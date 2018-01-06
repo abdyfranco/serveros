@@ -34,6 +34,16 @@ from OS X Lion to OS X El Capitan.
 Some of the official Apple applications from the Server Tools package from OS X Snow
 Leopard Server, patched and modified in order to work in newer versions of macOS.
 
+### USB 3 & SATA 6 Drivers
+Add support for third-party USB 3 and SATA 6 PCI-E cards, adding Xserve support to
+the latest standards and connectivity protocols.
+
+### LOM Firmware Update
+This update includes changes to the Lights-Out Management environment of the Xserve (Early 2008).
+
+It addresses issues that cause frequent power supply and fan notifications to be sent.
+This update is strongly recommended for all Xserve (Early 2008) systems.
+
 ## Copyright
 - Copyright (c) 2016-2018 [dosdude1](http://dosdude1.com/)
 - Copyright (c) 2016-2018 [Pixeleyes Ltd.](http://www.pixeleyes.co.nz)
