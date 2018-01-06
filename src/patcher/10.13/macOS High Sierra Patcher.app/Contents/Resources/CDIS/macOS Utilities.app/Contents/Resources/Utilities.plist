@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Buttons</key>
+	<array>
+		<dict>
+			<key>BundlePath</key>
+			<string>/System/Installation/CDIS/Time Machine System Restore.app</string>
+			<key>DescriptionKey</key>
+			<string>You have a backup of your system that you want to restore.</string>
+			<key>Path</key>
+			<string>/System/Installation/CDIS/Time Machine System Restore.app/Contents/MacOS/Time Machine System Restore</string>
+			<key>TitleKey</key>
+			<string>Restore From Time Machine Backup</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<array>
+				<string>-RunInOSIEnv</string>
+			</array>
+			<key>BundlePath</key>
+			<string>/Install macOS Sierra.app</string>
+			<key>DescriptionKey</key>
+			<string>Reinstall a new copy of macOS.</string>
+			<key>IsInstallAssistant</key>
+			<true/>
+			<key>Path</key>
+			<string>/Install macOS Sierra.app/Contents/MacOS/InstallAssistant</string>
+			<key>TitleKey</key>
+			<string>Reinstall macOS</string>
+		</dict>
+		<dict>
+			<key>BundlePath</key>
+			<string>/Applications/Safari.app</string>
+			<key>DescriptionKey</key>
+			<string>Browse the web for help or other information.</string>
+			<key>Path</key>
+			<string>/Applications/Safari.app/Contents/MacOS/Safari</string>
+			<key>TitleKey</key>
+			<string>Browse The Web</string>
+		</dict>
+		<dict>
+			<key>BundlePath</key>
+			<string>/Applications/Utilities/Disk Utility.app</string>
+			<key>DescriptionKey</key>
+			<string>Repair or erase a volume.</string>
+			<key>Path</key>
+			<string>/Applications/Utilities/Disk Utility.app/Contents/MacOS/Disk Utility</string>
+			<key>TitleKey</key>
+			<string>Disk Utility</string>
+		</dict>
+	</array>
+	<key>Menu</key>
+	<array>
+		<dict>
+			<key>BundlePath</key>
+			<string>/Applications/Utilities/Firmware Password Utility.app</string>
+			<key>Path</key>
+			<string>/Applications/Utilities/Firmware Password Utility.app/Contents/MacOS/Firmware Password Utility</string>
+			<key>TitleKey</key>
+			<string>Firmware Password Utility</string>
+		</dict>
+		<dict>
+			<key>BundlePath</key>
+			<string>/System/Library/CoreServices/Applications/Network Utility.app</string>
+			<key>Path</key>
+			<string>/System/Library/CoreServices/Applications/Network Utility.app/Contents/MacOS/Network Utility</string>
+			<key>TitleKey</key>
+			<string>Network Utility</string>
+		</dict>
+		<dict>
+			<key>BundlePath</key>
+			<string>/System/Library/CoreServices/Applications/RAID Utility.app</string>
+			<key>Path</key>
+			<string>/System/Library/CoreServices/Applications/RAID Utility.app/Contents/MacOS/RAID Utility</string>
+			<key>Show If</key>
+			<dict>
+				<key>Selector</key>
+				<string>shouldShowRAIDUtility</string>
+			</dict>
+			<key>TitleKey</key>
+			<string>RAID Utility</string>
+		</dict>
+		<dict>
+			<key>BundlePath</key>
+			<string>/Applications/Utilities/Terminal.app</string>
+			<key>Path</key>
+			<string>/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal</string>
+			<key>TitleKey</key>
+			<string>Terminal</string>
+		</dict>
+	</array>
+</dict>
+</plist>
