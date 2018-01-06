@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>qtbr</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>QTBR.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Broadcast Document</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>qtbr</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>BroadcastDoc</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>QuickTime Broadcaster</string>
+	<key>CFBundleGetInfoString</key>
+	<string>1.5.3, Copyright 2002-2009 Apple Inc.  All Rights Reserved.</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>QuickTime Broadcaster Help</string>
+	<key>CFBundleIconFile</key>
+	<string>QTB.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.QuickTime Broadcaster</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>QuickTime Broadcaster</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.5.3</string>
+	<key>CFBundleSignature</key>
+	<string>qtbr</string>
+	<key>CFBundleVersion</key>
+	<string>153</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
+	<key>NSAppleScriptEnabled</key>
+	<string>YES</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>

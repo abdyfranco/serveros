@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>_id_</key>
+	<string>replace_me</string>
+	<key>_newid_</key>
+	<true/>
+	<key>addresses</key>
+	<array>
+		<string>replace_me:255.255.255.0</string>
+	</array>
+	<key>name</key>
+	<string>replace_me-net</string>
+	<key>allowAll</key>
+	<true/>
+	<key>allowAllOptions</key>
+	<string>via replace_me</string>
+	<key>rules</key>
+	<array/>
+</dict>
+</plist>

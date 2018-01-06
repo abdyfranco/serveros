@@ -1,0 +1,15 @@
+Folgende Server-Einstellungen werden geändert:
+
+%@ (%@) wird als WAN-Anschluss verwendet. Diese Verbindung wird mit folgenden Anschlüssen gemeinsam genutzt:
+%@
+DHCP wird aktiviert und mit folgenden Teilnetzen konfiguriert:
+%@
+Alle früher konfigurierten DHCP-Teilnetze werden gelöscht.
+
+Die IP-Firewall wird aktiviert und mit folgenden IP-Adressgruppen konfiguriert:
+%@ 
+NAT wird aktiviert und stellt das Netzwerk auf %@ (%@) bereit
+
+VPN wird %@aktiviert
+
+DNS wird aktiviert

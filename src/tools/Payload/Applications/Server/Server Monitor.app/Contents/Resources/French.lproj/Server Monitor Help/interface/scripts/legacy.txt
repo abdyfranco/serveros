@@ -1,0 +1,1 @@
+These scripts are legacy scripts that were used back in the pre-refactored jquery and prototype  builds.  They still need to stay here, in order for the legacy builds to be able to update to the modern structure.

@@ -23,7 +23,8 @@ on unsupported Macs.
 
 ### macOS High Sierra Patcher
 macOS High Sierra Patcher, the successor to macOS Sierra Patcher, is an easy-to-use
-tool that allows anyone to install macOS High Sierra on unsupported Macs.
+tool that allows anyone to install macOS High Sierra on unsupported Macs, also adds
+support for APFS drives.
 
 ### Xserve LOM Configurator
 Xserve LOM Configurator, allows you to configure the Xserve's Lights Out Management ports

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>clamp_mss</key>
+		<true/>
+		<key>deny_incoming</key>
+		<false/>
+		<key>dynamic</key>
+		<true/>
+		<key>interface</key>
+		<string>replace_me</string>
+		<key>log</key>
+		<true/>
+		<key>log_denied</key>
+		<false/>
+		<key>proxy_only</key>
+		<false/>
+		<key>reverse</key>
+		<false/>
+		<key>same_ports</key>
+		<true/>
+		<key>unregistered_only</key>
+		<true/>
+		<key>use_sockets</key>
+		<true/>
+	</dict>
+</plist>

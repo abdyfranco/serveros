@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>WINS_NBDD_server</key>
+		<string></string>
+		<key>WINS_node_type</key>
+		<string>NOT_SET</string>
+		<key>WINS_primary_server</key>
+		<string></string>
+		<key>WINS_scope_id</key>
+		<string></string>
+		<key>WINS_secondary_server</key>
+		<string></string>
+		<key>_id_</key>
+		<string>replace_me</string>
+		<key>_newid_</key>
+		<true/>
+		<key>descriptive_name</key>
+		<string>replace_me</string>
+		<key>dhcp_domain_name</key>
+		<string></string>
+		<key>dhcp_domain_name_server</key>
+		<array>
+			<string>replace_me</string>
+		</array>
+		<key>dhcp_enabled</key>
+		<true/>
+		<key>dhcp_ldap_url</key>
+		<array>
+			<string></string>
+		</array>
+		<key>dhcp_router</key>
+		<string>replace_me</string>
+		<key>lease_time_secs</key>
+		<string>3600</string>
+		<key>net_mask</key>
+		<string>255.255.255.0</string>
+		<key>net_range_end</key>
+		<string>replace_me</string>
+		<key>net_range_start</key>
+		<string>replace_me</string>
+		<key>selected_port_name</key>
+		<string>replace_me</string>
+	</dict>
+</plist>

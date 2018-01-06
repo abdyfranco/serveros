@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Network Names</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Set up names that identify your server on the network." />
+      <meta name="topicid" content="sh7e2852f8" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="sh7e2852f8"></a><a name="svrasst_names"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="sh7e2852f8">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Network Names</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Use the Network Names pane to set up names that will identify your server to other computers on the network.</p>
+                  <table type="Multicolumn" cols="1" border="0" cellspacing="2" cellpadding="2">
+                     <tr class="TableHead">
+                        <th>
+                           <div class="TableHead">Settings for network names</div>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Primary DNS Name</div>
+                           <p class="Para">This is set automatically if it can be determined from the DNS server on your network. It’s the full, unique name for the
+                              server in the DNS service, for example myserver.example.com. You shouldn’t change this name if it’s actually registered to
+                              your server, but if it’s wrong you can click the Edit button to change it. If you change the DNS name in this pane, make sure
+                              your DNS server is updated to use the new name.
+                           </p>
+                           <p class="Para">If your network doesn’t have a DNS server, use a name like myserver.private.</p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Computer Name</div>
+                           <p class="Para">Identifies the server to users who are browsing for network file servers or other network resources identified by computer
+                              name rather than network address. Specify a name 63 Roman characters or fewer. The name can include spaces, but avoid using
+                              =, :, or @. (If a user’s computer connects to the server using the SMB file sharing protocol, Mac OS X Server automatically
+                              converts the computer name to a form that’s valid with SMB.)
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Local Hostname</div>
+                           <p class="Para">The computer also has a local hostname, which ends with “.local” (such as myserver.local). Computers on the server’s local
+                              subnet can use the server’s local hostname instead of its primary DNS name to reach the server without using a global DNS
+                              system to resolve names to IP addresses. A computer’s local hostname can be used only on its local network (IP subnet).
+                           </p>
+                           <p class="Para">The local hostname is derived by default from the computer name. If you want to change it, use Server Admin or the Sharing
+                              pane of System Preferences after setup is complete.
+                           </p>
+                        </th>
+                     </tr>
+                  </table>
+                  <div class="Subhead">
+                     <div class="Name">Network names for an auto setup profile</div>
+                     <p class="Para">If you’re creating a profile for later automatic server setup and want to use it to set up multiple servers, you can leave
+                        the Primary DNS Name and Computer Name blank. When you use the profile to set up a server, Server Assistant looks up the DNS
+                        name using the server’s IP address and derives the computer name from the DNS name.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

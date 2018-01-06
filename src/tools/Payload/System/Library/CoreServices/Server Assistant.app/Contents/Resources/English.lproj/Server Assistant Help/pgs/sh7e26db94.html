@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Network</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Specify connection settings for your server’s network interfaces." />
+      <meta name="topicid" content="sh7e26db94" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="sh7e26db94"></a><a name="svrasst_netw"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="sh7e26db94">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Network</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Use the Network pane to specify connection settings for your server’s network interfaces. The group of settings for each interface
+                     is a network connection service. A network interface is also called a port, which is the part of the interface that a plug
+                     or cable connects to.
+                  </p>
+                  <p class="Para">Your server needs a network connection service for the local network that users’ computers connect to. This is usually an
+                     Ethernet network, but may be an AirPort network. If your Internet service provider (ISP) requires connecting via PPPoE, you
+                     need to configure a PPPoE network service connection. If your server connects to more than one network, you need to configure
+                     a network connection service for each network your server connects to.
+                  </p>
+               </div>
+               <div class="Task">
+                  <div class="Name">To configure a network service connection:</div>
+                  <ul class="ListBullet">
+                     <li>
+                        <p class="Para">Select a network connection service in the list, and then specify settings. For information about the settings for the different
+                           kinds of network connection services, see the following topics:
+                        </p>
+                        <div class="LinkTopicPage"><a href="sh7e29bdc7.html">Configuring an Ethernet Network Connection Service</a></div>
+                        <div class="LinkTopicPage"><a href="sh7e2909f2.html">Configuring an AirPort Network Connection Service</a></div>
+                        <div class="LinkTopicPage"><a href="sh7e274adc.html">Configuring a FireWire Network Connection Service</a></div>
+                        <div class="LinkTopicPage"><a href="sh7e27301f.html">Configuring a PPPoE Network Connection Service</a></div>
+                        <div class="LinkTopicPage"><a href="sh7e2cbf90.html">Configuring an LOM Port Network Connection Service</a></div>
+                        <div class="LinkTopicPage"><a href="sh7e2c243e.html">Making a Network Connection Service Inactive</a></div>
+                     </li>
+                     <li>
+                        <p class="Para">Add a network connection service by clicking the Add (+) button. For instructions, see <a href="sh7e2a2b39.html">Adding a Network Connection Service</a>.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Remove a network connection service by selecting it and clicking the Delete (–) button.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Show only preferred network connection services, or show all network connection services, by using the Action (gear) button
+                           if it’s present.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">See the hardware address and interface name for a network connection service by hovering the pointer over the network connection
+                           service in the list.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Change the priority of network connection services by dragging them in the list. When trying to communicate over a network,
+                           the server uses the network connection services in the listed order.
+                        </p>
+                        <p class="Para">The first active network connection service is the server’s primary network connection. The server uses this service for all
+                           communications outside the local network.
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="Outro">
+                  <p class="Para">The Network pane initially lists a network connection service for each of the server’s Ethernet interfaces. Other available
+                     network interfaces aren’t listed, because Ethernet is preferred for server network connections. To see all network interfaces,
+                     use the Action (gear) button. If the server has no Ethernet interfaces, the Network pane lists all available network interfaces.
+                     The Network pane doesn’t initially list any services if you’re creating a profile for later automatic server setup.
+                  </p>
+                  <p class="Para">Most Macintosh computers have a built-in Ethernet port. They may have additional interfaces built in or added on, such as
+                     an AirPort interface for a wireless network connection, a FireWire port that can be used for a network connection, or a second
+                     Ethernet port.
+                  </p>
+                  <p class="Para">Intel-based Xserve systems also have an interface for the lights-out management (LOM) processor. This interface has its own
+                     IP address and lets you connect to the server using the Server Monitor application even when the server is shut down.
+                  </p>
+                  <div class="Subhead">
+                     <div class="Name">Network connection services for an Internet gateway</div>
+                     <p class="Para">If the Internet Gateway pane appeared prior to the Network pane, and you chose to make this server an Internet gateway, you
+                        can’t change settings for the Ethernet connection to your local network. Server Assistant configures those settings automatically.
+                     </p>
+                  </div>
+                  <div class="Subhead">
+                     <div class="Name">Network connection services for multiple servers</div>
+                     <p class="Para">If you’re setting up multiple servers at the same time, Server Assistant displays the Network pane for each one in turn. The
+                        text near the top of the pane tells you the DNS name and IP address of the server you’re currently configuring.
+                     </p>
+                  </div>
+                  <div class="Subhead">
+                     <div class="Name">Network connection services for an Xsan metadata controller</div>
+                     <p class="Para">If the Xsan pane appeared earlier and you chose to make the server an Xsan metadata controller:</p>
+                     <ul class="ListBullet">
+                        <li>
+                           <p class="Para">Make sure the network connection service for the private metadata network is <span class="Emphasis">inactive </span>if you plan to have the private metadata network configured automatically during Xsan setup. For instructions, see <a href="sh7e2c243e.html">Making a Network Connection Service Inactive</a>. 
+                           </p>
+                        </li>
+                        <li>
+                           <p class="Para">Make sure all other network connection services will each have a fixed (static) IP address. For example, set the Configure
+                              IPv4 option to “Manually” or “Using DHCP with manual address.”
+                           </p>
+                           <p class="Para">The BootP, PPPoE, and DHCP network configuration options aren’t available because they aren’t appropriate for an Xsan network.</p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="Subhead">
+                     <div class="Name">Network connection services for an auto setup profile</div>
+                     <p class="Para">If you’re creating a profile for later automatic server setup, the network connection services you configure in this pane
+                        will be used as follows: While setting up a server automatically, Server Assistant tries to match a network connection service
+                        in the saved profile to the server’s network interfaces by comparing hardware addresses (also called MAC addresses or Ethernet
+                        IDs). If that fails, it tries to match the interface name (also called the BSD port name) of a saved network connection service,
+                        such as en0, en1, or fw0, to the server’s network interfaces. If that fails, it doesn’t use the saved network connection service.
+                     </p>
+                     <p class="Para">You can set up generic network connection services that will match the network interfaces on a variety of servers. Set up
+                        two Ethernet services and one AirPort service, and set the Configure IPv4 option of each to Using DHCP. Before starting automatic
+                        server setup, make sure your DHCP service is configured to assign a fixed (static) IP address to each network interface of
+                        each server being set up automatically. If a particular server doesn’t have two Ethernet interfaces or an AirPort interface,
+                        Server Assistant doesn’t use the corresponding saved network connection service.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,59 @@
+{
+    IBClasses = (
+        {CLASS = BackgroundlessTabView; LANGUAGE = ObjC; SUPERCLASS = NSTabView; }, 
+        {
+            ACTIONS = {
+                applyMaskingOptions = id; 
+                applyPortSettings = id; 
+                hardLoopIDChanged = id; 
+                refreshDebugLUNS = id; 
+                revertPortSettings = id; 
+                setHardLoopIDEnabled = id; 
+                setPortSpeed = id; 
+                setPortTopology = id; 
+            }; 
+            CLASS = FibreChannelWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_applyButton" = NSButton; 
+                "_authenticationButton" = id; 
+                "_cardLocationText" = NSTextField; 
+                "_cardPortButton" = TexturedPopupButton; 
+                "_cardPortStatusText" = NSTextField; 
+                "_cardView" = NSView; 
+                "_contentBox" = NSBox; 
+                "_currentView" = NSView; 
+                "_debugLUNRefreshButton" = NSButton; 
+                "_enableHardLoopIDSwitch" = NSButton; 
+                "_fibreCardOutlineView" = NSOutlineView; 
+                "_hardLoopIDPopUp" = NSPopUpButton; 
+                "_lunMaskingApplyButton" = NSButton; 
+                "_maskingTable" = NSTableView; 
+                "_maskingView" = NSView; 
+                "_noSelectionView" = NSView; 
+                "_portSpeedPopUp" = NSPopUpButton; 
+                "_portTopologyPopUp" = NSPopUpButton; 
+                "_portView" = NSView; 
+                "_portWWNNLabel" = NSTextField; 
+                "_portWWNNText" = NSTextField; 
+                "_portWWPNLabel" = NSTextField; 
+                "_portWWPNText" = NSTextField; 
+                "_restartIcon" = NSImageView; 
+                "_restartRequiredField" = NSTextField; 
+                "_revertButton" = NSButton; 
+                "_window" = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = NSAuthorizationView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mDelegate = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = NSAuthorizationViewDelegate; LANGUAGE = ObjC; }, 
+        {CLASS = TexturedPopupButton; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}

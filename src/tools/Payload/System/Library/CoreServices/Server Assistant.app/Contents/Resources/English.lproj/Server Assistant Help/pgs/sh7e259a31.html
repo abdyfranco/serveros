@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Administrator Account</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Set up a user account that has server administration privileges." />
+      <meta name="topicid" content="sh7e259a31" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="sh7e259a31"></a><a name="svrasst_admn"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="sh7e259a31">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Administrator Account</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Use the Administrator Account pane to set up a user account that has server administration privileges.</p>
+                  <table type="Multicolumn" cols="1" border="0" cellspacing="2" cellpadding="2">
+                     <tr class="TableHead">
+                        <th>
+                           <div class="TableHead">Administrator account settings</div>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Name</div>
+                           <p class="Para">The full name you want used for the primary administrator account—for example, Server Administrator. This name can contain
+                              up to 255 characters (as few as 85 Japanese characters). It can include spaces. It can’t be the same as any predefined user
+                              name, such as System Administrator.
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Short Name</div>
+                           <p class="Para">This is an abbreviation of the full name. The short name typically is eight or fewer characters, but can be up to 255 Roman
+                              characters, typically eight or fewer. Use only a through z, A through Z, 0 through 9, period (.), _ (underscore), or - (hyphen).
+                              You can’t use a predefined user’s short name, such as root. After the account is created, you can’t change the short name.
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Password</div>
+                           <p class="Para">Should be hard to guess and kept secret. Anyone who knows an administrator name and password can change server settings and
+                              manage user accounts.
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Password Hint</div>
+                           <p class="Para">Can be anything that will help you recall your password (except the password itself).</p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Enable administrators to log in remotely using SSH</div>
+                           <p class="Para">Allows server administrators to use the SSH (Secure Shell) network protocol to log in to the server from another location.</p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Enable administrators to manage this server remotely</div>
+                           <p class="Para">Allows server administrators to observe and control your server over the network by using the display, keyboard, and mouse
+                              of a Mac with Mac OS X screen sharing or Apple Remote Desktop software, which you can purchase separately.
+                           </p>
+                        </th>
+                     </tr>
+                  </table>
+                  <div class="Subhead">
+                     <div class="Name">Other administrator accounts</div>
+                     <p class="Para">The password you enter here is also used for the System Administrator account, whose short name is root. If your server will
+                        have its own users and groups, this password will also be used for a directory administrator account, whose name is Directory
+                        Administrator and short name is diradmin. You can enter a different directory administrator name and short name if you choose
+                        the “Configure manually” option in the “Users and Groups” pane later.
+                     </p>
+                     <p class="Para">The System Administrator account has full access to the system, including system files. Protecting this root user password
+                        is very important, so it should not be the same as another account’s password. Server administrators don’t need root user
+                        privileges.
+                     </p>
+                  </div>
+                  <div class="Alert">
+                     <div class="Important"><span class="Important">Important:  </span>After setting up the server, you should either change the password of the account you create here and the directory administrator
+                        account, or change the password of the System Administrator (root) account. 
+                     </div>
+                  </div>
+                  <p class="Para">To change the password or other attributes of the administrator account you create here, use the Accounts pane of System Preferences
+                     after logging in to the server.
+                  </p>
+                  <p class="Para">To change the password or other attributes of the Directory Administrator account, use the Workgroup Manager application after
+                     setting up the server.
+                  </p>
+                  <p class="Para">To change the password of the System Administrator (root) account, use the Login Options section of the Accounts pane of System
+                     Preferences to open the Directory Utility application after setting up the server.
+                  </p>
+                  <div class="Subhead">
+                     <div class="Name">Keeping your server secure</div>
+                     <p class="Para">For security, you should create a standard user account (not an administrator account) and routinely use it to log in. Use
+                        an administrator account with Server Preferences, Server Admin, Workgroup Manager, or other administration applications and
+                        tools when you need to manage users, groups, or services.
+                     </p>
+                     <p class="Para">You can create standard user accounts by using Server Preferences or Workgroup Manager.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

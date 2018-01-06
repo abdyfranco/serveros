@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>15A284</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>ServerMonitorFile.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Server Monitor document</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>smsl</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>Server Monitor</string>
+	<key>CFBundleGetInfoString</key>
+	<string>2.0 (5), Copyright © 2002-2016 Apple Inc. All rights reserved.</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Server Monitor Help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Server Monitor Help</string>
+	<key>CFBundleIconFile</key>
+	<string>ServerMonitor.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.server_monitor</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Server Monitor</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
+	<key>CFBundleSignature</key>
+	<string>smsm</string>
+	<key>CFBundleVersion</key>
+	<string>5</string>
+	<key>DTCompiler</key>
+	<string></string>
+	<key>DTPlatformBuild</key>
+	<string>11C22</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>11C22</string>
+	<key>DTSDKName</key>
+	<string></string>
+	<key>DTXcode</key>
+	<string>0800</string>
+	<key>DTXcodeBuild</key>
+	<string>8S201h</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.11.0</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu.nib</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Classes</key>
+	<dict>
+		<key>AppController</key>
+		<dict>
+			<key>Description</key>
+			<string>Objet de script de niveau supérieur de la configuration de passerelle.</string>
+			<key>Name</key>
+			<string>application</string>
+		</dict>
+	</dict>
+	<key>Commands</key>
+	<dict>
+		<key>GoTo</key>
+		<dict>
+			<key>Description</key>
+			<string>Ouvre un nouveau document pour l’identifiant du serveur et de la session spécifié.</string>
+			<key>Name</key>
+			<string>goto</string>
+		</dict>
+	</dict>
+	<key>Description</key>
+	<string>Commandes et classes spécifiques de la configuration simple du serveur.</string>
+	<key>Name</key>
+	<string>Configuration de passerelle</string>
+</dict>
+</plist>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Finding an Interface Name or Hardware Address</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Use command-line tools to find an interface name or hardware address." />
+      <meta name="topicid" content="shb7520989" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="shb7520989"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="shb7520989">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Finding an Interface Name or Hardware Address</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">If you’re creating an auto server setup profile and want to add a network connection service in the Network pane but don’t
+                     know an interface name (BSD port) or hardware address (MAC address) for a server that’s connected to your network, you can
+                     use command-line tools to get the information. You need to know the remote server’s IP address or DNS name and its hardware
+                     serial number. Use <span class="CodeBody">ssh</span> to log in to the remote server from the command line, and then use <span class="CodeBody">networksetup</span> to get network port information.
+                  </p>
+               </div>
+               <div class="Task">
+                  <div class="Name">To get network interface information for a remote server:</div>
+                  <ol class="ListNumber">
+                     <li>
+                        <p class="Para">Make sure the remote server has started up and is connected to the network.</p>
+                        <p class="Para">If Mac OS X Server isn’t installed yet, you can start up the remote server using the <span class="Emphasis">Mac OS X Server Install Disc</span>.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Open Terminal on your Mac, and then log in to the remote server by typing this command and pressing Return:</p>
+                        <div class="CodeListing">
+                           <div class="CodeLines">
+                              <div class="CodeLine">ssh root@<span class="CodeEmphasis">serveraddress</span></div>
+                           </div>
+                        </div>
+                        <p class="Para">Replace <span class="Emphasis">serveraddress</span> with the IP address or DNS name of the remote server.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Enter <span class="Emphasis">yes</span> if you’re asked if you’re sure you want to continue connecting even though the authenticity of the remote server can’t be
+                           established.
+                        </p>
+                        <p class="Para">You’re asked this the first time you log in to a remote server.</p>
+                     </li>
+                     <li>
+                        <p class="Para">When prompted for the password, enter the first eight characters of the remote server’s serial number.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Type this command and press Return:</p>
+                        <div class="CodeListing">
+                           <div class="CodeLines">
+                              <div class="CodeLine">networksetup -listallhardwareports</div>
+                           </div>
+                        </div>
+                        <p class="Para">The output of this command identifies an interface name as “Device” and a hardware address as “Ethernet Address.”</p>
+                     </li>
+                  </ol>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

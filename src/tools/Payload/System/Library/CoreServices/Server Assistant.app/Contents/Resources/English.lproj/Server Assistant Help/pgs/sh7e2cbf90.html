@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Configuring an LOM Port Network Connection Service</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Enter the settings for a lights-out management network connection." />
+      <meta name="topicid" content="sh7e2cbf90" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="sh7e2cbf90"></a><a name="svrasst_lom"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="sh7e2cbf90">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Configuring an LOM Port Network Connection Service</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Xserve systems with Intel processors include a separate lights-out management (LOM) processor that lets you communicate with
+                     the server even when it is not powered on. The LOM processor has its own network settings for the server’s built-in Ethernet
+                     ports.
+                  </p>
+               </div>
+               <div class="Task">
+                  <div class="Name">To configure an LOM Port network connection service:</div>
+                  <ol class="ListNumber">
+                     <li>
+                        <p class="Para">Select an LOM Port service in the list on the left.</p>
+                     </li>
+                     <li>
+                        <p class="Para">If requested, enter the name and password for the LOM administrator.</p>
+                        <p class="Para">The LOM administrator account is not the same as the Mac OS X Server administrator account, but you can use the same name
+                           and password if you want to.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Click Configure, choose a configuration method, and enter the configuration details using the information below.</p>
+                        <ul class="ListDescriptor">
+                           <li>
+                              <div class="Term">IP Address:  </div>
+                              <div class="Description">A numeric address that uniquely identifies the server on the network. It’s written as four numbers separated by periods (for
+                                 example, 192.0.2.123).
+                              </div>
+                              <p class="Para">Give the LOM interface its own IP address. Don’t use the same address that you assigned to built-in Ethernet 1 or Ethernet
+                                 2, even though it uses the same physical connector (port 1 or 2) on the back of the Xserve.
+                              </p>
+                           </li>
+                           <li>
+                              <div class="Term">Subnet Mask:  </div>
+                              <div class="Description">A group of four numbers that identifies the network part of the server’s IP address; the remainder of the IP address uniquely
+                                 identifies the server on that network
+                              </div>
+                           </li>
+                           <li>
+                              <div class="Term">Router:  </div>
+                              <div class="Description">The IP address of the router for the server’s local network (for example, 192.168.99.1 or 10.0.7.1). The router is a device
+                                 that forwards data packets from the local network toward their destinations on other networks or the Internet. If you don’t
+                                 have a router in your network, enter the server’s IP address instead.
+                              </div>
+                           </li>
+                        </ul>
+                     </li>
+                  </ol>
+               </div>
+               <div class="Outro">
+                  <p class="Para">You can change the LOM administrator name or password by clicking Admin Account.</p>
+                  <p class="Para">After setting up the server, you can change the LOM Port network settings and add or change LOM administrator accounts using
+                     Server Monitor. For instructions, open Server Monitor (in /Applications/Server/) and then use the Help menu. You can also
+                     change these settings from the command line using the <span class="CodeBody">IPMITool</span> in Terminal. For information, see the <span class="CodeBody">IPMITool</span> man topic.
+                  </p>
+               </div>
+               <div class="LinkInternal"><span class="LinkInternal">Related Topics</span><div class="LinkTopicPage"><a href="sh7e26db94.html">Network</a></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
