@@ -47,3 +47,5 @@ support to the latest standards and connectivity protocols.
 ## Copyright
 - Copyright (c) 2016-2018 [dosdude1](http://dosdude1.com/)
 - Copyright (c) 2016-2018 [Pixeleyes Ltd.](http://www.pixeleyes.co.nz)
+- Copyright (c) 2015-2018 [MinnowStor](https://forums.macrumors.com/members/jimj740.832671/)
+- Copyright (c) 2012-2018 [Intel Corporation](https://www.intel.com)
