@@ -1,0 +1,41 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                cancel = id; 
+                print = id; 
+                showAboutBox = id; 
+                startUpdate = id; 
+                warnAboutShutdown = id; 
+                warnNoErase = id; 
+            }; 
+            CLASS = CommonUpdaterController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fibApp = id; 
+                fibCancelButton = id; 
+                fibCurrentVersion = id; 
+                fibElapsedTime = id; 
+                fibInstructions = id; 
+                fibInstructionsText = id; 
+                fibNewVersion = id; 
+                fibNoErase = id; 
+                fibNoFirmwareFlashMode = id; 
+                fibNoFlash = id; 
+                fibNoVerify = id; 
+                fibProgressBar = id; 
+                fibUpdateButton = id; 
+                fibUpdatingText = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            CLASS = EFIUpdaterController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {fibSafetyOffCheckBox = id; }; 
+            SUPERCLASS = CommonUpdaterController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
