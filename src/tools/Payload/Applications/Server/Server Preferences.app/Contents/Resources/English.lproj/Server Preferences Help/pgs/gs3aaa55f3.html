@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Specifying a Mail Relay Server</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-24-2009 14:23:55" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="2.7.49" />
+      <meta name="project" content="Server Preferences Help" />
+      <meta name="description"
+            content="Your ISP may require you to relay outgoing mail through a designated server." />
+      <meta name="topicid" content="gs3aaa55f3" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220507265666572656E6365732048656C70">
+      <div id="Nav"><a name="gs3aaa55f3"></a><a name="svrpref_mailrelay"></a><a name="x6D61696C2073657276696365"></a><a name="x72656C6179207365727665722C206D61696C"></a><a name="x496E7465726E657420736572766963652070726F7669646572"></a><a name="x4953502028496E7465726E657420736572766963652070726F766964657229"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Preferences Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="gs3aaa55f3">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsvrpref.gif" alt="Server Preferences icon" /></div>
+               <div class="Name">Specifying a Mail Relay Server</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Your mail service can relay outgoing mail through another server, and that relay server will forward the mail to its destination.</p>
+                  <ul class="ListBullet">
+                     <li>
+                        <p class="Para">If you use a commercial Internet service provider (ISP), it may stipulate that all outgoing email be relayed through a designated
+                           server.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">If your organization provides your Internet service, your server may need to use a relay server to deliver outgoing mail through
+                           a firewall. In this case, your organization will designate a particular server for relaying mail through the firewall.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">You need to use a relay server if the DNS service for your ISP or organization can’t resolve the public IP address of your
+                           server (or your AirPort Base Station or other router) to your server’s DNS name; this is called a <span class="Emphasis">reverse lookup.</span></p>
+                     </li>
+                  </ul>
+                  <div class="Alert">
+                     <div class="Important"><span class="Important">Important:  </span>Use a relay server only if your ISP or organization requires one. Relaying mail through another server without permission
+                        may make your server appear to be a mail service abuser.
+                     </div>
+                  </div>
+               </div>
+               <div class="Task">
+                  <div class="Name">To relay outgoing mail through another server:</div>
+                  <ol class="ListNumber">
+                     <li>
+                        <p class="Para">In the Mail pane of Server Preferences, select “Relay outgoing mail through ISP.”</p>
+                        <p class="Para">If this option is already selected, click the Edit button next to it. </p>
+                        <p class="Para">A dialog appears for entering the relay server connection details.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Enter the relay server’s DNS name or IP address supplied by your ISP or organization.</p>
+                     </li>
+                     <li>
+                        <p class="Para">If your ISP or organization also requires your server to authenticate before sending mail, select “Enable SMTP relay authentication”
+                           and enter the user name and password from your ISP or organization.
+                        </p>
+                     </li>
+                  </ol>
+               </div>
+               <div class="LinkInternal"><span class="LinkInternal">Related Topics</span><div class="LinkTopicPage"><a href="gs3aadbf05.html">Managing Mail Service</a></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

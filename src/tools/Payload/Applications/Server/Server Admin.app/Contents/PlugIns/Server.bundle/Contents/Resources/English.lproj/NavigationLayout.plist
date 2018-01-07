@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>System Information</string>
+		<key>tabs</key>
+		<array>
+			<string>OV</string>
+			<string>LO</string>
+			<string>GR</string>
+			<string>CF_SHARING</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>System Settings</string>
+		<key>tabs</key>
+		<array>
+			<string>SOFTWAREUPDATE</string>
+			<string>CERTS</string>
+			<string>CF_ACL</string>
+			<string>CF</string>
+			<string>CF_NOTIF</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>File Server Settings</string>
+		<key>tabs</key>
+		<array>
+			<string>CF_PRIVS</string>
+			<string>QUOTAS</string>
+		</array>
+	</dict>
+</array>
+</plist>

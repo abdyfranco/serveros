@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>TopLevelDSNodesNotToShow</key>
+	<array>
+		<string>AppleTalk</string>
+		<string>DAVE Network</string>
+		<string>mDNS</string>
+		<string>Rendezvous</string>
+		<string>Bonjour</string>
+		<string>SLP</string>
+		<string>SMB</string>
+	</array>
+</dict>
+</plist>

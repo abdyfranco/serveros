@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>L2TP</key>
+		<array>
+			<dict>
+				<key>EAP</key>
+				<dict/>
+				<key>IPSec</key>
+				<dict>
+					<key>AuthenticationMethod</key>
+					<string>SharedSecret</string>
+					<key>IPSecSharedSecretObf</key>
+					<data></data>
+				</dict>
+				<key>PPP</key>
+				<dict>
+					<key>AuthName</key>
+					<string></string>
+					<key>CommRemoteAddress</key>
+					<string>vpn.apple.com</string>
+					<key>TokenCard</key>
+					<integer>0</integer>
+					<key>UserDefinedName</key>
+					<string></string>
+				</dict>
+			</dict>
+		</array>
+	</dict>
+</plist>

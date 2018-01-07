@@ -1,0 +1,4 @@
+tell application "Workgroup Manager"
+	activate
+	goto "<USERNAME>#<PASSWORD>#<HOST>#Preferences"
+end tell

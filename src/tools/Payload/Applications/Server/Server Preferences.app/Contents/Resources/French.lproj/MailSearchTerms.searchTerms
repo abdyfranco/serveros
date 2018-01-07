@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>mail</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>service de messagerie, configuration du serveur de messagerie, courrier électronique, spam, courrier indésirable, activer le filtrage du courrier indésirable, activer le filtrage des virus, faire transiter le courrier électronique sortant, relayer le courrier électronique sortant, message de bienvenue, message de bienvenue destiné aux nouveaux utilisateurs, pop, cyrus, imap, smtp, postfix, amavisd</string>
+				<key>title</key>
+				<string>Configuration du service de messagerie</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>relais, smtp</string>
+				<key>title</key>
+				<string>Réglages de relais du courrier électronique</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>bienvenue, message</string>
+				<key>title</key>
+				<string>Message de bienvenue du courrier électronique</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>courrier électronique, spam, virus, spamassasin, amavisd</string>
+				<key>title</key>
+				<string>Filtrage du spam du courrier électronique</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

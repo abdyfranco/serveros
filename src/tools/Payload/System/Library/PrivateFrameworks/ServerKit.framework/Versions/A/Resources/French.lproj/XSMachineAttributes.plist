@@ -1,0 +1,1532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MacBook1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook à processeur Intel Core Duo proposé en noir ou en blanc.</string>
+			<key>model</key>
+			<string>MacBook</string>
+			<key>processor</key>
+			<string>Intel Core Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>i386</string>
+	</dict>
+	<key>MacBook2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook à processeur Intel Core 2 Duo proposé en noir ou en blanc.</string>
+			<key>model</key>
+			<string>MacBook</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBook3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook à processeur Intel Core 2 Duo proposé en noir ou en blanc.</string>
+			<key>model</key>
+			<string>MacBook</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBook4,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook à processeur Intel Core 2 Duo proposé en noir ou en blanc.</string>
+			<key>model</key>
+			<string>MacBook</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBook5,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook doté d’un processeur Intel Core 2 Duo, corps unibloc en aluminum, lancé fin 2008.</string>
+			<key>marketingModel</key>
+			<string>MacBook doté d’un processeur Intel Core 2 Duo (corps unibloc en aluminum)</string>
+			<key>model</key>
+			<string>MacBook</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBook5,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook blanc doté d’un processeur Intel Core 2 Duo, lancé début 2009.</string>
+			<key>marketingModel</key>
+			<string>MacBook doté d’un processeur Intel Core 2 Duo (blanc, début 2009)</string>
+			<key>model</key>
+			<string>MacBook</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookAir1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Air doté d’un processeur Intel Core 2 Duo.</string>
+			<key>model</key>
+			<string>MacBook Air</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookAir2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Air doté d’un processeur Intel Core 2 Duo.</string>
+			<key>model</key>
+			<string>MacBook Air</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro à processeur Intel Core Duo et écran de 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>i386</string>
+	</dict>
+	<key>MacBookPro1,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro à processeur Intel Core Duo et écran de 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>i386</string>
+	</dict>
+	<key>MacBookPro2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro à processeur Intel Core 2 Duo et écran de 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro2,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro à processeur Intel Core 2 Duo et écran de 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro à processeur Intel Core 2 Duo et écran de 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro4,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro à processeur Intel Core 2 Duo, écran de 15 ou 17 pouces et trackpad Multitouch.</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro5,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro doté d’un processeur Intel Core 2 Duo, corps unibloc en aluminum, lancé fin 2008.</string>
+			<key>marketingModel</key>
+			<string>MacBook Pro doté d’un processeur Intel Core 2 Duo (corps unibloc en aluminum)</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro5,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro doté d’un processeur Intel Core 2 Duo, corps unibloc en aluminum, lancé début 2009.</string>
+			<key>marketingModel</key>
+			<string>MacBook Pro doté d’un processeur Intel Core 2 Duo (corps unibloc en aluminum)</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro5,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro with Intel Core 2 Duo with aluminum unibody, introduced mid 2009.</string>
+			<key>marketingModel</key>
+			<string>MacBook Pro doté d’un processeur Intel Core 2 Duo (corps unibloc en aluminum)</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro5,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro with Intel Core 2 Duo with aluminum unibody, introduced mid 2009.</string>
+			<key>marketingModel</key>
+			<string>MacBook Pro doté d’un processeur Intel Core 2 Duo (corps unibloc en aluminum)</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacBookPro5,5</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>MacBook Pro with Intel Core 2 Duo with aluminum unibody, introduced mid 2009.</string>
+			<key>marketingModel</key>
+			<string>MacBook Pro doté d’un processeur Intel Core 2 Duo (corps unibloc en aluminum)</string>
+			<key>model</key>
+			<string>MacBook Pro</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacPro1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour (châssis en aluminum).</string>
+			<key>marketingModel</key>
+			<string>Mac Pro</string>
+			<key>model</key>
+			<string>Mac Pro</string>
+			<key>processor</key>
+			<string>Intel Xeon</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacPro1,1,Quad</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour (châssis en aluminum).</string>
+			<key>marketingModel</key>
+			<string>Mac Pro</string>
+			<key>model</key>
+			<string>Mac Pro</string>
+			<key>processor</key>
+			<string>Intel Xeon</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+		<key>cores</key>
+		<integer>4</integer>
+	</dict>
+	<key>MacPro2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour (châssis en aluminum).</string>
+			<key>marketingModel</key>
+			<string>Mac Pro</string>
+			<key>model</key>
+			<string>Mac Pro</string>
+			<key>processor</key>
+			<string>Intel Xeon</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacPro3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour (châssis en aluminum).</string>
+			<key>marketingModel</key>
+			<string>Mac Pro</string>
+			<key>model</key>
+			<string>Mac Pro</string>
+			<key>processor</key>
+			<string>Intel Xeon</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>MacPro4,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour (châssis en aluminium), lancée début 2009.</string>
+			<key>marketingModel</key>
+			<string>Mac Pro (début 2009)</string>
+			<key>model</key>
+			<string>Mac Pro</string>
+			<key>processor</key>
+			<string>Intel Xeon</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>Macmini1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Ordinateur de bureau Macintosh, de taille réduite, doté d’un processeur Intel Core 2 Duo, Intel Core Duo ou Intel Core.</string>
+			<key>marketingModel</key>
+			<string>Mac mini à processeur Intel Core</string>
+			<key>model</key>
+			<string>Mac mini</string>
+			<key>processor</key>
+			<string>Intel Core</string>
+		</dict>
+		<key>architecture</key>
+		<string>i386</string>
+	</dict>
+	<key>Macmini2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Mac de bureau de taille réduite doté d’un processeur Intel Core 2 Duo, Intel Core Duo ou Intel Core.</string>
+			<key>marketingModel</key>
+			<string>Mac mini à processeur Intel Core</string>
+			<key>model</key>
+			<string>Mac mini</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>Macmini3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Mac mini avec NVIDIA GeForce 9400M, lancé début 2009.</string>
+			<key>marketingModel</key>
+			<string>Mac mini à processeur Intel Core</string>
+			<key>model</key>
+			<string>Mac mini</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>PowerBook1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Ordinateur portable à chassis en plastique et en caoutchouc noir et aux contours gravés.</string>
+			<key>model</key>
+			<string>Macintosh PowerBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>Macintosh PowerBook G3.pdf</string>
+	</dict>
+	<key>PowerBook2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le portable « palourde » classique de couleur vive à anse intégrée et les modèles ultérieurs à châssis rectangulaire en plastique métallisé et blanc et à écran plat de 12 ou 14 pouces.</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>iBook G3.pdf</string>
+	</dict>
+	<key>PowerBook2,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le portable « palourde » classique de couleur vive à anse intégrée et les modèles ultérieurs à châssis rectangulaire en plastique métallisé et blanc et à écran plat de 12 ou 14 pouces.</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>iBook G3.pdf</string>
+	</dict>
+	<key>PowerBook2,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le portable « palourde » classique de couleur vive à anse intégrée et les modèles ultérieurs à châssis rectangulaire en plastique métallisé et blanc et à écran plat de 12 ou 14 pouces.</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>iBook G3.pdf</string>
+	</dict>
+	<key>PowerBook3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook3,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook3,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook3,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook3,5</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook4,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le portable « palourde » classique de couleur vive à anse intégrée et les modèles ultérieurs à châssis rectangulaire en plastique métallisé et blanc et à écran plat de 12 ou 14 pouces.</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>iBook G3.pdf</string>
+	</dict>
+	<key>PowerBook4,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le portable « palourde » classique de couleur vive à anse intégrée et les modèles ultérieurs à châssis rectangulaire en plastique métallisé et blanc et à écran plat de 12 ou 14 pouces.</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>iBook G3.pdf</string>
+	</dict>
+	<key>PowerBook4,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le portable « palourde » classique de couleur vive à anse intégrée et les modèles ultérieurs à châssis rectangulaire en plastique métallisé et blanc et à écran plat de 12 ou 14 pouces.</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>iBook G3.pdf</string>
+	</dict>
+	<key>PowerBook4,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le portable « palourde » classique de couleur vive à anse intégrée et les modèles ultérieurs à châssis rectangulaire en plastique métallisé et blanc et à écran plat de 12 ou 14 pouces.</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+		<key>hardwareImageName</key>
+		<string>iBook G3.pdf</string>
+	</dict>
+	<key>PowerBook5,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,5</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,6</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,7</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,8</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook5,9</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook6,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook6,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook6,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iBook blancs à processeur G4</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook6,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook6,5</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iBook blancs à processeur G4</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook6,7</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iBook blancs à processeur G4</string>
+			<key>model</key>
+			<string>iBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerBook6,8</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Inclut le modèle classique plat en titanium à écran plat de 15 pouces et les modèles ultérieurs en aluminum à écran de 12, 15 ou 17 pouces.</string>
+			<key>model</key>
+			<string>PowerBook</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>cores</key>
+		<integer>1</integer>
+	</dict>
+	<key>PowerMac1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique bleu et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Macintosh</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>hardwareImageName</key>
+		<string>Power Macintosh G3.pdf</string>
+	</dict>
+	<key>PowerMac1,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique bleu et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Macintosh</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>hardwareImageName</key>
+		<string>Power Macintosh G3.pdf</string>
+	</dict>
+	<key>PowerMac10,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Mac de bureau G4 de taille réduite, branchable sur presque tous les écrans LCD ou VGA.</string>
+			<key>marketingModel</key>
+			<string>Mac mini</string>
+			<key>model</key>
+			<string>Mac mini</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac10,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Mac de bureau G4 de taille réduite, branchable sur presque tous les écrans LCD ou VGA.</string>
+			<key>marketingModel</key>
+			<string>Mac mini</string>
+			<key>model</key>
+			<string>Mac mini</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac11,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en aluminium.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac11,2,Quad</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en aluminium.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac12,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac G5 à écran plat</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Concept tout-en-un comprenant le châssis classique en plastique bleu et blanc, proposant a posteriori d’autres coloris.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>hardwareImageName</key>
+		<string>iMac G3.pdf</string>
+	</dict>
+	<key>PowerMac2,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Concept tout-en-un comprenant le châssis classique en plastique bleu et blanc, proposant a posteriori d’autres coloris.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>hardwareImageName</key>
+		<string>iMac G3.pdf</string>
+	</dict>
+	<key>PowerMac3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique gris et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac3,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique gris et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac3,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique gris et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac3,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique gris et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac3,5</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique gris et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac3,6</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en plastique gris et blanc gravé.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac4,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Concept tout-en-un comprenant le châssis classique en plastique bleu et blanc, proposant a posteriori d’autres coloris.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G3</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>hardwareImageName</key>
+		<string>iMac G3.pdf</string>
+	</dict>
+	<key>PowerMac4,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Conception tout-en-un en forme de dôme avec écran plat de 15, 17 ou 20 pouces.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac4,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Conception tout-en-un avec écran plat CRT intégré dans un châssis arrondi compact.</string>
+			<key>model</key>
+			<string>eMac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac4,5</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Conception tout-en-un en forme de dôme avec écran plat de 15, 17 ou 20 pouces.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac5,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Ordinateur de bureau cubique en plastique clair.</string>
+			<key>marketingModel</key>
+			<string>Power Mac G4 Cube</string>
+			<key>model</key>
+			<string>Power Mac Cube</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>hardwareImageName</key>
+		<string>Power Mac G4 Cube.pdf</string>
+	</dict>
+	<key>PowerMac5,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Ordinateur de bureau cubique en plastique clair.</string>
+			<key>marketingModel</key>
+			<string>Power Mac G4 Cube</string>
+			<key>model</key>
+			<string>Power Mac Cube</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+		<key>hardwareImageName</key>
+		<string>Power Mac G4 Cube.pdf</string>
+	</dict>
+	<key>PowerMac6,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Conception tout-en-un en forme de dôme avec écran plat de 15, 17 ou 20 pouces.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac6,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Conception tout-en-un en forme de dôme avec écran plat de 15, 17 ou 20 pouces.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac6,4</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Conception tout-en-un avec écran plat CRT intégré dans un châssis arrondi compact.</string>
+			<key>model</key>
+			<string>eMac</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac7,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en aluminium.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac7,3</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en aluminium.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac8,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac G5 à écran plat</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac8,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac G5 à écran plat</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>PowerMac9,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Tour de bureau en aluminium.</string>
+			<key>model</key>
+			<string>Power Mac</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>RackMac1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Serveur G4 monté sur rack avec lecteur optique à chargement par plateau ou par fente et quatre baies d’expansion, ou modèle G4 de nœud de grappe de serveurs à baie d’expansion unique.</string>
+			<key>model</key>
+			<string>Xserve</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>RackMac1,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Serveur G4 monté sur rack avec lecteur optique à chargement par plateau ou par fente et quatre baies d’expansion, ou modèle G4 de nœud de grappe de serveurs à baie d’expansion unique.</string>
+			<key>model</key>
+			<string>Xserve</string>
+			<key>processor</key>
+			<string>G4</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>RackMac3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Serveur G5 monté sur rack avec lecteur CD ou DVD-ROM à chargement par fente et trois baies d’extension ou modèle de nœud de grappe de serveurs sans baie d’extension.</string>
+			<key>model</key>
+			<string>Xserve</string>
+			<key>processor</key>
+			<string>G5</string>
+		</dict>
+		<key>architecture</key>
+		<string>ppc</string>
+	</dict>
+	<key>Xserve1,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Serveur Intel Xeon série 5100 monté sur rack , lancé fin 2006.</string>
+			<key>marketingModel</key>
+			<string>Xserve (fin 2006)</string>
+			<key>model</key>
+			<string>Xserve</string>
+			<key>processor</key>
+			<string>Intel Xeon série 5100</string>
+		</dict>
+		<key>architecture</key>
+		<string>i386</string>
+	</dict>
+	<key>Xserve2,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Serveur Intel Xeon série 5400 monté sur rack , lancé début 2008.</string>
+			<key>marketingModel</key>
+			<string>Xserve (début 2008)</string>
+			<key>model</key>
+			<string>Xserve</string>
+			<key>processor</key>
+			<string>Intel Xeon série 5400</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>Xserve3,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>Serveur Intel Xeon série 5500 monté sur rack , lancé début 2009.</string>
+			<key>marketingModel</key>
+			<string>Xserve (début 2006)</string>
+			<key>model</key>
+			<string>Xserve</string>
+			<key>processor</key>
+			<string>Intel Xeon série 5500</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>iMac4,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat, doté d’un processeur Intel Core Duo.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>i386</string>
+	</dict>
+	<key>iMac4,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat, doté d’un processeur Intel Core Duo.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>i386</string>
+	</dict>
+	<key>iMac5,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat, doté d’un processeur Intel Core 2 Duo.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>iMac5,2</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat, doté d’un processeur Intel Core 2 Duo.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>iMac6,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat, doté d’un processeur Intel Core 2 Duo.</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>iMac7,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat de 20 ou 24 pouces (châssis en aluminum) et doté d’un processeur Intel Core 2 Duo.</string>
+			<key>marketingModel</key>
+			<string>iMac Intel Core 2 Duo (châssis en aluminum)</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>iMac8,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat de 20 ou 24 pouces (châssis en aluminum) et doté d’un processeur Intel Core 2 Duo.</string>
+			<key>marketingModel</key>
+			<string>iMac Intel Core 2 Duo (châssis en aluminum)</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+	<key>iMac9,1</key>
+	<dict>
+		<key>_LOCALIZABLE_</key>
+		<dict>
+			<key>description</key>
+			<string>iMac à écran plat de 20 ou 24 pouces (châssis en aluminum) et doté d’un processeur Intel Core 2 Duo.</string>
+			<key>marketingModel</key>
+			<string>iMac Intel Core 2 Duo (châssis en aluminum)</string>
+			<key>model</key>
+			<string>iMac</string>
+			<key>processor</key>
+			<string>Intel Core 2 Duo</string>
+		</dict>
+		<key>architecture</key>
+		<string>x86_64</string>
+	</dict>
+</dict>
+</plist>

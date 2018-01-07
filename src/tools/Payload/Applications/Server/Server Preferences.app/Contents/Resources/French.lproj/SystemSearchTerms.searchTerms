@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>system</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>informations système, version du système, processeur, numéro de série, numéro de série de serveur, changement du numéro de série, modification du numéro de série, saisie du numéro de série, adresse ip, nom de domaine, nom dns, nom d’ordinateur, mémoire, ram, alertes, mises à jour de logiciels, notification d’espace disque faible, licence, licence serveur</string>
+				<key>title</key>
+				<string>Informations système</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

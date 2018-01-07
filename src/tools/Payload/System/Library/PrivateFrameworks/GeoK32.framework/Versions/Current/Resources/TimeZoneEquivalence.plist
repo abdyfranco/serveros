@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UTC</key>
+	<string>Europe/London</string>
+	<key>GMT</key>
+	<string>Europe/London</string>
+	<key>Africa/Asmera</key>
+	<string>Africa/Asmara</string>
+	<key>America/Buenos_Aires</key>
+	<string>America/Argentina/Buenos_Aires</string>
+	<key>America/Indianapolis</key>
+	<string>America/Indiana/Indianapolis</string>
+	<key>Asia/Novosibirsk</key>
+	<string>Asia/Krasnoyarsk</string>
+	<key>Australia/Canberra</key>
+	<string>Australia/Sydney</string>
+	<key>Brazil/East</key>
+	<string>America/Sao_Paulo</string>
+	<key>Canada/Atlantic</key>
+	<string>America/Halifax</string>
+	<key>Canada/Eastern</key>
+	<string>America/Montreal</string>
+	<key>Canada/Mountain</key>
+	<string>America/Edmonton</string>
+	<key>Canada/Newfoundland</key>
+	<string>America/St_Johns</string>
+	<key>Canada/Saskatchewan</key>
+	<string>America/Regina</string>
+	<key>US/Central</key>
+	<string>America/Indiana/Knox</string>
+	<key>US/Eastern</key>
+	<string>America/Kentucky/Monticello</string>
+	<key>US/Mountain</key>
+	<string>America/Boise</string>
+	<key>US/Pacific</key>
+	<string>America/Los_Angeles</string>
+</dict>
+</plist>

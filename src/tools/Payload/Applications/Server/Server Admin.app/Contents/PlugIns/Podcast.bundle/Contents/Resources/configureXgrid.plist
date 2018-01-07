@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>writeSettings</string>
+	<key>configuration</key>
+	<dict>
+		<key>AgentSettings</key>
+		<dict>
+			<key>Enabled</key>
+			<true/>
+			<key>prefs</key>
+			<dict>
+				<key>BindToFirstAvailable</key>
+				<false/>
+				<key>ControllerAuthentication</key>
+				<string>Kerberos</string>
+				<key>ControllerName</key>
+				<string>localhost</string>
+				<key>OnlyWhenIdle</key>
+				<false/>
+				<key>ResolveNameAsNetService</key>
+				<true/>
+			</dict>
+		</dict>
+		<key>ControllerSettings</key>
+		<dict>
+			<key>Enabled</key>
+			<true/>
+			<key>prefs</key>
+			<dict>
+				<key>AgentAuthentication</key>
+				<string>Kerberos</string>
+				<key>ClientAuthentication</key>
+				<string>Kerberos</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

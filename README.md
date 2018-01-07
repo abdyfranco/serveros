@@ -37,8 +37,8 @@ It addresses issues that cause frequent power supply and fan notifications to be
 This update is strongly recommended for all Xserve (Early 2008) systems.
 
 ### Server Tools
-Some of the official Apple applications from the Server Tools package from OS X Snow
-Leopard Server, patched and modified in order to work in newer versions of macOS.
+All the official Apple applications from the Server Tools package from OS X Snow
+Leopard Server, has been patched and modified in order to work in newer versions of macOS.
 
 ### NVMe, USB 3 & SATA 6 Drivers
 Add support for third-party NVMe Drives, USB 3 and SATA 6 PCI-E cards, adding Xserve

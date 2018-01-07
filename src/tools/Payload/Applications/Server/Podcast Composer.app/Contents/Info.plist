@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>15A284</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>Podcast Composer</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pwf</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>PodcastComposerBundle</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/pwf</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>DocumentType</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>????</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSDocumentClass</key>
+			<string>Document</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>Podcast Composer</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Podcast Composer Help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Podcast Composer Help</string>
+	<key>CFBundleIconFile</key>
+	<string>PodcastComposer</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.PodcastComposer</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Podcast Composer</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
+	<key>CFBundleSignature</key>
+	<string>APPL</string>
+	<key>CFBundleVersion</key>
+	<string>52</string>
+	<key>DTCompiler</key>
+	<string></string>
+	<key>DTPlatformBuild</key>
+	<string>11C22</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>11C22</string>
+	<key>DTSDKName</key>
+	<string></string>
+	<key>DTXcode</key>
+	<string>0800</string>
+	<key>DTXcodeBuild</key>
+	<string>8S201h</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2002-2009 Apple Inc. All rights reserved.</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.11.0</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>Application</string>
+</dict>
+</plist>

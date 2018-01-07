@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historiques, historique d’erreurs, système, historique d’événements, visualiseur d’événements, erreurs</string>
+				<key>title</key>
+				<string>Historiques</string>
+			</dict>
+		</array>
+	</dict>
+	<key>fileSharingLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historique partage de fichiers, historiques afp, historiques smb</string>
+				<key>title</key>
+				<string>Historique de Partage de fichiers</string>
+			</dict>
+		</array>
+	</dict>
+	<key>iChatLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historique ichat server, historique ichat, messagerie instantanée</string>
+				<key>title</key>
+				<string>Historique iChat Server</string>
+			</dict>
+		</array>
+	</dict>
+	<key>iCalLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historiques ical server, historiques caldav</string>
+				<key>title</key>
+				<string>Historique iCal Server</string>
+			</dict>
+		</array>
+	</dict>
+	<key>mailLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historiques de messagerie, historiques du serveur de messagerie, historiques pop, historiques imap, historiques smtp</string>
+				<key>title</key>
+				<string>Historique du serveur de messagerie</string>
+			</dict>
+		</array>
+	</dict>
+	<key>webLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historiques de site web, historiques web, historiques http</string>
+				<key>title</key>
+				<string>Historique de site web</string>
+			</dict>
+		</array>
+	</dict>
+	<key>vpnLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historiques vpn, historiques d’accès distant</string>
+				<key>title</key>
+				<string>Historique VPN</string>
+			</dict>
+		</array>
+	</dict>
+	<key>dsLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>historiques de services d’annuaire, historiques ldap, historiques open directory</string>
+				<key>title</key>
+				<string>Historiques de Services d’annuaire</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>mail</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>mail service メールサービス, mail server configuration メールサーバの構成 メールサーバーの構成 メールサーバの設定 メールサーバーの設定, email メール 電子メール Eメール イーメール, spam スパム SPAM, junk mail 迷惑メール ジャンクメール, enable junk mail filtering 迷惑メールフィルタを有効にする 迷惑メールフィルターを有効にする 迷惑メールフィルタリングを有効にする 迷惑メールフィルタを使用 迷惑メールフィルターを使用 迷惑メールフィルタリングを使用, enable virus filtering ウイルスフィルタを有効にする ウィルスフィルタを有効にする ウイルスフィルターを有効にする ウィルスフィルターを有効にする ウイルスフィルタリングを有効にする ウィルスフィルタリングを有効にする ウイルスフィルタを使用 ウィルスフィルタを使用 ウイルスフィルターを使用 ウィルスフィルターを使用, relay outgoign mail 送信メールをリレー 送信メールをリレイ 送信メールを中継 送信メールを転送, welcome message ウェルカムメッセージ ようこそメッセージ 挨拶メッセージ, new user welcome message 新規ユーザウェルカムメッセージ 新規ユーザーウェルカムメッセージ 新しいユーザウェルカムメッセージ 新しいユーザーウェルカムメッセージ 新規ユーザようこそメッセージ 新規ユーザーようこそメッセージ 新しいユーザようこそメッセージ 新しいユーザーようこそメッセージ 新規ユーザ挨拶メッセージ 新規ユーザー挨拶メッセージ, welcome message eto new users 新規ユーザへのウェルカムメッセージ 新規ユーザーへのウェルカムメッセージ 新しいユーザへのウェルカムメッセージ 新しいユーザーへのウェルカムメッセージ 新規ユーザへのようこそメッセージ 新規ユーザーへのようこそメッセージ 新しいユーザへのようこそメッセージ 新しいユーザーへのようこそメッセージ 新規ユーザへの挨拶メッセージ 新規ユーザーへの挨拶メッセージ, pop POP Post Office Protocol, cyrus CYRUS サイラス, imap IMAP アイマップ Internet Message Access Protocol, smtp SMTP Simple Mail Transfer Protocol, postfix Postfix ポストフィックス ポストフィクス, amavisd AMaViSd Amavisd amavisd-new</string>
+				<key>title</key>
+				<string>メールサービスの構成</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>relay リレー リレイ 中継 転送, smtp SMTP Simple Mail Transfer Protocol</string>
+				<key>title</key>
+				<string>メールのリレー設定</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>welcome ウェルカム ようこそ 挨拶, message メッセージ</string>
+				<key>title</key>
+				<string>メールのウェルカムメッセージ</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>mail メール, spam スパム SPAM, virus ウイルス ウィルス ウィールス ヴィールス ビールス, spamassasin スパムアサシン SpamAssasin, amavisd AMaViSd Amavisd amavisd-new</string>
+				<key>title</key>
+				<string>Mail の迷惑メールフィルタ</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

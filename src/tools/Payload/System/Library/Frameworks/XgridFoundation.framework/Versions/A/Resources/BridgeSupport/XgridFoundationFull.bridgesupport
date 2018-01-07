@@ -1,0 +1,539 @@
+<?xml version='1.0'?>
+<signatures version='0.9'>
+<depends_on path='/System/Library/Frameworks/Foundation.framework'/>
+<depends_on path='/System/Library/Frameworks/Security.framework'/>
+<depends_on path='/System/Library/Frameworks/CoreServices.framework'/>
+<depends_on path='/System/Library/Frameworks/Kerberos.framework'/>
+<depends_on path='/System/Library/Frameworks/IOKit.framework'/>
+<depends_on path='/System/Library/Frameworks/SystemConfiguration.framework'/>
+<depends_on path='/System/Library/Frameworks/CoreFoundation.framework'/>
+<constant name='XGActionMonitorResultsOutputFilesKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGActionMonitorResultsOutputStreamsKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGConnectionKeyIsClosed' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGConnectionKeyIsOpened' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGConnectionKeyState' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGControllerWillDeallocNotification' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGFileStandardErrorPath' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGFileStandardOutputPath' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationARTConditionsKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationARTDataKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationARTEqualKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationARTMaximumKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationARTMinimumKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationARTSpecificationsKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationApplicationIdentifierKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationArgumentTypeKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationArgumentsKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationCommandKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationDependsOnJobsKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationDependsOnTasksKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationEnvironmentKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationFileDataKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationGridIdentifierKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationInputFileMapKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationInputFilesKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationInputStreamKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationIsExecutableKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationNameKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationNotificationEmailKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationPathIdentifierKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationSchedulerHintsKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationSchedulerParametersKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationSubmissionIdentifierKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationTaskPrototypeIdentifierKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationTaskPrototypesKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationTaskSpecificationsKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationTypeKey' declared_type='NSString*' const='true' type='@'/>
+<constant name='XGJobSpecificationTypeTaskListValue' declared_type='NSString*' const='true' type='@'/>
+<enum name='XGActionMonitorOutcomeFailure' value='2'/>
+<enum name='XGActionMonitorOutcomeNone' value='0'/>
+<enum name='XGActionMonitorOutcomeSuccess' value='1'/>
+<enum name='XGAuthenticatorStateAuthenticated' value='2'/>
+<enum name='XGAuthenticatorStateAuthenticating' value='1'/>
+<enum name='XGAuthenticatorStateFailed' value='3'/>
+<enum name='XGAuthenticatorStateUnauthenticated' value='0'/>
+<enum name='XGConnectionStateClosed' value='0'/>
+<enum name='XGConnectionStateClosing' value='3'/>
+<enum name='XGConnectionStateOpen' value='2'/>
+<enum name='XGConnectionStateOpening' value='1'/>
+<enum name='XGFileTypeNone' value='0'/>
+<enum name='XGFileTypeRegular' value='1'/>
+<enum name='XGFileTypeStream' value='2'/>
+<enum name='XGResourceActionDelete' value='5'/>
+<enum name='XGResourceActionGetOutputFiles' value='10'/>
+<enum name='XGResourceActionGetOutputStreams' value='9'/>
+<enum name='XGResourceActionGetSpecification' value='11'/>
+<enum name='XGResourceActionMakeDefault' value='7'/>
+<enum name='XGResourceActionNone' value='0'/>
+<enum name='XGResourceActionRename' value='6'/>
+<enum name='XGResourceActionRestart' value='2'/>
+<enum name='XGResourceActionResume' value='4'/>
+<enum name='XGResourceActionStop' value='1'/>
+<enum name='XGResourceActionSubmitJob' value='8'/>
+<enum name='XGResourceActionSuspend' value='3'/>
+<enum name='XGResourceStateAvailable' value='4'/>
+<enum name='XGResourceStateCanceled' value='12'/>
+<enum name='XGResourceStateConnecting' value='2'/>
+<enum name='XGResourceStateFailed' value='13'/>
+<enum name='XGResourceStateFinished' value='14'/>
+<enum name='XGResourceStateOffline' value='1'/>
+<enum name='XGResourceStatePending' value='6'/>
+<enum name='XGResourceStateRunning' value='9'/>
+<enum name='XGResourceStateStagingIn' value='8'/>
+<enum name='XGResourceStateStagingOut' value='11'/>
+<enum name='XGResourceStateStarting' value='7'/>
+<enum name='XGResourceStateSuspended' value='10'/>
+<enum name='XGResourceStateUnavailable' value='3'/>
+<enum name='XGResourceStateUninitialized' value='0'/>
+<enum name='XGResourceStateWorking' value='5'/>
+<class name='NSObject'>
+<method selector='authenticatorDidAuthenticate:'>
+<arg name='authenticator' declared_type='XGAuthenticator*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='authenticatorDidNotAuthenticate:'>
+<arg name='authenticator' declared_type='XGAuthenticator*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='connectionDidClose:'>
+<arg name='connection' declared_type='XGConnection*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='connectionDidNotOpen:withError:'>
+<arg name='connection' declared_type='XGConnection*' type='@' index='0'/>
+<arg name='error' declared_type='NSError*' type='@' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='connectionDidOpen:'>
+<arg name='connection' declared_type='XGConnection*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='fileDownload:decideDestinationWithSuggestedPath:'>
+<arg name='fileDownload' declared_type='XGFileDownload*' type='@' index='0'/>
+<arg name='path' declared_type='NSString*' type='@' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='fileDownload:didCreateDestination:'>
+<arg name='fileDownload' declared_type='XGFileDownload*' type='@' index='0'/>
+<arg name='destination' declared_type='NSString*' type='@' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='fileDownload:didFailWithError:'>
+<arg name='fileDownload' declared_type='XGFileDownload*' type='@' index='0'/>
+<arg name='error' declared_type='NSError*' type='@' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='fileDownload:didReceiveAttributes:'>
+<arg name='fileDownload' declared_type='XGFileDownload*' type='@' index='0'/>
+<arg name='attributes' declared_type='NSDictionary*' type='@' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='fileDownload:didReceiveData:'>
+<arg name='fileDownload' declared_type='XGFileDownload*' type='@' index='0'/>
+<arg name='data' declared_type='NSData*' type='@' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='fileDownloadDidBegin:'>
+<arg name='fileDownload' declared_type='XGFileDownload*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='fileDownloadDidFinish:'>
+<arg name='fileDownload' declared_type='XGFileDownload*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='XGActionMonitor'>
+<method selector='action'>
+<retval declared_type='XGResourceAction' type='i'/>
+</method>
+<method selector='actionDidFail'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='actionDidSucceed'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='actionMonitorWithResource:action:' class_method='true'>
+<arg name='resource' declared_type='XGResource*' type='@' index='0'/>
+<arg name='action' declared_type='XGResourceAction' type='i' index='1'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='actionMonitorWithResource:action:parameters:' class_method='true'>
+<arg name='resource' declared_type='XGResource*' type='@' index='0'/>
+<arg name='action' declared_type='XGResourceAction' type='i' index='1'/>
+<arg name='parameters' declared_type='NSDictionary*' type='@' index='2'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='error'>
+<retval declared_type='NSError*' type='@'/>
+</method>
+<method selector='initWithResource:action:parameters:'>
+<arg name='resource' declared_type='id' type='@' index='0'/>
+<arg name='action' declared_type='XGResourceAction' type='i' index='1'/>
+<arg name='parameters' declared_type='NSDictionary*' type='@' index='2'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='outcome'>
+<retval declared_type='XGActionMonitorOutcome' type='i'/>
+</method>
+<method selector='parameters'>
+<retval declared_type='NSDictionary*' type='@'/>
+</method>
+<method selector='performAction'>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='resource'>
+<retval declared_type='XGResource*' type='@'/>
+</method>
+<method selector='results'>
+<retval declared_type='NSDictionary*' type='@'/>
+</method>
+</class>
+<class name='XGAuthenticator'>
+<method selector='beginAuthentication:'>
+<arg name='piggybackReply' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='delegate'>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='error'>
+<retval declared_type='NSError*' type='@'/>
+</method>
+<method selector='failWithError:'>
+<arg name='error' declared_type='NSError*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='finishAuthentication'>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='piggyback'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='profileURI' class_method='true'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='receiveData:'>
+<arg name='data' declared_type='NSData*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='sendData:'>
+<arg name='data' declared_type='NSData*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setDelegate:'>
+<arg name='delegate' declared_type='id' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='state'>
+<retval declared_type='XGAuthenticatorState' type='i'/>
+</method>
+</class>
+<class name='XGConnection'>
+<method selector='authenticator'>
+<retval declared_type='XGAuthenticator*' type='@'/>
+</method>
+<method selector='close'>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='delegate'>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='error'>
+<retval declared_type='NSError*' type='@'/>
+</method>
+<method selector='hostname'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='initWithHostname:portnumber:'>
+<arg name='hostname' declared_type='NSString*' type='@' index='0'/>
+<arg name='portnumber' declared_type='UInt32' type64='I' type='L' index='1'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='initWithNetService:'>
+<arg name='netService' declared_type='NSNetService*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='isClosed'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='isOpened'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='name'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='netService'>
+<retval declared_type='NSNetService*' type='@'/>
+</method>
+<method selector='open'>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='portnumber'>
+<retval declared_type='UInt32' type64='I' type='L'/>
+</method>
+<method selector='servicePrincipal'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='setAuthenticator:'>
+<arg name='authenticator' declared_type='XGAuthenticator*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setDelegate:'>
+<arg name='delegate' declared_type='id' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='state'>
+<retval declared_type='XGConnectionState' type='i'/>
+</method>
+</class>
+<class name='XGController'>
+<method selector='controllerWithHostname:portnumber:' class_method='true'>
+<arg name='hostname' declared_type='NSString*' type='@' index='0'/>
+<arg name='portnumber' declared_type='UInt32' type64='I' type='L' index='1'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='controllerWithNetService:' class_method='true'>
+<arg name='netService' declared_type='NSNetService*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='defaultController' class_method='true'>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='defaultGrid'>
+<retval declared_type='XGGrid*' type='@'/>
+</method>
+<method selector='gridForIdentifier:'>
+<arg name='identifier' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='XGGrid*' type='@'/>
+</method>
+<method selector='grids'>
+<retval declared_type='NSArray*' type='@'/>
+</method>
+<method selector='initWithConnection:'>
+<arg name='connection' declared_type='XGConnection*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='jobsPredicateString'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='performSubmitJobActionWithJobSpecification:gridIdentifier:'>
+<arg name='jobSpecification' declared_type='NSDictionary*' type='@' index='0'/>
+<arg name='gridIdentifier' declared_type='NSString*' type='@' index='1'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='privateController' class_method='true'>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='setJobsPredicateString:'>
+<arg name='predicateString' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='XGFile'>
+<method selector='job'>
+<retval declared_type='XGJob*' type='@'/>
+</method>
+<method selector='path'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='taskIdentifier'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='type'>
+<retval declared_type='XGFileType' type='i'/>
+</method>
+</class>
+<class name='XGFileDownload'>
+<method selector='cancel'>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='delegate'>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='destination'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='file'>
+<retval declared_type='XGFile*' type='@'/>
+</method>
+<method selector='initWithFile:delegate:'>
+<arg name='file' declared_type='XGFile*' type='@' index='0'/>
+<arg name='delegate' declared_type='id' type='@' index='1'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='setDestination:allowOverwrite:'>
+<arg name='destination' declared_type='NSString*' type='@' index='0'/>
+<arg name='allowOverwrite' declared_type='BOOL' type='B' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='XGGSSAuthenticator'>
+<method selector='servicePrincipal'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='setServicePrincipal:'>
+<arg name='servicePrincipal' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='XGGrid'>
+<method selector='isDefault'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='jobForIdentifier:'>
+<arg name='identifier' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='XGJob*' type='@'/>
+</method>
+<method selector='jobs'>
+<retval declared_type='NSArray*' type='@'/>
+</method>
+<method selector='name'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+</class>
+<class name='XGJob'>
+<method selector='activeCPUPower'>
+<retval declared_type='float' type='f'/>
+</method>
+<method selector='applicationIdentifier'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='applicationInfo'>
+<retval declared_type='NSDictionary*' type='@'/>
+</method>
+<method selector='completedTaskCount'>
+<retval declared_type='NSInteger' type64='q' type='i'/>
+</method>
+<method selector='dateStarted'>
+<retval declared_type='NSDate*' type='@'/>
+</method>
+<method selector='dateStopped'>
+<retval declared_type='NSDate*' type='@'/>
+</method>
+<method selector='dateSubmitted'>
+<retval declared_type='NSDate*' type='@'/>
+</method>
+<method selector='name'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='percentDone'>
+<retval declared_type='float' type='f'/>
+</method>
+<method selector='performDeleteAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='performGetOutputFilesAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='performGetOutputStreamsAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='performGetSpecificationAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='performRestartAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='performResumeAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='performStopAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='performSuspendAction'>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='taskCount'>
+<retval declared_type='NSInteger' type64='q' type='i'/>
+</method>
+</class>
+<class name='XGResource'>
+<method selector='actionMonitors'>
+<retval declared_type='NSArray*' type='@'/>
+</method>
+<method selector='connection'>
+<retval declared_type='XGConnection*' type='@'/>
+</method>
+<method selector='controller'>
+<retval declared_type='XGController*' type='@'/>
+</method>
+<method selector='identifier'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='isUpdated'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='isUpdating'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='performAction:withParameters:'>
+<arg name='action' declared_type='XGResourceAction' type='i' index='0'/>
+<arg name='parameters' declared_type='NSDictionary*' type='@' index='1'/>
+<retval declared_type='XGActionMonitor*' type='@'/>
+</method>
+<method selector='state'>
+<retval declared_type='XGResourceState' type='i'/>
+</method>
+</class>
+<class name='XGTwoWayRandomAuthenticator'>
+<method selector='setPassword:'>
+<arg name='password' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setUsername:'>
+<arg name='username' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='username'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+</class>
+<informal_protocol name='XGAuthenticatorDelegate'>
+<method type='v12@0:4@8' selector='authenticatorDidAuthenticate:'>
+<arg name='authenticator' index='0'/>
+</method>
+<method type='v12@0:4@8' selector='authenticatorDidNotAuthenticate:'>
+<arg name='authenticator' index='0'/>
+</method>
+</informal_protocol>
+<informal_protocol name='XGConnectionDelegate'>
+<method type='v12@0:4@8' selector='connectionDidClose:'>
+<arg name='connection' index='0'/>
+</method>
+<method type='v16@0:4@8@12' selector='connectionDidNotOpen:withError:'>
+<arg name='connection' index='0'/>
+<arg name='error' index='1'/>
+</method>
+<method type='v12@0:4@8' selector='connectionDidOpen:'>
+<arg name='connection' index='0'/>
+</method>
+</informal_protocol>
+<informal_protocol name='XGFileDownloadDelegate'>
+<method type='v16@0:4@8@12' selector='fileDownload:decideDestinationWithSuggestedPath:'>
+<arg name='fileDownload' index='0'/>
+<arg name='path' index='1'/>
+</method>
+<method type='v16@0:4@8@12' selector='fileDownload:didCreateDestination:'>
+<arg name='fileDownload' index='0'/>
+<arg name='destination' index='1'/>
+</method>
+<method type='v16@0:4@8@12' selector='fileDownload:didFailWithError:'>
+<arg name='fileDownload' index='0'/>
+<arg name='error' index='1'/>
+</method>
+<method type='v16@0:4@8@12' selector='fileDownload:didReceiveAttributes:'>
+<arg name='fileDownload' index='0'/>
+<arg name='attributes' index='1'/>
+</method>
+<method type='v16@0:4@8@12' selector='fileDownload:didReceiveData:'>
+<arg name='fileDownload' index='0'/>
+<arg name='data' index='1'/>
+</method>
+<method type='v12@0:4@8' selector='fileDownloadDidBegin:'>
+<arg name='fileDownload' index='0'/>
+</method>
+<method type='v12@0:4@8' selector='fileDownloadDidFinish:'>
+<arg name='fileDownload' index='0'/>
+</method>
+</informal_protocol>
+</signatures>

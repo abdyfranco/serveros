@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Import</key>
+	<dict>
+		<key>importPluginUUID</key>
+		<string>QuickTimeImportPlugin</string>
+		<key>importPluginConfiguration</key>
+		<dict>
+			<key>automaticChapterGeneration</key>
+			<false/>
+			<key>type</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>Export</key>
+	<dict>
+		<key>exportPlugins</key>
+		<array>
+			<dict>
+				<key>exportPluginUUID</key>
+				<string>QuickTimeExportPlugin</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Publish</key>
+	<dict>
+		<key>publishPlugins</key>
+		<array>
+			<dict>
+				<key>publishPluginConfiguration</key>
+				<dict>
+					<key>archiveOriginals</key>
+					<true/>
+					<key>publishPreviews</key>
+					<true/>
+					<key>publishGeneratedMedias</key>
+					<true/>
+					<key>publishEditedMaster</key>
+					<true/>
+				</dict>
+				<key>publishPluginUUID</key>
+				<string>PodcastLibraryPublishPlugin</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Notify</key>
+	<dict>
+		<key>notifyPlugins</key>
+		<array/>
+	</dict>
+</dict>
+</plist>

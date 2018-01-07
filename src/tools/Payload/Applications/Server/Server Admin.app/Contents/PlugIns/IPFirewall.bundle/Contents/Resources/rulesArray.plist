@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>standardServices</key>
+	<array>
+		<dict>
+			<key>_id_</key>
+			<string>http</string>
+			<key>name</key>
+			<string>Web Service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>80</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>afpovertcp</string>
+			<key>name</key>
+			<string>Apple File Service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>548</string>
+		</dict>
+         <dict>
+			<key>_id_</key>
+			<string>smb</string>
+			<key>name</key>
+			<string>Windows File Service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>139</string>
+		</dict>
+        <dict>
+			<key>_id_</key>
+			<string>ftp</string>
+			<key>name</key>
+			<string>FTP File Service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>20-21</string>
+		</dict>
+        <dict>
+			<key>_id_</key>
+			<string>ipp</string>
+			<key>name</key>
+			<string>Printer Sharing</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>631</string>
+		</dict>
+        <dict>
+			<key>_id_</key>
+			<string>domain</string>
+			<key>name</key>
+			<string>Domain Name Service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>53</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>echo</string>
+			<key>name</key>
+			<string>Echo</string>
+			<key>protocol</key>
+			<string>udp</string>
+			<key>dest-port</key>
+			<string>7</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>ssh</string>
+			<key>name</key>
+			<string>Secure Shell (SSH)</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>22</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>smtp</string>
+			<key>name</key>
+			<string>SMTP Mail</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>25</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>dhcps</string>
+			<key>name</key>
+			<string>DHCP and NetBoot</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>67</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>finger</string>
+			<key>name</key>
+			<string>Finger Service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>79</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>pop3</string>
+			<key>name</key>
+			<string>POP3 Mail</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>110</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>sunrpc</string>
+			<key>name</key>
+			<string>Remote Procedure Call</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>111</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>netbios-ns</string>
+			<key>name</key>
+			<string>Windows Names</string>
+			<key>protocol</key>
+			<string>udp</string>
+			<key>dest-port</key>
+			<string>137</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>netbios-dgm</string>
+			<key>name</key>
+			<string>Windows Browsing</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>138</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>asip-webadmin</string>
+			<key>name</key>
+			<string>Secure Server Administration protocol</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>311</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>ldap</string>
+			<key>name</key>
+			<string>LDAP Service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>389</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>at</string>
+			<key>name</key>
+			<string>AppleTalk protocols</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>201-208</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>svrloc</string>
+			<key>name</key>
+			<string>Service Location Protocol</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>427</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>rtsp</string>
+			<key>name</key>
+			<string>QTSS Streaming RTSP</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>554</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>remoteda</string> <!-- not in /etc/services -->
+			<key>name</key>
+			<string>Remote Directory Access</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>625</string>
+		</dict>
+		<dict>
+			<key>_id_</key> <!-- not in /etc/services -->
+			<string>ldap ssl</string>
+			<key>name</key>
+			<string>Secure LDAP</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>636</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>magadmin</string> <!-- not in /etc/services -->
+			<key>name</key>
+			<string>Server Administration protocol</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>687</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>qtssadmin</string> <!-- not in /etc/services -->
+			<key>name</key>
+			<string>QTSS Web administration</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>1220</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>pptp</string>
+			<key>name</key>
+			<string>PPTP VPN</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>1723</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>ipfo</string>
+			<key>name</key>
+			<string>IP Failover</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>1694</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>nfsd</string>
+			<key>name</key>
+			<string>NFS file service</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>2049</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>macmanager</string> <!-- not in /etc/services -->
+			<key>name</key>
+			<string>Macintosh Manager</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>2236</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>ard</string> <!-- not in /etc/services -->
+			<key>name</key>
+			<string>Apple Remote Desktop</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>3283</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>qtssmp3</string> <!-- not in /etc/services -->
+			<key>name</key>
+			<string>QTSS MP3 Streaming</string>
+			<key>protocol</key>
+			<string>tcp</string>
+			<key>dest-port</key>
+			<string>8000-8001</string>
+		</dict>
+	</array>
+</dict>
+</plist>

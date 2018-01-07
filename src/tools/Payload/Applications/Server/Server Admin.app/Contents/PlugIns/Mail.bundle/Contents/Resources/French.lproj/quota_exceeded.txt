@@ -1,0 +1,11 @@
+De : Administrateur de messagerie <Postmaster@exemple.com>
+Objet : [Erreur] Quota du serveur de courrier électronique dépassé
+
+Nous vous informons que vous avez dépassé la limite de stockage maximale sur le serveur de courrier électronique. Les prochains courriers risquent d’être refusés jusqu’à ce que vous libériez suffisamment d’espace.
+
+Veuillez déplacer les messages dont vous n’avez plus besoin sur le serveur vers vos dossiers de courrier locaux. Pensez également à vérifier vos dossiers « Messages envoyés », « Corbeille » et « Éléments supprimés » pour supprimer les messages qui ne sont plus utiles sur le serveur.
+
+Merci de votre attention.
+
+Cordialement,
+L’administrateur de messagerie

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Jabber</string>
+	<key>CFBundleGetInfoString</key>
+	<string>10.6, � Copyright 2004-2008 Apple Inc.</string>
+	<key>CFBundleIconFile</key>
+	<string>Plugin.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.ServerAdmin.Jabber</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>iChat</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>10.6</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>42</string>
+	<key>IsDefaultPlugin</key>
+	<false/>
+	<key>IsLeopardPlugin</key>
+	<true/>
+	<key>IsTigerPlugin</key>
+	<true/>
+	<key>NSMainNibFile</key>
+	<string>Jabber</string>
+	<key>NSPrincipalClass</key>
+	<string>Jabber</string>
+	<key>ServerManagerDaemonCommand</key>
+	<string>servermgr_jabber</string>
+	<key>SupportsSessionlessAccess</key>
+	<false/>
+</dict>
+</plist>

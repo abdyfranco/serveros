@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>VPN</string>
+	<key>CFBundleGetInfoString</key>
+	<string>10.6, © Copyright 2003-2008 Apple Inc.</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.ServerAdmin.VPN</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>VPN</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>10.6</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>116</string>
+	<key>IsPantherPlugin</key>
+	<true/>
+	<key>NSMainNibFile</key>
+	<string>VPN</string>
+	<key>NSPrincipalClass</key>
+	<string>VPN</string>
+	<key>NonExportableSettings</key>
+	<array>
+		<string>Servers:com.apple.ppp.l2tp:L2TP:IPSecSharedSecretValue</string>
+	</array>
+	<key>NonImportableSettings</key>
+	<array>
+		<string>Servers:com.apple.ppp.l2tp:L2TP:IPSecSharedSecretValue</string>
+	</array>
+	<key>ServerManagerDaemonCommand</key>
+	<string>servermgr_vpn</string>
+</dict>
+</plist>

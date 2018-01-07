@@ -1,0 +1,46 @@
+{
+	Name = "Server Admin suite"; 
+	Description = "Server Admin specific classes."; 
+	Classes = {
+        "AppController" = {
+            Name = "application";
+            PluralName = "applications";
+            Description = "Server Admin top level scripting object.";
+  		};
+		"MainDocument" = {
+			Name = "document"; 
+			PluralName = "documents"; 
+			Description = "A document."; 
+		}; 
+		"Shortcut" = {
+			Name = "shortcut"; 
+			PluralName = "shortcuts"; 
+			Description = "A shortcut."; 
+			Attributes = {
+				"userName" = { Description = "User name (short or long)."; Name = "user name"; }; 
+				"password" = { Description = "Password (clear text)."; Name = "password"; }; 
+				"tabName" = { Description = "Tab view name (service-dependent)."; Name = "tab view name"; }; 
+				"serviceName" = { Description = "Service name (localized)."; Name = "service name"; }; 
+				"serverName" = { Description = "Host name (ip or dns name)."; Name = "host name"; }; 
+				"shouldSaveToKeychain" = { Description = "Should save password to keychain."; Name = "should save to keychain"; }; 
+				"shouldOpenNewWindow" = { Description = "Should open new window."; Name = "should open new window"; }; 
+			}; 
+		};
+		"ServerEntry" = {
+			Name = "server"; 
+			PluralName = "servers"; 
+			Description = "A server."; 
+			Attributes = {
+				"sessionHost" = { Description = "Host name."; Name = "host name"; }; 
+				"sessionUserName" = { Description = "User name."; Name = "user name"; }; 
+				"sessionPassword" = { Description = "Password."; Name = "password"; }; 
+			}; 
+		};
+	};
+	Commands = {
+		"GoTo" = {
+			Name = "goto";
+			Description = "Goes to shortcut (reference is \"userName#password#serverName#serviceName#tabName#shouldSaveToKeychain#shouldOpenNewWindow\" or reference is a shorcut).";
+		};
+	};
+}

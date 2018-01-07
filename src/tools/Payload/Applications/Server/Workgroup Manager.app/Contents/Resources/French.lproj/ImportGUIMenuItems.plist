@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dsRecTypeStandard:All</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Nom de fiche</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>ID unique généré</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Données de bureau gérées</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Drapeaux de bureau gérés</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:ComputerGroups</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Nom abrégé</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:DistinguishedName</string>
+			<key>display string</key>
+			<string>Nom du groupe</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>ID unique généré</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembers</string>
+			<key>display string</key>
+			<string>Membres du groupe</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembership</string>
+			<key>display string</key>
+			<string>Adhésion de groupe</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NestedGroups</string>
+			<key>display string</key>
+			<string>Groupes imbriqués</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Picture</string>
+			<key>display string</key>
+			<string>Image</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Données de bureau gérées</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Drapeaux de bureau gérés</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Commentaire</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:ServicesLocator</string>
+			<key>display string</key>
+			<string>Localisateur de services</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:ComputerLists</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Nom de la liste</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>ID unique généré</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Computers</string>
+			<key>display string</key>
+			<string>Ordinateurs</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Données de bureau gérées</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Drapeaux de bureau gérés</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Group</string>
+			<key>display string</key>
+			<string>Restreint aux groupes</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Computers</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Nom de l’ordinateur</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>ID unique généré</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:ENetAddress</string>
+			<key>display string</key>
+			<string>Adresse Ethernet</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Commentaire</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Données de bureau gérées</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Drapeaux de bureau gérés</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Groups</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RealName</string>
+			<key>display string</key>
+			<string>Nom complet</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Nom abrégé</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PrimaryGroupID</string>
+			<key>display string</key>
+			<string>ID unique</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>ID unique généré</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembers</string>
+			<key>display string</key>
+			<string>Membres du groupe basés sur GUID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembership</string>
+			<key>display string</key>
+			<string>Membres du groupe basés sur le nom abrégé</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NestedGroups</string>
+			<key>display string</key>
+			<string>Groupes imbriqués</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeDirectory</string>
+			<key>display string</key>
+			<string>Dossier de groupe</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeLocOwner</string>
+			<key>display string</key>
+			<string>Propriétaire du dossier de groupe</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Users</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RealName</string>
+			<key>display string</key>
+			<string>Nom complet</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Noms abrégés</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Password</string>
+			<key>display string</key>
+			<string>Mot de passe</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PasswordPolicyOptions</string>
+			<key>display string</key>
+			<string>Politique du mot de passe</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:UniqueID</string>
+			<key>display string</key>
+			<string>ID unique</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>ID unique généré</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PrimaryGroupID</string>
+			<key>display string</key>
+			<string>ID du groupe principal</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:UserShell</string>
+			<key>display string</key>
+			<string>Shell utilisateur</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeDirectory</string>
+			<key>display string</key>
+			<string>Répertoire de départ</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NFSHomeDirectory</string>
+			<key>display string</key>
+			<string>Répertoire de départ NFS</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBHomeDrive</string>
+			<key>display string</key>
+			<string>Lecteur de départ SMB</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBHome</string>
+			<key>display string</key>
+			<string>Chemin de départ SMB</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBProfilePath</string>
+			<key>display string</key>
+			<string>Chemin du profil SMB</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBScriptPath</string>
+			<key>display string</key>
+			<string>Chemin de script SMB</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MailAttribute</string>
+			<key>display string</key>
+			<string>Attribut de Mail</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Données de bureau gérées</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Drapeaux de bureau gérés</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Commentaire</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Keywords</string>
+			<key>display string</key>
+			<string>Mots-clés</string>
+		</dict>
+	</array>
+</dict>
+</plist>

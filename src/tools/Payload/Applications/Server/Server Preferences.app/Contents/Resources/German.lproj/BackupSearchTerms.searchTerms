@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>backup</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>time machine, sichern, backup, time machine konfiguration, backup von computern, backup konfiguration, backup von konfiguration</string>
+				<key>title</key>
+				<string>Time Machine-Konfiguration</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

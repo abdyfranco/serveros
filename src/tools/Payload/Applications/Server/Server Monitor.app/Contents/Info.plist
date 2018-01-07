@@ -24,7 +24,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Server Monitor</string>
 	<key>CFBundleGetInfoString</key>
-	<string>2.0 (5), Copyright © 2002-2016 Apple Inc. All rights reserved.</string>
+	<string>Copyright © 2002-2009 Apple Inc. All rights reserved.</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Server Monitor Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -32,7 +32,7 @@
 	<key>CFBundleIconFile</key>
 	<string>ServerMonitor.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apple.server_monitor</string>
+	<string>com.apple.ServerMonitor</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

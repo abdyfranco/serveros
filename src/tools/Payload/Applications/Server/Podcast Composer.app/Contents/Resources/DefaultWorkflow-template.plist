@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>artConditions</key>
+		<dict>
+			<key>0</key>
+			<dict>
+				<key>artEqual</key>
+				<string>1</string>
+			</dict>
+		</dict>
+		<key>artSpecifications</key>
+		<dict>
+			<key>0</key>
+			<dict>
+				<key>artArguments</key>
+				<array>
+					<string>$$GLOBAL::Shared Filesystem$$</string>
+					<string>$$GLOBAL::Server UUID$$</string>
+				</array>
+				<key>artPath</key>
+				<string>$$GLOBAL::Workflow Resource Path$$/Tools/art.rb</string>
+			</dict>
+		</dict>
+		<key>name</key>
+		<string>$$GLOBAL::Xgrid Job Name$$</string>
+		<key>notificationEmail</key>
+		<string>$$GLOBAL::Administrator Email Address$$</string>
+		<key>taskSpecifications</key>
+		<dict/>
+		<key>userRequirements</key>
+		<array>
+			<string>Title</string>
+			<string>Description</string>
+		</array>
+	</dict>
+</array>
+</plist>
