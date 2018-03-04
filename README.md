@@ -40,12 +40,13 @@ This update is strongly recommended for all Xserve (Early 2008) systems.
 All the official Apple applications from the Server Tools package from OS X Snow
 Leopard Server, has been patched and modified in order to work in newer versions of macOS.
 
-### NVMe, USB 3 & SATA 6 Drivers
-Add support for third-party NVMe Drives, USB 3 and SATA 6 PCI-E cards, adding Xserve
+### NVMe, USB 3 & SATA 3 Drivers
+Add support for third-party NVMe Drives, USB 3 and SATA 3 PCI-E cards, adding Xserve
 support to the latest standards and connectivity protocols.
 
 ## Copyright
 - Copyright (c) 2016-2018 [dosdude1](http://dosdude1.com/)
 - Copyright (c) 2016-2018 [Pixeleyes Ltd.](http://www.pixeleyes.co.nz)
 - Copyright (c) 2015-2018 [MinnowStor](https://forums.macrumors.com/members/jimj740.832671/)
+- Copyright (c) 2013-2018 [Zenith432](https://sourceforge.net/u/zenith432/profile/)
 - Copyright (c) 2012-2018 [Intel Corporation](https://www.intel.com)
