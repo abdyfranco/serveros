@@ -1,1 +1,0 @@
-Cet outil a détecté qu’il existe au moins un sous-réseau DHCP configuré sur ce serveur. Si vous continuez, toutes les informations concernant ce sous-réseau seront supprimées. Une fois que cet outil aura terminé sa tâche, vous ne pourrez pas rétablir cette configuration. Êtes-vous sûr de vouloir continuer ?

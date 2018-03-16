@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>logName</key>
+		<string>Push Notification Server Error Log</string>
+		<key>logIdentifier</key>
+		<string>PUBSUB_ERROR_LOG</string>
+	</dict>
+	<dict>
+		<key>logName</key>
+		<string>XMPP Server Log</string>
+		<key>logIdentifier</key>
+		<string>JABBER_LOG</string>
+	</dict>
+</array>
+</plist>

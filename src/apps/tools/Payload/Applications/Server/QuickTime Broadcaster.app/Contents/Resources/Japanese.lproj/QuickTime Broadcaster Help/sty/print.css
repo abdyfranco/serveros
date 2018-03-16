@@ -1,0 +1,19 @@
+/* Help print layout version 1.0.1r  HTML   04-30-09 */
+/* Help print layout version 1.0.a 10-21-08 */ 
+
+
+body{
+	margin-top: 2px;
+	margin-right: 15px;
+	margin-left: 15px;
+}
+/* Gray banner tags */
+#Nav { display: none; }
+
+#NavLeft { display: none; }
+
+#NavRight { display: none; }
+
+
+#linkfeedback { display: none; }
+

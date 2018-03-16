@@ -1,4 +1,4 @@
-![Xserve Reloaded](./src/banner.jpg)
+![Xserve Reloaded](./src/assets/banner.jpg)
 
 # Xserve Reloaded
 
@@ -30,15 +30,15 @@ support for APFS drives.
 Xserve LOM Configurator, allows you to configure the Xserve's Lights Out Management ports
 from OS X Lion to OS X El Capitan.
 
-### Xserve LOM Firmware Update
-This update includes changes to the Lights-Out Management environment of the Xserve (Early 2008).
-
-It addresses issues that cause frequent power supply and fan notifications to be sent.
-This update is strongly recommended for all Xserve (Early 2008) systems.
-
 ### Server Tools
 All the official Apple applications from the Server Tools package from OS X Snow
 Leopard Server, has been patched and modified in order to work in newer versions of macOS.
+
+### Xgrid
+Xgrid is a program and distributed computing protocol that allows networked computers to
+contribute to a single task. When the initiating computer sends the complete instructions,
+or job, for processing to the controller, the controller splits the task up into these small
+instruction packets, known as tasks.
 
 ### NVMe, USB 3 & SATA 3 Drivers
 Add support for third-party NVMe Drives, USB 3 and SATA 3 PCI-E cards, adding Xserve

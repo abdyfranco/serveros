@@ -1,0 +1,219 @@
+/* @group Print Media Styles */
+
+/* don't show some of the interface elements */
+div#menuWrapper,
+div#navigation,
+div#navigationView,
+div#search,
+div#print,
+.marquee.helpcenter {
+	display: none;
+}
+
+/* don't display our testing things */
+div#debugVersionNumber,
+div#currentURL {
+	display: none;
+}
+
+/* fix the height of the body */
+body.printPage {
+	overflow: visible;
+	padding-left: 22px;
+	font-family: Helvetica, Arial, sans-serif;
+}
+.RightToLeft body.printPage {
+	padding-left: 0;
+	padding-right: 22px;
+	direction: rtl;
+}
+
+.logo {
+	position: absolute;
+	top: 8px;
+	left: 33px;
+}
+.RightToLeft .logo {
+	left: 0;
+	right: 33px;
+}
+
+.flamingo2 .logo {
+	top: 8px;
+	left: 29px;
+}
+.RightToLeft.flamingo2 .logo {
+	left: 0;
+	right: 29px;
+}
+.blackflamingo .logo,
+.orangeflamingo .logo {
+	top: 3px;
+}
+
+/* book title */
+div.contentView div.title {
+	font-size: 29px;
+	line-height: 32px;
+	margin-left: 40px;
+	padding-top: 8px;
+	padding-bottom: 2px;
+	color: #4f4f4f;
+}
+.RightToLeft div.contentView div.title {
+	margin-left: 0;
+	margin-right: 40px;
+}
+
+.orangeflamingo div.contentView div.title,
+.blackflamingo div.contentView div.title {
+	padding-top: 3px;
+}
+
+/* style for the content breadcrumbs */
+div.contentBreadcrumbs {
+	border-top: 1px solid #929292;
+	margin-top: 18px;
+	padding-top: 9px;
+	padding-bottom: 0;
+	margin-bottom: -5px;
+	font-size: 10px;
+	font-weight: bold;
+	color: #929292;
+}
+
+div.contentBreadcrumbs span.breadcrumbArrow {
+	font-size: 8px;
+	color: #BBBBBB;
+	padding: 0 2px 0 4px;
+}
+
+/* fix the padding of the title */
+.printElement > div.contentName {
+	font-size: 16px !important;
+	line-height: 20px;
+	padding-left: 0px !important;
+	padding-top: 18px;
+}
+.RightToLeft .printElement > div.contentName {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
+/* make sure the content shows */
+div#mainContentWrapper, div#contentView-browseController, .contentWrapper {
+	position: static !important;
+	margin-left: 0px !important;
+	overflow: visible !important;
+}
+.RightToLeft div#mainContentWrapper, div#contentView-browseController, .contentWrapper {
+	margin-right: 0px !important;
+}
+
+/* make sure all tasks are open */
+.contentView .TaskWrapper.closed > div.Task {
+	display: block;
+}
+.contentView .TaskWrapper p.Name:hover, .contentView .TaskWrapper > a > p.Name:hover {
+	text-decoration: none !important;
+	color: #333 !important;
+	cursor: pointer !important;
+}
+.contentView .showHideSteps {
+	display: none;
+}
+
+/* task step intro h2 */
+div.topic.task > h2.title.topictitle2 {
+	padding: 6px 15px 6px 0;
+	-webkit-border-top-right-radius: 0;
+	-webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+	-moz-border-radius-topleft: 0;
+	background-image: none;
+	-webkit-background-origin: border;
+	background: none;
+	border-bottom: none;
+	color:  #000;
+}
+.RightToLeft div.topic.task > h2.title.topictitle2 {
+	padding: 6px 0 6px 15px;
+}
+
+.blueflamingo div.topic.task > h2.title.topictitle2 {
+	padding: 6px 15px;
+	-webkit-border-top-right-radius: .45em;
+	-webkit-border-top-left-radius: .45em;
+	-moz-border-radius-topright: .45em;
+	-moz-border-radius-topleft: .45em;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, to(rgba(243, 243, 243, 1.0)), from(rgba(253, 253, 253, .75)));
+	-webkit-background-origin: border;
+	background: -moz-linear-gradient(top, #fdfdfd, #f3f3f3);
+	border-bottom: 1px solid #e4e4e4;
+}
+
+/* hides background and adjust margins for lightbox */
+div#lightbox #lightboxInnerWrapper {
+	position: absolute;
+	left: 29px;
+	right: 29px;
+	bottom: 0;
+	background: white;
+	z-index: 101;
+	-webkit-box-shadow: none;
+}
+.contentView .Table thead > tr.TableHeadingRow th > p.TableHead, p.TableHead {
+	color: #000;
+}
+.contentView thead .TableHeadingRow {
+	display: table-row;
+	border-spacing: 1px;
+	border-top:  2px solid #666;
+	border-bottom:  2px solid  #666;
+}
+/* simpletable */
+table.simpletable>tbody > tr.sthead {
+	border-top:  2px solid  #666;
+	border-bottom:  2px solid  #666;
+}
+table.simpletable>tbody > tr.strow {
+	border-top:  1px solid  #666;
+	border-bottom:  1px solid  #666;
+}
+table.simpletable>tbody > tr.sthead>th.stentry {
+	color: #000;
+}
+/* properties table */
+table.simpletable.properties>tbody > tr {
+	border-top:  2px solid  #666;
+	border-bottom:  2px solid  #666;
+}
+table.simpletable.properties>tbody > tr.strow.property {
+	border-top:  1px solid  #666;
+	border-bottom:  1px solid  #666;
+}
+table.simpletable.properties>tbody > tr>th {
+	color: #000;
+}
+.LinkUniversal {
+	margin-bottom: 8px;
+}
+.printElement {
+	padding-top: 6px;
+}
+
+span.GlossaryTerm {
+	text-decoration: none !important;
+}
+/* hides movie links */
+div.LinkAppleWebMovie {
+	display: none;
+}
+
+.printElement.copyright {
+	font-size: 8px !important;
+	line-height: 12px !important;
+}
+
+/* @end */
+

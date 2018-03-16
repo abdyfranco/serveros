@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Setting Up Users’ Computers Manually</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-24-2009 14:23:55" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="2.7.49" />
+      <meta name="project" content="Server Preferences Help" />
+      <meta name="description"
+            content="Users can manually configure their applications to get services from your server." />
+      <meta name="topicid" content="gs3a9d9c06" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220507265666572656E6365732048656C70">
+      <div id="Nav"><a name="gs3a9d9c06"></a><a name="x636F6E66696775726174696F6E"></a><a name="x7573657273"></a><a name="x6E6574776F726B73"></a><a name="x636C69656E7420636F6D707574657273"></a><a name="x4D6163C2A04F53C2A05820536572766572"></a><a name="x4D6163204F532058"></a><a name="x57696E646F77732075736572732C20706C616E6E696E6720666F72"></a><a name="x4164647265737320426F6F6B20536572766572"></a><a name="x6943616C20536572766572"></a><a name="x69436861742073657276696365"></a><a name="x6D61696C2073657276696365"></a><a name="x7765622062726F7773657273"></a><a name="x536166617269"></a><a name="x62726F77736572732C20776562"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Preferences Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="gs3a9d9c06">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsvrpref.gif" alt="Server Preferences icon" /></div>
+               <div class="Name">Setting Up Users’ Computers Manually</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Users who have Mac OS X v10.5 Leopard or earlier, or who are running Windows, can get services from your server by configuring
+                     their applications manually. They can use the following settings, replacing the italicized placeholders with your server’s
+                     DNS name and the user’s short name. Users who have Mac OS X v10.6 Snow Leopard normally see an invitation to set up their
+                     applications automatically, but they can also configure their applications manually. For information about the invitation,
+                     see <a href="gs3a9d3672.html">Setting Up Macs That Join Your Network</a>. 
+                  </p>
+                  <table type="Multicolumn" cols="1" border="0" cellspacing="2" cellpadding="2">
+                     <tr class="TableHead">
+                        <th>
+                           <div class="TableHead">Settings for applications</div>
+                        </th>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">Finder</span> or other SMB or AFP file sharing client
+                           </p>
+                           <p class="Para">afp://<span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">smb://<span class="Emphasis">myserver.example.com</span></p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">Address Book (with Mac OS X v10.6 Snow Leopard)</span> or other CardDAV contacts application
+                           </p>
+                           <p class="Para">Server address:  <span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">User name:  the name of the user account on the server</p>
+                           <p class="Para">Password:  the password of the user account on the server</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">iCal (with Mac OS X v10.6 Snow Leopard)</span></p>
+                           <p class="Para">Account type:  automatic (CalDAV)</p>
+                           <p class="Para">Email address:  <span class="Emphasis">usershortname</span>@<span class="Emphasis">myserver.example.com</span></p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">iCal (with Mac OS X Server v10.5 Leopard)</span> or other CalDAV calendar application
+                           </p>
+                           <p class="Para">Personal calendar subscription (read only):  http://<span class="Emphasis">myserver.example.com</span>:8008/calendars/users/<span class="Emphasis">usershortname</span>/calendar/
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">iChat</span> or other XMPP instant messaging application
+                           </p>
+                           <p class="Para">Account type:  Jabber</p>
+                           <p class="Para">Server address:  <span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">Jabber ID:  <span class="Emphasis">usershortname</span>@<span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">Authentication:  Kerberos v5 preferred (other standard methods supported)</p>
+                           <p class="Para">Port:  5223</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">Mail</span> or other email application
+                           </p>
+                           <p class="Para">Account type:  IMAP or POP</p>
+                           <p class="Para">Incoming mail server:  <span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">Outgoing mail server:  <span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">Email address:  <span class="Emphasis">usershortname</span>@<span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">Authentication:  Kerberos v5 preferred (other standard methods supported)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">Safari</span> or other web browser
+                           </p>
+                           <p class="Para">Server website:  http://<span class="Emphasis">myserver.example.com</span></p>
+                           <p class="Para">Click links to see My Page, wikis, blogs, calendars, and webmail.</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p class="Para"><span class="EmphasisDisplay">Network preferences</span> or other VPN connection, such as Internet Connect in Mac OS X v10.4 Tiger.
+                           </p>
+                           <p class="Para">See <a href="gs3a9e21fb.html">Setting Up a Mac User’s VPN Connection</a> or <a href="gs3a9c9c0b.html">Setting Up a User’s VPN Connection Manually</a></p>
+                           <p class="Para"></p>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="LinkInternal NoRule"><span class="LinkInternal">Related Topics</span><div class="LinkTopicPage"><a href="gs3a9c8217.html">Setting Up Users’ Macs Automatically</a></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

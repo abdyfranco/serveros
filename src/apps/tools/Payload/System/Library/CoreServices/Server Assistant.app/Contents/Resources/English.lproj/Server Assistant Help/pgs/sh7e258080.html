@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Connect to a Directory Server</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Manually configure a connection to a directory server in your organization." />
+      <meta name="topicid" content="sh7e258080" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="sh7e258080"></a><a name="svrasst_dircnnct"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="sh7e258080">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Connect to a Directory Server</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Use the "Connect to a Directory Server” pane to manually configure a connection to an existing directory server in your organization.
+                     If you choose not to configure a directory server connection now, you can connect to a directory server after finishing server
+                     setup. To connect to one or more directory servers after server setup, use the Login Options section of the Accounts pane
+                     of System Preferences.
+                  </p>
+                  <table type="Multicolumn" cols="1" border="0" cellspacing="2" cellpadding="2">
+                     <tr class="TableHead">
+                        <th>
+                           <div class="TableHead">Directory server connection settings</div>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Connect to an external directory server</div>
+                           <p class="Para">Select this option if you want the server to connect (bind) to an existing directory system.</p>
+                           <p class="Para">If you’re setting up Xsan on your server, this isn’t a selectable option. If you don’t want to connect to a directory server
+                              now, click Go Back and select “Connect to a directory server later” in the "Users and Groups” pane.
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Server Address</div>
+                           <p class="Para">Select the directory server from the pop-up menu, or enter the directory server’s DNS name. If you’re connecting to an Open
+                              Directory server, you can enter its IP address.
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Server Type</div>
+                           <p class="Para">Can be Open Directory or Active Directory.</p>
+                           <p class="Para">If you’re setting up a server now (not creating an auto setup profile for later use), Server Type is determined automatically.</p>
+                           <p class="Para">If you need to connect to a different type of directory server, deselect the “Connect to an external directory server” option
+                              and configure the connection after finishing server setup.
+                           </p>
+                           <p class="Para">If you’re setting up Xsan on your server, you can only connect to an Open Directory server using this pane. To connect a server
+                              with Xsan to a different type of directory server, click Go Back and select select “Connect to a directory server later” in
+                              the "Users and Groups” pane.
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">User account name and password</div>
+                           <p class="Para">These fields appear if the directory server allows or requires authentication.</p>
+                           <ul class="ListBullet">
+                              <li>
+                                 <p class="Para"><span class="Emphasis">For Open Directory,</span> you can enter the short name or long name and the password of a standard user account; you don’t need to use a directory
+                                    administrator account.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p class="Para"><span class="Emphasis">For Active Directory,</span> you can enter the name and password of an Active Directory administrator account or a standard user account that has the
+                                    “Add workstations to domain” privilege.
+                                 </p>
+                              </li>
+                           </ul>
+                        </th>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

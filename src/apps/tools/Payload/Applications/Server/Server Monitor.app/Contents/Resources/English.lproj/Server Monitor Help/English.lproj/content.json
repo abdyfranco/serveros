@@ -1,0 +1,144 @@
+[{
+    "content": {
+        "apd03812A5E-44D2-486E-B9A2-B778DD9044F4": {
+            "alternativeName": "Control the system identifier light", 
+            "content": "<div id='apd03812A5E-44D2-486E-B9A2-B778DD9044F4' class='apd-topic'><div class='subjectids'><a name='apd03812A5E-44D2-486E-B9A2-B778DD9044F4'></a></div><h1 class='title topictitle1'>Control the system identifier light</h1><div class='body taskbody'><p class='shortdesc'>To find a specific Xserve in a rack of servers, you can use Server Monitor to turn on\n        the server\u2019s system identifier light.</p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Select the server in the server list.</span></li><li class='li step'><span class='ph cmd'>Click the <span class='ph uicontrol'>Info button</span>.</span></li><li class='li step'><span class='ph cmd'>Click the \u201c<span class='ph uicontrol'>System identifier light</span>\u201d button.</span></li></ol></div></div>", 
+            "keywords": "tcp, udp, well-known, firewall", 
+            "name": "Control the system identifier light", 
+            "summary": "To find a specific Xserve in a rack of servers, you can use Server Monitor to turn on the server\u2019s system identifier light."
+        }, 
+        "apd4337AA66-9DB5-4957-9BCA-A4F0B6028138": {
+            "alternativeName": "Add lights-out management accounts", 
+            "content": "<div id='apd4337AA66-9DB5-4957-9BCA-A4F0B6028138' class='apd-topic'><div class='subjectids'><a name='apd4337AA66-9DB5-4957-9BCA-A4F0B6028138'></a></div><h1 class='title topictitle1'>Add lights-out management accounts</h1><div class='body taskbody'><p class='shortdesc'>Normally, you create one lights-out management account when you first set up an\n        Intel-based Xserve using Server Assistant. You can use Server Monitor to set up additional\n        accounts.</p><ol class='ol steps'><li class='li step'><span class='ph cmd'>In Server Monitor, select a server, and then choose <span class='ph menucascade'><span class='ph uicontrol'>Server</span>\n                         > <span class='ph uicontrol'>Edit Accounts</span></span></span></li><li class='li step'><span class='ph cmd'>Enter account settings. <span class='ph'>Choose the account type Admin for someone who can\n                        both monitor and control (start up, shut down, and restart) the server.\n                        Choose the account type User for someone who can only monitor the\n                        server.</span></span></li><li class='li step'><span class='ph cmd'>Click <span class='ph uicontrol'>Add User</span>, and then click\n                        <span class='ph uicontrol'>Done</span>.</span></li></ol></div><div class='section postreq'>You can also set up lights-out management accounts using the IPMITool command-line\n            tool in Terminal. For information, see the IPMITool man page.</div></div>", 
+            "keywords": "tcp, udp, well-known, firewall, lights-out, xserve", 
+            "name": "Add lights-out management accounts", 
+            "summary": "Normally, you create one lights-out management account when you first set up an Intel-based Xserve using Server Assistant. You can use Server Monitor to set up additional accounts."
+        }, 
+        "apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4": {
+            "alternativeName": "Start up, shut down, or restart a server", 
+            "content": "<div id='apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4' class='apd-topic'><div class='subjectids'><a name='apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4'></a></div><h1 class='title topictitle1'>Start up, shut down, or restart a server</h1><div class='body taskbody'><p class='shortdesc'>You can use Server Monitor to start up, shut down, or restart an Xserve\n        remotely.</p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Select the Xserve in the server list, then click <span class='ph uicontrol'>Info.</span></span></li><li class='li step'><span class='ph cmd'>In the lower-right corner of the window, click\n                        <span class='ph uicontrol'>Restart</span>, <span class='ph uicontrol'>Shut Down</span>, or\n                        <span class='ph uicontrol'>Power On</span>.</span></li></ol></div><div class='section postreq'>The <span class='ph uicontrol'>Power On</span> button is available only for Intel-based Xserve systems.</div></div>", 
+            "keywords": "tcp, udp, well-known, firewall, xserve", 
+            "name": "Start up, shut down, or restart a server", 
+            "summary": "You can use Server Monitor to start up, shut down, or restart an Xserve remotely."
+        }, 
+        "apd5DF83713-84EF-42BA-A30C-8A471AB5A13F": {
+            "alternativeName": "Add a server to the list", 
+            "content": "<div id='apd5DF83713-84EF-42BA-A30C-8A471AB5A13F' class='apd-topic'><div class='subjectids'><a name='apd5DF83713-84EF-42BA-A30C-8A471AB5A13F'></a></div><h1 class='title topictitle1'>Add a server to the list</h1><div class='body taskbody'><p class='shortdesc'>To monitor a server, add it to the server list.</p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Choose <span class='ph menucascade'><span class='ph uicontrol'>Server</span>\n                         > <span class='ph uicontrol'>Add Server</span></span> or click <span class='ph uicontrol'>Add Server</span> in the toolbar.</span></li><li class='li step'><span class='ph cmd'>Enter the name or address of the server and an account name and password.\n                        <span class='ph'>For an Intel-based Xserve, use the address and account information for\n                        the lights-out management (LOM) port.</span></span></li><li class='li step'><span class='ph cmd'>If you don\u2019t want to enter the account password each time you open Server\n                    Monitor, click \u201c<span class='ph uicontrol'>Save password in keychain</span>.\u201d</span></li><li class='li step'><span class='ph cmd'>Click <span class='ph uicontrol'>OK</span>.</span></li></ol></div><div class='section postreq'>You can also add servers to the list by importing or merging a previously saved\n            list of servers. See <a class='xref' href='#apdD677F1E1-178F-427F-A33D-94A04321C9A0' title='When you open Server Monitor, you see the list of servers you worked with most recently.'>Switch server lists</a>.</div></div>", 
+            "keywords": "tcp, udp, well-known, firewall, xserve", 
+            "name": "Add a server to the list", 
+            "summary": "To monitor a server, add it to the server list."
+        }, 
+        "apdA63A42D8-4924-4D18-885C-68857071DD68": {
+            "alternativeName": "View server status", 
+            "content": "<div id='apdA63A42D8-4924-4D18-885C-68857071DD68' class='apd-topic'><div class='subjectids'><a name='apdA63A42D8-4924-4D18-885C-68857071DD68'></a></div><h1 class='title topictitle1'>View server status</h1><div class='body conbody'><div class='abstract'><span class='shortdesc'>Here are several ways you can view server status information.</span></div><div class='section'><h2 class='title sectiontitle'>To see information about a component:</h2><p class='p'>Select a server, click a component button (Drives or Temperature, for example) above\n                the information section at the bottom of the window, and then choose a specific\n                component or sensor from the pop-up menu. You can also click any status or component\n                icon in the Status Summary column.</p></div><div class='section'><h2 class='title sectiontitle'>To switch between detailed and summary views:</h2><p class='p'>Click the \u201cShow detailed status\u201d checkbox, or double-click a component icon in the\n                Status Summary column.</p></div><div class='section'><h2 class='title sectiontitle'>To scan device information quickly:</h2><p class='p'>Hold down the mouse button and drag the pointer over the icons in the Status Summary\n                column.</p></div><div class='section'><h2 class='title sectiontitle'>To display only problems:</h2><p class='p'>Click \u201cShow warnings and failures only\u201d below the server list.</p></div></div></div>", 
+            "name": "View server status", 
+            "summary": "Here are several ways you can view server status information."
+        }, 
+        "apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E": {
+            "alternativeName": "Set up server status email notifications", 
+            "content": "<div id='apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E' class='apd-topic'><div class='subjectids'><a name='apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E'></a></div><h1 class='title topictitle1'>Set up server status email notifications</h1><div class='body taskbody'><p class='shortdesc'>You can have Server Monitor send email notifications to specific individuals when the\n        status of selected server components changes.</p><ol class='ol steps'><li class='li step'><span class='ph cmd'>In Server Monitor, select a server in the server list and click <span class='ph uicontrol'>Edit\n                    Notifications.</span></span></li><li class='li step'><span class='ph cmd'>Choose the devices you want to be notified about.</span></li><li class='li step'><span class='ph cmd'>Enter the sender name you want displayed in the email.</span></li><li class='li step'><span class='ph cmd'>Type the addresses you want the email to be sent to. (Click\n                        <span class='ph uicontrol'>Pager</span> if the address is for a pager. Use the\n                        <span class='ph uicontrol'>Add</span> or <span class='ph uicontrol'>Delete</span> buttons to add\n                    or delete addresses.)</span></li><li class='li step'><span class='ph cmd'>Choose a priority for the notification.</span></li><li class='li step'><span class='ph cmd'>Enter the subject and message you want displayed in the email.</span></li><li class='li step'><span class='ph cmd'>Choose whether you want the remote server or Server Monitor to send the\n                    email.</span></li><li class='li step'><span class='ph cmd'>Click <span class='ph uicontrol'>OK</span>.</span></li></ol></div><div class='section postreq'>You can also add servers to the list by importing or merging a previously saved\n            list of servers. See <a class='xref' href='#apdD677F1E1-178F-427F-A33D-94A04321C9A0' title='When you open Server Monitor, you see the list of servers you worked with most recently.'>Switch server lists</a>.</div></div>", 
+            "keywords": "tcp, udp, well-known, firewall", 
+            "name": "Set up server status email notifications", 
+            "summary": "You can have Server Monitor send email notifications to specific individuals when the status of selected server components changes."
+        }, 
+        "apdBF6DC783-0285-4063-A432-61CB0EB01171": {
+            "name": "Manage servers"
+        }, 
+        "apdBF6DC783-0285-4063-A432-61CB0EB01172": {
+            "name": "Configure lights-out management"
+        }, 
+        "apdD677F1E1-178F-427F-A33D-94A04321C9A0": {
+            "alternativeName": "Switch server lists", 
+            "content": "<div id='apdD677F1E1-178F-427F-A33D-94A04321C9A0' class='apd-topic'><div class='subjectids'><a name='apdD677F1E1-178F-427F-A33D-94A04321C9A0'></a></div><h1 class='title topictitle1'>Switch server lists</h1><div class='body conbody'><div class='abstract'><div class='shortdesc'>When you open Server Monitor, you see the list of servers you worked with most\n            recently.</div><p class='p'>To work with more than one list of servers, you can save server lists in separate files\n            and then switch by importing the list you want to use. You can also combine lists by\n            merging a saved list with the current list.</p></div><div class='section'><h2 class='title sectiontitle'>To save the current server list:</h2><p class='p'>In Server Monitor, choose File > Export, choose a location, and then click Save.</p></div><div class='section'><h2 class='title sectiontitle'>To switch to a different list:</h2><p class='p'>Choose File > Import, choose a saved list file, and then click Open.</p></div><div class='section'><h2 class='title sectiontitle'>To merge lists:</h2><p class='p'>Choose File > Merge, choose a saved list file, and then click Open.</p></div></div></div>", 
+            "name": "Switch server lists", 
+            "summary": "When you open Server Monitor, you see the list of servers you worked with most recently."
+        }, 
+        "apdD7678147-E865-43DA-85E0-94EC3A216B3C": {
+            "alternativeName": "Server Monitor Help", 
+            "class": "default", 
+            "content": "<div class='apd-topic' id='apdD7678147-E865-43DA-85E0-94EC3A216B3C'><div class='subjectids'><a name='apdD7678147-E865-43DA-85E0-94EC3A216B3C'></a></div><h1 class='title topictitle1'>Server Monitor Help</h1><div class='body conbody'><div class='section'><h2 class='title sectiontitle'>Server Monitor Help</h2><p class='p'>Use this utility to monitor and control Xserve systems.</p></div><div class='section linkTagline'><p class='p'><a class='xref' href='http://www.apple.com/macosx/server/' target='_blank'>More help for Lion Server</a></p></div></div></div>", 
+            "excludefromsearch": "1", 
+            "name": "Server Monitor Help", 
+            "navigation": "false"
+        }, 
+        "apdFA711495-65E8-4D76-BFF2-2A6825769A94": {
+            "alternativeName": "View a log of Server Monitor activity", 
+            "content": "<div id='apdFA711495-65E8-4D76-BFF2-2A6825769A94' class='apd-topic'><div class='subjectids'><a name='apdFA711495-65E8-4D76-BFF2-2A6825769A94'></a></div><h1 class='title topictitle1'> View a log of Server Monitor activity</h1><div class='body conbody'><div class='abstract'><div class='shortdesc'>Server Monitor keeps a record of monitoring and control activity for each\n            server.</div><p class='p'>Each log records Server Monitor interactions with the server, not system activity on the\n            server itself. For example, the log shows server status changes, the times when Server\n            Monitor contacted the server, and whether a connection attempt was successful.</p></div><div class='section'><h2 class='title sectiontitle'>To view a log:</h2><p class='p'>Select a server and click Show Log.</p></div><div class='section'><h2 class='title sectiontitle'>To save a log to a file:</h2><p class='p'>Select a server, click Show Log, and then click Save As in the log window.</p></div><div class='section'><h2 class='title sectiontitle'>To clear a log:</h2><p class='p'>Select a server, click Show Log, and then click Clear Log in the log window.</p></div></div></div>", 
+            "name": "View a log of Server Monitor activity", 
+            "summary": "Server Monitor keeps a record of monitoring and control activity for each server."
+        }, 
+        "apdFC997FF7-06C6-414C-875F-E073FE22DDD8": {
+            "alternativeName": "Change lights-out management processor settings", 
+            "content": "<div id='apdFC997FF7-06C6-414C-875F-E073FE22DDD8' class='apd-topic'><div class='subjectids'><a name='apdFC997FF7-06C6-414C-875F-E073FE22DDD8'></a></div><h1 class='title topictitle1'>Change lights-out management processor settings</h1><div class='body taskbody'><p class='shortdesc'>Intel-based Xserve systems include a lights-out management processor that lets you\n        communicate with the server even when it isn\u2019t powered on. Normally, you provide network\n        settings and account information for the lights-out management processor when you first set\n        up the Xserve using Server Assistant. You can use Server Monitor to change the lights-out\n        management settings for the server that Server Monitor is running on.</p><ol class='ol steps'><li class='li step'><span class='ph cmd'>In Server Monitor, choose <span class='ph menucascade'><span class='ph uicontrol'>Server</span>\n                         > <span class='ph uicontrol'>Configure Local Machine.</span></span></span></li><li class='li step'><span class='ph cmd'>Enter account settings. <span class='ph'>Choose the account type Admin for someone who can\n                        monitor and control (start up, shut down, and restart) the server. Choose\n                        the account type User for someone who can only monitor the\n                    server.</span></span></li><li class='li step'><span class='ph cmd'>Choose <span class='ph uicontrol'>Port 1</span> or <span class='ph uicontrol'>Port 2</span> from the\n                        \"<span class='ph uicontrol'>LOM uses Ethernet</span>\" pop-up menu.</span><span class='ph uicontrol'>Port 1 </span>corresponds to Ethernet port 1 on the back of\n                    the Xserve.\n            </li><li class='li step'><span class='ph cmd'>Enter network and account settings and click\n                    <span class='ph uicontrol'>Apply</span>.</span></li></ol></div><div class='section postreq'><div class='note note'><span class='notetitle'>Note:</span> Be sure to give the lights-out management processor port its own IP address. Don\u2019t\n                use the same address that you use for the server.</div><p class='p'>You can also change settings for the lights-out management processor using the\n                IPMITool command-line tool in Terminal. For information, see the IPMITool man\n                page.</p></div></div>", 
+            "keywords": "tcp, udp, well-known, firewall, lights-out, xserve", 
+            "name": "Change lights-out management processor settings", 
+            "summary": "Intel-based Xserve systems include a lights-out management processor that lets you communicate with the server even when it isn\u2019t powered on. Normally, you provide network settings and account information for the lights-out management processor when you first set up the Xserve using Server Assistant. You can use Server Monitor to change the lights-out management settings for the server that Server Monitor is running on."
+        }, 
+        "button-0": {
+            "alternativeNameStyle": "replace", 
+            "howdyPageID": "apdD7678147-E865-43DA-85E0-94EC3A216B3C", 
+            "type": "navigation"
+        }
+    }, 
+    "hierarchy": [
+        {
+            "children": [
+                {
+                    "class": "default", 
+                    "id": "apdD7678147-E865-43DA-85E0-94EC3A216B3C"
+                }, 
+                {
+                    "children": [
+                        {
+                            "id": "apd5DF83713-84EF-42BA-A30C-8A471AB5A13F"
+                        }, 
+                        {
+                            "id": "apdA63A42D8-4924-4D18-885C-68857071DD68"
+                        }, 
+                        {
+                            "id": "apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4"
+                        }, 
+                        {
+                            "id": "apd03812A5E-44D2-486E-B9A2-B778DD9044F4"
+                        }, 
+                        {
+                            "id": "apdD677F1E1-178F-427F-A33D-94A04321C9A0"
+                        }, 
+                        {
+                            "id": "apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E"
+                        }, 
+                        {
+                            "id": "apdFA711495-65E8-4D76-BFF2-2A6825769A94"
+                        }
+                    ], 
+                    "id": "apdBF6DC783-0285-4063-A432-61CB0EB01171"
+                }, 
+                {
+                    "children": [
+                        {
+                            "id": "apdFC997FF7-06C6-414C-875F-E073FE22DDD8"
+                        }, 
+                        {
+                            "id": "apd4337AA66-9DB5-4957-9BCA-A4F0B6028138"
+                        }
+                    ], 
+                    "id": "apdBF6DC783-0285-4063-A432-61CB0EB01172"
+                }
+            ], 
+            "id": "button-0"
+        }
+    ], 
+    "settings": {
+        "AppVersion": "1.0", 
+        "BuildVersion": "8.13", 
+        "CategoryArt": "svrmic.png", 
+        "Design": "redFlamingo", 
+        "FolderName": "Server Monitor Help", 
+        "LocalizationISOCode": "en", 
+        "RemoteURL": "https://help.apple.com/servermonitor/mac/10.7/ServerMonitorHelp/", 
+        "ShowFeedbackLink": 1, 
+        "ShowVersionNumber": 0, 
+        "Title": "Server Monitor Help"
+    }
+}
+]

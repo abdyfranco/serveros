@@ -1,4 +1,0 @@
-tell application "Workgroup Manager"
-	activate
-	goto "<USERNAME>#<PASSWORD>#<HOST>#Accounts"
-end tell

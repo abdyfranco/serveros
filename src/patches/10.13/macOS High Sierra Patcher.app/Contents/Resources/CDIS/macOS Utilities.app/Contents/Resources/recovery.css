@@ -1,0 +1,612 @@
+/* CSS voiceover.css*/
+/* Version: v1.0.5 12-8-10*/
+
+/* START REDEFINED DEFAULT TAGS */
+
+/* This sets the default properties any Recovery page */
+body {
+	background-color: #fff;
+	font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	color: #333;
+	line-height: 1.6em;
+	text-align: left;
+	margin-top: 1.5em;
+	margin-right: 2em;
+	margin-left: 10em;
+}
+
+/* Unless specified in a specific class, this is the default properties for the <p> tag*/
+p {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0.32em;
+	padding-bottom: 0.32em;
+}
+
+/* h1 is used for the Chapter Name */
+h1 {
+	clear: both;
+	font-size: 1.4em;
+	line-height: 1.33em;
+	color: #000;
+	margin-top: 0;
+	padding-top: 1.5em;
+	margin-bottom: .2em;
+	padding-bottom: 0;
+}
+
+/* h2 is used for the Topic Title */
+h2 {
+	clear: both;
+	font-size: 1.3em;
+	font-weight: bold;
+	line-height: 1.29em;
+	color: #336699;
+	margin-top: 1em;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0.1em;
+}
+
+/* .titletitle is used for the Task titles */
+.tasktitle {
+	clear: both;
+	font-size: 1.10em;
+	font-weight: bold;
+	line-height: 1.29em;
+	color: #333;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0.43em;
+	overflow: hidden;
+}
+
+
+/* These following action classes set the link, hover and visited states for a link on the recovery pages*/
+a:link {
+	color: #0088CC;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:visited {
+	color: color: #011E57;
+}
+
+
+
+/* END REDEFINED DEFAULT TAGS */
+
+
+
+/* START STYLES FOR INTRO / OUTRO */
+
+/* Wrapper for content in the Intro */
+.intro {
+	margin-top: 0;
+	padding-top: 0;
+	padding-bottom: 0.4em;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+.taskintro {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+/* Wrapper for content in the Outro */
+.outro {
+	margin-top: 0;
+	margin-bottom: 0.8em;
+	padding-top: 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%
+}
+
+/* intro, outro and related topic auxlinks are links that are placed at the same left margin as the parent paragraph */
+.auxlink-intro,
+.auxlink-outro {
+	clear: both;
+	float: left;
+	margin-top: 0;
+	margin-bottom: 0.50em;
+	padding: 0;
+	width: 100%;
+}
+
+
+/* The sublink-intro and sublink-outro styles are used for child links for number and bullet list items in the Intro and Outro blocks*/
+.sublink-intro,
+.sublink-outro {
+	display: block;
+	margin-left: -1.43em;
+	margin-right: 1.50em;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+/* END STYLES FOR INTRO / OUTRO */
+
+
+/* START STYLES FOR IMAGES */
+
+/* This class is used for graphics that after a paragraph in the Intro AND Outro
+   This is NOT used for graphcs within a Number or Bullet list. */
+   
+.image-aux {
+	margin-top: 0;
+	padding-bottom: 0.71em;
+}
+
+/* 2nd Level child graphic. This is a graphic whose parent is a List Item in this order:
+   Number Item > Graphic, or
+   Bullet Item > Graphic */
+   
+.image-sublist {
+	margin-left: -1.29em;
+	margin-top: 0;
+	margin-bottom: 0.96;
+}
+
+/* 3rd Level child graphic that is displayed in this order in a list:
+   Number Item > Bullet > Graphic */
+
+.image-subnumber-bullet {
+	margin-top: 0;
+	margin-left: -2.86em;
+	margin-bottom: 0.71em;
+	padding: 0;
+	position: relative;
+	overflow: hidden;
+}
+
+/* END STYLES FOR IMAGES*/
+
+
+/* START STYLES FOR LEGAL CONTENT */
+
+/* This is the class assigned to the, e.g., <p class="legal-sublist">
+   for the legal content that follows a Numbered or Bullet item in a list */
+.legal-sublist {
+	margin-left: -1.37em;
+	margin-top: 0;
+	margin-bottom: 0.64em;
+	padding-top: 0;
+}
+
+/* This is the span class that should be placed around the legal type (e.g., warning, important, note, notice) that 
+   appears before the legal text */
+.legal-prefix {
+	position: relative;
+	left: 0;
+	font-size: 0.93em;
+	font-weight: bold;
+	padding-right: 0.36em;
+	text-transform: uppercase;
+	word-spacing: -2pt;
+	letter-spacing: 1pt;
+}
+
+/* END STYLES FOR LEGAL CONTENT*/
+
+
+/* START STYLE FOR TEXT + TEXT PAIR */
+
+.prefix {
+	position: relative;
+	left: 0;
+	font-weight: bold;
+	padding-right: 0.29em;
+}
+
+/* START STYLE FOR TEXT + TEXT PAIR */
+
+
+/* START STYLES FOR TASKS */
+
+/* wrapper used identify a Topic since multiple topics are allowed on the same Chapter page */
+.topic {
+	margin: 0;
+	padding: 0 0 .5em 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+/* Wrapper for a Topic's task; since is a class, this call be called multiple times, since Topics can have multiple Tasks */
+.task {
+	margin-top: 0;
+	margin-bottom: 0.3em;
+	padding: 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+
+/* The .sublistlink style is used for a child link for number AND bullet list items
+   The .sublisttexttext style is used for aux-option-text+text that comes after Number and Bullet list items */
+.sublistlink, .sublisttexttext {
+	display: block;
+	margin-left: -1.37em;
+	margin-right: 1.50em;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 0;
+}
+
+/* Sets the spacing before and after an Ordered List (number list) */
+.list-number ol {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	overflow: hidden;
+}
+
+/* Sets the leading for the list items in an Ordered List (number) */
+.list-number li {
+	list-style-position: outside;
+	list-style: decimal;
+	position: relative;
+	left: -1.29em;
+	margin-top: 0.4em;
+	margin-bottom: 0.4em;
+	padding: 0;
+}
+
+/* Sets the spacing before and after an Unordered List (bullet) */
+.list-bullet ul {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	overflow: hidden;
+}
+
+/* Sets the leading for the list items in an Unordered List (bullet) */
+.list-bullet li {
+	list-style-position: outside;
+	list-style: square;
+	position: relative;
+	left: -1.43em;
+	margin-top: 0.32em;
+	margin-bottom: 0.32em;
+	padding: 0;
+	text-indent: 0;
+	text-align: left;
+}
+
+/* This sets the spacing before and after a CHILD bullet list (bullet list after a number item)*/
+
+.sublist-bullet ul {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	overflow: hidden;
+}
+
+/* This is used for child bullet items whose parent is a Bullet item */
+.sublist-bullet li {
+	list-style-position: outside;
+	list-style: square;
+	position: relative;
+	left: -2.95em;
+	margin-top: 0.32em;
+	margin-bottom: 0.32em;
+	padding: 0;
+	text-indent: 0;
+	text-align: left;
+}
+
+/* This changes the padding property when the <p> tag is used within the .list-number and .sublist-bullet class */
+.list-number p,
+.sublist-bullet p {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0.32em;
+	padding-bottom: 0.32em;
+}
+
+/* END STYLES FOR TASKS */
+
+
+
+/* START STYLES FOR ANNOTATED TOPIC LIST */
+
+/* This is the wrapper for an ATL item (header, descriptive paragraph, link) */
+.atl-item {
+	margin: 0;
+	padding: 0 0 0.64em 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+/* This applies the appropraite properties to the <p> tag when used within the .alt-item wrapper */
+.atl-item p {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 0 3em 0.64em 3em;
+}
+
+.atl-item h2 {
+	font-size: 1.3em;
+	font-weight: bold;
+	line-height: 1.50em;
+	color: #336699;
+	margin: 0 1.5em;
+	padding-bottom: 0;
+}
+
+/* END STYLES FOR ANNOTATED TOPIC LIST */
+
+
+/* START STYLES FOR 2-COLUMN REFERENCE */
+
+/* Wrapper for a the 2-column table */
+.table-twocolumn {
+	margin: 0 0 1.71em 0;
+	padding: 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+/* This is the gray column header that appears at the top of the reference table */
+.column-headerbar {
+	clear: both;
+	float: left;
+	position: relative;
+	background-color: #999;
+	padding: 0;
+	margin-bottom: 0.29em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	width: 100%;
+	font-size: 0.79em;
+	font-weight: bold;
+	letter-spacing: 0.15em;
+	word-spacing: -2pt;
+	line-height: 1.55em;
+	color: #ffffff;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+.column-headerbar p {
+	padding-top: 0.29em;
+	padding-bottom: 0.29em;
+	padding-left: 0.57em;
+	padding-right: 1.07em;
+}
+.column1-header {
+	clear: both;
+	float: left;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 49%;
+	overflow: hidden;
+}
+
+.column2-header {
+	float: right;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 50%;
+	overflow: hidden;
+}
+
+/* This is the wrapper for the sub-head in a table*/
+.table-subhead1 {
+	clear: both;
+	float: left;
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 0.43.em;
+	padding-bottom: 0;
+	width: 49%;
+	overflow: hidden;
+}
+
+.table-subhead1 p {
+	font-size: 0.93em;
+	font-weight: bold;
+	color: #000000;
+	margin-top: 0.57em;
+	margin-bottom: 0;
+	padding-right: 1.07em;
+	padding-left: 0.57em;
+	padding-top: 0;
+	padding-bottom: 0.36em;
+	overflow: hidden;
+}
+
+/* This is the wrapper for the sub-head in a table*/
+.table-subhead2 {
+	float: right;
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 0.43.em;
+	padding-bottom: 0;
+	width: 50%;
+	overflow: hidden;
+}
+
+.table-subhead2 p {
+	font-size: 0.93em;
+	font-weight: bold;
+	color: #000000;
+	margin-top: 0.57em;
+	margin-bottom: 0;
+	padding-right: 1.07em;
+	padding-left: 0.57em;
+	padding-top: 0;
+	padding-bottom: 0.36em;
+	overflow: hidden;
+}
+
+/*This is the wrapper for a row in the table; this puts the border below the contents in the row */
+.table-row {
+	clear: both;
+	float: left;
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 0.43.em;
+	padding-bottom: 0;
+	border-bottom: 1px solid #D0D0D0;
+	width: 100%;
+	overflow: hidden;
+}
+
+/* This is the DIV for the left column in the table */
+.table-col1 {
+	clear: both;
+	float: left;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 49%;
+	overflow: hidden;
+}
+
+/* This sets the paragraph properties for the left column */
+.table-col1 p {
+	margin-top: 0.57em;
+	margin-bottom: 0;
+	padding-right: 1.07em;
+	padding-left: 0.57em;
+	padding-top: 0;
+	padding-bottom: 0.36em;
+	overflow: hidden;
+}
+
+/* This is the DIV for the right column in the table */
+.table-col2 {
+	float: right;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 50%;
+	overflow: hidden;
+}
+
+/* This sets the paragraph properties for the right column */
+.table-col2 p {
+	margin-top: 0.57em;
+	margin-bottom: 0;
+	padding-right: 1.07em;
+	padding-left: 0.57em;
+	padding-top: 0;
+	padding-bottom: 0.36em;
+	overflow: hidden;
+}
+
+/* END STYLES FOR 2-COLUMN REFERENCE TABLE */
+
+
+/* START STYLES FOR THE RECOVERY ONLINE GUIDE INDEX */
+
+/* This is the wrapper for introductory text that only appears at the top of the
+   Recovery Start Page -- this should not be used for any other content.*/
+   
+#startpage-intro {
+	margin-right: 0;
+	margin-left: -7em;
+	padding: 0 0 0.86em 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+	
+}
+
+.startpage-logo {
+	margin: 0;
+	padding: 0 0 0.86em 0;
+	clear: both;
+	float: left;
+}
+
+#startpage-intro h1 {
+	clear: both;
+	font-size: 1.4em;
+	line-height: 1.33em;
+	color: #000;
+	margin-top: 0;
+	margin-bottom: 0.96em;
+	padding: 0;
+}
+
+#startpage-intro h2 {
+	clear: both;
+	font-size: 1.3em;
+	font-weight: bold;
+	line-height: 1.29em;
+	color: #000;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0.64em;
+	padding-bottom: 0;
+}
+
+
+/* This is the wrapper the content on the Recovery Online Guide Index */
+.index {
+	margin: 0;
+	padding: 0 0 2em 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+
+/* h1 is used for the title at the top of the Recovery Guide Index */
+.index h1 {
+	clear: both;
+	font-size: 1.4em;
+	line-height: 1.33em;
+	color: #000;
+	margin-top: 0;
+	margin-bottom: 0.86em; 
+}
+
+/* h2 corresponds to the Chapter Title on the Recovery Guide Index */
+.index h2 {
+	clear: both;
+	font-size: 1.3em;
+	font-weight: normal;
+	line-height: 1.29em;
+	color: #336699;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0.32em;
+	padding-bottom: 0.32em;
+}
+
+
+/* END STYLES FOR THE Recovery GUIDE INDEX */

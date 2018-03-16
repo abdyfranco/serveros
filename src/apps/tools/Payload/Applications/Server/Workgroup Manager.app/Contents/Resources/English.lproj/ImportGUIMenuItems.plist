@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dsRecTypeStandard:All</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Record Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Generated Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Managed Desktop Data</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Managed Desktop Flags</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:ComputerLists</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>List Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Generated Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Computers</string>
+			<key>display string</key>
+			<string>Computers</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Managed Desktop Data</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Managed Desktop Flags</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Group</string>
+			<key>display string</key>
+			<string>Restricted To Groups</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:ComputerGroups</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Short Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:DistinguishedName</string>
+			<key>display string</key>
+			<string>Group Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Generated Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembers</string>
+			<key>display string</key>
+			<string>Group Members</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembership</string>
+			<key>display string</key>
+			<string>Group Membership</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NestedGroups</string>
+			<key>display string</key>
+			<string>Nested Groups</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Picture</string>
+			<key>display string</key>
+			<string>Picture</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Managed Desktop Data</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Managed Desktop Flags</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Comment</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:ServicesLocator</string>
+			<key>display string</key>
+			<string>Services Locator</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Computers</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Computer Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Generated Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:ENetAddress</string>
+			<key>display string</key>
+			<string>Ethernet Address</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Comment</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Managed Desktop Data</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Managed Desktop Flags</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Groups</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RealName</string>
+			<key>display string</key>
+			<string>Real Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Short Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PrimaryGroupID</string>
+			<key>display string</key>
+			<string>Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Generated Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembers</string>
+			<key>display string</key>
+			<string>Group Members Based On GUID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembership</string>
+			<key>display string</key>
+			<string>Group Members Based On Short Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NestedGroups</string>
+			<key>display string</key>
+			<string>Nested Groups</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeDirectory</string>
+			<key>display string</key>
+			<string>Group Folder</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeLocOwner</string>
+			<key>display string</key>
+			<string>Group Folder Owner</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Users</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RealName</string>
+			<key>display string</key>
+			<string>Real Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Short Names</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Password</string>
+			<key>display string</key>
+			<string>Password</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PasswordPolicyOptions</string>
+			<key>display string</key>
+			<string>Password Policy</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:UniqueID</string>
+			<key>display string</key>
+			<string>Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Generated Unique ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PrimaryGroupID</string>
+			<key>display string</key>
+			<string>Primary Group ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:UserShell</string>
+			<key>display string</key>
+			<string>User Shell</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeDirectory</string>
+			<key>display string</key>
+			<string>Home Directory</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NFSHomeDirectory</string>
+			<key>display string</key>
+			<string>NFS Home Directory</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBHomeDrive</string>
+			<key>display string</key>
+			<string>SMB Home Drive</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBHome</string>
+			<key>display string</key>
+			<string>SMB Home Path</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBProfilePath</string>
+			<key>display string</key>
+			<string>SMB Profile Path</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBScriptPath</string>
+			<key>display string</key>
+			<string>SMB Script Path</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MailAttribute</string>
+			<key>display string</key>
+			<string>Mail Attribute</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Managed Desktop Data</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Managed Desktop Flags</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Comment</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Keywords</string>
+			<key>display string</key>
+			<string>Keywords</string>
+		</dict>
+	</array>
+</dict>
+</plist>

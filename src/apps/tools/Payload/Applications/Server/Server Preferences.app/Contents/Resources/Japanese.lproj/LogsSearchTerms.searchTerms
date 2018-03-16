@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dsLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>directory services logs ディレクトリサービスログ ディレクトリーサービスログ ディレクトリサービス記録 ディレクトリーサービス記録, ldap logs LDAP ログ LDAP 記録, open directory logs Open Directory ログ オープンディレクトリログ オープンディレクトリーログ Open Directory 記録 オープンディレクトリ記録 オープンディレクトリー記録</string>
+				<key>title</key>
+				<string>ディレクトリサービス・ログ</string>
+			</dict>
+		</array>
+	</dict>
+	<key>fileSharingLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>file sharing logs ファイル共有ログ ファイル共有記録, afp logs AFP ログ AFP 記録, smb logs SMB ログ SMB 記録</string>
+				<key>title</key>
+				<string>ファイル共有ログ</string>
+			</dict>
+		</array>
+	</dict>
+	<key>iCalLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>ical server logs iCal サーバログ iCal サーバーログ アイカルサーバログ アイカルサーバーログ iCal サーバ記録 iCal サーバー記録 アイカルサーバ記録 アイカルサーバー記録, caldav logs CalDAV ログ CalDAV 記録</string>
+				<key>title</key>
+				<string>iCal サーバログ</string>
+			</dict>
+		</array>
+	</dict>
+	<key>iChatLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>ichat server log iChat サーバログ iChat サーバーログ アイチャットサーバログ アイチャットサーバーログ iChat サーバ記録 iChat サーバー記録 アイチャットサーバ記録 アイチャットサーバー記録, ichat log iChat ログ アイチャットログ iChat 記録 アイチャット記録, instant messaging インスタントメッセージ インスタントメッセージング IM</string>
+				<key>title</key>
+				<string>iChat サーバログ</string>
+			</dict>
+		</array>
+	</dict>
+	<key>logs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>logs ログ 記録, error log エラーログ エラー記録, system システム, event log イベントログ イベント記録, event viewer イベントビューア イベントビューアー イベントビュアー イベントビューワ イベントビューワー イベントビュワー イベント表示, errors エラー</string>
+				<key>title</key>
+				<string>ログ</string>
+			</dict>
+		</array>
+	</dict>
+	<key>mailLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>mail logs メールログ メール記録, mail server logs メールサーバログ メールサーバーログ メールサーバ記録 メールサーバー記録, pop logs POP ログ POP 記録, imap logs IMAP ログ IMAP 記録, smtp logs SMTP ログ SMTP 記録</string>
+				<key>title</key>
+				<string>メールサーバログ</string>
+			</dict>
+		</array>
+	</dict>
+	<key>vpnLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>vpn logs VPN ログ VPN 記録, remote access logs リモートアクセスログ リモート接続ログ リモート通信ログ リモートアクセス記録 リモート接続記録 リモート通信記録</string>
+				<key>title</key>
+				<string>VPN ログ</string>
+			</dict>
+		</array>
+	</dict>
+	<key>webLogs</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>website logs Web サイトログ ウェブサイトログ インターネットサイトログ インタネットサイトログ Web サイト記録 ウェブサイト記録 インターネットサイト記録 インタネットサイト記録, web logs Web ログ ウェブログ インターネットログ インタネットログ Web 記録 ウェブ記録 インターネット記録 インタネット記録, http logs HTTP ログ HTTP 記録</string>
+				<key>title</key>
+				<string>Web サイトログ</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

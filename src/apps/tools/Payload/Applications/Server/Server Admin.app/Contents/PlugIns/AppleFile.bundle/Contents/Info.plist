@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>AppleFile</string>
+	<key>CFBundleGetInfoString</key>
+	<string>10.6, © Copyright 2001–2008 Apple Inc.</string>
+	<key>CFBundleIconFile</key>
+	<string>Plugin.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.ServerAdmin.AppleFile</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>AFP</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>10.6</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>115</string>
+	<key>NSMainNibFile</key>
+	<string>AppleFile</string>
+	<key>NSPrincipalClass</key>
+	<string>AppleFile</string>
+	<key>NeedsDSConfiguratorPane</key>
+	<false/>
+	<key>ServerManagerDaemonCommand</key>
+	<string>servermgr_afp</string>
+	<key>SupportsClusterization</key>
+	<true/>
+	<key>SupportsSessionlessAccess</key>
+	<false/>
+</dict>
+</plist>

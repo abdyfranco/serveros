@@ -1,0 +1,2212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>auth_algorithms</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>ohne</string>
+		<key>0x00000001</key>
+		<string>HMAC_SHA1</string>
+		<key>0x00000002</key>
+		<string>HMAC_MD5</string>
+	</dict>
+	<key>authtype_session_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>OHNE</string>
+		<key>0x00000001</key>
+		<string>MD2</string>
+		<key>0x00000002</key>
+		<string>MD5</string>
+		<key>0x00000004</key>
+		<string>KENNWORT</string>
+		<key>0x00000005</key>
+		<string>OEM</string>
+		<key>0x00000006</key>
+		<string>RMCP+</string>
+	</dict>
+	<key>bit_rate_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>IPMI-Over-Serial-Setting</string>
+		<key>0x00000006</key>
+		<string>9.6K</string>
+		<key>0x00000007</key>
+		<string>19.2K</string>
+		<key>0x00000008</key>
+		<string>38.4K</string>
+		<key>0x00000009</key>
+		<string>57.6K</string>
+		<key>0x0000000A</key>
+		<string>115.2K</string>
+	</dict>
+	<key>broken_dev_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Firmware defekt</string>
+		<key>0x00000001</key>
+		<string>Bootblock defekt</string>
+		<key>0x00000002</key>
+		<string>FRU Internal Use Area defekt</string>
+		<key>0x00000003</key>
+		<string>Leeres SDR Repository</string>
+		<key>0x00000004</key>
+		<string>IPMB antwortet nicht</string>
+		<key>0x00000005</key>
+		<string>Kein Zugriff auf BMC FRU</string>
+		<key>0x00000006</key>
+		<string>Kein Zugriff auf SDR Repository</string>
+		<key>0x00000007</key>
+		<string>Kein Zugriff auf SEL Device</string>
+	</dict>
+	<key>channel_activity_type_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>IPMI Messaging session active</string>
+		<key>0x00000001</key>
+		<string>Callback Messaging session active</string>
+		<key>0x00000002</key>
+		<string>Dial-out Alert active</string>
+		<key>0x00000003</key>
+		<string>TAP Page Active</string>
+	</dict>
+	<key>channel_medium_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Reserviert</string>
+		<key>0x00000001</key>
+		<string>IPMB (I2C)</string>
+		<key>0x00000002</key>
+		<string>ICMB v1.0</string>
+		<key>0x00000003</key>
+		<string>ICMB v0.9</string>
+		<key>0x00000004</key>
+		<string>802.3 LAN</string>
+		<key>0x00000005</key>
+		<string>Seriell/Modem</string>
+		<key>0x00000006</key>
+		<string>anderes LAN</string>
+		<key>0x00000007</key>
+		<string>PCI SMBus</string>
+		<key>0x00000008</key>
+		<string>SMBus v1.0/v1.1</string>
+		<key>0x00000009</key>
+		<string>SMBus v2.0</string>
+		<key>0x0000000A</key>
+		<string>USB 1.x</string>
+		<key>0x0000000B</key>
+		<string>USB 2.x</string>
+		<key>0x0000000C</key>
+		<string>Systemschnittstelle</string>
+	</dict>
+	<key>channel_protocol_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Reserviert</string>
+		<key>0x00000001</key>
+		<string>IPMB-1.0</string>
+		<key>0x00000002</key>
+		<string>ICMB-1.0</string>
+		<key>0x00000003</key>
+		<string>Reserviert</string>
+		<key>0x00000004</key>
+		<string>IPMI-SMBus</string>
+		<key>0x00000005</key>
+		<string>KCS</string>
+		<key>0x00000006</key>
+		<string>SMIC</string>
+		<key>0x00000007</key>
+		<string>BT-10</string>
+		<key>0x00000008</key>
+		<string>BT-15</string>
+		<key>0x00000009</key>
+		<string>TMode</string>
+		<key>0x0000001C</key>
+		<string>OEM 1</string>
+		<key>0x0000001D</key>
+		<string>OEM 2</string>
+		<key>0x0000001E</key>
+		<string>OEM 3</string>
+		<key>0x0000001F</key>
+		<string>OEM 4</string>
+	</dict>
+	<key>chassis_power_control_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Down/Off</string>
+		<key>0x00000001</key>
+		<string>Up/On</string>
+		<key>0x00000002</key>
+		<string>Cycle</string>
+		<key>0x00000003</key>
+		<string>Reset</string>
+		<key>0x00000004</key>
+		<string>Diag</string>
+		<key>0x00000005</key>
+		<string>Soft</string>
+	</dict>
+	<key>completion_codes</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Command completed normally</string>
+		<key>0xFFFEF9C0</key>
+		<string>Node busy</string>
+		<key>0xFFFEF9C1</key>
+		<string>Invalid command</string>
+		<key>0xFFFEF9C2</key>
+		<string>Invalid command on LUN</string>
+		<key>0xFFFEF9C3</key>
+		<string>Timeout</string>
+		<key>0xFFFEF9C4</key>
+		<string>Out of space</string>
+		<key>0xFFFEF9C5</key>
+		<string>Reservation cancelled or invalid</string>
+		<key>0xFFFEF9C6</key>
+		<string>Request data truncated</string>
+		<key>0xFFFEF9C7</key>
+		<string>Request data length invalid</string>
+		<key>0xFFFEF9C8</key>
+		<string>Request data field length limit exceeded</string>
+		<key>0xFFFEF9C9</key>
+		<string>Parameter out of range</string>
+		<key>0xFFFEF9CA</key>
+		<string>Cannot return number of requested data bytes</string>
+		<key>0xFFFEF9CB</key>
+		<string>Requested sensor, data, or record not found</string>
+		<key>0xFFFEF9CC</key>
+		<string>Invalid data field in request</string>
+		<key>0xFFFEF9CD</key>
+		<string>Command illegal for specified sensor or record type</string>
+		<key>0xFFFEF9CE</key>
+		<string>Command response could not be provided</string>
+		<key>0xFFFEF9CF</key>
+		<string>Cannot execute duplicated request</string>
+		<key>0xFFFEF9D0</key>
+		<string>SDR Repository in update mode</string>
+		<key>0xFFFEF9D1</key>
+		<string>Device firmware in update mode</string>
+		<key>0xFFFEF9D2</key>
+		<string>BMC initialization in progress</string>
+		<key>0xFFFEF9D3</key>
+		<string>Destination unavailable</string>
+		<key>0xFFFEF9D4</key>
+		<string>Insufficient privilege level</string>
+		<key>0xFFFEF9D5</key>
+		<string>Command not supported in present state</string>
+		<key>0xFFFEF9FF</key>
+		<string>Unspecified error</string>
+	</dict>
+	<key>encryption_algorithms</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>ohne</string>
+		<key>0x00000001</key>
+		<string>AES_CBC_128</string>
+		<key>0x00000002</key>
+		<string>xRC4_128</string>
+		<key>0x00000003</key>
+		<string>xRC4_40</string>
+	</dict>
+	<key>entity_device_type_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Reserviert</string>
+		<key>0x00000001</key>
+		<string>Reserviert</string>
+		<key>0x00000002</key>
+		<string>DS1624 Temperatursensor</string>
+		<key>0x00000003</key>
+		<string>DS1621 Temperatursensor</string>
+		<key>0x00000004</key>
+		<string>LM75 Temperatursensor</string>
+		<key>0x00000005</key>
+		<string>Heceta ASIC</string>
+		<key>0x00000006</key>
+		<string>Reserviert</string>
+		<key>0x00000007</key>
+		<string>Reserviert</string>
+		<key>0x00000008</key>
+		<string>EEPROM, 24C01</string>
+		<key>0x00000009</key>
+		<string>EEPROM, 24C02</string>
+		<key>0x0000000A</key>
+		<string>EEPROM, 24C04</string>
+		<key>0x0000000B</key>
+		<string>EEPROM, 24C08</string>
+		<key>0x0000000C</key>
+		<string>EEPROM, 24C16</string>
+		<key>0x0000000D</key>
+		<string>EEPROM, 24C17</string>
+		<key>0x0000000E</key>
+		<string>EEPROM, 24C32</string>
+		<key>0x0000000F</key>
+		<string>EEPROM, 24C64</string>
+		<key>0x00000011</key>
+		<string>Reserviert</string>
+		<key>0x00000012</key>
+		<string>Reserviert</string>
+		<key>0x00000013</key>
+		<string>Reserviert</string>
+		<key>0x00000014</key>
+		<string>PCF 8570 256 Byte RAM</string>
+		<key>0x00000015</key>
+		<string>PCF 8573 clock/calendar</string>
+		<key>0x00000016</key>
+		<string>PCF 8574A I/O Port</string>
+		<key>0x00000017</key>
+		<string>PCF 8583 clock/calendar</string>
+		<key>0x00000018</key>
+		<string>PCF 8593 clock/calendar</string>
+		<key>0x00000019</key>
+		<string>Clock calendar</string>
+		<key>0x0000001A</key>
+		<string>PCF 8591 A/D, D/A Converter</string>
+		<key>0x0000001B</key>
+		<string>I/O Port</string>
+		<key>0x0000001C</key>
+		<string>A/D Converter</string>
+		<key>0x0000001D</key>
+		<string>D/A Converter</string>
+		<key>0x0000001E</key>
+		<string>A/D, D/A Converter</string>
+		<key>0x0000001F</key>
+		<string>LCD Controller/Driver</string>
+		<key>0x00000020</key>
+		<string>Core Logic (Chip set) Device</string>
+		<key>0x00000021</key>
+		<string>LMC6874 Intelligent Battery controller</string>
+		<key>0x00000022</key>
+		<string>Intelligent Battery controller</string>
+		<key>0x00000023</key>
+		<string>Combo Management ASIC</string>
+		<key>0x00000024</key>
+		<string>Maxim 1617 Temperatursensor</string>
+		<key>0x000000BF</key>
+		<string>Other/Unspecified</string>
+		<key>0x00001000</key>
+		<string>IPMI FRU Inventory</string>
+		<key>0x00001001</key>
+		<string>DIMM Memory ID</string>
+		<key>0x00001002</key>
+		<string>IPMI FRU Inventory</string>
+		<key>0x00001003</key>
+		<string>System Processor Cartridge FRU</string>
+	</dict>
+	<key>entity_id_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Unspezifiziert</string>
+		<key>0x00000001</key>
+		<string>Andere</string>
+		<key>0x00000002</key>
+		<string>Unbekannt</string>
+		<key>0x00000003</key>
+		<string>Prozessor</string>
+		<key>0x00000004</key>
+		<string>Laufwerk oder Laufwerksschacht</string>
+		<key>0x00000005</key>
+		<string>Peripherieschacht</string>
+		<key>0x00000006</key>
+		<string>Systemmanagementmodul</string>
+		<key>0x00000007</key>
+		<string>Systemplatine</string>
+		<key>0x00000008</key>
+		<string>Speichermodul</string>
+		<key>0x00000009</key>
+		<string>Prozessormodul</string>
+		<key>0x0000000A</key>
+		<string>Netzteil</string>
+		<key>0x0000000B</key>
+		<string>Erweiterungskarte</string>
+		<key>0x0000000C</key>
+		<string>Frontwandplatine</string>
+		<key>0x0000000D</key>
+		<string>Rückwandplatine</string>
+		<key>0x0000000E</key>
+		<string>Stromversorgungsplatine</string>
+		<key>0x0000000F</key>
+		<string>Laufwerksbusplatine</string>
+		<key>0x00000010</key>
+		<string>Interne Systemerweiterungsplatine</string>
+		<key>0x00000011</key>
+		<string>Andere Systemplatine</string>
+		<key>0x00000012</key>
+		<string>Prozessorplatine</string>
+		<key>0x00000013</key>
+		<string>Leistungseinheit</string>
+		<key>0x00000014</key>
+		<string>Leistungsmodul</string>
+		<key>0x00000015</key>
+		<string>Leistungsverwaltung</string>
+		<key>0x00000016</key>
+		<string>Gehäuserückwandplatine</string>
+		<key>0x00000017</key>
+		<string>Systemgehäuse</string>
+		<key>0x00000018</key>
+		<string>Gehäuse für Untereinheit</string>
+		<key>0x00000019</key>
+		<string>Andere Gehäuseplatine</string>
+		<key>0x0000001A</key>
+		<string>Laufwerksschacht</string>
+		<key>0x0000001B</key>
+		<string>Peripherieschacht</string>
+		<key>0x0000001C</key>
+		<string>Geräteschacht</string>
+		<key>0x0000001D</key>
+		<string>Lüfter</string>
+		<key>0x0000001E</key>
+		<string>Kühleinheit</string>
+		<key>0x0000001F</key>
+		<string>Kabel/Verbindung</string>
+		<key>0x00000020</key>
+		<string>Speichergerät</string>
+		<key>0x00000021</key>
+		<string>Systemverwaltungs-Software</string>
+		<key>0x00000022</key>
+		<string>BIOS</string>
+		<key>0x00000023</key>
+		<string>Betriebssystem</string>
+		<key>0x00000024</key>
+		<string>Systembus</string>
+		<key>0x00000025</key>
+		<string>Gruppe</string>
+		<key>0x00000026</key>
+		<string>Gerät zur entfernten Verwaltung</string>
+		<key>0x00000027</key>
+		<string>Externe Umgebung</string>
+		<key>0x00000028</key>
+		<string>Batterie</string>
+		<key>0x00000029</key>
+		<string>Prozessor-Blade</string>
+		<key>0x0000002A</key>
+		<string>Verbindungsschalter</string>
+		<key>0x0000002B</key>
+		<string>Prozessor/Speichermodul</string>
+		<key>0x0000002C</key>
+		<string>I/O-Modul</string>
+		<key>0x0000002D</key>
+		<string>Prozessor/IO-Modul</string>
+		<key>0x0000002E</key>
+		<string>Management-Controller-Firmware</string>
+		<key>0x0000002F</key>
+		<string>IPMI-Kanal</string>
+		<key>0x00000030</key>
+		<string>PCI-Bus</string>
+		<key>0x00000031</key>
+		<string>PCI</string>
+		<key>0x00000032</key>
+		<string>SCSI-Bus (parallel)</string>
+		<key>0x00000033</key>
+		<string>SATA/SAS-Bus</string>
+		<key>0x00000034</key>
+		<string>Prozessor/Front-Side-Bus</string>
+	</dict>
+	<key>event_dir_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Assertion Event</string>
+		<key>0x00000001</key>
+		<string>Deassertion Event</string>
+	</dict>
+	<key>event_thresh_hi</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>lnc</string>
+		<key>0x00000003</key>
+		<string>lcr</string>
+		<key>0x00000005</key>
+		<string>lnr</string>
+		<key>0x00000007</key>
+		<string>unc</string>
+		<key>0x00000009</key>
+		<string>ucr</string>
+		<key>0x0000000B</key>
+		<string>unr</string>
+	</dict>
+	<key>event_thresh_lo</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>lnc</string>
+		<key>0x00000002</key>
+		<string>lcr</string>
+		<key>0x00000004</key>
+		<string>lnr</string>
+		<key>0x00000006</key>
+		<string>unc</string>
+		<key>0x00000008</key>
+		<string>ucr</string>
+		<key>0x0000000A</key>
+		<string>unr</string>
+	</dict>
+	<key>integrity_algorithms</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>ohne</string>
+		<key>0x00000001</key>
+		<string>HMAC_SHA1_96</string>
+		<key>0x00000002</key>
+		<string>HMAC_MD5_128</string>
+		<key>0x00000003</key>
+		<string>MD5_128</string>
+	</dict>
+	<key>jedec_id1_vals</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>AMD</string>
+		<key>0x00000002</key>
+		<string>AMI</string>
+		<key>0x00000004</key>
+		<string>Fujitsu</string>
+		<key>0x00000007</key>
+		<string>Hitachi</string>
+		<key>0x00000008</key>
+		<string>Inmos</string>
+		<key>0x0000000B</key>
+		<string>Intersil</string>
+		<key>0x0000000D</key>
+		<string>Mostek</string>
+		<key>0x0000000E</key>
+		<string>Motorola</string>
+		<key>0x00000010</key>
+		<string>NEC</string>
+		<key>0x00000013</key>
+		<string>Conexant (Rockwell)</string>
+		<key>0x00000015</key>
+		<string>Philips Semi. (Signetics)</string>
+		<key>0x00000016</key>
+		<string>Synertek</string>
+		<key>0x00000019</key>
+		<string>Xicor</string>
+		<key>0x0000001A</key>
+		<string>Zilog</string>
+		<key>0x0000001C</key>
+		<string>Mitsubishi</string>
+		<key>0x0000001F</key>
+		<string>Atmel</string>
+		<key>0x00000020</key>
+		<string>SGS/Thomson</string>
+		<key>0x00000023</key>
+		<string>Wafer Scale Integration</string>
+		<key>0x00000025</key>
+		<string>Tristar</string>
+		<key>0x00000026</key>
+		<string>Visic</string>
+		<key>0x00000029</key>
+		<string>Microchip Technology</string>
+		<key>0x0000002A</key>
+		<string>Ricoh Ltd.</string>
+		<key>0x0000002C</key>
+		<string>Micron Technology</string>
+		<key>0x0000002F</key>
+		<string>ACTEL</string>
+		<key>0x00000031</key>
+		<string>Catalyst</string>
+		<key>0x00000032</key>
+		<string>Panasonic</string>
+		<key>0x00000034</key>
+		<string>Cypress</string>
+		<key>0x00000037</key>
+		<string>Zarlink</string>
+		<key>0x00000038</key>
+		<string>UTMC</string>
+		<key>0x0000003B</key>
+		<string>Integrated CMOS(Vertex)</string>
+		<key>0x0000003D</key>
+		<string>Tektronix</string>
+		<key>0x0000003E</key>
+		<string>Sun Microsystems</string>
+		<key>0x00000040</key>
+		<string>MOSEL</string>
+		<key>0x00000043</key>
+		<string>Xerox</string>
+		<key>0x00000045</key>
+		<string>SunDisk</string>
+		<key>0x00000046</key>
+		<string>Elan Circuit Tech.</string>
+		<key>0x0000004A</key>
+		<string>Compaq</string>
+		<key>0x0000004C</key>
+		<string>SCI</string>
+		<key>0x0000004F</key>
+		<string>I3 Design System</string>
+		<key>0x00000051</key>
+		<string>Crosspoint Solutions</string>
+		<key>0x00000052</key>
+		<string>Alliance Semiconductor</string>
+		<key>0x00000054</key>
+		<string>Hewlett-Packard</string>
+		<key>0x00000057</key>
+		<string>New Media</string>
+		<key>0x00000058</key>
+		<string>MHS Electronic</string>
+		<key>0x0000005B</key>
+		<string>Kawasaki Steel</string>
+		<key>0x0000005D</key>
+		<string>TECMAR</string>
+		<key>0x0000005E</key>
+		<string>Exar</string>
+		<key>0x00000061</key>
+		<string>Northern Telecom</string>
+		<key>0x00000062</key>
+		<string>Sanyo</string>
+		<key>0x00000064</key>
+		<string>Crystal Semiconductor</string>
+		<key>0x00000067</key>
+		<string>Asparix</string>
+		<key>0x00000068</key>
+		<string>Convex Computer</string>
+		<key>0x0000006B</key>
+		<string>Transwitch</string>
+		<key>0x0000006D</key>
+		<string>Cannon</string>
+		<key>0x0000006E</key>
+		<string>Altera</string>
+		<key>0x00000070</key>
+		<string>QUALCOMM</string>
+		<key>0x00000073</key>
+		<string>AMS (Austria Micro)</string>
+		<key>0x00000075</key>
+		<string>Aster Electronics</string>
+		<key>0x00000076</key>
+		<string>Bay Networks (Synoptic)</string>
+		<key>0x00000079</key>
+		<string>Thesys</string>
+		<key>0x0000007A</key>
+		<string>Solbourne Computer</string>
+		<key>0x0000007C</key>
+		<string>Dialog</string>
+		<key>0x00000083</key>
+		<string>Fairchild</string>
+		<key>0x00000085</key>
+		<string>GTE</string>
+		<key>0x00000086</key>
+		<string>Harris</string>
+		<key>0x00000089</key>
+		<string>Intel</string>
+		<key>0x0000008A</key>
+		<string>I.T.T.</string>
+		<key>0x0000008F</key>
+		<string>National</string>
+		<key>0x0000008c</key>
+		<string>Monolithic Memories</string>
+		<key>0x00000091</key>
+		<string>RCA</string>
+		<key>0x00000092</key>
+		<string>Raytheon</string>
+		<key>0x00000094</key>
+		<string>Seeq</string>
+		<key>0x00000097</key>
+		<string>Texas Instruments</string>
+		<key>0x00000098</key>
+		<string>Toshiba</string>
+		<key>0x0000009B</key>
+		<string>Eurotechnique</string>
+		<key>0x0000009D</key>
+		<string>Lucent (AT&amp;T)</string>
+		<key>0x0000009E</key>
+		<string>Exel</string>
+		<key>0x000000A1</key>
+		<string>Lattice Semi.</string>
+		<key>0x000000A4</key>
+		<string>IBM</string>
+		<key>0x000000A7</key>
+		<string>Intl. CMOS Technology</string>
+		<key>0x000000A8</key>
+		<string>SSSI</string>
+		<key>0x000000AB</key>
+		<string>VLSI</string>
+		<key>0x000000AD</key>
+		<string>Hyundai Electronics</string>
+		<key>0x000000AE</key>
+		<string>OKI Semiconductor</string>
+		<key>0x000000B0</key>
+		<string>Sharp</string>
+		<key>0x000000B3</key>
+		<string>IDT</string>
+		<key>0x000000B5</key>
+		<string>DEC</string>
+		<key>0x000000B6</key>
+		<string>LSI Logic</string>
+		<key>0x000000B9</key>
+		<string>Thinking Machine</string>
+		<key>0x000000BA</key>
+		<string>Thomson CSF</string>
+		<key>0x000000BC</key>
+		<string>Honeywell</string>
+		<key>0x000000BF</key>
+		<string>SST</string>
+		<key>0x000000C1</key>
+		<string>Infineon</string>
+		<key>0x000000C2</key>
+		<string>Macronix</string>
+		<key>0x000000C4</key>
+		<string>Plus Logic</string>
+		<key>0x000000C7</key>
+		<string>European Silicon Str.</string>
+		<key>0x000000C8</key>
+		<string>Apple Inc.</string>
+		<key>0x000000C9</key>
+		<string>Xilinx</string>
+		<key>0x000000CB</key>
+		<string>Protocol Engines</string>
+		<key>0x000000CD</key>
+		<string>Seiko Instruments</string>
+		<key>0x000000CE</key>
+		<string>Samsung</string>
+		<key>0x000000D0</key>
+		<string>Klic</string>
+		<key>0x000000D3</key>
+		<string>Tandem</string>
+		<key>0x000000D5</key>
+		<string>Intg. Silicon Solutions</string>
+		<key>0x000000D6</key>
+		<string>Brooktree</string>
+		<key>0x000000D9</key>
+		<string>Performance Semi.</string>
+		<key>0x000000DA</key>
+		<string>Winbond Electronic</string>
+		<key>0x000000DC</key>
+		<string>Bright Micro</string>
+		<key>0x000000DF</key>
+		<string>PCMCIA</string>
+		<key>0x000000E0</key>
+		<string>LG Semiconductor</string>
+		<key>0x000000E3</key>
+		<string>Array Microsystems</string>
+		<key>0x000000E5</key>
+		<string>Analog Devices</string>
+		<key>0x000000E6</key>
+		<string>PMC-Sierra</string>
+		<key>0x000000E9</key>
+		<string>Quality Semiconductor</string>
+		<key>0x000000EA</key>
+		<string>Nimbus Technology</string>
+		<key>0x000000EC</key>
+		<string>Micronas (ITT Intermetall)</string>
+		<key>0x000000EF</key>
+		<string>NEXCOM</string>
+		<key>0x000000F1</key>
+		<string>Sony</string>
+		<key>0x000000F2</key>
+		<string>Cray Research</string>
+		<key>0x000000F4</key>
+		<string>Vitesse</string>
+		<key>0x000000F7</key>
+		<string>Zentrum</string>
+		<key>0x000000F8</key>
+		<string>TRW</string>
+		<key>0x000000FB</key>
+		<string>Allied-Signal</string>
+		<key>0x000000FD</key>
+		<string>Media Vision</string>
+		<key>0x000000FE</key>
+		<string>Level One Communication</string>
+		<key>0x000000a2</key>
+		<string>NCR</string>
+	</dict>
+	<key>jedec_id2_vals</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>Cirrus Logic</string>
+		<key>0x00000002</key>
+		<string>National Instruments</string>
+		<key>0x00000004</key>
+		<string>Alcatel Mietec</string>
+		<key>0x00000007</key>
+		<string>JTAG Technologies</string>
+		<key>0x00000008</key>
+		<string>Loral</string>
+		<key>0x0000000B</key>
+		<string>Bestlink Systems</string>
+		<key>0x0000000D</key>
+		<string>GENNUM</string>
+		<key>0x0000000E</key>
+		<string>VideoLogic</string>
+		<key>0x00000010</key>
+		<string>Chip Express</string>
+		<key>0x00000013</key>
+		<string>TCSI</string>
+		<key>0x00000015</key>
+		<string>Hughes Aircraft</string>
+		<key>0x00000016</key>
+		<string>Lanstar Semiconductor</string>
+		<key>0x00000019</key>
+		<string>Music Semi</string>
+		<key>0x0000001A</key>
+		<string>Ericsson Components</string>
+		<key>0x0000001C</key>
+		<string>Eon Silicon Devices</string>
+		<key>0x0000001F</key>
+		<string>Integ. Memories Tech.</string>
+		<key>0x00000020</key>
+		<string>Corollary Inc.</string>
+		<key>0x00000023</key>
+		<string>EIV(Switzerland)</string>
+		<key>0x00000025</key>
+		<string>Zarlink (formerly Mitel)</string>
+		<key>0x00000026</key>
+		<string>Clearpoint</string>
+		<key>0x00000029</key>
+		<string>Vanguard</string>
+		<key>0x0000002A</key>
+		<string>Hagiwara Sys-Com</string>
+		<key>0x0000002C</key>
+		<string>Celestica</string>
+		<key>0x0000002F</key>
+		<string>Rohm Company Ltd.</string>
+		<key>0x00000031</key>
+		<string>Libit Signal Processing</string>
+		<key>0x00000032</key>
+		<string>Enhanced Memories Inc.</string>
+		<key>0x00000034</key>
+		<string>Adaptec Inc.</string>
+		<key>0x00000037</key>
+		<string>AMIC Technology</string>
+		<key>0x00000038</key>
+		<string>Adobe Systems</string>
+		<key>0x0000003B</key>
+		<string>Newport Digital</string>
+		<key>0x0000003D</key>
+		<string>T Square</string>
+		<key>0x0000003E</key>
+		<string>Seiko Epson</string>
+		<key>0x00000040</key>
+		<string>Viking Components</string>
+		<key>0x00000043</key>
+		<string>Suwa Electronics</string>
+		<key>0x00000045</key>
+		<string>Micron CMS</string>
+		<key>0x00000046</key>
+		<string>American Computer &amp; Digital Components Inc</string>
+		<key>0x00000049</key>
+		<string>CPU Design</string>
+		<key>0x0000004A</key>
+		<string>Price Point</string>
+		<key>0x0000004C</key>
+		<string>Tellabs</string>
+		<key>0x0000004F</key>
+		<string>Transcend Information</string>
+		<key>0x00000051</key>
+		<string>CKD Corporation Ltd.</string>
+		<key>0x00000052</key>
+		<string>Capital Instruments, Inc.</string>
+		<key>0x00000054</key>
+		<string>Linvex Technology</string>
+		<key>0x00000057</key>
+		<string>Dynamem, Inc.</string>
+		<key>0x00000058</key>
+		<string>NERA ASA</string>
+		<key>0x0000005B</key>
+		<string>Acorn Computers</string>
+		<key>0x0000005D</key>
+		<string>Oak Technology, Inc.</string>
+		<key>0x0000005E</key>
+		<string>Itec Memory</string>
+		<key>0x00000061</key>
+		<string>Wintec Industries</string>
+		<key>0x00000062</key>
+		<string>Super PC Memory</string>
+		<key>0x00000064</key>
+		<string>Galvantech</string>
+		<key>0x00000067</key>
+		<string>GateField</string>
+		<key>0x00000068</key>
+		<string>Integrated Memory System</string>
+		<key>0x0000006B</key>
+		<string>Goldenram</string>
+		<key>0x0000006D</key>
+		<string>Cimaron Communications</string>
+		<key>0x0000006E</key>
+		<string>Nippon Steel Semi. Corp.</string>
+		<key>0x00000070</key>
+		<string>AMCC</string>
+		<key>0x00000073</key>
+		<string>Digital Microwave</string>
+		<key>0x00000075</key>
+		<string>MIMOS Semiconductor</string>
+		<key>0x00000076</key>
+		<string>Advanced Fibre</string>
+		<key>0x00000079</key>
+		<string>Acbel Polytech Inc.</string>
+		<key>0x0000007A</key>
+		<string>Apacer Technology</string>
+		<key>0x0000007C</key>
+		<string>FOXCONN</string>
+		<key>0x00000083</key>
+		<string>ILC Data Device</string>
+		<key>0x00000085</key>
+		<string>Micro Linear</string>
+		<key>0x00000086</key>
+		<string>Univ. of NC</string>
+		<key>0x00000089</key>
+		<string>Nchip</string>
+		<key>0x0000008A</key>
+		<string>Galileo Tech</string>
+		<key>0x0000008C</key>
+		<string>Graychip</string>
+		<key>0x0000008F</key>
+		<string>Robert Bosch</string>
+		<key>0x00000091</key>
+		<string>DATARAM</string>
+		<key>0x00000092</key>
+		<string>United Microelec Corp.</string>
+		<key>0x00000094</key>
+		<string>Smart Modular</string>
+		<key>0x00000097</key>
+		<string>Qlogic</string>
+		<key>0x00000098</key>
+		<string>Kingston</string>
+		<key>0x0000009B</key>
+		<string>SpaSE</string>
+		<key>0x0000009D</key>
+		<string>Programmable Micro Corp</string>
+		<key>0x0000009E</key>
+		<string>DoD</string>
+		<key>0x000000A1</key>
+		<string>Dallas Semiconductor</string>
+		<key>0x000000A2</key>
+		<string>Omnivision</string>
+		<key>0x000000A4</key>
+		<string>Novatel Wireless</string>
+		<key>0x000000A7</key>
+		<string>Cabletron</string>
+		<key>0x000000A8</key>
+		<string>Silicon Technology</string>
+		<key>0x000000AB</key>
+		<string>Vantis</string>
+		<key>0x000000AD</key>
+		<string>Century</string>
+		<key>0x000000AE</key>
+		<string>Hal Computers</string>
+		<key>0x000000B0</key>
+		<string>Juniper Networks</string>
+		<key>0x000000B3</key>
+		<string>Tundra Semiconductor</string>
+		<key>0x000000B5</key>
+		<string>LightSpeed Semi.</string>
+		<key>0x000000B6</key>
+		<string>ZSP Corp.</string>
+		<key>0x000000B9</key>
+		<string>Dynachip</string>
+		<key>0x000000BA</key>
+		<string>PNY Electronics</string>
+		<key>0x000000BC</key>
+		<string>MMC Networks</string>
+		<key>0x000000BF</key>
+		<string>Broadcom</string>
+		<key>0x000000C1</key>
+		<string>V3 Semiconductor</string>
+		<key>0x000000C2</key>
+		<string>Flextronics (formerly Orbit)</string>
+		<key>0x000000C4</key>
+		<string>Transmeta</string>
+		<key>0x000000C7</key>
+		<string>Enhance 3000 Inc</string>
+		<key>0x000000C8</key>
+		<string>Tower Semiconductor</string>
+		<key>0x000000CB</key>
+		<string>Maxim Integrated Product</string>
+		<key>0x000000CD</key>
+		<string>Centaur Technology</string>
+		<key>0x000000CE</key>
+		<string>Unigen Corporation</string>
+		<key>0x000000D0</key>
+		<string>Memory Card Technology</string>
+		<key>0x000000D3</key>
+		<string>Aica Kogyo, Ltd.</string>
+		<key>0x000000D5</key>
+		<string>MSC Vertriebs GmbH</string>
+		<key>0x000000D6</key>
+		<string>AKM Company, Ltd.</string>
+		<key>0x000000D9</key>
+		<string>GSI Technology</string>
+		<key>0x000000DA</key>
+		<string>Dane-Elec (C Memory)</string>
+		<key>0x000000DC</key>
+		<string>Lara Technology</string>
+		<key>0x000000DF</key>
+		<string>Tanisys Technology</string>
+		<key>0x000000E0</key>
+		<string>Truevision</string>
+		<key>0x000000E3</key>
+		<string>MGV Memory</string>
+		<key>0x000000E5</key>
+		<string>Gadzoox Nteworks</string>
+		<key>0x000000E6</key>
+		<string>Multi Dimensional Cons.</string>
+		<key>0x000000E9</key>
+		<string>Triscend</string>
+		<key>0x000000EA</key>
+		<string>XaQti</string>
+		<key>0x000000EC</key>
+		<string>Clear Logic</string>
+		<key>0x000000EF</key>
+		<string>Advantage Memory</string>
+		<key>0x000000F1</key>
+		<string>LeCroy</string>
+		<key>0x000000F2</key>
+		<string>Yamaha Corporation</string>
+		<key>0x000000F4</key>
+		<string>NetLogic Microsystems</string>
+		<key>0x000000F7</key>
+		<string>BF Goodrich Data.</string>
+		<key>0x000000F8</key>
+		<string>Epigram</string>
+		<key>0x000000FB</key>
+		<string>Admor Memory</string>
+		<key>0x000000FD</key>
+		<string>Quadratics Superconductor</string>
+		<key>0x000000FE</key>
+		<string>3COM</string>
+	</dict>
+	<key>jedec_id3_vals</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>Camintonn Corporation</string>
+		<key>0x00000002</key>
+		<string>ISOA Incorporated</string>
+		<key>0x00000004</key>
+		<string>ADMtek Incorporated</string>
+		<key>0x00000007</key>
+		<string>MOSAID Technologies</string>
+		<key>0x00000008</key>
+		<string>Ardent Technologies</string>
+		<key>0x0000000B</key>
+		<string>Allayer Technologies</string>
+		<key>0x0000000D</key>
+		<string>Oasis Semiconductor</string>
+		<key>0x0000000E</key>
+		<string>Novanet Semiconductor</string>
+		<key>0x00000010</key>
+		<string>Power General</string>
+		<key>0x00000013</key>
+		<string>Telocity</string>
+		<key>0x00000015</key>
+		<string>Symagery Microsystems</string>
+		<key>0x00000016</key>
+		<string>C-Port Corporation</string>
+		<key>0x00000019</key>
+		<string>Malleable Technologies</string>
+		<key>0x0000001A</key>
+		<string>Kendin Communications</string>
+		<key>0x0000001C</key>
+		<string>Sanmina Corporation</string>
+		<key>0x0000001F</key>
+		<string>Actrans System Inc.</string>
+		<key>0x00000020</key>
+		<string>ALPHA Technologies</string>
+		<key>0x00000023</key>
+		<string>Align Manufacturing</string>
+		<key>0x00000025</key>
+		<string>Chameleon Systems</string>
+		<key>0x00000026</key>
+		<string>Aplus Flash Technology</string>
+		<key>0x00000029</key>
+		<string>ADTEC Corporation</string>
+		<key>0x0000002A</key>
+		<string>Kentron Technologies</string>
+		<key>0x0000002C</key>
+		<string>ASIC Designs Inc</string>
+		<key>0x0000002F</key>
+		<string>Siemens AG</string>
+		<key>0x00000031</key>
+		<string>Itautec Philco SA</string>
+		<key>0x00000032</key>
+		<string>Radiata Inc.</string>
+		<key>0x00000034</key>
+		<string>Legend</string>
+		<key>0x00000037</key>
+		<string>Enikia Incorporated</string>
+		<key>0x00000038</key>
+		<string>SwitchOn Networks</string>
+		<key>0x0000003B</key>
+		<string>ESS Technology</string>
+		<key>0x0000003D</key>
+		<string>Excess Bandwidth</string>
+		<key>0x0000003E</key>
+		<string>West Bay Semiconductor</string>
+		<key>0x00000040</key>
+		<string>Newport Communications</string>
+		<key>0x00000043</key>
+		<string>Intellitech Corporation</string>
+		<key>0x00000045</key>
+		<string>Ishoni Networks</string>
+		<key>0x00000046</key>
+		<string>Silicon Spice</string>
+		<key>0x00000049</key>
+		<string>Centillium Communications</string>
+		<key>0x0000004A</key>
+		<string>W.L. Gore</string>
+		<key>0x0000004C</key>
+		<string>GlobeSpan</string>
+		<key>0x0000004F</key>
+		<string>Saifun Semiconductors</string>
+		<key>0x00000051</key>
+		<string>MetaLink Technologies</string>
+		<key>0x00000052</key>
+		<string>Feiya Technology</string>
+		<key>0x00000054</key>
+		<string>Shikatronics</string>
+		<key>0x00000057</key>
+		<string>Com-Tier</string>
+		<key>0x00000058</key>
+		<string>Malaysia Micro Solutions</string>
+		<key>0x0000005B</key>
+		<string>Anadyne Microelectronics</string>
+		<key>0x0000005D</key>
+		<string>Mellanox Technologies</string>
+		<key>0x0000005E</key>
+		<string>Tenx Technologies</string>
+		<key>0x00000061</key>
+		<string>Skyup Technology</string>
+		<key>0x00000062</key>
+		<string>HiNT Corporation</string>
+		<key>0x00000064</key>
+		<string>MCI Computer GMBH</string>
+		<key>0x00000067</key>
+		<string>AVED Memory</string>
+		<key>0x00000068</key>
+		<string>Legerity</string>
+		<key>0x0000006B</key>
+		<string>nCUBE</string>
+		<key>0x0000006D</key>
+		<string>FDK Corporation</string>
+		<key>0x0000006E</key>
+		<string>High Bandwidth Access</string>
+		<key>0x00000070</key>
+		<string>BRECIS</string>
+		<key>0x00000073</key>
+		<string>Chicory Systems</string>
+		<key>0x00000075</key>
+		<string>Fast-Chip</string>
+		<key>0x00000076</key>
+		<string>Zucotto Wireless</string>
+		<key>0x00000079</key>
+		<string>eSilicon</string>
+		<key>0x0000007A</key>
+		<string>Morphics Technology</string>
+		<key>0x0000007C</key>
+		<string>Silicon Wave</string>
+		<key>0x00000083</key>
+		<string>Agate Semiconductor</string>
+		<key>0x00000085</key>
+		<string>HYPERTEC</string>
+		<key>0x00000086</key>
+		<string>Adhoc Technologies</string>
+		<key>0x00000089</key>
+		<string>Switchcore</string>
+		<key>0x0000008A</key>
+		<string>Cisco Systems, Inc.</string>
+		<key>0x0000008C</key>
+		<string>WorkX AG</string>
+		<key>0x0000008F</key>
+		<string>E-M Solutions</string>
+		<key>0x00000091</key>
+		<string>Advanced Hardware Arch.</string>
+		<key>0x00000092</key>
+		<string>Inova Semiconductors GmbH</string>
+		<key>0x00000094</key>
+		<string>Delkin Devices</string>
+		<key>0x00000097</key>
+		<string>SiberCore Technologies</string>
+		<key>0x00000098</key>
+		<string>Southland Microsystems</string>
+		<key>0x0000009B</key>
+		<string>Great Technology Microcomputer</string>
+		<key>0x0000009D</key>
+		<string>HADCO Corporation</string>
+		<key>0x0000009E</key>
+		<string>Corsair</string>
+		<key>0x000000A1</key>
+		<string>Cygnal Integrated Products Incorporated</string>
+		<key>0x000000A2</key>
+		<string>Artesyn Technologies</string>
+		<key>0x000000A4</key>
+		<string>Peregrine Semiconductor</string>
+		<key>0x000000A7</key>
+		<string>MIPS Technologies</string>
+		<key>0x000000A8</key>
+		<string>Chrysalis ITS</string>
+		<key>0x000000AB</key>
+		<string>Win Technologies</string>
+		<key>0x000000AD</key>
+		<string>Extreme Packet Devices</string>
+		<key>0x000000AE</key>
+		<string>RF Micro Devices</string>
+		<key>0x000000B0</key>
+		<string>Sarnoff Corporation</string>
+		<key>0x000000B3</key>
+		<string>Benchmark Elect. (AVEX)</string>
+		<key>0x000000B5</key>
+		<string>SpecTek Incorporated</string>
+		<key>0x000000B6</key>
+		<string>Hi/fn</string>
+		<key>0x000000B9</key>
+		<string>AANetcom Incorporated</string>
+		<key>0x000000BA</key>
+		<string>Micro Memory Bank</string>
+		<key>0x000000BC</key>
+		<string>Virata Corporation</string>
+		<key>0x000000BF</key>
+		<string>DSP Group</string>
+		<key>0x000000C1</key>
+		<string>Chip2Chip Incorporated</string>
+		<key>0x000000C2</key>
+		<string>Phobos Corporation</string>
+		<key>0x000000C4</key>
+		<string>Nordic VLSI ASA</string>
+		<key>0x000000C7</key>
+		<string>Alchemy Semiconductor</string>
+		<key>0x000000C8</key>
+		<string>Agilent Technologies</string>
+		<key>0x000000CB</key>
+		<string>HanBit Electronics</string>
+		<key>0x000000CD</key>
+		<string>Element 14</string>
+		<key>0x000000CE</key>
+		<string>Pycon</string>
+		<key>0x000000D0</key>
+		<string>Sibyte, Incorporated</string>
+		<key>0x000000D3</key>
+		<string>I &amp; C Technology</string>
+		<key>0x000000D5</key>
+		<string>Elektrobit</string>
+		<key>0x000000D6</key>
+		<string>Megic</string>
+		<key>0x000000D9</key>
+		<string>Hyperchip</string>
+		<key>0x000000DA</key>
+		<string>Gemstone Communications</string>
+		<key>0x000000DC</key>
+		<string>3ParData</string>
+		<key>0x000000DF</key>
+		<string>Helix AG</string>
+		<key>0x000000E0</key>
+		<string>Domosys</string>
+		<key>0x000000E3</key>
+		<string>Chiaro</string>
+		<key>0x000000E5</key>
+		<string>Exbit Technology A/S</string>
+		<key>0x000000E6</key>
+		<string>Integrated Technology Express</string>
+		<key>0x000000E9</key>
+		<string>Jasmine Networks</string>
+		<key>0x000000EA</key>
+		<string>Caspian Networks</string>
+		<key>0x000000EC</key>
+		<string>Silicon Access Networks</string>
+		<key>0x000000EF</key>
+		<string>MultiLink Technology</string>
+		<key>0x000000F1</key>
+		<string>World Wide Packets</string>
+		<key>0x000000F2</key>
+		<string>APW</string>
+		<key>0x000000F4</key>
+		<string>Xstream Logic</string>
+		<key>0x000000F7</key>
+		<string>Realchip</string>
+		<key>0x000000F8</key>
+		<string>Galaxy Power</string>
+		<key>0x000000FB</key>
+		<string>Accelerant Networks</string>
+		<key>0x000000FD</key>
+		<string>SandCraft</string>
+		<key>0x000000FE</key>
+		<string>Elpida</string>
+	</dict>
+	<key>jedec_id4_vals</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>Solectron</string>
+		<key>0x00000002</key>
+		<string>Optosys Technologies</string>
+		<key>0x00000004</key>
+		<string>TriMedia Technologies</string>
+		<key>0x00000007</key>
+		<string>Optillion</string>
+		<key>0x00000008</key>
+		<string>Terago Communications</string>
+		<key>0x0000000B</key>
+		<string>Nanya Technology</string>
+		<key>0x0000000D</key>
+		<string>Mysticom</string>
+		<key>0x0000000E</key>
+		<string>LightSand Communications</string>
+		<key>0x00000010</key>
+		<string>Agere Systems</string>
+		<key>0x00000013</key>
+		<string>Golden Empire</string>
+		<key>0x00000015</key>
+		<string>Tioga Technologies</string>
+		<key>0x00000016</key>
+		<string>Netlist</string>
+		<key>0x00000019</key>
+		<string>Centon Electronics</string>
+		<key>0x0000001A</key>
+		<string>Tyco Electronics</string>
+		<key>0x0000001C</key>
+		<string>Zettacom</string>
+		<key>0x0000001F</key>
+		<string>Aspex Technology</string>
+		<key>0x00000020</key>
+		<string>F5 Networks</string>
+		<key>0x00000023</key>
+		<string>Acorn Networks</string>
+		<key>0x00000025</key>
+		<string>Kingmax Semiconductor</string>
+		<key>0x00000026</key>
+		<string>BOPS</string>
+		<key>0x00000029</key>
+		<string>eMemory Technology</string>
+		<key>0x0000002A</key>
+		<string>Procket Networks</string>
+		<key>0x0000002C</key>
+		<string>Trebia Networks</string>
+		<key>0x0000002F</key>
+		<string>Ample Communications</string>
+		<key>0x00000031</key>
+		<string>Astute Networks</string>
+		<key>0x00000032</key>
+		<string>Azanda Network Devices</string>
+		<key>0x00000034</key>
+		<string>Tekmos</string>
+		<key>0x00000037</key>
+		<string>Firecron Ltd</string>
+		<key>0x00000038</key>
+		<string>Resonext Communications</string>
+		<key>0x0000003B</key>
+		<string>Concept Computer</string>
+		<key>0x0000003D</key>
+		<string>3Dlabs</string>
+		<key>0x0000003E</key>
+		<string>ct Magazine</string>
+		<key>0x00000040</key>
+		<string>Silicon Packets</string>
+		<key>0x00000043</key>
+		<string>Semicon Devices Singapore</string>
+		<key>0x00000045</key>
+		<string>Improv Systems</string>
+		<key>0x00000046</key>
+		<string>INDUSYS GmbH</string>
+		<key>0x00000049</key>
+		<string>Ritek Corp</string>
+		<key>0x0000004A</key>
+		<string>empowerTel Networks</string>
+		<key>0x0000004C</key>
+		<string>Cavium Networks</string>
+		<key>0x0000004F</key>
+		<string>Intrinsity</string>
+		<key>0x00000051</key>
+		<string>Terawave Communications</string>
+		<key>0x00000052</key>
+		<string>IceFyre Semiconductor</string>
+		<key>0x00000054</key>
+		<string>Picochip Designs Ltd</string>
+		<key>0x00000057</key>
+		<string>Pijnenburg Securealink</string>
+		<key>0x00000058</key>
+		<string>MemorySolutioN</string>
+		<key>0x0000005B</key>
+		<string>Nazomi Communications</string>
+		<key>0x0000005D</key>
+		<string>Rockwell Collins</string>
+		<key>0x0000005E</key>
+		<string>PAION</string>
+		<key>0x00000061</key>
+		<string>SiCon Video</string>
+		<key>0x00000062</key>
+		<string>NanoAmp Solutions</string>
+		<key>0x00000064</key>
+		<string>PrairieComm</string>
+		<key>0x00000067</key>
+		<string>Atsana Semiconductor</string>
+		<key>0x00000068</key>
+		<string>Allegro Networks</string>
+		<key>0x0000006B</key>
+		<string>NVIDIA</string>
+		<key>0x0000006D</key>
+		<string>Peak Electronics</string>
+		<key>0x00000070</key>
+		<string>Teradiant Networks</string>
+		<key>0x00000073</key>
+		<string>RAM Components</string>
+		<key>0x00000075</key>
+		<string>ClearSpeed</string>
+		<key>0x00000076</key>
+		<string>Matsushita Battery</string>
+		<key>0x00000079</key>
+		<string>Utron Technology</string>
+		<key>0x0000007A</key>
+		<string>Astec International</string>
+		<key>0x0000007C</key>
+		<string>Redux Communications</string>
+		<key>0x00000083</key>
+		<string>Buffalo (Formerly Melco)</string>
+		<key>0x00000085</key>
+		<string>Cyan Technologies</string>
+		<key>0x00000086</key>
+		<string>Global Locate</string>
+		<key>0x00000089</key>
+		<string>Ikanos Communications</string>
+		<key>0x0000008A</key>
+		<string>Princeton Technology</string>
+		<key>0x0000008C</key>
+		<string>Elite Flash Storage</string>
+		<key>0x0000008F</key>
+		<string>ATI Technologies</string>
+		<key>0x00000091</key>
+		<string>NeoMagic</string>
+		<key>0x00000092</key>
+		<string>AuroraNetics</string>
+		<key>0x00000094</key>
+		<string>Muskin</string>
+		<key>0x00000097</key>
+		<string>TeraLogic</string>
+		<key>0x00000098</key>
+		<string>Cicada Semiconductor</string>
+		<key>0x0000009B</key>
+		<string>Magis Works</string>
+		<key>0x0000009D</key>
+		<string>Cogency Semiconductor</string>
+		<key>0x0000009E</key>
+		<string>Chipcon AS</string>
+		<key>0x000000A1</key>
+		<string>Programmable Silicon Solutions</string>
+		<key>0x000000A2</key>
+		<string>ChipWrights</string>
+		<key>0x000000A4</key>
+		<string>Quicklogic</string>
+		<key>0x000000A7</key>
+		<string>Flasys</string>
+		<key>0x000000A8</key>
+		<string>BitBlitz Communications</string>
+		<key>0x000000AB</key>
+		<string>Purple Ray</string>
+		<key>0x000000AD</key>
+		<string>Delta Electronics</string>
+		<key>0x000000AE</key>
+		<string>Onex Communications</string>
+		<key>0x000000B0</key>
+		<string>Memory Experts Intl</string>
+		<key>0x000000B3</key>
+		<string>Dibcom</string>
+		<key>0x000000B5</key>
+		<string>API NetWorks</string>
+		<key>0x000000B6</key>
+		<string>Bay Microsystems</string>
+		<key>0x000000B9</key>
+		<string>Tachys Technologies</string>
+		<key>0x000000BA</key>
+		<string>Equator Technology</string>
+		<key>0x000000BC</key>
+		<string>SILCOM</string>
+		<key>0x000000BF</key>
+		<string>Sanera Systems</string>
+		<key>0x000000C1</key>
+		<string>Viasystems Group</string>
+		<key>0x000000C2</key>
+		<string>Simtek</string>
+		<key>0x000000C4</key>
+		<string>Satron Handelsges</string>
+		<key>0x000000C7</key>
+		<string>Corrent</string>
+		<key>0x000000C8</key>
+		<string>Infrant Technologies</string>
+		<key>0x000000CB</key>
+		<string>Hypertec</string>
+		<key>0x000000CD</key>
+		<string>PLX Technology</string>
+		<key>0x000000CE</key>
+		<string>Massana Design</string>
+		<key>0x000000D0</key>
+		<string>Valence Semiconductor</string>
+		<key>0x000000D3</key>
+		<string>Primarion</string>
+		<key>0x000000D5</key>
+		<string>Silverback Systems</string>
+		<key>0x000000D6</key>
+		<string>Jade Star Technologies</string>
+		<key>0x000000D9</key>
+		<string>Cambridge Silicon Radio</string>
+		<key>0x000000DA</key>
+		<string>Swissbit</string>
+		<key>0x000000DC</key>
+		<string>eWave System</string>
+		<key>0x000000DF</key>
+		<string>Alphamosaic Ltd</string>
+		<key>0x000000E0</key>
+		<string>Sandburst</string>
+		<key>0x000000E3</key>
+		<string>Ericsson Technology</string>
+		<key>0x000000E5</key>
+		<string>Mitac International</string>
+		<key>0x000000E6</key>
+		<string>Layer N Networks</string>
+		<key>0x000000E9</key>
+		<string>Marvell Semiconductors</string>
+		<key>0x000000EA</key>
+		<string>Netergy Microelectronic</string>
+		<key>0x000000EC</key>
+		<string>Internet Machines</string>
+		<key>0x000000EF</key>
+		<string>Accton Technology</string>
+		<key>0x000000F1</key>
+		<string>Europe Technologies</string>
+		<key>0x000000F2</key>
+		<string>Cortina Systems</string>
+		<key>0x000000F4</key>
+		<string>Raqia Networks</string>
+		<key>0x000000F7</key>
+		<string>Xelerated</string>
+		<key>0x000000F8</key>
+		<string>SimpleTech</string>
+		<key>0x000000FB</key>
+		<string>AVM gmbH</string>
+		<key>0x000000FD</key>
+		<string>Dot Hill Systems</string>
+		<key>0x000000FE</key>
+		<string>TeraChip</string>
+	</dict>
+	<key>jedec_id5_vals</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>T-RAM Incorporated</string>
+		<key>0x00000002</key>
+		<string>Innovics Wireless</string>
+		<key>0x00000004</key>
+		<string>KeyEye Communications</string>
+		<key>0x00000007</key>
+		<string>Dotcast</string>
+		<key>0x00000008</key>
+		<string>Silicon Mountain Memory</string>
+		<key>0x0000000B</key>
+		<string>Galazar Networks</string>
+		<key>0x0000000D</key>
+		<string>Patriot Scientific</string>
+		<key>0x0000000E</key>
+		<string>Neoaxiom Corporation</string>
+		<key>0x00000010</key>
+		<string>Europe Technologies</string>
+		<key>0x00000013</key>
+		<string>Digital Communications Technology Incorporated</string>
+		<key>0x00000015</key>
+		<string>Fulcrum Microsystems</string>
+		<key>0x00000016</key>
+		<string>Positivo Informatica Ltd</string>
+		<key>0x00000019</key>
+		<string>Zhiying Software</string>
+		<key>0x0000001A</key>
+		<string>Direct2Data</string>
+		<key>0x0000001C</key>
+		<string>Skyworks Solutions</string>
+		<key>0x0000001F</key>
+		<string>Zensys A/S</string>
+		<key>0x00000020</key>
+		<string>Legend Silicon Corp.</string>
+		<key>0x00000023</key>
+		<string>Renesas Technology</string>
+		<key>0x00000025</key>
+		<string>Phyworks</string>
+		<key>0x00000026</key>
+		<string>MediaTek</string>
+		<key>0x00000029</key>
+		<string>Wintegra Ltd</string>
+		<key>0x0000002A</key>
+		<string>Mathstar</string>
+		<key>0x0000002C</key>
+		<string>Oplus Technologies</string>
+		<key>0x0000002F</key>
+		<string>Radia Communications</string>
+		<key>0x00000031</key>
+		<string>Emuzed</string>
+		<key>0x00000032</key>
+		<string>LOGIC Devices</string>
+		<key>0x00000034</key>
+		<string>Quake Technologies</string>
+		<key>0x00000037</key>
+		<string>Kongsberg Maritime</string>
+		<key>0x00000038</key>
+		<string>Faraday Technology</string>
+		<key>0x0000003B</key>
+		<string>ARM Ltd.</string>
+		<key>0x0000003D</key>
+		<string>Vativ Technologies</string>
+		<key>0x0000003E</key>
+		<string>Endicott Interconnect Technologies</string>
+		<key>0x00000040</key>
+		<string>Bandspeed</string>
+		<key>0x00000043</key>
+		<string>Ramaxel Technology</string>
+		<key>0x00000045</key>
+		<string>Axis Communications</string>
+		<key>0x00000046</key>
+		<string>Legacy Electronics</string>
+		<key>0x00000049</key>
+		<string>MobilEye Technologies</string>
+		<key>0x0000004A</key>
+		<string>Excel Semiconductor</string>
+		<key>0x0000004C</key>
+		<string>VirtualDigm</string>
+		<key>0x00000083</key>
+		<string>Teknovus</string>
+		<key>0x00000085</key>
+		<string>Runcom Technologies</string>
+		<key>0x00000086</key>
+		<string>RedSwitch</string>
+		<key>0x00000089</key>
+		<string>Signia Technologies</string>
+		<key>0x0000008A</key>
+		<string>Pixim</string>
+		<key>0x0000008C</key>
+		<string>White Electronic Designs</string>
+		<key>0x0000008F</key>
+		<string>3Y Power Technology</string>
+		<key>0x00000091</key>
+		<string>Potentia Power Systems</string>
+		<key>0x00000092</key>
+		<string>C-guys Incorporated</string>
+		<key>0x00000094</key>
+		<string>Silicon-Based Technology</string>
+		<key>0x00000097</key>
+		<string>XIOtech Corporation</string>
+		<key>0x00000098</key>
+		<string>PortalPlayer</string>
+		<key>0x0000009B</key>
+		<string>Phonex Broadband</string>
+		<key>0x0000009D</key>
+		<string>Entropic Communications</string>
+		<key>0x0000009E</key>
+		<string>Pacific Force Technology</string>
+		<key>0x000000A1</key>
+		<string>sci-worx GmbH</string>
+		<key>0x000000A2</key>
+		<string>Oasis Silicon Systems</string>
+		<key>0x000000A4</key>
+		<string>Raza Microelectronics</string>
+		<key>0x000000A7</key>
+		<string>Non-cents Productions</string>
+		<key>0x000000A8</key>
+		<string>US Modular</string>
+		<key>0x000000AB</key>
+		<string>StarCore</string>
+		<key>0x000000AD</key>
+		<string>Mindspeed</string>
+		<key>0x000000AE</key>
+		<string>Just Young Computer</string>
+		<key>0x000000B0</key>
+		<string>OCZ</string>
+		<key>0x000000B3</key>
+		<string>Inphi Corporation</string>
+		<key>0x000000B5</key>
+		<string>Vixel</string>
+		<key>0x000000B6</key>
+		<string>SolusTek</string>
+		<key>0x000000B9</key>
+		<string>Altium Ltd.</string>
+		<key>0x000000BA</key>
+		<string>Insyte</string>
+		<key>0x000000BC</key>
+		<string>DigiVision</string>
+		<key>0x000000BF</key>
+		<string>Pericom</string>
+		<key>0x000000C1</key>
+		<string>LeWiz Communications</string>
+		<key>0x000000C2</key>
+		<string>CPU Technology</string>
+		<key>0x000000C4</key>
+		<string>DSP Group</string>
+		<key>0x000000C7</key>
+		<string>Chrontel</string>
+		<key>0x000000C8</key>
+		<string>Powerchip Semiconductor</string>
+		<key>0x000000CB</key>
+		<string>A-DATA Technology</string>
+	</dict>
+	<key>netfn_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Chassis</string>
+		<key>0x00000002</key>
+		<string>Bridge</string>
+		<key>0x00000004</key>
+		<string>Sensor/Event</string>
+		<key>0x00000006</key>
+		<string>Programm</string>
+		<key>0x00000008</key>
+		<string>Firmware</string>
+		<key>0x0000000A</key>
+		<string>Speicher</string>
+		<key>0x0000000C</key>
+		<string>Transport</string>
+		<key>0x00000030</key>
+		<string>Intel allgemein</string>
+		<key>0x00000032</key>
+		<string>Intel Plattform</string>
+		<key>0x00000034</key>
+		<string>Intel SDK</string>
+		<key>0x00000036</key>
+		<string>Apple allgemein</string>
+	</dict>
+	<key>oem_info</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Unbekannt</string>
+		<key>0x0000002A</key>
+		<string>Sun Microsystems</string>
+		<key>0x0000003F</key>
+		<string>Apple Inc.</string>
+		<key>0x00000157</key>
+		<string>Intel Corporation</string>
+		<key>0x000019FD</key>
+		<string>Tyan Computer Corporation</string>
+		<key>0x00002415</key>
+		<string>Newisys</string>
+		<key>0x00002A7C</key>
+		<string>Supermicro</string>
+		<key>0x00003A98</key>
+		<string>Kontron</string>
+	</dict>
+	<key>privlvl_vals</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>CALLBACK</string>
+		<key>0x00000002</key>
+		<string>USER</string>
+		<key>0x00000003</key>
+		<string>OPERATOR</string>
+		<key>0x00000004</key>
+		<string>ADMINISTRATOR</string>
+		<key>0x00000005</key>
+		<string>OEM</string>
+		<key>0x0000000F</key>
+		<string>NO ACCESS</string>
+	</dict>
+	<key>rakp_return_codes</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Keine Fehler</string>
+		<key>0x00000001</key>
+		<string>Ungenügende Ressourcen für Session</string>
+		<key>0x00000002</key>
+		<string>Ungültige Session-ID</string>
+		<key>0x00000003</key>
+		<string>Ungültiger Payload-Typ</string>
+		<key>0x00000004</key>
+		<string>Ungültiger Authentifizierungsalgorithmus</string>
+		<key>0x00000005</key>
+		<string>Ungültiger Integritätsalgorithmus</string>
+		<key>0x00000006</key>
+		<string>Kein passender Authentifizierungsalgorithmus</string>
+		<key>0x00000007</key>
+		<string>Kein passender Integritäts-Payload</string>
+		<key>0x00000008</key>
+		<string>Inaktive Session-ID</string>
+		<key>0x00000009</key>
+		<string>Ungültige Funktion</string>
+		<key>0x0000000A</key>
+		<string>Nicht autorisierte Funktionsanfrage</string>
+		<key>0x0000000B</key>
+		<string>Ungenügende Ressourcen für Funktion</string>
+		<key>0x0000000C</key>
+		<string>Ungültige Länge des Namens</string>
+		<key>0x0000000D</key>
+		<string>Nicht autorisierter Name</string>
+		<key>0x0000000E</key>
+		<string>Nicht autorisierte GUID</string>
+		<key>0x0000000F</key>
+		<string>Ungültiger Wert für Integritätsprüfung</string>
+		<key>0x00000010</key>
+		<string>Ungültiger Geheimhaltungsalgorithmus</string>
+		<key>0x00000011</key>
+		<string>Cipher Suite nicht passend</string>
+		<key>0x00000012</key>
+		<string>Ungültiger Parameter</string>
+	</dict>
+	<key>rmcp_plus_payload_types</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>IPMI (0)</string>
+		<key>0x00000001</key>
+		<string>SOL  (1)</string>
+		<key>0x00000002</key>
+		<string>OEM  (2)</string>
+		<key>0x00000010</key>
+		<string>OpenSession Req (0x10)</string>
+		<key>0x00000011</key>
+		<string>OpenSession Resp (0x11)</string>
+		<key>0x00000012</key>
+		<string>RAKP1 (0x12)</string>
+		<key>0x00000013</key>
+		<string>RAKP2 (0x13)</string>
+		<key>0x00000014</key>
+		<string>RAKP3 (0x14)</string>
+		<key>0x00000015</key>
+		<string>RAKP4 (0x15)</string>
+	</dict>
+	<key>sensor_assert_cond_full</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>lnc-</string>
+		<key>0x00000002</key>
+		<string>lnc+</string>
+		<key>0x00000004</key>
+		<string>lcr-</string>
+		<key>0x00000008</key>
+		<string>lcr+</string>
+		<key>0x00000010</key>
+		<string>lnr-</string>
+		<key>0x00000020</key>
+		<string>lnr+</string>
+		<key>0x00000040</key>
+		<string>unc-</string>
+		<key>0x00000080</key>
+		<string>unc+</string>
+	</dict>
+	<key>sensor_assert_cond_min</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>ucr-</string>
+		<key>0x00000002</key>
+		<string>ucr+</string>
+		<key>0x00000004</key>
+		<string>unr-</string>
+		<key>0x00000008</key>
+		<string>unr+</string>
+	</dict>
+	<key>sensor_threshold_vals</key>
+	<dict>
+		<key>0x00000001</key>
+		<string>Unten - nicht kritisch</string>
+		<key>0x00000002</key>
+		<string>Unten - kritisch</string>
+		<key>0x00000004</key>
+		<string>Unten - nicht wiederherstellbar</string>
+		<key>0x00000008</key>
+		<string>Oben - nicht kritisch</string>
+		<key>0x00000010</key>
+		<string>Oben - kritisch</string>
+		<key>0x00000020</key>
+		<string>Oben - nicht wiederherstellbar</string>
+	</dict>
+	<key>sensor_type_desc</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>reserviert</string>
+		<key>0x00000001</key>
+		<string>Temperatur</string>
+		<key>0x00000002</key>
+		<string>Spannung</string>
+		<key>0x00000003</key>
+		<string>Strom</string>
+		<key>0x00000004</key>
+		<string>Lüfter</string>
+		<key>0x00000005</key>
+		<string>Physikalische Sicherheit</string>
+		<key>0x00000006</key>
+		<string>Plattform-Sicherheit</string>
+		<key>0x00000007</key>
+		<string>Prozessor</string>
+		<key>0x00000008</key>
+		<string>Netzteil</string>
+		<key>0x00000009</key>
+		<string>Netzteileinheit</string>
+		<key>0x0000000A</key>
+		<string>Kühlgerät</string>
+		<key>0x0000000B</key>
+		<string>Andere</string>
+		<key>0x0000000C</key>
+		<string>Speicher</string>
+		<key>0x0000000D</key>
+		<string>Laufwerksschacht</string>
+		<key>0x0000000E</key>
+		<string>POST Speichergrößenanpassung</string>
+		<key>0x0000000F</key>
+		<string>System-Firmware-Fortschritt</string>
+		<key>0x00000010</key>
+		<string>Ereignisaufzeichnung deaktiviert</string>
+		<key>0x00000011</key>
+		<string>Watchdog 1</string>
+		<key>0x00000012</key>
+		<string>Systemereignis</string>
+		<key>0x00000013</key>
+		<string>Kritische Unterbrechung</string>
+		<key>0x00000014</key>
+		<string>Taster / Schalter</string>
+		<key>0x00000015</key>
+		<string>Modul / Platine</string>
+		<key>0x00000016</key>
+		<string>Mikrocontroller / Koprozessor</string>
+		<key>0x00000017</key>
+		<string>Erweiterungskarte</string>
+		<key>0x00000018</key>
+		<string>Gehäuse</string>
+		<key>0x00000019</key>
+		<string>Chip-Satz</string>
+		<key>0x0000001A</key>
+		<string>Andere autauschbare Einheit</string>
+		<key>0x0000001B</key>
+		<string>Kabel / Verbindung</string>
+		<key>0x0000001C</key>
+		<string>Terminator</string>
+		<key>0x0000001D</key>
+		<string>Systemstart / Neustart initiiert</string>
+		<key>0x0000001E</key>
+		<string>Fehler beim Start</string>
+		<key>0x0000001F</key>
+		<string>OS-Start</string>
+		<key>0x00000020</key>
+		<string>OS-Stopp / Ausschalten</string>
+		<key>0x00000021</key>
+		<string>Steckplatz / Anschluss</string>
+		<key>0x00000022</key>
+		<string>System-ACPI-Power-State</string>
+		<key>0x00000023</key>
+		<string>Watchdog 2</string>
+		<key>0x00000024</key>
+		<string>Plattformalarm</string>
+		<key>0x00000025</key>
+		<string>Einheitenpräsenz</string>
+		<key>0x00000026</key>
+		<string>Monitor-ASIC/IC</string>
+		<key>0x00000027</key>
+		<string>LAN</string>
+		<key>0x00000028</key>
+		<string>Managementsubsystem-Status</string>
+		<key>0x00000029</key>
+		<string>Batterie</string>
+		<key>0x0000002A</key>
+		<string>Sitzungsüberwachung</string>
+		<key>0x0000002B</key>
+		<string>Versionsänderung</string>
+		<key>0x0000002C</key>
+		<string>Status der austauschbaren Einheit</string>
+	</dict>
+	<key>sensor_unit_desc</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>unspezifiziert</string>
+		<key>0x00000001</key>
+		<string>Grad C</string>
+		<key>0x00000002</key>
+		<string>Grad F</string>
+		<key>0x00000003</key>
+		<string>Grad K</string>
+		<key>0x00000004</key>
+		<string>Volt</string>
+		<key>0x00000005</key>
+		<string>Ampere</string>
+		<key>0x00000006</key>
+		<string>Watt</string>
+		<key>0x00000007</key>
+		<string>Joule</string>
+		<key>0x00000008</key>
+		<string>Coulomb</string>
+		<key>0x00000009</key>
+		<string>VA</string>
+		<key>0x0000000A</key>
+		<string>Nit</string>
+		<key>0x0000000B</key>
+		<string>Lumen</string>
+		<key>0x0000000C</key>
+		<string>Lux</string>
+		<key>0x0000000D</key>
+		<string>Candela</string>
+		<key>0x0000000E</key>
+		<string>kPa</string>
+		<key>0x0000000F</key>
+		<string>PSI</string>
+		<key>0x00000010</key>
+		<string>Newton</string>
+		<key>0x00000011</key>
+		<string>Kubik-Fuß pro Minute</string>
+		<key>0x00000012</key>
+		<string>U/min</string>
+		<key>0x00000013</key>
+		<string>Hz</string>
+		<key>0x00000014</key>
+		<string>Mikrosekunde</string>
+		<key>0x00000015</key>
+		<string>Millisekunde</string>
+		<key>0x00000016</key>
+		<string>Sekunde</string>
+		<key>0x00000017</key>
+		<string>Minute</string>
+		<key>0x00000018</key>
+		<string>Stunde</string>
+		<key>0x00000019</key>
+		<string>Tag</string>
+		<key>0x0000001A</key>
+		<string>Woche</string>
+		<key>0x0000001B</key>
+		<string>Milli-Inch</string>
+		<key>0x0000001C</key>
+		<string>Inch</string>
+		<key>0x0000001D</key>
+		<string>Fuß</string>
+		<key>0x0000001E</key>
+		<string>Kubik-Inch</string>
+		<key>0x0000001F</key>
+		<string>Kubik-Fuß</string>
+		<key>0x00000020</key>
+		<string>mm</string>
+		<key>0x00000021</key>
+		<string>cm</string>
+		<key>0x00000022</key>
+		<string>m</string>
+		<key>0x00000023</key>
+		<string>Kubikzentimeter</string>
+		<key>0x00000024</key>
+		<string>Kubikmeter</string>
+		<key>0x00000025</key>
+		<string>Liter</string>
+		<key>0x00000026</key>
+		<string>Flüssigunze</string>
+		<key>0x00000027</key>
+		<string>Radiant</string>
+		<key>0x00000028</key>
+		<string>Steradiant</string>
+		<key>0x00000029</key>
+		<string>Umdrehungen</string>
+		<key>0x0000002A</key>
+		<string>Zyklen</string>
+		<key>0x0000002B</key>
+		<string>Schwerkraft</string>
+		<key>0x0000002C</key>
+		<string>Unze</string>
+		<key>0x0000002D</key>
+		<string>Pfund</string>
+		<key>0x0000002E</key>
+		<string>Pfund pro Fuß</string>
+		<key>0x0000002F</key>
+		<string>Unzen pro Inch</string>
+		<key>0x00000030</key>
+		<string>Gauss</string>
+		<key>0x00000031</key>
+		<string>Gilbert</string>
+		<key>0x00000032</key>
+		<string>Henry</string>
+		<key>0x00000033</key>
+		<string>Millihenry</string>
+		<key>0x00000034</key>
+		<string>Farad</string>
+		<key>0x00000035</key>
+		<string>Mikrofarad</string>
+		<key>0x00000036</key>
+		<string>Ohm</string>
+		<key>0x00000037</key>
+		<string>Siemens</string>
+		<key>0x00000038</key>
+		<string>Mol</string>
+		<key>0x00000039</key>
+		<string>Becquerel</string>
+		<key>0x0000003A</key>
+		<string>ppm</string>
+		<key>0x0000003B</key>
+		<string>reserviert</string>
+		<key>0x0000003C</key>
+		<string>Dezibel</string>
+		<key>0x0000003D</key>
+		<string>dBA</string>
+		<key>0x0000003E</key>
+		<string>dBC</string>
+		<key>0x0000003F</key>
+		<string>Gray</string>
+		<key>0x00000040</key>
+		<string>Sievert</string>
+		<key>0x00000041</key>
+		<string>Farbtemperatur °K</string>
+		<key>0x00000042</key>
+		<string>Bit</string>
+		<key>0x00000043</key>
+		<string>Kilobit</string>
+		<key>0x00000044</key>
+		<string>Megabit</string>
+		<key>0x00000045</key>
+		<string>Gigabit</string>
+		<key>0x00000046</key>
+		<string>Byte</string>
+		<key>0x00000047</key>
+		<string>Kilobyte</string>
+		<key>0x00000048</key>
+		<string>Megabyte</string>
+		<key>0x00000049</key>
+		<string>Gigabyte</string>
+		<key>0x0000004A</key>
+		<string>Wort</string>
+		<key>0x0000004B</key>
+		<string>Doppelwort</string>
+		<key>0x0000004C</key>
+		<string>Vierfach Wort</string>
+		<key>0x0000004D</key>
+		<string>Zeile</string>
+		<key>0x0000004E</key>
+		<string>Treffer</string>
+		<key>0x0000004F</key>
+		<string>Fehlschlag</string>
+		<key>0x00000050</key>
+		<string>Wiederholung</string>
+		<key>0x00000051</key>
+		<string>Zurücksetzen</string>
+		<key>0x00000052</key>
+		<string>Überlauf</string>
+		<key>0x00000053</key>
+		<string>Unterlauf</string>
+		<key>0x00000054</key>
+		<string>Kollision</string>
+		<key>0x00000055</key>
+		<string>Pakete</string>
+		<key>0x00000056</key>
+		<string>Nachrichten</string>
+		<key>0x00000057</key>
+		<string>Zeichen</string>
+		<key>0x00000058</key>
+		<string>Fehler</string>
+		<key>0x00000059</key>
+		<string>korrigierbarer Fehler</string>
+		<key>0x0000005A</key>
+		<string>nicht korrigierbarer Fehler</string>
+		<key>0x0000005B</key>
+		<string>fataler Fehler</string>
+		<key>0x0000005C</key>
+		<string>Gramm</string>
+	</dict>
+	<key>serial_set_in_progress</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>set-complete</string>
+		<key>0x00000001</key>
+		<string>set-in-progress</string>
+		<key>0x00000002</key>
+		<string>commit-write</string>
+	</dict>
+	<key>sol_parameters</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Set In Progress (0)</string>
+		<key>0x00000001</key>
+		<string>Enable (1)</string>
+		<key>0x00000002</key>
+		<string>Authentication (2)</string>
+		<key>0x00000003</key>
+		<string>Character Interval (3)</string>
+		<key>0x00000004</key>
+		<string>Retry (4)</string>
+		<key>0x00000005</key>
+		<string>Nonvolatile Bitrate (5)</string>
+		<key>0x00000006</key>
+		<string>Volatile Bitrate (6)</string>
+		<key>0x00000007</key>
+		<string>Payload Channel (7)</string>
+		<key>0x00000008</key>
+		<string>Payload Port (8)</string>
+	</dict>
+	<key>spd_config_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Ohne</string>
+		<key>0x00000001</key>
+		<string>Parity</string>
+		<key>0x00000002</key>
+		<string>ECC</string>
+	</dict>
+	<key>spd_memtype_vals</key>
+	<dict>
+		<key>0x00000002</key>
+		<string>EDO</string>
+		<key>0x00000004</key>
+		<string>SDRAM</string>
+		<key>0x00000007</key>
+		<string>DDR</string>
+	</dict>
+	<key>spd_voltage_vals</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>5.0V TTL</string>
+		<key>0x00000001</key>
+		<string>LVTTL</string>
+		<key>0x00000002</key>
+		<string>HSTL 1.5V</string>
+		<key>0x00000003</key>
+		<string>SSTL 3.3V</string>
+		<key>0x00000004</key>
+		<string>SSTL 2.5V</string>
+	</dict>
+	<key>lan_parameters</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Set in Progress</string>
+		<key>0x00000001</key>
+		<string>Auth Type Support</string>
+		<key>0x00000002</key>
+		<string>Auth Type Enable</string>
+		<key>0x00000003</key>
+		<string>IP Address</string>
+		<key>0x00000004</key>
+		<string>IP Address Source</string>
+		<key>0x00000005</key>
+		<string>MAC Address</string>
+		<key>0x00000006</key>
+		<string>Subnet Mask</string>
+		<key>0x00000007</key>
+		<string>IP Header</string>
+		<key>0x00000008</key>
+		<string>Primary RMCP Port</string>
+		<key>0x00000009</key>
+		<string>Secondary RMCP Port</string>
+		<key>0x0000000A</key>
+		<string>BMC ARP Control</string>
+		<key>0x0000000B</key>
+		<string>Gratuitous ARP Interval</string>
+		<key>0x0000000C</key>
+		<string>Default Gateway IP</string>
+		<key>0x0000000D</key>
+		<string>Default Gateway MAC</string>
+		<key>0x0000000E</key>
+		<string>Backup Gateway IP</string>
+		<key>0x0000000F</key>
+		<string>Backup Gateway MAC</string>
+		<key>0x00000010</key>
+		<string>SNMP Community String</string>
+		<key>0x00000011</key>
+		<string>Number of Destinations</string>
+		<key>0x00000012</key>
+		<string>Destination Type</string>
+		<key>0x00000013</key>
+		<string>Destination Addresses</string>
+		<key>0x00000014</key>
+		<string>802.1q VLAN ID</string>
+		<key>0x00000015</key>
+		<string>802.1q VLAN Priority</string>
+		<key>0x00000016</key>
+		<string>RMCP+ Cipher Suite Count</string>
+		<key>0x00000017</key>
+		<string>RMCP+ Cipher Suites</string>
+		<key>0x00000018</key>
+		<string>Cipher Suite Priv Max</string>
+		<key>0x00000019</key>
+		<string>802.1q VLAN TAGs</string>
+		<key>0x00000060</key>
+		<string>OEM lert String</string>
+		<key>0x00000061</key>
+		<string>Alert Retry Algorithm</string>
+		<key>0x00000062</key>
+		<string>UTC Offset</string>
+		<key>0x000000C0</key>
+		<string>DHCP Server IP</string>
+		<key>0x000000C1</key>
+		<string>DHCP Server MAC</string>
+		<key>0x000000C2</key>
+		<string>DHCP Enable</string>
+		<key>0x000000C9</key>
+		<string>Channel Access Mode</string>
+	</dict>
+	<key>provision_tool</key>
+	<dict>
+		<key>0x00000000</key>
+		<string>Admin</string>
+		<key>0x00000001</key>
+		<string>Benutzer</string>
+	</dict>
+</dict>
+</plist>

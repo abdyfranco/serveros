@@ -1,1 +1,0 @@
-tell application "Server Monitor"	activateend tell

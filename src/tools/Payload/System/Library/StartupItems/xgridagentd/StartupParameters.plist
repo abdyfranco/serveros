@@ -1,6 +1,0 @@
-{
-  Description     = "Xgrid Agent";
-  Provides        = ("xgridagentd");
-  Requires        = ("Network", "DirectoryServices");
-  OrderPreference = "Last";
-}

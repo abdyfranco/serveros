@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = ProgressViewController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myParentView = NSView; 
+                myParentWindowController = id; 
+                myProgressView = NSProgressIndicator; 
+                mySender = id; 
+                myStatusView = NSTextField; 
+                myStopButton = NSButton; 
+                mySubStatusView = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

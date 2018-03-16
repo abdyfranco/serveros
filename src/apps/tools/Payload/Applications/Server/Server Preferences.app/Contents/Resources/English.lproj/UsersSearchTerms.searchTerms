@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>users</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>account, users, password, reset password, change password, new user, remove users, delete user, edit user, add user, import users</string>
+				<key>title</key>
+				<string>User accounts configuration</string>
+			</dict>
+		</array>
+	</dict>
+	<key>usersContactInfo</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>contact info, name, address, phone, mobile phone, telephone, email address, website, weblog, blog</string>
+				<key>title</key>
+				<string>User contact information</string>
+			</dict>
+		</array>
+	</dict>
+	<key>usersServices</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>file sharing access, ical access, ichat access, mail access, vpn access, remote access, time machine access, enable access, disable access, instant messaging access, jabber access</string>
+				<key>title</key>
+				<string>User access to services</string>
+			</dict>
+		</array>
+	</dict>
+	<key>usersGroups</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>groups, group members, edit membership</string>
+				<key>title</key>
+				<string>Group membership per user</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

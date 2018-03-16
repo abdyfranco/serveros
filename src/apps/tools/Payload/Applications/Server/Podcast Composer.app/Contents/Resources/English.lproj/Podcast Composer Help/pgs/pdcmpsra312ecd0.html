@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Configuring Dual Source</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-12-2009 15:51:37" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.1" />
+      <meta name="project" content="Podcast Composer Help" />
+      <meta name="description"
+            content="Use this option to create a podcast from two QuickTime movie." />
+      <meta name="topicid" content="pdcmpsra312ecd0" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x506F646361737420436F6D706F7365722048656C70">
+      <div id="Nav"><a name="pdcmpsra312ecd0"></a><a name="pr_import_dual"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Podcast Composer Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="pdcmpsra312ecd0">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnpc.gif" alt="Xserve RAID Utility Icon" /></div>
+               <div class="Name">Configuring Dual Source</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">If you want the workflow to create a podcast from two QuickTime movies, select and configure the Dual Source option of the
+                     Import stage. For example, a screen recording of a presentation and a video of the presenter.
+                  </p>
+               </div>
+               <div class="Task">
+                  <div class="Name">To configure the Dual Source option of the Import stage:</div>
+                  <ol class="ListNumber">
+                     <li>
+                        <p class="Para">In Podcast Composer, go to the Import Stage (choose Stages &gt; Import or press Command-2).</p>
+                     </li>
+                     <li>
+                        <p class="Para">Double-click Dual Source, or move your mouse over the Dual Source icon and click the Information button in the lower-right
+                           corner.
+                        </p>
+                        <p class="Para">A dialog appears, displaying the settings that you can configure and a live preview box that reflects your selections.</p>
+                     </li>
+                     <li>
+                        <p class="Para">From the Dual Source Composition pop-up menu, choose one of the following composition options to specify how the two input
+                           videos are going to be composed to create the final movie:
+                        </p>
+                        <ul class="ListBullet">
+                           <li>
+                              <p class="Para">Keynote Presentation—This picture-in-picture composition displays the screen recording movie in full screen and hides the
+                                 second movie. After 15 seconds (by default) this composition minimizes the screen recording movie, moves it to the right,
+                                 and displays the second movie in the bottom-left corner of the screen. Finally, after 15 seconds (by default) the composition
+                                 brings back the screen recording movie into full screen and hides the second movie. This process repeats for the duration
+                                 of the movie.
+                              </p>
+                           </li>
+                        </ul>
+                        <ul class="ListBullet">
+                           <li>
+                              <p class="Para">Overlay—This picture-in-picture composition displays the screen recording movie in full screen and overlays the second movie
+                                 in the bottom-right corner of the screen. Then, in response to conditions in the screen recording (for example, a slide doesn’t
+                                 change for more than 20 seconds) the location of the overlay is switched, if transition detection is enabled. If transition
+                                 detection is not enabled, both movies remain in their original positions.
+                              </p>
+                           </li>
+                           <li>
+                              <p class="Para">Overlay with Fade—This composition is similar to the Overlay composition, but instead of keeping the second movie in view
+                                 all the time, this composition fades the movie in and out at certain intervals (10 seconds by default).
+                              </p>
+                           </li>
+                        </ul>
+                        <ul class="ListBullet">
+                           <li>
+                              <p class="Para">Theater—This composition is similar to the Overlay composition, except that you always have a full view of the screen recording
+                                 movie. This option is ideal if you don’t want any part of the screen recording to be covered by the other movie.
+                              </p>
+                           </li>
+                        </ul>
+                     </li>
+                     <li>
+                        <p class="Para">If you want Podcast Composer to automatically detect transitions in the screen recording movie, select Automatic Transitions.</p>
+                        <p class="Para">With this option enabled, Podcast Composer can detect slide transitions in the movie and use this information to determine
+                           when to switch movies in the composition.
+                        </p>
+                        <p class="Para">If you choose not to automatically detect transitions, there will be no transition. The selected dual source composition remains
+                           static. Both movies remain in their original positions.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">If you want Podcast Composer to automatically detect changes in the input movies and use this information to assign chapters
+                           in the generated podcast, select Automatic Chapter Generation.
+                        </p>
+                        <p class="Para">For example, you might want chapters in the podcast to mark each transition to a new slide.</p>
+                        <p class="Para">In the case of a screen recording, the workflow inserts a chapter marker in the video when it detects a slide transition or
+                           when no changes occur in the video for a certain moment. This is useful when doing a screen recording or for any video that
+                           includes presentations.
+                        </p>
+                        <p class="Para">The tool used by the workflow to add chapter markers detects stability in a movie by comparing frames. When the tool finds
+                           a stable sequence, it considers it a chapter. Then, when the sequence changes to another sequence, the tool consider that
+                           change a transition.
+                        </p>
+                        <p class="Para">Chapter markers are recommended for screen recordings, but not for video and audio recordings. However, there are instances
+                           when adding these markers is useful, such as when the source video is for a screen recording captured from the VGA or DVI
+                           stream of a computer screen. Screen recording using Podcast Capture works only on a computer running Mac OS X v10.5 or later.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Click Done.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Choose File &gt; Save.</p>
+                     </li>
+                  </ol>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

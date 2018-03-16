@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Alerts sent</key>
+	<array>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.softraid.driver.SoftRAID</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>ed4454bf920a7a1193b5e580a3055013e22e8e76</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>SoftRAID.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/SoftRAID.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: SoftRAID LLC (NDGSU3WA4Y)</string>
+			<key>com.apple.message.teamid</key>
+			<string>NDGSU3WA4Y</string>
+			<key>com.apple.message.version</key>
+			<string>5.5.2</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.promise.driver.stex</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>8ec885a0c4a379b1aa2425cbbe1e2ae11fc2e61b</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>PromiseSTEX.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/PromiseSTEX.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: Promise Technology Mobile Apps (268CCUR4WN)</string>
+			<key>com.apple.message.teamid</key>
+			<string>268CCUR4WN</string>
+			<key>com.apple.message.version</key>
+			<string>6.2.9</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.bundleID</key>
+			<string>com.parrotgeek.LegacyUSBInjector</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>0894998f354e33e2c1d235d31fc7715c5e39086e</string>
+			<key>com.apple.message.kextname</key>
+			<string>LegacyUSBInjector.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/LegacyUSBInjector.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>Unsigned kext</string>
+			<key>com.apple.message.version</key>
+			<string>1.0</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.highpoint-tech.kext.HighPointRR</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>e601cd898292b9584540d3e812623feaea2d106a</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>HighPointRR.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/HighPointRR.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: HighPoint Technologies, Inc (DX6G69M9N2)</string>
+			<key>com.apple.message.teamid</key>
+			<string>DX6G69M9N2</string>
+			<key>com.apple.message.version</key>
+			<string>4.3.3</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.highpoint-tech.kext.HighPointIOP</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>587dff4ff5385b06e6da4a2b05f9f1df01e1923c</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>HighPointIOP.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/HighPointIOP.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: HighPoint Technologies, Inc (DX6G69M9N2)</string>
+			<key>com.apple.message.teamid</key>
+			<string>DX6G69M9N2</string>
+			<key>com.apple.message.version</key>
+			<string>4.3.2</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.CalDigit.driver.HDPro</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>7cc63a89c360c80b32a4bf624d002fb2ce2e96b4</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>CalDigitHDProDrv.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/CalDigitHDProDrv.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: CalDigit, Inc (8R7PS6VYW7)</string>
+			<key>com.apple.message.teamid</key>
+			<string>8R7PS6VYW7</string>
+			<key>com.apple.message.version</key>
+			<string>2.1.2</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.ATTO.driver.ATTOExpressSASRAID2</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>7220b01982b29119bf41b061d8331a86a39ed1c9</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>ATTOExpressSASRAID2.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/ATTOExpressSASRAID2.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: ATTO Technology, Inc. (FC94733TZD)</string>
+			<key>com.apple.message.teamid</key>
+			<string>FC94733TZD</string>
+			<key>com.apple.message.version</key>
+			<string>3.7.1</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.ATTO.driver.ATTOExpressSASHBA2</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>7335662450fa9aec1e5da8d1d73b31f6da2add6a</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>ATTOExpressSASHBA2.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/ATTOExpressSASHBA2.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: ATTO Technology, Inc. (FC94733TZD)</string>
+			<key>com.apple.message.teamid</key>
+			<string>FC94733TZD</string>
+			<key>com.apple.message.version</key>
+			<string>2.4.6</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.ATTO.driver.ATTOCelerityFC8</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>1038e4fd79ea657c355aeccf7a2dff9395e2657b</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>ATTOCelerityFC8.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/ATTOCelerityFC8.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: ATTO Technology, Inc. (FC94733TZD)</string>
+			<key>com.apple.message.teamid</key>
+			<string>FC94733TZD</string>
+			<key>com.apple.message.version</key>
+			<string>2.5.6</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.Areca.ArcMSR</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>4f387771c26d86e2b2e351d7f6a6d5f33e9c1e06</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>ArcMSR.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/ArcMSR.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: Areca Technology Corporation (34JN824YNC)</string>
+			<key>com.apple.message.teamid</key>
+			<string>34JN824YNC</string>
+			<key>com.apple.message.version</key>
+			<string>1.3.7</string>
+		</dict>
+		<dict>
+			<key>com.apple.message.architecture</key>
+			<string>x86_64</string>
+			<key>com.apple.message.bundleID</key>
+			<string>com.Accusys.driver.Acxxx</string>
+			<key>com.apple.message.fat</key>
+			<false/>
+			<key>com.apple.message.hash</key>
+			<string>b80b15f6523c3bd4f91c3b7d0ddaf5c6d638bdb8</string>
+			<key>com.apple.message.issuercn</key>
+			<string>Developer ID Certification Authority</string>
+			<key>com.apple.message.kextname</key>
+			<string>ACS6x.kext</string>
+			<key>com.apple.message.kextpath</key>
+			<string>/Library/Extensions/ACS6x.kext</string>
+			<key>com.apple.message.signaturetype</key>
+			<string>3rd-party kext with devid+ certificate</string>
+			<key>com.apple.message.subjectcn</key>
+			<string>Developer ID Application: Accusys,Inc (K3TDMD9Y6B)</string>
+			<key>com.apple.message.teamid</key>
+			<string>K3TDMD9Y6B</string>
+			<key>com.apple.message.version</key>
+			<string>3.1.8</string>
+		</dict>
+	</array>
+</dict>
+</plist>

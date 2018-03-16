@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Mac Pro</key>
+	<string>Tour d’ordinateur de bureau (boîtier en aluminium).</string>
+	<key>Mac mini</key>
+	<string>Ordinateur de bureau Mac G4 à faible encombrement se connectant à presque tous les moniteurs LCD ou VGA.</string>
+	<key>Mac mini Intel Core</key>
+	<string>Ordinateur de bureau Mac à faible encombrement doté d’un processeur Intel Core Duo ou Intel Core Solo.</string>
+	<key>MacBook</key>
+	<string>MacBook doté d’un processeur Intel Core Duo, disponible en noir ou en blanc.</string>
+	<key>MacBook Pro Intel Core Duo</key>
+	<string>MacBook Pro doté d’un processeur Intel Core Duo, avec écran de 15 ou 17 pouces.</string>
+	<key>Macintosh PowerBook G3</key>
+	<string>Ordinateur portable dans un boîtier en plastique et en caoutchouc noir dont les côtés sont gravés.</string>
+	<key>Power Mac G4</key>
+	<string>Tour d'ordinateur de bureau en plastique gris et blanc.</string>
+	<key>Power Mac G4 Cube</key>
+	<string>Ordinateur de bureau en forme de cube et en plastique transparent.</string>
+	<key>Power Mac G5</key>
+	<string>Tour d'ordinateur de bureau en aluminium.</string>
+	<key>Power Macintosh G3</key>
+	<string>Tour d’ordinateur de bureau en plastique gravé bleu et blanc. </string>
+	<key>PowerBook G4</key>
+	<string>Comprend les modèles à boîtier en titane très mince et à écran plat de 15 pouces et les modèles plus récents dotés d’un boîtier en aluminium et d’un écran de 12, 15 ou 17 pouces.</string>
+	<key>Xserve</key>
+	<string>Serveur à processeur Intel Xeon, monté en rack, doté d’un lecteur optique à chargement par fente et de trois baies d’extension pour modules disque dur Serial ATA ou SAS.</string>
+	<key>Xserve G4</key>
+	<string>Serveur G4 monté en rack, doté d’un lecteur optique à chargement par plateau ou par fente et de quatre baies d’extension, ou bien modèle G4 Cluster Node à une seule baie d’extension.</string>
+	<key>Xserve G5</key>
+	<string>Serveur G5 monté en rack avec lecteur CD-ROM ou DVD-ROM à chargement frontal et trois baies d’extension, ou sans baies d’extension pour le modèle Cluster Node. </string>
+	<key>eMac G4</key>
+	<string>Un design tout en un intégrant un écran plat CRT dans un boîtier rond peu encombrant.</string>
+	<key>iBook G3</key>
+	<string>Comprend les modèles originaux en forme de coquillage de couleur claire et dotés d’une anse intégrée et les modèles plus récents dotés d’un boîtier en plastique rectangulaire blanc et argent et d’un écran plat de 12 ou 14 pouces.</string>
+	<key>iBook G4</key>
+	<string>iBook blancs dotés d’un processeur G4.</string>
+	<key>iMac G3</key>
+	<string>Un design tout en un intégré originellement dans un boîtier en plastique bleu et blanc, les modèles les plus récents étant disponibles en différentes couleurs.</string>
+	<key>iMac G4</key>
+	<string>Un design tout en un intégré dans une base en forme de dôme et doté d'un écran plat de 15, 17 ou 20 pouces. </string>
+	<key>iMac G5</key>
+	<string>iMac G5 à écran plat.</string>
+	<key>iMac Intel Core 2 Duo</key>
+	<string>iMac Intel Core 2 Duo à écran plat.</string>
+	<key>iMac Intel Core Duo</key>
+	<string>iMac Intel Core Duo à écran plat.</string>
+</dict>
+</plist>

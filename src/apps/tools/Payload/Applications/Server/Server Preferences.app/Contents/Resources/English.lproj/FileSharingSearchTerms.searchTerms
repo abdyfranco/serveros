@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileSharing</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>file sharing, file sharing service, group folder sharing, public folder sharing, afp, smb, cifs, windows</string>
+				<key>title</key>
+				<string>File Sharing configuration</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>sharepoint, share point, groups folder</string>
+				<key>title</key>
+				<string>Groups folder sharing</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>sharepoint, share point, public folder</string>
+				<key>title</key>
+				<string>Public folder sharing</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

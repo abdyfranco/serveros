@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>vpn</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>vpn VPN Virtual Private Network, remote access リモートアクセス リモート接続 リモート通信, vpn configuration VPN 構成 VPN 設定, client vpn configuration file クライアント VPN 構成ファイル クライアント VPN 設定ファイル</string>
+				<key>title</key>
+				<string>VPN サービスの構成</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

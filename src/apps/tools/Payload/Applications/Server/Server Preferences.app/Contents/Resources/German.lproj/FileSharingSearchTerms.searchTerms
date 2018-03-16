@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileSharing</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>Dateifreigabe, Dateifreigabedienst, Gruppenordner-Freigabe, Freigabe öffentlicher Ordner, afp, smb, cifs, windows</string>
+				<key>title</key>
+				<string>Dateifreigabe-Konfiguration</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>netzwerkordner, netzwerk ordner, gruppenordner</string>
+				<key>title</key>
+				<string>Gruppenordner freigeben</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>netzwerkordner, netzwerk ordner, öffentlicher ordner</string>
+				<key>title</key>
+				<string>Öffentlichen Ordner freigeben</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

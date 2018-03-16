@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Using Multicast</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="4-30-2009 20:52:55" />
+      <meta name="xsltver" content="1.4.4" />
+      <meta name="release" content="5.4" />
+      <meta name="project" content="QuickTime Broadcaster Help" />
+      <meta name="description" content="Summary" />
+      <meta name="topicid" content="qt4d5e5abc" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x517569636B54696D652042726F61646361737465722048656C70">
+      <div id="Nav"><a name="qt4d5e5abc"></a><a name="x517569636B54696D652042726F6164636173746572"></a><a name="x6D756C746963617374"></a><a name="x4D424F4E4520286D756C746963617374206261636B626F6E6529"></a><a name="x74696D652D746F2D6C69766520617474726962757465202854544C29"></a><div id="NavLeft"><a class="NavLinkLeft"
+               href="help:anchor='access' bookID=QuickTime Broadcaster Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="qt4d5e5abc">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnqtb.gif" alt="QTSB Icon" /></div>
+               <div class="Name">Using Multicast</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Multicasting is a method of broadcasting over a local network (not over the Internet) using a single stream that’s shared
+                     among all viewers of the broadcast. Each viewer tunes in to the broadcast much like a radio tunes in to an FM broadcast.
+                  </p>
+                  <p class="Para">Multicasting requires a network that has access to a multicast backbone (MBone) or is multicast-enabled.</p>
+                  <p class="Para">You can multicast over a local network if it is multicast-enabled. Contact your network administrator to find out if your
+                     network supports multicasting.
+                  </p>
+               </div>
+               <div class="Task">
+                  <div class="Name">To broadcast over a local network using the multicast method:</div>
+                  <ol class="ListNumber">
+                     <li>
+                        <p class="Para">In QuickTime Broadcaster, if the expanded window isn’t open, click Show Details.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Click Network.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Choose Multicast from the Transmission pop-up menu.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Click Generate IP Address.</p>
+                        <p class="Para">This enters the IP address you’re using to send the multicast. An address is created in a range reserved for multicast broadcasts.
+                           If your network administrator has assigned specific multicast addresses, you can enter an address manually.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Specify a Time To Live (TTL) setting (or accept the default).</p>
+                        <p class="Para">This setting specifies the number of times a media stream can be passed from one router to another before the stream is no
+                           longer transmitted. The value can be any number between 1 and 255. A value of 1 reaches client computers on the local network.
+                           The larger the number, the farther the multicast packets will travel.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Choose File &gt; Export &gt; SPD or File &gt; Export &gt; Movie.</p>
+                        <p class="Para">This creates a session description protocol (SDP) file or a QuickTime movie file, which you can send to others. To view the
+                           broadcast, double-click the SDP file or use QuickTime Player to open the movie file.
+                        </p>
+                     </li>
+                  </ol>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

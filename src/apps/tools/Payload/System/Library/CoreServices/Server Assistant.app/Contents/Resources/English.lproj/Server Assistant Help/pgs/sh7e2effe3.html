@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Users and Groups (Xsan)</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Choose how you’ll manage users and groups on an Xsan MDC." />
+      <meta name="topicid" content="sh7e2effe3" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="sh7e2effe3"></a><a name="svrasst_xsands"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="sh7e2effe3">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Users and Groups (Xsan)</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">In the Users and Groups pane for an Xsan primary metadata controller, the option you select specifies how you manage user
+                     and group accounts, which are used to authenticate users of SAN computers and determine which services they’re allowed to
+                     access. You use the user and group accounts to control access to files and folders on the SAN by assigning access privileges
+                     to users and groups.
+                  </p>
+                  <table type="Multicolumn" cols="1" border="0" cellspacing="2" cellpadding="2">
+                     <tr class="TableHead">
+                        <th>
+                           <div class="TableHead">Options for managing users and groups</div>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Manage users and groups with Xsan Admin</div>
+                           <p class="Para">Sets up the primary metadata controller as an Open Directory master, so it has its own directory service for user and group
+                              accounts. You create and manage users and groups using Xsan Admin after setup. Xsan Admin automatically configures SAN computers
+                              to connect to the Open Directory service.
+                           </p>
+                           <p class="Para">This option is recommended if you don’t already have a directory server and you don’t expect to have more than 20 SAN users.
+                              These users will have local home folders on their computers, not network home folders on the server.
+                           </p>
+                           <div class="Alert">
+                              <div class="Important"><span class="Important">Important:  </span>If you select this option, be sure to use Xsan Admin—do <span class="Emphasis">not </span>use Server Preferences—to create users and groups. Xsan Admin creates a home folder for a new user account, but Server Preferences
+                                 doesn’t.
+                              </div>
+                           </div>
+                           <div class="Alert">
+                              <div class="Important"><span class="Important">Important:  </span>You can select this option only while using this setup assistant to set up Mac OS X Server on the primary metadata controller.
+                                 You can’t configure this option afterward.
+                              </div>
+                           </div>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Use existing users and groups from an Open Directory server</div>
+                           <p class="Para">Allows you to connect the primary metadata controller to an existing Open Directory server whose DNS name or IP address you
+                              specify in the next pane. Xsan Admin automatically configures SAN computers to connect to the Open Directory server. Users
+                              and groups are managed by an administrator of the Open Directory server.
+                           </p>
+                        </th>
+                     </tr>
+                     <tr class="TableDisplay">
+                        <th>
+                           <div class="TableDisplay">Connect to a directory server later</div>
+                           <p class="Para">Allows you to postpone connecting to an existing Open Directory server until after setup, or to connect to another type of
+                              directory server, such as Active Directory, after setup. To configure directory service connections on SAN computers with
+                              Snow Leopard, use the Login Options section of the Accounts pane of System Preferences. To configure directory service connections
+                              on SAN computers with Leopard, use the Directory Utility application.
+                           </p>
+                        </th>
+                     </tr>
+                  </table>
+               </div>
+               <div class="Outro">
+                  <p class="Para">If you don’t see these options, you’re not setting up an Xsan primary metadata controller. See <a href="sh7e2a1166.html">Users and Groups</a>.
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

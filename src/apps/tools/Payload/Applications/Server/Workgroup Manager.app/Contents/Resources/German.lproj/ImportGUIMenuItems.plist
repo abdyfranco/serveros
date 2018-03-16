@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dsRecTypeStandard:All</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Eintragsname</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Erzeugte eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Daten für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Schalter für verwaltete Einstellungen</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:ComputerGroups</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Kurzname</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:DistinguishedName</string>
+			<key>display string</key>
+			<string>Gruppenname</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Erzeugte eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembers</string>
+			<key>display string</key>
+			<string>Gruppenmitglieder</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembership</string>
+			<key>display string</key>
+			<string>Gruppenmitgliedschaft</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NestedGroups</string>
+			<key>display string</key>
+			<string>Verschachtelte Gruppen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Picture</string>
+			<key>display string</key>
+			<string>Bild</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Daten für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Schalter für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Kommentar</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:ServicesLocator</string>
+			<key>display string</key>
+			<string>Services Locator</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:ComputerLists</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Listenname</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Erzeugte eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Computers</string>
+			<key>display string</key>
+			<string>Computer</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Daten für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Schalter für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Group</string>
+			<key>display string</key>
+			<string>Beschränkt auf Grupppen</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Computers</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Computername</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Erzeugte eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:ENetAddress</string>
+			<key>display string</key>
+			<string>Ethernet-Adresse</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Kommentar</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Daten für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Schalter für verwaltete Einstellungen</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Groups</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RealName</string>
+			<key>display string</key>
+			<string>Vollständiger Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Kurzname</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PrimaryGroupID</string>
+			<key>display string</key>
+			<string>Eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Erzeugte eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembers</string>
+			<key>display string</key>
+			<string>Gruppenmitglieder basierend auf GUID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GroupMembership</string>
+			<key>display string</key>
+			<string>Gruppenmitglieder basierend auf Kurzname</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NestedGroups</string>
+			<key>display string</key>
+			<string>Verschachtelte Gruppen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeDirectory</string>
+			<key>display string</key>
+			<string>Gruppenordner</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeLocOwner</string>
+			<key>display string</key>
+			<string>Eigentümer des Gruppenordners</string>
+		</dict>
+	</array>
+	<key>dsRecTypeStandard:Users</key>
+	<array>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RealName</string>
+			<key>display string</key>
+			<string>Vollständiger Name</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:RecordName</string>
+			<key>display string</key>
+			<string>Kurznamen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Password</string>
+			<key>display string</key>
+			<string>Kennwort</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PasswordPolicyOptions</string>
+			<key>display string</key>
+			<string>Kennwortrichtlinie</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:UniqueID</string>
+			<key>display string</key>
+			<string>Eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:GeneratedUID</string>
+			<key>display string</key>
+			<string>Erzeugte eindeutige ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:PrimaryGroupID</string>
+			<key>display string</key>
+			<string>Primärgruppen-ID</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:UserShell</string>
+			<key>display string</key>
+			<string>Benutzer-Shell</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:HomeDirectory</string>
+			<key>display string</key>
+			<string>Benutzerordner</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:NFSHomeDirectory</string>
+			<key>display string</key>
+			<string>NFS-Benutzerordner</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBHomeDrive</string>
+			<key>display string</key>
+			<string>SMB-Benutzerordnerlaufwerk</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBHome</string>
+			<key>display string</key>
+			<string>SMB-Benutzerordnerpfad</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBProfilePath</string>
+			<key>display string</key>
+			<string>SMB-Profilpfad</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:SMBScriptPath</string>
+			<key>display string</key>
+			<string>SMB-Skriptpfad</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MailAttribute</string>
+			<key>display string</key>
+			<string>Mail-Attribute</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXSettings</string>
+			<key>display string</key>
+			<string>Daten für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:MCXFlags</string>
+			<key>display string</key>
+			<string>Schalter für verwaltete Einstellungen</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Comment</string>
+			<key>display string</key>
+			<string>Kommentar</string>
+		</dict>
+		<dict>
+			<key>attribute</key>
+			<string>dsAttrTypeStandard:Keywords</string>
+			<key>display string</key>
+			<string>Schlüsselwörter</string>
+		</dict>
+	</array>
+</dict>
+</plist>

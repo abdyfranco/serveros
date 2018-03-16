@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>catchAllGroupID</key>
+	<string>catchAllGroupID</string>
+	<key>groups</key>
+	<array>
+		<dict>
+			<key>identifier</key>
+			<string>Accounts</string>
+			<key>panes</key>
+			<array>
+				<string>com.apple.ServerPreferences.UsersPlugin</string>
+				<string>com.apple.ServerPreferences.GroupsPlugin</string>
+			</array>
+		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>Services</string>
+			<key>panes</key>
+			<array>
+				<string>com.apple.ServerPreferences.FileSharingPlugin</string>
+				<string>com.apple.ServerPreferences.AddressBookPlugin</string>
+				<string>com.apple.ServerPreferences.CalendarPlugin</string>
+				<string>com.apple.ServerPreferences.ChatPlugin</string>
+				<string>com.apple.ServerPreferences.MailPlugin</string>
+				<string>com.apple.ServerPreferences.WebPlugin</string>
+				<string>com.apple.ServerPreferences.VPNPlugin</string>
+			</array>
+		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>System</string>
+			<key>panes</key>
+			<array>
+				<string>com.apple.ServerPreferences.SystemPlugin</string>
+				<string>com.apple.ServerPreferences.LogsPlugin</string>
+				<string>com.apple.ServerPreferences.GraphsPlugin</string>
+				<string>com.apple.ServerPreferences.BackupPlugin</string>
+				<string>com.apple.ServerPreferences.SecurityPlugin</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

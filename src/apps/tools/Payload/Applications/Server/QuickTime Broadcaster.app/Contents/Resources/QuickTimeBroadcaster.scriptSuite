@@ -1,0 +1,229 @@
+/*
+	File:		QuickTimeBroadcaster.scriptSuite
+
+	Copyright:	©2001 by Apple Computer, Inc., all rights reserved.
+
+	$Log: QuickTimeBroadcaster.scriptSuite,v $
+	Revision 1.13  2004/08/04 20:36:28  timmon
+	Add windowPosition attribute to document class. Fixes Radar 3522080.
+	
+	Revision 1.12  2002/06/07 21:15:39  abaerlocher
+	Add recording attribute (was missing for some reason).
+	
+	Revision 1.11  2002/03/24 07:35:40  flint
+	Add dataRate, connectedUsers, and cpuLoad support.
+	
+	Revision 1.10  2002/03/24 06:02:53  flint
+	Properties dataRate and frameRate are now  NSNumber rather than NSString.
+	
+	Revision 1.9  2002/03/24 04:18:18  flint
+	Change mediaType => mediaTypeString to get a non-localized media type string; stream active property should be writable.
+	
+	Revision 1.8  2002/03/24 01:55:26  flint
+	Remove stream enable properties from application class -- streams are now enabled by setting the enabled property of a stream.
+	
+	Revision 1.7  2002/03/24 00:06:17  flint
+	Add support for preset names, streams,  and stream stats.
+	
+	Revision 1.6  2002/03/22 22:12:54  flint
+	Add AS support for enabling streams.
+	
+	Revision 1.5  2002/03/15 00:43:42  flint
+	AS terminology tweaks.
+	
+	Revision 1.4  2002/03/14 23:44:48  flint
+	Update AppleScript support.
+	
+	Revision 1.3  2001/12/19 01:45:05  flint
+	Add AS support for broadcast location.
+	
+	Revision 1.2  2001/12/15 00:47:59  flint
+	Update terminology to support changes in property names necessitated by moving AS implementation to a category.
+	
+	Revision 1.1  2001/12/11 00:57:47  flint
+	Add AppleScript support.
+	
+	Revision 1.1  2001/12/10 19:31:13  flint
+	Add basic AppleScript support.
+	
+*/
+
+{
+    "Name" = "QuickTimeBroadcaster";
+    "AppleEventCode" = "qtbr";
+    
+    "Classes" = {
+        "NSApplication" = {
+            "Superclass" = "NSCoreSuite.NSApplication";
+            "ToManyRelationships" = {
+                "orderedDocuments" = {
+                    "Type" = "BroadcastDoc";
+                    "AppleEventCode" = "docu";
+                };
+            };
+            "AppleEventCode" = "capp";
+        };
+        "BroadcastDoc" = {
+            "Superclass" = "NSCoreSuite.NSDocument";
+            "ToManyRelationships" = {
+                "audioPresets" = {
+                    "Type" = "NSArray";
+                    "AppleEventCode" = "aupr";
+                    "ReadOnly" = "Yes";
+                };
+                 "videoPresets" = {
+                    "Type" = "NSArray";
+                    "AppleEventCode" = "vdpr";
+                    "ReadOnly" = "Yes";
+                };
+                "networkPresets" = {
+                    "Type" = "NSArray";
+                    "AppleEventCode" = "ntpr";
+                    "ReadOnly" = "Yes";
+                };
+                "streams" = {
+                    "Type" = "QTBroadcastStream";
+                    "AppleEventCode" = "stre";
+                     "ReadOnly" = "Yes";
+               };
+           };
+            "SupportedCommands" = {
+                 "Start" = "startBroadcast:";
+                 "Stop" = "stopBroadcast:";
+           };
+            "AppleEventCode" = "docu";
+            "Attributes" = {
+                "presentationAudioSource" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "bras";
+                    "ReadOnly" = "No";
+                };
+                "presentationVideoSource" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "brvs";
+                    "ReadOnly" = "No";
+                };
+                "presentationNetwork" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "brnt";
+                    "ReadOnly" = "No";
+                };
+                "recording" = {
+                    "Type" = "NSNumber<Bool>";
+                    "AppleEventCode" = "brrd";
+                    "ReadOnly" = "No";
+                };
+                "presentationStatus" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "prst";
+                    "ReadOnly" = "Yes";
+                };
+                "dataRate" = {
+                    "Type" = "NSNumber<Float>";
+                    "AppleEventCode" = "stdr";
+                    "ReadOnly" = "Yes";
+                };
+                "connectedUsers" = {
+                    "Type" = "NSNumber";
+                    "AppleEventCode" = "brcu";
+                    "ReadOnly" = "Yes";
+                };
+                "cpuLoad" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "brld";
+                    "ReadOnly" = "Yes";
+                };
+                "windowPosition" = {
+                    "Type" = "NSData<QDPoint>";
+                    "AppleEventCode" = "ppos";
+                    "ReadOnly" = "No";
+                };
+            };
+		};
+        "QTBroadcastStream" = {
+            "Superclass" = "NSCoreSuite.AbstractObject";
+            "AppleEventCode" = "stre";
+            "Attributes" = {
+                "mediaTypeString" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "stty";
+                    "ReadOnly" = "Yes";
+                };
+                "dataRate" = {
+                    "Type" = "NSNumber<Float>";
+                    "AppleEventCode" = "stdr";
+                    "ReadOnly" = "Yes";
+                };
+                "frameRate" = {
+                    "Type" = "NSNumber<Float>";
+                    "AppleEventCode" = "stfr";
+                    "ReadOnly" = "Yes";
+                };
+                "streamEnabled" = {
+                    "Type" = "NSNumber<Bool>";
+                    "AppleEventCode" = "sten";
+                    "ReadOnly" = "No";
+                };
+            };
+		};
+        "Audio Preset" = {
+            "Superclass" = "NSCoreSuite.AbstractObject";
+            "AppleEventCode" = "aupr";
+            "Attributes" = {
+                "name" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "prnm";
+                    "ReadOnly" = "Yes";
+                };
+            };
+		};
+        "Video Preset" = {
+            "Superclass" = "NSCoreSuite.AbstractObject";
+            "AppleEventCode" = "vdpr";
+            "Attributes" = {
+                "presetName" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "prnm";
+                    "ReadOnly" = "Yes";
+                };
+            };
+		};
+        "Network Preset" = {
+            "Superclass" = "NSCoreSuite.AbstractObject";
+            "AppleEventCode" = "ntpr";
+            "Attributes" = {
+                "presetName" = {
+                    "Type" = "NSString";
+                    "AppleEventCode" = "prnm";
+                    "ReadOnly" = "Yes";
+                };
+            };
+		};
+    };
+    "Commands" = {
+        "Start" = {
+            "AppleEventClassCode" = "qtbr"; 
+            "AppleEventCode" = "star";
+            "CommandClass" = "NSScriptCommand"; 
+            "Type" = "";         
+        };
+        "Stop" = {
+            "AppleEventClassCode" = "qtbr"; 
+            "AppleEventCode" = "stop"; 
+            "CommandClass" = "NSScriptCommand"; 
+            "Type" = "";         
+        };
+    };
+	"ValueTypes" = {
+		"QDPoint" = "QDpt";
+		"QDRect" = "qdrt";
+	};
+    /*
+    "Enumerations" = {
+        "StatisticOptions" = {
+            "AppleEventCode" = "stat"; 
+            "Enumerators" = { "Ask" = "ask "; "No" = "no  "; "Yes" = "yes "; }; 
+    }; 
+  };
+  */
+  }

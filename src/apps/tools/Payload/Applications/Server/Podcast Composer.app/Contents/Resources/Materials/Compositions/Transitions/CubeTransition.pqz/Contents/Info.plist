@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>Name</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.PodcastProducer.composition.transition.CubeTransition</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Cube</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(RC_ProjectSourceVersion)</string>
+	<key>Copyright</key>
+	<string>Copyright</string>
+	<key>Description</key>
+	<string>Description</string>
+	<key>Directions</key>
+	<array>
+		<string>Top to Bottom</string>
+		<string>Bottom to Top</string>
+		<string>Left to Right</string>
+		<string>Right to Left</string>
+	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright</string>
+	<key>Name</key>
+	<string>Name</string>
+	<key>Version</key>
+	<string>2.0</string>
+</dict>
+</plist>

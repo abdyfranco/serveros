@@ -1,0 +1,22 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {clickedKeychainButton = id; doCancel = id; doConnect = id; }; 
+            CLASS = LoginSheet; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myConnectButton = NSButton; 
+                myHostField = NSTextField; 
+                myLoginSheet = NSPanel; 
+                myParentDocument = id; 
+                myPasswordField = NSSecureTextField; 
+                myProgressIndicator = NSProgressIndicator; 
+                myUseKeychainButton = NSButton; 
+                myUsernameField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

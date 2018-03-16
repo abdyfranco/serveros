@@ -1,0 +1,25 @@
+#!/bin/sh
+rsrcPath=$1
+volPath=$2
+specPath=$3
+rm "$volPath/System/Installation/Packages"
+cp -R "/Volumes/OS X Install ESD/Packages" "$volPath/System/Installation/"
+cp "/Volumes/OS X Install ESD/BaseSystem.dmg" "$volPath/"
+cp "/Volumes/OS X Install ESD/BaseSystem.chunklist" "$volPath/"
+cp "$rsrcPath/InstallableMachines.plist" "$volPath/System/Installation/Packages/"
+cp "$rsrcPath/PlatformSupport.plist" "$volPath/System/Library/CoreServices/"
+cp "$rsrcPath/prelinkedkernel" "$volPath/System/Library/PrelinkedKernels/"
+xattr -c "$volPath/System/Library/PrelinkedKernels/prelinkedkernel"
+chflags uchg "$volPath/System/Library/PrelinkedKernels/prelinkedkernel"
+mkdir "$volPath/System/Library/Caches"
+cp -R "$rsrcPath/com.apple.kext.caches" "$volPath/System/Library/Caches/"
+cp -R "$rsrcPath/LegacyUSBInjector.kext" "$volPath/Library/Extensions/"
+chmod -R 0755 "$volPath/Library/Extensions/LegacyUSBInjector.kext"
+cp -R "$rsrcPath/macOS Post Install.app" "$volPath/Applications/Utilities/"
+cp "$rsrcPath/InstallerMenuAdditions.plist" "$volPath/System/Installation/CDIS/macOS Installer.app/Contents/Resources/"
+cp "$specPath/OSInstall.mpkg" "$volPath/System/Installation/Packages/"
+cp "$rsrcPath/prelinkedkernel" "$volPath/Applications/Utilities/macOS Post Install.app/Contents/Resources/"
+rm -R "$volPath/System/Library/PrivateFrameworks/OSInstaller.framework"
+cp -R "$rsrcPath/OSInstaller.framework" "$volPath/System/Library/PrivateFrameworks/"
+cp -R "$rsrcPath/UtilitiesLauncher.app" "$volPath/Applications/Utilities/"
+cp "$rsrcPath/com.dd1.UtilitiesLauncher.plist" "$volPath/System/Library/LaunchDaemons/"

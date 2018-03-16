@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Strict//EN""http:// www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-16"> 
+
+	<script type='text/javascript' src='../jquery-1.9.1.min.js'></script>
+	
+	<style type="text/css">
+	span {
+	display: inline-block;
+	vertical-align:9px;	
+	}
+	#connBox {
+	font-size: 16px;
+	font-family: "Lucida Grande";
+ 	width:250px;
+ 	margin: 0 auto;
+	text-align:center;
+	}
+
+
+	</style>
+	<script type="text/javascript">
+	window.server = "http://www.apple.com/support/macd/CAS";
+	
+	$(window).resize(function() {
+		
+		var obj = $("#connBox");
+		var halfsc = $(window).height()/2;
+		var halfh = $("#connBox").height()/2; 
+		var goBottom = (halfsc - halfh);
+		$(obj).css("padding-top",goBottom);
+	});
+
+	//Dapatkan parameter URL
+	function getURLParam( name )
+	{
+
+		name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");  
+		var regexS = "[\\?&]"+name+"=([^&#]*)";  
+		var regex = new RegExp( regexS );  
+		var results = regex.exec( window.location.href ); 
+		if( results == null )  
+		return "";  
+		else   
+		return results[1];
+	}
+
+
+	var result;
+	firstTime = true;
+
+	/*Check connectivity*/
+	function checkConnection(result,funCallback)
+	{
+
+		try
+		{
+			if(navigator.onLine==true) //Jaringan online
+			{
+
+				var checkRoute =$.ajax({
+					url: window.server+'routeToApple.json',
+					dataType: 'jsonp',
+					jsonpCallback:'jsonCallback',
+					async: false,
+					timeout: 5000,
+					error: function (xhr, ajaxOptions, thrownError){ /*No route*/
+						result = false;
+						loadPage(result);
+					}
+					,
+					success: function(data) { /*Route found*/
+
+						if(data.online=="success")
+						{
+							result=true;
+							loadPage(result);
+						}
+						else
+						{
+							result = false;
+							loadPage(result);
+						}
+					}
+
+				});
+			}
+			else //Jaringan offline
+			{
+				if(firstTime==true) //Tunggu empat detik lagi sebelum mencoba menghubungkan - Pertama kali
+				{
+						firstTime=false;
+					setTimeout(function() {
+
+						checkConnection(result,loadPage);
+						}, 4000);
+					}
+					else
+					{
+						result = false;
+						loadPage(result);
+
+
+					}
+
+				}
+			}
+			catch(error) //Tampilkan halaman offline
+			{
+				result = false;
+				loadPage(result);
+
+			}
+
+
+		}
+
+		</script>
+
+	</head>
+	<body onload=resizeWindow()>
+		<div id = "main"> </div>
+		<div id="container">
+
+			<form style="display: hidden" action="../Consent.html" id="form">
+
+
+				<input type="hidden" id="serialno" name="serialno" />
+				<input type="hidden" id="referencecode" name="referencecode"/>
+				<input type="hidden" id="language" name="language"/>
+				<input type="hidden" id="version" name="version"/>
+			</form>
+			<div id="connBox">
+			<img  src = "../ActivityIndicator.gif" height="30"></img>
+			<span> Menghubungkan...&nbsp;</span>   	
+			</div>
+			
+			
+			<script>
+			
+			function resizeWindow()
+			{
+					window.resizeTo(screen.width,screen.height);
+					$(window).resize();
+			}
+			var result = false;
+			var i = 0;
+			var serialNo = getURLParam('serialno');
+			var refCodeArray = getURLParam('refcodes');
+			var language = getURLParam('language');
+			var version = getURLParam('version');
+			setTimeout(function() {
+				checkConnection(result,loadPage);
+				}, 6000);
+
+			
+				function loadPage(result)
+				{
+					if(result==true) /*Route to Apple found */
+					{
+
+						document.getElementById("serialno").setAttribute("value",serialNo.toUpperCase());
+						document.getElementById("referencecode").setAttribute("value",refCodeArray);
+						document.getElementById("language").setAttribute("value",language.toUpperCase());	
+						document.getElementById("version").setAttribute("value",version); 
+						document.getElementById("form").submit();
+				}
+					else
+					{
+						//Tampilkan halaman offline
+			
+						$("#main").load('GuestLoginInformation.html','_self');
+						$("#connBox").hide();
+
+						setTimeout(function() {
+							checkConnection();
+							}, 5000);
+
+						}
+					}
+					</script>
+
+				</div>
+			</body>

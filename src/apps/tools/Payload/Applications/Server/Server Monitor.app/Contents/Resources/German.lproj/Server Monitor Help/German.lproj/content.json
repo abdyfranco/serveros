@@ -1,0 +1,133 @@
+[{
+"content": {
+"apd5DF83713-84EF-42BA-A30C-8A471AB5A13F": {
+"content": "<div id='apd5DF83713-84EF-42BA-A30C-8A471AB5A13F' class='apd-topic'><div class='subjectids'><a name='apd5DF83713-84EF-42BA-A30C-8A471AB5A13F'><\/a><\/div><h1 class='title topictitle1'>Hinzufügen eines Servers zur Liste<\/h1><div class='body taskbody'><p class='shortdesc'>Wenn Sie einen Server überwachen möchten, fügen Sie ihn zur Serverliste hinzu.<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Wählen Sie <span class='ph menucascade'><span class='ph uicontrol'>Server<\/span>  > <span class='ph uicontrol'>hinzufügen<\/span><\/span> oder klicken Sie in der Symbolleiste auf <span class='ph uicontrol'>Server hinzufügen<\/span>.<\/span><\/li><li class='li step'><span class='ph cmd'>Geben Sie den Namen oder die Adresse des Servers sowie einen Account-Namen und das Kennwort ein. <span class='ph'>Bei einem Intel-basierten Xserve verwenden Sie die Adress- und Account-Angaben für den LOM-Port (Lights-Out Management).<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>Wenn Sie das Kennwort des Accounts nicht bei jedem Öffnen von Servermonitor erneut eingeben möchten, klicken Sie auf <span class='ph uicontrol'>Kennwort zum Schlüsselbund hinzufügen<\/span>.”<\/span><\/li><li class='li step'><span class='ph cmd'>Klicken Sie auf <span class='ph uicontrol'>OK<\/span>.<\/span><\/li><\/ol><\/div><div class='section postreq'>Sie können Server zu der Liste hinzufügen, indem Sie eine zuvor gesicherte Serverliste importieren oder zusammenfügen. Vgl. <a class='xref' href='#apdD677F1E1-178F-427F-A33D-94A04321C9A0' title='Nach dem Öffnen des Programms \"Servermonitor\" wird eine Liste mit den Servern angezeigt, mit denen Sie zuletzt gearbeitet haben.'>Wechseln der Serverlisten<\/a>.<\/div><\/div>", 
+"keywords": "tcp, udp, well-known, firewall, xserve", 
+"name": "Hinzufügen eines Servers zur Liste", 
+"alternativeName": "Hinzufügen eines Servers zur Liste", 
+"summary": "Wenn Sie einen Server überwachen möchten, fügen Sie ihn zur Serverliste hinzu."}
+, 
+"apdBF6DC783-0285-4063-A432-61CB0EB01172": {
+"name": "Konfigurieren von LOM (Lights-out Management)"}
+, 
+"apdD677F1E1-178F-427F-A33D-94A04321C9A0": {
+"content": "<div id='apdD677F1E1-178F-427F-A33D-94A04321C9A0' class='apd-topic'><div class='subjectids'><a name='apdD677F1E1-178F-427F-A33D-94A04321C9A0'><\/a><\/div><h1 class='title topictitle1'>Wechseln der Serverlisten<\/h1><div class='body conbody'><div class='abstract'><div class='shortdesc'>Nach dem Öffnen des Programms \"Servermonitor\" wird eine Liste mit den Servern angezeigt, mit denen Sie zuletzt gearbeitet haben.<\/div><p class='p'>Wenn Sie mit mehreren Serverlisten arbeiten, können Sie Serverlisten in separaten Dateien sichern und dann die Liste wechseln, indem Sie die jeweils gewünschte Liste importieren. Sie können Listen auch kombinieren, indem Sie eine gesicherte Liste mit einer aktuellen Liste mischen (zusammenfügen).<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Die aktuelle Serverliste sichern<\/h2><p class='p'>Wählen Sie in Servermonitor \"Ablage\" > \"Exportieren\". Wählen Sie dann einen Speicherort und klicken Sie auf \"Sichern\".<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Zu einer anderen Liste wechseln<\/h2><p class='p'>Wählen Sie \"Ablage\" > \"Importieren\", wählen Sie eine gesicherte Listendatei und klicken Sie auf \"Öffnen\".<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Listen zusammenfügen<\/h2><p class='p'>Wählen Sie \"Ablage\" > \"Zusammenfügen\", wählen Sie eine gesicherte Listendatei und klicken Sie auf \"Öffnen\".<\/p><\/div><\/div><\/div>", 
+"alternativeName": "Wechseln der Serverlisten", 
+"name": "Wechseln der Serverlisten", 
+"summary": "Nach dem Öffnen des Programms \"Servermonitor\" wird eine Liste mit den Servern angezeigt, mit denen Sie zuletzt gearbeitet haben."}
+, 
+"apdA63A42D8-4924-4D18-885C-68857071DD68": {
+"content": "<div id='apdA63A42D8-4924-4D18-885C-68857071DD68' class='apd-topic'><div class='subjectids'><a name='apdA63A42D8-4924-4D18-885C-68857071DD68'><\/a><\/div><h1 class='title topictitle1'>Anzeigen des Serverstatus<\/h1><div class='body conbody'><div class='abstract'><span class='shortdesc'>Es gibt mehrere Möglichkeiten, die Informationen zum Serverstatus anzuzeigen:<\/span><\/div><div class='section'><h2 class='title sectiontitle'>Gehen Sie wie folgt vor, um Informationen über eine Komponente anzuzeigen:<\/h2><p class='p'>Wählen Sie einen Server aus, klicken Sie auf die Komponententasten (z. B. die Taste \"Laufwerke\" oder \"Temperatur\") über dem Informationsbereich unten im Fenster und wählen Sie dann eine bestimmte Komponente oder einen Sensor aus dem Einblendmenü aus. Sie können auch auf ein Symbol für den Status oder eine Komponente in der Spalte \"Statuszusammenfassung\" klicken.<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Gehen Sie wie folgt vor, um zwischen Detailansicht und Zusammenfassung zu wechseln:<\/h2><p class='p'>Klicken Sie auf das Feld \"Detaillierten Status anzeigen\" oder wählen Sie ein Komponentensymbol in der Spalte \"Statuszusammenfassung\" durch Doppelklicken aus.<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Gehen Sie wie folgt vor, um Geräteinformationen schnell zu prüfen:<\/h2><p class='p'>Halten Sie die Maustaste gedrückt und bewegen Sie den Zeiger über die Symbole in der Spalte \"Statuszusammenfassung\".<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Gehen Sie wie folgt vor, um nur die Probleme bzw. Fehler anzuzeigen:<\/h2><p class='p'>Klicken Sie auf \"Nur Ausfälle und Warnungen anzeigen\" unter der Serverliste.<\/p><\/div><\/div><\/div>", 
+"alternativeName": "Anzeigen des Serverstatus", 
+"name": "Anzeigen des Serverstatus", 
+"summary": "Es gibt mehrere Möglichkeiten, die Informationen zum Serverstatus anzuzeigen:"}
+, 
+"apdFA711495-65E8-4D76-BFF2-2A6825769A94": {
+"content": "<div id='apdFA711495-65E8-4D76-BFF2-2A6825769A94' class='apd-topic'><div class='subjectids'><a name='apdFA711495-65E8-4D76-BFF2-2A6825769A94'><\/a><\/div><h1 class='title topictitle1'> Anzeigen eines Protokolls der Servermonitor-Aktivität<\/h1><div class='body conbody'><div class='abstract'><div class='shortdesc'>Der Servermonitor führt ein Protokoll der Überwachungs- und Steuerungsaktivität an jedem Server.<\/div><p class='p'>Jedes Protokoll zeichnet Interaktionen zwischen Servermonitor und Server auf, jedoch keine Systemaktivität am Server selbst. Das Protokoll zeigt z. B., Änderungen des Serverstatus, die Uhrzeiten der Kontaktaufnahme vom Servermonitor zum Server, sowie Angaben über Erfolg oder Fehlschlagen einer versuchten Verbindung.<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Ein Protokoll anzeigen<\/h2><p class='p'>Wählen Sie einen Server aus und klicken Sie auf \"Protokoll anzeigen\".<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Ein Protokoll in einer Datei sichern<\/h2><p class='p'>Wählen Sie einen Server aus, klicken Sie auf \"Protokoll anzeigen\" und klicken Sie danach auf \"Sichern unter\" im Protokollfenster.<\/p><\/div><div class='section'><h2 class='title sectiontitle'>Ein Protokoll löschen<\/h2><p class='p'>Wählen Sie einen Server aus, klicken Sie auf \"Protokoll anzeigen\" und klicken Sie danach auf \"Protokoll löschen\" im Protokollfenster.<\/p><\/div><\/div><\/div>", 
+"alternativeName": "Anzeigen eines Protokolls der Servermonitor-Aktivität", 
+"name": "Anzeigen eines Protokolls der Servermonitor-Aktivität", 
+"summary": "Der Servermonitor führt ein Protokoll der Überwachungs- und Steuerungsaktivität an jedem Server."}
+, 
+"apd03812A5E-44D2-486E-B9A2-B778DD9044F4": {
+"content": "<div id='apd03812A5E-44D2-486E-B9A2-B778DD9044F4' class='apd-topic'><div class='subjectids'><a name='apd03812A5E-44D2-486E-B9A2-B778DD9044F4'><\/a><\/div><h1 class='title topictitle1'>Steuerung der Service-LED<\/h1><div class='body taskbody'><p class='shortdesc'>Wenn Sie einen bestimmten Xserve in einem Server-Rack suchen, verwenden Sie das Programm \"Servermonitor\" zum Aktivieren der Service-LED des betreffenden Servers.<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Wählen Sie den Server in der Serverliste aus.<\/span><\/li><li class='li step'><span class='ph cmd'>Klicken Sie auf die Taste <span class='ph uicontrol'>Information<\/span>.<\/span><\/li><li class='li step'><span class='ph cmd'>Klicken Sie auf die Taste <span class='ph uicontrol'>Service-LED<\/span>.<\/span><\/li><\/ol><\/div><\/div>", 
+"keywords": "tcp, udp, well-known, firewall", 
+"name": "Steuerung der Service-LED", 
+"alternativeName": "Steuerung der Service-LED", 
+"summary": "Wenn Sie einen bestimmten Xserve in einem Server-Rack suchen, verwenden Sie das Programm \"Servermonitor\" zum Aktivieren der Service-LED des betreffenden Servers."}
+, 
+"button-0": {
+"type": "navigation", 
+"howdyPageID": "apdD7678147-E865-43DA-85E0-94EC3A216B3C", 
+"alternativeNameStyle": "replace"}
+, 
+"apd4337AA66-9DB5-4957-9BCA-A4F0B6028138": {
+"content": "<div id='apd4337AA66-9DB5-4957-9BCA-A4F0B6028138' class='apd-topic'><div class='subjectids'><a name='apd4337AA66-9DB5-4957-9BCA-A4F0B6028138'><\/a><\/div><h1 class='title topictitle1'>Hinzufügen von LOM-Accounts (Lights-Out Management)<\/h1><div class='body taskbody'><p class='shortdesc'>Normalerweise erstellen Sie einen LOM-Account (Lights-Out Management), wenn Sie das erste Mal einen Intel-basierten Xserve mit dem Serverassistenten konfigurieren. Mit dem Programm \"Servermonitor\" können Sie zusätzliche Accounts konfigurieren.<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Wählen Sie im Servermonitor einen Server aus. Wählen Sie dann <span class='ph menucascade'><span class='ph uicontrol'>Server<\/span>  > <span class='ph uicontrol'>Accounts bearbeiten<\/span><\/span><\/span><\/li><li class='li step'><span class='ph cmd'>Geben Sie die Account-Einstellungen ein. <span class='ph'>Wählen Sie als Account-Typ \"Admin\" für eine Person, die die Berechtigung zum Überwachen und Steuern (Starten, Ausschalten und Neustarten) des Servers besitzt. Wählen Sie den Account-Typ \"Benutzer\" für einen Benutzer, der nur zum Überwachen des Servers berechtigt ist.<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>Klicken Sie auf <span class='ph uicontrol'>Benutzer hinzufügen<\/span> und anschließend auf <span class='ph uicontrol'>Fertig<\/span>.<\/span><\/li><\/ol><\/div><div class='section postreq'>Sie können auch LOM-Account (Lights-Out Management) mit dem Befehlszeilenprogramm \"IPMITool\" im Terminal festlegen. Informationen dazu finden Sie auf der man-Seite \"IPMITool\".<\/div><\/div>", 
+"keywords": "tcp, udp, well-known, firewall, lights-out, xserve", 
+"name": "Hinzufügen von LOM-Accounts (Lights-Out Management)", 
+"alternativeName": "Hinzufügen von LOM-Accounts (Lights-Out Management)", 
+"summary": "Normalerweise erstellen Sie einen LOM-Account (Lights-Out Management), wenn Sie das erste Mal einen Intel-basierten Xserve mit dem Serverassistenten konfigurieren. Mit dem Programm \"Servermonitor\" können Sie zusätzliche Accounts konfigurieren."}
+, 
+"apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E": {
+"content": "<div id='apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E' class='apd-topic'><div class='subjectids'><a name='apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E'><\/a><\/div><h1 class='title topictitle1'>Konfigurieren von E-Mail-Benachrichtigungen über den Serverstatus<\/h1><div class='body taskbody'><p class='shortdesc'>Sie können dafür sorgen, dass der Servermonitor E-Mail-Benachrichtigungen an bestimmte Empfänger sendet, sobald sich der Status ausgewählter Serverkomponenten ändert.<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Wählen Sie im Servermonitor einen Server in der Serverliste aus und klicken Sie auf <span class='ph uicontrol'>Benachrichtigungen bearbeiten.<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>Wählen Sie die Geräte aus, über deren Status Sie benachrichtigt werden wollen.<\/span><\/li><li class='li step'><span class='ph cmd'>Geben Sie den Namen des Absenders ein, der in der E-Mail angezeigt werden soll.<\/span><\/li><li class='li step'><span class='ph cmd'>Geben Sie die Adressen ein, an die die E-Mail gesendet werden soll. (Klicken Sie auf <span class='ph uicontrol'>Pager<\/span>, wenn es sich um die Adresse eines Pagers handelt. Mithilfe der Taste <span class='ph uicontrol'>Hinzufügen<\/span> oder <span class='ph uicontrol'>Löschen<\/span> können Sie Adressen hinzufügen oder löschen.)<\/span><\/li><li class='li step'><span class='ph cmd'>Wählen Sie die Priorität für die Benachrichtigung aus.<\/span><\/li><li class='li step'><span class='ph cmd'>Geben Sie den Betreff und die Mitteilung ein, die in der E-Mail angezeigt werden soll.<\/span><\/li><li class='li step'><span class='ph cmd'>Wählen Sie aus, ob die E-Mail vom entfernten Server oder von Servermonitor gesendet werden soll.<\/span><\/li><li class='li step'><span class='ph cmd'>Klicken Sie auf <span class='ph uicontrol'>OK<\/span>.<\/span><\/li><\/ol><\/div><div class='section postreq'>Sie können Server zu der Liste hinzufügen, indem Sie eine zuvor gesicherte Serverliste importieren oder zusammenfügen. Vgl. <a class='xref' href='#apdD677F1E1-178F-427F-A33D-94A04321C9A0' title='Nach dem Öffnen des Programms \"Servermonitor\" wird eine Liste mit den Servern angezeigt, mit denen Sie zuletzt gearbeitet haben.'>Wechseln der Serverlisten<\/a>.<\/div><\/div>", 
+"keywords": "tcp, udp, well-known, firewall", 
+"name": "Konfigurieren von E-Mail-Benachrichtigungen über den Serverstatus", 
+"alternativeName": "Konfigurieren von E-Mail-Benachrichtigungen über den Serverstatus", 
+"summary": "Sie können dafür sorgen, dass der Servermonitor E-Mail-Benachrichtigungen an bestimmte Empfänger sendet, sobald sich der Status ausgewählter Serverkomponenten ändert."}
+, 
+"apdBF6DC783-0285-4063-A432-61CB0EB01171": {
+"name": "Verwalten von Servern"}
+, 
+"apdFC997FF7-06C6-414C-875F-E073FE22DDD8": {
+"content": "<div id='apdFC997FF7-06C6-414C-875F-E073FE22DDD8' class='apd-topic'><div class='subjectids'><a name='apdFC997FF7-06C6-414C-875F-E073FE22DDD8'><\/a><\/div><h1 class='title topictitle1'>Ändern der Einstellungen des LOM-Prozessors (Lights-Out Management)<\/h1><div class='body taskbody'><p class='shortdesc'>Intel-basierte Xserve-Systeme enthalten einen LOM-Prozessor, mithilfe dessen Sie auch mit einem Server kommunizieren können, wenn dieser nicht eingeschaltet ist. Normalerweise geben Sie Netzwerkeinstellungen und Account-Informationen für den LOM-Prozessor (Lights-Out Management) an, wenn Sie den Xserve erstmals mit dem Serverassistenten konfigurieren. Mit dem Servermonitor können Sie die LOM-Einstellungen des Servers ändern, auf dem das Programm \"Servermonitor\" ausgeführt wird.<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Wählen Sie im Servermonitor <span class='ph menucascade'><span class='ph uicontrol'>Server<\/span>  > <span class='ph uicontrol'>Lokale Maschine konfigurieren.<\/span><\/span><\/span><\/li><li class='li step'><span class='ph cmd'>Geben Sie die Account-Einstellungen ein. <span class='ph'>Wählen Sie als Account-Typ \"Admin\" für eine Person, die die Berechtigung zum Überwachen und Steuern (Starten, Ausschalten und Neustarten) des Servers besitzt. Wählen Sie den Account-Typ \"Benutzer\" für einen Benutzer, der nur zum Überwachen des Servers berechtigt ist.<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>Wählen Sie <span class='ph uicontrol'>Port 1<\/span> oder <span class='ph uicontrol'>Port 2<\/span> aus dem Einblendmenü <span class='ph uicontrol'>LOM verwendet Ethernet<\/span>.<\/span><span class='ph uicontrol'>Port 1 <\/span>entspricht dabei Ethernetanschluss 1 an der Rückseite des Xserve.\n      <\/li><li class='li step'><span class='ph cmd'>Geben Sie Netzwerk- und Account-Einstellungen ein und klicken Sie auf <span class='ph uicontrol'>Anwenden<\/span>.<\/span><\/li><\/ol><\/div><div class='section postreq'><div class='note note'><span class='notetitle'>Anmerkung:<\/span> Stellen Sie sicher, dass Sie für den Anschluss des LOM-Prozessors eine eigene IP-Adresse vergeben. Verwenden Sie nicht die gleiche Adresse wie für den Server selbst.<\/div><p class='p'>Sie können auch die Einstellungen für den LOM-Prozessor mit dem Befehlszeilenprogramm \"IPMITool\" im Terminal ändern. Informationen dazu finden Sie auf der man-Seite \"IPMITool\".<\/p><\/div><\/div>", 
+"keywords": "tcp, udp, well-known, firewall, lights-out, xserve", 
+"name": "Ändern der Einstellungen des LOM-Prozessors (Lights-Out Management)", 
+"alternativeName": "Ändern der Einstellungen des LOM-Prozessors (Lights-Out Management)", 
+"summary": "Intel-basierte Xserve-Systeme enthalten einen LOM-Prozessor, mithilfe dessen Sie auch mit einem Server kommunizieren können, wenn dieser nicht eingeschaltet ist. Normalerweise geben Sie Netzwerkeinstellungen und Account-Informationen für den LOM-Prozessor (Lights-Out Management) an, wenn Sie den Xserve erstmals mit dem Serverassistenten konfigurieren. Mit dem Servermonitor können Sie die LOM-Einstellungen des Servers ändern, auf dem das Programm \"Servermonitor\" ausgeführt wird."}
+, 
+"apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4": {
+"content": "<div id='apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4' class='apd-topic'><div class='subjectids'><a name='apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4'><\/a><\/div><h1 class='title topictitle1'>Starten, Ausschalten und Neustarten eines Servers<\/h1><div class='body taskbody'><p class='shortdesc'>Sie können das Programm \"Servermonitor\" zum Starten, Ausschalten oder Neustarten eines Xserve per Fernzugriff verwenden.<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>Wählen Sie den Xserve in der Serverliste aus und klicken Sie auf <span class='ph uicontrol'>Info.<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>Klicken Sie unten rechts im Fenster auf <span class='ph uicontrol'>Neustart<\/span>, <span class='ph uicontrol'>Ausschalten<\/span> oder <span class='ph uicontrol'>Einschalten<\/span>.<\/span><\/li><\/ol><\/div><div class='section postreq'>Die <span class='ph uicontrol'>Einschalttaste<\/span> ist nur bei Intel-basierten Xserve-Systemen verfügbar.<\/div><\/div>", 
+"keywords": "tcp, udp, well-known, firewall, xserve", 
+"name": "Starten, Ausschalten und Neustarten eines Servers", 
+"alternativeName": "Starten, Ausschalten und Neustarten eines Servers", 
+"summary": "Sie können das Programm \"Servermonitor\" zum Starten, Ausschalten oder Neustarten eines Xserve per Fernzugriff verwenden."}
+, 
+"apdD7678147-E865-43DA-85E0-94EC3A216B3C": {
+"navigation": "false", 
+"content": "<div class='apd-topic' id='apdD7678147-E865-43DA-85E0-94EC3A216B3C'><div class='subjectids'><a name='apdD7678147-E865-43DA-85E0-94EC3A216B3C'><\/a><\/div><h1 class='title topictitle1'>Servermonitor-Hilfe<\/h1><div class='body conbody'><div class='section'><h2 class='title sectiontitle'>Servermonitor-Hilfe<\/h2><p class='p'>Verwenden Sie dieses Dienstprogramm, um Xserve-Systeme zu überwachen und zu steuern.<\/p><\/div><div class='section linkTagline'><p class='p'><a class='xref' href='http:\/\/www.apple.com\/macosx\/server\/' target='_blank'>Weitere Hilfethemen für Lion Server<\/a><\/p><\/div><\/div><\/div>", 
+"alternativeName": "Servermonitor-Hilfe", 
+"name": "Servermonitor-Hilfe", 
+"class": "default", 
+"excludefromsearch": "1"}
+}
+, 
+"hierarchy": [
+{
+"id": "button-0", 
+"children": [
+{
+"id": "apdD7678147-E865-43DA-85E0-94EC3A216B3C", 
+"class": "default"}
+,{
+"id": "apdBF6DC783-0285-4063-A432-61CB0EB01171", 
+"children": [
+{
+"id": "apd5DF83713-84EF-42BA-A30C-8A471AB5A13F"}
+,{
+"id": "apdA63A42D8-4924-4D18-885C-68857071DD68"}
+,{
+"id": "apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4"}
+,{
+"id": "apd03812A5E-44D2-486E-B9A2-B778DD9044F4"}
+,{
+"id": "apdD677F1E1-178F-427F-A33D-94A04321C9A0"}
+,{
+"id": "apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E"}
+,{
+"id": "apdFA711495-65E8-4D76-BFF2-2A6825769A94"}
+]
+}
+,{
+"id": "apdBF6DC783-0285-4063-A432-61CB0EB01172", 
+"children": [
+{
+"id": "apdFC997FF7-06C6-414C-875F-E073FE22DDD8"}
+,{
+"id": "apd4337AA66-9DB5-4957-9BCA-A4F0B6028138"}
+]
+}
+]
+}
+]
+, 
+"settings": {
+"Design": "redFlamingo", 
+"BuildVersion": "", 
+"ShowVersionNumber": 0, 
+"CategoryArt": "svrmic.png", 
+"AppVersion": "1.0", 
+"FolderName": "Server Monitor Help", 
+"LocalizationISOCode": "de", 
+"Title": "Servermonitor-Hilfe", 
+"RemoteURL": "https:\/\/help.apple.com\/servermonitor\/mac\/10.7\/ServerMonitorHelp\/"}
+}
+]

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   systemBatchRequest.xml
+   ServerPreferences
+
+   Created by Mike Thole on 9/24/08.
+   Copyright 2008 __MyCompanyName__. All rights reserved.
+-->
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>batchRequest</string>
+	<key>sendResponsesAsDictionary</key>
+	<true/>
+	<key>requestsArray</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>servermgr_info</string>
+			<key>request</key>
+			<dict>
+				<key>command</key>
+				<string>getState</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>servermgr_info</string>
+			<key>request</key>
+			<dict>
+				<key>command</key>
+				<string>readSettings</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>servermgr_accounts</string>
+			<key>request</key>
+			<dict>
+				<key>command</key>
+				<string>readSettings</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

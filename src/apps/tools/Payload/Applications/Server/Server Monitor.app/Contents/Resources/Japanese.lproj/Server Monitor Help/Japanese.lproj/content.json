@@ -1,0 +1,133 @@
+[{
+"content": {
+"apd5DF83713-84EF-42BA-A30C-8A471AB5A13F": {
+"content": "<div id='apd5DF83713-84EF-42BA-A30C-8A471AB5A13F' class='apd-topic'><div class='subjectids'><a name='apd5DF83713-84EF-42BA-A30C-8A471AB5A13F'><\/a><\/div><h1 class='title topictitle1'>サーバをリストに追加する<\/h1><div class='body taskbody'><p class='shortdesc'>サーバを監視するには、サーバリストに追加します。<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>「<span class='ph uicontrol'>サーバ<\/span>」＞「<span class='ph uicontrol'>サーバを追加<\/span>」と選択するか、ツールバーの「<span class='ph uicontrol'>サーバを追加<\/span>」をクリックします。<\/span><\/li><li class='li step'><span class='ph cmd'>サーバの名前またはアドレスと、アカウント名およびパスワードを入力します。<span class='ph'>Intel プロセッサ搭載 Xserve の場合は、LOM（Lights-out Management）ポートのアドレスとアカウント情報を使用してください。<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>「サーバモニタ」を開くたびにアカウントパスワードを入力したくない場合は、「パスワードをキーチェーンに保存」をクリックします。<\/span><\/li><li class='li step'><span class='ph cmd'>「<span class='ph uicontrol'>OK<\/span>」をクリックします。<\/span><\/li><\/ol><\/div><div class='section postreq'>以前に保存したサーバリストを読み込むか結合する方法で、サーバをリストに追加することもできます。「<a class='xref' href='#apdD677F1E1-178F-427F-A33D-94A04321C9A0' title='「サーバモニタ」を開くと、最近作業をしたサーバのリストが表示されます。'>サーバリストを切り替える<\/a>」を参照してください。<\/div><\/div>", 
+"keywords": "TCP, UDP, 既知, ファイアウォール, xserve", 
+"name": "サーバをリストに追加する", 
+"alternativeName": "サーバをリストに追加する", 
+"summary": "サーバを監視するには、サーバリストに追加します。"}
+, 
+"apdBF6DC783-0285-4063-A432-61CB0EB01172": {
+"name": "LOM（Lights-out Management）を構成する"}
+, 
+"apdD677F1E1-178F-427F-A33D-94A04321C9A0": {
+"content": "<div id='apdD677F1E1-178F-427F-A33D-94A04321C9A0' class='apd-topic'><div class='subjectids'><a name='apdD677F1E1-178F-427F-A33D-94A04321C9A0'><\/a><\/div><h1 class='title topictitle1'>サーバリストを切り替える<\/h1><div class='body conbody'><div class='abstract'><div class='shortdesc'>「サーバモニタ」を開くと、最近作業をしたサーバのリストが表示されます。<\/div><p class='p'>サーバの複数のリストを作業するには、サーバリストをそれぞれ別のファイルに保存してから、使用したいリストを読み込む方法でそれらを切り替えることができます。また、保存したリストを現在のリストに結合することにより、リストを組み合わせることができます。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>現在のサーバリストを保存するには：<\/h2><p class='p'>「サーバモニタ」で、「ファイル」＞「書き出す」と選択し、場所を選択してから、「保存」をクリックします。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>別のリストに切り替えるには：<\/h2><p class='p'>「ファイル」＞「読み込む」と選択し、保存したリストファイルを選んでから、「開く」をクリックします。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>リストを結合するには：<\/h2><p class='p'>「ファイル」＞「結合」と選択し、保存したリストファイルを選んでから、「開く」をクリックします。<\/p><\/div><\/div><\/div>", 
+"alternativeName": "サーバリストを切り替える", 
+"name": "サーバリストを切り替える", 
+"summary": "「サーバモニタ」を開くと、最近作業をしたサーバのリストが表示されます。"}
+, 
+"apdA63A42D8-4924-4D18-885C-68857071DD68": {
+"content": "<div id='apdA63A42D8-4924-4D18-885C-68857071DD68' class='apd-topic'><div class='subjectids'><a name='apdA63A42D8-4924-4D18-885C-68857071DD68'><\/a><\/div><h1 class='title topictitle1'>サーバの状況を表示する<\/h1><div class='body conbody'><div class='abstract'><span class='shortdesc'>サーバの状況情報を表示する方法はいくつかあります。<\/span><\/div><div class='section'><h2 class='title sectiontitle'>コンポーネントに関する情報を見るには：<\/h2><p class='p'>サーバを選択し、ウインドウの下部の情報セクションの上にあるコンポーネントボタン（「ドライブ」や「温度」など）をクリックし、ポップアップメニューから特定のコンポーネントまたはセンサーを選びます。「状況の概要」列にある状況またはコンポーネントアイコンをクリックすることもできます。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>詳細ビューと概要ビューを切り替えるには：<\/h2><p class='p'>「詳細な状況を表示」チェックボックスにチェックマークを付けるか、「状況の概要」列にあるコンポーネントアイコンをダブルクリックします。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>装置の情報をすばやくスキャンするには：<\/h2><p class='p'>マウスボタンを押したまま、ポインタを「状況の概要」列にあるアイコンの上にドラッグします。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>問題だけを表示するには：<\/h2><p class='p'>サーバリストの下にある「警告と接続に失敗したサーバのみ表示する」をクリックします。<\/p><\/div><\/div><\/div>", 
+"alternativeName": "サーバの状況を表示する", 
+"name": "サーバの状況を表示する", 
+"summary": "サーバの状況情報を表示する方法はいくつかあります。"}
+, 
+"apdFA711495-65E8-4D76-BFF2-2A6825769A94": {
+"content": "<div id='apdFA711495-65E8-4D76-BFF2-2A6825769A94' class='apd-topic'><div class='subjectids'><a name='apdFA711495-65E8-4D76-BFF2-2A6825769A94'><\/a><\/div><h1 class='title topictitle1'> サーバモニタの動作ログを表示する<\/h1><div class='body conbody'><div class='abstract'><div class='shortdesc'>「サーバモニタ」には、監視および制御の動作がサーバごとに記録されます。<\/div><p class='p'>各ログには、「サーバモニタ」とサーバとの間で行われたやり取りが記録され、サーバ自体のシステム動作は記録されません。たとえば、ログにはサーバの状況の変化、「サーバモニタ」がサーバにいつ接続したか、正常に接続できたかどうかなどが記録されます。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>ログを表示するには：<\/h2><p class='p'>サーバを選択し、「ログを表示」をクリックします。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>ログをファイルに保存するには：<\/h2><p class='p'>サーバを選択し、「ログを表示」をクリックしてから、ログウインドウで「別名で保存」をクリックします。<\/p><\/div><div class='section'><h2 class='title sectiontitle'>ログを消去するには：<\/h2><p class='p'>サーバを選択し、「ログを表示」をクリックしてから、ログウインドウで「ログを消去」をクリックします。<\/p><\/div><\/div><\/div>", 
+"alternativeName": "サーバモニタの動作ログを表示する", 
+"name": "サーバモニタの動作ログを表示する", 
+"summary": "「サーバモニタ」には、監視および制御の動作がサーバごとに記録されます。"}
+, 
+"apd03812A5E-44D2-486E-B9A2-B778DD9044F4": {
+"content": "<div id='apd03812A5E-44D2-486E-B9A2-B778DD9044F4' class='apd-topic'><div class='subjectids'><a name='apd03812A5E-44D2-486E-B9A2-B778DD9044F4'><\/a><\/div><h1 class='title topictitle1'>システム ID ランプを制御する<\/h1><div class='body taskbody'><p class='shortdesc'>サーバのラックにある特定の Xserve を見つけるには、「サーバモニタ」を使用してサーバのシステム ID ランプを入にします。<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>サーバリストでサーバを選択します。<\/span><\/li><li class='li step'><span class='ph cmd'>「<span class='ph uicontrol'>情報<\/span>」ボタンをクリックします。<\/span><\/li><li class='li step'><span class='ph cmd'>「<span class='ph uicontrol'>システム ID ランプ<\/span>」ボタンをクリックします。<\/span><\/li><\/ol><\/div><\/div>", 
+"keywords": "TCP, UDP, 既知, ファイアウォール", 
+"name": "システム ID ランプを制御する", 
+"alternativeName": "システム ID ランプを制御する", 
+"summary": "サーバのラックにある特定の Xserve を見つけるには、「サーバモニタ」を使用してサーバのシステム ID ランプを入にします。"}
+, 
+"button-0": {
+"type": "navigation", 
+"howdyPageID": "apdD7678147-E865-43DA-85E0-94EC3A216B3C", 
+"alternativeNameStyle": "replace"}
+, 
+"apd4337AA66-9DB5-4957-9BCA-A4F0B6028138": {
+"content": "<div id='apd4337AA66-9DB5-4957-9BCA-A4F0B6028138' class='apd-topic'><div class='subjectids'><a name='apd4337AA66-9DB5-4957-9BCA-A4F0B6028138'><\/a><\/div><h1 class='title topictitle1'>LOM（Lights-out Management）アカウントを追加する<\/h1><div class='body taskbody'><p class='shortdesc'>通常は、Intel 搭載 Xserve を最初に設定するときに「サーバアシスタント」を使って、1 つの LOM（Lights-out Management）アカウントを作成します。「サーバモニタ」を使用して追加のアカウントを設定できます。<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>「サーバモニタ」で、サーバを選択し、「<span class='ph uicontrol'>サーバ<\/span>」＞「<span class='ph uicontrol'>アカウントを編集<\/span>」と選択します。<\/span><\/li><li class='li step'><span class='ph cmd'>アカウント設定を入力します。<span class='ph'>サーバの監視および制御（起動、システム終了、再起動）を許可するユーザには、アカウントタイプとして「管理者」を選択します。サーバの監視のみを許可するユーザには、アカウントタイプとして「ユーザ」を選択します。<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>「<span class='ph uicontrol'>ユーザを追加<\/span>」をクリックしてから、「<span class='ph uicontrol'>完了<\/span>」をクリックします。<\/span><\/li><\/ol><\/div><div class='section postreq'>LOM（Lights-out Management）アカウントは、「ターミナル」の IPMITool コマンドラインツールを使って設定することもできます。詳しくは、IPMITool のマニュアルページ（man で表示）を参照してください。<\/div><\/div>", 
+"keywords": "TCP, UDP, 既知, ファイアウォール, Lights-out, xserve", 
+"name": "LOM（Lights-out Management）アカウントを追加する", 
+"alternativeName": "LOM（Lights-out Management）アカウントを追加する", 
+"summary": "通常は、Intel 搭載 Xserve を最初に設定するときに「サーバアシスタント」を使って、1 つの LOM（Lights-out Management）アカウントを作成します。「サーバモニタ」を使用して追加のアカウントを設定できます。"}
+, 
+"apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E": {
+"content": "<div id='apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E' class='apd-topic'><div class='subjectids'><a name='apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E'><\/a><\/div><h1 class='title topictitle1'>サーバの状況のメール通知を設定する<\/h1><div class='body taskbody'><p class='shortdesc'>選択したサーバコンポーネントの状況が変化したときに特定のユーザにメール通知を送信するように、「サーバモニタ」を設定できます。<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>「サーバモニタ」のサーバリストでサーバを選択し、「<span class='ph uicontrol'>通知を編集<\/span>」をクリックします。 <\/span><\/li><li class='li step'><span class='ph cmd'>通知を受けたい装置を選びます。<\/span><\/li><li class='li step'><span class='ph cmd'>メールの差出人として表示したい名前を入力します。<\/span><\/li><li class='li step'><span class='ph cmd'>メールの宛先のアドレスを入力します。（ポケットベル用のアドレスの場合は、「<span class='ph uicontrol'>ポケットベル<\/span>」をクリックします。「<span class='ph uicontrol'>追加<\/span>」ボタンまたは「<span class='ph uicontrol'>削除<\/span>」ボタンを使って、アドレスを追加または削除してください。）<\/span><\/li><li class='li step'><span class='ph cmd'>通知の優先順位を選びます。<\/span><\/li><li class='li step'><span class='ph cmd'>メールの件名とメッセージを入力します。<\/span><\/li><li class='li step'><span class='ph cmd'>リモートサーバと「サーバモニタ」のどちらでメールを送信するかを選びます。<\/span><\/li><li class='li step'><span class='ph cmd'>「<span class='ph uicontrol'>OK<\/span>」をクリックします。<\/span><\/li><\/ol><\/div><div class='section postreq'>以前に保存したサーバリストを読み込むか結合する方法で、サーバをリストに追加することもできます。「<a class='xref' href='#apdD677F1E1-178F-427F-A33D-94A04321C9A0' title='「サーバモニタ」を開くと、最近作業をしたサーバのリストが表示されます。'>サーバリストを切り替える<\/a>」を参照してください。<\/div><\/div>", 
+"keywords": "TCP, UDP, 既知, ファイアウォール", 
+"name": "サーバの状況のメール通知を設定する", 
+"alternativeName": "サーバの状況のメール通知を設定する", 
+"summary": "選択したサーバコンポーネントの状況が変化したときに特定のユーザにメール通知を送信するように、「サーバモニタ」を設定できます。"}
+, 
+"apdBF6DC783-0285-4063-A432-61CB0EB01171": {
+"name": "サーバを管理する"}
+, 
+"apdFC997FF7-06C6-414C-875F-E073FE22DDD8": {
+"content": "<div id='apdFC997FF7-06C6-414C-875F-E073FE22DDD8' class='apd-topic'><div class='subjectids'><a name='apdFC997FF7-06C6-414C-875F-E073FE22DDD8'><\/a><\/div><h1 class='title topictitle1'>LOM（Lights-out Management）プロセッサの設定を変更する<\/h1><div class='body taskbody'><p class='shortdesc'>Intel プロセッサ搭載 Xserve システムには、電源が入っていないときでもサーバと通信できる、LOM（Lights-out Management）プロセッサが組み込まれています。通常は、Xserve を最初に設定するときに「サーバアシスタント」を使って、LOM（Lights-out Management）プロセッサのネットワーク設定とアカウント情報を入力します。「サーバモニタ」が実行されているサーバの LOM（Lights-out Management）設定は、「サーバモニタ」を使って変更できます。<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>「サーバモニタ」で、「<span class='ph uicontrol'>サーバ<\/span>」＞「<span class='ph uicontrol'>ローカルコンピュータを構成<\/span>」と選択します。<\/span><\/li><li class='li step'><span class='ph cmd'>アカウント設定を入力します。<span class='ph'>サーバの監視および制御（起動、システム終了、再起動）を許可するユーザには、アカウントタイプとして「管理者」を選択します。サーバの監視のみを許可するユーザには、アカウントタイプとして「ユーザ」を選択します。<\/span><\/span><\/li><li class='li step'><span class='ph cmd'>「<span class='ph uicontrol'>LOM が使用する Ethernet<\/span>」ポップアップメニューから「<span class='ph uicontrol'>ポート 1<\/span>」または「<span class='ph uicontrol'>ポート 2<\/span>」を選択します。<\/span>\n         「<span class='ph uicontrol'>ポート 1<\/span>」は Xserve の背面の Ethernet ポート 1 に対応します。\n      <\/li><li class='li step'><span class='ph cmd'>ネットワークとアカウントの情報を入力し、「<span class='ph uicontrol'>適用<\/span>」をクリックします。<\/span><\/li><\/ol><\/div><div class='section postreq'><div class='note note'><span class='notetitle'>注:<\/span> LOM（Lights-out Management）プロセッサのポートには、必ず専用の IP アドレスを指定してください。サーバに使用しているものと同じアドレスを使用しないでください。<\/div><p class='p'>LOM（Lights-out Management）プロセッサの設定は、「ターミナル」の IPMITool コマンドラインツールを使って変更することもできます。詳しくは、IPMITool のマニュアルページ（man で表示）を参照してください。<\/p><\/div><\/div>", 
+"keywords": "TCP, UDP, 既知, ファイアウォール, Lights-out, xserve", 
+"name": "LOM（Lights-out Management）プロセッサの設定を変更する", 
+"alternativeName": "LOM（Lights-out Management）プロセッサの設定を変更する", 
+"summary": "Intel プロセッサ搭載 Xserve システムには、電源が入っていないときでもサーバと通信できる、LOM（Lights-out Management）プロセッサが組み込まれています。通常は、Xserve を最初に設定するときに「サーバアシスタント」を使って、LOM（Lights-out Management）プロセッサのネットワーク設定とアカウント情報を入力します。「サーバモニタ」が実行されているサーバの LOM（Lights-out Management）設定は、「サーバモニタ」を使って変更できます。"}
+, 
+"apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4": {
+"content": "<div id='apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4' class='apd-topic'><div class='subjectids'><a name='apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4'><\/a><\/div><h1 class='title topictitle1'>サーバを起動する／システム終了する／再起動する<\/h1><div class='body taskbody'><p class='shortdesc'>「サーバモニタ」を使って、Xserve をリモートから起動、システム終了、または再起動できます。<\/p><ol class='ol steps'><li class='li step'><span class='ph cmd'>サーバリストで Xserve を選択し、「<span class='ph uicontrol'>情報<\/span>」をクリックします。<\/span><\/li><li class='li step'><span class='ph cmd'>ウインドウの右下にある「<span class='ph uicontrol'>再起動<\/span>」、「<span class='ph uicontrol'>システム終了<\/span>」、または「<span class='ph uicontrol'>電源を入れる<\/span>」をクリックします。<\/span><\/li><\/ol><\/div><div class='section postreq'>「<span class='ph uicontrol'>電源を入れる<\/span>」ボタンは、Intel プロセッサ搭載 Xserve システムでのみ使用できます。<\/div><\/div>", 
+"keywords": "TCP, UDP, 既知, ファイアウォール, Xserve", 
+"name": "サーバを起動する／システム終了する／再起動する", 
+"alternativeName": "サーバを起動する／システム終了する／再起動する", 
+"summary": "「サーバモニタ」を使って、Xserve をリモートから起動、システム終了、または再起動できます。"}
+, 
+"apdD7678147-E865-43DA-85E0-94EC3A216B3C": {
+"navigation": "false", 
+"content": "<div class='apd-topic' id='apdD7678147-E865-43DA-85E0-94EC3A216B3C'><div class='subjectids'><a name='apdD7678147-E865-43DA-85E0-94EC3A216B3C'><\/a><\/div><h1 class='title topictitle1'>サーバモニタヘルプ<\/h1><div class='body conbody'><div class='section'><h2 class='title sectiontitle'>サーバモニタヘルプ<\/h2><p class='p'>Xserve システムを監視および制御するときは、このユーティリティを使用します。<\/p><\/div><div class='section linkTagline'><p class='p'><a class='xref' href='http:\/\/www.apple.com\/jp\/macosx\/server\/' target='_blank'>Lion Server のその他のヘルプ<\/a><\/p><\/div><\/div><\/div>", 
+"alternativeName": "サーバモニタヘルプ", 
+"name": "サーバモニタヘルプ", 
+"class": "default", 
+"excludefromsearch": "1"}
+}
+, 
+"hierarchy": [
+{
+"id": "button-0", 
+"children": [
+{
+"id": "apdD7678147-E865-43DA-85E0-94EC3A216B3C", 
+"class": "default"}
+,{
+"id": "apdBF6DC783-0285-4063-A432-61CB0EB01171", 
+"children": [
+{
+"id": "apd5DF83713-84EF-42BA-A30C-8A471AB5A13F"}
+,{
+"id": "apdA63A42D8-4924-4D18-885C-68857071DD68"}
+,{
+"id": "apd58D6B3AE-2C7E-478F-BC9B-A438BF953CC4"}
+,{
+"id": "apd03812A5E-44D2-486E-B9A2-B778DD9044F4"}
+,{
+"id": "apdD677F1E1-178F-427F-A33D-94A04321C9A0"}
+,{
+"id": "apdA7C3943E-2CCF-4DD4-9110-59B82EF2255E"}
+,{
+"id": "apdFA711495-65E8-4D76-BFF2-2A6825769A94"}
+]
+}
+,{
+"id": "apdBF6DC783-0285-4063-A432-61CB0EB01172", 
+"children": [
+{
+"id": "apdFC997FF7-06C6-414C-875F-E073FE22DDD8"}
+,{
+"id": "apd4337AA66-9DB5-4957-9BCA-A4F0B6028138"}
+]
+}
+]
+}
+]
+, 
+"settings": {
+"Design": "redFlamingo", 
+"BuildVersion": "", 
+"ShowVersionNumber": 0, 
+"CategoryArt": "svrmic.png", 
+"AppVersion": "1.0", 
+"FolderName": "Server Monitor Help", 
+"LocalizationISOCode": "ja", 
+"Title": "サーバモニタヘルプ", 
+"RemoteURL": "https:\/\/help.apple.com\/servermonitor\/mac\/10.7\/ServerMonitorHelp\/"}
+}
+]

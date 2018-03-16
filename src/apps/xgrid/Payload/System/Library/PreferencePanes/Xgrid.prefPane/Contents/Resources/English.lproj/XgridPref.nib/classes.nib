@@ -1,0 +1,71 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {deauthenticate = id; willDeauthenticate = id; }; 
+            CLASS = NSAdminPreference; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {authenticator = id; comboAuthButton = NSAuthorizationView; }; 
+            SUPERCLASS = NSPreference; 
+        }, 
+        {
+            CLASS = NSAuthorizationView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mDelegate = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = NSAuthorizationViewDelegate; LANGUAGE = ObjC; }, 
+        {
+            CLASS = NSPreference; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_prefTabsController" = NSPrefTabsController; }; 
+            SUPERCLASS = NSPreferencePane; 
+        }, 
+        {
+            CLASS = NSPreferencePane; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_firstKeyView" = id; 
+                "_initialKeyView" = id; 
+                "_lastKeyView" = id; 
+                "_window" = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {toggleAgent = id; }; 
+            CLASS = XgAgentPrefController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_pref" = XgridPref; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                agentPasswordAction = id; 
+                clientPasswordAction = id; 
+                requireClientPasswordAction = id; 
+                toggleController = id; 
+            }; 
+            CLASS = XgControllerPrefController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_agentPasswordField" = NSSecureTextField; 
+                "_clientPasswordField" = NSSecureTextField; 
+                "_pref" = XgridPref; 
+                "_requireClientPasswordButton" = NSButton; 
+                "_serviceButton" = NSButton; 
+                "_serviceStatus" = NSTextField; 
+                "_serviceStatusDescription" = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = XgridPref; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_agentPrefController" = XgAgentPrefController; }; 
+            SUPERCLASS = NSAdminPreference; 
+        }, 
+        {CLASS = XgridServiceBrowser; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

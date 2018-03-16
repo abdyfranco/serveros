@@ -1,0 +1,1453 @@
+/* typography.css      version 1.0.1s  HTML   04-30-09 */
+/* typography.css      version 1.0.1p  HTML   03-30-09 */
+/* typography.css      version 1.0.1o  HTML   12-11-08 */
+
+#Header {
+    margin-top: 2.85em;
+    padding-right: 6px
+}
+
+#Icon {
+    margin-bottom: -3px;
+    padding-right: .5em;
+    float: left
+}
+
+
+#Header #Icon + .Name {
+    font-size : 100%;
+    line-height: 125%;
+    font-weight : bold;
+    padding-top : .6em;
+    padding-right: 1em;
+    padding-bottom: .95em;
+    color : black;
+}
+
+p, ul, ol   { 
+    padding : 0em; 
+    margin: 0em;
+}
+
+
+.Para {
+    font-size: 75%;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    color: #333;  
+}
+
+.Emphasis {
+    font-style:italic;
+}
+.EmphasisDisplay {
+    font-weight: bold;
+}
+
+.AppleTopicBody > .Intro > Table:first-child {
+    margin-top: .7em;
+}
+
+.AppleTopicBody > .Intro > .LinkTopicPage:first-child {
+    margin-top: .45em;
+}
+
+.AppleTopicBody > .Task:first-child {
+    margin-top: .85em;
+}
+
+.AppleTopicBody > .TaskMulti:first-child {
+    margin-top: .5em;
+}
+
+/*********************/
+/* ALERTS            */
+/*********************/
+
+
+.Alert > .Para {
+    font-size: 75%;
+}
+
+
+ol>li>.Alert > .Para {
+    font-size: 100%;
+    margin-left: -.25em;
+}
+
+ul > li > .Alert > .Para {
+    font-size: 100%;
+    margin-left: 0em;
+}
+
+/* CAUTIOIN */
+
+div.Caution {
+    font-size: 75%;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    color: #333;  
+}
+
+span.Caution {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+    margin-right: -.5em;
+}
+
+ol li span.Caution {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ol li .Caution {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    text-indent:.3em;
+    margin-left:-.3em;
+    color: #333;  
+}
+
+ul li span.Caution {
+    font-size : .90em!important;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ul li .Caution {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    margin-left:0em;
+    color: #333;  
+}
+
+/* IMPORTATNT */
+    
+div.Important {
+    font-size: 75%;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    color: #333;  
+}
+
+span.Important {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+    margin-right: -.5em;
+}
+
+ol li span.Important {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ol li .Important {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    text-indent:.3em;
+    margin-left:-.3em;
+    color: #333;  
+}
+
+ul li span.Important {
+    font-size : .90em!important;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ul li .Important {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    margin-left:0em;
+    color: #333;  
+}
+
+/* NOTE */
+
+div.Note {
+    font-size: 75%;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    color: #333;  
+}
+
+span.Note {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+    margin-right: -.5em;
+}
+
+ol li span.Note {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ol li .Note {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    text-indent:.3em;
+    margin-left:-.3em;
+    color: #333;  
+}
+
+ul li span.Note {
+    font-size : .90em!important;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+
+ul li .Note {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    margin-left:0em;
+    color: #333;  
+}
+
+/* NOTICE */
+
+div.Notice {
+    font-size: 75%;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    color: #333;  
+}
+
+span.Notice {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+    margin-right: -.5em;
+}
+
+ol li span.Notice {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ol li .Notice {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    text-indent:.3em;
+    margin-left:-.3em;
+    color: #333;  
+}
+
+ul li span.Notice {
+    font-size : .90em!important;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ul li .Notice {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    margin-left:0em;
+    color: #333;  
+}
+
+/* TIP */
+
+div.Tip {
+    font-size: 75%;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    color: #333;  
+}
+
+span.Tip {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+    margin-right : -.5em;
+}
+
+ol li span.Tip {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ol li .Tip {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    text-indent:.3em;
+    margin-left:-.3em;
+    color: #333;  
+}
+
+ul li span.Tip {
+    font-size : .90em!important;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ul li .Tip {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    margin-left:0em;
+    color: #333;  
+}
+
+/* WARNING */
+
+div.Warning {
+    font-size: 75%;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    color: #333;  
+}
+
+span.Warning {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+    margin-right : -.5em;
+}
+
+ol li span.Warning {
+    font-size : .95em;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ol li .Warning {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    text-indent:.3em;
+    margin-left:-.3em;
+    color: #333;  
+}
+
+ul li span.Warning {
+    font-size : .90em!important;
+    font-weight : bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color : #000;
+}
+
+ul li .Warning {
+    font-size: 100%;
+    margin-top: .75em;
+    margin-bottom: .75em;    
+    margin-left:0em;
+    color: #333;  
+}
+
+/*********************/
+/* APPLE ACCESS TOC  */
+/*********************/
+
+.AppleAccessTOCBody {
+    margin-top: 0em;
+    margin-left: 2.5em;
+}
+
+.AppleAccessTOCBody > .Intro {
+    margin-bottom: 1.5em;
+}
+
+.TOC {
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+    margin-left: .62em;
+}
+
+.TOC > .Name {
+    font-size: 75%;
+    font-weight: bold;
+    margin-top: .7em;
+    margin-bottom: -.25em;
+    margin-left: -.75em;
+    color: #000;  
+}
+
+.TOC > .Name .Para {
+    margin-top: .25em;
+    margin-bottom: .15em;
+}
+
+.TOC > .Name +.Para {
+    margin-top: .65em;
+}
+
+.AppleAccessTOCBody .Para {
+    margin-top: .25em;
+    margin-bottom: .5em;
+}
+
+
+.AppleAccessTOCBody .TOC > .Para + .LinkTopicPage {
+    margin-top: 0em;
+}
+
+
+.TOC > .Name + .LinkTopicPage {
+    margin-top: .35em;
+}
+
+.TOC > .LinkTopicPage:first-child {
+    margin-top: -.6em;
+}
+
+.AppleAccessTOCBody > .TOC > .LinkTopicPage:first-child {
+    margin-top: -.6em;
+    margin-left: -.5em;
+}
+
+.AppleAccessTOCBody > .TOC > .LinkTopicPage:first-child ~ .LinkTopicPage {
+    margin-left: -.5em;
+}
+
+.AppleAccessTOCBody > .Intro + .TOC > .LinkTopicPage:first-of-type {
+    margin-top: -1.25em;
+}
+
+.AppleAccessTOCBody > .Intro + .TOC > .LinkTopicPage:first-child {
+    margin-top: -1.25em;
+}
+
+.AppleAccessTOCBody .LinkTopicPage a:link:after {
+    content: "\25B8";
+    font-size : 120%;
+    color : #3366cc;
+    vertical-align:-7%;
+    padding-left: .1em;
+}
+
+.AppleAccessTOCBody .LinkTopicPage a:visited:after {
+    content: "\25B8";
+    font-size : 112.5%;
+    color : #011e57;
+    vertical-align:-7%;
+    padding-left: .1em;
+}
+
+.AppleAccessTOCBody .LinkTopicPage {
+    margin-top: 0em;
+    margin-bottom: -.15em;
+}
+
+.AppleAccessTOCBody + #feedback {
+    margin-left: 3em;
+    margin-top: -.5em;
+}
+
+
+/*********************/
+/* CODE       */
+/*********************/
+
+.CodeLine {
+    font-size: 75%;
+    font : .75em "Courier", sans-serif;
+    line-height : 1.75;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    color: #333;   
+}
+
+.CodeBody {
+    font-size: 100% !important;
+    font : .75em "Courier", sans-serif;
+}
+
+li .CodeLine {
+    font-size: 60%;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    color: #333; 
+    margin-left: -.25em;
+}
+
+ol li .CodeLine {
+    font-size: 100%;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    color: #333; 
+    margin-left: -.25em;
+}
+
+ol li ul.ListBullet li .CodeLine {
+    font-size: 60%;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    color: #333; 
+    margin-left: -.25em;
+}
+
+ul li .CodeLine {
+    font-size: 100%;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    color: #333; 
+    margin-left: 0em;
+}
+
+.Task > .CodeListing {
+    margin-top: 1em;
+    margin-bottom: .75em;
+}
+
+td .CodeLine {
+	margin-top: .2em;
+}
+
+.CodeEmphasis {
+	font-style: italic;
+}
+
+.CodeEmphasisDisplay {
+	font-weight: bold;
+}
+
+.CodeUnderline {
+	text-decoration:underline;
+}
+
+/*********************/
+/* FEEDBACK              */
+/*********************/
+
+#feedback {
+    margin-top: .85em;
+}
+
+.LinkFeedback {
+	font-size: 75%;
+	font-family: "Lucida Grande", Arial, sans-serif;
+	margin-left:.15em;
+	margin-right:.25em;
+}
+
+/*********************/
+/* FIGURE       */
+/*********************/
+
+.Figure {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+ol li .Figure {
+    margin-left: -.25em;
+}
+
+/*********************/
+/* HI STRINGS        */
+/*********************/
+
+
+.HIStrings {
+    list-style : none;
+    font-size : 75%;
+    margin-top : 1.5em;
+}
+
+.HISubString {
+    list-style : none;
+    list-style-position : outside;
+    margin-left : -.3em;
+    margin-top: 0em;
+    margin-bottom: 1em;
+}
+
+.HISubString li {
+    margin-top: .25em;
+    margin-bottom : .25em;
+}
+
+.HISubString .HISubString {
+    margin-top: 0em;
+    margin-left : .25em;
+}
+
+/* bullet */
+
+.HISubString > li:before {
+    content: "\25A0";
+    color : #666;
+    font-size : 150%;
+    float: left;
+    position: relative;
+    clear:both;
+    top: -.1em;
+    margin-left : .15em;
+    margin-right : .35em;
+}
+
+/* nested HISubstring */
+
+.HISubString>li .HISubString > li:before {
+    content: "\25A0";
+    color : #fff;
+    font-size : 150%;
+    float: left;
+    position: relative;
+    top: -.3em;
+    margin-left : 0em;
+    margin-right : .3em;
+}
+
+/* description inside an HISubString */
+
+.HISubString .Description {
+    font-size : 100%;
+    font-weight : normal;
+    margin-bottom : .75em;
+    margin-left: 1.5em;
+    color: #333;
+}
+
+.HISubString .HISubString .Description {
+    margin-left: 1.25em;
+}
+
+/*********************/
+/* LINK EXTERNAL     */
+/*********************/
+
+div.LinkExternal:before  { 
+    content:"";
+    display: block;
+    -webkit-box-shadow: 0em .1em .2em #ccc;
+    border-top:.1em solid #d7d7d7;
+    overflow: visible;
+    height: 0em;
+    width: 100%;
+    display: block;
+    margin-top: 1.25em;
+    margin-bottom: 1.2em;
+}
+
+span.LinkExternal {
+    font-size: 75%;
+    font-weight: bold;
+    color: #000;   
+}
+
+/*********************/
+/* LINK INTERNAL     */
+/*********************/
+
+div.LinkInternal:before  { 
+    content:"";
+    display: block;
+    -webkit-box-shadow: 0em .1em .2em #ccc;
+    border-top:.1em solid #d7d7d7;
+    overflow: visible;
+    height: 0em;
+    width: 100%;
+    display: block;
+    margin-top: 1.25em;
+    margin-bottom: 1.2em;
+}
+
+span.LinkInternal {
+    font-size: 75%;
+    font-weight: bold;
+    color: #000;   
+}
+
+.LinkInternal > .LinkTopicPage {
+	margin-top: .15em;
+	margin-bottom: .15em;
+}
+
+.TaskMulti + .LinkInternal:before, .Task + .LinkInternal:before, .TaskMulti + .LinkExternal:before, .Task + .LinkExternal:before  { 
+    content:"";
+    display: block;
+    -webkit-box-shadow: 0em 0em 0em #fff;
+    border-top: 0em solid #fff;
+    height: 0em;
+    width: 0%;
+    display: block;
+    margin-top: 0em;
+}
+div.LinkExternal > .LinkAppleWeb, div.LinkExternal > .LinkCustomWeb, div.LinkExternal > .LinkHandBuilt, div.LinkExternal > .LinkOpenApp, div.LinkExternal > .LinkOpenPrefs, div.LinkExternal > .LinkOpenWithScript  { 
+    font-size : 100% !important;
+    margin-bottom : 0em;
+}
+
+
+/*********************/
+/* LINKS       */
+/*********************/
+
+
+a:link {
+    font-size : 75%;
+    color: #3366cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    font-size : 75%;
+    color: #011e57;
+    text-decoration: none;
+}
+
+p > a:link, .Caution > a:link, .Important > a:link, .Note > a:link, .Notice > a:link, .Tip > a:link, .Warning > a:link {
+    font-size : 100%;
+    line-height:inherit;
+    color: #3366cc;
+    text-decoration: none;
+    position: relative;
+}
+
+p > a:hover, .Caution > a:hover, .Important > a:hover, .Note > a:hover, .Notice > a:hover, .Tip > a:hover, .Warning > a:hover {
+    text-decoration: underline;
+}
+
+p > a:visited, .Caution > a:visited, .Important > a:visited, .Note > a:visited, .Notice > a:visited, .Tip > a:visited, .Warning > a:visited {
+    font-size : 100%;
+    color: #011e57;
+    text-decoration: none;
+}
+
+ul.ListBullet li > p.Para + .LinkTopicPage {
+    margin-top: -.15em;
+}
+
+ul.ListBullet li > .LinkTopicPage {
+    font-size : 135%;
+}
+
+ol > li > .LinkTopicPage {
+    font-size : 135%;
+    margin-left: -.2em;
+}
+
+ol > li > .LinkOpenPrefs, ol > li > .LinkOpenApp, ol > li > .LinkAppleWeb, ol > li > .LinkCustomWeb, ol > li > .LinkHandBuilt {
+    margin-left: -.2em;
+}
+
+.LinkTopicPage + .LinkTopicPage {
+	margin-top: .15em;
+	margin-bottom: .15em;
+}
+
+.LinkOpenPrefs, .LinkOpenApp, .LinkHandBuilt, .LinkAppleWeb, .LinkCustomWeb {
+	font-size : 100%;
+	margin-top: .15em;
+	margin-bottom: .15em;
+}
+
+li > .LinkSubjectAnchor, li > .LinkAppleWeb, li > .LinkCustomWeb, li > .LinkOpenApp, li > .LinkOpenPrefs {
+	font-size : 135%;
+	margin-top: .15em;
+	margin-bottom: .15em;
+}
+
+/*********************/
+/* LIST BULLET       */
+/*********************/
+
+/* marker spec only*/
+
+ul.ListBullet > li:before {
+    content: "\25A0";
+    color : #666;
+    font-size : 150%;
+    float: left;
+    clear:both;
+    position: relative;
+    top: -.15em;
+    margin-right : .3em;
+    margin-left : -.9em;
+}
+
+ol > li > ul.ListBullet > li:before {
+    content: "\25A0";
+    color : #666;
+    font-size : 150%;
+    float: left;
+    clear:both;
+    position: relative;
+    top: -.15em;
+    left: 0em;
+    margin-right : .4em;
+    margin-left : -.9em;
+}
+
+/* entire parent bullet list*/
+
+ul.ListBullet {
+    list-style : none;
+    list-style-position : inside;
+    font-size : 75%;
+    margin-left : 1.4em;
+    margin-top: .25em;
+    margin-bottom: .75em;
+}
+
+ul.ListBullet li > .Para {
+    color: #333;
+    font-size: 100% !important;
+    position:relative;
+    margin-top: .7em;
+    margin-bottom:.7em;
+}
+
+/* adjusts space between marker and text*/
+
+ol > li > ul.ListBullet li > .Para {
+    color: #333;
+    font-size: 100% !important;
+    position:relative;
+    margin-top: .7em;
+    margin-bottom:.7em;
+    margin-left: .3em;
+}
+
+/* nested bullet list*/
+
+ul.ListBullet li > ul.ListBullet {
+    font-size: 100%;
+    margin-left:1.25em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+ul.ListBullet li > ul.ListBullet li {
+    margin-top: .5em;
+    margin-bottom:.5em;
+}
+
+ul.ListBullet .Para + .Para {
+    margin-top: .5em;
+}
+
+.Task > ul.ListBullet {
+    margin-top: 1.5em;
+    margin-left: 1.7em;
+}
+
+.Task > ul.ListBullet > li {
+    margin-top: 1em;
+    margin-bottom: 1.5em !important;
+}
+
+.Task > ul.ListBullet > li > .Para {
+    margin-top: .75em;
+    margin-bottom: .75em;
+}
+
+/* nested bullet list in list number*/
+
+ol.ListNumber li > ul.ListBullet > li {
+    font-size: 130%;
+    margin-top: .5em;
+    margin-bottom:.5em;
+}
+
+/*********************/
+/* LIST DESCRIPTOR       */
+/*********************/
+
+ul.ListDescriptor {
+    list-style-type: none;
+    font-size: 75%;
+    padding: 0;
+    color: #333;
+}
+
+ul.ListDescriptor li {
+    margin-top: .5em;
+    margin-bottom:.5em;
+}
+
+.Term {
+    display:inline;
+    font-weight: bold;
+    float:left; 
+    margin-right: 0em;
+}
+
+ul.ListBullet > li > ul.ListDescriptor {
+    font-size: 100%;
+}
+
+
+ul.ListDescriptor > li > .Para {
+    font-size: 100%;
+}
+
+ul.ListDescriptor > li > .ListBullet {
+    font-size: 100%;
+}
+
+ul.ListDescriptor a {
+    font-size: 100%;
+}
+
+ol > li > ul.ListDescriptor {
+    font-size: 100%;
+}
+
+.ListSingle > ul.ListDescriptor {
+    font-size: 75%;
+}
+
+.Subhead > ul.ListDescriptor {
+    font-size: 75%;
+}
+
+/*********************/
+/* LIST NUMBER       */
+/*********************/
+
+ol.ListNumber {
+    list-style-position: outside;
+    list-style-type: decimal;
+    margin-top: .5em;
+    margin-left: 2em;
+    padding: 0;
+    color: #666;
+    font-size: 75%;
+}
+
+ol.ListNumber > li {
+    margin-top: 1.5em;
+    margin-bottom:1.5em;
+    margin-left:-.25em;
+}
+
+ol.ListNumber li > .Para {
+    font-size: 100%;
+    color: #333;
+    position:relative;
+    text-indent: 0em;
+    margin-left:-.3em;
+}
+
+ol.ListNumber .Para+.Para {
+    margin-top: .5em;
+}
+
+ol.ListNumber li > .ListDescriptor {
+    margin-left:-.3em;
+}
+
+ol.ListNumber li > ol.ListNumber {
+    list-style-position: outside;
+    list-style-type: lower-alpha;
+    margin-left: 1.65em;
+    font-size: 100%;
+}
+
+ol.ListNumber li > ol.ListNumber li{
+    margin-top: .5em;
+    margin-bottom:.5em;
+}
+
+/*********************/
+/* LIST SINGLE       */
+/*********************/
+
+.ListSingle {
+    margin-top: 1.15em;
+    margin-bottom: 1em;
+}
+
+.ListSingle + .Outro {
+    margin-top: 1em;
+    margin-bottom: 1.2em;
+}
+
+
+/*********************/
+/* SUBHEAD           */
+/*********************/
+
+.Subhead > .Name {
+    font-size: 75%;
+    font-weight: bold;
+    margin-top: 1.5em;
+    margin-bottom: -.25em;
+    color: #000;  
+}
+
+/*********************/
+/* TASK              */
+/*********************/
+
+.Task {
+    margin-top : 1em;
+    margin-bottom : 1.25em;
+    margin-left : -.1em;
+    padding-top : 1.25em;
+    padding-bottom : .3em;
+    padding-left : 1.25em;
+    padding-right : 1.5em;
+    -webkit-border-bottom-left-radius: .75em .75em;
+    -webkit-border-bottom-right-radius: .75em .75em;
+    -webkit-border-top-left-radius: .75em .75em;
+    -webkit-border-top-right-radius: .75em .75em;
+    border-color: #d7d7d7;
+    border-style: solid;
+    border-width: 1px;
+    -webkit-box-shadow: 0em 0.1em 0.25em #cccccc;
+}
+
+.Task > .Name {
+    color: #000;
+    font-size: 90% !important;
+    font-weight: bold;
+}
+
+.Task > .Name + ul.ListBullet li {
+    margin-top : 0em;
+    margin-bottom : .5em;
+}
+
+.Task + .Task {
+    margin-top : 1.4em;
+}
+
+.Task > .Outro {
+    margin-bottom:inherit;
+}
+
+ 
+/*********************/
+/* TABLE STYLES      */
+/*********************/
+
+li > Table {
+    font-size : 130%;
+}
+
+ol > li > table {
+    margin-left: -.25em;
+}
+
+td {
+    display: table-cell;
+    font-size : 100%;
+    line-height: 100%;
+    padding: .2em;
+    padding-bottom: 0em;
+    padding-right: .4em;
+    vertical-align:top;
+    white-space:normal;
+    overflow:hidden;
+}
+
+th {
+    display: table-cell;
+    font-size : 100%;
+    line-height: 100%;
+    vertical-align:top;
+}
+
+th .TableSubhead {
+    display: table-cell;
+    vertical-align:top;
+    padding-top: .3em;
+    padding-bottom: .4em;
+}
+
+
+td > .TableSubhead {
+    display: block;
+    font-weight : bold;
+    color : #000;
+}
+
+
+th > .TableDisplay {
+    display: block;
+    font-weight : bold;
+    color : #000;
+}
+
+th > .Para {
+    padding-left: .2em;    
+}
+
+.TableDisplay + .Para {
+    margin-top: .5em
+}
+
+td > p.Para {
+    display: block;
+    margin-top: .3em;
+}
+
+Table .Figure {
+    display: block;
+    margin-left: .3em;
+    margin-top: .3em;
+    margin-bottom: .3em;
+}
+
+td ul.ListBullet > li:before {
+    content: "\25A0";
+    color : #666;
+    font-size : 150%;
+    float: left;
+    clear:both;
+    position: relative;
+    top: -.1em;
+    margin-right : .3em;
+    margin-left : -.9em;
+}
+
+
+/* entire parent bullet list*/
+
+td ul.ListBullet {
+    list-style : none;
+    list-style-position : inside;
+    font-size : 75%;
+    margin-left : 1.4em;
+    margin-top: .25em;
+    margin-bottom: .75em;
+}
+
+td ul.ListBullet li > .Para {
+    color: #333;
+    font-size: 100% !important;
+    position:relative;
+    margin-top: .5em;
+    margin-bottom:.5em;
+}
+th ul.ListBullet {
+    margin-left : 1.6em;
+}
+
+
+/*********************/
+/* TABLE 1 COLUMN    */
+/*********************/
+
+
+Table[type="1 column"] {
+    display: table;
+    table-layout:fixed;
+    width: 100%;
+    margin-top : 1em;
+    margin-bottom : 1.5em;
+    background-color: white;
+}
+
+Table[type="1 column"] tr.TableSubhead, Table[type="1 column"] tr.TableHead {
+    display: table-row;
+    border-top: 3px solid #D0D0D0;
+}
+
+Table[type="1 column"] tr {
+    display: table-row;
+    border-top: 1px solid #D0D0D0;
+    border-bottom: 1px solid #D0D0D0;
+}
+
+/* body row group */
+
+Table[type="1 column"] > tbody  {
+    display: table-row-group;
+    width: 100%;
+}
+
+Table[type="1 column"] tr th .TableSubhead, Table[type="1 column"] tr th .TableHead {
+    display: table-cell;
+    font-size : 75%;
+    font-weight: bold;
+    vertical-align:top;
+    padding-top: .5em;
+    margin-bottom: .1em;
+    padding-left: .3em;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+Table[type="1 column"] tr th .TableDisplay {
+    display: table-cell;
+    font-size : 75%;
+    font-weight: bold;
+    vertical-align:top;
+    padding-top: .5em;
+    margin-bottom: 0em;
+    padding-left: .3em;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+tr th .Figure {
+    display: block;    
+    margin-left: 0em;
+    margin-top: .75em;
+    margin-bottom: .75em;
+}
+
+Table[type="1 column"] tr td .Figure {
+    display: block;    
+    margin-left: 0em;
+    margin-top: .75em;
+    margin-bottom: .75em;
+}
+
+
+/********************************/
+/* TABLE DATA and DATAFULLWIDTH */
+/********************************/
+
+/* Data table border around outside*/
+
+
+Table[type="Data"], Table[type="DataFullWidth"] {
+    display: table;
+    table-layout:fixed;
+    width: 100%;
+    margin-top : 1.5em;
+    margin-bottom : 1.5em;
+    background-color: white;
+}
+
+Table[type="Data"] > tbody > tr > th, Table[type="DataFullWidth"] > tbody > tr > th {
+    display: table-cell;
+    width: 100%;
+    padding:0em;
+    padding-left: .3em;
+    padding-right: .2em;
+    vertical-align:top;
+    border:1px solid #D0D0D0;
+}
+
+Table[type="Data"] > tbody > tr > td, Table[type="DataFullWidth"] > tbody > tr > td {
+    display: table-cell;
+    width: 100%;
+    padding:0em;
+    padding-left: .3em;
+    padding-right: .2em;
+    vertical-align:top;
+    border:1px solid #D0D0D0;
+}
+
+Table[type="Data"] div.TableSubhead, Table[type="DataFullWidth"] div.TableSubhead {
+    display: table-cell;
+    font-size : 75%;
+    font-weight : bold;
+    color : #000;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+Table[type="Data"] td > p.Para, Table[type="DataFullWidth"] td > p.Para {
+    margin-bottom: .3em;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/**************************************************/
+/* TABLE MULTICOLUMN, FULL WIDTH, 2 COLUMN CUSTOM */
+/**************************************************/
+
+
+table[type="Multicolumn"], table[type="Full width"], Table[type="2 column"], Table[type="Custom"] {
+    width: 100%;
+    table-layout: fixed;
+    margin-top : 1em;
+    margin-bottom : 1em;
+    background-color: white;
+}
+
+table[type="Multicolumn"] > tbody > tr.TableHead, table[type="Full width"] > tbody > tr.TableHead, table[type="2 column"] > tbody > tr.TableHead, table[type="Custom"] > tbody > tr.TableHead  {
+    display: table-header-group;
+    float: left;
+    padding-top: .1em;
+    padding-bottom: .1em;
+    width: 100%;
+    -webkit-border-bottom-left-radius: .3em .3em;
+    -webkit-border-bottom-right-radius: .3em .3em;
+    -webkit-border-top-left-radius: .3em .3em;
+    -webkit-border-top-right-radius: .3em .3em;
+    border-color: #999999;
+    border-style: solid;
+    border-width: 1px;
+    background: #999999;
+}
+
+
+/* heading cell  */
+
+table[type="Multicolumn"] > tbody > tr > th, table[type="Full width"] > tbody > tr > th, table[type="2 column"] > tbody > tr > th, table[type="Custom"] > tbody > tr > th {
+    display: table-cell;
+    float: left;
+    vertical-align:top;
+    padding-left: .3em;
+    padding-right: .6em;
+}
+
+/* makes body row 100% width of page, adds rule bottom */
+
+table[type="Multicolumn"] > tbody tr, table[type="Full width"] > tbody tr, table[type="2 column"] > tbody tr, table[type="Custom"] > tbody tr  {
+    display: table-row;
+    width: 100%;
+    border-bottom: 1px solid #D0D0D0;
+}
+
+
+/* body cell, includes the row height spacing  */
+
+table[type="Multicolumn"] > tbody > tr > td, table[type="Full width"] > tbody > tr > td, table[type="2 column"] > tbody > tr > td, table[type="Custom"] > tbody > tr > td {
+    display: table-cell;
+    float: left;
+    vertical-align:top;
+    padding-left: .3em;
+    padding-right: .6em;
+}
+
+/* table heading font style*/
+
+table[type="Multicolumn"] div.TableHead, table[type="Full width"] div.TableHead, table[type="2 column"] div.TableHead, table[type="Custom"] div.TableHead {
+    display:block;
+    font-size:70%;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing: 0.15em;
+    position:relative;
+    left:0;
+    top:0;
+    color:#fff;
+}
+
+/*------------------------------------------------------------*/
+/* table subheading and display, includes row height spacing*/
+
+div.TableSubhead, div.TableDisplay {
+    display: block;
+    font-size : 75%;
+    font-weight : bold;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    color : #000;
+    padding-top: .65em;
+    margin-bottom: .65em;
+}
+tr.TableDisplay, tr.TableSubhead  {
+    display: table-row;
+    border-top: 3px solid #D0D0D0;
+}
+
+table[type="Data"]tr.TableDisplay, table[type="Data"]tr.TableSubhead, table[type="DataFullWidth"]tr.TableDisplay, table[type="DataFullWidth"]tr.TableSubhead   {
+    display: table-row;
+    border-top: 0px solid #D0D0D0;
+}
+
+tr.TableHead + tr.TableDisplay, tr.TableHead + tr.TableSubhead  {
+    border-top: 0px solid #D0D0D0;
+}
+
+td > p.Para, th > p.Para {
+    display: block;
+    font-size : 75%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-top: .3em;
+    margin-bottom: .5em;
+}
+
+
+
+ 
+/*----- widths based on number of columns --------------------*/
+
+table[cols="2"] th, table[cols="2"] td {
+    display: table-cell;
+    width: 45%;
+}
+
+table[cols="3"] th, table[cols="3"] td {
+    display: table-cell;
+    width: 29%;
+}
+
+table[cols="4"] th, [cols="4"] td {
+    display: table-cell;
+    width: 21%;
+}
+
+table[cols="5"] th, table[cols="5"] td {
+    display: table-cell;
+    width: 16%;
+}
+
+table[cols="6"] th, table[cols="6"] td {
+    display: table-cell;
+    width: 14%;
+    border: 1px solid green;
+}
+
+table[cols="7"] th, table[cols="7"] td {
+    display: table-cell;
+    width: 12%;
+    border: 1px solid green;
+}
+
+table[cols="8"] th, table[cols="8"] td {
+    display: table-cell;
+    width: 10%;
+    border: 1px solid green;
+}
+
+
+

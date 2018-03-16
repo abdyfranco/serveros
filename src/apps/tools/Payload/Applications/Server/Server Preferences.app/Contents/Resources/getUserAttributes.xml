@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="0.9">
+<dict>
+	<key>command</key>
+	<string>getUserAttributes</string>
+	<key>dsAttrTypeStandard:RecordName</key>
+	<string></string>
+	<key>attributesToReturn</key>
+	<array>
+		<string>dsAttrTypeStandard:GeneratedUID</string>
+	</array>
+</dict>
+</plist>

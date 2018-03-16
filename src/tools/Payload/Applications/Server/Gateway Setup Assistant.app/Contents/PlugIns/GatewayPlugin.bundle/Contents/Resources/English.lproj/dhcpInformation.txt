@@ -1,1 +1,0 @@
-This tool has detected that there is at least one DHCP subnet configured on this server. By continuing, you will delete any information about that subnet. Once this tool has completed you will not be able to get that configuration back. Are you sure you want to continue?

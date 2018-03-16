@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>mail</key>
+	<dict>
+		<key>localizableStrings</key>
+		<array>
+			<dict>
+				<key>index</key>
+				<string>mail service, mail server configuration, email, spam, junk mail, enable junk mail filtering, enable virus filtering, relay outgoign mail, welcome message, new user welcome message, welcome message eto new users, pop, cyrus, imap, smtp, postfix, amavisd</string>
+				<key>title</key>
+				<string>Mail service configuration</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>relay, smtp</string>
+				<key>title</key>
+				<string>Mail relay settings</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>welcome, message</string>
+				<key>title</key>
+				<string>Mail welcome message</string>
+			</dict>
+			<dict>
+				<key>index</key>
+				<string>mail, spam, virus, spamassasin, amavisd</string>
+				<key>title</key>
+				<string>Mail spam filtering</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

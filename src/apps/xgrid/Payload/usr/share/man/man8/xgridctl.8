@@ -1,0 +1,83 @@
+.\" Automatically generated from mdocxml
+.Dd September 29, 2004
+.Dt "xgridctl" 8
+.Os Mac OS X
+.Sh NAME
+.Nm xgridctl
+.Nd Xgrid daemons control interface
+.Sh SYNOPSIS
+.Nm
+.Ar status
+.Ar target
+.Ar on|off|start|stop|restart
+.Sh OPTIONS
+The available options are as follows:
+.Bl -tag -width XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+.It Ar "status"
+print status of running daemons
+.It Ar "target"
+affect c[ontroller] or a[gent] daemon
+.It Ar "on|off|start|stop|restart"
+turn on/off launching daemon at startup, or explicitly start/stop/restart daemon.  Note that 'restart' will kill all instances of a given daemon, as will 'stop' if none is specified in the pid file.
+.El
+.Sh RETURN VALUES
+.Bl -tag -width XXXXX
+.It 0 Completed succesfully.
+.It 1 Target not recognized: use 'c' or 'a'.
+.It 2 Action not recognized: use on|off|start|stop|restart
+.It 10 Wrong number of arguments.
+.It 20 Not run as root.
+.It 30 Executables not found; may need to reinstall Xgrid.
+.It 31 Process directory not found; may need to reinstall Mac OS X.
+.El
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/libexec/xgrid/xgridagentd
+Xgrid agent daemon
+.It Pa /usr/libexec/xgrid/xgridcontrollerd
+Xgrid controller daemon
+.It Pa /var/run/xgridagentd.pid
+Xgrid agent process ID
+.It Pa /var/run/xgridcontrollerd.pid
+Xgrid controller process ID
+.It Pa /etc/hostconfig 
+Host configuration file -- controls whether agent and controller are launched at startup)
+.El
+.Sh EXAMPLES
+.Bl -tag -width XXXXX
+.It xgrid status
+.It print status of daemons
+xgrid controller on
+.It edit hostconfig to launch controller on system startup
+xgrid a stop
+.It kill current xgrid agent process; repeat to kill all agent processes
+.El
+.Sh DIAGNOSTICS
+.Bl -tag -width XXXXX
+.It Warning: adding missing 'tag'
+.It Hostconfig does not already contain Xgrid variables; may not be installed properly.
+Warning: ## copies of (controller|agent)d already running
+.It Trying to another daemon when one or more already running; will usually succeed, but may cause unpredictable behavior.
+.El
+See also RETURN VALUES, above. 
+.Sh ERRORS
+.Bl -tag -width XXXXX
+.It Error: failed to launch (executable)
+.It Tried to start/restart a give daemon, but failed.
+.It Error: process 'executable' not currently running
+.It Tried to kill a process which did not exist.
+.El
+.Sh SEE ALSO
+.Xr xgrid 1 
+.Sh HISTORY
+This program was first introduced in Mac OS X 10.4 "Tiger".  It was inspired by apachectl(8).
+.Pp
+.Sh BUGS
+xgridctl(8) uses kill -TERM to allow the daemons a chance to die gracefully; there is currently no way to force a kill -KILL.
+.Pp
+Bug reports can be sent to 
+.Li bugreport.apple.com
+.Pp
+Feedback can be sent to 
+.Li xgrid@apple.com
+.Pp

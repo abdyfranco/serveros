@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Internet Gateway</title>
+      <meta http-equiv="contentBlock-Type" content="text/html; charset=UTF-8" />
+      <meta name="dategen" content="6-26-2009 14:19:36" />
+      <meta name="xsltver" content="1.5.1" />
+      <meta name="release" content="1.4.18" />
+      <meta name="project" content="Server Assistant Help" />
+      <meta name="description"
+            content="Set up your server to share its Internet connection with other computers on your local network." />
+      <meta name="topicid" content="sh7e2a48f9" />
+      <link href="../sty/layout.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/typography.css" rel="stylesheet" type="text/css" />
+      <link href="../sty/print.css" rel="stylesheet" type="text/css" media="print" />
+   </head>
+   <body class="en" id="x53657276657220417373697374616E742048656C70">
+      <div id="Nav"><a name="sh7e2a48f9"></a><a name="svrasst_gtwy"></a><div id="NavLeft"><a class="NavLinkLeft" href="help:anchor='access' bookID=Server Assistant Help">Home</a></div>
+         <div id="NavRight"></div>
+      </div>
+      <div class="AppleTopic" id="sh7e2a48f9">
+         <div class="Section">
+            <div id="Header">
+               <div id="Icon"><img src="../gfx/xicnsast.gif" alt="Server Assistant Icon" /></div>
+               <div class="Name">Internet Gateway</div>
+            </div>
+            <div class="AppleTopicBody">
+               <div class="Intro">
+                  <p class="Para">Use the Gateway Setup pane to set up your server to share its Internet connection with other computers on your local network,
+                     linking your local network to the Internet.
+                  </p>
+                  <p class="Para">The Gateway pane appears only if the server has two Ethernet ports configured as follows:</p>
+                  <ul class="ListBullet">
+                     <li>
+                        <p class="Para">One Ethernet port must have a public IP address on the Internet (not a private IP address like 10.0.0.1 or 192.168.1.1). This
+                           port is connected to your DSL modem, cable modem, or other Internet source. Usually, you use the server’s first built-in Ethernet
+                           port for this.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Another Ethernet port must be must be connected to a functional network switch or hub in your local private network. This
+                           Ethernet port must be unconfigured, have a manual IP address, or have a self-assigned IP address beginning with 169.254. Other
+                           computers connected to this local network will share the server’s Internet connection.
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="Task">
+                  <div class="Name">To set up your server as an Internet Gateway:</div>
+                  <div class="ListSingle">
+                     <p class="Para">Select “Configure this server as an Internet gateway.”</p>
+                     <p class="Para">Server Assistant automatically determines which Ethernet port is the public interface and which is the local interface.</p>
+                     <p class="Para">If more than one Ethernet port can be used for the public interface or the local interface, choose the port you want to use
+                        from the pop-up menu.
+                     </p>
+                  </div>
+               </div>
+               <div class="Outro">
+                  <p class="Para">Setting up your server as a gateway does the following:</p>
+                  <ul class="ListBullet">
+                     <li>
+                        <p class="Para">Assigns the Ethernet port connected to the local network the private IP address 192.168.1.1.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Turns on DHCP service and configures it to provide IP addresses 192.168.1.100 through 192.168.1.199 to computers on the local
+                           network. DHCP service assigns these addresses to computers whose Ethernet ports are configured with the “Using DHCP” option.
+                        </p>
+                        <p class="Para">You can also give users addresses 192.168.1.2 through 192.168.1.99, to use to configure their Ethernet ports with the “Using
+                           DCHP with manual address” option. Addresses 192.168.1.200 through 192.168.1.220 are reserved for your server’s VPN service.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Sets up NAT service to share the server’s Internet connection with computers on the local network.</p>
+                     </li>
+                     <li>
+                        <p class="Para">Sets up the server’s firewall to block incoming connections that originate from computers on the Internet. The firewall allows
+                           outgoing connections from computers on the local network. It also allows incoming connections that are responding to the local
+                           computers’ outgoing connections. After setup, you can use the Security pane of Server Preferences to allow incoming requests
+                           through the firewall for specific services.
+                        </p>
+                     </li>
+                     <li>
+                        <p class="Para">Sets up DNS service for the local network, and configures it to cache DNS name lookups to improve performance for local network
+                           computers.
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

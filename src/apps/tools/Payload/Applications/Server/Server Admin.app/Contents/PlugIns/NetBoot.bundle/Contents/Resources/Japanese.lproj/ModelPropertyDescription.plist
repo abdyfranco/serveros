@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Mac Pro</key>
+	<string>タワー型デスクトップ（アルミニウム筐体）。</string>
+	<key>Mac mini</key>
+	<string>ほとんどの LCD または VGA ディスプレイに接続できる省スペースのデスクトップ型 Mac G4 です。</string>
+	<key>Mac mini Intel Core</key>
+	<string>Intel Core Duo、または Intel Core Solo を搭載した省スペースのデスクトップ型 Mac です。</string>
+	<key>MacBook</key>
+	<string>Intel Core Duo プロセッサ搭載 MacBook です。本体カラーはホワイトまたはブラックです。</string>
+	<key>MacBook Pro Intel Core Duo</key>
+	<string>Intel Core Duo プロセッサと、15 または 17 インチのディスプレイを搭載した MacBook Pro です。</string>
+	<key>Macintosh PowerBook G3</key>
+	<string>プラスチックとラバー素材からなるブラックボディで、丸みを帯びたデザインのノート型コンピュータです。</string>
+	<key>Power Mac G4</key>
+	<string>グレイとホワイトのプラスチックボディで、丸みを帯びたタワースタイルのデスクトップ型コンピュータです。</string>
+	<key>Power Mac G4 Cube</key>
+	<string>透明なプラスチックボディで、キューブスタイルのデスクトップ型コンピュータです。</string>
+	<key>Power Mac G5</key>
+	<string>アルミニウムボディのタワースタイルデスクトップ型コンピュータです。</string>
+	<key>Power Macintosh G3</key>
+	<string>ブルーとホワイトのプラスチックボディで、丸みを帯びたタワースタイルのデスクトップ型コンピュータです。</string>
+	<key>PowerBook G4</key>
+	<string>15 インチディスプレイを搭載した薄型チタニウムボディの初期モデルと、12、15、または 17 インチのディスプレイを搭載したアルミニウムボディの後継モデルがあります。</string>
+	<key>Xserve</key>
+	<string>スロットローディング式の光学ドライブと 3 基の SATA または SAS の拡張ベイを備えた Intel Xeon ベースのラックマウントサーバ</string>
+	<key>Xserve G4</key>
+	<string>トレイ式またはスロットローディング式の光学ドライブと 4 基の拡張ベイを備えた G4 搭載ラックマウント式サーバモデルと、1 基の拡張ベイを備えた G4 搭載クラスタノードモデルがあります。</string>
+	<key>Xserve G5</key>
+	<string>G5 搭載のラックマウント式サーバコンピュータで、スロットローディング式の光学ドライブ（CD-ROM または DVD-ROM）と 3 基の拡張ベイを備えたモデルと、拡張ベイのないクラスタノードモデルがあります。</string>
+	<key>eMac G4</key>
+	<string>省スペースの丸みを帯びたボディに、ディスプレイを内蔵したオールインワンタイプのモデルです。</string>
+	<key>iBook G3</key>
+	<string>ハンドル付きクラムシェル型ボディのカラフルな初期モデルと、シルバーとホワイトの四角いプラスチックボディに 12 または 14 インチのディスプレイを搭載した後継モデルがあります。</string>
+	<key>iBook G4</key>
+	<string>ホワイトボディの G4 プロセッサ搭載 iBook です。</string>
+	<key>iMac G3</key>
+	<string>オールインワンタイプのモデルで、ブルーとホワイトのプラスチックボディの初期型と、多様なボディカラーの後期型があります。</string>
+	<key>iMac G4</key>
+	<string>ドーム型のベース部に、15、17、または  20 インチの薄型ディスプレイを搭載したオールインワンタイプのモデルです。</string>
+	<key>iMac G5</key>
+	<string>薄型ボディの G5 搭載 iMac です。</string>
+	<key>iMac Intel Core 2 Duo</key>
+	<string>薄型ボディの Intel Core 2 Duo 搭載 iMac です。</string>
+	<key>iMac Intel Core Duo</key>
+	<string>薄型ボディの Intel Core Duo 搭載 iMac です。</string>
+</dict>
+</plist>

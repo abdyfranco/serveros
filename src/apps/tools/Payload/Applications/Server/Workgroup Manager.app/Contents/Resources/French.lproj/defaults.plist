@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AccountPluginsOrder</key>
+	<dict>
+		<key>ComputerAccount</key>
+		<array>
+			<string>Général</string>
+			<string>Réseau</string>
+		</array>
+		<key>ComputerListAccount</key>
+		<array>
+			<string>Élémentaires</string>
+			<string>Membres</string>
+		</array>
+		<key>ComputerListPref</key>
+		<array/>
+		<key>ComputerPref</key>
+		<array/>
+		<key>GroupAccount</key>
+		<array>
+			<string>Élémentaires</string>
+			<string>Membres</string>
+			<string>Dossier de groupe</string>
+		</array>
+		<key>GroupPref</key>
+		<array/>
+		<key>LocationAccount</key>
+		<array/>
+		<key>LocationPref</key>
+		<array/>
+		<key>UserAccount</key>
+		<array>
+			<string>Élémentaires</string>
+			<string>Privilèges</string>
+			<string>Avancés</string>
+			<string>Groupes</string>
+			<string>Départ</string>
+			<string>Courrier</string>
+			<string>Impression</string>
+			<string>Infos</string>
+			<string>Windows</string>
+		</array>
+		<key>UserPref</key>
+		<array/>
+	</dict>
+</dict>
+</plist>

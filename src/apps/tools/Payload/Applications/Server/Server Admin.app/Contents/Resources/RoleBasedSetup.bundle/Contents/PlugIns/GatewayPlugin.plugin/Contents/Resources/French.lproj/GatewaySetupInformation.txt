@@ -1,0 +1,15 @@
+Les réglages du serveur suivants vont être modifiés :
+
+%@ (%@) sera utilisé comme connexion WAN. Cette connexion sera partagée avec les ports suivants :
+%@
+DHCP sera activé et configuré avec les sous-réseaux suivants :
+%@
+Tous les sous-réseaux configurés précédemment pour DHCP seront supprimés.
+
+Le coupe-feu IP sera activé et configuré avec les groupes d’adresses IP suivants :
+%@ 
+NAT sera activé et partagera le réseau sur %@ (%@)
+
+VPN sera %@ activé
+
+DNS sera activé
