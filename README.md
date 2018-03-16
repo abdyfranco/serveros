@@ -7,7 +7,7 @@ was officially discontinued, offering as an alternative the Mac Mini Server or t
 Mac Pro, but none of these machines are designed with server-grade hardware in
 mind and are not a real replacement.
 
-The latest model of the Xserve received software updates up to OS X El Captain, however
+The latest model of the Xserve received software updates up to OS X El Capitan, however
 from Mac OS X Lion the Xserve received the same OS used on the other Macs, a more
 user-oriented operating system rather than a server-oriented operating system, eliminating
 all the server tools and replacing them with the weak "Server.app" application.
