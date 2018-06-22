@@ -32,7 +32,7 @@
 	<key>CFBundleIconFile</key>
 	<string>ServerPreferences</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apple.ServerPreferences</string>
+	<string>com.apple.server_preferences</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -46,19 +46,23 @@
 	<key>CFBundleVersion</key>
 	<string>119.5</string>
 	<key>DTCompiler</key>
-	<string></string>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>11C22</string>
+	<string>8C1002</string>
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>11C22</string>
+	<string>16C58</string>
 	<key>DTSDKName</key>
-	<string></string>
+	<string>macosx10.12internal</string>
 	<key>DTXcode</key>
-	<string>0800</string>
+	<string>0821</string>
 	<key>DTXcodeBuild</key>
-	<string>8S201h</string>
+	<string>8C1002</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.10.5</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<true/>
 	<key>NSAppleScriptEnabled</key>

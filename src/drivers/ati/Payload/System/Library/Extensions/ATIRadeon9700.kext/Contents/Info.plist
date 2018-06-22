@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>ATIRadeon9700</string>
+	<key>CFBundleGetInfoString</key>
+	<string>ATIRadeon9700 1.5.28.21 (5703)</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.ATIRadeon9700</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ATI Radeon 9700 Kernel Extension</string>
+	<key>CFBundlePackageType</key>
+	<string>KEXT</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.5.28</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>5.2.8</string>
+	<key>IOKitPersonalities</key>
+	<dict>
+		<key>ATIRadeon9700</key>
+		<dict>
+			<key>ATIEnableWideBlitSupport</key>
+			<true/>
+			<key>ATIUseTearingWideBlit</key>
+			<false/>
+			<key>CFBundleIdentifier</key>
+			<string>com.apple.ATIRadeon9700</string>
+			<key>IOCFPlugInTypes</key>
+			<dict>
+				<key>ACCF0000-0000-0000-0000-000a2789904e</key>
+				<string>ATIRadeon9700GA.plugin</string>
+			</dict>
+			<key>IOClass</key>
+			<string>ATIRadeon9700</string>
+			<key>IODVDBundleName</key>
+			<string>ATIRadeon9700VADriver</string>
+			<key>IOMatchCategory</key>
+			<string>IOAccelerator</string>
+			<key>IOPCIMatch</key>
+			<string>0x4E441002 0x41441002 0x4E481002 0x41481002 0x41501002 0x4E501002 0x41521002 0x4E541002 0x4A481002 0x4A491002 0x4A4A1002 0x4A4B1002 0x4A4C1002 0x4A4D1002 0x4A4E1002 0x5B601002 0x5B621002 0x3E501002 0x4E561002 0x5B641002 0x3E541002</string>
+			<key>IOProviderClass</key>
+			<string>IOPCIDevice</string>
+			<key>IOSourceVersion</key>
+			<string>1.5.28.21</string>
+		</dict>
+	</dict>
+	<key>OSBundleLibraries</key>
+	<dict>
+		<key>com.apple.iokit.IOGraphicsFamily</key>
+		<string>1.0.0b1</string>
+		<key>com.apple.iokit.IONDRVSupport</key>
+		<string>1.0.0b1</string>
+		<key>com.apple.iokit.IOPCIFamily</key>
+		<string>1.0.0b1</string>
+		<key>com.apple.kernel.iokit</key>
+		<string>1.0.0b1</string>
+		<key>com.apple.kpi.bsd</key>
+		<string>8.0.0</string>
+		<key>com.apple.kpi.iokit</key>
+		<string>8.0</string>
+	</dict>
+</dict>
+</plist>

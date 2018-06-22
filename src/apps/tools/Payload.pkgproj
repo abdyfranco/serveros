@@ -21,11 +21,11 @@
 								<key>GID</key>
 								<integer>80</integer>
 								<key>PATH</key>
-								<string>/Users/abdy/Documents/Github Repositories/xserve-reloaded/src/apps/tools/Payload/Applications/Server</string>
+								<string>Payload/Applications/Server</string>
 								<key>PATH_TYPE</key>
-								<integer>0</integer>
+								<integer>1</integer>
 								<key>PERMISSIONS</key>
-								<integer>493</integer>
+								<integer>511</integer>
 								<key>TYPE</key>
 								<integer>3</integer>
 								<key>UID</key>
@@ -86,22 +86,6 @@
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
-								<string>/Users/abdy/Documents/Github Repositories/xserve-reloaded/src/apps/tools/Payload/Library/Dictionaries</string>
-								<key>PATH_TYPE</key>
-								<integer>0</integer>
-								<key>PERMISSIONS</key>
-								<integer>493</integer>
-								<key>TYPE</key>
-								<integer>3</integer>
-								<key>UID</key>
-								<integer>0</integer>
-							</dict>
-							<dict>
-								<key>CHILDREN</key>
-								<array/>
-								<key>GID</key>
-								<integer>0</integer>
-								<key>PATH</key>
 								<string>Documentation</string>
 								<key>PATH_TYPE</key>
 								<integer>0</integer>
@@ -114,7 +98,24 @@
 							</dict>
 							<dict>
 								<key>CHILDREN</key>
-								<array/>
+								<array>
+									<dict>
+										<key>CHILDREN</key>
+										<array/>
+										<key>GID</key>
+										<integer>0</integer>
+										<key>PATH</key>
+										<string>Payload/Library/Dictionaries</string>
+										<key>PATH_TYPE</key>
+										<integer>1</integer>
+										<key>PERMISSIONS</key>
+										<integer>511</integer>
+										<key>TYPE</key>
+										<integer>3</integer>
+										<key>UID</key>
+										<integer>0</integer>
+									</dict>
+								</array>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -282,7 +283,7 @@
 								<key>PATH_TYPE</key>
 								<integer>0</integer>
 								<key>PERMISSIONS</key>
-								<integer>493</integer>
+								<integer>1005</integer>
 								<key>TYPE</key>
 								<integer>1</integer>
 								<key>UID</key>
@@ -389,11 +390,11 @@
 										<key>GID</key>
 										<integer>0</integer>
 										<key>PATH</key>
-										<string>/Users/abdy/Documents/Github Repositories/xserve-reloaded/src/apps/tools/Payload/Library/Widgets/Server Status.wdgt</string>
+										<string>Payload/Library/Widgets/Server Status.wdgt</string>
 										<key>PATH_TYPE</key>
-										<integer>0</integer>
+										<integer>1</integer>
 										<key>PERMISSIONS</key>
-										<integer>493</integer>
+										<integer>511</integer>
 										<key>TYPE</key>
 										<integer>3</integer>
 										<key>UID</key>
@@ -433,11 +434,11 @@
 						<key>GID</key>
 						<integer>0</integer>
 						<key>PATH</key>
-						<string>/Users/abdy/Documents/Github Repositories/xserve-reloaded/src/apps/tools/Payload/System</string>
+						<string>Payload/System</string>
 						<key>PATH_TYPE</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>PERMISSIONS</key>
-						<integer>493</integer>
+						<integer>511</integer>
 						<key>TYPE</key>
 						<integer>3</integer>
 						<key>UID</key>
@@ -499,16 +500,68 @@
 			<key>TREAT_MISSING_FILES_AS_WARNING</key>
 			<false/>
 			<key>VERSION</key>
-			<integer>4</integer>
+			<integer>5</integer>
+		</dict>
+		<key>PACKAGE_SCRIPTS</key>
+		<dict>
+			<key>POSTINSTALL_PATH</key>
+			<dict>
+				<key>PATH</key>
+				<string>post.sh</string>
+				<key>PATH_TYPE</key>
+				<integer>1</integer>
+			</dict>
+			<key>PREINSTALL_PATH</key>
+			<dict>
+				<key>PATH</key>
+				<string>pre.sh</string>
+				<key>PATH_TYPE</key>
+				<integer>1</integer>
+			</dict>
+			<key>RESOURCES</key>
+			<array>
+				<dict>
+					<key>CHILDREN</key>
+					<array/>
+					<key>GID</key>
+					<integer>0</integer>
+					<key>PATH</key>
+					<string>post.sh</string>
+					<key>PATH_TYPE</key>
+					<integer>1</integer>
+					<key>PERMISSIONS</key>
+					<integer>420</integer>
+					<key>TYPE</key>
+					<integer>3</integer>
+					<key>UID</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>CHILDREN</key>
+					<array/>
+					<key>GID</key>
+					<integer>0</integer>
+					<key>PATH</key>
+					<string>pre.sh</string>
+					<key>PATH_TYPE</key>
+					<integer>1</integer>
+					<key>PERMISSIONS</key>
+					<integer>420</integer>
+					<key>TYPE</key>
+					<integer>3</integer>
+					<key>UID</key>
+					<integer>0</integer>
+				</dict>
+			</array>
 		</dict>
 		<key>PACKAGE_SETTINGS</key>
 		<dict>
 			<key>AUTHENTICATION</key>
 			<integer>1</integer>
 			<key>CONCLUSION_ACTION</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>FOLLOW_SYMBOLIC_LINKS</key>
-			<false/>
+			<true/>
 			<key>IDENTIFIER</key>
 			<string>com.apple.servertools</string>
 			<key>LOCATION</key>
@@ -519,6 +572,8 @@
 			<false/>
 			<key>PAYLOAD_SIZE</key>
 			<integer>-1</integer>
+			<key>REFERENCE_PATH</key>
+			<string></string>
 			<key>RELOCATABLE</key>
 			<false/>
 			<key>USE_HFS+_COMPRESSION</key>
@@ -583,7 +638,7 @@
 					<key>PROXY_TOOLTIP</key>
 					<string>Remove ".pbdevelopment" files created by ProjectBuilder or Xcode.</string>
 					<key>STATE</key>
-					<false/>
+					<true/>
 				</dict>
 				<dict>
 					<key>PATTERNS_ARRAY</key>
@@ -644,7 +699,7 @@
 					<key>PROXY_TOOLTIP</key>
 					<string>Remove helper files and folders used by the CVS, SVN or Git Source Code Management systems.</string>
 					<key>STATE</key>
-					<false/>
+					<true/>
 				</dict>
 				<dict>
 					<key>PATTERNS_ARRAY</key>
@@ -681,7 +736,7 @@
 					<key>PROXY_TOOLTIP</key>
 					<string>Remove "classes.nib", "info.nib" and "designable.nib" files within .nib bundles.</string>
 					<key>STATE</key>
-					<false/>
+					<true/>
 				</dict>
 				<dict>
 					<key>PATTERNS_ARRAY</key>
@@ -710,7 +765,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Payload</string>
+			<string>Server Tools</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 		</dict>

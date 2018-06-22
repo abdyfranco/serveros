@@ -1,0 +1,6 @@
+/usr/bin/iodbc-config
+/usr/bin/odbctest
+/usr/lib/libiodbc.a
+/usr/lib/libiodbc.dylib
+/usr/lib/libiodbcinst.a
+/usr/lib/libiodbcinst.dylib

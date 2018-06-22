@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>15A284</string>
+	<string>17F77</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDocumentTypes</key>
@@ -34,7 +34,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apple.ServerAdmin</string>
+	<string>com.apple.server_admin</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -48,23 +48,25 @@
 	<key>CFBundleVersion</key>
 	<string>328.4</string>
 	<key>DTCompiler</key>
-	<string></string>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>11C22</string>
+	<string>8C1002</string>
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>11C22</string>
+	<string>16C58</string>
 	<key>DTSDKName</key>
-	<string></string>
+	<string>macosx10.12internal</string>
 	<key>DTXcode</key>
-	<string>0800</string>
+	<string>0821</string>
 	<key>DTXcodeBuild</key>
-	<string>8S201h</string>
+	<string>8C1002</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.10.5</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<true/>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.11.0</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>Yes</string>
 	<key>NSHumanReadableCopyright</key>
