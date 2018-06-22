@@ -44,6 +44,26 @@ instruction packets, known as tasks.
 Add support for third-party NVMe Drives, USB 3 and SATA 3 PCI-E cards, adding Xserve
 support to the latest standards and connectivity protocols.
 
+## Building ##
+The creation of the distribution package and the management of the dependencies are handled
+by [Packages](http://s.sudre.free.fr/Software/Packages/about.html), a macOS application.
+
+## Installing ##
+Before proceeding with the installation of **Xserve Reloaded** you must disable SIP in your
+macOS installation.
+
+The distribution package must be compiled using the Packages application, once the
+installation package is done it will be available in the build folder.
+
+This package can be installed just like any other package by running it.
+
+If the installation of the package fails, it may be due to Gatekeeper so it will be necessary
+to install the package through the terminal by running it using sudo.
+
+```
+sudo installer -pkg "./build/Xserve Reloaded.pkg" -target /
+```
+
 ## Compatibility ##
 **Xserve Reloaded** is fully compatible with the following configurations:
 - Xserve 2,1 running macOS 10.12 (macOS Sierra)*
