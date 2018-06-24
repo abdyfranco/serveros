@@ -71,7 +71,7 @@ sudo installer -pkg "./build/Xserve Reloaded.pkg" -target /
 - Xserve 3,1 running macOS 10.12 (macOS Sierra)
 - Xserve 3,1 running macOS 10.13 (macOS High Sierra)
 
-###### * Requires a graphics card upgrade to a Nvidia GT 120 or better. ######
+###### * Requires a graphics card upgrade to an NVIDIA GT 120 or better. ######
 
 ## Copyright ##
 - Copyright (c) 2016-2018 [dosdude1](http://dosdude1.com/)
