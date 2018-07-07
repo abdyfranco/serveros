@@ -1,0 +1,24 @@
+;;
+;; xgridcontrollerd - sandbox profile
+;; Copyright (c) 2007 - 2009 Apple Inc.  All Rights reserved.
+;;
+;; WARNING: The sandbox rules in this file currently constitute 
+;; Apple System Private Interface and are subject to change at any time and
+;; without notice. The contents of this file are also auto-generated and not
+;; user editable; it may be overwritten at any time.
+;;
+(version 1)
+
+(debug deny)
+
+(deny default)
+
+(import "bsd.sb")
+
+(allow process* network* mach* sysctl-read system-socket)
+(allow signal (target self))
+
+(allow file-read* (regex "^/(bin|dev|(private/)?(etc|tmp|var)|usr|System|Library)(/|$)"))
+(allow file-read* file-write* (regex "^/((private/)?(tmp|var)|Library/Logs)(/|$)"))
+
+(allow process-exec (regex "^/usr/sbin/postdrop$") (with no-profile))

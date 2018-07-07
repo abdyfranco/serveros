@@ -1,0 +1,23 @@
+;;
+;; _xgridtask_nobody - sandbox profile
+;; Copyright (c) 2006 - 2009 Apple Inc.  All Rights reserved.
+;;
+;; WARNING: The sandbox rules in this file currently constitute 
+;; Apple System Private Interface and are subject to change at any time and
+;; without notice. The contents of this file are also auto-generated and not
+;; user editable; it may be overwritten at any time.
+;;
+(version 1)
+
+(debug deny)
+
+(deny default)
+
+(import "bsd.sb")
+
+(allow process* sysctl* mach* network* system-socket)
+(allow signal (target pgrp))
+
+(allow file-read* file-ioctl (regex "^/(bin|dev|(private/)?(etc|tmp|var)|usr|System|Library)(/|$)"))
+(allow file-read* file-write* file-ioctl (regex "^/(private/)?(tmp|var)(/|$)"))
+
