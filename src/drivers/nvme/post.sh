@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo xattr -r -d com.apple.quarantine /System/Library/Extensions/NVMeGeneric.kext
-sudo chown -R root:wheel /System/Library/Extensions/NVMeGeneric.kext
+sudo xattr -r -d com.apple.quarantine /Library/Extensions/NVMeGeneric.kext
+sudo chown -R root:wheel /Library/Extensions/NVMeGeneric.kext
 sudo spctl --master-enable
