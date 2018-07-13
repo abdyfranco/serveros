@@ -4,6 +4,10 @@ sudo xattr -r -d com.apple.quarantine /Library/Extensions/EtronUSBHub3.kext
 sudo xattr -r -d com.apple.quarantine /Library/Extensions/EtronUSBxHCI.kext
 sudo xattr -r -d com.apple.quarantine /Library/Extensions/GenericUSBXHCI.kext
 
+sudo xattr -rc /Library/Extensions/EtronUSBHub3.kext
+sudo xattr -rc /Library/Extensions/EtronUSBxHCI.kext
+sudo xattr -rc /Library/Extensions/GenericUSBXHCI.kext
+
 sudo chown -R root:wheel /Library/Extensions/EtronUSBHub3.kext
 sudo chown -R root:wheel /Library/Extensions/EtronUSBxHCI.kext
 sudo chown -R root:wheel /Library/Extensions/GenericUSBXHCI.kext

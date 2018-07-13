@@ -7,6 +7,9 @@ sudo xattr -r -d com.apple.quarantine /System/Library/PrivateFrameworks/Platform
 sudo xattr -r -d com.apple.quarantine /usr/bin/ipmitool
 sudo xattr -r -d com.apple.quarantine /usr/sbin/hwmond
 
+sudo xattr -rc /System/Library/Extensions/AppleBMC.kext
+sudo xattr -rc /System/Library/PrivateFrameworks/PlatformHardwareManagement.framework
+
 sudo chown -R root:wheel /System/Library/Extensions/AppleBMC.kext
 
 sudo spctl --master-enable
