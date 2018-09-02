@@ -86,6 +86,22 @@
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
+								<string>Payload/Library/Dictionaries</string>
+								<key>PATH_TYPE</key>
+								<integer>1</integer>
+								<key>PERMISSIONS</key>
+								<integer>511</integer>
+								<key>TYPE</key>
+								<integer>3</integer>
+								<key>UID</key>
+								<integer>0</integer>
+							</dict>
+							<dict>
+								<key>CHILDREN</key>
+								<array/>
+								<key>GID</key>
+								<integer>0</integer>
+								<key>PATH</key>
 								<string>Documentation</string>
 								<key>PATH_TYPE</key>
 								<integer>0</integer>
@@ -98,24 +114,7 @@
 							</dict>
 							<dict>
 								<key>CHILDREN</key>
-								<array>
-									<dict>
-										<key>CHILDREN</key>
-										<array/>
-										<key>GID</key>
-										<integer>0</integer>
-										<key>PATH</key>
-										<string>Payload/Library/Dictionaries</string>
-										<key>PATH_TYPE</key>
-										<integer>1</integer>
-										<key>PERMISSIONS</key>
-										<integer>511</integer>
-										<key>TYPE</key>
-										<integer>3</integer>
-										<key>UID</key>
-										<integer>0</integer>
-									</dict>
-								</array>
+								<array/>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -227,7 +226,36 @@
 							</dict>
 							<dict>
 								<key>CHILDREN</key>
-								<array/>
+								<array>
+									<dict>
+										<key>BUNDLE_CAN_DOWNGRADE</key>
+										<false/>
+										<key>BUNDLE_POSTINSTALL_PATH</key>
+										<dict>
+											<key>PATH_TYPE</key>
+											<integer>1</integer>
+										</dict>
+										<key>BUNDLE_PREINSTALL_PATH</key>
+										<dict>
+											<key>PATH_TYPE</key>
+											<integer>1</integer>
+										</dict>
+										<key>CHILDREN</key>
+										<array/>
+										<key>GID</key>
+										<integer>0</integer>
+										<key>PATH</key>
+										<string>Payload/Library/PreferencePanes/Hosts.prefPane</string>
+										<key>PATH_TYPE</key>
+										<integer>1</integer>
+										<key>PERMISSIONS</key>
+										<integer>493</integer>
+										<key>TYPE</key>
+										<integer>3</integer>
+										<key>UID</key>
+										<integer>0</integer>
+									</dict>
+								</array>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -243,7 +271,24 @@
 							</dict>
 							<dict>
 								<key>CHILDREN</key>
-								<array/>
+								<array>
+									<dict>
+										<key>CHILDREN</key>
+										<array/>
+										<key>GID</key>
+										<integer>0</integer>
+										<key>PATH</key>
+										<string>Payload/Library/Preferences/com.apple.xgrid.agent.plist</string>
+										<key>PATH_TYPE</key>
+										<integer>1</integer>
+										<key>PERMISSIONS</key>
+										<integer>493</integer>
+										<key>TYPE</key>
+										<integer>3</integer>
+										<key>UID</key>
+										<integer>0</integer>
+									</dict>
+								</array>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -371,36 +416,7 @@
 							</dict>
 							<dict>
 								<key>CHILDREN</key>
-								<array>
-									<dict>
-										<key>BUNDLE_CAN_DOWNGRADE</key>
-										<false/>
-										<key>BUNDLE_POSTINSTALL_PATH</key>
-										<dict>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-										</dict>
-										<key>BUNDLE_PREINSTALL_PATH</key>
-										<dict>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-										</dict>
-										<key>CHILDREN</key>
-										<array/>
-										<key>GID</key>
-										<integer>0</integer>
-										<key>PATH</key>
-										<string>Payload/Library/Widgets/Server Status.wdgt</string>
-										<key>PATH_TYPE</key>
-										<integer>1</integer>
-										<key>PERMISSIONS</key>
-										<integer>511</integer>
-										<key>TYPE</key>
-										<integer>3</integer>
-										<key>UID</key>
-										<integer>0</integer>
-									</dict>
-								</array>
+								<array/>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -425,6 +441,22 @@
 						<integer>493</integer>
 						<key>TYPE</key>
 						<integer>1</integer>
+						<key>UID</key>
+						<integer>0</integer>
+					</dict>
+					<dict>
+						<key>CHILDREN</key>
+						<array/>
+						<key>GID</key>
+						<integer>0</integer>
+						<key>PATH</key>
+						<string>Payload/private</string>
+						<key>PATH_TYPE</key>
+						<integer>1</integer>
+						<key>PERMISSIONS</key>
+						<integer>493</integer>
+						<key>TYPE</key>
+						<integer>3</integer>
 						<key>UID</key>
 						<integer>0</integer>
 					</dict>
@@ -474,6 +506,22 @@
 						<integer>493</integer>
 						<key>TYPE</key>
 						<integer>1</integer>
+						<key>UID</key>
+						<integer>0</integer>
+					</dict>
+					<dict>
+						<key>CHILDREN</key>
+						<array/>
+						<key>GID</key>
+						<integer>0</integer>
+						<key>PATH</key>
+						<string>Payload/usr</string>
+						<key>PATH_TYPE</key>
+						<integer>1</integer>
+						<key>PERMISSIONS</key>
+						<integer>493</integer>
+						<key>TYPE</key>
+						<integer>3</integer>
 						<key>UID</key>
 						<integer>0</integer>
 					</dict>
@@ -543,6 +591,22 @@
 					<integer>0</integer>
 					<key>PATH</key>
 					<string>pre.sh</string>
+					<key>PATH_TYPE</key>
+					<integer>1</integer>
+					<key>PERMISSIONS</key>
+					<integer>420</integer>
+					<key>TYPE</key>
+					<integer>3</integer>
+					<key>UID</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>CHILDREN</key>
+					<array/>
+					<key>GID</key>
+					<integer>0</integer>
+					<key>PATH</key>
+					<string>ServerApplicationsFolderIcon.icns</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 					<key>PERMISSIONS</key>
@@ -765,7 +829,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Server Tools</string>
+			<string>Legacy Server Tools</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 		</dict>

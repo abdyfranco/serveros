@@ -1,20 +1,23 @@
-![Xserve Reloaded](./src/assets/banner.jpg)
+![serverOS](./src/assets/banner.jpg)
 
-# Xserve Reloaded #
+# serverOS for Mac #
 
-**Xserve Reloaded** – The Xserve was the Apple server until November 5, 2010 that
+**serverOS** – The Xserve was the Apple server until November 5, 2010 that
 was officially discontinued, offering as an alternative the Mac Mini Server or the
 Mac Pro, but none of these machines are designed with server-grade hardware in
 mind and are not a real replacement.
 
-The latest model of the Xserve received software updates up to OS X El Capitan, however
-from Mac OS X Lion the Xserve received the same OS used on the other Macs, a more
-user-oriented operating system rather than a server-oriented operating system, eliminating
-all the server tools and replacing them with the weak "Server.app" application.
+Over time the server versions of macOS were suppressed and replaced with the client
+versions, a more user-oriented operating system rather than a server-oriented operating
+system, eliminating all the server tools and replacing them with the weak "Server.app"
+application.
 
-Xserve Reloaded, seeks to give a new life to the Xserve giving the possibility of
-installing the latest versions of macOS and bringing back part of the server-oriented
-functionality lost in previous versions.
+However, in April 2018 in macOS High Sierra, all server functions of the Server.app
+application were deprecated by Apple, leaving it to offer server software for Mac forever.
+
+serverOS, seeks to give a new life to Mac servers giving the possibility of installing
+the latest versions of macOS on unsupported machines and bringing back part of the
+server-oriented functionality lost in previous versions.
 
 ## Included Packages ##
 ### macOS Sierra Patcher ###
@@ -33,12 +36,6 @@ from a modern macOS installation.
 ### Server Tools ###
 All the official Apple applications from the Server Tools package directly from OS X Snow
 Leopard Server, has been patched and modified in order to work in newer versions of macOS.
-
-### Xgrid ###
-Xgrid is a program and distributed computing protocol that allows networked computers to
-contribute to a single task. When the initiating computer sends the complete instructions,
-or job, for processing to the controller, the controller splits the task up into these small
-instruction packets, known as tasks.
 
 ### NVMe, USB 3 & SATA 3 Drivers ###
 Add support for third-party NVMe Drives, USB 3 and SATA 3 PCI-E cards, adding Xserve
@@ -65,7 +62,7 @@ sudo installer -pkg "./build/Xserve Reloaded.pkg" -target /
 ```
 
 ## Compatibility ##
-**Xserve Reloaded** is fully compatible with the following configurations:
+**serverOS** is fully compatible with the following configurations:
 - Xserve 2,1 running macOS 10.12 (macOS Sierra)*
 - Xserve 2,1 running macOS 10.13 (macOS High Sierra)*
 - Xserve 3,1 running macOS 10.12 (macOS Sierra)

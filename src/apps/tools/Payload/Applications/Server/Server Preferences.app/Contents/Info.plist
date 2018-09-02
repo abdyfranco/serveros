@@ -62,7 +62,7 @@
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.10.5</string>
+	<string>10.10.0</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<true/>
 	<key>NSAppleScriptEnabled</key>
