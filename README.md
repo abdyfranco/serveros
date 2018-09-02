@@ -46,7 +46,7 @@ The creation of the distribution package and the management of the dependencies 
 by [Packages](http://s.sudre.free.fr/Software/Packages/about.html), a macOS application.
 
 ## Installing ##
-Before proceeding with the installation of **Xserve Reloaded** you must disable SIP in your
+Before proceeding with the installation of **serverOS** you must disable SIP in your
 macOS installation.
 
 The distribution package must be compiled using the Packages application, once the
@@ -58,7 +58,7 @@ If the installation of the package fails, it may be due to Gatekeeper so it will
 to install the package through the terminal by running it using sudo.
 
 ```
-sudo installer -pkg "./build/Xserve Reloaded.pkg" -target /
+sudo installer -pkg "./build/serverOS.pkg" -target /
 ```
 
 ## Compatibility ##
