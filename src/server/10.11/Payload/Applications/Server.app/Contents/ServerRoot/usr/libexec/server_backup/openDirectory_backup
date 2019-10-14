@@ -1,0 +1,219 @@
+#!/usr/bin/perl
+
+#################################   Constants  #################################
+$ECHO = "/bin/echo";
+$ODBACKUPSCRIPT = "/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/opendirectorybackup";
+$PBUDDY = "/usr/libexec/PlistBuddy";
+$SERVER_BACKUP_CONF = "/Applications/Server.app/Contents/ServerRoot/private/etc/server_backup";
+$SLAPCONFIG = "/usr/sbin/slapconfig";
+$ServerBackupProgressLogFile = "/private/var/log/server_backup/server_progress.log";
+$OD_MASTER = "1.1 - hosting a master LDAP directory server";
+$DSImageName = "ServerBackup_OpenDirectoryMaster";
+$SparseImageExtension = ".sparseimage";
+$SERVICE_NAME = "openDirectory";
+
+$CONF_EXT = ".conf";
+$STATUS_EXT = ".status";
+$ServiceConf = "40-openDirectory.plist";
+$ServiceName = "dirserv";
+%$BigList = "";
+
+if($ENV{VERBOSE} eq 1) {$VERBOSE = '1';}
+if($ENV{DEBUG} eq 1) {$DEBUG = '1';}
+if($ENV{FUNCLOG} eq 1) {$FUNCLOG = '1';}
+if($ENV{PROGRESS} eq 1) {$PROGRESS = '1';}
+
+if ($VERBOSE) {
+	print("openDirectory_backup was called.\n");
+}
+
+ParseOptions();
+if ($DEBUG) 
+{ dumpAssociativeArray(@ARGV); }
+
+validateOptionsAndDispatch(@ARGV);
+exit();
+
+################################################################################
+sub validateOptionsAndDispatch()
+{
+	%BigList = @_;
+	SWITCH: {
+		if (uc($BigList{"-cmd"}) eq uc("actions")) { if($DEBUG) {print("actions\n");} Actions(); last SWITCH; }
+		if (uc($BigList{"-cmd"}) eq uc("backup"))  { 
+			#We will only call this plugin if the result of 
+			#	slapconfig -getStyle
+			#   is "1.1 - hosting a master LDAP directory server"
+			#
+			
+			$ourStyle=qx($SLAPCONFIG -getstyle);
+			chomp($ourStyle);
+			if("${ourStyle}" eq "${OD_MASTER}") {
+				if($DEBUG) {print("backup\n"); }
+				Backup(($BigList{"-path"})); 
+				last SWITCH;
+			} else {
+				$nothing = "2";
+				$pString = sprintf("\"## PROGRESS :: :: $SERVICE_NAME :: Backing up DirectoryService :: Aborted, server not correct type, only OpenDirectory masters can be backed up via this service \"");
+				qx($ECHO $pString >> $ServerBackupProgressLogFile);
+				last SWITCH;
+			}
+			
+		}
+		if (uc($BigList{"-cmd"}) eq uc("help"))    { if($DEBUG) {print("help\n");} Usage(); last SWITCH; }
+		if (uc($BigList{"-cmd"}) eq uc("version")) { if($DEBUG) {print("version\n");} Version(); last SWITCH; }
+		$nothing = "1";
+	}
+    if($nothing eq "1")
+	{print("Legal options were not supplied!\n");Usage();}
+}
+
+################################################################################
+sub Actions() 
+{
+	if ($FUNCLOG) 
+		{ print("Start Actions-------------------------------------------------------+\n"); }
+
+	if($VERBOSE) 
+		{ print (qq(${PBUDDY} -c \"Print :BackupActions\" $SERVER_BACKUP_CONF/$ServiceConf) . "\n"); }
+
+	$Version = qx(${PBUDDY} -c \"Print :BackupActions\" $SERVER_BACKUP_CONF/$ServiceConf);
+	print($Version);
+		
+	if ($FUNCLOG) 
+		{ print("End   Actions-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+sub Backup()
+{
+	if ($FUNCLOG)
+		{ print("Start Backup-------------------------------------------------------+\n"); }
+
+	#Create our service named folder in the image.
+	#Will use the file systems location for storing backup files, "misc. backup files", see `man hier`.
+	$tPath="/var/backups";
+	if(! -e $tPath) { # Should always exist.
+		if ($DEBUG) { print("${MKDIR} $tPath"); }
+		qx(${MKDIR} $tPath);
+	}
+
+	# call slapconfig to backup the ldapmaster/OpenDirectory stuff.
+	$LOG_PATH=$BigList{"-log"};
+	if ($DEBUG) {
+		printf("daCmd := %s\n", qq($SLAPCONFIG -backupdb $tPath/$DSImageName -noEncrypt));
+	}
+	@openDirectoryBackupResponse = qx($SLAPCONFIG -backupdb $tPath/$DSImageName -noEncrypt);
+	open(OUT, ">$LOG_PATH") || die ("Couldn't open the file $LOG_PATH for writing.\n");
+	select(OUT);
+	print(@openDirectoryBackupResponse);
+	close(OUT);
+
+	CreateBrowseFile();
+	if($PROGRESS) {
+		$pString = sprintf("\"## PROGRESS :: :: $SERVICE_NAME :: Backing up DirectoryService :: %%%f \"", 100);
+		qx($ECHO $pString >> $SBSProgressLogFile);
+	}
+	if ($VERBOSE) {
+		print(qq(${ECHO} Wrote data for $SERVICE_NAME := $tt >> $BigList{"-log"}) . "\n");
+	}
+	if ($FUNCLOG)
+		{ print("End  Backup-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+sub Version() 
+{
+	if ($FUNCLOG) 
+		{ print("Start Version-------------------------------------------------------+\n"); }
+	
+	if($VERBOSE) 
+		{ print (qq(${PBUDDY} -c \"Print :Version\" $SERVER_BACKUP_CONF/$ServiceConf) . "\n"); }
+
+	$Version = qx(${PBUDDY} -c \"Print :Version\" $SERVER_BACKUP_CONF/$ServiceConf);
+	print($Version);
+		
+	if ($FUNCLOG) 
+		{ print("End   Version-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+sub CreateBrowseFile() {
+	if ($FUNCLOG)
+    { print("Start CreateBrowseFile-------------------------------------------------------+\n"); }
+    my $tPath=$BigList{"-path"};
+    my $SERVICE_NAME = "openDirectory.browse.plist";
+	my $daPath=$tPath . "/" . $SERVICE_NAME;
+ 	open(BROWSE, ">$daPath") || die ("Couldn't open the file $daPath for writing.\n");
+ 	select(BROWSE);
+    print ('<?xml version="1.0" encoding="UTF-8"?>' . "\n");
+    print ('<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' . "\n");
+    print ('<plist version="1.0">' . "\n");
+    print ('<array>' . "\n");
+    print ('<string>' . "/var/backups/" . $DSImageName . $SparseImageExtension . "</string>\n");
+    print ("</array>" . "\n");
+    print ("</plist>" . "\n");
+ 	close(BROWSE);
+	if ($FUNCLOG)
+    { print("End  CreateBrowseFile-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+# ParseOptions takes a list of possible options and a boolean indicating
+# whether the option has a value following, and sets up an associative array
+# %opt of the values of the options given on the command line. It removes all
+# the arguments it uses from @ARGV and returns them in @optArgs.
+#
+sub ParseOptions {
+	local (@optval) = @_;
+	local ($opt, @opts, %valFollows, @newargs);
+
+	while (@optval) {
+		$opt = shift(@optval);
+		push(@opts,$opt);
+		$valFollows{$opt} = shift(@optval);
+	}
+
+	@optArgs = ();
+	%opt = ();
+
+	arg: while (defined($arg = shift(@ARGV))) {
+		foreach $opt (@opts) {
+			if ($arg eq $opt) {
+				push(@optArgs, $arg);
+				if ($valFollows{$opt}) {
+				$opt{$opt} = shift(@ARGV);
+				push(@optArgs, $opt{$opt});
+				} else {
+					$opt{$opt} = 1;
+				}
+				next arg;
+			}
+		}
+		push(@newargs,$arg);
+	}
+	@ARGV = @newargs;
+}
+
+################################################################################
+sub dumpAssociativeArray() {
+	%BigList = @_;
+	while(($theKey, $theVal) = each (%BigList))
+		{ print "$theKey is the key for value $theVal\n"; }
+		if($BigList{"-cmd"} eq "backup")
+			{ print "cmd := ", $BigList{"-cmd"}, "\n"; }
+}
+
+################################################################################
+sub Usage() {
+	print("Usage:\n");
+	print("openDirectory_backup supports the following options:\n");
+	print(" -cmd actions :                Prints out the dictionary of BackupActions from the conf file := $SERVER_BACKUP_CONF$ServiceConf\n");
+	print(" -cmd backup -path path -log logPath \n");
+	print("    where path is the path to the mounted image where the data was backed-up.\n");
+	print("    where logPath is the path to the backup log file for this service, it can be found in property list file := $SERVER_BACKUP_CONF$ServiceConf\n");
+	print(" -cmd help :                   Displays this usage.\n");
+	print(" -cmd version :                Prints out the version value from the property list := $SERVER_BACKUP_CONF$ServiceConf\n");
+	exit(0);
+}
+

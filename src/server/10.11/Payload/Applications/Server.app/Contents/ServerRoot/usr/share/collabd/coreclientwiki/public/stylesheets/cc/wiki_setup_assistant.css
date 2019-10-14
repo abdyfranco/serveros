@@ -1,0 +1,249 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+#wiki_setup
+{
+    width: 522px;
+    font-size: 0.9em;
+    z-index: 501;
+}
+#wiki_setup_mask
+{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.6);
+	z-index: 500;
+}
+
+
+#wiki_setup form {
+    height: 100%;
+    width: 100%;
+}
+#wiki_setup .panel
+{
+    height: 100%;
+    width: 100%;
+    border-radius: 0.3em;
+}
+
+
+#wiki_setup .panel .title
+{
+    height: 29px;
+    line-height: 29px;
+    margin: 0;
+    
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+    
+    color: #474747;
+    text-shadow:0 1px 1px #ffffff;
+    
+    background: #E7E7E7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dddddd), color-stop(0.25, #eeeeee));
+    background: -moz-linear-gradient(top, #ffffff, #eeeeee 25%, #dddddd);
+    border-bottom: 1px solid #c3c3c3;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+#wiki_setup .panel .title span
+{
+    font-weight: normal;
+    color: #898989;
+	padding-left: 6px;
+}
+
+
+#wiki_setup .panel .content
+{
+    min-height: 220px;
+    padding: 21px 21px 17px 21px;
+}
+#wiki_setup .panel .content input,
+#wiki_setup .panel .content textarea,
+#wiki_setup .panel .content label
+{
+    font-size: 1em;
+    line-height: 1.5em;
+}
+#wiki_setup .panel .content label
+{
+    line-height: 2em;
+}
+#wiki_setup .panel .section
+{
+    padding: 15px;
+    margin-top: 1.5em;
+    color: #5f5f5f;
+    border-radius: 0.5em;
+}
+#wiki_setup .panel .section:first-child
+{
+    margin-top: 0;
+}
+#wiki_setup .panel .section.selected
+{
+    border: 1px solid #D4D4D4;
+    background: #E4E4E4;
+}
+
+#wiki_setup .panel .controls
+{
+    height: 42px;
+    padding: 0 21px;
+    text-align: right;
+}
+
+#wiki_setup .panel .controls span
+{
+    float: right;
+}
+#wiki_setup .panel .controls .button
+{
+    margin-left: 1em;
+    width: 105px;
+    min-width: 105px;
+}
+#wiki_setup .panel .controls .button.cancel
+{
+    float: left;
+    margin-left: 0;
+}
+
+
+
+
+
+
+
+#wiki_setup .panel.name .field label,
+#wiki_setup .panel.access .field label,
+#wiki_setup .panel.appearance .field label
+{
+	line-height: 26px;
+    float: left;
+    display: block;
+    width: 85px; /* Keep in sync with #wiki_setup_name, #wiki_setup_description, #wiki_setup_avatar */
+    color: #5f5f5f;
+    font-weight: bold;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#wiki_setup .panel.appearance .field label[for="wiki_setup_avatar"]
+{
+	margin-top: 11px;
+}
+#wiki_setup_name,
+#wiki_setup_description,
+#wiki_setup_avatar
+{
+    display: block;
+    margin: 0 0 0 90px; /* Keep in sync with (#wiki_setup .panel.name .field label) width */
+    width: 318px;
+}
+#wiki_setup_name
+{
+    font-family: Helvetica, arial, sans-serif;
+	margin-bottom: 10px;
+}
+#wiki_setup_description
+{
+    font-family: Helvetica, arial, sans-serif;
+    height: 80px;
+}
+#wiki_setup_avatar
+{
+	padding: 0 0 0 16px;
+	width: 328px;
+}
+
+
+
+
+#wiki_setup .panel.access .section label
+{
+    display: block;
+}
+#wiki_setup .panel.access .section .heading
+{
+    display: inline-block;
+    width: 50px;
+    padding-right: 5px;
+    font-weight: bold;
+    text-align: right;
+}
+#wiki_setup .panel.access .acl-chooser-radio
+{
+    vertical-align: top;
+    margin-right: 5px;
+}
+#wiki_setup .panel.access .description
+{
+    margin-left: 2px;
+    padding: 0;
+    font-size: 11px;
+}
+
+#wiki_setup .panel.appearance .field label
+{
+	width: 116px;
+}
+
+
+#wiki_setup .panel.complete .section
+{
+    text-align: center;
+    padding-top: 100px;
+    background: #E4E4E4 url(/__collabd/coreclientbase/stylesheets/cc/img/checkmark.png) center 18px no-repeat;
+    background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/checkmark.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/checkmark@2x.png) 2x);
+}
+#wiki_setup .panel.complete .confirmation
+{
+    padding: 0 1em;
+}
+#wiki_setup .panel.complete .confirmation span
+{
+    font-weight: bold;
+	word-wrap: break-word;
+}
+
+#wiki_setup .panel.appearance .section .field
+{
+	margin-left: 22px;
+	clear: left;
+}
+
+#wiki_setup .panel.appearance .settings_theme_chooser
+{
+	width: 280px;
+}
+#wiki_setup .panel.appearance .settings_theme_chooser .theme_swatches
+{
+	margin: 0 0 0 12px;
+}
+#wiki_setup_avatar,
+#wiki_setup_color_scheme
+{
+	margin-left: 112px;
+}
+#wiki_setup_avatar
+{
+	margin-bottom: 12px;
+}

@@ -1,0 +1,39 @@
+#!/usr/bin/ruby
+
+# Copyright (c) 2014 Apple Inc. All Rights Reserved.
+
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+
+$ServerRoot = "/Applications/Server.app/Contents/ServerRoot"
+def wasEnabled(webAppName)
+    preUpgradeStatusString = `#{$ServerRoot}/usr/sbin/webappctl status-pre-upgrade #{webAppName}`
+    if $?.exitstatus != 0 || preUpgradeStatusString !~ /RUNNING/
+        return false
+    else
+        return true
+    end
+end
+    
+if ARGV.count == 0
+    $stdout.puts("Usage:\n\t#{File.basename($0)} webapp-name\n")
+    $stdout.puts("\t#{File.basename($0)} new-webapp-name [old-webapp-name...]\n")
+    exit(1)
+end
+if ARGV.count == 1
+    if wasEnabled(ARGV[0])
+        `#{$ServerRoot}/usr/sbin/webappctl start #{ARGV[0]}`
+        exit(0)
+    end
+else
+    newWebAppName = ARGV[0]
+    oldWebApps = ARGV[1..ARGV.count-1]
+    oldWebApps.each { |oldWebApp|
+        if wasEnabled(oldWebApp)
+            `#{$ServerRoot}/usr/sbin/webappctl start #{newWebAppName}`
+            exit(0)
+        end
+    }
+end

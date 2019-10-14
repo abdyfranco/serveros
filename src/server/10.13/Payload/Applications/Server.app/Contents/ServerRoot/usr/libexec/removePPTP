@@ -1,0 +1,54 @@
+#!/usr/bin/perl -w
+
+#
+#  removePPTP
+#  servermgr_vpn
+#
+
+# Copyright (c) 2016 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+
+use strict;
+use Foundation;
+
+my $vpnConfig = "/Library/Preferences/SystemConfiguration/com.apple.RemoteAccessServers.plist";
+my $pptpPlist = "/Applications/Server.app/Contents/ServerRoot/System/Library/LaunchDaemons/com.apple.ppp.pptp.plist";
+
+#
+# unload the com.apple.pppp.pptp job and remove the pptp service from the
+# ActiveServers array in the vpnConfig file. Needs to be run as root
+#
+
+system("/bin/launchctl unload -w \"$pptpPlist\"") == 0
+    or warn "removePPTP: launchctl unload failed: $!\n";
+
+
+my $configDict = NSMutableDictionary->dictionaryWithContentsOfFile_("$vpnConfig");
+
+if (!$configDict || !$$configDict) {
+    warn "removePPTP: Couldn't create dictionary from $vpnConfig\n";
+} else {
+    my $activeServers = $configDict->objectForKey_("ActiveServers");
+    
+    if (!$activeServers || !$$activeServers) {
+        print "removePPTP: unable to find ActiveServers array in $vpnConfig\n";
+    } else {
+        if ($activeServers->containsObject_("com.apple.ppp.pptp")) {
+            print "removePPTP: pptp is active\n";
+            my $activeServersMutable = NSMutableArray->arrayWithArray_($activeServers);
+            $activeServersMutable->removeObject_("com.apple.ppp.pptp");
+            print "ActiveServers array = " . $activeServersMutable->description->cString() . "\n";
+            $configDict->setObject_forKey_($activeServersMutable, "ActiveServers");
+            
+            $configDict->writeToFile_atomically_("$vpnConfig", 1);
+        } else {
+            print "removePPTP: pptp is NOT active\n";
+        }
+    }
+}
+

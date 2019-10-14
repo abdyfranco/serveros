@@ -1,0 +1,93 @@
+#!/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+#
+# Copyright (c) 2009-2016 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# Runs as PromotionExtra
+#
+# Copy installed files, under the bundle, to their run-time place,
+# under /Library/Server.
+#
+# Set up SSL config of default secure site.
+#
+
+require 'fileutils'
+require 'cfpropertylist'
+require 'logger'
+require 'set'
+require 'socket'
+require 'tempfile'
+
+$logFile = "/Library/Logs/Setup.log"
+$logger = Logger.new($logFile)
+$logger.level = Logger::DEBUG
+
+$SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+$SERVER_LIBRARY_DIR = "/Library/Server"
+$SERVER_WEB_CONFIG_APACHE_DIR = "#{$SERVER_LIBRARY_DIR}/Web/Config/apache2"
+$SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR = "#{$SERVER_LIBRARY_DIR}/Web/Config/apache2.previous"
+
+if FileTest.exists?($SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR)
+	if FileTest.exists?($SERVER_WEB_CONFIG_APACHE_DIR)
+		`rm -rf #{$SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR}`
+	end
+end
+	
+if FileTest.exists?($SERVER_WEB_CONFIG_APACHE_DIR)
+	#create a previous copy
+	`ditto #{$SERVER_WEB_CONFIG_APACHE_DIR} #{$SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR}`
+end
+
+# Populate default config files
+FileUtils.mkdir_p($SERVER_WEB_CONFIG_APACHE_DIR)
+FileUtils.chmod(0755, $SERVER_WEB_CONFIG_APACHE_DIR)
+
+`ditto #{$SERVER_INSTALL_PATH_PREFIX}/private/etc/apache2 #{$SERVER_WEB_CONFIG_APACHE_DIR}`
+
+`cp -Rf #{$SERVER_INSTALL_PATH_PREFIX}/#{$SERVER_LIBRARY_DIR}/Web/ #{$SERVER_LIBRARY_DIR}/Web/`
+
+def stop_apache_if_running
+		$logger.info("shutdown apache service if it is running")
+		oldJobsStrings = `/bin/launchctl list | grep org.apache.http`
+		if !oldJobsStrings.empty?
+			$logger.warn("Apache desktop is running. Unloading apache jobs: #{oldJobsStrings}")
+			`/usr/sbin/apachectl stop`
+		end
+		oldJobsStrings = `/bin/launchctl list | grep com.apple.server.httpd`
+		if !oldJobsStrings.empty?
+			$logger.warn("Server Apache is running. Unloading server-apache jobs: #{oldJobsStrings}")
+			`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl disable service=com.apple.server.httpd`
+		end
+		#Clear the serverctl cache.
+		`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl reset service=com.apple.server.httpd`
+		$logger.info("Finished shutdown of apache service")
+end
+
+def move_wfs_behind_proxy
+    serverName = `hostname`.chomp
+    `defaults write /etc/wfs/wfs.plist ServerAddr '127.0.0.1'`
+    `defaults write /etc/wfs/wfs.plist ServerName #{serverName}`
+    `defaults write /etc/wfs/wfs.plist ServerSSL -bool FALSE`
+    `defaults write /etc/wfs/wfs.plist ServerPort -int 81`
+    `plutil -convert xml1 /etc/wfs/wfs.plist`
+end
+
+def create_default_cert_symlink
+    certDir = "/etc/certificates"
+    certSymLink = "#{certDir}/default_certificate"
+    certFile = `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/certadmin --default-certificate-path`.chomp
+    if !FileTest.exists?(certSymLink) && FileTest.exists?(certFile)
+	`ln -s #{certFile} #{certSymLink}`
+    end
+end
+
+create_default_cert_symlink()
+stop_apache_if_running()
+move_wfs_behind_proxy()
+$logger.info("*** Web Service promotion end ***\n");
+$logger.close
+exit 0

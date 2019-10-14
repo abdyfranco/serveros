@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>EnableTransactions</key>
+  <true/>
+  <key>GroupName</key>
+  <string>_devicemgr</string>
+  <key>Label</key>
+  <string>com.apple.DeviceManagement.dmpgHelper</string>
+  <key>MachServices</key>
+  <dict>
+    <key>com.apple.DeviceManagement.dmpgHelper</key>
+    <true/>
+  </dict>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/DeviceManagerModels.framework/XPCServices/dmpgHelper.xpc/Contents/MacOS/dmpgHelper</string>
+  </array>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>StandardErrorPath</key>
+  <string>/dev/null</string>
+  <key>StandardOutPath</key>
+  <string>/dev/null</string>
+  <key>UserName</key>
+  <string>_devicemgr</string>
+</dict>
+</plist>

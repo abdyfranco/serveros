@@ -1,0 +1,123 @@
+(version 1)
+
+(deny default)
+
+(allow file-read*
+       (subpath "/Applications")
+       (subpath "/Library/Server/Wiki")
+       (subpath "/AppleInternal")
+       (subpath "/System")
+       (subpath "/Library")
+       (subpath "/var")
+       (subpath "/private/var")
+       (subpath "/etc")
+       (subpath "/private/etc")
+       (subpath "/usr/lib")
+       (subpath "/usr/share")
+       (literal "/")
+       (literal "/dev/fd")
+       (literal "/dev/tty")
+       (literal "/dev/null")
+       (literal "/dev/autofs_nowait")
+       (literal "/dev/dtracehelper")
+       (literal "/dev/urandom")
+       (literal "/dev/random")
+       (subpath "/usr/bin")
+       (literal "/usr/bin/tmutil"))
+
+(allow file-read-metadata
+       (subpath "/System")
+       (subpath "/Library")
+       (subpath "/Volumes")
+       (literal "/Network/Servers")
+       (literal "/SWE")
+       (literal "/bin/sh")
+       (literal "/dev")
+       (literal "/home")
+       (literal "/net")
+       (literal "/usr")
+       (literal "/usr/bin/python")
+       (literal "/usr/bin/tar"))
+
+(allow file-write*
+       (subpath (param "FileDataPath"))
+       (literal "/dev/dtracehelper")
+       (literal "/dev/null")
+       (subpath "/Library/Server/Wiki/Logs")
+       (subpath "/Library/Server/Wiki/Database.xpg")
+       (subpath "/Library/Server/Wiki/PostgresSocket")
+       (subpath "/var/folders")
+       (subpath "/private/var"))
+
+(allow file-write-data
+       (literal "/dev/tty"))
+
+(allow file-ioctl
+       (subpath "/dev"))
+
+(allow ipc-sysv-sem)
+
+(allow ipc-sysv-shm)
+
+(allow ipc-posix-shm)
+
+(allow mach-per-user-lookup)
+
+(allow mach-register)
+
+(allow mach-lookup
+       (global-name "com.apple.FSEvents")
+       (global-name "com.apple.distributed_notifications@Uv3")
+       (global-name "com.apple.metadata.mds")
+       (global-name "com.apple.CoreServices.coreservicesd")
+       (global-name "com.apple.FontObjectsServer")
+       (global-name "com.apple.FontServer")
+       (global-name "com.apple.SecurityServer")
+       (global-name "com.apple.SystemConfiguration.SCNetworkReachability")
+       (global-name "com.apple.SystemConfiguration.configd")
+       (global-name "com.apple.cookied")
+       (global-name "com.apple.decalog4.incoming")
+       (global-name "com.apple.distributed_notifications@1v3")
+       (global-name "com.apple.dock.server")
+       (global-name "com.apple.ls.boxd")
+       (global-name "com.apple.networkd")
+       (global-name "com.apple.pasteboard.1")
+       (global-name "com.apple.system.opendirectoryd.api")
+       (global-name "com.apple.window_proxies")
+       (global-name "com.apple.coreservices.appleevents")
+       (global-name "com.apple.WebKit.PluginAgent")
+       (global-name "com.apple.nsurlstorage-cache")
+       (global-name "com.apple.webinspector")
+       (global-name "com.apple.cfprefsd.daemon")
+       (global-name "com.apple.system.opendirectoryd.libinfo")
+       (global-name "com.apple.system.opendirectoryd.membership")
+       (global-name "com.apple.system.notification_center")
+       (global-name "com.apple.system.logger")
+       (global-name "com.apple.CoreServices.coreservicesd")
+       (global-name "com.apple.coreservices.launchservicesd")
+       (global-name "com.apple.gkbisd")
+       (global-name "com.apple.windowserver.active"))
+
+(allow network-inbound
+       (subpath "/Library/Server/Wiki/PostgresSocket")
+       (local udp "localhost:*"))
+
+(allow network-outbound)
+
+(allow process-fork)
+
+(allow sysctl-read)
+
+(allow system-socket)
+
+(allow iokit-open)
+
+(allow process-exec
+       (subpath "/Applications/Server.app/Contents/ServerRoot/usr")
+       (subpath “/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin”)
+       (subpath "/usr/bin")
+       (subpath "/bin")
+       (subpath "/usr/sbin")
+       (subpath "/System"))
+
+(allow signal)

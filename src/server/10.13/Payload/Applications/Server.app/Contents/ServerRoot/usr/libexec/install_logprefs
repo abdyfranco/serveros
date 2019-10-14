@@ -1,0 +1,96 @@
+#!/usr/bin/python
+
+#  install_logprefs
+#  servermgrd
+#
+
+# Copyright (c) 2016 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+
+import os
+import sys
+import shutil
+import stat
+import re
+import Foundation
+
+
+#
+# CheckVersion - make sure we only install the files iff the major build version of the OS is >= 16
+#
+
+def checkVersion():
+    baseVersion = 16
+    sysVersPath = "/System/Library/CoreServices/SystemVersion.plist"
+    versionDict  = Foundation.NSDictionary.dictionaryWithContentsOfFile_(sysVersPath)
+    versionString = versionDict.objectForKey_("ProductBuildVersion")
+    vers = versionString.UTF8String()
+    mob = re.match('^[0-9]*', vers)
+    versNum = int(mob.group())
+    if (versNum >= baseVersion):
+        return 1
+    return 0
+
+#
+# do we install or not?
+#
+
+if (checkVersion()):
+    print('Installing Logging Preferences Files')
+else:
+    print('No need to install')
+    sys.exit()
+
+serverPrefix = "/Applications/Server.app/Contents/ServerRoot"
+templateDir = "/Applications/Server.app/Contents/ServerRoot/Library/Preferences/Logging"
+targetDir = "/Library/Preferences/Logging"
+scriptPath = "/Library/Server/.UninstallExtras/uninstall_logprefs"
+
+
+# create the uninstall script
+try:
+    uninstallFile = open(scriptPath, "wa")
+
+except EnvironmentError as exp:
+    print 'Could not create uninstall file:(',exp.errno,') ', exp.strerror
+    sys.exit(1)
+
+uninstallFile.write("#!/bin/sh\n")
+uninstallFile.write("\n")
+uninstallFile.write("# Copyright (c) 2016 Apple Inc. All Rights Reserved.\n")
+uninstallFile.write("#\n")
+uninstallFile.write("# IMPORTANT NOTE: This file is licensed only for use on Apple-branded\n")
+uninstallFile.write("# computers and is subject to the terms and conditions of the Apple Software\n")
+uninstallFile.write("# License Agreement accompanying the package this file is a part of.\n")
+uninstallFile.write("# You may not port this file to another platform without Apple's written consent.\n")
+uninstallFile.write("\n")
+
+#
+# Copy the prefs files while creating the uninstall script
+#
+
+for dirName, subdirList, fileList in os.walk(templateDir):
+    basePath = dirName[len(serverPrefix):]
+    for fname in fileList:
+        sourcePath = os.path.join(dirName, fname)
+        targetPath = os.path.join(basePath, fname)
+        try:
+            shutil.copy(sourcePath, targetPath)
+            print('copying %s' % fname + ' to %s ' % targetPath)
+        except IOError:
+            print('copying %s' % fname + ' to %s failed' % targetPath)
+        finally:
+            # add the corresponding remove command to the uninstall script
+            removeCmd = "/bin/rm " + targetPath + '\n'
+            uninstallFile.write(removeCmd)
+
+uninstallFile.close()
+
+# set the privs on the uninstall file
+st = os.stat(scriptPath)
+os.chmod(scriptPath, st.st_mode | stat.S_IXUSR)

@@ -1,0 +1,4 @@
+#!/usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+#require File.dirname(__FILE__) + '/../config/boot'
+require_relative '../config/boot'
+require 'commands/server'

@@ -1,0 +1,139 @@
+#!/bin/bash
+#-------------------------------------------------------------------------
+# Copyright (c) 2018 Apple Inc. All rights reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#-------------------------------------------------------------------------
+
+SERVER_ROOT="/Applications/Server.app/Contents/ServerRoot"
+DEVICEMGR_PATH="$SERVER_ROOT/usr/share/devicemgr"
+
+source $DEVICEMGR_PATH/config/common.sh       # Loads all our path definitions and some other common variables
+
+echo "This tool generates files that allow Apple to investigate issues with your"
+echo "computer and help improve Apple products. The files might contain personal"
+echo "information found on your device or associated with your iCloud accounts,"
+echo "including but not limited to serial numbers of your device, your device name,"
+echo "your user name, file paths, file names, your computer's IP addresses, and"
+echo "network connection information. This information is used by Apple in"
+echo "accordance with its privacy policy and is not shared with any other company."
+echo "By using this tool and sending the results to Apple, you consent to Apple"
+echo "using the contents of these files to improve Apple products."
+echo ""
+echo "Press 'Enter' to continue."
+
+IFS='$\n' read -r line
+
+DATE_STR=`/bin/date -j +"%Y-%m-%d@%H%M%S"`     # Keep at most one dump per hour
+HOST_NAME=`hostname | sed -E 's/([^.]+)\..*/\1/'`
+DUMP_VERS=`defaults read $DEVICEMGR_PATH/Info.plist CFBundleVersion`
+
+DUMP_DIR="/tmp/devicemgr.$DATE_STR"
+if [ -z "$DUMP_DIR" -o $"DUMP_DIR" = '/' ]; then
+  echo "Unable to locate a suitable temporary directory."
+  exit 11
+fi
+mkdir -m 770 "$DUMP_DIR"            # Lock down permissions to the user who is running the command
+$SUDO chgrp _devicemgr "$DUMP_DIR"  # Give _devicemgr access so pg_dump works
+
+DUMP_NAME="devicemgr_v2m0-$HOST_NAME-$DUMP_VERS-$DATE_STR.pg_dump.sql"
+DUMP_PATH="$DUMP_DIR/$DUMP_NAME"
+
+STOPPED=`$SERVERADMIN status devicemgr | grep "STOPPED"`
+
+if [ -z "$STOPPED" ]; then
+  echo "Stopping devicemgr service..."
+  $SUDO $SERVERADMIN stop devicemgr
+  ERR=$?
+  if [ $ERR -eq 0 ]; then
+    STATUS=`$SUDO $SERVERADMIN status devicemgr`
+    STOPPING=`echo "$STATUS" | grep "STOPPING"`
+    until [ -z "$STOPPING"]; do
+      echo "$STATUS"
+      sleep 1
+      STATUS=`$SUDO $SERVERADMIN status devicemgr`
+      STOPPING=`echo "$STATUS" | grep "STOPPING"`
+    done
+    echo "$STATUS"
+  else
+    echo "Failed to stop devicemgr service ($ERR)."
+    exit 2
+  fi
+fi
+
+# Stop our "always on" devicemgrd so we can get a quiesced DB copy
+echo "Stopping devicemgrd..."
+$SUDO $SERVERCTL disable service=com.apple.DeviceManagement.devicemgrd 1> /dev/null
+ERR=$?
+if [ $ERR -eq 0 ]; then
+  # Stop and restart PostgreSQL on our cluster to ensure nobody else is accessing it
+  # echo "Stopping dmpgHelper..."
+  $SUDO $SERVERCTL disable service=com.apple.DeviceManagement.dmpgHelper 1> /dev/null
+  echo "Stopping PostgreSQL..."
+  $SUDO $SERVERCTL disable service=com.apple.DeviceManagement.postgres 1> /dev/null
+  ERR=$?
+  if [ $ERR -eq 0 ]; then
+    echo "Restarting PostgreSQL..."
+    $SUDO $SERVERCTL enable service=com.apple.DeviceManagement.postgres 1> /dev/null
+    ERR=$?
+    if [ $ERR -eq 0 ]; then
+      wait_for_postgres
+      # Time to create the clone
+      echo "Dumping Profile Manager database..."
+      $SUDO -u _devicemgr $SERVER_ROOT/usr/bin/pg_dump -U _devicemgr -d devicemgr_v2m0 -h $PM_PG_SOCKET_DIR -C -F p --serializable-deferrable -f "$DUMP_PATH"
+      ERR=$?
+      if [ $ERR -eq 0 ]; then
+        $SUDO cp -R $PM_FILE_STORE_DIR "$DUMP_DIR"
+      else
+        echo "pg_dump failed ($ERR)"
+      fi
+
+      # Start everything back up
+      echo "Restarting devicemgrd..."
+      $SUDO $SERVERCTL enable service=com.apple.DeviceManagement.dmpgHelper 1> /dev/null
+    else
+      echo "Failed to start PostgreSQL ($ERR)."
+    fi
+  else
+    echo "Failed to stop PostgreSQL ($ERR)."
+  fi
+
+  $SUDO $SERVERCTL enable service=com.apple.DeviceManagement.devicemgrd 1> /dev/null
+else
+  echo "Failed to stop devicemgrd ($ERR)."
+fi
+
+if [ -z "$STOPPED" -a $ERR -eq 0 ]; then
+  echo "Starting devicemgr service..."
+  $SUDO $SERVERADMIN start devicemgr
+  save_cwd=`pwd`
+  cd $BACKEND_LIB_PATH
+  $SUDO ./dm_tool -a noOp    # Get devicemgrd running
+  cd "$save_cwd"
+fi
+
+if [ $ERR -eq 0 ]; then
+  $SUDO tar cvzf "$DUMP_PATH.tgz" -C "$DUMP_DIR" "$DUMP_NAME" `basename $PM_FILE_STORE_DIR`
+  ERR=$?
+  echo
+  if [ $ERR -ne 0 ]; then
+    echo "Failed to create tarball of databsae dump ($ERR)"
+  else
+    $SUDO chown `id -u` "$DUMP_PATH.tgz"
+    $SUDO chmod 640 "$DUMP_PATH.tgz"
+    echo "Created Profile Manager database dump at $DUMP_PATH.tgz"
+  fi
+fi
+
+if [ $ERR -eq 0 ]; then
+  if [ -n "$DUMP_PATH" -a -d "$DUMP_PATH" -a "$DUMP_PATH" != '/' ]; then
+    $SUDO rm -rf "$DUMP_PATH"       # Clean up the dump directory
+  fi
+else
+  if [ -n "$DUMP_DIR" -a -d "$DUMP_DIR" -a "$DUMP_DIR" != '/' ]; then
+    rm -rf "$DUMP_DIR"      # Clean up the entire temporary directory on error
+  fi
+fi

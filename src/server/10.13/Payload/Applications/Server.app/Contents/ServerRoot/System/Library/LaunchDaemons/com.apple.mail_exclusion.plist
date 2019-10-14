@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>EnablePressuredExit</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.mail_exclusion</string>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/MailService/mail_exclusions.pl</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/MailService/mail_exclusions.pl</string>
+	</array>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>0</integer>
+		<key>Minute</key>
+		<integer>30</integer>
+	</dict>
+	<key>PreventsSleep</key>
+	<true/>
+</dict>
+</plist>

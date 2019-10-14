@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BinaryOrderPreference</key>
+	<array>
+		<integer>7</integer>
+		<integer>-1</integer>
+	</array>
+	<key>EnableTransactions</key>
+	<false/>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>dm_log_level</key>
+		<string>1</string>
+		<key>DYLD_FRAMEWORK_PATH</key>
+		<string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks</string>
+		<key>SERVER_INSTALL_PATH_PREFIX</key>
+		<string>/Applications/Server.app/Contents/ServerRoot</string>
+		<key>TMP</key>
+		<string>/Library/Server/ProfileManager/Config/ServiceData/Data/tmp</string>
+		<key>TMPDIR</key>
+		<string>/Library/Server/ProfileManager/Config/ServiceData/Data/tmp</string>
+		<key>TEMP</key>
+		<string>/Library/Server/ProfileManager/Config/ServiceData/Data/tmp</string>
+	</dict>
+	<key>GroupName</key>
+	<string>_devicemgr</string>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.DeviceManagement.php-fpm</string>
+  <key>ProcessType</key>
+  <string>Interactive</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/php-fpm</string>
+		<string>-y</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/php/php-fpm.conf</string>
+		<string>-c</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/php/php.ini</string>
+	</array>
+	<key>UserName</key>
+	<string>_devicemgr</string>
+</dict>
+</plist>

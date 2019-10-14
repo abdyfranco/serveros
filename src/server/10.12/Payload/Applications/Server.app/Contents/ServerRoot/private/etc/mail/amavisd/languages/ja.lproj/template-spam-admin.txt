@@ -1,0 +1,38 @@
+# =============================================================================
+# This is a template for SPAM ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+From: %f
+Date: %d
+Subject: 迷惑メール（送信元：[?%l||LOCAL ][?%a||¥[%a¥] ]%s）
+To: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <SA%i@%h>
+
+コンテンツタイプ：[:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, ブロック内容：[:ccat|name]]
+このメッセージの内部参照コードは %n/%i です。
+
+[? %a |#|[:wrap|78||  |最初のアップストリーム SMTP クライアント IP アドレス：¥[%a¥] %g]]
+[? %e |#|[:wrap|78||  |「Received:」のトレースに基づく¥
+メッセージの発信元：¥[%e¥], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|¥
+[:wrap|78||  |Sender: [:header_field|Sender]¥
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |隔離されませんでした。|メッセージは隔離されました：%q]
+
+[? %#D |#|メッセージは次の宛先に中継されます：[¥n%D]
+]
+[? %#N |#|メッセージは次の宛先に中継されませんでした：[¥n%N]
+]
+SpamAssassin レポート：
+[%A
+]¥

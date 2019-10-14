@@ -1,0 +1,45 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED/BAD-HEADER RECIPIENTS NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+寄件人：%f
+日期：%d
+標題：[? [:ccat|major] |清除郵件|清除郵件|MTA-阻擋的郵件|\
+超大郵件|郵件中的無效頭標|垃圾郵件|垃圾郵件|郵件中未檢查的內容\
+郵件中被阻擋的內容 (%F)|郵件中的病毒 (%V)]來自 %s 的 TO YOU 
+[? [:header_field|收件人] |收件人：未經許可的收件人：;|收件人：[:頭標_欄位|收件人]]
+[? [:header_field|Cc] |#|Cc: [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||阻擋的內容提示]|病毒提示]
+
+我們的內容檢查器發現
+[? %#V |#|[:wrap|78|    |  |[?%#V|病毒|病毒|病毒]: %V]]
+[? %#F |#|[:wrap|78|    |  |已阻擋 [?%#F|名稱|名稱|名稱]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+在寄給您的郵件中 [? %S |來自可能是偽裝的寄件人：|寄件人：]
+  %o
+[? %S |表明為：%s|#]
+
+內容類型：[:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, 阻擋 [:ccat|name]]
+您的郵件在我們的內部參考代碼為 %n/%i
+
+[? %a |#|[:wrap|78||  |首次上傳 SMTP 用戶端 IP 位址：\[%a\] %g]]
+[? %e |#|[:wrap|78||  |根據“接收日期：”追蹤,\
+ 郵件製作於：\[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |未隔離。|郵件已隔離為：%q]
+
+請聯絡您的系統管理者以瞭解詳情。

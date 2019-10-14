@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Sites</key>
+	<array>
+		<dict>
+			<key>_id_</key>
+			<string>127.0.0.1:34580_</string>
+		</dict>
+		<dict>
+			<key>_id_</key>
+			<string>127.0.0.1:34543_</string>
+		</dict>
+	</array>
+	<key>EnabledSites</key>
+	<string>/Library/Server/Web/Config/apache2/sites</string>
+	<key>DisabledSites</key>
+	<string>/Library/Server/Web/Config/apache2/sites_disabled</string>
+</dict>
+</plist>

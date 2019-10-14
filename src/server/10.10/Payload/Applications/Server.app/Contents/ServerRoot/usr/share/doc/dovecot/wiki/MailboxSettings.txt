@@ -1,0 +1,41 @@
+Mailbox settings
+================
+
+Since Dovecot v2.1 one can assign SPECIAL-USE RFC 6154
+[http://www.faqs.org/rfcs/rfc6154.html] tags and specify, which mailboxes to
+create and/or subscribe to automatically.
+
+The autocreated mailboxes are created lazily to disk only when accessed for the
+first time. The autosubscribed mailboxes aren't written to subscriptions file,
+unless SUBSCRIBE command is explicitly used for them.
+
+---%<-------------------------------------------------------------------------
+namespace inbox {
+  #prefix = INBOX. # the namespace prefix isn't added again to the mailbox
+names.
+  # ...
+
+  mailbox Trash {
+    auto = no
+    special_use = \Trash
+  }
+  mailbox Drafts {
+    auto = no
+    special_use = \Drafts
+  }
+  mailbox Sent {
+    auto = subscribe # autocreate, autosubscribe
+    special_use = \Sent
+  }
+  mailbox Spam {
+    auto = create # autocreate, but don't autosubscribe
+    special_use = \Junk
+  }
+  mailbox virtual/All { # if you have a virtual "All messages" mailbox
+    auto = no
+    special_use = \All
+  }
+}
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2013-08-05 04:42)

@@ -1,0 +1,469 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+##
+# Copyright (c) 2005-2015 Apple Inc. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##
+
+"""
+Server Mail Sender command line utility
+"""
+
+import os
+import re
+import sys
+from subprocess import Popen, PIPE, STDOUT
+from cStringIO import StringIO
+from twisted.internet import defer, ssl, reactor
+from twisted.mail.smtp import ESMTPSenderFactory, messageid, rfc822date
+from plistlib import readPlist
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from getopt import getopt, GetoptError
+from socket import getfqdn
+
+
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+SERVER_ADMIN = "%s/usr/sbin/serveradmin" % (SERVER_APP_ROOT,)
+PREFS_PATH = "/Library/Preferences/com.apple.server.mailsender.plist"
+DEFAULT_USERNAME = u"com.apple.servermailsender"
+
+
+# Exit status codes:
+NO_ERROR       = 0
+ERROR_USAGE    = 1   # Incorrect command line arguments
+ERROR_HOSTNAME = 2   # Can't determine server hostname
+ERROR_PASSWORD = 3   # Password not found in System Keychain
+ERROR_SECURITY = 4   # /usr/bin/security command not found
+
+
+def usage(e=None):
+    if e:
+        print(e)
+        print("")
+
+    name = os.path.basename(sys.argv[0])
+    print("usage: %s [options]" % (name,))
+    print("")
+    print("Send email using the OS X Server's configured sender account.")
+    print("The plaintext body of the message is read from stdin by default.")
+    print("options:")
+    print("  -h --help: Print this help and exit")
+    print("  -p --plaintext: Specify plaintext body on command line instead of reading stdin")
+    print("  -H --htmltext: Specify html body")
+    print("  -s --subject: Specify the subject for the email")
+    print("  -t --to: Specfiy the To address")
+    print("  -v --verbose: Print status messages")
+
+    if e:
+        sys.exit(ERROR_USAGE)
+    else:
+        sys.exit(NO_ERROR)
+
+
+def main():
+
+    try:
+        (optargs, args) = getopt(
+            sys.argv[1:], "H:hp:s:t:v", [
+                "help",
+                "htmltext=",
+                "plaintext=",
+                "subject=",
+                "to=",
+                "verbose",
+            ],
+        )
+    except GetoptError, e:
+        usage(e)
+
+    subject = u"OS X Server message"
+    toAddress = None
+    plainText = None
+    htmlText = None
+    verbose = False
+
+    for opt, arg in optargs:
+        if opt in ("-h", "--help"):
+            usage()
+
+        elif opt in ("-H", "--htmltext"):
+            htmlText = arg.decode("utf-8")
+
+        elif opt in ("-p", "--plaintext"):
+            plainText = arg.decode("utf-8")
+
+        elif opt in ("-s", "--subject"):
+            subject = arg.decode("utf-8")
+
+        elif opt in ("-t", "--to"):
+            toAddress = arg.decode("utf-8")
+
+        elif opt in ("-v", "--verbose"):
+            verbose = True
+
+    if toAddress is None:
+        print("Error: No receipient specified\n")
+        usage()
+
+    if "@" not in toAddress:
+        print("Error: Receipient address is missing @\n")
+        usage()
+
+    if plainText is None:
+        plainText = sys.stdin.read()
+        plainText = plainText.decode("utf-8")
+
+    if not os.path.exists(PREFS_PATH):
+        if verbose:
+            print("Mail sender has not been configured")
+        hostname = getfqdn()
+        if not hostname:
+            print("Cannot determine hostname; please configure.")
+            sys.exit(ERROR_HOSTNAME)
+        createMailSenderAccount(verbose=verbose)
+        port = 0
+        fromAddress = u"%s@%s" % (DEFAULT_USERNAME, hostname)
+        username = DEFAULT_USERNAME
+        useSSL = True
+        keychainLookup = "%s@localhost" % (username,)
+    else:
+        prefs = readPlist(PREFS_PATH)
+        hostname    = prefs["hostname"]
+        port        = prefs["port"]
+        fromAddress = prefs["fromAddress"]
+        username    = prefs["username"]
+        useSSL      = prefs["useSSL"]
+        keychainLookup = fromAddress
+
+    if "@" not in fromAddress:
+        print("Error: Sender address is missing @\n")
+        usage()
+
+    try:
+        password = getPasswordFromKeychain(keychainLookup)
+    except KeychainPasswordNotFound:
+        print("Could not locate password for %s in System keychain" % (keychainLookup,))
+        sys.exit(ERROR_PASSWORD)
+    except KeychainAccessError:
+        print("Could not locate '/usr/bin/security' command to look up password")
+        sys.exit(ERROR_SECURITY)
+
+    msgId, payload = generatePayload(subject, plainText, htmlText,
+        fromAddress, toAddress, replyToAddress=None)
+
+    if not port:
+        port = None
+
+    requireTLS = useSSL
+
+    reactor.callLater(0, sendMessage, msgId, payload, fromAddress, toAddress,
+        username, password, hostname, port=port, useSSL=useSSL, requireTLS=requireTLS,
+        verbose=verbose)
+    reactor.run()
+
+
+def generatePayload(subject, plainText, htmlText, fromAddress, toAddress, replyToAddress=None):
+    """
+    Given a subject, plain-text body, optional html-text body, from address,
+    to address, and optional reply-to address, generate both a message-id and
+    utf-8 encoded MIME multipart playload.
+
+    @param subject: The subject of the email
+    @type subject: Unicode
+
+    @param plainText: The plain text body
+    @type plainText: Unicode
+
+    @param htmlText: The optional html body (use None for no HTML alternative)
+    @type htmlText: Unicode or None
+
+    @param fromAddress: The From address of the email
+    @type fromAddress: Unicode
+
+    @param toAddress: The To address of the email
+    @type toAddress: Unicode
+
+    @param replyToAddress: The optional Reply-To address of the email, which
+        defaults to "no-reply@<hostname portion of fromAddress>"
+    @type toAddress: Unicode
+
+    @return: tuple of (message-id, string representation of MIME multipart)
+    """
+
+    if replyToAddress is None:
+        replyToAddress = "no-reply@%s" % (fromAddress.split("@")[1],)
+
+    msg = MIMEMultipart()
+    msg["From"] = fromAddress
+    msg["Subject"] = subject
+    msg["To"] = toAddress
+    msg["Reply-To"] = replyToAddress
+    msg["Date"] = rfc822date()
+    msgId = messageid()
+    msg["Message-ID"] = msgId
+
+    msgAlt = MIMEMultipart("alternative")
+    msg.attach(msgAlt)
+
+    # plain version
+    msgPlain = MIMEText(plainText.encode("UTF-8"), "plain", "UTF-8")
+    msgAlt.attach(msgPlain)
+
+    if htmlText:
+        # html version
+        msgHtmlRelated = MIMEMultipart("related", type="text/html")
+        msgAlt.attach(msgHtmlRelated)
+
+        msgHtml = MIMEText(htmlText.encode("UTF-8"), "html", "UTF-8")
+        msgHtmlRelated.attach(msgHtml)
+
+    return msgId, msg.as_string()
+
+
+def _send(msgId, payload, fromAddress, toAddress, username, password, hostname, port, useSSL, requireTLS,
+    verbose=False):
+    """
+    Send an email
+
+    @param msgId: The message id
+    @type subject: string
+
+    @param payload: The payload of the email as a string
+    @type plainText: string
+
+    @param fromAddress: The From address of the email
+    @type fromAddress: Unicode
+
+    @param toAddress: The To address of the email
+    @type toAddress: Unicode
+
+    @param username: The username to use for SMTP
+    @type username: string
+
+    @param password: The password to use for SMTP
+    @type password: string
+
+    @param hostname: The hostname to use for SMTP
+    @type hostname: string
+
+    @param port: The port to use for SMTP
+    @type port: integer
+
+    @param useSSL: Whether to connect using SSL
+    @type useSSL: boolean
+
+    @param requireTLS: Whether to requireTLS
+    @type requireTLS: boolean
+
+    @param verbose: Whether to print status messages to stdout
+    @type verbose: boolean
+
+    @return: Deferred returning True if successful, False otherwise
+    """
+
+    if verbose:
+        print("from: %s, to: %s" %
+            (fromAddress.encode("utf-8"), toAddress.encode("utf-8")))
+        print("host: %s, port: %d, useSSL: %s, requireTLS: %s" %
+            (hostname, port, useSSL, requireTLS))
+
+    if useSSL:
+        contextFactory = ssl.ClientContextFactory()
+    else:
+        contextFactory = None
+
+    deferred = defer.Deferred()
+
+    def _success(result, msgId, fromAddress, toAddress):
+        if verbose:
+            print("Sent message %s" % (msgId,))
+        return True
+
+    def _failure(failure, msgId, fromAddress, toAddress):
+        if verbose:
+            print("Failed to send message %s (Reason: %s)" %
+               (msgId, failure.getErrorMessage()))
+        return False
+
+    factory = ESMTPSenderFactory(
+        username, password, fromAddress.encode("utf-8"),
+        toAddress.encode("utf-8"), StringIO(payload.replace("\r\n", "\n")), deferred,
+        contextFactory=contextFactory,
+        requireAuthentication=False,
+        requireTransportSecurity=requireTLS
+    )
+    deferred.addCallback(_success, msgId, fromAddress, toAddress)
+    deferred.addErrback(_failure, msgId, fromAddress, toAddress)
+
+    if useSSL:
+        reactor.connectSSL(hostname, port, factory, contextFactory)
+    else:
+        reactor.connectTCP(hostname, port, factory)
+
+    return deferred
+
+
+@defer.inlineCallbacks
+def sendMessage(msgId, payload, fromAddress, toAddress, username, password, hostname,
+    port=None, useSSL=False, requireTLS=False, verbose=False):
+    """
+    Send an email, either using a pre-defined sequence of port settings if no
+    port is explicitly passed in, or the specified port.
+
+    @param msgId: The message id
+    @type subject: string
+
+    @param payload: The payload of the email as a string
+    @type plainText: string
+
+    @param fromAddress: The From address of the email
+    @type fromAddress: Unicode
+
+    @param toAddress: The To address of the email
+    @type toAddress: Unicode
+
+    @param username: The username to use for SMTP
+    @type username: string
+
+    @param password: The password to use for SMTP
+    @type password: string
+
+    @param hostname: The hostname to use for SMTP
+    @type hostname: string
+
+    @param port: The port to use for SMTP.  If port is None, the standard SMTP
+        ports will be attempted in the order specified below
+    @type port: integer
+
+    @param useSSL: Whether to connect using SSL.  If port is None, the useSSL
+        setting will be dynamically set based on which standard port is being
+        used.
+    @type useSSL: boolean
+
+    @param requireTLS: Whether to requireTLS.  If port is None, the requireTLS
+        setting will be dynamically set based on which standard port is being
+        used.
+    @type requireTLS: boolean
+
+    @param verbose: Whether to print status messages to stdout
+    @type verbose: boolean
+
+    @return: Deferred returning True if successful, False otherwise
+    """
+
+
+    if port is None:
+        attempts = [
+            # Port, useSSL, requireTLS
+            (587,   False,  True),
+            (25,    False,  True),
+            (465,   True,   False),
+            (25,    False,  False),
+        ]
+        for port, useSSL, requireTLS in attempts:
+            if ((yield _send(msgId, payload, fromAddress, toAddress, username, password, hostname, port,
+                useSSL, requireTLS, verbose=verbose))):
+                result = True
+                break
+        else:
+            # We were not able to send it
+            result = False
+    else:
+        result = (yield _send(msgId, payload, fromAddress, toAddress, username, password, hostname, port,
+            useSSL, requireTLS, verbose=verbose))
+
+    if verbose and not result:
+        print("We were unable to send the message")
+
+    reactor.stop()
+
+
+def createMailSenderAccount(verbose=False):
+    """
+    Calls serveradmin to auto-configure the local mail sender account
+
+    @param verbose: Whether to print status messages to stdout
+    @type verbose: boolean
+
+    @return: True is the serveradmin call returned with no error, False otherwise.
+    """
+    child = Popen(
+        args=[SERVER_ADMIN, "command"],
+        stdin=PIPE,
+        stdout=PIPE,
+        stderr=PIPE,
+    )
+    if verbose:
+        print("Auto-configuring Server mail sender account")
+    output, error = child.communicate(input="calendar:command = createMailSenderAccount")
+    if child.returncode:
+        if verbose:
+            print("Error from %s, %d, %s" % (SERVER_ADMIN, child.returncode, error))
+        return False
+    return True
+
+
+
+class KeychainPasswordNotFound(Exception):
+    """
+    Exception raised when the password does not exist
+    """
+
+
+class KeychainAccessError(Exception):
+    """
+    Exception raised when not able to access keychain
+    """
+
+passwordRegExp = re.compile(r'password: "(.*)"')
+
+def getPasswordFromKeychain(account):
+    """
+    Retrieve a password from the System keychain for the keychain item matching
+        account.
+
+    @param account: The account to search for in the System Keychain
+    @type account: string
+
+    @return: The password
+    @rtype: string
+    """
+    if os.path.isfile("/usr/bin/security"):
+        child = Popen(
+            args=[
+                "/usr/bin/security", "find-generic-password",
+                "-a", account, "-g",
+            ],
+            stdout=PIPE, stderr=STDOUT,
+        )
+        output, error = child.communicate()
+
+        if child.returncode:
+            raise KeychainPasswordNotFound(error)
+        else:
+            match = passwordRegExp.search(output)
+            if not match:
+                error = "Password for %s not found in keychain" % (account,)
+                raise KeychainPasswordNotFound(error)
+            else:
+                return match.group(1)
+
+    else:
+        error = "Keychain access utility ('security') not found"
+        raise KeychainAccessError(error)
+
+
+
+if __name__ == "__main__":
+    main()

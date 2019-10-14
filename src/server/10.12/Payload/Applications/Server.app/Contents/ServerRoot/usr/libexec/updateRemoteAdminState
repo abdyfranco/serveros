@@ -1,0 +1,35 @@
+#!/usr/bin/perl -w
+
+#  updateRemoteAdminState
+#
+# Copyright (c) 2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+
+# tells the servermgr_info plugin to update the remote admin state
+
+use strict;
+
+my $scriptName="updateRemoteAdminState";
+my $prefslocation = $ARGV[0];
+my $defaultPrefs = $ARGV[1];
+
+# if the prefs file is present quit
+if (-e $prefslocation )
+{
+    printf("no need to update\n");
+    exit(0);
+}
+
+# else copy the prefs file from the default location
+print "copying missing prefs file from defaults\n";
+system("/bin/cp \"$defaultPrefs\" \"$prefslocation\" ");
+
+# and start remote admin to match the default behavior
+print "enabling remote administration\n";
+system("/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin settings info:enableRemoteAdministration = yes");
+exit(0);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>identifier</key>
+		<string>ConnectToServerAssistant.SEAssistantAdminServerLoginPage</string>
+		<key>enabled</key>
+		<dict>
+			<key>server.adminSession</key>
+			<false/>
+		</dict>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>ConnectToServerAssistant.SEAssistantDirectoryServerLoginPage</string>
+		<key>enabled</key>
+		<dict>
+			<key>server.odSession</key>
+			<false/>
+		</dict>
+	</dict>
+</array>
+</plist>

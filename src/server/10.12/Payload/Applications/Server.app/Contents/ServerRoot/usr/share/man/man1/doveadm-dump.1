@@ -1,0 +1,112 @@
+.\" Copyright (c) 2010-2016 Dovecot authors, see the included COPYING file
+.TH DOVEADM\-DUMP 1 "2014-08-24" "Dovecot v2.2" "Dovecot"
+.SH NAME
+doveadm\-dump \- Dump the content of Dovecot\(aqs binary mailbox index/log
+.\"------------------------------------------------------------------------
+.SH SYNOPSIS
+.BR doveadm " [" \-Dv "] " dump " [" \-t
+.IR type "] " path
+.\"------------------------------------------------------------------------
+.SH DESCRIPTION
+Dovecot uses several binary index and log files in order to improve
+performance for accessing mails. For some mailbox formats, such as sdbox
+and mdbox, the index files are part of the format itself.
+For details about index files, see also: http://wiki2.dovecot.org/IndexFiles
+.PP
+.B doveadm dump
+is used to show the contents of those mailbox index/log files, in human
+readable format. This is mainly useful for Dovecot developers when
+debugging some problem.
+.\"------------------------------------------------------------------------
+.SH OPTIONS
+Global
+.BR doveadm (1)
+.IR options :
+.TP
+.B \-D
+Enables verbosity and debug messages.
+.TP
+.BI \-o\  setting = value
+Overrides the configuration
+.I setting
+from
+.I /Library/Server/Mail/Config/dovecot/dovecot.conf
+and from the userdb with the given
+.IR value .
+In order to override multiple settings, the
+.B \-o
+option may be specified multiple times.
+.TP
+.B \-v
+Enables verbosity, including progress counter.
+.\" --- command specific options --- "/.
+.PP
+Command specific
+.IR options :
+.TP
+.BI \-t\  type
+the file type of the file to be dumped.
+If the
+.I type
+was omitted,
+.BR doveadm (1)
+tries to detect the type of
+.IR path .
+.I type
+can be:
+.RS
+.TP 12
+.B dbox
+\(rA m.\c
+.I n
+(sdbox or mdbox mailbox file)
+.TP
+.B fts\-expunge\-log
+Dump the list of expunged mails in
+.IR dovecot\-expunges.log .
+Currently used only by fts\-lucene.
+.TP
+.B fts\-lucene
+Dump the list of indexed mails in
+.I lucene\-indexes
+directory
+.TP
+.B imapzlib
+Uncompress an IMAP traffic log, which contains data compressed using the
+IMAP COMPRESSION extension.
+.TP
+.B index
+\(rA dovecot.index, dovecot.map.index
+.TP
+.B log
+\(rA dovecot.index.log, dovecot.map.index.log
+.TP
+.B mailboxlog
+\(rA dovecot.mailbox.log
+.TP
+.B thread
+\(rA dovecot.index.thread
+.RE
+.\"------------------------------------------------------------------------
+.SH ARGUMENTS
+.TP
+.I path
+The path to the corresponding dbox storage, index or log file.
+If only a directory is specified, doveadm tries to detect the type of files
+under it and dumps them.
+.\"------------------------------------------------------------------------
+.SH EXAMPLE
+Look at the contents of a mailbox\(aqs index:
+.PP
+.nf
+.B doveadm dump ~/Maildir/.work/
+.\"------------------------------------------------------------------------
+.SH REPORTING BUGS
+Report bugs, including
+.I doveconf \-n
+output, to the Dovecot Mailing List <dovecot@dovecot.org>.
+Information about reporting bugs is available at:
+http://dovecot.org/bugreport.html
+.\"------------------------------------------------------------------------
+.SH SEE ALSO
+.BR doveadm (1)

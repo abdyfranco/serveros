@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>WebDAVSharing</key>
+	<dict>
+		<key>WikisVirtualSharePointName</key>
+		<string>Wikis</string>
+		<key>WebMainConfigDir</key>
+		<string>/Library/Server/Web/Config/apache2</string>
+		<key>CreateHomeDirsForLocalUsers</key>
+		<true/>
+		<key>InactivityTimeoutSeconds</key>
+		<integer>3600</integer>
+		<key>ShareWikiFiles</key>
+		<true/>
+		<key>SynthesizeSharePointForUserHomeDir</key>
+		<true/>
+		<key>ShareSharePoints</key>
+		<false/>
+		<key>ApplyUserInstanceSandbox</key>
+		<true/>
+		<key>RemoveUserLogDirsAtStartup</key>
+		<true/>
+		<key>PathForUserLogDirs</key>
+		<string>/private/var/run/webdav_sharing</string>
+		<key>AllowLongUserName</key>
+		<false/>
+		<key>LogFilePath</key>
+		<string>/Library/Logs/WebDAVSharing.log</string>
+		<key>LogLevel</key>
+		<string>error</string>
+	</dict>
+	<key>WebConfig</key>
+	<dict>
+		<key>WebServiceOn</key>
+		<false/>
+		<key>LogFilePath</key>
+		<string>/Library/Logs/WebConfig.log</string>
+		<key>LogLevel</key>
+		<string>error</string>
+		<key>RealmAuthType</key>
+		<string>Digest</string>
+		<key>SavePreviousConfigFileWhenUpdating</key>
+		<true/>
+		<key>InsureDocumentRootIsPopulated</key>
+		<true/>
+		<key>CreateRedirectToSSLVirtualHost</key>
+		<false/>
+		<key>WebAppPreflightFailureBlocksDirectives</key>
+		<true/>
+		<key>WebAppPreflightFailureBlocksExecutables</key>
+		<true/>
+		<key>StartStopWebServerWithConfigChange</key>
+		<true/>		
+		<key>WebAppPreflightsEnabled</key>
+		<true/>		
+	</dict>
+</dict>
+</plist>

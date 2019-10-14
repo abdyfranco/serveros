@@ -1,0 +1,27 @@
+Count quota
+===========
+
+(Requires Dovecot v2.2.19+)
+
+The quota is tracked internally within Dovecot's index files. Each mailbox's
+quota is tracked separately and when the current quota usage is wanted to be
+known, the mailboxes' quotas are summed up together. To get the best
+performance mailbox list indexes should be enabled.
+
+Configuration
+-------------
+
+---%<-------------------------------------------------------------------------
+mailbox_list_index = yes
+plugin {
+  # 10MB quota limit
+  quota = count:User quota
+  quota_rule = *:storage=10M
+
+  # This is required - it uses "virtual sizes" rather than "physical sizes" for
+quota counting:
+  quota_vsizes = yes
+}
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

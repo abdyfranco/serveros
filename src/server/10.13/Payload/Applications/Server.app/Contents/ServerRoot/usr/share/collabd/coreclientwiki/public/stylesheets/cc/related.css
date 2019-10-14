@@ -1,0 +1,256 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-sidebar-section[data-guid="sidebars/related"] .content
+{
+	padding-bottom: 12px;
+}
+
+.cc-related-items
+{
+	margin-right: -14px;
+	position: relative;
+}
+
+/* @group Related items */
+
+.cc-related-items-list h2.placeholder
+{
+	display: none;
+	padding-right: 14px;
+}
+
+.cc-related-items-list.empty h2.placeholder
+{
+	display: block;
+}
+
+.cc-related-items-list li
+{
+	position: relative;
+}
+
+.cc-related-items-list a
+{
+	display: block;
+	height: 30px;
+	line-height: 15px;
+	overflow: visible !important;
+	padding: 5px 0px;
+	position: relative;
+}
+
+.cc-related-items-list a span.icon
+{
+	background: url(/__collabd/coreclientbase/stylesheets/cc/img/document_32x32.png) no-repeat;
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/document_32x32.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/document_32x32@2x.png) 2x);
+	height: 32px;
+	position: absolute;
+	top: 2px;
+	width: 32px;
+}
+
+.cc-related-items-list a span.title,
+.cc-related-items-list a span.location
+{
+	display: block;
+	margin-left: 36px;
+	margin-right: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-shadow: #FFFFFF 0px 1px 0px;
+	white-space: nowrap;
+}
+
+.cc-related-items-list a span.location
+{
+	color: #868686;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.cc-related-items-list .no-location a span.title
+{
+	line-height: 30px;
+}
+
+.cc-related-items-list a.delete
+{
+	display: block;
+	width: 21px;
+	height: 22px;
+	left: -10px;
+	opacity: 0;
+	padding: 0px;
+	position: absolute;
+	top: -6px;
+	z-index: 10;
+	-webkit-transition: opacity 0.1s linear;
+}
+
+.cc-related-items-list li:hover a.delete
+{
+	opacity: 1;
+}
+
+/* @end */
+
+/* @group Relate menu */
+
+.cc-related-popup-menu
+{
+	position: absolute;
+	top: -2px;
+	right: -12px;
+	width: 249px;
+	z-index: 500;
+}
+
+.cc-related-popup-menu .handle,
+.cc-related-popup-menu .top-cap,
+.cc-related-popup-menu .bottom-cap,
+.cc-related-popup-menu .top,
+.cc-related-popup-menu .bottom
+{
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}	
+
+.cc-related-popup-menu .handle
+{
+	background-position: -201px 0px;
+	height: 28px;
+	width: 48px;
+	position: absolute;
+	right: 0px;
+	top: -28px;
+}
+
+.cc-related-popup-menu .handle .button.add
+{
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	height: 22px;
+	left: 50%;
+	margin-left: -10px;
+	margin-top: -10px;
+	position: absolute;
+	top: 50%;
+	width: 21px;
+}
+
+.cc-related-popup-menu .top-cap
+{
+	background-position: 0px -28px;
+	display: block;
+	height: 7px;
+}
+
+.cc-related-popup-menu .bottom-cap
+{
+	background-position: 0px -35px;
+	display: block;
+	height: 10px;
+}
+
+.cc-related-popup-menu .top,
+.cc-related-popup-menu .bottom
+{
+	background-position: -249px 0px;
+	background-repeat: repeat-y;
+}
+
+.cc-related-popup-menu .body a,
+.cc-related-popup-menu .body ul.recents a,
+.cc-related-popup-menu .body h2
+{
+	display: block;
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	margin: 0px 3px;
+	padding: 0px 10px;
+	text-shadow: #FFFFFF 0px 1px 0px;
+}
+
+.cc-related-popup-menu .top
+{
+	padding-bottom: 4px;
+}
+
+.cc-related-popup-menu .top a.search
+{
+	margin-top: -2px;
+}
+
+.cc-related-popup-menu .body .bottom h2:first-child
+{
+	margin-bottom: 4px;
+	border-left: none;
+	border-right: none;
+}
+
+.cc-related-popup-menu .body a,
+.cc-related-popup-menu .body ul.recents a
+{
+	cursor: pointer;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cc-related-popup-menu .body h2
+{
+	height: 24px;
+	line-height: 24px;
+	border-left: none;
+	border-right: none;
+}
+
+.cc-related-popup-menu .body h2.placeholder
+{
+	background: none;
+	border: none;
+	color: #9A9A9A;
+	display: none;
+	font-size: 12px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+}
+
+.cc-related-popup-menu.loading h2.placeholder,
+.cc-related-popup-menu.loading ul.recents
+{
+	display: none;
+}
+
+.cc-related-popup-menu.loading .body h2.placeholder,
+.cc-related-popup-menu.empty .body h2.placeholder
+{
+	display: block;
+}
+
+.cc-related-popup-menu.loading .body h2.placeholder
+{
+	background-image: url(./img/sidebar_spinner.gif);
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 60px;
+	line-height: 60px;
+	text-indent: -9999px;
+}
+
+/* @end */

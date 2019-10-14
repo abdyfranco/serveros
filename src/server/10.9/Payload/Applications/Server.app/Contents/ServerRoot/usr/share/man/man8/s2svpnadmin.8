@@ -1,0 +1,72 @@
+.\"     @(#)s2svpnadmin.8	1.0
+.\" 
+.\" Copyright (c) 2000-2012 Apple Computer, Inc., all rights reserved.
+.\" Distributed only as part of Mac OS X Server
+.\" 
+.\" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\" computers and is subject to the terms and conditions of the Apple Software
+.\" License Agreement accompanying the package this file is a part of.
+.\" You may not port this file to another platform without Apple's written consent.
+.\" 
+.Dd September 10, 2004
+.Dt s2svpnadmin 8
+.Os "Mac OS X Server"
+.Sh NAME
+.Nm s2svpnadmin
+.Nd command line tool to configure and display currently configured site-to-site VPN servers
+.Sh SYNOPSIS
+.Nm
+.Sh DESCRIPTION
+The
+.Nm
+command line tool is an interactive tool used to list currently configured
+site-to-site VPN servers, display their configuration details, add a new
+configuration and delete an existing configuration. This tool can only be
+utilized to configure a local VPN server, not a remote one. To set up a
+site-to-site server successfully, you shall need to configure the two VPN
+gateway servers at the two sites independently. However, certain parameters
+must be kept common for a successful configuration.
+.Pp
+The
+.Nm
+tool identifies each site-to-site server with an identifying string. This
+string should not have any spaces in it. When configuring a new server,
+.Nm
+prompts the user to enter the name of such a string. Other than the name, 
+various other details are required such as the gateway addresses of the local
+and remote sites and a form of IPSec authentication to use. All IPv4 addresses
+are validated. If an invalid entry is made,
+.Nm
+will force you to start all over again.
+.Pp
+Two forms of authentication are supported: shared-secret and certificate based.
+Before choosing certificate based authentication, ensure that at least one
+certificate is currently installed on the server.
+.Nm
+will display a list of currently installed certificates and prompt the user
+to choose one of these. Certificates can be created, self-signed and installed
+using the Server Admin tool.If shared secret is  desired, ensure that the same
+shared secret is configured on the VPN server at the other site.
+.Pp 
+.Nm
+will also prompt for the creation of one or more policies. Policies are
+made of a local network and a remote network. A network is specified by a
+network address and the number of prefix bits that must be masked in an
+IPv4 address to determine the network address it corresponds to. Ensure that
+a compatible policy is configured on both VPN servers.
+.Pp
+Lastly
+.Nm
+will ask if the server needs to be enabled. By default it is enabled. Currently
+.Nm
+does not support editing a configuration, so if the server is not enabled,
+the configuration will need to be deleted and recreated and enabled at a
+later time.
+.Pp
+.Nm
+must be run as root.
+.Sh DIAGNOSTICS
+.Ex -std
+.Sh SEE ALSO
+.Xr pppd 8 ,
+.Xr vpnd 8

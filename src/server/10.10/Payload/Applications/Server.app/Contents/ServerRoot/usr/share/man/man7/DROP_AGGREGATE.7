@@ -1,0 +1,93 @@
+'\" t
+.\"     Title: DROP AGGREGATE
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "DROP AGGREGATE" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+DROP_AGGREGATE \- remove an aggregate function
+.\" DROP AGGREGATE
+.SH "SYNOPSIS"
+.sp
+.nf
+DROP AGGREGATE [ IF EXISTS ] \fIname\fR ( \fIargtype\fR [ , \&.\&.\&. ] ) [ CASCADE | RESTRICT ]
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBDROP AGGREGATE\fR
+removes an existing aggregate function\&. To execute this command the current user must be the owner of the aggregate function\&.
+.SH "PARAMETERS"
+.PP
+IF EXISTS
+.RS 4
+Do not throw an error if the aggregate does not exist\&. A notice is issued in this case\&.
+.RE
+.PP
+\fIname\fR
+.RS 4
+The name (optionally schema\-qualified) of an existing aggregate function\&.
+.RE
+.PP
+\fIargtype\fR
+.RS 4
+An input data type on which the aggregate function operates\&. To reference a zero\-argument aggregate function, write
+*
+in place of the list of input data types\&.
+.RE
+.PP
+CASCADE
+.RS 4
+Automatically drop objects that depend on the aggregate function\&.
+.RE
+.PP
+RESTRICT
+.RS 4
+Refuse to drop the aggregate function if any objects depend on it\&. This is the default\&.
+.RE
+.SH "EXAMPLES"
+.PP
+To remove the aggregate function
+myavg
+for type
+integer:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+DROP AGGREGATE myavg(integer);
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COMPATIBILITY"
+.PP
+There is no
+\fBDROP AGGREGATE\fR
+statement in the SQL standard\&.
+.SH "SEE ALSO"
+ALTER AGGREGATE (\fBALTER_AGGREGATE\fR(7)), CREATE AGGREGATE (\fBCREATE_AGGREGATE\fR(7))

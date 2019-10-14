@@ -1,0 +1,274 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group iPhone */
+	
+@media only screen and (max-device-width:480px) {
+		body.iphone .cc-auth-dialog {
+			top: 0px;
+			right: 0px;
+			bottom: 0px;
+			left: 0px;
+			width: 100%;
+			margin: 0px;
+			padding: 0px;
+			border-radius: 0px;
+			box-shadow: none;
+			font-size: 11px;
+			/* Help avoiding auto scrolling when hidding iphone keyboard */
+			overflow-y: hidden;
+			overflow-x: hidden;
+		}
+
+		body.iphone .cc-auth-dialog .inner {
+			height: 100%;
+			background: #FFFFFF;
+			background: #C1C1C1 0 0 repeat-x;
+			background-image: url(data:image/gif;base64,R0lGODlhAQCQAdUAANPT0+rq6unp6cPDw+jo6Obm5tLS0sTExMXFxefn59bW1uDg4MnJyd7e3tnZ2eLi4tra2sbGxtHR0eXl5cfHx9zc3OPj4+Tk5NjY2NTU1NXV1c3Nzdvb28HBwd/f38rKys7OztDQ0NfX193d3cjIyMzMzOHh4cvLy8/Pz+vr68LCwuzs7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAABAJABAAaYwJVwSCwaj8ikcslsOp/OlHRKDVivVoF2qyV4v4SEeJwomM+FiXp9abst8PhjTjfZ7Yu83sPnN/6AI4KCFYWGHIiIEIuMDo6PGJGSIpSUCpeYChqbnBmenwChoqEGpaYGEqmqIaysKK8oILKyG7W1Jbi4J7u7H76+DMHCJMTEFMfIEcrLCM3OCAfR0gcD1dbVKtna2x3d3UEAOw==);
+			color: #393939;
+		}
+        
+		body.iphone .cc-auth-dialog .inner .buttons {
+			text-align: center;
+			padding: 10px 0 12px 0;
+		}
+		
+        body.iphone .cc-auth-dialog .icon {
+            padding-top: 20px;
+        }
+        
+		body.iphone .cc-auth-dialog .icon .img {
+			height: 80px;
+			width: 80px;
+			background-size: 80px 80px;
+		}
+
+		body.iphone .cc-auth-dialog h1 {
+			background: none;
+			border: none;
+			color: #757575;
+			font-size: 16px;
+			text-shadow: none;
+			top: 150px;
+			position: absolute;
+			text-shadow: none;
+			text-align: center;
+			width: 100%;
+			font-weight: normal;
+		}
+ 		
+ 		body.iphone .cc-auth-dialog h2 {
+ 			color: #333333;
+			font-size: 28px;
+			font-weight: bold;
+			overflow: visible;
+			height: 64px;
+			line-height: 32px;
+			padding: 0px 0px 16px 0px;
+			text-align: center;
+			width: 100%;
+			max-width: 100%;
+			display: block;
+			position: absolute;
+			top: 110px;
+			white-space: nowrap;
+			overflow: hidden;
+            text-overflow: ellipsis;
+ 		}
+
+		body.iphone .sections {
+			position: absolute;
+			top: 200px;
+			left: 0;
+			width:100%;
+		}
+
+ 		body.iphone .section label {
+ 			display: none;
+ 		}
+
+ 		body.iphone .section input[type="text"],
+		body.iphone .section input[type="password"]
+		{
+				height: auto;
+				border: 1px solid #999999;
+				font-size: 20px;
+				margin: 0px auto;
+				width: 70%;
+				display: block;
+		}
+
+		body.iphone .inner .remember_me_checkbox {
+			text-align: center;
+			margin-top: 10px;
+		}
+
+		body.iphone .inner .remember_me_checkbox label {
+			padding: 0px;
+			display: inline;
+		}
+
+		body.iphone .buttons {
+			left: 0;
+			width: 100%;
+			top: 300px;
+			position: absolute;
+		}
+
+		body.iphone .buttons input[type="submit"], 
+		body.iphone .buttons input[type="reset"]
+		{
+			font-size: 14px;
+			width: 90px;
+		}
+
+		body.iphone p.error,
+		body.iphone p.info
+		{
+			font-size: 16px;
+			padding-bottom: 10px;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            
+		}
+        body.iphone p.error
+        {
+            top: 250px;
+        }
+        body.iphone p.info
+        {
+            top: 285px;
+        }
+		
+		@media screen and (orientation:landscape) {
+			body.iphone .cc-auth-dialog {
+				position: relative;
+			}
+			
+			body.iphone .cc-auth-dialog .inner {
+				min-height: 450px;
+			}			
+		}
+}
+
+/* @end */
+
+/* @group iPad */
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px)  { 
+	
+	body.ipad .cc-auth-dialog {
+		position: absolute;
+		left: 50%;
+		margin-left: -270px;
+		top: 50%;
+		margin-top: -170px;
+		background-color: rgba(255, 255, 255, 0.3);
+		width: 540px;
+		padding: 3px;
+		overflow: hidden;
+		border-radius: 7px;
+		box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+	}
+	
+	.cc-auth-dialog .inner {
+		height: 100%;
+		background-image: -webkit-gradient(linear,left top,left bottom,from(rgb(226,229,234)),to(rgb(208,210,216)));
+	}
+
+	body.ipad .cc-auth-dialog .inner h1 {
+		font-size: 17px;
+		line-height: 35px;
+		height:35px;
+	}	
+	
+	body.ipad .cc-auth-dialog .inner h2 {
+		max-width: 100%;
+		font-size: 22px;
+		padding: 10px 16px 12px 16px;
+	}
+	
+	body.ipad .cc-auth-dialog .inner .sections {
+		padding-bottom:16px;
+		padding-left: 25px;		
+	}
+
+	body.ipad .cc-auth-dialog .inner div.section {
+		width: 480px;
+		height: 44px;
+		left: 30px;
+		top: 30px;
+		padding-top:8px;
+		margin-top:3px;
+		-webkit-transform: none;		
+		background-color: white;
+		border-radius: 10px;
+		border: 1px solid #B8BBBF;
+		box-shadow: 0 1px 0 rgba(255,255,255,0.5),inset 0 1px 0 rgba(0,0,0,0.1);		
+	}
+	
+	body.ipad .cc-auth-dialog .inner label
+	{
+		width: 160px;
+		height: 44px;
+		-webkit-box-pack: start;
+		font-size: 19px;
+		font-weight: bold;
+		font-family: Helvetica;
+		line-height: 42px;
+		padding-left: 10px;
+		padding-right:15px;
+	}
+	
+	body.ipad .cc-auth-dialog .inner input[type=text], 
+	body.ipad .cc-auth-dialog .inner input[type=username], 
+	body.ipad .cc-auth-dialog .inner input[type=password] {
+		left: 120px !important;
+		right: 0px;
+		width: 250px;
+		border-width: 0;
+		margin: 0;
+		background: transparent;
+		padding: 11px 9px;
+		font-size: 17px;
+		font-family: Helvetica;				
+	}
+	
+	body.ipad .cc-auth-dialog .inner .remember_me_checkbox label {
+		width: 200px;
+		padding-left: 0px;
+		font-size: 17px;
+	}
+	
+	body.ipad .cc-auth-dialog .inner p.error, .cc-auth-dialog .inner p.intro, .cc-auth-dialog .inner p.info {
+		font-size: 16px;
+		padding-top: 6px;
+	}
+	
+	body.ipad .cc-auth-dialog .inner input[type="button"], .cc-auth-dialog .inner input[type="submit"], .cc-auth-dialog .inner input[type="reset"] {
+		width:130px;
+		font-size: 17px;
+	}
+	
+	body.ipad .cc-auth-dialog .inner .buttons {
+		padding: 10px 35px 12px 16px;
+	}
+
+	body.ipad:not(.en) .cc-auth-dialog .inner input[type="button"],
+	body.ipad:not(.en) .cc-auth-dialog .inner input[type="submit"],
+	body.ipad:not(.en) .cc-auth-dialog .inner input[type="reset"]
+	{
+		width: 130px;
+	}	
+}

@@ -1,0 +1,46 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd 5/11/10               \" DATE 
+.Dt MucDataMigrator 8      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm MucDataMigrator
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd Migration tool for moving persistent chat room data from mu-conference to Rooms format
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl v              \" [-v]
+.Op Fl s Ar source-path         \" {-s path}
+.Op Fl d Ar dest-path         \" {-d path} 
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm
+Is a tool for migrating mu-conference 0.6 - 0.8 persistent chat room data to Apple's Rooms plist format.  It is normally not invoked directly.
+.Pp
+A list of flags and their descriptions:
+.Bl -tag -width -indent  \" Differs from above in tag removed 
+.It Fl s                 \"-a flag as a list item
+Path to the source mu-conference spool directory (required)
+(ex.: /var/spool/conference.<jabber domain>)
+.It Fl d
+Path to the destination Rooms data directory (required)
+(ex.: /var/jabberd/Rooms/rooms.<jabber domain>)
+.It Fl v
+Enable verbose output
+.El                      \" Ends the list
+.Pp
+.\" .Sh ENVIRONMENT      \" May not be needed
+.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.\" .It Ev ENV_VAR_1
+.\" Description of ENV_VAR_1
+.\" .It Ev ENV_VAR_2
+.\" Description of ENV_VAR_2
+.\" .El
+.Sh FILES
+.Bl -tag -width /Library/Logs/Migration/jabbermigrator.log -compact
+.It Pa /Library/Logs/Migration/jabbermigrator.log
+.El

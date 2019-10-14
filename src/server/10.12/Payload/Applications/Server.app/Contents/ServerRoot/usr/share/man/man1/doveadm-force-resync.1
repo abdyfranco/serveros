@@ -1,0 +1,160 @@
+.\" Copyright (c) 2010-2016 Dovecot authors, see the included COPYING file
+.TH DOVEADM\-FORCE\-RESYNC 1 "2015-05-09" "Dovecot v2.2" "Dovecot"
+.SH NAME
+doveadm\-force\-resync \- Repair broken mailboxes
+.\"------------------------------------------------------------------------
+.SH SYNOPSIS
+.BR doveadm " [" \-Dv "] " force\-resync " [" \-S
+.IR socket_path "] " mailbox
+.\"-------------------------------------
+.br
+.BR doveadm " [" \-Dv "] " force\-resync " [" \-S
+.IR socket_path "] "
+.BI \-A \ mailbox
+.\"-------------------------------------
+.br
+.BR doveadm " [" \-Dv "] " force\-resync " [" \-S
+.IR socket_path "] "
+.BI "\-F" " file mailbox"
+.\"-------------------------------------
+.br
+.BR doveadm " [" \-Dv "] " force\-resync " [" \-S
+.IR socket_path "] "
+.BI \-u " user mailbox"
+.\"------------------------------------------------------------------------
+.SH DESCRIPTION
+Under certain circumstances it may happen, that
+.BR dovecot (1)
+is unable to automatically solve problems with mailboxes.
+In such situations the
+.B force\-resync
+command may be helpful.
+It tries to fix all problems.
+For sdbox and mdbox mailboxes the storage files will be also checked.
+.\"------------------------------------------------------------------------
+.SH OPTIONS
+Global
+.BR doveadm (1)
+.IR options :
+.TP
+.B \-D
+Enables verbosity and debug messages.
+.TP
+.BI \-o\  setting = value
+Overrides the configuration
+.I setting
+from
+.I /Library/Server/Mail/Config/dovecot/dovecot.conf
+and from the userdb with the given
+.IR value .
+In order to override multiple settings, the
+.B \-o
+option may be specified multiple times.
+.TP
+.B \-v
+Enables verbosity, including progress counter.
+.\" --- command specific options --- "/.
+.PP
+Command specific
+.IR options :
+.\"-------------------------------------
+.TP
+.B \-A
+If the
+.B \-A
+option is present, the
+.I command
+will be performed for all users.
+Using this option in combination with system users from
+.B userdb { driver = passwd }
+is not recommended, because it contains also users with a lower UID than
+the one configured with the
+.I first_valid_uid
+setting.
+.sp
+When the SQL userdb module is used make sure that the
+.I iterate_query
+setting in
+.I /Library/Server/Mail/Config/dovecot/dovecot\-sql.conf.ext
+matches your database layout.
+When using the LDAP userdb module, make sure that the
+.IR iterate_attrs " and " iterate_filter
+settings in
+.I /Library/Server/Mail/Config/dovecot/dovecot-ldap.conf.ext
+match your LDAP schema.
+Otherwise
+.BR doveadm (1)
+will be unable to iterate over all users.
+.\"-------------------------------------
+.TP
+.BI \-F\  file
+Execute the
+.I command
+for all the users in the
+.IR file .
+This is similar to the
+.B \-A
+option,
+but instead of getting the list of users from the userdb,
+they are read from the given
+.IR file .
+The
+.I file
+contains one username per line.
+.\"-------------------------------------
+.TP
+.BI \-S\  socket_path
+The option\(aqs argument is either an absolute path to a local UNIX domain
+socket, or a hostname and port
+.RI ( hostname : port ),
+in order to connect a remote host via a TCP socket.
+.sp
+This allows an administrator to execute
+.BR doveadm (1)
+mail commands through the given socket.
+.\"-------------------------------------
+.TP
+.BI \-u\  user/mask
+Run the
+.I command
+only for the given
+.IR user .
+It\(aqs also possible to use
+.RB \(aq * \(aq
+and
+.RB \(aq ? \(aq
+wildcards (e.g. \-u *@example.org).
+.br
+When neither the
+.B \-A
+option, nor the
+.BI \-F\  file
+option, nor the
+.BI \-u\  user
+was specified, the
+.I command
+will be executed with the environment of the
+currently logged in user.
+.\"------------------------------------------------------------------------
+.SH ARGUMENTS
+.TP
+.I mailbox
+The name of the mailbox to fix. With mdbox all of the mailboxes are fixed,
+so you can use for example INBOX as the name.
+.\"------------------------------------------------------------------------
+.SH EXAMPLE
+Fix bob\(aqs INBOX:
+.PP
+.nf
+.B doveadm force\-resync \-u bob INBOX
+.fi
+.\"------------------------------------------------------------------------
+.SH REPORTING BUGS
+Report bugs, including
+.I doveconf \-n
+output, to the Dovecot Mailing List <dovecot@dovecot.org>.
+Information about reporting bugs is available at:
+http://dovecot.org/bugreport.html
+.\"------------------------------------------------------------------------
+.SH SEE ALSO
+.BR doveadm (1)

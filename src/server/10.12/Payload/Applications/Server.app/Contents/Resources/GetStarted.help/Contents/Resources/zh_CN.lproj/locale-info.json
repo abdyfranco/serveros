@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "zh_CN.lproj",
+		"isoCodes": ["zh-cn", "zh-hans", "zh"],
+		"isoName": "Simplified Chinese",
+		"name": "简体中文"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>若要查看帮助，您必须打开 JavaScript。</p>有关更多信息，请参阅 <a href=\"http://help.apple.com/resources/javascript/\">此 Apple 支持文章</a>。</div>",
+		"loadfailed": "<div>帮助当前不可用。</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@ 个搜索结果",
+		"Apple applications": "Apple 应用程序",
+		"Cancel": "取消",
+		"Change Language": "更改语言",
+		"Close": "关闭",
+		"Featured application help": "精选应用程序帮助",
+		"Go to the homepage": "前往首页",
+		"Help for:": "帮助：",
+		"Hide": "隐藏",
+		"Home": "首页",
+		"Loading latest help...": "正在下载最新帮助…",
+		"Other applications": "其他应用程序",
+		"Print Book": "打印图书",
+		"Print Options": "打印选项",
+		"Print Page": "打印页面",
+		"Print Section": "打印章节",
+		"Recent applications": "最近更新的应用程序",
+		"Search": "搜索",
+		"Send feedback.": "发送反馈。",
+		"Show all": "显示全部",
+		"Show less": "显示更少",
+		"Show the previous page": "显示上一页",
+		"Show the next page": "显示下一页",
+		"Show": "显示",
+		"Was this page helpful?": "此页面是否有帮助？"
+	}
+}

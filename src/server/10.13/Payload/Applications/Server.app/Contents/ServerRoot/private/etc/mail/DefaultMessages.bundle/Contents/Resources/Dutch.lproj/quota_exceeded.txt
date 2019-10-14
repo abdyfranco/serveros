@@ -1,0 +1,11 @@
+Van: E-mailbeheerder <Postmaster@example.com>
+Onderwerp: [Fout] Quotum op mailserver is overschreden
+
+Je hebt je opslagquotum op de mailserver overschreden. Nieuwe berichten worden mogelijk niet meer afgeleverd totdat je voldoende ruimte hebt vrijgemaakt voor de nieuwe e-mail.
+
+Verplaats alle berichten die je niet meer nodig hebt van de server naar je lokale e-mailmappen. Controleer ook of er in de mappen voor verstuurde en verwijderde e-mail berichten staan die van de server kunnen worden verwijderd.
+
+Zou je dit probleem zo snel mogelijk willen verhelpen?
+
+Hartelijk dank,
+E-mailbeheerder

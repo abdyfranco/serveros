@@ -1,0 +1,600 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group General */
+
+div#quicklook_mask
+{
+	background: rgba(0,0,0,0.6);
+	bottom: 0px;
+	left: 0px;
+	position: fixed;
+	right: 0px;
+	text-align: center;
+	top: 0px;
+	z-index: 5000;
+}
+
+div#quicklook_panel
+{
+	background-color: rgba(255,255,255,0.2);
+	border: 3px solid transparent;
+	margin-left: -3px;
+	margin-top: -3px;
+	position: absolute;
+	z-index: 5010;
+	border-radius: 7px;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+	-webkit-transform: scale(1.0);
+	-webkit-transition-property: -webkit-transform, opacity;
+	-webkit-transition-duration: 0.5s;
+	-webkit-transition-timing-function: ease-in-out;
+}
+
+div#quicklook_panel_browser,
+div#quicklook_panel .progress,
+div#quicklook_panel_preview
+{
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+div#quicklook_hovering_area.paginated #quicklook_panel_preview
+{
+	border-bottom-left-radius: 0px;
+}
+
+div#quicklook_panel_browser
+{
+	border-bottom-right-radius: 0px;
+}
+
+/* @end */
+
+/* @group Title bar */
+
+div#quicklook_panel_close
+{
+	background: transparent url(./img/quicklook_titlebar_close.png) 0px 0px no-repeat;
+	display: block;
+	height: 19px;
+	left: 4px;
+	position: absolute;
+	top: 4px;
+	width: 19px;
+	z-index: 1;
+}
+
+body.hidpi div#quicklook_panel_close
+{
+	background-image: url(./img/quicklook_titlebar_close@2x.png);
+	background-size: 19px 56px;
+}
+
+*html div#quicklook_panel_close
+{
+	left: auto;
+	right: 4px;
+}
+
+div#quicklook_panel_close:hover { background-position: 0px -18px; }
+div#quicklook_panel_close:active { background-position: 0px -36px; }
+
+div#quicklook_panel_title
+{
+	background: #E7E7E7;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop( 0, #FFFFFF ), color-stop( 0.25, #EEEEEE ), color-stop( 1, #DDDDDD ));
+	background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 25%, #DDDDDD);
+	border-bottom: 1px solid #B7B7B7;
+	height: 26px;
+	left: 0px;
+	position: relative;
+	right: 0px;
+	top: 0px;
+	text-align: center;
+	text-shadow: 0px 1px 1px #FFFFFF;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+div#quicklook_panel_title h3.title
+{
+	color: #474747;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 26px;
+	margin: 0px;
+	overflow: hidden;
+	padding: 0px 10px 0px 30px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+div#quicklook_panel_title h3 img
+{
+	height: 20px;
+	max-width: 40px;
+	padding-bottom: 4px;
+	padding-right: 6px;
+	vertical-align: middle;
+}
+
+/* @end */
+
+/* @group Loading */
+
+div#quicklook_panel .progress
+{
+	background-color: #C7C7C7;
+	bottom: 0px;
+	left: 0px;
+	position: absolute;
+	right: 0px;
+	top: 27px;
+}
+
+div#quicklook_panel .progress h2
+{
+	color: #666666;
+	font-size: 22px;
+	height: 130px;
+	left: 50%;
+	line-height: 110px;
+	margin: -55px 0px 0px -250px !important;
+	overflow: hidden;
+	padding: 0px;
+	position: absolute;
+	text-align: center;
+	text-overflow: ellipsis;
+	top: 50%;
+	white-space: nowrap;
+	width: 500px;
+}
+
+div#quicklook_panel_loading h2
+{
+	background: transparent url(./img/spinner_c7c7c7.gif) center 0px no-repeat;
+}
+
+/* @end */
+
+/* @group Thumbnails */
+
+div#quicklook_panel_browser
+{
+	background-color: #C7D9EA;
+	border-right: 1px solid #B7B7B7;
+	overflow-y: scroll;
+	position: absolute;
+	top: 27px;
+	bottom: 0px;
+	left: 0px;
+	text-align: center;
+	width: 199px;
+	padding: 0px;
+}
+
+div#quicklook_panel_browser div.thumbnail
+{
+	margin-top: -12px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	position: relative;
+}
+
+div#quicklook_panel_browser div.thumbnail:first-child
+{
+	margin-top: 0px;
+}
+
+div#quicklook_panel_browser div.thumbnail.loading
+{
+	background: transparent url(./img/thumbnail_spinner.gif) center center no-repeat;
+	height: 48px;
+}
+
+div#quicklook_panel_browser div.thumbnail.loading img,
+div#quicklook_panel_browser div.thumbnail.loading .pagination-wrapper
+{
+	display: none;
+}
+
+div#quicklook_panel_browser div.thumbnail div.pagination-wrapper
+{
+	left: 0px;
+	margin-top: -16px;
+	opacity: 0;
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	-webkit-transition: opacity 0.2s ease-in-out;
+}
+
+div#quicklook_panel_browser div.thumbnail.selected div.pagination-wrapper,
+div#quicklook_panel_browser div.thumbnail:hover div.pagination-wrapper
+{
+	opacity: 1;
+}
+
+div#quicklook_panel_browser span.pagination
+{
+	background-color: rgba(0, 0, 0, 0.8);
+	border: 1px solid #4D4D4D;
+	cursor: pointer;
+	color: white;
+	display:-moz-inline-stack;
+	display: inline-block;
+	font-size: 12px;
+	height: 22px;
+	line-height: 22px;
+	padding: 0px 6px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+div#quicklook_panel_browser img
+{
+	border: 1px solid #A8B7C5;
+	width: 160px;
+	box-shadow: 0px 1px 2px rgba( 0, 0, 0, 0.15);
+}
+
+div#quicklook_panel_browser div.thumbnail.selected img
+{
+	border: 3px solid #4C87C5;
+	margin-bottom: -2px;
+	margin-top: -2px;
+	border-radius: 3px;
+	box-shadow: none;
+}
+
+/* @end */
+
+/* @group iPad thumbnail pagination */
+
+div#quicklook_panel_browser_pagination_up,
+div#quicklook_panel_browser_pagination_down
+{
+	display: none;
+}
+
+body.mobilesafari div#quicklook_panel_browser
+{
+	bottom: 30px;
+	border-bottom: 1px solid #B7B7B7;
+	border-radius: 0px;
+	top: 27px;
+}
+
+body.mobilesafari div#quicklook_panel_thumbnails_scroll_up
+{
+	background-image: url(./img/quicklook_up_active.png);
+	background-image: -webkit-image-set(url(./img/quicklook_up_active.png) 1x, url(./img/quicklook_up_active@2x.png) 2x);
+	color: #FFFFFF;
+	display: block;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	left: 0px;
+	position: absolute;
+	width: 99px;
+	text-indent: -9999px;
+	border-bottom-left-radius: 5px;
+}
+
+body.mobilesafari div#quicklook_panel_thumbnails_scroll_down
+{
+	background-image: url(./img/quicklook_down_active.png);
+	background-image: -webkit-image-set(url(./img/quicklook_down_active.png) 1x, url(./img/quicklook_down_active@2x.png) 2x);
+	border-right: 1px solid #B7B7B7;
+	color: #FFFFFF;
+	display: block;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	left: 0px;
+	position: absolute;
+	width: 100px;
+	text-indent: -9999px;
+}
+
+body.mobilesafari div#quicklook_panel_thumbnails_scroll_up.disabled
+{
+	background-image: url(./img/quicklook_up_inactive.png);
+	background-image: -webkit-image-set(url(./img/quicklook_up_inactive.png) 1x, url(./img/quicklook_up_inactive@2x.png) 2x);
+}
+
+body.mobilesafari div#quicklook_panel_thumbnails_scroll_down.disabled
+{
+	background-image: url(./img/quicklook_down_inactive.png);
+	background-image: -webkit-image-set(url(./img/quicklook_down_inactive.png) 1x, url(./img/quicklook_down_inactive@2x.png) 2x);
+}
+
+body.mobilesafari div#quicklook_panel_thumbnails_scroll_up
+{
+	bottom: 0px;
+}
+
+body.mobilesafari div#quicklook_panel_thumbnails_scroll_down
+{
+	bottom: 0px;
+	left: 99px;
+}
+
+/* @end */
+
+/* @group Main preview pane */
+
+div#quicklook_hovering_area {
+    position:absolute;
+    top: 27px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+div#quicklook_panel_preview
+{
+	background-color: #C7C7C7;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	text-align: center;
+	overflow: hidden;
+	position: absolute;
+}
+
+div#quicklook_panel_preview.fullscreen
+{
+	overflow: auto;
+}
+
+div#quicklook_panel_preview.loading
+{
+	background: #C7C7C7 url(./img/spinner_c7c7c7.gif) center center no-repeat;
+}
+
+div#quicklook_hovering_area.paginated
+{
+	left: 200px;
+}
+
+div#quicklook_panel_preview img
+{
+	max-width: 100%;
+	max-height: 100%;
+	vertical-align: middle;
+}
+
+div#quicklook_panel_preview.fullscreen img
+{
+	border: none !important;
+	max-width: none !important;
+	max-height: none !important;
+	margin-bottom: 0px !important;
+	box-shadow: none !important;
+}
+
+div#quicklook_panel_preview img.paginated
+{
+	border: 1px solid #A6A6A6;
+	margin-bottom: 4px;
+	max-width: 95%;
+	max-height: 95%;
+	vertical-align: middle;
+	box-shadow: 0px 1px 2px rgba(0,0,0,0.15);
+}
+
+/* @end */
+
+/* @group Resizing and dragging */
+
+div#quicklook_resizehandle
+{
+	background: transparent url(./img/quicklook_resize_handle.png) 6px 6px no-repeat;
+	bottom: -10px;
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	right: -10px;
+	z-index: 5020;
+}
+
+body.hidpi div#quicklook_resizehandle
+{
+	background-image: url(./img/quicklook_resize_handle@2x.png);
+	background-size: 10px 10px;
+}
+
+div#quicklook_dragcanvas
+{
+	bottom: 0px;
+	left: 0px;
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	z-index: 5050;
+}
+
+div#quicklook_dragoutline
+{
+	border: 3px solid #4C87C5;
+	margin-left: -3px;
+	margin-top: -3px;
+	position: absolute;
+	z-index: 5010;
+	border-radius: 7px 7px 4px 4px;
+}
+
+div#quicklook_hud
+{
+	background-color: rgba(0, 0, 0, 0.8);
+	border: 1px solid #4D4D4D;
+	bottom: 0px;
+	cursor: default;
+	height: 50px;
+	left: 50%;
+	margin: 0px auto;
+	margin-bottom: 24px;
+	margin-left: -65px;
+	opacity: 0;
+	position: absolute;
+	width: 130px;
+	-webkit-transition: opacity 0.2s ease-in-out;
+	border-radius: 10px;
+}
+
+
+div#quicklook_hovering_area:hover div#quicklook_hud { opacity: 1; }
+
+div#quicklook_panel_preview.preloading
+{
+	background: #C7C7C7 url(../cc/img/spinner_transparent.gif) center center no-repeat;
+}
+
+div#quicklook_panel_preview.preloading:hover div#quicklook_hud { opacity: 0; }
+
+div#quicklook_hud a
+{
+	background-color: transparent;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	position: absolute;
+}
+
+a#quicklook_hud_scale
+{
+	height: 28px;
+	left: 16px;
+	top: 10px;
+	width: 28px;
+}
+
+a#quicklook_hud_download
+{
+	height: 28px;
+	left: 60px;
+	top: 10px;
+	width: 18px;
+}
+
+a#quicklook_hud_close
+{
+	height: 22px;
+	left: 94px;
+	top: 13px;
+	width: 22px;
+}
+
+div#quicklook_hud a.fullscreen
+{
+	background-image: url(./img/quicklook_fullscreen_button.png);
+	background-position: 0px -28px;
+}
+
+body.hidpi div#quicklook_hud a.fullscreen
+{
+	background-image: url(./img/quicklook_fullscreen_button@2x.png);
+	background-size: 28px 84px;
+}
+
+div#quicklook_hud a.fitscreen
+{
+	background-image: url(./img/quicklook_fitscreen_button.png);
+	background-position: 0px -28px;
+}
+
+body.hidpi div#quicklook_hud a.fitscreen
+{
+	background-image: url(./img/quicklook_fitscreen_button@2x.png);
+	background-size: 27px 84px;
+}
+
+div#quicklook_hud a.download
+{
+	background-image: url(./img/quicklook_download_button.png);
+	background-position: 0px -28px;
+}
+
+body.hidpi div#quicklook_hud a.download
+{
+	background-image: url(./img/quicklook_download_button@2x.png);
+	background-size: 18px 56px;
+}
+
+div#quicklook_hud a.close
+{
+	background-image: url(./img/quicklook_close_button.png);
+	background-position: 0px -22px;
+}
+
+body.hidpi div#quicklook_hud a.close
+{
+	background-image: url(./img/quicklook_close_button@2x.png);
+	background-size: 22px 44px;
+}
+
+div#quicklook_hud a:hover { background-position: 0px 0px; }
+
+a#quicklook_hud_scale.disabled
+{
+	background-position: 0px -56px !important;
+	cursor: default;	
+}
+
+/* @end */
+
+/* @group Media */
+
+#quicklook_panel_preview .media.audio .artwork
+{
+	background: transparent url(./img/quicklook_album_art.png) top left no-repeat;
+	display: block;
+	height: 258px;
+	left: 3px;
+	position: absolute;
+	top: 3px;
+	width: 258px;
+}
+
+body.hidpi #quicklook_panel_preview .media.audio .artwork
+{
+	background-image: url(./img/quicklook_album_art@2x.png);
+	background-size: 258px 258px;
+}
+
+#quicklook_panel_preview .media.audio .qtmedia
+{
+	height: 16px;
+	left: 3px;
+	position: absolute;
+	top: 261px;
+	width: 258px;
+}
+
+#quicklook_panel_preview .media.movie
+{
+	left: 3px;
+	position: absolute;
+	top: 3px;
+}
+
+#quicklook_panel_preview .media.movie .qtmedia
+{
+	display: block;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* @end */

@@ -1,0 +1,11 @@
+Van: E-mailbeheerder <Postmaster@example.com>
+Onderwerp: [Waarschuwing] Quotum op mailserver is bijna bereikt
+
+Je hebt je opslagquotum op de mailserver bijna bereikt. Als je je quotum overschrijdt, worden nieuwe berichten mogelijk niet meer afgeleverd.
+
+Verplaats alle berichten die je niet meer nodig hebt van de server naar je lokale e-mailmappen. Controleer ook of er in de mappen voor verstuurde en verwijderde e-mail berichten staan die van de server kunnen worden verwijderd.
+
+Zou je dit probleem zo snel mogelijk willen verhelpen?
+
+Hartelijk dank,
+E-mailbeheerder

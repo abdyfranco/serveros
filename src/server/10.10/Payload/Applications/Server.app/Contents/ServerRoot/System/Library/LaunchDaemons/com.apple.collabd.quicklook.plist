@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.apple.collabd.quicklook</string>
+    <key>PreventsSleep</key>
+    <true/>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/System/Library/Frameworks/QuickLook.framework/Resources/quicklookd.app/Contents/MacOS/quicklookd</string>
+        <string>--servername</string>
+        <string>com.apple.collabd.quicklook</string>
+        <string>--allowedplugins</string>
+        <string>/Library/Server/Wiki/Config/qlgenerators.plist.default</string>
+        <string>--allowedplugins</string>
+        <string>/Library/Server/Wiki/Config/qlgenerators.plist</string>
+        <string>--nouser</string>
+    </array>
+    <key>MachServices</key>
+    <dict>
+        <key>com.apple.collabd.quicklook</key>
+        <true/>
+    </dict>
+    <key>ThrottleInterval</key>
+    <integer>1</integer>
+    <key>UserName</key>
+    <string>_teamsserver</string>
+    <key>GroupName</key>
+    <string>_teamsserver</string>
+</dict>
+</plist>

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+sudo chown -R $(whoami) /usr/local/share/man/man5 /usr/local/share/man/man7
+
+# Install services
+brew install mongodb
+brew install redis
+brew install mariadb
+brew install postgresql
+brew install nginx
+brew install perl
+brew install ruby
+brew install node
+brew install bind
+brew install openvpn
+brew install docker
+brew install pure-ftpd
+brew install dovecot
+
+# Instal PHP components
+brew install composer
+brew install phpunit
+brew install phpmyadmin
+brew install pgweb
+brew install phplint
+
+# Instal CLI commands
+brew install m-cli

@@ -1,0 +1,197 @@
+'\" t
+.\"     Title: droplang
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "DROPLANG" "1" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+droplang \- remove a PostgreSQL procedural language
+.\" droplang
+.SH "SYNOPSIS"
+.HP \w'\fBdroplang\fR\ 'u
+\fBdroplang\fR [\fIconnection\-option\fR...] \fIlangname\fR [\fIdbname\fR]
+.HP \w'\fBdroplang\fR\ 'u
+\fBdroplang\fR [\fIconnection\-option\fR...] \fB\-\-list\fR | \fB\-l\fR  [\fIdbname\fR]
+.SH "DESCRIPTION"
+.PP
+
+droplang
+is a utility for removing an existing procedural language from a
+PostgreSQL
+database\&.
+.PP
+
+droplang
+is just a wrapper around the
+DROP EXTENSION (\fBDROP_EXTENSION\fR(7))
+SQL command\&.
+.if n \{\
+.sp
+.\}
+.RS 4
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBCaution\fR
+.ps -1
+.br
+.PP
+
+droplang
+is deprecated and may be removed in a future
+PostgreSQL
+release\&. Direct use of the
+\fBDROP EXTENSION\fR
+command is recommended instead\&.
+.sp .5v
+.RE
+.SH "OPTIONS"
+.PP
+
+droplang
+accepts the following command line arguments:
+.PP
+\fIlangname\fR
+.RS 4
+Specifies the name of the procedural language to be removed\&. (This name is lower\-cased\&.)
+.RE
+.PP
+\fB[\-d]\fR\fB \fR\fB\fIdbname\fR\fR, \fB[\-\-dbname=]\fR\fB\fIdbname\fR\fR
+.RS 4
+Specifies from which database the language should be removed\&. The default is to use the database with the same name as the current system user\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-echo\fR
+.RS 4
+Display SQL commands as they are executed\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+Show a list of already installed languages in the target database\&.
+.RE
+.PP
+\fB\-V\fR, \fB\-\-version\fR
+.RS 4
+Print the
+droplang
+version and exit\&.
+.RE
+.PP
+\fB\-?\fR, \fB\-\-help\fR
+.RS 4
+Show help about
+droplang
+command line arguments, and exit\&.
+.RE
+.PP
+
+droplang
+also accepts the following command line arguments for connection parameters:
+.PP
+\fB\-h \fR\fB\fIhost\fR\fR, \fB\-\-host=\fR\fB\fIhost\fR\fR
+.RS 4
+Specifies the host name of the machine on which the server is running\&. If host begins with a slash, it is used as the directory for the Unix domain socket\&.
+.RE
+.PP
+\fB\-p \fR\fB\fIport\fR\fR, \fB\-\-port=\fR\fB\fIport\fR\fR
+.RS 4
+Specifies the Internet TCP/IP port or local Unix domain socket file extension on which the server is listening for connections\&.
+.RE
+.PP
+\fB\-U \fR\fB\fIusername\fR\fR, \fB\-\-username=\fR\fB\fIusername\fR\fR
+.RS 4
+User name to connect as\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-no\-password\fR
+.RS 4
+Never issue a password prompt\&. If the server requires password authentication and a password is not available by other means such as a
+\&.pgpass
+file, the connection attempt will fail\&. This option can be useful in batch jobs and scripts where no user is present to enter a password\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-password\fR
+.RS 4
+Force
+droplang
+to prompt for a password before connecting to a database\&.
+.sp
+This option is never essential, since
+droplang
+will automatically prompt for a password if the server demands password authentication\&. However,
+droplang
+will waste a connection attempt finding out that the server wants a password\&. In some cases it is worth typing
+\fB\-W\fR
+to avoid the extra connection attempt\&.
+.RE
+.SH "ENVIRONMENT"
+.PP
+\fBPGDATABASE\fR, \fBPGHOST\fR, \fBPGPORT\fR, \fBPGUSER\fR
+.RS 4
+Default connection parameters
+.RE
+.PP
+This utility, like most other
+PostgreSQL
+utilities, also uses the environment variables supported by
+libpq
+(see
+Section 31.14, \(lqEnvironment Variables\(rq, in the documentation)\&.
+.SH "DIAGNOSTICS"
+.PP
+Most error messages are self\-explanatory\&. If not, run
+droplang
+with the
+\fB\-\-echo\fR
+option and see under the respective
+SQL
+command for details\&. Also, any default connection settings and environment variables used by the
+libpq
+front\-end library will apply\&.
+.SH "NOTES"
+.PP
+Use
+\fBcreatelang\fR(1)
+to add a language\&.
+.SH "EXAMPLES"
+.PP
+To remove the language
+pltcl:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBdroplang pltcl dbname\fR
+.fi
+.if n \{\
+.RE
+.\}
+.SH "SEE ALSO"
+\fBcreatelang\fR(1), DROP EXTENSION (\fBDROP_EXTENSION\fR(7)), DROP LANGUAGE (\fBDROP_LANGUAGE\fR(7))

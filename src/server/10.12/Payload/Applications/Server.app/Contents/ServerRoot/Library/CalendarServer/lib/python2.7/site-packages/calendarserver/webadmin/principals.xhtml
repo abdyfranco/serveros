@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+ xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1"
+ t:render="main"
+>
+
+  <head>
+    <title><t:slot name="title" /></title>
+    <link t:render="stylesheet" />
+    <style>
+      tr.record:hover { background-color: #FFFF00; }
+    </style>
+  </head>
+
+  <body>
+
+    <h1><t:slot name="title" /></h1>
+
+    <form id="search_form" action="" method="get">
+      Search for a principal:
+      <input
+       id="search_field" type="search" name="search"
+       placeholder="Search..." size="40" autofocus="true"
+       t:render="search_terms"
+    />
+    </form>
+
+    <table id="records" t:render="if_search_results">
+      <caption>Records</caption>
+      <thead>
+        <tr class="record">
+          <th class="record_full_name">Full name</th>
+          <th class="record_type">Record Type</th>
+          <th class="record_short_name">Short Name</th>
+          <th class="record_email">Email Address</th>
+          <th class="record_calendaruseraddress">Calendar User Address</th>
+          <th class="record_serveruri">Server</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="record" t:render="search_results_row">
+          <t:attr name="onclick">window.open("/admin/principals/<t:slot name="uid" />");</t:attr>
+          <td class="record_full_name"><t:slot name="fullNames" /></td>
+          <td class="record_type"><t:slot name="recordType" /></td>
+          <td class="record_short_name"><t:slot name="shortNames" /></td>
+          <td class="record_email"><t:slot name="emailAddresses" /></td>
+          <td class="record_calendaruseraddress"><t:slot name="calendarUserAddresses" /></td>
+          <td class="record_serveruri"><t:slot name="serverURI" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </body>
+
+</html>

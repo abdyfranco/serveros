@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>SERVER_INSTALL_PATH_PREFIX</key>
+		<string>/Applications/Server.app/Contents/ServerRoot</string>
+		<key>MODULE_INSTALL_PATH_PREFIX</key>
+		<string></string>
+		<key>XPC_SERVICES_UNAVAILABLE</key>
+		<string>1</string>
+	</dict>
+	<key>Label</key>
+	<string>com.apple.serviceproxy</string>
+	<key>KeepAlive</key>
+	<true/>
+	<key>ExitTimeOut</key>
+	<integer>31</integer>
+	<key>ProcessType</key>
+	<string>Interactive</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/httpd-server-wrapper</string>
+		<string>-D</string>
+		<string>FOREGROUND</string>
+		<string>-f</string>
+		<string>/Library/Server/Web/Config/Proxy/apache_serviceproxy.conf</string>
+		<string>-E</string>
+		<string>/private/var/log/apache2/service_proxy_error.log</string> 
+	</array>
+</dict>
+</plist>

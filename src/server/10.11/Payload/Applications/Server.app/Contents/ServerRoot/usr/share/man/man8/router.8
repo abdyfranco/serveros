@@ -1,0 +1,26 @@
+.TH router 8 "28 August 2003" "2.3.1-426" "jabberd project"
+.SH NAME
+router \- XML packet distributor
+.SH SYNOPSIS
+.B router
+.I [-h] [-c config] [-D]
+.SH DESCRIPTION
+.BR router
+is the core component of the jabberd system. It passes XML packets between the components, and manages the entry and exit of components onto the network.
+.SH OPTIONS
+.TP
+.B \-h
+Show summary of options.
+.TP
+.B \-c
+Alternate configuration file to use. The compiled-in default is /etc/jabberd/router.xml.
+.TP
+.B \-D
+Print debugging output. You should configure jabberd with the --enable-debug switch to enable this.
+.SH SEE ALSO
+.BR jabberd (8)
+.BR c2s (8)
+.BR s2s (8)
+.BR sm (8)
+.SH AUTHOR
+Robert Norris <rob@cataclysm.cx>

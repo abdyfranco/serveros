@@ -1,0 +1,525 @@
+#!/usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+
+##
+# Copyright (c) 2012-2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+# of the Apple Software and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is part of.
+##
+
+$ServerLibraryPath = '/Library/Server'
+$ServiceConfigPath = '/Library/Server/Wiki/Config'
+$StashedServiceConfigPath = $ServiceConfigPath + '.stashed'
+$PreviousServiceConfigPath = $ServiceConfigPath + '.previous'
+$ServerInstallPathPrefix = '/Applications/Server.app/Contents/ServerRoot'
+
+$DefaultDatabaseDir = $ServerLibraryPath + '/Wiki/Database.xpg'
+$DefaultDatabaseClusterDir = $DefaultDatabaseDir + '/Cluster.pg'
+$DefaultFileDataPath = $ServerLibraryPath + '/Wiki/FileData'
+$PostgresSocketDir  = $ServerLibraryPath + '/Wiki/PostgresSocket'
+
+$WebConfigPath = $ServerLibraryPath + '/Web/Config/apache2'
+$SharedWebConfigFile = $WebConfigPath + '/httpd_corecollaboration_shared.conf'
+
+ENV['BUNDLE_GEMFILE'] = "#{$ServerInstallPathPrefix}/usr/share/collabd/gems/Gemfile"
+
+require 'rubygems'
+require 'bundler/setup'
+
+$LOAD_PATH << "#{$ServerInstallPathPrefix}/usr/share/collabd/server/ruby/lib"
+
+require 'fileutils'
+require 'find'
+require 'collaboration'
+require 'pg'
+require 'shellwords'
+require 'logger'
+
+$PreflightLogDirectoryPath = $ServerLibraryPath + '/Wiki/Logs'
+$PreflightLogPath = $PreflightLogDirectoryPath + '/collabd_preflight.log'
+unless File.exists?($PreflightLogDirectoryPath)
+  `/bin/mkdir -p #{$PreflightLogDirectoryPath}`
+  `/usr/sbin/chown -R 94:94 #{$PreflightLogDirectoryPath}`
+end
+$logger = Logger.new($PreflightLogPath)
+FileUtils.chmod 0640, $PreflightLogPath
+FileUtils.chown '94', '94', $PreflightLogPath
+
+$logger.info("Starting preflight script")
+`/usr/bin/dscl /Local/Default -create /Users/_teamsserver NFSHomeDirectory /var/empty`
+
+#
+# FIX PERMISSIONS
+#
+
+$fileopts = {}
+
+def mask_dir_to_file(dir_perm)
+    if dir_perm & 0100 > 0
+        dir_perm ^= dir_perm.to_s(8).rjust(4, '0').gsub(/[1-9]/, '1').to_i(8)
+    end
+    dir_perm
+end
+
+def chmod_or_chown_file_or_dir(path, user, group, dirperm, fileperm, dirxattrperm, filexattrperm)
+  # Get current ownership / permission, to know if we need to make changes
+  begin
+    stats = File.stat(path)
+  rescue
+    return
+  end
+  # convert current file mode to octal, collect the last 3 chars, convert back to number
+  current_mode = stats.mode.to_s(8).to_s[2..-1].to_i
+  current_user = stats.uid
+  current_group = stats.gid
+  target_dir_mode = nil
+  target_file_mode = nil
+  unless dirperm.nil?
+    target_dir_mode = dirperm.to_s(8).to_i
+  end
+  unless fileperm.nil?
+    target_file_mode = fileperm.to_s(8).to_i
+  end
+  
+  # Fix user / group ownership if needed
+  if (user != nil and group != nil) and ((current_user != user) || (current_group != group))
+    $logger.debug "#{current_user} != #{user} || #{current_group} != #{group} :: #{path}"
+    FileUtils.chown(user, group, path, $fileopts)
+  end
+
+  # Fix permissions if needed and xattr ACLs
+  if File.directory?(path)
+      unless dirperm.nil?
+          if current_mode != target_dir_mode
+              $logger.debug "d #{current_mode} != #{target_dir_mode}, #{path}"
+              FileUtils.chmod(dirperm, path, $fileopts)
+          end
+      end
+      unless dirxattrperm.nil?
+          system("/bin/chmod +a \"#{dirxattrperm}\" #{path.shellescape}")
+      end
+  else
+      unless fileperm.nil?
+          if current_mode != target_file_mode
+            $logger.debug "f #{current_mode} != #{target_file_mode}, #{path}"
+            FileUtils.chmod(fileperm, path, $fileopts)
+          end
+      end
+      unless filexattrperm.nil?
+          system("/bin/chmod +a \"#{filexattrperm}\" #{path.shellescape}")
+      end
+  end
+end
+
+def fix_permissions(path, user, group, dirperm, fileperm, dirxattrperm, filexattrperm, recursive)
+    $logger.info("Fixing permission for path #{path} user #{user} group #{group} directory permission #{dirperm} and file permissions #{fileperm}, dir xattrs #{dirxattrperm}, file xattrs #{filexattrperm}, recursive? #{recursive}")
+    if not path.include?('*') and not File.exists?(path)
+        $logger.debug "mkdir #{path}"
+        FileUtils.mkdir_p(path, $fileopts)
+    end
+
+    Dir.glob(path) do |p|
+        if recursive
+            Find.find(p) do |f|
+                if f.start_with?('/') then absp = f else absp = p+'/'+f end
+                chmod_or_chown_file_or_dir(absp, user, group, dirperm, fileperm, dirxattrperm, filexattrperm)
+            end
+        else # not recursive
+            chmod_or_chown_file_or_dir(p, user, group, dirperm, fileperm, dirxattrperm, filexattrperm)
+        end
+    end
+end
+
+def copy_default_plist(default_plist)
+    $logger.info("Copying default plist into place from #{default_plist}")
+    path = $ServiceConfigPath + '/' + default_plist + '.plist'
+    defpath = $ServerInstallPathPrefix + '/private/etc/collabd/' + default_plist + '.plist.default'
+    FileUtils.cp(defpath, path, $fileopts) unless File.exists?(path)
+end
+
+# Copies defaultdata into place.  We always replace the contents of /Library/Server/Wiki/Config/defaultdata to pick up the latest template changes.
+
+def copy_defaultdata_folder_and_plist
+    path = $ServiceConfigPath + '/defaultdata'
+    defpath = $ServerInstallPathPrefix + '/private/etc/collabd/defaultdata'
+    FileUtils.cp_r(defpath, path, $fileopts)
+    path = $ServiceConfigPath + '/defaultdata.plist'
+    defpath = $ServerInstallPathPrefix + '/private/etc/collabd/defaultdata.plist.default'
+    $logger.info("Copying default data and plist into place from #{defpath} and #{path}")
+    FileUtils.cp(defpath, path, $fileopts)
+end
+
+def clean_start_end_quotes(str)
+  if ( !str.nil? && str.match(/^\"/)  )
+    str = str.slice(1..-1)
+  end
+  if (!str.nil? && str.match(/$\"/) )
+    str = str.slice(0..-2)
+  end
+  
+  str = "" if (str.nil?)
+  return str
+end
+
+def quotedString(str)
+	return "\"" + clean_start_end_quotes(str) +  "\""
+end
+	
+	
+def update_shared_apache_config(file_data_path)
+	return if file_data_path.nil? || '' == file_data_path || !File.exists?($SharedWebConfigFile) 
+	$logger.debug("Copying FileDataPath:#{file_data_path} to shared XSendFilePath in httpd_corecollaboration_shared.conf")
+	temp_file_name = $SharedWebConfigFile + ".temp"
+	FileUtils.rm_f(temp_file_name) if File.exists?(temp_file_name) 
+	temp_contents = File.open(temp_file_name, "w:UTF-8")
+	foundSendFilePath = false
+	read_contents = File.open($SharedWebConfigFile, "r:UTF-8").each  { | line |
+		words = line.strip.split
+		if words[0] == "XSendFilePath"
+			temp_contents.puts "    XSendFilePath " + quotedString(file_data_path)
+			foundSendFilePath = true
+		else
+			temp_contents.puts line
+		end
+	}
+	temp_contents.close
+	read_contents.close
+	FileUtils.mv(temp_file_name, $SharedWebConfigFile , :force => true) if foundSendFilePath
+end
+
+# Given a root config directory (e.g. /Volumes/Foo/Wiki/Config), migrates supported keys into the current /Library/Server/Wiki/Config/collabd.plist.
+
+def migrate_collabd_config_from_path(from_config_directory)
+  begin
+    $logger.debug("Attempting to migrate config from #{from_config_directory}")
+    if File.exists?(from_config_directory)
+      $logger.debug("We have a previous service config at #{from_config_directory}, migrating supported keys")
+      current_config_dict = Collaboration.dictionaryWithContentsOfFile($ServiceConfigPath + '/collabd.plist')
+      previous_config_dict = Collaboration.dictionaryWithContentsOfFile(from_config_directory + '/collabd.plist')
+      $logger.info("Previous collabd config is #{previous_config_dict.inspect}")
+    
+      if current_config_dict.nil?
+        $logger.error("Could not parse current collabd.plist")
+        return
+      end
+      if previous_config_dict.nil?
+        $logger.error("Could not parse previous collabd.plist")
+        return
+      end
+    
+      for key in ['LogFileMaxSize', 'LogFileMaxRolled', 'FiltersEnabled', 'AutolinkEnabled', 'ShouldFilterSystemUsers'] do
+        previous_value = previous_config_dict[key]
+        unless previous_value.nil?
+          $logger.debug("Copying previous #{key} key (#{previous_value}) to current configuration")
+          current_config_dict[key] = previous_value
+        end
+      end
+    
+      if !previous_config_dict['LogLevel'].nil?
+        if previous_config_dict['LogLevel'] == 'debug'
+          current_config_dict['LogLevel'] = 'info'
+        else
+          current_config_dict['LogLevel'] = previous_config_dict['LogLevel']
+        end
+      end
+    
+      # Copy the IntegrationPruningPolicy.
+      previous_integration_pruning_policy = previous_config_dict['Server']['IntegrationPruningPolicy']
+      unless previous_integration_pruning_policy.nil?
+        current_integration_pruning_policy = current_config_dict['Server']['IntegrationPruningPolicy']
+        for key in ['ProductPruningFrequency', 'ProductPruningUnit', 'LogPruningFrequency', 'LogPruningUnit'] do
+          unless previous_integration_pruning_policy[key].nil?
+            $logger.debug("Copying previous Server.IntegrationPruningPolicy.#{key} key (#{previous_integration_pruning_policy[key]}) to current configuration")
+            current_integration_pruning_policy[key] = previous_integration_pruning_policy[key]
+          end
+        end
+        current_config_dict['Server']['IntegrationPruningPolicy'] = current_integration_pruning_policy
+      end
+    
+      # Copy all the Client keys.
+      previous_client_config = previous_config_dict['Client']
+      if previous_client_config != nil
+        current_client_config = current_config_dict['Client']
+        previous_client_config.each do |k, v|
+          $logger.debug("Copying previous Client.#{k} key (#{v}) to current configuration")
+          unless current_client_config[k].nil?
+            current_client_config[k] = v
+          end
+        end
+        current_config_dict['Client'] = current_client_config
+      end
+    
+      # Copy what we support from the auth config.
+      previous_auth_config = previous_config_dict['Auth']
+      if previous_auth_config != nil
+        current_auth_config = current_config_dict['Auth']
+        for key in ['Authenticator', 'EnableRememberMe', 'ChangePasswordEnabled', 'ExpirationDurationSeconds', 'RememberDurationSeconds'] do
+          unless previous_auth_config[key].nil?
+            $logger.debug("Copying previous Auth.#{key} key (#{previous_auth_config[key]}) to current configuration")
+            current_auth_config[key] = previous_auth_config[key]
+          end
+        end
+        current_config_dict['Auth'] = current_auth_config
+      end
+    
+      # Copy the FileDataPath key.
+      previous_file_data_path = previous_config_dict['FileDataPath']
+      if previous_file_data_path != nil and previous_file_data_path != ''
+        $logger.debug("Copying previous FileDataPath key (#{previous_file_data_path}) to current configuration")
+        current_config_dict['FileDataPath'] = previous_file_data_path
+      end
+
+      # Copy the database cluster key if we have it.
+      had_previous_database_cluster = false
+      if previous_config_dict['Database']
+        if previous_config_dict['Database']['DatabaseClusterDirectory']
+          database_cluster_dir = previous_config_dict['Database']['DatabaseClusterDirectory']
+          $logger.debug("Copying previous Database.DatabaseClusterDirectory (#{database_cluster_dir}) to current configuration")
+          current_config_dict['Database']['DatabaseClusterDirectory'] = database_cluster_dir
+          had_previous_database_cluster = true
+        end
+      end
+    
+      # If are migrating a previous FileDataPath location, use that location to determine the new location of the database cluster.
+      unless had_previous_database_cluster
+        $logger.debug("Previous configuration did not have a Database.DatabaseClusterDirectory key")
+        # Use the old FileDataPath location to determine if we want to place the new database cluster on an alternate volume.
+        if previous_file_data_path != nil and previous_file_data_path =~ /^\/Volumes\/.*/
+          $logger.debug("Previous configuration had a FileDataPath key on an external volume (#{previous_file_data_path})")
+            path_components = previous_file_data_path.split(File::SEPARATOR)
+            # Prefix the database cluster directory with the root volume path, e.g. /Volumes/RAID/Library/Server/Wiki/Database.xpg
+            database_cluster_dir = File.join("/#{path_components[1]}/#{path_components[2]}", $DefaultDatabaseClusterDir)
+            $logger.debug("Configuring Database.DatabaseClusterDirectory (#{database_cluster_dir})")
+            current_config_dict['Database']['DatabaseClusterDirectory'] = database_cluster_dir
+        end
+      end
+    
+      # Write the configuration out to disk.
+      Collaboration.writePlistRepresentationOfDictionaryToPath(current_config_dict, $ServiceConfigPath+'/collabd.plist')
+      $logger.info("Collabd config is now #{current_config_dict.inspect}")
+    end
+  rescue
+    $logger.error("Failed to migrate previous configuration from path #{from_config_directory}")
+  end
+end
+
+# Move aside any previous configs.  We will migrate any keys we support migrating back on top of it below.
+
+if File.exists?($ServiceConfigPath)
+  $logger.info("Config directory already exists at #{$ServiceConfigPath}, stashing aside in #{$StashedServiceConfigPath}")
+  if File.exists?($StashedServiceConfigPath)
+    FileUtils.rm_r($StashedServiceConfigPath)
+  end
+  FileUtils.move($ServiceConfigPath, $StashedServiceConfigPath)
+end
+
+path_permissions = [
+    [ $ServerLibraryPath + '/Wiki', 94, 94, 0755, 0644, nil, nil, FALSE ],
+    [ $ServerLibraryPath + '/Wiki/Logs', 94, 94, 0775, 0640, nil, nil, TRUE ],
+    [ $ServiceConfigPath, 94, 94, 0775, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/shared', 94, 94, 0750, 0640, nil, nil, TRUE ],
+    [ $ServiceConfigPath + '/collabd.plist', 94, 94, 0750, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/collabd-search.plist', 94, 94, 0750, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/quicklook.plist', 94, 94, 0750, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/qlgenerators.plist', 94, 94, 0750, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/whitelist.plist', 94, 94, 0750, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/notifications.plist', 94, 94, 0750, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/defaultdata.plist', 94, 94, 0750, 0640, nil, nil, FALSE ],
+    [ $ServiceConfigPath + '/defaultdata', 94, 94, 0750, 0640, nil, nil, TRUE ],
+    [ $PostgresSocketDir, 94, 94, 0775, 0640, nil, nil, TRUE ],
+    [ $ServerLibraryPath + '/Xcode/Cache', 94, 94, 0755, 0640, nil, nil, FALSE ],
+    [ $ServerLibraryPath + '/Xcode/Cache/ServiceState', 94, 94, 0755, 0640, nil, nil, FALSE ],
+    [ $ServerLibraryPath + '/Xcode/Cache/KickFiles', 94, 94, 0755, 0640, nil, nil, FALSE ],
+    [ $ServerLibraryPath + '/Xcode/Cache/KickFiles/com.apple.collabd.scm_poller', 94, 94, 0755, 0640, nil, nil, FALSE ]
+]
+
+# Create directories and fix permissions first.
+
+unless File.exists?($ServerLibraryPath)
+   system("/bin/mkdir", "-p", "#{$ServerLibraryPath}")
+   system("/bin/chmod", "0755", $ServerLibraryPath)
+   system('/usr/sbin/chown', 'root:wheel', $ServerLibraryPath)
+end
+
+path_permissions[0..3].each do |p,u,g,dm,fm,dxattr,fxattr,r|
+    fix_permissions(p,u,g,dm,fm,dxattr,fxattr,r)
+end
+
+# Copy default plists ino place and fix permissions.
+
+%w[ collabd collabd-search quicklook qlgenerators notifications whitelist ].each do |d|
+    copy_default_plist(d)
+end
+path_permissions[4..9].each do |p,u,g,dm,fm,dxattr,fxattr,r|
+    fix_permissions(p,u,g,dm,fm,dxattr,fxattr,r)
+end
+
+# Copy default data into place and fix remaining permissions.
+
+copy_defaultdata_folder_and_plist()
+path_permissions[10..-1].each do |p,u,g,dm,fm,dxattr,fxattr,r|
+    fix_permissions(p,u,g,dm,fm,dxattr,fxattr,r)
+end
+
+#
+# If we're migrating from 10.7, look in /Library/Server/Previous and try to glean a config.
+#
+
+migratedTenSevenConfigPath = $ServerLibraryPath + '/Previous/private/etc/collabd'
+migrate_collabd_config_from_path(migratedTenSevenConfigPath)
+if File.exists?(migratedTenSevenConfigPath)
+  FileUtils.mv(migratedTenSevenConfigPath, migratedTenSevenConfigPath + '.old')
+end
+
+#
+# If we stashed away a configuration above, update the configuration we just laid down with keys we support migrating.
+# Move aside the previous config so we don't do this on every run of the preflight.
+#
+
+migrate_collabd_config_from_path($StashedServiceConfigPath)
+if File.exists?($StashedServiceConfigPath)
+  if File.exists?($PreviousServiceConfigPath)
+    FileUtils.rm_r($PreviousServiceConfigPath)
+  end
+  FileUtils.mv($StashedServiceConfigPath, $PreviousServiceConfigPath)
+end
+
+config = Collaboration.dictionaryWithContentsOfFile($ServiceConfigPath+'/collabd.plist')
+if config.nil?
+    $logger.info("Could not read collabd.plist config from #{$ServiceConfigPath}, using default config inside Server.app bundle")
+    config = Collaboration.dictionaryWithContentsOfFile($ServerInstallPathPrefix + '/private/etc/collabd/collabd.plist.default')
+end
+
+# If we had a shared secret, put it back.  Otherwise generate a new one.
+
+$logger.info("Checking shared secret")
+$NewSharedSecret = `uuidgen`.strip
+previous_shared_secret_path = "#{$PreviousServiceConfigPath}/shared/shared_secret"
+if File.exists?(previous_shared_secret_path)
+  previous_shared_secret = File.read(previous_shared_secret_path).strip
+  if previous_shared_secret and previous_shared_secret != ""
+    $NewSharedSecret = previous_shared_secret
+    $logger.debug("Shared secret already exists at #{previous_shared_secret_path}, reusing")
+  end
+end
+if !File.exists?($ServiceConfigPath+'/shared/shared_secret')
+    $logger.info("Creating shared secret file")
+    system('/usr/bin/touch', $ServiceConfigPath+'/shared/shared_secret')
+    f = File.open($ServiceConfigPath+'/shared/shared_secret', 'w')
+    $logger.debug("Writing shared secret to file")
+    f.write($NewSharedSecret)
+    f.close
+end
+$logger.info("Fixing permissions and ownership on shared secret")
+system('/bin/chmod', '0640', $ServiceConfigPath+'/shared/shared_secret')
+system('/usr/sbin/chown', '94:94', $ServiceConfigPath+'/shared/shared_secret')
+
+#
+# Re-read the configuration settings we care about AFTER we have migrated them.
+#
+
+$FileDataPath = (config['FileDataPath'] || $DefaultFileDataPath)
+$DatabaseClusterDir = config['Database']['DatabaseClusterDirectory']
+$DatabaseDir = File.dirname($DatabaseClusterDir)
+
+#
+# 14893301
+# If the database/file data is on a separate volume, wait for those volumes to mount.
+#
+
+for relocatable_path in [$FileDataPath, $DatabaseDir]
+  if relocatable_path =~ /^\/Volumes\/(.*?)\/.*/
+    relocatable_path = "/Volumes/#{$1}"
+    not_ready_indicator_path = relocatable_path + "/.autodiskmounted"
+    $logger.info("Waiting on external data volume to mount (#{relocatable_path})")
+    `/bin/wait4path #{relocatable_path.shellescape}`
+    $logger.info("Volume appears to have mounted, continuing")
+    while true do
+        break if !FileTest.exists?(not_ready_indicator_path)
+        $logger.info("Volume #{relocatable_path} is not yet real; waiting for completion")
+        sleep(1)
+    end
+  end
+end
+extra_path_permissions = [
+    [ File.dirname((((config||{})['PagePreview']||{})['KickFilePath'])||'/var/run/kick-collabpp/kick'), 94, 94, 0770, 0640, nil, nil, TRUE ],
+    [ $DatabaseDir, 94, 94, 0700, 0600, nil, nil, FALSE ]
+]
+extra_path_permissions.each do |p,u,g,dm,fm,dxattr,fxattr,r|
+    fix_permissions(p,u,g,dm,fm,dxattr,fxattr,r)
+end
+
+#
+# 13413862
+# Relocate/ensure the database is initialized.
+#
+
+$logger.info("Verifying database exists at #{$DatabaseClusterDir}")
+if !File.exists?($DatabaseClusterDir)
+    $logger.info("Service cluster database does not exist, will attempt to relocate from shared service cluster")
+    if File.exists?($ServerLibraryPath+'/postgres_service_clusters/wiki')
+        $logger.info("Relocating database by calling relocate_postgres_service_cluster -d #{$DatabaseClusterDir} -s wiki")
+        system($ServerInstallPathPrefix+'/usr/libexec/relocate_postgres_service_cluster', '-d', $DatabaseClusterDir, '-s', 'wiki')
+    end
+    if !File.exists?($DatabaseClusterDir)
+        $logger.info("Service cluster database still does not exist, we will create a new database")
+        Dir.chdir('/') do
+          system('su', '-m', '_teamsserver', '-c', "#{$ServerInstallPathPrefix}/usr/bin/initdb --encoding UTF8 --locale=C -D " + $DatabaseClusterDir.shellescape)
+          # The database will be initialized by collabd_database_loader once the database is running.
+        end
+    end
+    $logger.info("Fixing permissions on existing cluster")
+    fix_permissions($DatabaseClusterDir, 94, 94, 0700, 0640, nil, nil, false)
+end
+
+#
+# 14757752
+# Install the postgres-specific newsyslogd configuration file
+#
+
+$logger.info("Installing newsyslogd configuration for postgres.log")
+if !File.exists?("/private/etc/newsyslog.d")
+    `/bin/mkdir -p /private/etc/newsyslog.d`
+end
+
+#
+# 14700349
+# Repair permissions on FileDataPath so the contents can be served by Apache.  All files/directories
+# should be owned by _teamsserver:_teamsserver.  We apply a search ACL xattr to all directories, and
+# a read ACL xattr to all files.  Directories are 750, and files 640.
+#
+
+$logger.debug("Creating #{$FileDataPath} if it does not exist already")
+FileUtils.mkdir_p($FileDataPath)
+
+# Copy the file data path from collabd.plist to the XSendFilePath in httpd_corecollaboration_shared.conf
+update_shared_apache_config($FileDataPath)
+
+if (!$FileDataPath.nil? && File.exists?($FileDataPath))
+  # Do the most critical chown of the top two levels of directories first.
+  $logger.debug("Changing owner of FileData (and top-level directories in FileData) to 94:94")
+  FileUtils.chown('94', '94', $FileDataPath)
+  system("/usr/bin/find #{$FileDataPath.shellescape} -type d -d 1 -print0 | /usr/bin/xargs -0 /usr/sbin/chown 94:94")
+  # Do the rest async.
+  child = fork {
+    $logger.info("Starting async task to set permissions for #{$FileDataPath}")
+    tf = Time.now
+    system("/usr/sbin/chown -R 94:94 #{$FileDataPath.shellescape}") # faster than FileUtils.chown_R
+    # First set all permissions doing a fast chmod -R.
+    system("/bin/chmod -H -R +a '_www allow search,read' #{$FileDataPath.shellescape}")
+    system("/bin/chmod -H -R 0750 #{$FileDataPath.shellescape}")
+    # Then reset just the files in the tree.
+    system("/usr/bin/find -L #{$FileDataPath.shellescape} -type f -print0 | /usr/bin/xargs -0 /bin/chmod -a '_www allow search'")
+    system("/usr/bin/find -L #{$FileDataPath.shellescape} -type f -print0 | /usr/bin/xargs -0 /bin/chmod 0640")
+    $logger.info("Finished async task to set permissions for #{$FileDataPath}. Elapsed time: #{Time.now - tf}.")
+  }
+  Process.detach(child)
+end
+
+$logger.info("Exiting preflight script")

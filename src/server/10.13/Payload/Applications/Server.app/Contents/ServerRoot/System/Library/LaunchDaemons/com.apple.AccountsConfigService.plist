@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>EnableTransactions</key>
+	<true/>
+	<key>EnablePressuredExit</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.AccountsConfigService</string>
+	<key>UserName</key>
+	<string>_scsd</string>
+	<key>GroupName</key>
+	<string>_scsd</string>
+	<key>ProcessType</key>
+	<string>Interactive</string>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/scsd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/libexec/scsd</string>
+		<string>-l</string>
+	</array>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<array>
+			<dict>
+				<key>SockFamily</key>
+				<string>Unix</string>
+				<key>SockType</key>
+				<string>Stream</string>
+				<key>SockPathOwner</key>
+				<integer>31</integer>
+				<key>SockPathGroup</key>
+				<integer>70</integer>
+				<key>SockPathName</key>
+				<string>/var/run/scsd.socket</string>
+				<key>SockPathMode</key>
+				<integer>432</integer>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

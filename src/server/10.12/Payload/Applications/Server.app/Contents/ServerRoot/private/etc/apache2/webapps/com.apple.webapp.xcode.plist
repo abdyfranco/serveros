@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>com.apple.webapp.xcode</string>
+	<key>includeFiles</key>
+	<array>
+		<string>/Library/Developer/XcodeServer/CurrentXcodeSymlink/Contents/Developer/usr/share/xcs/httpd_xcs.conf</string>
+	</array>
+	<key>sslPolicy</key>
+	<integer>4</integer>
+</dict>
+</plist>

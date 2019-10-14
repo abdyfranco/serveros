@@ -1,0 +1,83 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Subject: [? [:ccat|major]
+|清除您寄送的郵件\
+|清除您寄送的郵件\
+|清除您寄送的郵件（MTA 阻擋）\
+|您寄送的超大郵件\
+|您寄送之郵件中的錯誤頭標\
+|您寄送的垃圾郵件\
+|您寄送的垃圾郵件\
+|您寄送的郵件中有未檢查的內容\
+|您寄送的受阻擋內容 (%F)\
+|您寄送的郵件中帶有病毒 (%V)\
+]
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <VS%i@%h>
+
+[? [:ccat|major] |清除|清除|MTA-阻擋|超大|無效頭標|\
+垃圾郵件|垃圾郵件|未檢查的內容|阻擋的內容提示|病毒提示]
+
+我們的內容檢查器發現
+[? %#V |#|[:wrap|78|    |  |[? %#V |viruses|virus|viruses]: %V]]
+[? %#F |#|[:wrap|78|    |  |已阻擋 [? %#F |名稱|名稱|名稱]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+在假設由您寄送的郵件中 %s
+寄至下列 [? %#R |收件人|收件人|收件人]:[
+-> %R]
+
+您的郵件在我們的內部參考代碼為 %n/%i
+
+[? %a |#|[:wrap|78||  |首次上傳 SMTP 用戶端 IP 位址：\[%a\] %g]]
+[? %e |#|[:wrap|78||  |根據“接收日期：”追蹤,\
+ 郵件製作於：\[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+[? %#D |停止傳送郵件！
+
+]#
+[? %#V ||請檢查系統是否有病毒，或詢問您的
+系統管理者該如何執行。
+
+]#
+[? %#V |[? %#F ||#
+The message [?%#D|已被阻擋|觸發這項警告] 因為它包含帶有
+宣告名稱的組件（MIME 的一部分或內含）或 MIME 類型，或違反
+我們存取規則的內容類型。
+
+若要傳送可能會被網站規則視為有風險或不需要的內容，或是單純
+因為過大而無法郵件的內容，請考慮將內容發佈到網站上，或是只將
+文件的 URL 傳送給收件人。
+
+視收件人和寄件人的網站規則而定，仍可能使用下列其中一種方式
+來寄送任何內容（包含病毒）：
+
+- 使用 pgp、gpg 或其他加密方式；
+
+- 包覆在以密碼保護或雜亂容器或封存內（例如：zip -e、arj -g、arc g、rar -p 或其他方式）
+
+請注意，若內容不是為了保密，密鑰或密碼可能會包含在相同的郵件中，以方便收件人使用。
+
+如果不是惡意的內容，我們對於所造成的不便感到抱判歉。
+
+這些限制的用意在於切斷病毒和惡意軟體最常用的散播方式。它們經常利用一般
+的郵件閱讀器（Microsoft 的郵件閱讀器和瀏覽器是最常見的目標）中的自動機制
+和安全性漏洞。要求收件人採取明確而肯定的動作來解碼郵件，這樣能夠大幅降低
+惡意軟體自動散佈的風險。
+#
+# 關於我們的郵件限制規則，詳情請見 ...
+
+]]#

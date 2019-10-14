@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>13A603</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Xcode</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.Server.Services.Xcode</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Xcode</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>10.8.1</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>382</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>5A11344p</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>13A603</string>
+	<key>DTSDKName</key>
+	<string></string>
+	<key>DTXcode</key>
+	<string>0500</string>
+	<key>DTXcodeBuild</key>
+	<string>5A11344p</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.9</string>
+	<key>NSMainNibFile</key>
+	<string>SVXcodeServicePane</string>
+	<key>NSPrincipalClass</key>
+	<string>SVXcodeServicePane</string>
+	<key>SVMinimumServerVersion</key>
+	<string>2.2.50</string>
+</dict>
+</plist>

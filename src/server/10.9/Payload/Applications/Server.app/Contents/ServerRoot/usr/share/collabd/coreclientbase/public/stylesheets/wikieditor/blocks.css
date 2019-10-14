@@ -1,0 +1,2055 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Blocks core */
+
+.block
+{
+	display: table;
+	font-size: 13px;
+	margin: 12px 0px 12px 0px;
+	width: 100%;
+}
+
+.block.text
+{
+	display: block;
+}
+
+.block-placeholder
+{
+	display: none;
+}
+
+.block-spacer
+{
+	display: inline;
+}
+
+.block .wrapper > .inner
+{
+	position: relative;
+	vertical-align: top;
+}
+
+.block .delete
+{
+	background: transparent url(./img/block_delete.png) top left no-repeat;
+	cursor: default;
+	display: none;
+	height: 30px;
+	left: -15px;
+	opacity: 0;
+	position: absolute;
+	text-indent: -9999px;
+	top: -15px;
+	width: 30px;
+	z-index: 10;
+	-webkit-transition: opacity 0.2s ease-in;
+}
+
+body.hidpi .block .delete
+{
+	background-image: url(./img/block_delete@2x.png);
+	background-size: 30px 60px;
+}
+
+.block .draghandle
+{
+	display: none;
+}
+
+.block.file .draghandle
+{
+	display: block;
+}
+
+.editing .block .delete
+{
+	display: block;
+}
+
+.editing .block:hover > .wrapper > .inner > .delete
+{
+	opacity: 1;
+}
+
+.block .delete:active
+{
+	background-position: 0px -30px;
+}
+
+.block .debug
+{
+	background-color: #FFEDCC;
+	color: orange !important;
+	cursor: pointer !important;
+	display: none;
+	font-size: 10px;
+	font-weight: bold;
+	height: 20px;
+	line-height: 20px;
+	padding: 0px 4px;
+	position: absolute;
+	right: 0px;
+	top: -20px;
+	z-index: 500;
+}
+
+/* @end */
+
+/* @group Toolbar */
+
+.toolbar .toplevel.file > span,
+.toolbar .toplevel.table > span,
+.toolbar .toplevel.sandbox > span
+{
+	text-indent: -9999px;
+	width: 16px;
+}
+
+.toolbar .toplevel.file > span {
+	background: transparent url(./img/editor_toolbar_file.png) center 2px no-repeat !important;
+}
+
+body.hidpi .toolbar .toplevel.file > span {
+	background-image: url(./img/editor_toolbar_file@2x.png) !important;
+	background-size: 11px 12px !important;
+}
+
+.toolbar .toplevel.table > span {
+	background: transparent url(./img/editor_toolbar_table.png) center 2px no-repeat !important;
+}
+
+body.hidpi .toolbar .toplevel.table > span {
+	background-image: url(./img/editor_toolbar_table@2x.png) !important;
+	background-size: 16px 12px !important;
+}
+
+.toolbar .toplevel.sandbox > span {
+	background: transparent url(./img/editor_toolbar_html_snippet.png) 5px 3px no-repeat !important;
+}
+
+body.hidpi .toolbar .toplevel.sandbox > span {
+	background-image: url(./img/editor_toolbar_html_snippet@2x.png) !important;
+	background-size: 20px 10px !important;
+}
+
+.toolbar .toplevel.indentation .indent > span,
+.toolbar .toplevel.indentation .outdent > span
+{
+	text-indent: -9999px;
+	width: 8px;
+}
+
+.toolbar .toplevel.indentation .indent > span {
+	background: transparent url(./img/editor_toolbar_indent.png) center 3px no-repeat !important;
+}
+
+body.hidpi .toolbar .toplevel.indentation .indent > span {
+	background-image: url(./img/editor_toolbar_indent@2x.png) !important;
+	background-size: 11px 10px !important;
+}
+
+.toolbar .toplevel.indentation .outdent > span {
+	background: transparent url(./img/editor_toolbar_outdent.png) center 3px no-repeat !important;
+	width: 9px;
+}
+
+body.hidpi .toolbar .toplevel.indentation .outdent > span {
+	background-image:  url(./img/editor_toolbar_outdent@2x.png) !important;
+	background-size: 11px 10px !important;
+}
+
+/* @end */
+
+/* @group CC.WikiEditor.TextBlock */
+
+.block.text
+{
+	cursor: text !important;
+	margin: 0px;
+	position: relative;
+}
+
+.block.text > .wrapper > .inner > .delete
+{
+	display: none;
+}
+
+.block.text .content .editable
+{
+	font-size: 13px;
+	line-height: 18px;
+	min-height: 18px;
+	padding-left: 36px;
+	padding-right: 36px;
+	word-wrap: break-word;
+}
+
+.block.text .content .editable:focus
+{
+	outline: none;
+}
+
+.block.text a:link,
+.block.text a:active,
+.block.text a:visited,
+.block.text a:hover
+{
+	color: #4B8ABA;
+}
+
+.block.text a:hover
+{
+	text-decoration: underline;
+}
+
+.editing .block.text a
+{
+	cursor: text !important;
+	text-decoration: none !important;
+}
+
+.block.text .align-left,
+.block.text .align-right,
+.block.text .align-center,
+.block.text .align-justify
+{
+	display: block;
+}
+
+.block.text .align-left { text-align: left; }
+.block.text .align-right { text-align: right; }
+.block.text .align-center { text-align: center; }
+.block.text .align-justify { text-align: justify; }
+
+.toolbar .textblock .formatting > span,
+.toolbar .textblock .style > span,
+.toolbar .textblock .link > span,
+.toolbar .textblock .liststyle > span,
+.toolbar .textblock .item .left,
+.toolbar .textblock .item .right,
+.toolbar .textblock .item .center,
+.toolbar .textblock .item .justify
+{
+	text-indent: -9999px;
+}
+
+.toolbar .textblock .formatting > span,
+.toolbar .textblock .style > span,
+.toolbar .textblock .link > span,
+.toolbar .textblock .liststyle > span
+{
+	height: 9px;
+	margin: 3px 0px 0px 7px;
+	padding: 0px 2px 3px 0px !important;
+	width: 19px !important;
+}
+
+.toolbar .textblock .formatting > span {
+	background: transparent url(./img/editor_toolbar_paragraph_styles.png) top left no-repeat !important;
+}
+
+body.hidpi .toolbar .textblock .formatting > span {
+	background-image: url(./img/editor_toolbar_paragraph_styles@2x.png) !important;
+	background-size: 20px 10px !important;
+}
+
+.toolbar .textblock .style > span {
+	background: transparent url(./img/editor_toolbar_text_styles.png) 0px -1px no-repeat !important;
+}
+
+body.hidpi .toolbar .textblock .style > span {
+	background-image: url(./img/editor_toolbar_text_styles@2x.png) !important;
+	background-size: 19px 11px !important;
+}
+
+.toolbar .textblock .link > span {
+	background: transparent url(./img/editor_toolbar_link.png) top left no-repeat !important;
+	margin-left: 6px;
+	margin-top: 2px;
+	width: 20px !important;
+}
+
+body.hidpi .toolbar .textblock .link > span {
+	background-image: url(./img/editor_toolbar_link@2x.png) !important;
+	background-size: 21px 11px !important;
+}
+
+.toolbar .textblock .liststyle > span {
+	background: transparent url(./img/editor_toolbar_list.png) top left no-repeat !important;
+	margin-left: 5px;
+	width: 21px !important;
+}
+
+body.hidpi .toolbar .textblock .liststyle > span {
+	background-image: url(./img/editor_toolbar_list@2x.png) !important;
+	background-size: 22px 10px !important;
+}
+
+.toolbar .textblock .item .left span,
+.toolbar .textblock .item .right span,
+.toolbar .textblock .item .center span,
+.toolbar .textblock .item .justify span
+{
+	height: 9px;
+	width: 12px;
+	margin: 3px 5px;
+	padding: 0px;
+}
+
+.toolbar .textblock .item .left span {
+	background: transparent url(./img/editor_toolbar_align_left.png) 2px 0px no-repeat;
+	padding-left: 2px;
+}
+
+.toolbar .textblock .item .right span {
+	background: transparent url(./img/editor_toolbar_align_right.png) top left no-repeat;
+}
+
+.toolbar .textblock .item .center span {
+	background: transparent url(./img/editor_toolbar_align_center.png) top left no-repeat;
+}
+
+.toolbar .textblock .item .justify span {
+	background: transparent url(./img/editor_toolbar_align_justify.png) top left no-repeat;
+	padding-right: 1px;
+}
+
+/* HiDPI align */
+body.hidpi .toolbar .textblock .item .left span {
+	background-image: url(./img/editor_toolbar_align_left@2x.png);
+	background-size: 11px 10px;
+}
+
+body.hidpi .toolbar .textblock .item .right span {
+	background-image: url(./img/editor_toolbar_align_right@2x.png);
+	background-size: 11px 10px;
+}
+
+body.hidpi .toolbar .textblock .item .center span {
+	background-image: url(./img/editor_toolbar_align_center@2x.png);
+	background-size: 11px 10px;
+}
+
+body.hidpi .toolbar .textblock .item .justify span {
+	background-image: url(./img/editor_toolbar_align_justify@2x.png);
+	background-size: 11px 10px;
+}
+/* HiDPI end*/
+
+.toolbar .textblock .blockquote,
+.block.text .content .editable blockquote.quote,
+.block.text .content .editable.blockquote
+{
+	border-left: 2px solid #CCCCCC;
+	color: #5E5E5E;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+	font-size: 13px;
+	margin: 10px 56px;
+	padding: 2px 8px;
+}
+
+.block.text .content .editable blockquote.quote p,
+.block.text .content .editable blockquote.quote blockquote,
+.block.text .content .editable blockquote.quote pre,
+.block.text .content .editable blockquote.quote h1,
+.block.text .content .editable blockquote.quote h2,
+.block.text .content .editable blockquote.quote h3
+{
+	padding-bottom: 0px;
+}
+
+.toolbar .textblock .blockquote
+{
+	border-left: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.toolbar .textblock .blockquote:hover
+{
+	color: #FFFFFF;
+}
+
+.block.text .content .editable blockquote
+{
+	margin: 0px 40px;
+}
+
+.toolbar .textblock .pre,
+.block.text .content .editable pre,
+.block.text .content .editable.pre
+{
+	font-family: "Courier New", Courier, mono;
+	font-size: 14px;
+	white-space: pre;
+}
+
+.toolbar .textblock .h1,
+.block.text .content .editable h1,
+.block.text .content .editable.h1
+{
+	font-size: 24px;
+	line-height: 27px;
+}
+
+.toolbar .textblock .h2,
+.block.text .content .editable h2,
+.block.text .content .editable.h2
+{
+	font-size: 18px;
+	line-height: 25px;
+}
+
+.toolbar .textblock .h3,
+.block.text .content .editable h3,
+.block.text .content .editable.h3
+{
+	font-size: 16px;
+	line-height: 21px;
+}
+
+.block.text .content .editable p,
+.block.text .content .editable pre,
+.block.text .content .editable h1,
+.block.text .content .editable h2,
+.block.text .content .editable h3,
+.block.text .content .editable.p,
+.block.text .content .editable.pre,
+.block.text .content .editable.h1,
+.block.text .content .editable.h2,
+.block.text .content .editable.h3
+{
+	margin: 10px 0px 0px 0px;
+}
+
+.block.text .content .editable p,
+.block.text .content .editable.p
+{
+	margin-top: 11px;
+}
+
+.block.text .content .editable h1,
+.block.text .content .editable.h1
+{
+	margin-top: 13px;
+}
+
+.block.text .content .editable h2,
+.block.text .content .editable.h2
+{
+	margin-top: 15px;
+}
+
+.block.text .content .editable h3,
+.block.text .content .editable.h3
+{
+	margin-top: 8px;
+}
+
+.toolbar .textblock .bold,
+.block.text .content .editable .bold
+{
+	font-weight: bold;
+}
+
+.toolbar .textblock .italic,
+.block.text .content .editable .italic
+{
+	font-style: italic;
+}
+
+.toolbar .textblock .underline,
+.block.text .content .editable .underline
+{
+	text-decoration: underline;
+}
+
+.toolbar .textblock .important,
+.block.text .content .editable .important,
+.block.text .content .editable .custom_forecolor_important
+{
+	color: red;
+	font-weight: bold;
+}
+
+.toolbar .textblock .emphasis,
+.block.text .content .editable .emphasis,
+.block.text .content .editable .custom_forecolor_emphasis
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.toolbar .textblock .highlight,
+.block.text .content .editable .highlight,
+.block.text .content .editable .custom_backcolor_highlight
+{
+	background-color: #ECEEA8;
+	color: #666666;
+}
+
+.toolbar .textblock .highlight span
+{
+	border: 1px solid #FFFFFF;
+	border-top-width: 2px;
+	border-right-width: 23px;
+	border-bottom-width: 2px;
+	border-left-width: 23px;
+	margin: -1px 0px;
+	padding: 2px 4px !important;
+}
+
+.toolbar .textblock .highlight span:hover
+{
+	border-color: transparent;
+}
+
+.block.text .content .editable ol,
+.block.text .content .editable ul
+{
+	margin: 7px 40px 7px 40px;
+}
+
+.block.text .content .editable ol ol,
+.block.text .content .editable ol ul,
+.block.text .content .editable ul ol,
+.block.text .content .editable ul ul
+{
+	margin: 0px 40px 0px 40px;
+}
+
+.block.text .content .editable ul
+{
+	list-style-type: disc;
+}
+
+.block.text .content .editable ol
+{
+	list-style-type: decimal;
+}
+
+/* @end */
+
+/* @group Text debug mode */
+
+.block.table .block.text .debug
+{
+	right: -3px;
+	top: -23px;
+}
+
+.block.text .debug:hover,
+.block.text .guid:hover
+{
+	cursor: pointer !important;
+}
+
+.wikieditor-debugmode.editing .block.text:hover > .wrapper > .inner > .debug,
+.wikieditor-debugmode.editing .block.text:hover > .wrapper > .inner > .guid
+{
+	display: block;
+}
+
+.wikieditor-debugmode.editing .block.text:hover
+{
+	background-color: #FFEBCC !important;
+}
+
+.wikieditor-debugmode.editing .block.text.editing
+{
+	background-color: #CAE5CC;
+}
+
+#text_block_debug_dialog th
+{
+	vertical-align: top;
+}
+
+#text_block_debug_dialog_html
+{
+	border: 1px solid #DBDBDB;
+	color: #5F5F5F;
+	height: 250px;
+	outline: none;
+	padding: 4px;
+	width: 500px;
+}
+
+#text_block_debug_dialog_properties
+{
+	padding: 2px 0px;
+	width: 500px;
+}
+
+#text_block_copy_paste_debug
+{
+	background: #FFFFFF;
+	border-top: 1px solid #CCCCCC;
+	bottom: 0px;
+	display: none;
+	height: 220px;
+	left: 0px;
+	opacity: 0.8;
+	position: absolute;
+	right: 0px;
+	z-index: 5000;
+	-webkit-transition: height 0.4s ease-in-out;
+}
+
+#text_block_copy_paste_debug.collapsed
+{
+	height: 40px;
+}
+
+#text_block_copy_paste_debug.collapsed input.clear,
+#text_block_copy_paste_debug.collapsed span,
+#text_block_copy_paste_debug.collapsed div.clipboard
+{
+	display: none;
+}
+
+.wikieditor-debugmode #text_block_copy_paste_debug
+{
+	display: block;
+}
+
+#text_block_copy_paste_debug h2
+{
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	padding: 10px 0px 0px 0px;
+}
+
+#text_block_copy_paste_debug span
+{
+	color: #666666;
+	font-size: 11px;
+	padding: 0px 14px;
+}
+
+#text_block_copy_paste_debug input.clear
+{
+	position: absolute;
+	top: 10px;
+	right: 68px;
+}
+
+#text_block_copy_paste_debug input.toggle
+{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+#text_block_copy_paste_debug .clipboard
+{
+	background: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	height: 150px;
+	left: 10px;
+	overflow-y: scroll;
+	position: absolute;
+	right: 10px;
+	top: 50px;
+}
+
+/* @end */
+
+/* @group CC.WikiEditor.SandboxBlock */
+
+.block.sandbox > .wrapper
+{
+	display: table-cell;
+	min-width: 360px;
+}
+
+.firefox4plus .block.sandbox > .wrapper,
+.ie9plus .block.sandbox > .wrapper
+{
+	display: block;
+}
+
+.block.sandbox .container
+{
+	background: transparent !important;
+	border: 1px solid transparent;
+	margin: 0px 1px;
+	position: relative;
+	display: block;
+	border-radius: 4px;
+	box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+}
+
+.block.sandbox.editing .container
+{
+	border-color: #7DBEF1;
+	box-shadow: 0px 0px 6px rgba(82,168,236,0.5);
+}
+
+.block.sandbox.staged
+{
+	-webkit-perspective: 1000;
+}
+
+.block.sandbox.staged .container
+{
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition: -webkit-transform 0.75s ease-in-out;
+}
+
+.block.sandbox .container .frontside,
+.block.sandbox .container .flipside
+{
+	overflow: hidden;
+	-webkit-backface-visibility: hidden;
+	border-radius: 4px;
+}
+
+.block.sandbox .container .flipside
+{
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	position: absolute;
+}
+
+.block.sandbox.flipped .container,
+.block.sandbox.flipped .container .flipside
+{
+	-webkit-transform: rotateY(-180deg);
+}
+
+.block.sandbox.flipped.focused .container,
+.block.sandbox.flipped.focused .container .flipside
+{
+	-webkit-transform: rotate(0deg) !important;
+	-webkit-transition: none !important;
+}
+
+.block.sandbox.reset .container
+{
+	-webkit-transform: rotateY(-180deg) !important;
+	-webkit-transition: none !important;
+}
+
+.block.sandbox.reset .flipside
+{
+	-webkit-transition: none !important;
+}
+
+.block.sandbox .container .info
+{
+	background: transparent url(./img/sandboxblock_info.png) top left no-repeat;
+	bottom: 7px;
+	cursor: default;
+	display: none;
+	height: 17px;
+	opacity: 0;
+	position: absolute;
+	right: 7px;
+	width: 17px;
+	-webkit-transition: opacity 0.15s linear;
+}
+
+body.hidpi .block.sandbox .container .info
+{
+	background-image: url(./img/sandboxblock_info@2x.png);
+	background-size: 17px 17px;
+}
+
+.editing .block.sandbox .container .info
+{
+	display: block;
+}
+
+.block.sandbox.focused .container .info,
+.block.sandbox.flipped .container .info
+{
+	display: none !important;
+}
+
+.block.sandbox .container:hover .info
+{
+	opacity: 1;
+}
+
+.block.sandbox.focused .delete,
+.block.sandbox.flipped .delete
+{
+	display: none !important;
+}
+
+.block.sandbox .container .flipside
+{
+	background: #3E3D43;
+	background: -webkit-gradient(linear, left top, right top, from(#57575B), to(#3E3D43));
+	background: -moz-linear-gradient(left,#57575B, #3E3D43);
+	display: none;
+	left: 0px;
+	font-size: 18px !important;
+	position: absolute;
+	top: 0px;
+	border-radius: inherit;
+	-webkit-backface-visibility: hidden;
+	box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
+}
+
+.block.staged .container .flipside
+{
+	display: block;
+	-webkit-transform: rotateY(-180deg);
+	-webkit-transition: -webkit-transform 0.75s ease-in-out;
+}
+
+.block.sandbox .flipside .controls .markup
+{
+	background-color: rgba(0,0,0,0.1);
+	border: 1px solid #353535;
+	border-left-color: #444444;
+	border-right-color: #444444;
+	color: white;
+	font-family: Helvetica, Arial, Geneva, sans-serif;
+	font-size: 12px;
+	padding: 6px;
+	resize: none;
+}
+
+.block.sandbox .flipside .controls .markup:focus
+{
+	outline: none;
+}
+
+.block.sandbox .flipside .buttons
+{
+	bottom: 0px;
+	display: block;
+	height: 23px;
+	left: 12px;
+	min-width: 200px;
+	padding: 0px 0px 13px 0px;
+	position: absolute;
+	right: 12px;
+	text-align: right;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
+
+.block.sandbox .flipside .button
+{
+	border-width: 0px 5px;
+	display: inline-block;
+	color: #FFFFFF;
+	cursor: default;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 23px;
+	margin: 4px 0px;
+	max-width: 40%;
+	overflow: hidden;
+	padding: 0px 8px;
+	position: absolute;
+	text-overflow: ellipsis;
+	text-align: center;
+	top: 0px;
+	text-shadow: rgba(0,0,0,0.4) 0px 1px 1px;
+	white-space: nowrap;
+	-webkit-border-image: url(./img/sandboxblock_flipside_glossy_button.png) 0 5 0 5 repeat;
+	-moz-border-image: url(./img/sandboxblock_flipside_glossy_button.png) 0 5 0 5 repeat;
+}
+
+body.hidpi .block.sandbox .flipside .button
+{
+	-webkit-border-image: url(./img/sandboxblock_flipside_glossy_button@2x.png) 0 10 0 10 repeat;
+	-moz-border-image: url(./img/sandboxblock_flipside_glossy_button@2x.png) 0 10 0 10 repeat;
+}
+
+.block.sandbox .flipside .button:active
+{
+	background-color: rgba(0,0,0,0.25);
+	border-radius: 6px;
+}
+
+.block.sandbox .flipside .button.matchstyles
+{
+	left: 0px;
+}
+
+.block.sandbox .flipside .button.done
+{
+	right: 0px;
+}
+
+.block.sandbox .container
+{
+	background-color: #FFFFFF;
+}
+
+.block.sandbox .frontside .iframe
+{
+	display: block;
+	margin: 15px;
+	border-radius: inherit;
+}
+
+.block.sandbox .container,
+.block.sandbox iframe
+{
+	min-height: 150px;
+}
+
+#sandbox_block_match_styles_dialog input.primaryaction
+{
+	width: 90px;
+}
+
+.page.migrated .block.sandbox .container
+{
+	background: #FFFFFF;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.block.sandbox .frontside .iframe img
+{
+	max-width: 100%;
+}
+
+.block.sandbox .frontside .iframe table th
+{
+	background-color: #E7E7E7;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.block.sandbox .frontside .iframe table th,
+.block.sandbox .frontside .iframe table td
+{
+	border: 1px solid #D7D7D7;
+	border-bottom: none;
+	border-right: none;
+	padding: 4px;
+}
+
+.block.sandbox .frontside .iframe table tr:nth-child(even) td
+{
+	background-color: #F6F6F6;
+}
+
+.block.sandbox .frontside .iframe table th:last-child,
+.block.sandbox .frontside .iframe table td:last-child
+{
+	border-right: 1px solid #D7D7D7;
+}
+
+.block.sandbox .frontside .iframe table tr:last-child td
+{
+	border-bottom: 1px solid #D7D7D7;
+}
+
+/* @end */
+
+/* @group CC.WikiEditor.AttachmentBlock */
+
+.block.attachment .attachment
+{
+	font-family: Helvetica, Arial, Geneva, sans-serif;
+	min-width: 250px;
+	max-width: 300px;
+	margin: 0px 1px;
+	position: relative;
+}
+
+.block.attachment .inner > .delete
+{
+	display: none;
+}
+
+.block.attachment .left-container .delete
+{
+	background-image: url(./img/attachmentblock_delete.png);
+	height: 21px;
+	left: -10px;
+	top: -10px;
+	width: 21px;
+}
+
+body.hidpi .block.attachment .left-container .delete
+{
+	background-image: url(./img/attachmentblock_delete@2x.png);
+	background-size: 21px 42px;
+}
+
+.block.attachment .left-container .delete:active
+{
+	background-position: 0px -21px;
+}
+
+.editing .block.attachment .attachment:hover .left-container .delete
+{
+	opacity: 1;
+}
+
+.block.attachment .attachment,
+.block.attachment .left-cap,
+.block.attachment .mid,
+.block.attachment .right-cap,
+.block.attachment .filename
+{
+	height: 24px;
+}
+
+.block.attachment .left-container
+{
+	left: 0px;
+	position: absolute;
+	right: 10px;
+	top: 0px;
+}
+
+.block.attachment .left-cap
+{
+	background: transparent url(./img/attachmentblock_bg.png) 0px 0px no-repeat;
+	float: left;
+	width: 10px;
+}
+
+.block.attachment .mid
+{
+	background: transparent url(./img/attachmentblock_bg.png) 0px -72px repeat-x;
+	bottom: 0px;
+	display: block;
+	left: 10px;
+	position: absolute;
+	right: 0px;
+	text-overflow: ellipsis;
+	text-shadow: #F0F0F0 0px 1px 0px;
+	top: 0px;
+}
+
+.block.attachment .right-cap
+{
+	background: transparent url(./img/attachmentblock_bg.png) -10px 0px no-repeat;
+	float: right;
+	overflow: hidden;
+	width: 27px;
+}
+
+body.hidpi .block.attachment .left-cap,
+body.hidpi .block.attachment .mid,
+body.hidpi .block.attachment .right-cap
+{
+	background-image: url(./img/attachmentblock_bg@2x.png);
+	background-size: 88px 120px;
+}
+
+.block.attachment .attachment:hover .left-cap
+{
+	background-position: 0px -24px;
+}
+
+.block.attachment .attachment:hover .mid
+{
+	background-position: 0px -96px;
+}
+
+.block.attachment .attachment:hover .right-cap
+{
+	background-position: -10px -24px;
+}
+
+.block.attachment .filename
+{
+	background: transparent url(./img/attachment_default_icon.png) left center no-repeat;
+	color: #333333;
+	display: block;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 24px;
+	overflow: hidden;
+	padding: 0px 10px 0px 22px;
+	text-overflow: ellipsis;
+	text-shadow: #F0F0F0 0px 1px 0px;
+	white-space: nowrap;
+}
+
+body.hidpi .block.attachment .filename
+{
+	background-image: url(./img/attachment_default_icon@2x.png);
+	background-size: 16px 16px;
+}
+
+.block.attachment .filename.media
+{
+	background-image: url(./img/attachment_media_icon.png);
+}
+
+body.hidpi .block.attachment .filename.media
+{
+	background-image: url(./img/attachment_media_icon@2x.png);
+	background-size: 16px 16px;
+}
+
+.block.attachment .attachment.quicklookable .left-container
+{
+	right: 41px;
+}
+
+.block.attachment .attachment.quicklookable .right-cap
+{
+	background-position: -37px 0px;
+	width: 41px;
+}
+
+.block.attachment .attachment.quicklookable:hover .left-cap
+{
+	background-position: 0px 0px;
+}
+
+.block.attachment .attachment.quicklookable:hover .mid
+{
+	background-position: 0px -72px;
+}
+
+.block.attachment .attachment.quicklookable .left-container:hover .left-cap
+{
+	background-position: 0px -24px;
+}
+
+.block.attachment .attachment.quicklookable .left-container:hover .mid
+{
+	background-position: 0px -96px;
+}
+
+.block.attachment .attachment.quicklookable:hover .right-cap
+{
+	background-position: -37px -24px;
+}
+
+.block.attachment .attachment.quicklookable .right-cap:hover
+{
+	background-position: -37px -48px;
+}
+
+.block.attachment .attachment:hover
+{
+	cursor: pointer;
+}
+
+.editing .block.attachment .attachment:hover
+{
+	cursor: default;
+}
+
+.editing .block.attachment .attachment .left-container
+{
+	right: 10px !important;
+}
+
+.editing .block.attachment .attachment .left-container .left-cap
+{
+	background-position: 0px 0px !important;
+}
+
+.editing .block.attachment .attachment .left-container .mid
+{
+	background-position: 0px -72px !important;
+}
+
+.editing .block.attachment .attachment .right-cap
+{
+	background-position: -78px 0px !important;
+	width: 10px;
+}
+
+/* @end */
+
+/* @group CC.WikiEditor.ImageBlock, CC.WikiEditor.MediaBlock */
+
+.block.image .wrapper,
+.block.media .wrapper
+{
+	display: table-cell;
+	margin: 0px 1px;
+	max-width: 696px; /* 768px - 2*36px */
+	text-align: center;
+}
+
+.ie9plus .block.image .wrapper,
+.ie9plus .block.media .wrapper
+{
+	display: block;
+}
+
+.ie9plus .block.table .block.image .wrapper,
+.ie9plus .block.table .block.media .wrapper
+{
+	max-width: none;
+}
+
+.block.image .inner,
+.block.media .inner
+{
+	max-width: 100%;
+}
+
+.block.image .inner > .delete,
+.block.media .inner > .delete
+{
+	display: none;
+}
+
+.editing .block.image:hover .content .delete,
+.editing .block.media:hover .content .delete
+{
+	opacity: 1;
+}
+
+.block.image .container .delete,
+.block.media .container .delete
+{
+	top: -15px;
+}
+
+.block.image .container,
+.block.media .container
+{
+	background-color: #F0F0F0;
+	border: 1px solid #FFFFFF;
+	cursor: default;
+	display: block;
+	min-height: 20px;
+	min-width: 20px;
+	position: relative;
+	border-radius: 4px;
+	box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
+}
+
+.block.media .container
+{
+	border-radius: 0px !important;
+}
+
+.block.image.editing .container,
+.block.media.editing .container
+{
+	border-color: #7DBEF1;
+	box-shadow: 0px 0px 6px rgba(82,168,236,0.5);
+}
+
+.block.image .container.borderless
+{
+	background: transparent;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.block.image .image
+{
+	overflow: hidden;
+	border-radius: 4px;
+}
+
+.block.image .image,
+.editing .block.image .image.linked
+{
+	cursor: default;
+}
+
+.block.image .image.linked
+{
+	cursor: pointer;
+}
+
+.block.image .image img,
+.block.media .image img
+{
+	display: block;
+	max-width: 100%;
+}
+
+@-moz-document url-prefix()
+{
+	td .block.image .image img,
+	td .block.media .image img
+	{
+		max-width: auto;
+		width: 100%;
+	}
+}
+
+.block.image .placeholder
+{
+	display: none;
+}
+
+.block.image.loading .placeholder
+{
+	background-color: #F0F0F0;
+	display: block;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	z-index: 2;
+}
+
+.block.image .placeholder h2
+{
+	background: transparent url(./img/spinner_transparent.gif) top center no-repeat;
+	display: block;
+	font-size: 18px;
+	left: 50%;
+	margin: -40px -75px;
+	padding: 45px 0px 0px 0px;
+	position: absolute;
+	top: 50%;
+	width: 150px;
+}
+
+.block.image .inner,
+.block.attachment .inner,
+.block.media .inner
+{
+	display: inline-block;
+}
+
+.block.media .placeholder
+{
+	cursor: default;
+	height: 258px;
+	position: relative;
+	width: 258px;
+}
+
+.block.media.audio .media
+{
+	background: transparent url(./img/media_audio_poster.png);
+}
+
+body.hidpi .block.media.audio .media
+{
+	background-image: url(./img/media_audio_poster@2x.png);
+	background-size: 258px 258px;
+}
+
+.block.media .play
+{
+	background: rgba(0,0,0,0.1) url(./img/movie_play.png) center center no-repeat;
+	cursor: pointer;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+body.hidpi .block.media .play
+{
+	background-image: url(./img/movie_play@2x.png);
+	background-size: 62px 61px;
+}
+
+.block.media .content .container .placeholder > h2
+{
+	color: #666666;
+	font-size: 14px;
+	line-height: 18px;
+	margin: 0px;
+	padding: 105px 15px 0px 15px;
+	text-align: center;
+}
+
+.block.media img
+{
+	display: block;
+}
+
+.block.media .container.loading
+{
+	background: #F0F0F0 url(./img/spinner_transparent.gif) center center no-repeat;
+}
+
+/* @end */
+
+/* @group CC.WikiEditor.TableBlock */
+
+.block.table
+{
+	cursor: default;
+	margin: 0px 0px 18px -18px;
+	text-align: center;
+}
+
+.block.table table
+{
+	table-layout: fixed;
+}
+
+.block.table > .wrapper
+{
+	display: table-cell;
+	max-width: 714px; /* 768px - 2*36px + 18px */
+}
+
+.firefox4plus .block.table > .wrapper,
+.ie9plus .block.table > .wrapper
+{
+	display: block;
+	height: auto;
+}
+
+.block.table > .wrapper,
+.editing .block.table td:not(.reserved)
+{
+	cursor: text;
+}
+
+.block.table td.cell
+{
+	padding: 2px;
+}
+
+.block.table > .wrapper > .inner
+{
+	display: inline-block;
+}
+
+.block.table > .wrapper > .inner > .content > .container
+{
+	display: inline-block;
+	position: relative;
+}
+
+.block.table > .wrapper > .inner > .delete
+{
+	display: none;
+}
+
+.block.table .reserved.header
+{
+	background: #D4D4D4 !important;
+	background: -webkit-gradient(linear, left top, right top, from(#E1E1E1), to(#D4D4D4), color-stop(0.49, #E1E1E1), color-stop(0.5, #D4D4D4)) !important;
+	background: -moz-linear-gradient(left, #E1E1E1, #E1E1E1 49%, #D4D4D4 50%, #D4D4D4) !important;
+	border: 1px solid #FFF;
+	color: #4E4E4E;
+	cursor: default;
+	font-size: 11px;
+	opacity: 0;
+	padding: 0px !important;
+	text-align: center;
+}
+
+.editing .block.table:hover .reserved.header,
+.block.table .showingmenu .reserved.header
+{
+	opacity: 1;
+	border-color: #9F9F9F;
+}
+
+.block.table .reserved.header,
+.block.table td,
+.block.table tr:last-child td,
+.block.table td:last-child,
+.block.table tr:first-child + tr td,
+.block.table .reserved.header.row + td
+{
+	-webkit-transition-property: opacity, border-color;
+	-webkit-transition-duration: 0.2s;
+	-webkit-transition-timing-function: ease-in-out;
+}
+
+.block.table .reserved.header.col
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#E1E1E1), to(#D4D4D4), color-stop(0.49, #E1E1E1), color-stop(0.5, #D4D4D4)) !important;
+	background: -moz-linear-gradient(top, #E1E1E1, #E1E1E1 49%, #D4D4D4 50%, #D4D4D4) !important;
+	border-left: none;
+	min-width: 44px;
+}
+
+.block.table .reserved.header.row
+{
+	border-top: none;
+	vertical-align: top;
+}
+
+.block.table .reserved.header.col
+{
+	vertical-align: top;
+}
+
+.block.table .reserved.header > div
+{
+	display: block;
+	position: relative;
+}
+
+.block.table .reserved.header div .top,
+.block.table .reserved.header div .right,
+.block.table .reserved.header div .bottom,
+.block.table .reserved.header div .left
+{
+	background-color: #EDEDED;
+	display: block;
+	position: absolute;
+}
+
+.block.table .reserved.header div .top
+{
+	height: 1px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+}
+
+.block.table .reserved.header div .right
+{
+	bottom: 0px;
+	right: 0px;
+	top: 0px;
+	width: 1px;
+}
+
+.block.table .reserved.header div .bottom
+{
+	height: 1px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+.block.table .reserved.header div .left
+{
+	bottom: 0px;
+	left: 0px;
+	top: 0px;
+	width: 1px;
+}
+
+.block.table .reserved.header.row > div .left,
+.block.table .reserved.header.row > div .right,
+.block.table .reserved.header.col > div .top,
+.block.table .reserved.header.col > div .bottom
+{
+	display: none;
+}
+
+.block.table .reserved.header .index
+{
+	display: none;
+	line-height: 16px;
+}
+
+.block.table .reserved.header.col .menu
+{
+	background: rgba(0,0,0,0.15) url(./img/tableblock_col_sort_arrow.png) center center no-repeat;
+	bottom: 0px;
+	display: none;
+	position: absolute;
+	right: -1px;
+	top: 0px;
+	width: 16px;
+}
+
+.block.table .reserved.header.row .menu
+{
+	background: transparent url(./img/tableblock_row_sort_arrow.png) center center no-repeat;
+	bottom: 0px;
+	display: none;
+	height: 16px;
+	margin-top: -7px;
+	position: absolute;
+	right: -10px;
+	top: 50%;
+	width: 20px;
+	z-index: 10;
+}
+
+body.hidpi .block.table .reserved.header.col .menu {
+	background-image: url(./img/tableblock_col_sort_arrow@2x.png);
+	background-size: 6px 4px;
+}
+
+body.hidpi .block.table .reserved.header.row .menu {
+	background-image: url(./img/tableblock_row_sort_arrow@2x.png);
+	background-size: 14px 14px;
+}
+
+
+.block.table .reserved.header.row .index
+{
+	margin-top: -13px;
+	position: absolute;
+	top: 50%;
+	width: 14px;
+}
+
+.block.table .reserved.header:hover .menu
+{
+	display: block;
+}
+
+.block.table .reserved.header.col .resize,
+.block.table .reserved.header.row .resize
+{
+	display: block;
+	position: absolute;
+	z-index: 20;
+}
+
+.block.table .reserved.header.col .resize
+{
+	bottom: 0px;
+	cursor: col-resize;
+	right: -4px;
+	top: 0px;
+	width: 6px;
+}
+
+.block.table .reserved.header.row .resize
+{
+	bottom: -4px;
+	cursor: row-resize;
+	height: 6px;
+	left: 0px;
+	right: 0px;
+}
+
+.block.table.resizing .index,
+.block.table.resizing .menu
+{
+	display: none !important;
+}
+
+.block.table .reserved.header .sizer
+{
+	display: block;
+}
+
+.block.table td
+{
+	border-bottom: 1px solid transparent;
+	border-right: 1px solid transparent;
+	padding: 0px;
+	vertical-align: top;
+}
+
+.block.table table.gridlines td
+{
+	border-bottom-color: #D7D7D7;
+	border-right-color: #D7D7D7;
+}
+
+.block.table tr:last-child td
+{
+	border-bottom: 1px solid transparent;
+}
+
+.block.table table.gridlines tr:last-child td
+{
+	border-bottom-color: #D7D7D7;
+}
+
+.block.table td:last-child
+{
+	border-right: 1px solid transparent;
+}
+
+.block.table table.gridlines td:last-child
+{
+	border-right-color: #D7D7D7;
+}
+
+.block.table table.alternating tr:nth-child(odd) td
+{
+	background: transparent;
+}
+
+.block.table table.alternating tr:nth-child(even) td
+{
+	background: #F6F6F6;
+}
+
+.block.table tr:first-child + tr td
+{
+	border-top: 1px solid transparent;	
+}
+
+.block.table table.gridlines tr:first-child + tr td
+{
+	border-top-color: #D7D7D7;
+}
+
+.block.table .reserved.header.row + td
+{
+	border-left: 1px solid transparent;
+}
+
+.block.table table.gridlines .reserved.header.row + td
+{
+	border-left-color: #D7D7D7;
+}
+
+.block.table table .reserved.header > .delete
+{
+	background: transparent url(./img/tableblock_delete_off.png) center 3px no-repeat;
+	display: block;
+	width: 16px !important;
+	height: 16px !important;
+	margin: 0px;
+	opacity: 1;
+	position: static !important;
+}
+
+body.hidpi .block.table table .reserved.header > .delete
+{
+	background-image: url(./img/tableblock_delete_off@2x.png);
+	background-size: 12px 13px;
+}
+
+.block.table table .reserved.header .delete:hover
+{
+	background-image: url(./img/tableblock_delete_over.png) !important;
+}
+
+body.hidpi .block.table table .reserved.header .delete:hover
+{
+	background-image: url(./img/tableblock_delete_over@2x.png) !important;
+	background-size: 12px 13px;
+}
+
+.block.table table .reserved.header .delete:active
+{
+	background-image: url(./img/tableblock_delete_on.png) !important;
+}
+
+body.hidpi .block.table table .reserved.header .delete:active
+{
+	background-image: url(./img/tableblock_delete_on@2x.png) !important;
+	background-size: 12px 13px;
+}
+
+.editor.inline.popup.forrow .appliescolumn,
+.editor.inline.popup.forcolumn .appliesrow
+{
+	display: none;
+}
+
+.block.table .block
+{
+	margin: 0px;
+}
+
+.block.table .block:not(.text)
+{
+	padding-bottom: 4px;
+}
+
+.block.table .block + .block
+{
+	padding-top: 4px;
+}
+
+.block.table .block.text .content .editable
+{
+	font-size: 12px;
+	padding: 4px;
+}
+
+.block.table .block.text .content .editable blockquote.quote
+{
+	margin: 4px 8px 4px 8px;
+	padding: 2px 6px;
+}
+
+.block.table .block.text .content .editable pre
+{
+	font-size: 12px;
+}
+
+.block.table .block.text .content .editable h1
+{
+	font-size: 18px;
+}
+
+.block.table .block.text .content .editable h2
+{
+	font-size: 15px;
+}
+
+.block.table .block.text .content .editable h3
+{
+	font-size: 13px;
+}
+
+.block.table .block.text .content .editable p,
+.block.table .block.text .content .editable blockquote,
+.block.table .block.text .content .editable pre,
+.block.table .block.text .content .editable h1,
+.block.table .block.text .content .editable h2,
+.block.table .block.text .content .editable h3,
+.block.table .block.text .content .editable.p,
+.block.table .block.text .content .editable.blockquote,
+.block.table .block.text .content .editable.pre,
+.block.table .block.text .content .editable.h1,
+.block.table .block.text .content .editable.h2,
+.block.table .block.text .content .editable.h3
+{
+	margin: 4px 0px 4px 0px;
+}
+
+.block.table table.headingrow tr:first-child + tr td,
+.block.table table.headingcolumn tr td:first-child + td
+{
+	background-color: #E7E7E7 !important;
+}
+
+.block.table table.headingrow tr:first-child + tr td .editable,
+.block.table table.headingcolumn tr td:first-child + td .editable
+{
+	font-size: 13px !important;
+	font-weight: bold !important;
+}
+
+#table_block_settings_dialog table
+{
+	width: 222px;
+}
+
+/* @group Workaround iOS crasher with nested overflows */
+
+body:not(.mobilesafari) .block.table > .wrapper
+{
+	overflow-x: auto;
+}
+
+body:not(.mobilesafari) .block.table > .wrapper::-webkit-scrollbar
+{
+	height: 9px;
+}
+
+body:not(.mobilesafari) .block.table > .wrapper::-webkit-scrollbar-track
+{
+	background-color: #E3E3E3;
+	margin: 0px 1px 0px 17px;
+	border-radius: 1em;
+}
+
+body:not(.mobilesafari) .block.table > .wrapper::-webkit-scrollbar-thumb
+{
+	background: #CCCCCC;
+	border: 1px solid #ADADAD;
+	border-radius: 1em;
+}
+
+/* @end */
+
+.block.table .container .alt.controls
+{
+	display: none;
+	width: 76px;
+	height: 68px;
+	position: absolute;
+	z-index: 50;
+}
+
+.block.table .container .alt.controls.row
+{
+	bottom: -52px;
+	left: -29px;
+}
+
+.block.table .container .alt.controls.col
+{
+	top: -24px;
+	right: -54px;
+}
+
+.block.table .container .alt.controls .toggle
+{
+	background: transparent url(./img/tableblock_alt_row_arrows.png) top left no-repeat;
+	width: 24px;
+	height: 24px;
+	top: 50%;
+	left: 50%;
+	margin: -12px 0px 0px -12px;
+	position: absolute;
+}
+
+body.hidpi .block.table .container .alt.controls .toggle
+{
+	background-image: url(./img/tableblock_alt_row_arrows@2x.png);
+	background-size: 24px 24px;
+}
+
+.block.table .container .alt.controls.col .toggle
+{
+	background-image: url(./img/tableblock_alt_col_arrows.png);
+}
+
+body.hidpi .block.table .container .alt.controls.col .toggle
+{
+	background-image: url(./img/tableblock_alt_col_arrows@2x.png);
+	background-size: 24px 24px;
+}
+
+.block.table .container .alt.controls .rotary
+{
+	background: #D6D6D6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#D6D6D6), to(#F9F9F9), color-stop(0.49, #E8E8E8), color-stop(0.5, #EAEAEA));
+	background: -moz-linear-gradient(top, #D6D6D6, #E8E8E8 49%, #EAEAEA 50%, #F9F9F9);
+	border-top: 1px solid #D4D4D4;
+	border-left: 1px solid #BABABA;
+	border-right: 1px solid #BABABA;
+	display: none;
+	height: 68px;
+	position: relative;
+	width: 76px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	box-shadow: 0px 6px 10px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 6px 10px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 6px 10px rgba(0,0,0,0.3);
+}
+
+.block.table .container .alt.controls.displaying .rotary
+{
+	display: block;
+}
+
+.block.table .container .alt.controls .up,
+.block.table .container .alt.controls .down,
+.block.table .container .alt.controls .up-bg,
+.block.table .container .alt.controls .down-bg
+{
+	height: 34px;
+	left: 0px;
+	position: absolute;
+	text-indent: -9999px;
+	top: 0px;
+	width: 100%;
+}
+
+.block.table .container .alt.controls .down,
+.block.table .container .alt.controls .down-bg
+{
+	bottom: 0px;
+	top: auto;
+}
+
+.block.table .container .alt.controls .up,
+.block.table .container .alt.controls .down
+{
+	cursor: default;
+	z-index: 2;
+}
+
+.block.table .container .alt.controls .up-bg
+{
+	background: transparent url(./img/tableblock_ticker_arrow_up.png) 56px 12px no-repeat;
+	border-top: 1px solid #EAEAEA;
+	border-bottom: 1px solid #B0B1B3;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+	height: 32px;
+	-webkit-border-top-left-radius: inherit;
+	-webkit-border-top-right-radius: inherit;
+	-moz-border-radius-topleft: inherit;
+	-moz-border-radius-topright: inherit;
+}
+
+body.hidpi .block.table .container .alt.controls .up-bg
+{
+	background-image: url(./img/tableblock_ticker_arrow_up@2x.png);
+	background-size: 10px 10px;
+}
+
+.block.table .container .alt.controls .down-bg
+{
+	background: transparent url(./img/tableblock_ticker_arrow_down.png) 56px 12px no-repeat;
+	border-top: 1px solid #FFFFFF;
+	height: 33px;
+}
+
+body.hidpi .block.table .container .alt.controls .down-bg
+{
+	background-image: url(./img/tableblock_ticker_arrow_down@2x.png);
+	background-size: 10px 10px;
+}
+
+.block.table .container .alt.controls .count
+{
+	bottom: 0px;
+	color: #424242;
+	display: block;
+	font-size: 36px;
+	font-weight: bold;
+	left: 0px;
+	line-height: 68px;
+	overflow: hidden;
+	position: absolute;
+	right: 20px;
+	top: 0px;
+	text-overflow: ellipsis;
+	text-align: center;
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.block.table .mask
+{
+	bottom: 0px;
+	left: 0px;
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	z-index: 49;
+}
+
+/* @end */
+
+/* @group Page-level padding (migrated pages only) */
+
+.page.blocks > .block:not(.text)
+{
+	padding: 0px 36px;
+}
+
+.page.blocks.migrated > .block.sandbox
+{
+	padding: 0px; /* 9408143 */
+}
+
+/* @end */
+
+/* @group Server homepage */
+
+.toplevel.sources.index .block.image .wrapper,
+.toplevel.sources.index .block.media .wrapper
+{
+	max-width: 658px; /* 730px - 2*36px */
+}
+
+.toplevel.sources.index .block.table > .wrapper
+{
+	max-width: 672px; /* 730px - 2*36px + 18px */
+}
+
+/* @end */

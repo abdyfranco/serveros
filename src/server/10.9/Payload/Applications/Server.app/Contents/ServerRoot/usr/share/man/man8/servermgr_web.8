@@ -1,0 +1,156 @@
+.\"" Copyright (c) 2010-2012 Apple Inc. All Rights Reserved.
+.\""
+.\"" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\"" computers and is subject to the terms and conditions of the Apple Software
+.\"" License Agreement accompanying the package this file is a part of.
+.\"" You may not port this file to another platform without Apple's written consent.
+.\""
+.\"
+.Dd September 20, 2010
+.Dt SERVERMGR_WEB
+.Os "Server app"
+.Sh NAME
+.Nm servermgr_web
+.Xr servermgrd 8
+plugin for managing web service state and configuration
+.Sh SYNOPSIS
+.Nm serveradmin command web:command =
+.Ar initialSetup
+.Nm serveradmin command web:command =
+.Ar getState
+.Nm serveradmin command web:command =
+.Ar setState
+.Nm serveradmin command web:command =
+.Ar getWebAppState
+.Nm serveradmin command web:command =
+.Ar setWebAppState
+.Nm serveradmin command web:command =
+.Ar getWebDAVSharingState
+.Nm serveradmin command web:command =
+.Ar setWebDAVSharingState
+.Nm serveradmin command web:command =
+.Ar getSites
+.Nm serveradmin command web:command =
+.Ar restoreFactorySettings
+.Sh DESCRIPTION
+The
+.Nm
+.Xr servermgrd 8
+plugin provides an agent to manage web service state and configuration, to
+.Xr servermgrd 8
+clients like Server Utility App. Command-line access to servermgr_web is provided via 
+.Xr serveradmin 8 ,
+specifically by using the serveradmin command argument as shown in the SYNOPSIS.
+.Sh OPTIONS
+The following command line options are available:
+.Bl -tag -width flag
+.It Ar readSettings
+The
+.Ar readSettings
+command causes the plugin to return the configuration dictionary, showing all the settings.
+.It Ar initialSetup
+The
+.Ar initialSetup
+command causes the plugin to initialize the configuration dictionary.
+.It Ar getState
+The
+.Ar getState
+command causes the plugin to return the state of web service as a text string; values include STOPPED, RUNNING.
+.It Ar setState
+The
+.Ar setState
+command causes the plugin to start or stop web service as specified.
+.It Ar getWebAppState
+The
+.Ar getWebAppState
+command causes the plugin to return the state of the specified web app as a text string; values include STOPPED, RUNNING.
+It can also be used to return the state of all web apps.
+.Bl -tag -width flag
+.It Ar webAppName
+The webAppName argument specifies the name of the web app whose state is to be returned. The special value "*" designates
+a request for all running web apps in all virtual hosts, and causes the virtualHostName argument to be ignored.
+.It Ar virtualHostName
+The virtualHostName argument specifies the name of the virtual host containing the web app whose state is to be returned.
+The special value "*" designates the default wild-card virtual host.
+.El
+.Pp
+Example usage:
+.Bd -literal
+ cd /Applications/Server.app/Contents/ServerRoot
+ ./usr/sbin/serveradmin command <<EOF
+ web:command=getWebAppState
+ web:webAppName=com.apple.webapp.wiki
+ web:virtualHostName=vh1.example.com
+ EOF
+.Ed
+.Pp
+Example using the
+.Xr webappctl 8 convenience utility:
+.Bd -literal
+ cd /Applications/Server.app/Contents/ServerRoot
+ ./usr/sbin/webappctl status com.apple.webapp.wiki vh1.example.com
+.Ed
+.It Ar setWebAppState
+The
+.Ar setWebAppState
+command causes the plugin to return the state of the specified web app as a text string; values include STOPPED, RUNNING.
+.Bl -tag -width flag
+.It Ar webAppName
+The webAppName argument specifies the name of the web app whose state is to be set. 
+.It Ar state
+The state argument specifies the new state of web app: "START" or "STOP". 
+.It Ar virtualHostName
+The virtualHostName argument specifies the name of the virtual host virtual host containing the web app whose state is to be set. The special value "*" designates
+the default wild-card virtual host.
+.El
+.Pp
+Example usage:
+.Bd -literal
+ cd /Applications/Server.app/Contents/ServerRoot
+ ./usr/sbin/serveradmin command <<EOF
+ web:command=setWebAppState
+ web:webAppName=com.apple.webapp.wiki
+ web:virtualHostName=vh1.example.com
+ web:state=START
+ EOF
+.Ed
+.Pp
+Example using the 
+.Xr webappctl 8 convenience utility:
+.Bd -literal
+ cd /Applications/Server.app/Contents/ServerRoot
+ ./usr/sbin/webappctl start com.apple.webapp.wiki vh1.example.com
+.Ed
+.It Ar getSites
+The
+.Ar getSites
+command causes the plugin to return an array of virtual host dictionaries.
+.It Ar restoreFactorySettings
+The
+.Ar restoreFactorySettings
+command causes the plugin to restore web configuration to its clean-install state.
+.El
+.Pp
+.Sh USAGE
+The primary way to interact with the
+.Nm
+plugin is via the serveradmin command, as shown in the OPTIONS section.
+.Pp
+.Pp
+An alternate way to interact with the
+.Nm
+plugin is to use the web interface provided on port 311 by
+.Xr servermgrd 8 .
+Note that the web interface to port 311 is disabled by default; you need to change the requireUserAgent 
+setting in /Library/Preferences/com.apple.servermgrd.plist in order to enable it. Be sure you understand
+any security implications before changing this setting.
+.\" -------- the text after width should be the longest file in the
+.\" -------- files section
+.Sh SEE ALSO
+.Xr servermgrd 8
+.Xr serveradmin 8
+.Xr webappctl 8
+.Sh HISTORY
+The
+.Nm
+plugin and serveradmin(8) command first appeared in Mac OS X Server 10.2

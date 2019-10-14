@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+    <dict>
+        <key>identifier</key>
+        <string>SEChangeHostNameIntroPage.SEChangeHostNameIntroPage</string>
+        <key>isNibOwner</key>
+        <true/>
+    </dict>
+    <dict>
+        <key>identifier</key>
+        <string>SANoNetworkPage.SANoNetworkPage</string>
+        <key>bundleIdentifier</key>
+        <string>com.apple.ServerAssistant.Framework.Pages</string>
+        <key>isNibOwner</key>
+        <true/>
+        <key>helpAnchor</key>
+        <string>apd2080FB81-BDDD-47BF-B23C-28D546BD6A7D</string>
+        <key>enabled</key>
+        <dict>
+            <key>detectedNoNetwork</key>
+            <true/>
+        </dict>
+    </dict>
+    <dict>
+        <key>identifier</key>
+        <string>SAMultipleNetworksPage.SAMultipleNetworksPage</string>
+        <key>bundleIdentifier</key>
+        <string>com.apple.ServerAssistant.Framework.Pages</string>
+        <key>isNibOwner</key>
+        <true/>
+        <key>helpAnchor</key>
+        <string>apd392D2F97-51B9-4B18-A895-888D513F1DFE</string>
+        <key>enabled</key>
+        <dict>
+            <key>detectedMultipleNetworks</key>
+            <true/>
+        </dict>
+    </dict>
+    <dict>
+        <key>identifier</key>
+        <string>SAChooseHostNameTypePage.SAChooseHostNameTypePage</string>
+        <key>bundleIdentifier</key>
+        <string>com.apple.ServerAssistant.Framework.Pages</string>
+        <key>isNibOwner</key>
+        <true/>
+        <key>helpAnchor</key>
+        <string>apdC57F6CFB-4B8B-4A63-B59A-8D4BF4EB3BEC</string>
+    </dict>
+    <dict>
+        <key>identifier</key>
+        <string>SAConnectingToYourMacPage.SAConnectingToYourMacPage</string>
+        <key>bundleIdentifier</key>
+        <string>com.apple.ServerAssistant.Framework.Pages</string>
+        <key>isNibOwner</key>
+        <true/>
+        <key>helpAnchor</key>
+        <string>apd19E2A330-F793-41F5-9C33-299593E4E290</string>
+    </dict>
+</array>
+</plist>

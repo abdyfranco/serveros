@@ -1,0 +1,18 @@
+TLS SNI Client Support
+======================
+
+Works:
+
+ * Thunderbird (Linux)
+ * K-9 on Android (merged Sept 2015 - https://github.com/k9mail/k-9/pull/718)
+ * Apple Mail (according to
+   https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
+
+Doesn't work:
+
+ * K-9 on Droid X2 (maybe fixed in newer versions - see above)
+ * Apple Mail (Mac OS X 10.10 and lower AND iOS 9.3 and lower)
+ * Outlook for Mac version 15 (according to
+   https://forums.cpanel.net/threads/mail-ssl-sni.454592/ )
+
+(This file was created from the wiki on 2017-05-30 16:30)

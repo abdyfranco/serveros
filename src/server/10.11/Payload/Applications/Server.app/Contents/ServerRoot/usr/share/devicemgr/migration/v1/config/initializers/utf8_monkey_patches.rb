@@ -1,0 +1,1 @@
+../../../../backend/config/initializers/utf8_monkey_patches.rb

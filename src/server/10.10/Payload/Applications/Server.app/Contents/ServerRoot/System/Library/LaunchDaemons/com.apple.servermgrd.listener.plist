@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.servermgrd.listener</string>
+	<key>Disabled</key>
+	<false/>
+	<key>EnableTransactions</key>
+	<true/>
+	<key>EnablePressuredExit</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/System/Library/CoreServices/ServerManagerDaemon.bundle/Contents/MacOS/servermgr-listener</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/dev/null</string>
+	<key>StandardOutPath</key>
+	<string>/dev/null</string>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<array>
+			<dict>
+				<key>SockFamily</key>
+				<string>IPv6</string>
+				<key>SockServiceName</key>
+				<string>311</string>
+				<key>SockType</key>
+				<string>stream</string>
+			</dict>
+			<dict>
+				<key>SockFamily</key>
+				<string>IPv4</string>
+				<key>SockServiceName</key>
+				<string>311</string>
+				<key>SockType</key>
+				<string>stream</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>rooms</string>
+	<key>domain</key>
+	<string>@HOSTNAME@</string>
+	<key>password</key>
+	<string>@ROUTERPASSWORD@</string>
+	<key>host</key>
+	<string>127.0.0.1</string>
+	<key>port</key>
+	<integer>5347</integer>
+	<key>secMod</key>
+	<string>JABBERD</string>
+	<key>verbosity</key>
+	<integer>3</integer>
+	<key>MaxHistoryMessagesSent</key>
+	<integer>50</integer>
+	<key>MaxHistoryHoursSent</key>
+	<integer>48</integer>
+	<key>RoomConfigDir</key>
+	<string>/Library/Server/Messages/Data/Rooms/rooms.@HOSTNAME@</string>
+	<key>Admins</key>
+	<array/>
+	<key>SendMessagesForLockStateOnCreate</key>
+	<false/>
+	<key>SendExtraTopicMessages</key>
+	<false/>
+	<key>InactivePersistentRoomTimeoutInDays</key>
+	<integer>30</integer>
+	<key>DisableCheckForLocalRouter</key>
+	<false/>
+	<key>OmitRoomNameFromInvitations</key>
+	<true/>
+	<key>UsePingsToKickInactiveClients</key>
+	<true/>
+	<key>PingFrequencyInSeconds</key>
+	<integer>30</integer>
+	<key>PingMaxIdleTimeInSeconds</key>
+	<integer>120</integer>
+</dict>
+</plist>

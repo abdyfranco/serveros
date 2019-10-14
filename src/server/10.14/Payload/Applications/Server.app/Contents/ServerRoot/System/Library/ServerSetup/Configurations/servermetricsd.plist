@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Install servermetricsd.</string>
+	<key>setup</key>
+	<dict>
+		<key>services</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Load servermetricsd&apos;s aggregator launchd job.</string>
+				<key>state</key>
+				<string>enabled</string>
+				<key>name</key>
+				<string>com.apple.servermetricsd.daemon</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Load servermetricsd&apos;s sampler launchd job.</string>
+				<key>state</key>
+				<string>enabled</string>
+				<key>name</key>
+				<string>com.apple.servermetricsd.sample</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

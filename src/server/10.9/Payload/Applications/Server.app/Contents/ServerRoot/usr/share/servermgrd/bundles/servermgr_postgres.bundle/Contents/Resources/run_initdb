@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+#
+# Author:: Apple Inc.
+# Documentation:: Apple Inc.
+# Copyright (c) 2013 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+# License:: All rights reserved.
+#
+# Helper script for servermgr_postgres.  Run initdb as the _postgres user.
+
+my $dataDir = $ARGV[0];
+if (! defined $dataDir || $dataDir eq q{}) {
+	exit 1;
+}
+
+if ( ! -d $dataDir ) {
+	exit 1;
+}
+
+my $ret = system 'sudo', '-u', '_postgres', '/Applications/Server.app/Contents/ServerRoot/usr/bin/initdb', '--encoding', 'UTF8', '-D', "$dataDir";
+if ($ret != 0) {
+	exit 1;
+}
+
+exit 0;

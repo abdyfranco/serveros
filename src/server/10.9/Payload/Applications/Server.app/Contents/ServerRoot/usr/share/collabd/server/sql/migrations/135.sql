@@ -1,0 +1,16 @@
+/**
+ * Copyright (c) 2014, Apple Inc. All rights reserved.
+ *
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ *
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+ALTER TABLE scm_commit_entity RENAME author TO author_email;
+ALTER TABLE scm_commit_entity ADD author_name varchar;
+UPDATE entity_type set fields=(fields - 'author'::text)||hstore('author_name', 'authorName')||hstore('author_email', 'authorEmail') WHERE name='com.apple.entity.SCMCommit';

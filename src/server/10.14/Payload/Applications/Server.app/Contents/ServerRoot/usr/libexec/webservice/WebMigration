@@ -1,0 +1,79 @@
+#!/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+#
+# Copyright (c) 2007-2016, 2018 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+require 'fileutils'
+require 'logger'
+$ServerInstallPathPrefix = "/Applications/Server.app/Contents/ServerRoot"
+$WebPromotion = "/usr/libexec/webservice/WebPromotion"
+
+def usage
+	usage_str =<<EOS
+usage: for example:\n
+#{File.basename($0)} --sourceRoot "/Library/Server/Previous" --targetRoot / --purge 0 --language en --sourceVersion 10.5 --sourceType System
+
+In this implementation, --language and --sourceType are ignored
+EOS
+	$stderr.print(usage_str)
+end
+
+$logFile = "/Library/Logs/Setup.log"
+$logger = Logger.new($logFile)
+$logger.level = Logger::DEBUG
+$logger.info("*** Web Service migration start ***")
+
+$purge = "0"
+$sourceRoot = "/Library/Server/Previous"
+$targetRoot = "/"
+$sourceType = "System"
+$sourceVersion = "10.7"
+$language = "en"
+
+while arg = ARGV.shift
+	case arg
+		when /--purge/
+			$purge = ARGV.shift
+		when /--sourceRoot/
+			$sourceRoot = ARGV.shift
+		when /--targetRoot/
+			$targetRoot = ARGV.shift
+		when /--sourceType/
+			$sourceType = ARGV.shift
+		when /--sourceVersion/
+			$sourceVersion = ARGV.shift
+		when /--language/
+			$language = ARGV.shift
+		else
+			$stderr.print "Invalid arg: " + arg + "\n"
+			usage()
+			Process.exit(1)
+	end
+end
+
+$logger.info("#{$0} --purge " + $purge + " --sourceRoot " + $sourceRoot + " --targetRoot " + $targetRoot + " --sourceType " + $sourceType + " --sourceVersion " + $sourceVersion + " --language " + $language)
+if !FileTest.directory?($targetRoot)
+		$logger.error("Exiting because required directory not found: " + $targetRoot)
+		$logger.info("*** Web Service migration end ***\n");
+		$logger.close
+		Process.exit(1)
+end
+
+$newWebConfigDir = "/Library/Server/Web/Config/apache2/"
+$newWebDataDir = "/Library/Server/Web/Data/"
+
+FileUtils.mkdir_p($targetRoot + $newWebConfigDir, :mode=>0755)
+FileUtils.mkdir_p($targetRoot + $newWebDataDir, :mode=>0755)
+`cp -Rf #{$ServerInstallPathPrefix}/#{$newWebDataDir} #{$targetRoot}#{$newWebDataDir}`
+
+#install default files and configuration 
+`#{$ServerInstallPathPrefix}#{$WebPromotion}`
+
+`#{$ServerInstallPathPrefix}#{$WebPromotion}`
+
+$logger.info("*** Web Service migration end ***\n");
+$logger.close

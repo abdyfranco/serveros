@@ -1,0 +1,306 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Targeted dialogs */
+
+.slideorigin {
+	visibility: hidden;
+	position: absolute;
+	left: 0;
+	top: auto;
+	width: 100%;
+	height: 1px;
+	margin: -2px 0 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.targeted_dialog {
+	border-radius: 10px;
+}
+
+/* @end */
+
+/* @group General dialogs */
+
+#dialog_mask {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 503;
+	background: rgba(0,0,0,0.6);
+}
+
+.dialog_parent {
+	border-bottom: 1px solid #353535;
+}
+
+.dialog {
+	z-index: 504;
+	position: absolute;
+	top: 0;
+	left: 25px;
+	overflow: hidden;
+}
+
+form th {
+	color: #5F5F5F;
+	font-weight: bold;
+	text-align: right;
+}
+
+.dialog form th {
+	padding-left: 20px;
+}
+
+td.form_buttons {
+	text-align: right;
+	height: 19px;
+}
+
+.dialog {
+	font-family: Helvetica, arial, sans-serif; /* so themes don't override the dialog font accidentally */
+	border-radius: 7px;
+	padding: 3px;
+	color: #616161;
+	text-align: left;
+	font-size: 0.7em;
+	margin: 0px;
+	background-color: rgba(255, 255, 255, 0.3);
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.dialog_contents {
+	background-color: white;
+	height: 100%;
+	border-radius: 5px;
+	padding: 0;
+}
+
+.dialog form {
+	padding: -23px 0 0;
+}
+
+.dialog table,
+.dialog_contents {
+	border-spacing: 0;
+	background: #EDEDED;
+	border-radius:5px;
+}
+
+.dialog h1, .dialog h2, .dialog h3, .dialog h4, .dialog h5, .dialog h6 {
+	color: #333;
+}
+
+.dialog input {
+	font-size: 1em;
+}
+
+.dialog input[type=text], .dialog input[type=password] {
+	width: 220px;
+}
+body:not(.en) .dialog input[type=text], .dialog input[type=password] {
+	width: 170px;
+}
+.dialog input[type=text], .dialog input[type=password], .dialog textarea {
+	border: 1px solid #D1D1D1;
+	color: #5F5F5F;
+	padding: 2px;
+	outline: none;
+	resize: none;
+}
+
+.dialog input[type=text], .dialog input[type=password] {
+	height: 20px;
+}
+
+.dialog label br {
+	display: none;
+}
+
+.dialog thead td {
+	cursor: default; /* 'move' cursor flickers if mouse moves outside the drag handle (while dragging quickly) */
+	color: #474747;
+	background: #D5D5D5 url(./img/dialog_header_bg.png) 0 0 repeat-x; /* Not to up-Res, this is for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#F9F9F9), to(#D5D5D5));
+	background: -moz-linear-gradient(top, #F9F9F9, #D5D5D5);
+	text-align: center;
+	font-weight: bold;
+	font-size: 13px;
+	height: 24px;
+	line-height: 24px;
+	text-shadow: 0px 1px 1px #FFFFFF;
+	border-bottom: 1px solid #b7b7b7;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.dialog .description
+{
+	padding: 0px 16px 6px 16px;
+}
+
+.dialog tbody th, .dialog tbody td {
+	font-size: 11px;
+	padding-top: 8px;
+}
+
+.dialog tbody tr:first-child th, .dialog tbody tr:first-child td {
+	padding-top: 15px;
+}
+
+.dialog tbody td {
+	padding-right: 16px;	
+}
+
+.dialog tbody th {
+	white-space: nowrap;
+	padding-right: 7px;
+	font-size: 12px;
+	padding-top: 9px;
+}
+
+.dialog tbody th.dialog_empty_header {
+	padding: 0px 0px 0px 16px;
+}
+
+.dialog_description {
+	max-width: 400px;
+	padding-left: 16px;
+}
+
+.projects.toplevel.index .dialog_description > h3
+{
+	display: none;
+}
+
+.dialog input[type=checkbox] {
+	margin-left: 0;
+}
+
+.dialog td.form_buttons {
+	padding-bottom: 12px;
+	padding-top: 12px;
+}
+
+.dialog td.form_buttons input {
+	width: 64px;
+	overflow: visible;
+}
+
+body:not(.en) .dialog td.form_buttons input[type="button"],
+body:not(.en) .dialog td.form_buttons input[type="submit"] {
+    width: 85px;
+}
+
+.dialog .primaryaction {
+	margin-left: 12px;
+}
+
+.dialog div.submit {
+	display: block;
+	text-align: right;
+}
+
+.dialog_progress_row {
+	background: url(./img/spinner_f0f0f0.gif) no-repeat 17px 50%;
+}
+
+.submit input, .submit input {
+	float: right;
+	margin-left: 0.3em;
+}
+
+.submit .primaryaction {
+	font-weight: bold;
+	color: #000;
+}
+
+.submit .secondaryaction {
+	font-weight: normal;
+	font-weight: #666;
+}
+
+/* @end */
+
+/* @group Progress */
+
+#progress_message_dialog.indeterminate thead, #progress_message_dialog.indeterminate thead tr {
+	display: none;
+}
+
+#progress_message_dialog.indeterminate #progress_spinner span {
+	display: block;
+	width: 30px;
+	height: 30px;
+	margin-right: auto;
+	margin-left: auto;
+	background: url(./img/spinner_transparent.gif) no-repeat;
+}
+
+#progress_message_dialog.indeterminate #progress_message {
+	padding-bottom: 16px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #696969;
+}
+
+#progress_message_dialog .form_buttons input
+{
+	width: 69px;
+}
+
+/* @end */
+
+/* @group Link dialog */
+
+#link_search_dialog_results {
+	margin: 0;
+	height: 250px;
+	overflow: auto;
+	border: 1px solid #CCCCCC;
+	padding: 0;
+	list-style-type: none;
+	background-color: #FFFFFF;
+	max-width: 510px;
+}
+
+#link_search_dialog_results li {
+	list-style-type: none;
+}
+
+#link_search_dialog_results li a {
+	display: block;
+	font-size: 1.2em;
+	padding: 6px;
+	text-decoration: none;
+}
+
+#link_search_dialog_results li:hover
+{
+	background-color: #E7E7E7;
+}
+
+#link_search_dialog_results .suggested {
+	background-color: #3875D7;
+	color: #FFFFFF;
+}
+
+#link_search_dialog_q {
+	width: 512px;
+	margin: 8px auto;
+}
+
+/* @end */

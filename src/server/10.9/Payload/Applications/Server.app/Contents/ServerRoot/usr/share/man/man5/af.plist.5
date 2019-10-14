@@ -1,0 +1,84 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.\" test using groff -man af.conf.8 -T ascii | more
+.Dd 3/28/06               \" DATE 
+.Dt af.plist 5      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm af.plist
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd config file for afctl
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+is a 
+.Ar plist
+formatted file containing configuration info for the 
+.Ar afctl
+tool. 
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+This document details the configuration parameters in an XML property list used by the
+.Ar afctl
+tool.
+.Pp                      \" Inserts a space
+The Keys in the 
+.Nm
+file are:
+.Bl -tag -width -indent  \" Begins a tagged list 
+.It whitlist_file               \" Each item preceded by .It macro
+The path to the whitelist file stored as a string (this may not be changeable in future versions)
+.It blacklist_file
+The path to the blacklist file stored as a string (this may not be changeable in future versions)
+.It stats_file
+The path to the state file stored as a string (this may not be changeable in future versions)
+.It default_timeout
+The default time to live for entries in the blacklist in minutes stored as a string
+.It sweep_interval
+The interval used by launchd to run the 
+.Ar afctl
+tool to age the entires in the blacklist in minutes stored as a string. Note that the time to live of the blacklist 
+entries effectivly gets rounded up to the next time launchd runs the tool.
+.It start_behavior
+Tells the 
+.Ar afctl
+tool what to when it gets launched during boot. A string value of "enable", instructs
+.Ar afctl
+to age the blacklist and then apply it. A string value of "disable" keeps the 
+.Ar afctl
+tool from running. Defaults to "disable".
+.It firewall_address
+The location of the firewall to be managed. Defaults to local.
+.It default_set
+The default rule set used by
+.Ar afctl
+with 
+.Ar ipfw
+as a number stored in a string.
+.It log_level
+The syslog level used by the 
+.Ar afctl
+tool when logging.  
+.It log_facility
+The syslog facility used by the 
+.Ar afctl
+tool when logging. 
+.El                      \" Ends the list
+.Pp
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "/Users/joeuser/Library/really_long_file_name" -compact
+.It Pa /etc/af.plist
+The plist formatted config file
+.El                      \" Ends the list
+.Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr plist 5 , 
+.Xr afctl 8 ,
+.Xr ipfw 8 ,
+.Xr ip6fw 8
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner

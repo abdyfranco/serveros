@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.ftpserver</string>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>Program</key>
+	<string>/usr/libexec/ftpd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>ftpd</string>
+		<string>-l</string>
+		<string>-r</string>
+		<string>-n</string>
+		<string>-c</string>
+		<string>/Library/Server/FTP/Config</string>
+	</array>
+	<key>inetdCompatibility</key>
+	<dict>
+		<key>Wait</key>
+		<false/>
+	</dict>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<dict>
+			<key>SockServiceName</key>
+			<string>ftp</string>
+			<key>Bonjour</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>SHAuthorizationRight</key>
+	<string>system.preferences</string>
+</dict>
+</plist>

@@ -1,0 +1,78 @@
+.\"     $Id: changeDirData8,v 1.0 2008/11/11 23:02:29 jacque Exp $
+.\"
+.\" Copyright (c) 2012 Apple Inc. All Rights Reserved.
+.\" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\" computers and is subject to the terms and conditions of the Apple Software
+.\" License Agreement accompanying the package this file is a part of.
+.\" You may not port this file to another platform without Apple's written consent.
+.Dd 11 December 2008
+.Dt changeDirData.pl 8
+.Os "Mac OS X Server"
+.Sh NAME
+.Nm changeDirData.pl
+.Nd Mac OS X Server OpenDirectory LDAP find/replace tool
+.Sh SYNOPSIS
+.Pp
+.Nm
+.Oo Fl hiPv 
+.Oc
+.Fl s Ar server
+.Fl u Ar diradmin
+.Op Fl p Ar password
+.Fl o Ar oldValue
+.Fl n Ar newValue
+.Fl r Ar recordType
+.Sh DESCRIPTION
+.Nm
+Searches an Open Directory LDAP server for a specified value, and replaces it.  This is particularly useful for bulk changing record values when a server hostname or ip number changes.  
+.Pp
+.Nm
+should be run against the Open Directory master -- not an Open Directory Replica, but the script itself can be run from any machine on the network.  
+.Pp
+It is highly recommended that you make a backup of your directory data (via Server Admin or slapconfig) before making bulk changes.
+.Sh OPTIONS
+The following options are available:
+.Bl -tag -width flag
+.It Fl h
+prints a usage statement and exits
+.It Fl i
+The find and replace operation will be done case insensitively.  mysearchstring will match not only mysearchstring, but also  MYSEARCHSTRING and mYsearchSTring
+.It Fl v
+prints more status information as the script runs
+.It Fl s Ar server
+the DNS or IP address of the OD LDAP server
+.It Fl u Ar username
+Username for a directory administrator on the LDAP server
+.It Fl o Ar oldValue
+the value to search for and replace. 
+.It Fl n Ar newValue
+the value that will replace the oldValue
+.It Fl r Ar recordType
+comma separated list of record types.  For all record types, use "all".  The list of valid record types is: users, groups, people, mounts, computers, augments, autoserversetup, computer_lists, computer_groups, computer_lists, printers, places, locations, maps, presets_computers, presets_computer_groups, presets_users, presets_groups, presets_computer_lists
+.El
+.Sh USAGE
+Although
+.Nm
+can be used to find and replace any string in any attribute of  your OD LDAP server, it is particularly useful for bulk changing references (such as home directory paths, email addresses, sharepoints, etc.)  to your server when its IP or hostname changes.  
+.Nm 
+should be run after the changeip command has been run on the server that is changing its hostname/IP.  
+.Sh NOTES
+It is highly recommended that you backup your Open Directory data via Server Admin or slapconfig before making bulk changes to your directory.
+.Pp
+Be careful with the values passed in 
+.Ar oldValue
+and 
+.Ar newValue .
+.Nm
+will use those values to perform a substring search-and-replace.  Thus changing "server1" to "server2" would also change "server12" to "server22".
+.Sh EXAMPLES
+Replace all occurrences in all record types of "blue" with "red" in the LDAP server hosted at dirserv.example.com:
+.Pp
+.Sy changeDirData.pl -s dirserv.apple.com -u diradmin -o blue -n red -r all
+.Pp
+Replace all occurrences of "oldserver.example.com" with "newserver.apple.com" case-insensitively on only user and group records  in the LDAP server hosted at dirserv.example.com:
+.Pp
+.Sy changeDirData.pl -i -s dirserv.apple.com -u diradmin -o oldserver.example.com -n newserver.apple.com -r users,groups
+.Sh SEE ALSO
+.Xr slapconfig 8
+.Xr changeip 8

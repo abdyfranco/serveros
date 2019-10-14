@@ -1,0 +1,25 @@
+#!/usr/bin/ruby
+
+# Copyright (c) 2016 Apple Inc. All Rights Reserved.
+
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+
+def wait4pathWithTimeout(path, timeoutInSeconds)
+     t0 = Time.now
+     while true do
+        return true if FileTest.exists?(path)
+        sleep(1)
+        break if Time.now - t0 >= timeoutInSeconds
+     end
+     return false
+end
+
+executable = '/usr/sbin/httpd'
+waitPath = '/var/run/NetworkChangeMonitorIsReady'
+if !wait4pathWithTimeout(waitPath, 30)
+	`syslog -s -l error #{File.basename($0)} timed out waiting for #{waitPath}. Proceeding.`
+end
+exec("#{executable} #{ARGV.join(' ')}")

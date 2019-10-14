@@ -1,0 +1,124 @@
+Rawlog
+======
+
+Dovecot supports logging IMAP/POP3 traffic (also TLS/SSL encrypted). There are
+several possibilities for this:
+
+ 1. rawlog_dir setting (v2.2.26+)
+ 2. Using 'rawlog' binary, which is executed as post-login script.
+ 3. Pre-login imap/pop3-login process via -R parameter.
+
+rawlog_dir setting (v2.2.26+)
+-----------------------------
+
+Dovecot creates *.in and *.out rawlogs to the specified directory if it exists.
+For example:
+
+---%<-------------------------------------------------------------------------
+protocol imap {
+  rawlog_dir = /tmp/rawlog/%u
+}
+---%<-------------------------------------------------------------------------
+
+rawlog binary
+-------------
+
+It works by checking if 'dovecot.rawlog/' directory exists in the logged in
+user's home directory, and writing the traffic to 'yyyymmdd-HHMMSS-pid.in' and
+'.out' files. Each connection gets their own in/out files. Rawlog will simply
+skip users who don't have the 'dovecot.rawlog/' directory and the performance
+impact for those users is minimal.
+
+Home directory
+--------------
+
+Note that for rawlog to work, your <userdb> [UserDatabase.txt] must have
+returned a home directory for the user.*IMPORTANT: The home directory must be
+returned by userdb, mail_home setting won't work.* Verify that 'doveadm user -u
+user@example.com' (with -u parameter) returns the home directory, for example:
+
+---%<-------------------------------------------------------------------------
+% doveadm user -u user@example.com
+userdb: user@example.com
+  user      : user@example.com
+  uid       : 1000
+  gid       : 1000
+  home      : /home/user@example.com
+---%<-------------------------------------------------------------------------
+
+In above configuration rawlog would expect to find
+'/home/user@example.com/dovecot.rawlog/' directory writable by uid 1000.
+
+If your userdb can't return a home directory directly, with v2.1+ you can add:
+
+---%<-------------------------------------------------------------------------
+userdb {
+  # ...
+  default_fields = home=/home/%u
+  # or temporarily even e.g. default_fields = home=/tmp/temp-home
+}
+---%<-------------------------------------------------------------------------
+
+You can also set DEBUG environment to have rawlog log an info message why it's
+not doing anything:
+
+---%<-------------------------------------------------------------------------
+import_environment = $import_environment DEBUG=1
+---%<-------------------------------------------------------------------------
+
+Configuration
+-------------
+
+To enable rawlog, you must use rawlog as a <post-login script>
+[PostLoginScripting.txt]:
+
+---%<-------------------------------------------------------------------------
+service imap {
+  executable = imap postlogin
+}
+service pop3 {
+  executable = pop3 postlogin
+}
+
+service postlogin {
+  executable = script-login -d rawlog
+  unix_listener postlogin {
+  }
+}
+---%<-------------------------------------------------------------------------
+
+You can also give parameters to rawlog:
+
+ * -b: Write IP packet boundaries (or whatever read() sees anyway) to the log
+   files. The packet is written between<<< and >>>.
+ * -t: Log a microsecond resolution timestamp at the beginning of each line.
+ * -I: Include IP address in the filename (v2.2.16+)
+ * v2.1 and newer:
+    * -f in: Log only to *.in files
+    * -f out: Log only to *.out files
+ * v2.0 and older:
+    * -i: Log only to *.in files
+    * -o: Log only to *.out files
+
+Pre-login rawlog (v2.1+)
+------------------------
+
+You can enable pre-login rawlog for all users by telling the login processes to
+log to a rawlog directory, for example:
+
+---%<-------------------------------------------------------------------------
+service imap-login {
+  executable = imap-login -R rawlogs
+}
+---%<-------------------------------------------------------------------------
+
+This tries to write the rawlogs under $base_dir/login/rawlogs directory. You
+need to create it first with enough write permissions, e.g.:
+
+---%<-------------------------------------------------------------------------
+mkdir /var/run/dovecot/login/rawlogs
+chown dovenull /var/run/dovecot/login/rawlogs
+chmod 0700 /var/run/dovecot/login/rawlogs
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>General Network Info and Airport Base Station Management</string>
+	<key>dependencies</key>
+	<array/>
+	<key>environment</key>
+	<dict>
+		<key>defaultsLocation</key>
+		<string>${serverRoot}/usr/share/servermgrd/bundles/servermgr_network.bundle/Contents/Resources/</string>
+		<key>previousLocation</key>
+		<string>/private/etc/nat/</string>
+		<key>networkConfig</key>
+		<string>${serverLibrary}/Network/Config</string>
+	</dict>
+	<key>defaults</key>
+	<dict/>
+	<key>setup</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Network Config Directory</key>
+			<dict>
+				<key>description</key>
+				<string>Directory containing network configuration items</string>
+				<key>path</key>
+				<string>${networkConfig}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>autoportmap</key>
+			<dict>
+				<key>description</key>
+				<string>The default autoportmap list</string>
+				<key>path</key>
+				<string>${networkConfig}/autoportmap.plist</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>${defaultsLocation}/autoportmap.plist</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>restore</key>
+	<dict/>
+	<key>migration</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>description</key>
+			<string>The old autoportmap.plist file</string>
+			<key>path</key>
+			<string>${networkConfig}/autoportmap.plist</string>
+			<key>source</key>
+			<string>${previousLocation}/autoportmap.plist</string>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Clear the password in the system keychain</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/clearAPBSPassword.sh</string>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict/>
+</dict>
+</plist>

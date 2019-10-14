@@ -1,0 +1,929 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+
+# Copyright (c) 2015 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+
+import argparse
+import datetime
+import glob
+import os
+import plistlib
+import shutil
+import socket
+import subprocess
+import sys
+import tarfile
+import time
+
+DEBUG = False
+VERBOSE = False
+FUNC_LOG = False
+
+CLEANUP = True
+
+MAX_SIZE_BYTES = 50000000                         #  50 Megabytes
+HALF_YEAR_AGO = time.time() - 60 * 60 * 24 * 180  # 180 Days old
+FIVE_DAYS_AGO = time.time() - 60 * 60 * 24 * 5    # 5 Days old
+totalBytes = 0
+TIME_STAMP = datetime.datetime.now().strftime("%y%m%d_%H%M%S") #Create our time stamp
+HOSTNAME = socket.gethostname().split('.')[0]
+if VERBOSE:
+    print TIME_STAMP
+
+# options
+all_flag = ''
+dry_run_flag = ''
+brief_flag = ''
+mobility_info_flag = ''
+no_prompt_flag = ''
+web_config_flag = ''
+xsan_config_flag = ''
+archive = ''
+
+SERVER_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+SERVERDIAGNOSE_GET_MOBILITY_INFO = SERVER_ROOT + "/usr/sbin/serverdiagnose_get-mobility-info"
+SERVERDIAGNOSE_SUS_LOGGATHER = SERVER_ROOT + "/usr/sbin/sus-gather-logs"
+SERVERDIAGNOSE_LOGS_PLIST = SERVER_ROOT + "/etc/LogPaths.plist"
+SERVERDIAGNOSE_BRIEF_LOGS_PLIST = SERVER_ROOT + "/etc/LogPaths_Brief.plist"
+WEBDAV_SHARING_VAR_RUN = "/var/run/webdav_sharing"
+WEBDAV_SHARING_TMP = "/tmp/webdav_sharing"
+
+# Various items to include
+SERVER_SETUP_STACK_SHOT = "/tmp/ServerSetup_StackShot" + TIME_STAMP + ".txt"
+APPLE_SYSTEM_PROFILE_REPORT = "/tmp/" + TIME_STAMP + "_APPLE_SYSTEM_PROFILE_REPORT_Report.spx"
+SERVER_INFO_PLIST = "/tmp/" + TIME_STAMP + "_ServerInfoPList.txt"
+DATA_STORE_VOLUME_INFO = "/tmp/" + TIME_STAMP + "_DataStore_VolumeInfo.txt"
+SYSDIAGNOSE_ARCHIVE = TIME_STAMP + "_SD_sysdiagnose"
+SYSDIAGNOSE_ARCHIVE_PATH = "/tmp/" + SYSDIAGNOSE_ARCHIVE + ".tar.gz"
+SUS_LOGGATHER_ARCHIVE_PATH = "/tmp/" + TIME_STAMP + "_" + HOSTNAME + "_swupd_gather.tgz"
+MIGRATED_PATHS_LIST = "/tmp/" + TIME_STAMP + "_" + HOSTNAME + "_MigratedPathsList.txt"
+
+# Possible archive paths
+ARCHIVE_DEFAULT = "/tmp/ServerLogs-" + HOSTNAME + "-" + TIME_STAMP + ".tgz"
+ARCHIVE_BRIEF = "/tmp/ServerLogs_Brief-" + HOSTNAME + "-" + TIME_STAMP + ".tgz"
+ARCHIVE_WEBCONFIG = "/tmp/ServerLogs_WebConfig-" + HOSTNAME + "-" + TIME_STAMP + ".tgz"
+ARCHIVE_ALL = "/tmp/ServerLogs_All-" + HOSTNAME + "-" + TIME_STAMP + ".tgz"
+ARCHIVE_WEBCONFIG_ALL = "/tmp/ServerLogs_WebConfig_All-" + HOSTNAME + "-" + TIME_STAMP + ".tgz"
+CALENDAR_SERVER_LOGS = "/tmp/CalendarServerLogs.tar.gz"
+ARCHIVE_NAME = ""
+FIREWALL_RULES = ""
+MANIFEST = ""
+
+if DEBUG and VERBOSE:
+    print ARCHIVE_DEFAULT
+    print ARCHIVE_BRIEF
+    print ARCHIVE_WEBCONFIG
+    print ARCHIVE_ALL
+    print ARCHIVE_WEBCONFIG_ALL
+
+APPLE_SYSTEM_PROFILE_REPORT_LIST = []
+CACHING_DEBUG_LOGS_LIST = []
+CUR_USER_LOGS_LIST = []
+CUR_USER_SERVER_DIAGNOSTICS_LIST = []
+CUR_USER_SERVER_WILD_LIST = []
+FIREWALL_RULES_LIST = []
+LIBRARY_SERVER_WEB_CONFIG_LIST = []
+SERVER_INFO_PLIST_LIST = []
+WEBDAV_SHARING_TMP_LIST = []
+
+MASTER_LIST = []
+INITIAL_MASTER_LIST = []
+REJECTED_LIST = []
+
+# Path constants
+LIBRARY_SERVER = "/Library/Server"
+CUR_USER_LOGS = os.getenv("HOME") + "/Library/Logs"
+LIBRARY_SERVER_WEB_CONFIG = "/Library/Server/Web/Config"
+SERVER_PNGS = "/var/root/Desktop/Server*.png"
+CUR_USER_SERVER_DIAGNOSTICS_FILES = CUR_USER_LOGS + "/DiagnosticReports/Server*"
+CACHING_DEBUG_LOGS = "/Library/Server/Caching/Logs/Debug"
+FIREWALL_DEFAULT_ANCHOR = "/Library/Server/Firewall/Anchors/default_anchor.txt"
+FIREWALL_CUSTOM_ANCHOR = "/Library/Server/Firewall/Anchors/custom_anchor.txt"
+CUR_USER_SERVER_WILD = CUR_USER_LOGS + "/Server.*"
+PREVIOUS_SYSTEM_LOGS = "/var/db/PreviousSystemLogs.cpgz"
+WEB_APP_INFO = "/tmp/WebServicesConfigStatus.txt"
+
+# Commands to generate log payload
+SERVERDIAGNOSE = SERVER_ROOT + "/usr/sbin/serverdiagnose"
+CALENDARSERVER_GATHER_LOGS_CMD = SERVER_ROOT + "/usr/sbin/calendarserver_gather_logs"
+DS_DIAGNOSE_CMD = "/System/Library/PrivateFrameworks/DirectoryServer.framework/Versions/A/Resources/dsdiagnose"
+STACKSHOT_CMD = "/usr/libexec/stackshot" + " -i -f " + SERVER_SETUP_STACK_SHOT
+PF_CMD1 = "/sbin/pfctl -sr "
+PF_CMD2 = "/sbin/pfctl -a \"com.apple.server-firewall/*\"" + " -sr"
+SYSTEM_PROFILER_CMD = "/usr/sbin/system_profiler -timeout 300 -xml"
+SYSTEM_PROFILER_BRIEF_CMD = "/usr/sbin/system_profiler SPHardwareDataType SPSoftwareDataType -timeout 300 -xml"
+if DEBUG:
+    SYSTEM_PROFILER_CMD = SYSTEM_PROFILER_BRIEF_CMD
+SERVERINFO_CMD = "/usr/sbin/serverinfo --plist"
+DATA_STORE_VOLUME_INFO_CMD = "/bin/ls -ale@ /Volumes"
+
+def getMigrationPaths():
+    if FUNC_LOG:
+        print "getMigrationPaths : S"
+
+    CMD = "/usr/bin/find /Library/Server/Previous /Library/Server/Migrated*"
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    f = open(MIGRATED_PATHS_LIST, 'w')
+    f.write(cmdOut + '\n')
+    f.close()
+
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    if FUNC_LOG:
+        print "getMigrationPaths : E"
+
+def getSize(filename):
+    if FUNC_LOG:
+        print "getSize"
+    try:
+        if os.path.exists(filename.strip()):
+            return os.stat(filename.strip()).st_size
+    except:
+        print "Handling exception as file := %s, is no longer available." % filename.strip()
+        return 0
+
+def getModDate(filename):
+    if FUNC_LOG:
+        print "getModDate"
+    try:
+        if os.path.exists(filename.strip()):
+            return os.path.getmtime(filename.strip())
+    except:
+        print "Handling exception as file := %s, is no longer available." % filename.strip()
+        return os.path.getmtime(SERVERDIAGNOSE.strip())
+
+def getLastNLines(fileName, n):
+    if FUNC_LOG:
+        print "getLastNLines : S"
+    p = subprocess.Popen(['tail', '-n', str(n), fileName], stdout=subprocess.PIPE)
+    lines, sinput = p.communicate()
+    if DEBUG:
+        print lines
+    if FUNC_LOG:
+        print "getLastNLines : E"
+    return lines
+
+def writeArchiveManifest(options):
+    if FUNC_LOG:
+        print "writeArchiveManifest : S"
+    global totalBytes, MANIFEST
+    if DEBUG:
+        print type(INITIAL_MASTER_LIST)
+        print INITIAL_MASTER_LIST
+    # REJECTED_LIST
+    for currentList in INITIAL_MASTER_LIST:
+        for item in currentList:
+            l = item.strip()
+            if DEBUG:
+                print "l := %s" % l
+            cur = {}
+            if DEBUG:
+                print "Item := %s\t Bytes := %d" % (item, totalBytes)
+            if (os.path.exists(l)):
+                if options.all_flag:    #No filtering because all means all!
+                    MASTER_LIST.append(l)
+                else:
+                    if ((getSize(l) > MAX_SIZE_BYTES) or (getModDate(l) < HALF_YEAR_AGO) or options.brief_flag):
+                        cur['Item'] = l
+                        didRemoveAlready = 0
+                        cur['tooLarge'] = False
+                        cur['tooOld'] = False
+                        cur['age'] = time.ctime(os.path.getmtime(l.strip()))
+                        cur['size'] = getSize(l)
+                        if (getSize(l) > MAX_SIZE_BYTES):
+                            cur['tooLarge'] = True
+                            didRemoveAlready = 1
+                            if DEBUG:
+                                print "File := %s is too large := %s" % (l, cur['size'])
+                            REJECTED_LIST.append(cur)
+                            totalBytes = totalBytes - cur['size']
+                        if (((getModDate(l) < HALF_YEAR_AGO) and didRemoveAlready == 0)):
+                            cur['tooOld'] = True
+                            didRemoveAlready = 1
+                            if DEBUG:
+                                print "File := %s is too old %s its size is := %s" % (l, cur['age'], cur['size'])
+                            REJECTED_LIST.append(cur)
+                            totalBytes = totalBytes - cur['size']
+                        if (options.brief_flag and didRemoveAlready == 0):    #Will remove all files in the list that are > 5 days old.
+                            if (((getModDate(l) < FIVE_DAYS_AGO) and didRemoveAlready == 0)):
+                                cur['tooOld'] = True
+                                didRemoveAlready = 1
+                                if DEBUG:
+                                    print "File := %s is too old %s its size is := %s" % (l, cur['age'], cur['size'])
+                                REJECTED_LIST.append(cur)
+                                totalBytes = totalBytes - cur['size']
+                        if didRemoveAlready == 0:
+                            MASTER_LIST.append(l)
+                    else:
+                        MASTER_LIST.append(l)
+            else:
+                if DEBUG:
+                    print "File := %s no longer exists for inclusion" % l
+    d = {'AllPaths' : MASTER_LIST, 'totalBytes' : totalBytes}
+
+    MANIFEST = os.path.splitext(ARCHIVE_NAME)[0] + ".plist"
+    r = {'RejectedPaths' : REJECTED_LIST}
+    m = {'Manifest' : MANIFEST}
+    top = {'Collections' : [d, r, m]}
+
+    plistlib.writePlist(top, MANIFEST)
+    if DEBUG:
+        print "top := %s" % top
+        print "MANIFEST := %s" % MANIFEST
+        print plistlib.readPlist(MANIFEST)
+    if FUNC_LOG:
+        print "writeArchiveManifest : E"
+
+
+def executeCommandWithResults(CMD):
+    if FUNC_LOG:
+        print "executeCommandWithResults : S"
+    if DEBUG:
+        print CMD
+        print os.path.exists((CMD.split()[0]))
+
+    fnull = open(os.devnull, "w")
+    if (os.path.exists((CMD.split()[0]))):
+        if DEBUG:
+            print "Command passed := %s" % CMD
+        try:
+            OUT = subprocess.check_output(CMD.split(), stderr=fnull, shell=False)
+        except subprocess.CalledProcessError, e:
+            print "\t\t<<< ERROR processing command >>>"
+            print e
+            fnull.close()
+            raise SystemExit('error: no password for {}'.format(e))
+    else:
+        return "executable supplied doesn't exist! %s" % (CMD.split()[0])
+    fnull.close()
+    if FUNC_LOG:
+        print "executeCommandWithResults : E"
+    return OUT
+
+def executeCommandWithResultsWebApps(CMD):
+    if FUNC_LOG:
+        print "executeCommandWithResults : S"
+    if DEBUG:
+        print CMD
+        print os.path.exists((CMD.split()[0]))
+    p = subprocess.Popen(CMD, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    stdout = []
+    while True:
+        line = p.stdout.readline()
+        stdout.append(line)
+        if line == '' and p.poll() != None:
+            break
+    if FUNC_LOG:
+        print "executeCommandWithResults : E"
+    return ''.join(stdout)
+
+def greeting():
+    msg = """This tool generates files that allow Apple to investigate issues with your
+computer and help improve Apple products. The files might contain personal
+information found on your device or associated with your iCloud accounts,
+including but not limited to serial numbers of your device, your device name,
+your user name, file paths, file names, your computer's IP addresses, and
+network connection information. This information is used by Apple in
+accordance with its privacy policy and is not shared with any other company.
+By using this tool and sending the results to Apple, you consent to Apple
+using the contents of these files to improve Apple products.
+"""
+    return msg
+
+# if we are in `all` mode and not dryrun then we will stuff away the webdav logs if they are present as part of the archive
+def getWebDavSharingLogs():
+    if FUNC_LOG:
+        print "getWebDavSharingLogs : S"
+    if os.path.isdir(WEBDAV_SHARING_VAR_RUN):    #Get webdav logs if they are present
+        shutil.copytree(WEBDAV_SHARING_VAR_RUN, WEBDAV_SHARING_TMP)
+        for root, _, files in os.walk(WEBDAV_SHARING_TMP):
+            for f in files:
+                fullpath = os.path.join(root, f)
+                file = os.path.basename(fullpath)
+                if "log" not in file:            #Remove non log files
+                    os.remove(fullpath)
+    if FUNC_LOG:
+        print "getWebDavSharingLogs : S"
+
+def stubornOSRemove(PATH):
+    if os.path.isfile(PATH):
+        if DEBUG:
+            print "stubornOSRemove(), PATH = %s" % PATH
+        os.remove(PATH)
+        if os.path.exists(PATH):
+            executeCommandWithResults("/bin/rm -v " + PATH)
+
+# Cleanup items we generated
+def cleanUpSignalAborted():
+    if FUNC_LOG:
+        print "cleanUpSignalAborted : S"
+
+    stubornOSRemove(FIREWALL_RULES)
+    stubornOSRemove(APPLE_SYSTEM_PROFILE_REPORT)
+    stubornOSRemove(SERVER_INFO_PLIST)
+    stubornOSRemove(DATA_STORE_VOLUME_INFO)
+    stubornOSRemove(SERVER_SETUP_STACK_SHOT)
+    stubornOSRemove(CALENDAR_SERVER_LOGS)
+    stubornOSRemove(SYSDIAGNOSE_ARCHIVE_PATH)
+    stubornOSRemove(SUS_LOGGATHER_ARCHIVE_PATH)
+    stubornOSRemove(MIGRATED_PATHS_LIST)
+
+    DS_ARCH_LIST = glob.glob("/tmp/dsdiagnose.*.tar.bz2")
+    for DS_ARCH in DS_ARCH_LIST:
+        stubornOSRemove(DS_ARCH)
+
+    MOBILITY_INFO_LIST = glob.glob("/tmp/wifi-*.log")
+    for MOBILITY_INFO_FILE in MOBILITY_INFO_LIST:
+        stubornOSRemove(MOBILITY_INFO_FILE)
+
+    SERVER_DIAGNOSE_MOBILITY_INFO_LIST = glob.glob("/Library/Logs/serverdiagnose_mobility-info-*.tar.gz")
+    for SERVER_DIAGNOSE_MOBILITY_INFO_FILE in SERVER_DIAGNOSE_MOBILITY_INFO_LIST:
+        stubornOSRemove(SERVER_DIAGNOSE_MOBILITY_INFO_FILE)
+
+    if os.path.isdir(WEBDAV_SHARING_TMP):
+        print "WEBDAV_SHARING_TMP = %s" % WEBDAV_SHARING_TMP
+        shutil.rmtree(WEBDAV_SHARING_TMP)
+
+    if FUNC_LOG:
+        print "cleanUpSignalAborted : E"
+
+def cleanUp(options):
+    if FUNC_LOG:
+        print "cleanUp : S"
+
+    global MANIFEST
+
+    if not options.brief_flag:
+        stubornOSRemove(FIREWALL_RULES)
+        stubornOSRemove(APPLE_SYSTEM_PROFILE_REPORT)
+        stubornOSRemove(SERVER_INFO_PLIST)
+        stubornOSRemove(DATA_STORE_VOLUME_INFO)
+        stubornOSRemove(SERVER_SETUP_STACK_SHOT)
+        stubornOSRemove(CALENDAR_SERVER_LOGS)
+        stubornOSRemove(SYSDIAGNOSE_ARCHIVE_PATH)
+        stubornOSRemove(SUS_LOGGATHER_ARCHIVE_PATH)
+        stubornOSRemove(WEB_APP_INFO)
+        stubornOSRemove(MIGRATED_PATHS_LIST)
+
+        DS_ARCH_LIST = glob.glob("/tmp/dsdiagnose.*.tar.bz2")
+        for DS_ARCH in DS_ARCH_LIST:
+            stubornOSRemove(DS_ARCH)
+
+        MOBILITY_INFO_LIST = glob.glob("/tmp/wifi-*.log")
+        for MOBILITY_INFO_FILE in MOBILITY_INFO_LIST:
+            stubornOSRemove(MOBILITY_INFO_FILE)
+
+        SERVER_DIAGNOSE_MOBILITY_INFO_LIST = glob.glob("/Library/Logs/serverdiagnose_mobility-info-*.tar.gz")
+        for SERVER_DIAGNOSE_MOBILITY_INFO_FILE in SERVER_DIAGNOSE_MOBILITY_INFO_LIST:
+            stubornOSRemove(SERVER_DIAGNOSE_MOBILITY_INFO_FILE)
+
+        if os.path.isdir(WEBDAV_SHARING_TMP):
+            print "WEBDAV_SHARING_TMP = %s" % WEBDAV_SHARING_TMP
+            shutil.rmtree(WEBDAV_SHARING_TMP)
+    else:
+        stubornOSRemove(APPLE_SYSTEM_PROFILE_REPORT)
+        stubornOSRemove(SERVER_INFO_PLIST)
+        stubornOSRemove(DATA_STORE_VOLUME_INFO)
+
+    stubornOSRemove(MANIFEST)
+    stubornOSRemove(WEB_APP_INFO)
+
+    if FUNC_LOG:
+        print "cleanUp : E"
+
+# This will open the folder and select the archive so the user doesn't have to go hunting for it.
+# If we are ssh'ed in or if there is an alternate archive path requested then we will not open the folder and select the archive.
+def openAndSelectArchiveIfLocal(options):
+    if FUNC_LOG:
+        print "openAndSelectArchiveIfLocal : S"
+    if ('SSH_CONNECTION' not in os.environ) and ('SSH_CLIENT' not in os.environ) and ('SSH_TTY' not in os.environ) and (len(options.archive) == 0):
+        executeCommandWithResults("/usr/bin/open -R " + ARCHIVE_NAME)
+    if FUNC_LOG:
+        print "openAndSelectArchiveIfLocal : E"
+
+# Common paths are specified in a property list that is easily modified with out having to change the script.
+def getAllCommonPaths(options):
+    if FUNC_LOG:
+        print "getAllCommonPaths : S"
+    # if we only are collecting the bare miniumn logs then use that set of files.
+    if options.brief_flag:
+        pl = plistlib.readPlist(SERVERDIAGNOSE_BRIEF_LOGS_PLIST)
+    else:
+        pl = plistlib.readPlist(SERVERDIAGNOSE_LOGS_PLIST)
+
+    CommonPaths = pl['CommonPaths']
+    for item in CommonPaths:
+        INITIAL_MASTER_LIST.append(glob.glob(item))
+        if DEBUG:
+            print item
+
+    if FUNC_LOG:
+        print "getAllCommonPaths : E"
+
+def createArchive(options):
+    if FUNC_LOG:
+        print "createArchive : S"
+    global MANIFEST
+    tar = tarfile.open(ARCHIVE_NAME, "w:gz")
+    if DEBUG:
+        print "Last Item := %s" % MASTER_LIST[-1]
+    for name in MASTER_LIST:
+        if DEBUG:
+            print name
+        if name != "/Library/Logs/cp.tar.gz" and name != '/Library/Logs/EventMonitor/EventMonitor.error.log':
+            try:
+                if os.path.exists(name.strip()):
+                    tar.add(name)
+            except:
+                print "Handling exception as file := %s, is no longer available." % name.strip()
+    tar.add(MANIFEST)
+    tar.close()
+    if FUNC_LOG:
+        print "createArchive : E"
+
+# Determine archive name from options
+def getArchiveNameFromOptions(options):
+    archive = ""
+    if options.all_flag and options.web_config_flag:
+        archive = ARCHIVE_WEBCONFIG_ALL
+    elif not options.all_flag and options.web_config_flag:
+        archive = ARCHIVE_WEBCONFIG
+    elif options.all_flag and not options.web_config_flag:
+        archive = ARCHIVE_ALL
+    elif options.brief_flag:
+        archive = ARCHIVE_BRIEF
+    else:
+        archive = ARCHIVE_DEFAULT
+
+    if len(options.archive): #override the archive name if one was provided.
+        # strip .tgz extension should it be provided incorrectly
+        if os.path.isdir(os.path.dirname(options.archive)):
+            archive = os.path.join(os.path.dirname(options.archive), os.path.basename(options.archive).split('.')[0]) + ".tgz"
+        else:
+            print "The parent directory for the archive does not exist. Path supplied was := %s" % options.archive
+            print "When specifing an alternate archive you need to supply the path to the archive that will be created."
+            sys.exit(4)
+    if DEBUG and len(archive):
+        print "archive := %s" % archive
+    return archive
+
+def create_parser():
+    if FUNC_LOG:
+        print "create_parser() : S"
+    description = 'Server Diagnostics Archiver'
+    parser = argparse.ArgumentParser(prog=description)
+    parser.add_argument('-a', '--all',              help="include all possible logs",   dest="all_flag",           action="store_true", default=False)
+    parser.add_argument('-b', '--brief',            help=argparse.SUPPRESS,             dest="brief_flag",         action="store_true", default=False)
+    parser.add_argument('-d', '--dryRun',           help=argparse.SUPPRESS,             dest="dry_run_flag",       action="store_true", default=False)
+    parser.add_argument('-n', '--noPrompt',         help=argparse.SUPPRESS,             dest="no_prompt_flag",     action="store_true", default=False)
+    parser.add_argument('-m', '--mobilityInfo',     help="include mobility logs",       dest="mobility_info_flag", action="store_true", default=False)
+    parser.add_argument('-w', '--webConfigInfo',    help="include web config files",    dest="web_config_flag",    action="store_true", default=False)
+    parser.add_argument('-v', '--version',          help="show version information",                               action='version', version='%(prog)s v10.11')
+    parser.add_argument('-x', '--xSan',             help=argparse.SUPPRESS,             dest="xsan_config_flag",   action="store_true", default=False)
+    parser.add_argument('-A', '--alternateArchive', help="directs the output to a name of your choice", dest='archive', action='store', default="")
+    if FUNC_LOG:
+        print "create_parser() : E"
+    return parser
+
+def getSysDiagnoseArchive():
+    if FUNC_LOG:
+        print "getSysDiagnoseArchive : S"
+    print "Creating sysdiagnose archive"
+    executeCommandWithResults("/usr/bin/sysdiagnose -l -b -f /tmp -A " + SYSDIAGNOSE_ARCHIVE)
+    if FUNC_LOG:
+        print "getSysDiagnoseArchive : E"
+
+def createSUSLogArchive():
+    if FUNC_LOG:
+        print "createSUSLogArchive : S"
+    print "Creating Software Update Server archive"
+    executeCommandWithResults(SERVERDIAGNOSE_SUS_LOGGATHER + " " + SUS_LOGGATHER_ARCHIVE_PATH)
+    if FUNC_LOG:
+        print "createSUSLogArchive : E"
+
+def getApacheItems():
+    writeList = []
+
+    if FUNC_LOG:
+        print "getApacheItems : S"
+
+    os.environ['SERVER_INSTALL_PATH_PREFIX'] = "/Applications/Server.app/Contents/ServerRoot"
+    os.environ['MODULE_INSTALL_PATH_PREFIX'] = ""
+    os.environ['XPC_SERVICES_UNAVAILABLE'] = "1"
+    writeList.append("export SERVER_INSTALL_PATH_PREFIX=/Applications/Server.app/Contents/ServerRoot")
+    writeList.append("export MODULE_INSTALL_PATH_PREFIX=")
+    writeList.append("export XPC_SERVICES_UNAVAILABLE=")
+
+    HEADER = "Test desktop apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -t -f /etc/apache2/httpd.conf"
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server websites apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -t -f /Library/Server/Web/Config/apache2/httpd_server_app.conf"
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server proxy apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/Proxy/apache_serviceproxy.conf -t"
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server collabd apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/apache2/services/collabd.conf -t"
+    os.environ['SERVICE_NAME'] = "collabd"
+    writeList.append("export SERVICE_NAME=collabd")
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server auth apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/apache2/services/auth.conf -t"
+    os.environ['SERVICE_NAME'] = "auth"
+    writeList.append("export SERVICE_NAME=auth")
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server changepassword apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/apache2/services/changepassword.conf -t"
+    os.environ['SERVICE_NAME'] = "changepassword"
+    writeList.append("export SERVICE_NAME=changepassword")
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server wiki apache"
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/apache2/services/wiki.conf -t"
+    os.environ['SERVICE_NAME'] = "wiki"
+    writeList.append("export SERVICE_NAME=wiki")
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server profilemanager apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/apache2/services/profilemanager.conf -t"
+    os.environ['SERVICE_NAME'] = "profilemanager"
+    writeList.append("export SERVICE_NAME=profilemanager")
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server Xcode apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/apache2/services/xcode.conf -t"
+    os.environ['SERVICE_NAME'] = "xcode"
+    writeList.append("export SERVICE_NAME=xcode")
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test Server ACSServer apache"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    CMD = "/usr/sbin/httpd -D FOREGROUND -D WEBSERVICE_ON -f /Library/Server/Web/Config/apache2/services/ACSServer.conf -t"
+    os.environ['SERVICE_NAME'] = "ACSServer"
+    writeList.append("export SERVICE_NAME=ACSServer")
+    writeList.append(CMD)
+    cmdOut = executeCommandWithResultsWebApps(CMD)
+    if DEBUG:
+        print "cmdOut := %s" % cmdOut
+    writeList.append(cmdOut.strip())
+
+    HEADER = "Test default SSL cert"
+    if DEBUG:
+        print HEADER
+    writeList.append(HEADER)
+    if os.path.isfile('/Library/Server/Web/Config/apache2/getsslpassphrase'):
+        lastLines = {}
+        CMD = "/Library/Server/Web/Config/apache2/getsslpassphrase *:443:0"
+        writeList.append(CMD)
+        cmdOut = executeCommandWithResultsWebApps(CMD)
+        if DEBUG:
+            print "cmdOut := %s" % cmdOut
+        lastLines = getLastNLines('/var/log/getsslpassphrase.log', 5)
+        errorPresent = False
+        for line in lastLines.split('\n'):
+            if "certadmin error: 1" in line:
+                writeList.append(line)
+                errorPresent = True
+                break
+        if errorPresent:
+            print "ERROR: Certificate check failed."
+            writeList.append("ERROR: Certificate check failed.")
+        else:
+            if DEBUG:
+                print "Certificate check passed."
+            writeList.append("Certificate check passed.")
+
+    else:
+        writeList.append("Tool \'/Library/Server/Web/Config/apache2/getsslpassphrase\' does not exist so can not evaluate ssl cert.")
+
+    if FUNC_LOG:
+        print "getApacheItems : E"
+
+    return writeList
+
+def main(argv):
+    if VERBOSE:
+        print 'ARGV      :', sys.argv[1:]
+        print 'argv count := %s' % len(argv)
+
+    global totalBytes, ARCHIVE_NAME, FIREWALL_RULES
+    answerMoblity = 'n'
+    answerWeb = 'n'
+    parser = create_parser()
+    args = parser.parse_args(argv)
+
+    if os.getuid() != 0:
+        print "Re-launching as root to collect server diagnostic information..."
+        args = ['sudo', sys.executable] + sys.argv + [os.environ]
+        os.execlpe('sudo', *args)
+    else:
+        if DEBUG:
+            print "CUR UID := %s" % os.getuid()
+
+    if not args.no_prompt_flag:
+        print greeting()
+        answerGreeting = raw_input("Press 'Enter' to continue.\n")
+        if answerGreeting.lower() == "n":
+            sys.exit(1)
+
+    ARCHIVE_NAME = getArchiveNameFromOptions(args)
+    getAllCommonPaths(args)
+
+    if not args.brief_flag:
+        if args.mobility_info_flag or args.all_flag:
+            if not args.no_prompt_flag:    #For skipping prompts when -m is used as an option.
+                answerMoblity = raw_input("The [-m] option will add an archive containing mobility information to the serverdiagnose archive. Continue? [Y/n]")
+                if answerMoblity.lower() == "n":
+                    sys.exit(2)
+            if args.all_flag:    #Because all should include all logs
+                answerMoblity = True
+        if args.web_config_flag or args.all_flag:
+            if not args.no_prompt_flag:
+                answerWeb = raw_input("The [-w] option will add the contents of /Library/Server/Web/Config to the serverdiagnose archive. Continue? [Y/n]")
+                if answerWeb.lower() == "n":
+                    sys.exit(3)
+            if args.all_flag:    #Because all should include all logs
+                answerWeb = True
+
+    if not args.brief_flag:
+        INITIAL_MASTER_LIST.append(glob.glob(PREVIOUS_SYSTEM_LOGS))
+        if DEBUG:
+            print "INITIAL_MASTER_LIST := %s" % INITIAL_MASTER_LIST
+
+        print "Collecting Calendar Server logs"
+        executeCommandWithResults(CALENDARSERVER_GATHER_LOGS_CMD)  # Creates /tmp/CalendarServerLogs.tar.gz
+        INITIAL_MASTER_LIST.append(glob.glob("/tmp/CalendarServerLogs.tar.gz"))
+        if DEBUG:
+            print "INITIAL_MASTER_LIST := %s" % INITIAL_MASTER_LIST
+
+        print "Collecting OpenDirectory logs archive"
+        tPath = executeCommandWithResults(DS_DIAGNOSE_CMD).split('/tmp/')[1]     # Creates /tmp/dsdiagnose.*****.tar.bz2, need to get the path
+        DIRECTORY_SERVICE_DIAGNOSE = os.path.join("/tmp", tPath)
+        if DEBUG:
+            print "tPath = %s" % tPath
+            print "DIRECTORY_SERVICE_DIAGNOSE:= %s" % DIRECTORY_SERVICE_DIAGNOSE
+        INITIAL_MASTER_LIST.append(glob.glob("/tmp/dsdiagnose*.*"))
+        if DEBUG:
+            print "INITIAL_MASTER_LIST := %s" % INITIAL_MASTER_LIST
+
+        # Collect PF rules
+        print "Collecting Personal Firewall rules files"
+        FIREWALL_RULES = "/tmp/" + TIME_STAMP + "-server-firewall-rules.txt"
+        PF1_CMD_OUT = executeCommandWithResults(PF_CMD1)
+        PF2_CMD_OUT = executeCommandWithResults(PF_CMD2)
+        f = open(FIREWALL_RULES, "w")
+        f.write(PF1_CMD_OUT)
+        f.write(PF2_CMD_OUT)
+        f.close()
+
+        print "Collecting stack shots"
+        executeCommandWithResults(STACKSHOT_CMD)  # Collect stackshots
+        if DEBUG:
+            print "STACKSHOT_CMD := %s" % STACKSHOT_CMD
+
+    if not args.xsan_config_flag:    #in this mode sysdiagnose will collect it's own copy of system profiler
+        if args.brief_flag:
+            print "Collecting terse system profile report"
+            SPX_OUT = executeCommandWithResults(SYSTEM_PROFILER_BRIEF_CMD)  # Call system profiler briefly
+        else:
+            print "Collecting system profile report"
+            SPX_OUT = executeCommandWithResults(SYSTEM_PROFILER_CMD)  # Call system profiler
+        if DEBUG:
+            print "APPLE_SYSTEM_PROFILE_REPORT := " + APPLE_SYSTEM_PROFILE_REPORT
+        f = open(APPLE_SYSTEM_PROFILE_REPORT, "w")
+        f.write(SPX_OUT)
+        f.close()
+
+    print "Collecting server information"
+    SERVERINFO_OUT = executeCommandWithResults(SERVERINFO_CMD)  # Get serverinfo results
+    if DEBUG:
+        print "SERVER_INFO_PLIST := " + SERVER_INFO_PLIST
+    f = open(SERVER_INFO_PLIST, "w")
+    f.write(SERVERINFO_OUT)
+    f.close()
+
+    print "Collecting migration information"
+    getMigrationPaths()
+
+    print "Collecting server data storage information"
+    DATA_STORE_VOLUME_INFO_OUT = executeCommandWithResults(DATA_STORE_VOLUME_INFO_CMD)  # Get data store volume info results
+    if len(DATA_STORE_VOLUME_INFO_OUT):
+        f = open(DATA_STORE_VOLUME_INFO, "w")
+        f.write(DATA_STORE_VOLUME_INFO_OUT)
+        f.close()
+        if DEBUG:
+            print "DATA_STORE_VOLUME_INFO_CMD := " + DATA_STORE_VOLUME_INFO_CMD
+            print "DATA_STORE_VOLUME_INFO := " + DATA_STORE_VOLUME_INFO
+
+    print "Collecting web applications status"
+    writeList = getApacheItems()
+    f = open(WEB_APP_INFO, "w")
+    for item in writeList:
+        if DEBUG:
+            print item
+        f.write(item + "\n")
+    f.close()
+    INITIAL_MASTER_LIST.append(glob.glob(WEB_APP_INFO))
+
+    if not args.brief_flag:
+        # Create mobility_info archive if requested.
+        if args.mobility_info_flag or args.all_flag:
+            SMI_ARCHIVE = "serverdiagnose_mobility-info-" + datetime.datetime.now().strftime("%y%m%d_%H%M%S") #Create archive with time stamp
+            print "Collecting the serverdiagnose_mobility-info archive"
+            SMI_ARCHIVE_CMD = SERVERDIAGNOSE_GET_MOBILITY_INFO + " " + SMI_ARCHIVE
+            executeCommandWithResults(SMI_ARCHIVE_CMD)
+            INITIAL_MASTER_LIST.append(glob.glob("/Library/Logs/serverdiagnose_mobility-info-*"))
+            if DEBUG:
+                print "INITIAL_MASTER_LIST := %s" % INITIAL_MASTER_LIST
+
+        # Collect common lists
+        CACHING_DEBUG_LOGS_LIST = glob.glob(CACHING_DEBUG_LOGS + "/*")
+
+        # Collect derived common lists
+        INITIAL_MASTER_LIST.append(glob.glob(FIREWALL_RULES))
+        if not args.xsan_config_flag:    #in this mode sysdiagnose will collect it's own copy of system profiler
+            INITIAL_MASTER_LIST.append(glob.glob(APPLE_SYSTEM_PROFILE_REPORT))
+        INITIAL_MASTER_LIST.append(glob.glob(SERVER_INFO_PLIST))
+        INITIAL_MASTER_LIST.append(glob.glob(DATA_STORE_VOLUME_INFO))
+        INITIAL_MASTER_LIST.append(glob.glob(WEBDAV_SHARING_TMP + "/*"))
+        INITIAL_MASTER_LIST.append(glob.glob(SERVER_SETUP_STACK_SHOT))
+        INITIAL_MASTER_LIST.append(glob.glob(MIGRATED_PATHS_LIST))
+
+        if args.all_flag:
+            getSysDiagnoseArchive()
+            INITIAL_MASTER_LIST.append(glob.glob(SYSDIAGNOSE_ARCHIVE_PATH))
+            createSUSLogArchive()
+            INITIAL_MASTER_LIST.append(glob.glob(SUS_LOGGATHER_ARCHIVE_PATH))
+            INITIAL_MASTER_LIST.append(glob.glob("/Library/Server/*/*Logs*")) #Always do this collection
+            for item in glob.glob(LIBRARY_SERVER + "/Logs/*"):
+                if type(item) is 'str':
+                    INITIAL_MASTER_LIST.append(item)
+                if type(item) is 'list':
+                    for i in item:
+                        INITIAL_MASTER_LIST.append(i)
+            INITIAL_MASTER_LIST.append(glob.glob(CUR_USER_LOGS + "/*"))
+
+        if os.path.exists("/var/root/Desktop"): #Always attempt to do this collection
+            INITIAL_MASTER_LIST.append(glob.glob(SERVER_PNGS))
+
+        if not args.all_flag: #Only do this if not ALL
+            INITIAL_MASTER_LIST.append(glob.glob(CUR_USER_SERVER_DIAGNOSTICS_FILES + "/*"))
+            INITIAL_MASTER_LIST.append(glob.glob(CUR_USER_SERVER_WILD))
+
+        if args.all_flag or args.web_config_flag: #Only do this if ALL or web config requested
+            INITIAL_MASTER_LIST.append(glob.glob(LIBRARY_SERVER_WEB_CONFIG + "/*"))
+
+        if not args.xsan_config_flag:    #in this mode sysdiagnose will collect it's own copy of system profiler
+            for i in APPLE_SYSTEM_PROFILE_REPORT_LIST:
+                if VERBOSE:
+                    print "1  ITEM := %s" % i
+                INITIAL_MASTER_LIST.append(i)
+        for i in CACHING_DEBUG_LOGS_LIST:
+            if VERBOSE:
+                print "2  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+        for i in CUR_USER_LOGS_LIST:
+            if VERBOSE:
+                print "3  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+        for i in CUR_USER_SERVER_DIAGNOSTICS_LIST:
+            if VERBOSE:
+                print "4  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+        for i in CUR_USER_SERVER_WILD_LIST:
+            if VERBOSE:
+                print "5  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+        for i in FIREWALL_RULES_LIST:
+            if VERBOSE:
+                print "6  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+        for i in LIBRARY_SERVER_WEB_CONFIG_LIST:
+            if VERBOSE:
+                print "7  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+        for i in SERVER_INFO_PLIST_LIST:
+            if VERBOSE:
+                print "8  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+        for i in WEBDAV_SHARING_TMP_LIST:
+            if VERBOSE:
+                print "9 ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+    else:
+        INITIAL_MASTER_LIST.append(glob.glob(APPLE_SYSTEM_PROFILE_REPORT))
+        INITIAL_MASTER_LIST.append(glob.glob(SERVER_INFO_PLIST))
+        INITIAL_MASTER_LIST.append(glob.glob(DATA_STORE_VOLUME_INFO))
+
+        for i in SERVER_INFO_PLIST_LIST:
+            if VERBOSE:
+                print "1  ITEM := %s" % i
+            INITIAL_MASTER_LIST.append(i)
+
+    for currentLogList in INITIAL_MASTER_LIST:
+        for item in currentLogList:
+            if DEBUG:
+                print item
+            if os.path.exists(item):
+                totalBytes = totalBytes + os.path.getsize(item)
+    if DEBUG:
+        print "Total bytes possible for inclusion will be := %d" % totalBytes
+
+    PLIST = [os.path.splitext(ARCHIVE_NAME)[0] + ".plist"]
+    INITIAL_MASTER_LIST.append(PLIST)
+    writeArchiveManifest(args)
+
+    while not os.path.exists(PLIST[0]):
+        print "Waiting for manifest file to be written"
+        time.sleep(1)
+    if not args.dry_run_flag:
+        print 'Creating serverdiagnose archive',
+        sys.stdout.flush()    # Need to do this to get the buffer flushed out during the archive command
+        createArchive(args)
+        openAndSelectArchiveIfLocal(args)
+
+    if CLEANUP:
+        cleanUp(args)
+
+    print "%s" % ARCHIVE_NAME
+
+if __name__ == "__main__":
+    try:
+        main(sys.argv[1:])
+    except KeyboardInterrupt:
+        if CLEANUP:
+            cleanUpSignalAborted()
+        sys.exit(0)

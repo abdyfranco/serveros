@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Web Service Migration</string>
+	<key>dependencies</key>
+	<array>
+		<string>servermgr_network</string>
+		<string>servermgr_dns</string>
+		<string>Migration</string>
+		<string>servermgr_web_setup</string>
+	</array>
+	<key>migration</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>arguments</key>
+				<array>
+					<string>--sourceRoot</string>
+					<string>/Library/Server/Previous</string>
+					<string>--targetRoot</string>
+					<string>/</string>
+					<string>--purge</string>
+					<string>0</string>
+					<string>--language</string>
+					<string>en</string>
+					<string>--sourceType</string>
+					<string>System</string>
+					<string>--sourceVersion</string>
+					<string>${previousSystemVersion}</string>
+				</array>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/webservice/WebMigration</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>WebPostSetup</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/webservice/WebPostSetup</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

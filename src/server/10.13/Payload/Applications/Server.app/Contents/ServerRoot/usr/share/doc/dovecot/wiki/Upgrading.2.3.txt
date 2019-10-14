@@ -1,0 +1,29 @@
+Upgrading Dovecot v2.2 to v2.3
+==============================
+
+Settings changes
+----------------
+
+ * director_doveadm_port setting removed. Name the inet_listener doveadm { .. }
+   instead.
+ * mdbox_purge_preserve_alt setting removed. It's always assumed to be "yes"
+   now.
+
+Setting default changes
+-----------------------
+
+ * mdbox_rotate_size=2M -> 10M
+
+Diffie-Heffman parameters for SSL
+---------------------------------
+
+ * ssl-parameters.dat file is now obsolete. You should use ssl_dh setting
+   instead:'ssl_dh=</etc/dovecot/dh.pem'
+    * You can convert an existing ssl-parameters.dat to dh.pem:
+
+      ---%<-------------------------------------------------------------------
+      dd if=/var/lib/dovecot/ssl-parameters.dat bs=1 skip=88 | openssl dh
+      -inform der > /etc/dovecot/dh.pem
+      ---%<-------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

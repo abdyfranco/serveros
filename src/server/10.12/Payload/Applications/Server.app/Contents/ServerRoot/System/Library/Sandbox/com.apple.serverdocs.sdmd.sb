@@ -1,0 +1,58 @@
+(version 1)
+
+(deny default)
+
+;;; We can't prevent the violations, so we suppress logging.
+;;; Unfortunately, since a deny file-read-metadata trumps an allow file-read* we need
+;;; to explicitly allow file-read-metadata for anything with a file-read*.
+;;(deny file-read-metadata (with no-log))
+;;(deny file-read-metadata)
+
+(import "system.sb")
+
+(system-network)
+
+;; prevent non-System keychains from being read
+(deny file-read* ;(with no-log)
+       (subpath "/Library/Keychains"))
+
+(deny file-read* ;(with no-log)
+       (subpath "/private/var/root"))
+
+; allow access to shares anywhere TODO: restrict further to specific shared paths
+(allow file-read*)
+(allow file-read-metadata)
+(allow file-write-create)
+(allow file-write*)
+(allow file-issue-extension)
+
+(allow ipc-posix-shm-read-data) ; TODO
+; TODO: /tmp/com.apple.csseed.86
+;       (ipc-posix-name "apple.shm.notification_center")
+;       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+(allow ipc-posix-shm-write-data) ; TODO
+;       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+(allow system-fsctl)
+
+(allow mach-lookup) ; TODO
+;       (global-name "com.apple.DiskArbitration.diskarbitrationd")
+;       (global-name "com.apple.lsd.modifydb")
+;       (global-name "com.apple.lsd.mapdb")
+;       (global-name "com.apple.decalog4.incoming")
+;       (global-name "com.apple.system.opendirectoryd.api")
+;       (global-name "com.apple.SystemConfiguration.configd")
+;       (global-name "com.apple.FSEvents")
+;       (global-name "com.apple.CoreServices.coreservicesd")
+;       (global-name "com.apple.coresymbolicationd")
+;       (global-name "com.apple.distributed_notifications@1v3")
+;       (global-name "com.apple.ocspd")
+;       (global-name "com.apple.SecurityServer"))
+
+(allow network-outbound
+       (literal "/private/var/run/mDNSResponder")
+       (regex #"/Library/Server/ServerDocs/Database.xpg/sockets/\.s\.PGSQL\.5432$")
+       (remote tcp  "*:2195")
+       (remote tcp  "*:2196"))
+

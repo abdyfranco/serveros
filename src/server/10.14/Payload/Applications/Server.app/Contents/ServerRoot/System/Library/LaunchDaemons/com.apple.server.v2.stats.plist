@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.server.v2.stats</string>
+	<key>RunAtLoad</key>
+	<false/>
+	<key>StartInterval</key>
+	<integer>604800</integer>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/server_send_stats</string>
+	<key>EnableTransactions</key>
+	<false/>
+	<key>EnablePressuredExit</key>
+	<true/>
+	<key>ProcessType</key>
+	<string>Background</string>
+</dict>
+</plist>

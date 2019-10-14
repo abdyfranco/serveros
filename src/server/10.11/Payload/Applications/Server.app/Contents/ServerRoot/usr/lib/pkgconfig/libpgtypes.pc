@@ -1,0 +1,9 @@
+Name: libpgtypes
+Description: PostgreSQL libpgtypes library
+Url: http://www.postgresql.org/
+Version: 9.4.5
+Requires: 
+Requires.private: 
+Cflags: -I/Applications/Server.app/Contents/ServerRoot/usr/include
+Libs: -L/Applications/Server.app/Contents/ServerRoot/usr/lib -lpgtypes
+Libs.private: -L/var/tmp/SDKOverrides.5798/MacOSX10.11.Internal.sdk/usr/lib -lm

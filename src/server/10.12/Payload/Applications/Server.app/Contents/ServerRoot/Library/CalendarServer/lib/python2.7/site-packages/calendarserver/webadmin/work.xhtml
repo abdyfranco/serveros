@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html
+ xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1"
+ t:render="main"
+>
+
+  <head>
+
+    <title><t:slot name="title" /></title>
+    <link t:render="stylesheet" />
+
+    <style>
+
+      #work_queue_chart {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .bar {
+        fill: steelblue;
+      }
+
+      .bar:hover {
+        fill: brown;
+      }
+
+      .axis text {
+        font: 10px sans-serif;
+      }
+
+      .axis path, .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
+
+      .x.axis path {
+        display: none;
+      }
+
+      .y.axis text:hover {
+        fill: brown;
+      }
+
+      #work_item_details {
+        display: none;
+      }
+
+      #debug {
+        display: none;
+      }
+
+    </style>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script>
+    //<![CDATA[
+
+      var debug = false;
+
+      var workTypeDescriptions = {
+        // Scheduling
+        "SCHEDULE_ORGANIZER_WORK": "Schedule Organizer",
+        "SCHEDULE_REPLY_WORK": "Schedule Reply",
+        "SCHEDULE_REPLY_CANCEL_WORK": "Schedule Reply (Cancel)",
+        "SCHEDULE_REFRESH_WORK": "Schedule Refresh",
+        "SCHEDULE_AUTO_REPLY_WORK": "Schedule Auto-reply",
+
+        // iMIP scheduling
+        "IMIP_POLLING_WORK": "iMIP Poll",
+        "IMIP_INVITATION_WORK": "iMIP Invitation",
+        "IMIP_REPLY_WORK": "iMIP Reply",
+
+        // Group cacher
+        "GROUP_CACHER_POLLING_WORK": "Group Cache Poll",
+        "GROUP_REFRESH_WORK": "Group Refresh",
+        "GROUP_ATTENDEE_RECONCILIATION_WORK": "Group Attendee Reconciliation",
+
+        // Push notifications
+        "PUSH_NOTIFICATION_WORK": "Push Notification",
+
+        // Event splitting
+        "CALENDAR_OBJECT_SPLITTER_WORK": "Event Split",
+
+        // Inbox cleanup
+        "INBOX_CLEANUP_WORK": "Inbox Cleanup",
+        "CLEANUP_ONE_INBOX_WORK": "Inbox Cleanup: One",
+
+        // Revision cleanup
+        "REVISION_CLEANUP_WORK": "Revision Cleanup",
+        "FIND_MIN_VALID_REVISION_WORK": "Revision Cleanup: Find Minimum",
+      };
+
+      var jobAttributeDescriptions = {
+        // Job management
+        "job_jobID": "Job ID",
+        "job_priority": "Job Priority",
+        "job_weight": "Job Weight",
+        "job_notBefore": "Not Before",
+
+        // Work item management
+        "work_workID": "Work ID",
+        "work_notBefore": "Not Before (W)",
+        "work_group": "Work Group",
+
+        // Push
+        "work_pushID": "Push ID",
+        "work_priority": "Priority",
+
+        // Scheduling
+        "work_icalendarUid": "iCalendar UID",
+        "work_attendeeCount": "Attendee Count",
+        "work_organizer": "Organizer",
+        "work_attendee": "Attendee",
+      }
+
+
+      // Function to return keys from an object in order, followed by keys
+      // from another which were not in the first.
+      // We use this in case we get a JSON dictionary with keys that haven't
+      // been mapped; the mapped keys will be in a known order and the rest
+      // will be in whatever order they came in over the wire.
+      function keysInKindOfKnownOrder(obj1, obj2) {
+        var keys = [];
+        for (var key in obj1) { if (key in obj2) { keys.push(key); } }
+        for (var key in obj2) { if (! key in obj1) { keys.push(key); } }
+        return keys;
+      }
+
+      function valueOrKey(obj, key) {
+        if (key in obj) {
+          return obj[key];
+        } else {
+          return key;
+        }
+      }
+
+
+      var maxSeen = 30;
+
+      function drawChart(data) {
+        var items = [];
+
+        var keys = keysInKindOfKnownOrder(workTypeDescriptions, data);
+
+        for (var i in keys) {
+          var key = keys[i];  // OMG JavaScript, seriously?
+
+          if (key in data) {
+            items.push({
+              name: key,
+              count: data[key],
+              description: valueOrKey(workTypeDescriptions, key),
+            });
+          }
+        }
+
+        var outerWidth  = 960;
+        var outerHeight = 500;
+        var margin = { top: 20, right: 30, bottom: 30, left: 160 };
+
+        var innerWidth  = outerWidth  - margin.left - margin.right;
+        var innerHeight = outerHeight - margin.top  - margin.bottom;
+
+        var xInset = 2;
+
+        var max = d3.max(items, function(i) { return i.count; });
+
+        if (max > maxSeen) { maxSeen = max; }
+
+        var xLocation =
+          d3.scale.log()
+            .domain([1, maxSeen])
+            .range([xInset, innerWidth])
+          ;
+
+        function xLocationWithZero(value) {
+          if (value < 1) {
+            return 0;
+          } else {
+            return xLocation(value);
+          }
+        }
+
+        var yLocation =
+          d3.scale.ordinal()
+            .domain(items.map(function(i) { return i.description; }))
+            .rangeRoundBands([0, innerHeight], 0.1)
+          ;
+
+        var xAxis =
+          d3.svg.axis()
+            .scale(xLocation)
+            .orient("bottom")
+            .ticks(20, ",.0f")
+          ;
+
+        var yAxis =
+          d3.svg.axis()
+            .scale(yLocation)
+            .orient("left")
+          ;
+
+        // Select chart
+        var chart =
+          d3.select("#work_queue_chart")
+            .attr("width", outerWidth)
+            .attr("height", outerHeight)
+          ;
+
+        // Select inner
+        var inner =
+          chart.selectAll(".inner")
+            .data([0])
+          ;
+
+        // Enter inner selection
+        inner.enter().append("g");
+
+        // Update inner selection
+        inner
+          .attr("class", "inner")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        ;
+
+        // Select, enter, update, exit x-axis
+        var x_axis = inner.selectAll(".x.axis").data([0]);
+        x_axis.enter().append("g");
+        x_axis
+          .attr("class", "x axis")
+          .attr("transform", "translate(" + xInset + "," + innerHeight + ")")
+          .call(xAxis)
+        ;
+        x_axis.exit().remove();
+
+        // Select, enter, update, exit y-axis
+        var y_axis = inner.selectAll(".y.axis").data([0]);
+        y_axis.enter().append("g");
+        y_axis
+          .attr("class", "y axis")
+          .call(yAxis)
+        ;
+        // y_axis
+        //   .selectAll(".tick")
+        //   .on("click", function(x) { alert(x); } )
+        // ;
+        y_axis.exit().remove();
+
+        // Select bars
+        var bars =
+          inner.selectAll(".bar")
+            .data(items)
+          ;
+
+        // Enter bars selection
+        bars.enter().append("rect");
+
+        // Update bars selection
+        bars
+          .attr("class", "bar")
+          .attr("width", function(i) { return xLocationWithZero(i.count); })
+          .attr("height", yLocation.rangeBand())
+          .attr(
+            "transform",
+            function(i) { return "translate(" + xInset + "," + yLocation(i.description) + ")"; }
+          )
+          .attr("onclick", function(i) { return 'showJobDetails("' + i.name + '");'; })
+        ;
+
+        // Exit bars selection
+        bars.exit().remove();
+
+        // Select labels
+        var labels =
+          inner.selectAll(".label")
+            .data(items)
+          ;
+
+        // Enter labels selection
+        labels.enter().append("text");
+
+        // Update labels selection
+        labels
+          .attr("class", "label")
+          .attr("x", function(i) { return xLocationWithZero(i.count) + 4; })
+          .attr("y", function(i) { return yLocation(i.description) + (yLocation.rangeBand() / 2); })
+          .attr("dy", "0.32em")
+          .text(
+            function(i) {
+              if (i.count < 1) { return ""; }
+              return i.count;
+            }
+          )
+        ;
+
+        // Exit labels selection
+        labels.exit().remove();
+
+        // Exit inner selection
+        inner.exit().remove();
+      }
+
+
+      function initChart() {
+        var data = {};
+
+        for (var key in workTypeDescriptions) {
+          data[key] = 0.1;
+        }
+
+        drawChart(data);
+      }
+
+
+      var eventSource;
+
+      function registerForEvents() {
+        eventSource = new EventSource("/webadmin/work/events");
+
+        eventSource.addEventListener(
+          "work-total",
+          function(e) {
+            // container = document.getElementById("event_debug");
+            // container.innerHTML = e.data;
+
+            drawChart(JSON.parse(e.data));
+          },
+          false
+        );
+      }
+
+
+      var itemTypeEventListener;
+      var itemTypeEventListenerWorkType;
+
+      function showJobDetails(workType) {
+        var debuggingContainer = document.getElementById("debug");
+
+        if (debug) {
+          debuggingContainer.style.display = "block";
+
+          var detailsDebug = document.getElementById("work_item_debug");
+          detailsDebug.innerHTML = workType;
+
+          var eventDebug = document.getElementById("event_debug");
+          eventDebug.innerHTML = "";
+
+        } else {
+          debuggingContainer.style.display = "none";
+        }
+
+        // Get description
+        if (workType in workTypeDescriptions) {
+          var description = workTypeDescriptions[workType];
+        } else {
+          var description = workType;
+        }
+
+        // Look up elements
+        var detailsTable = document.getElementById("work_item_details");
+        var detailsCaption = document.getElementById("work_item_details_caption");
+        var detailsHeader = document.getElementById("work_item_details_header");
+        var detailsBody = document.getElementById("work_item_details_body");
+
+        // Unregister existing details listener
+        if (typeof itemTypeEventListener !== "undefined") {
+          eventSource.removeEventListener(itemTypeEventListenerWorkType, itemTypeEventListener)
+        }
+
+        // Reset the details elements
+        detailsTable.style.display = "none";
+        detailsCaption.innerHTML = "Work Item Details: " + description;
+        detailsHeader.innerHTML = "";
+        detailsBody.innerHTML = "";
+
+        // Register requested details listener
+        itemTypeEventListenerWorkType = workType;
+
+        itemTypeEventListener = function(e) {
+          if (debug) {
+            eventDebug.innerHTML = e.data;
+          }
+
+          var jobItems = JSON.parse(e.data);
+
+          drawJobDetails(jobItems, detailsTable, detailsCaption, detailsHeader, detailsBody);
+        }
+
+        eventSource.addEventListener(workType, itemTypeEventListener)
+      }
+
+
+      function drawJobDetails(jobItems, detailsTable, detailsCaption, detailsHeader, detailsBody) {
+        // Reset the rows; we're going to refill the table below
+        detailsBody.innerHTML = "";
+
+        for (var i in jobItems) {
+          var jobItem = jobItems[i];  // OMG JavaScript is so stupid.
+
+          // Unhide the table
+          detailsTable.style.display = "block";
+  
+          var attributes = keysInKindOfKnownOrder(jobAttributeDescriptions, jobItem);
+
+          // Add the table headers if they aren't already there
+          if (detailsHeader.innerHTML == "") {
+            var row = document.createElement("tr");
+
+            for (var i in attributes) {
+              var attribute = attributes[i];  // OMG JavaScript, wow you so dumb
+              attributeDescription = valueOrKey(jobAttributeDescriptions, attribute)
+
+              addCellToRow(row, "th", attributeDescription)
+            }
+
+            detailsHeader.appendChild(row);
+          }
+
+          // Add a table row for this job item
+          var row = document.createElement("tr");
+
+          for (var i in attributes) {
+            var attribute = attributes[i];  // OMG JavaScript the lameness
+
+            var value = jobItem[attribute]
+            if (value === null) { value = ""; }
+
+            addCellToRow(row, "td", value)
+          }
+
+          detailsBody.appendChild(row);
+        }
+      }
+
+
+      function addCellToRow(row, tag, text) {
+        var cell = document.createElement(tag);
+        var content = document.createTextNode(text);
+
+        cell.appendChild(content);
+        row.appendChild(cell);
+      }
+
+
+      window.onload = function() {
+        initChart();
+        registerForEvents();
+      };
+
+    //]]>
+    </script>
+
+  </head>
+
+  <body>
+
+    <h1><t:slot name="title" /></h1>
+
+    <svg id="work_queue_chart" />
+
+    <table id="work_item_details">
+      <caption id="work_item_details_caption">Work Item Details</caption>
+      <thead id="work_item_details_header">
+        <tr>
+          <th>Job ID</th>
+          <th>Priority</th>
+          <th>Weight</th>
+          <th>Not Before</th>
+        </tr>
+      </thead>
+      <tbody id="work_item_details_body" />
+    </table>
+
+    <div id="debug">
+     <hr />
+     <div id="work_item_debug" />
+     <div id="event_debug" />
+   </div>
+
+  </body>
+
+</html>

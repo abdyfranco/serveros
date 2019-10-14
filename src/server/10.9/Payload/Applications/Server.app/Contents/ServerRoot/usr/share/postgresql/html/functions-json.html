@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>JSON Functions</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.2.8 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Functions and Operators"
+HREF="functions.html"><LINK
+REL="PREVIOUS"
+TITLE="XML Functions"
+HREF="functions-xml.html"><LINK
+REL="NEXT"
+TITLE="Sequence Manipulation Functions"
+HREF="functions-sequence.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2014-03-17T19:46:29"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="5"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.2.8 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="XML Functions"
+HREF="functions-xml.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="functions.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 9. Functions and Operators</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="Sequence Manipulation Functions"
+HREF="functions-sequence.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FUNCTIONS-JSON"
+>9.15. JSON Functions</A
+></H1
+><P
+>   <A
+HREF="functions-json.html#FUNCTIONS-JSON-TABLE"
+>Table 9-39</A
+> shows the functions that are available
+   for creating JSON (see <A
+HREF="datatype-json.html"
+>Section 8.14</A
+>) data.
+  </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="FUNCTIONS-JSON-TABLE"
+></A
+><P
+><B
+>Table 9-39. JSON Support Functions</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><COL><THEAD
+><TR
+><TH
+>Function</TH
+><TH
+>Description</TH
+><TH
+>Example</TH
+><TH
+>Example Result</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+>         
+         <TT
+CLASS="LITERAL"
+>array_to_json(anyarray [, pretty_bool])</TT
+>
+       </TD
+><TD
+>         Returns the array as JSON. A PostgreSQL multidimensional array
+         becomes a JSON array of arrays. Line feeds will be added between
+         dimension 1 elements if <TT
+CLASS="PARAMETER"
+>pretty_bool</TT
+> is true.
+       </TD
+><TD
+><TT
+CLASS="LITERAL"
+>array_to_json('{{1,5},{99,100}}'::int[])</TT
+></TD
+><TD
+><TT
+CLASS="LITERAL"
+>[[1,5],[99,100]]</TT
+></TD
+></TR
+><TR
+><TD
+>         
+         <TT
+CLASS="LITERAL"
+>row_to_json(record [, pretty_bool])</TT
+>
+       </TD
+><TD
+>         Returns the row as JSON. Line feeds will be added between level
+         1 elements if <TT
+CLASS="PARAMETER"
+>pretty_bool</TT
+> is true.
+       </TD
+><TD
+><TT
+CLASS="LITERAL"
+>row_to_json(row(1,'foo'))</TT
+></TD
+><TD
+><TT
+CLASS="LITERAL"
+>{"f1":1,"f2":"foo"}</TT
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="functions-xml.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="functions-sequence.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>XML Functions</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="functions.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Sequence Manipulation Functions</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

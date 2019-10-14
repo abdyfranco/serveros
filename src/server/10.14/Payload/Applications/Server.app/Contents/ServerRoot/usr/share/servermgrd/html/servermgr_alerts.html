@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>Alerts</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+        if (selection == "sendTestAlert") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>sendTestAlert</string>\n';
+		} else if (selection == "getAlerts") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getAlerts</string>\n';
+			commandValue += '	<key>startDate</key>\n';
+			commandValue += '	<string>2000-12-31T09:00:00</string>\n';
+            commandValue += '	<key>endDate</key>\n';
+			commandValue += '	<string>2012-12-24T09:00:00</string>\n';
+        } else if (selection == "clearAlerts") {
+            commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>clearAlerts</string>\n';
+            commandValue += '	<key>date</key>\n';
+            commandValue += '	<string>2012-12-24T09:00:00</string>\n';
+		} else if (selection == "markAlertAsRead") {
+            commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>markAlertAsRead</string>\n';
+            commandValue += '	<key>alertID</key>\n';
+            commandValue += '	<string>0001</string>\n';
+		} else if (selection == "markAlertAsResolved") {
+            commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>markAlertAsResolved</string>\n';
+            commandValue += '	<key>alertID</key>\n';
+            commandValue += '	<string>0001</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+            
+			commandValue += '	<key>settings</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>anyKey</key>\n';
+			commandValue += '		<string>anyValue</string>\n';
+			commandValue += '	</dict>\n';
+        }else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_alerts'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -</OPTION>
+                        <OPTION VALUE="sendTestAlert">sendTestAlert</OPTION>
+                        <OPTION VALUE="getAlerts">getAlerts</OPTION>
+                        <OPTION VALUE="clearAlerts">clearAlerts</OPTION>
+                        <OPTION VALUE="markAlertAsRead">markAlertAsRead</OPTION>
+                        <OPTION VALUE="markAlertAsResolved">markAlertAsResolved</OPTION>
+                        <OPTION VALUE="readSettings">readSettings</OPTION>
+                        <OPTION VALUE="writeSettings">writeSettings</OPTION>
+                    </SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_alerts">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

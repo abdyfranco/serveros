@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>collectPerformanceStats</key>
+	<false/>
+	<key>crashOnHangTimeout</key>
+	<false/>
+	<key>dumpFullDiagnostics</key>
+	<false/>
+	<key>forbiddenSSLCipherSuites</key>
+	<string>0,1,2,3,4,6,8,9,11,13,14,15,17,18,20,21,23,24,25,26,27,28,52,58,49153,49154,49155,49156,49157,49158,49159,49160,49161,49162,49163,49164,49165,49166,49167,49168,49169,49170,49171,49172,49173,49174,49175,49176,49177,49187,49188,49189,49190,49191,49192,49193,49194,49195,49196,49197,49198,49199,49200,49201,49202</string>
+	<key>idlePeriod</key>
+	<integer>60</integer>
+	<key>logExceptionDetails</key>
+	<false/>
+	<key>moduleAuthAnonymous</key>
+	<array/>
+	<key>moduleAuthAnyUser</key>
+	<array>
+		<string>servermgr_signaler</string>
+		<string>servermgr_xserve</string>
+	</array>
+	<key>moduleCommandAuthAnonymous</key>
+	<array>
+		<dict>
+			<key>command</key>
+			<string>getServicesInfo</string>
+			<key>module</key>
+			<string>servermgr_info</string>
+		</dict>
+	</array>
+	<key>moduleCommandAuthAnyUser</key>
+	<array>
+		<dict>
+			<key>command</key>
+			<string>getSANConfig</string>
+			<key>module</key>
+			<string>servermgr_san</string>
+		</dict>
+		<dict>
+			<key>command</key>
+			<string>getSACLsForUser</string>
+			<key>module</key>
+			<string>servermgr_info</string>
+		</dict>
+	</array>
+	<key>onlyAcceptLocalConnections</key>
+	<true/>
+	<key>requireUserAgent</key>
+	<true/>
+</dict>
+</plist>

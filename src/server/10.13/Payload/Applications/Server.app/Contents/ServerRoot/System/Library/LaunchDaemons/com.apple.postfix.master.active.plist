@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.postfix.master.active</string>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/postfix/master</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>master</string>
+		<string>-c</string>
+		<string>/Library/Server/Mail/Config/postfix</string>
+	</array>
+	<key>EnablePressuredExit</key>
+	<true/>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>QueueDirectories</key>
+	<array>
+		<string>/Library/Server/Mail/Data/spool/maildrop</string>
+	</array>
+	<key>KeepAlive</key>
+	<true/>
+</dict>
+</plist>

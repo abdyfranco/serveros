@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>Info</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "getHardwareInfo") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getHardwareInfo</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withQuotaUsage</string>\n';
+		} else if (selection == "getSystemLogPaths") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getSystemLogPaths</string>\n';
+		} else if (selection == "getExistingLogFiles") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getExistingLogFiles</string>\n';
+		} else if (selection == "tailFile") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>tailFile</string>\n';
+			commandValue += '	<key>identifier</key>\n';
+			commandValue += '	<string>systemLog</string>\n';
+			commandValue += '	<key>offset</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>amount</key>\n';
+			commandValue += '	<integer>5000</integer>\n';
+		} else if (selection == "getHistory") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getHistory</string>\n';
+			commandValue += '	<key>timeScale</key>\n';
+			commandValue += '	<integer>3600</integer>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>v1+v2</string>\n';
+		} else if (selection == "getSWUpdateStatus") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getSWUpdateStatus</string>\n';
+		} else if (selection == "startSWUpdateScan") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>startSWUpdateScan</string>\n';
+		} else if (selection == "startSWUpdateInstall") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>startSWUpdateInstall</string>\n';
+			commandValue += '	<key>swupdatesArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>identifier1</string>\n';
+			commandValue += '		<string>identifier2</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "killProcesses") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>killProcesses</string>\n';
+			commandValue += '	<key>pids</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<integer>anyPid</integer>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "listProcesses") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>listProcesses</string>\n';
+			commandValue += '	<key>limit</key>\n';
+			commandValue += '	<integer>5</integer>\n';
+			commandValue += '	<key>fieldsToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>Command</string>\n';
+			commandValue += '		<string>PID</string>\n';
+			commandValue += '		<string>CPUUsage</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>primarySortKey</key>\n';
+			commandValue += '	<string>CPUUsage</string>\n';
+			commandValue += '	<key>primarySortDirection</key>\n';
+			commandValue += '	<string>DESC</string>\n';
+			commandValue += '	<key>secondarySortKey</key>\n';
+			commandValue += '	<string>Command</string>\n';
+			commandValue += '	<key>secondarySortDirection</key>\n';
+			commandValue += '	<string>ASC</string>\n';
+		} else if (selection == "setPluginLogging") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setPluginLogging</string>\n';
+			commandValue += '	<key>pluginState</key>\n';
+			commandValue += '	<integer>1</integer>\n';
+		} else if (selection == "getFileSizes") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getFileSizes</string>\n';
+			commandValue += '	<key>options</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>sourcePaths</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>/Library/Server/</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getFileSizesProgress") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getFileSizesProgress</string>\n';
+			commandValue += '	<key>copyID</key>\n';
+			commandValue += '	<string>7A3A7422-974A-4EFB-9514-F531A7EBD103</string>\n';
+		} else if (selection == "startCopyFiles") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>startCopyFiles</string>\n';
+			commandValue += '	<key>options</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>sourcePaths</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>/Library/Server/</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>destinationPaths</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>/Volumes/Data/Library/Server/</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getCopyFilesProgress") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getCopyFilesProgress</string>\n';
+			commandValue += '	<key>copyID</key>\n';
+			commandValue += '	<string>7A3A7422-974A-4EFB-9514-F531A7EBD103</string>\n';  
+		} else if (selection == "removeFiles") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>removeFiles</string>\n';
+			commandValue += '	<key>options</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>pathsToRemove</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>/Volumes/Data/Library/Server/</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getRemoveFilesProgress") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getRemoveFilesProgress</string>\n';
+			commandValue += '	<key>copyID</key>\n';
+			commandValue += '	<string>7A3A7422-974A-4EFB-9514-F531A7EBD103</string>\n';  
+		}	else if (selection == "reboot") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>reboot</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>myKey1</key>\n';
+			commandValue += '		<string>myValue1</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "getServicesInfo") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getServicesInfo</string>\n';
+		} else if (selection == "getSACLsForUser") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getSACLsForUser</string>\n';
+			commandValue += '	<key>user</key>\n';
+			commandValue += '	<string>shortName</string>\n';
+		} else if (selection == "getContext") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getContext</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_info'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="getSACLsForUser">getSACLsForUser
+						<OPTION VALUE="getServicesInfo">getServicesInfo
+						<OPTION VALUE="getHardwareInfo">getHardwareInfo
+						<OPTION VALUE="getSystemLogPaths">getSystemLogPaths
+						<OPTION VALUE="getExistingLogFiles">getExistingLogFiles
+						<OPTION VALUE="tailFile">tailFile
+						<OPTION VALUE="getHistory">getHistory
+						<OPTION VALUE="getSWUpdateStatus">getSWUpdateStatus
+						<OPTION VALUE="startSWUpdateScan">startSWUpdateScan
+						<OPTION VALUE="startSWUpdateInstall">startSWUpdateInstall
+						<OPTION VALUE="killProcesses">killProcesses
+						<OPTION VALUE="listProcesses">listProcesses
+						<OPTION VALUE="setPluginLogging">setPluginLogging
+						<OPTION VALUE="getFileSizes">getFileSizes
+						<OPTION VALUE="getFileSizesProgress">getFileSizesProgress
+						<OPTION VALUE="startCopyFiles">startCopyFiles
+						<OPTION VALUE="getCopyFilesProgress">getCopyFilesProgress
+						<OPTION VALUE="removeFiles">removeFiles
+						<OPTION VALUE="getRemoveFilesProgress">getRemoveFilesProgress
+						<OPTION VALUE="reboot">reboot
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+						<OPTION VALUE="getContext">getContext
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_info">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

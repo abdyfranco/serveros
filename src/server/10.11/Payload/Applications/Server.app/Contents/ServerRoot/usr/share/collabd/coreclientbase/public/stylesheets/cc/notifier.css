@@ -1,0 +1,64 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.notifier
+{
+	background: transparent;
+	display: block;
+	height: 1px;
+	left: 0px;
+	position: absolute;
+	text-align: center;
+	top: 0px;
+	width: 100%;
+	z-index: 9999;
+}
+
+.notifier .content
+{
+	background-color: #000000;
+	color: #FFFFFF;
+	cursor: default;
+	display: inline-block;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	font-size: 11px;
+	height: 27px;
+	line-height: 27px;
+	max-width: 500px;
+	overflow: hidden;
+	padding: 0px 12px;
+	position: relative;
+	text-overflow: ellipsis;
+	top: -1px;
+	white-space: nowrap;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	-webkit-transition: top 0.25s ease-out;
+}
+
+.notifier.failed .content
+{
+	background-color: rgba(141,2,8,0.75);
+	border-color: #8d0208;
+}
+
+.notifier.busy .content
+{
+	background: #000000 url(./img/spinner_notification_busy.gif) 8px 5px no-repeat;
+	padding-left: 33px;
+}
+
+.notifier.hidden .content
+{
+	top: -27px;
+}

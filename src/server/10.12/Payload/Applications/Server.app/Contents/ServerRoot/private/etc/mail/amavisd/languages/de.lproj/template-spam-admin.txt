@@ -1,0 +1,38 @@
+# =============================================================================
+# This is a template for SPAM ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+From: %f
+Date: %d
+Subject: UNAUFGEFORDERTE MAIL VON [?%l||LOKAL ][?%a||\[%a\] ]%s
+To: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <SA%i@%h>
+
+Content type: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, blockiert für [:ccat|name]]
+Interner Referenzcode für die E-Mail ist %n/%i
+
+[? %a |#|[:wrap|78||  |IP-Adresse des ersten Upstream-SMTP-Client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Gemäß  "Empfangen:"-Trace\
+ stammt die E-Mail anscheinend von: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Nicht isoliert.|Die E-Mail wurde isoliert unter: %q]
+
+[? %#D |#|Die E-Mail WIRD weitergeleitet an:[\n%D]
+]
+[? %#N |#|Die E-Mail WURDE NICHT weitergeleitet an:[\n%N]
+]
+SpamAssassin-Bericht:
+[%A
+]\

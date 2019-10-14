@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>CERTS</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "readODIdentities") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readODIdentities</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>anyKey</key>\n';
+			commandValue += '		<string>anyValue</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "createCSR") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>createCertificateSigningRequest</string>\n';
+			commandValue += '	<key>distinguishedName</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>CommonName</key>\n';
+			commandValue += '		<string>server.example.com</string>\n';
+			commandValue += '		<key>EmailAddress</key>\n';
+			commandValue += '		<string>admin@example.com</string>\n';
+			commandValue += '		<key>Organization</key>\n';
+			commandValue += '		<string>Example, Inc</string>\n';
+			commandValue += '		<key>OrganizationUnit</key>\n';
+			commandValue += '		<string>Ministry of Examples</string>\n';
+			commandValue += '		<key>Locality</key>\n';
+			commandValue += '		<string>Anytown</string>\n';
+			commandValue += '		<key>State</key>\n';
+			commandValue += '		<string>CA</string>\n';
+			commandValue += '		<key>CountryCode</key>\n';
+			commandValue += '		<string>US</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "readCSRs") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readCertificateSigningRequests</string>\n';
+		} else if (selection == "deleteCSR") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>deleteCertificateSigningRequest</string>\n';
+			commandValue += '	<key>commonName</key>\n';
+			commandValue += '	<string>someName</string>\n';
+                }
+        }else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_certs'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="readODIdentities">readODIdentities
+						<OPTION VALUE="writeSettings">writeSettings
+                                                <OPTION VALUE="createCSR">createCSR
+                                                <OPTION VALUE="readCSRs">readCSRs
+                                                <OPTION VALUE="deleteCSR">deleteCSR
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_certs">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

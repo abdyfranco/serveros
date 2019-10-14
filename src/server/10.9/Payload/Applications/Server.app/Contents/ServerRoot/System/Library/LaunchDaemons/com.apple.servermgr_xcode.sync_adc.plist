@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.servermgr_xcode.sync_adc</string>
+	<key>Disabled</key>
+	<false/>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>UserName</key>
+	<string>root</string>
+	<key>GroupName</key>
+	<string>wheel</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin</string>
+		<string>command</string>
+		<string>xcode:command=syncADCWithTimingHeuristics</string>
+	</array>
+	<key>WatchPaths</key>
+	<array>
+		<string>/Library/Server/Xcode/Cache/KickFiles/com.apple.servermgr_xcode.sync_adc/</string>
+	</array>
+	<key>StartInterval</key>
+	<integer>300</integer>
+</dict>
+</plist>

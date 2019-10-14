@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IPSec</key>
+	<dict>
+		<key>ExchangeMode</key>
+		<array>
+			<string>Aggressive</string>
+			<string>Main</string>
+		</array>
+		<key>IdentifierVerification</key>
+		<string>GenerateFromRemoteAddress</string>
+		<key>LocalAddress</key>
+		<string></string>
+		<key>LocalCertificate</key>
+		<data>
+		</data>
+		<key>LocalIdentifier</key>
+		<string></string>
+		<key>NonceSize</key>
+		<integer>16</integer>
+		<key>Policies</key>
+		<array/>
+		<key>Proposals</key>
+		<array/>
+		<key>ProposalsBehavior</key>
+		<string>Claim</string>
+		<key>RemoteAddress</key>
+		<string></string>
+		<key>RemoteIdentifier</key>
+		<string></string>
+		<key>SharedSecret</key>
+		<string></string>
+		<key>SharedSecretEncryption</key>
+		<string>Keychain</string>
+		<key>SharedSecretValue</key>
+		<string></string>
+	</dict>
+	<key>Interface</key>
+	<dict>
+		<key>Type</key>
+		<string>IPSec</string>
+	</dict>
+	<key>enabled</key>
+	<false/>
+</dict>
+</plist>

@@ -1,0 +1,126 @@
+#!/usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+
+##
+# Copyright (c) 2012-2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+# of the Apple Software and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is part of.
+##
+
+$ServerLibraryPath = '/Library/Server'
+$ServiceConfigPath = $ServerLibraryPath + '/Wiki/Config'
+$ServerInstallPathPrefix = '/Applications/Server.app/Contents/ServerRoot'
+$LogDirectoryPath = $ServerLibraryPath + '/Wiki/Logs'
+$LogPath = $LogDirectoryPath + '/collabd_database_loader.log'
+MAX_XPG_CTL_LAUNCH_ATTEMPTS = 2
+XPG_CTL_LAUNCH_ATTEMPT_SLEEP = 3
+# Note extremely long timeout, because start may trigger a recovery and DB is unusable until it completes.
+XPG_CTL_WAIT_SECONDS = 86400
+
+ENV['BUNDLE_GEMFILE'] = "#{$ServerInstallPathPrefix}/usr/share/collabd/gems/Gemfile"
+
+require 'rubygems'
+require 'bundler/setup'
+
+$LOAD_PATH << "#{$ServerInstallPathPrefix}/usr/share/collabd/server/ruby/lib"
+
+require 'fileutils'
+require 'find'
+require 'collaboration'
+require 'pg'
+require 'shellwords'
+require 'logger'
+require 'optparse'
+
+unless File.exists?($LogDirectoryPath)
+  `/bin/mkdir -p #{$LogDirectoryPath}`
+  `/usr/sbin/chown -R 94:94 #{$LogDirectoryPath}`
+end
+$logger = Logger.new($LogPath)
+FileUtils.chmod 0640, $LogPath
+FileUtils.chown '94', '94', $LogPath
+
+$PostgresSocketDir = $ServerLibraryPath + '/Wiki/PostgresSocket'
+
+$ShouldStartDatabase = true
+
+OptionParser.new do |opts|
+
+  opts.on("--mode [MODE]", [:start, :stop], "Select database mode (start or stop)") do |m|
+    if m == :stop
+      $ShouldStartDatabase = false
+    end
+  end
+  
+end.parse!
+
+if ($ShouldStartDatabase)
+  $logger.info("Starting database via xpg_ctl")
+else
+  $logger.info("Stopping database via xpg_ctl")
+end
+
+Dir.chdir('/') do
+
+  xpgExitStatus = nil
+  retryCount = 0
+  while (retryCount < MAX_XPG_CTL_LAUNCH_ATTEMPTS)
+    
+    $logger.info("Trying to " + ($ShouldStartDatabase ? 'start' : 'stop') + " database (attempt #{retryCount + 1})")
+    
+    $logger.info("Re-reading database cluster location from config file")
+    current_config_dict = Collaboration.dictionaryWithContentsOfFile($ServiceConfigPath + '/collabd.plist')
+    $DatabaseClusterDir = current_config_dict['Database']['DatabaseClusterDirectory']
+    $logger.info("Database cluster is at #{$DatabaseClusterDir}")
+    msg = `#{$ServerInstallPathPrefix}/usr/bin/pg_controldata #{$DatabaseClusterDir.shellescape} 2>&1`
+    preflightExitStatus = $?.exitstatus
+    if preflightExitStatus == 0
+      $logger.info("#{$DatabaseClusterDir} looks like a proper database cluster directory")
+      $logger.info("Calling out to xpg_ctl to " + ($ShouldStartDatabase ? 'start' : 'stop') + " the collabd database cluster")
+      socketArg = PG.library_version  >= 90300 ? "unix_socket_directories" : "unix_socket_directory"
+      postgres_options = "-c log_line_prefix=%t -c log_lock_waits=on -c log_statement=ddl -c logging_collector=on " +
+        "-c max_connections=500 -c #{socketArg}=#{$PostgresSocketDir} -c unix_socket_group=_teamsserver " +
+        "-c unix_socket_permissions=0770 -c log_connections=on -c listen_addresses= -c log_directory=#{$LogDirectoryPath} " +
+        "-c log_filename=postgres-%a.log -c log_rotation_age=1440 -c log_truncate_on_rotation=on"
+      cmd = "#{$ServerInstallPathPrefix}/usr/bin/xpg_ctl " + ($ShouldStartDatabase ? 'start' : 'stop') + " -w -t #{XPG_CTL_WAIT_SECONDS} -D " + $DatabaseClusterDir.shellescape + " -l #{$LogDirectoryPath}/postgres-xpg.log -o \"#{postgres_options}\""
+      
+      $logger.info("Calling out to xpg_ctl: #{cmd}")
+      `sudo -u _teamsserver sh -c '#{cmd}'`
+      xpgExitStatus = $?.exitstatus
+      $logger.debug("xpg_ctl exit status: #{xpgExitStatus}")
+      
+      break if (xpgExitStatus == 0)
+    else
+      $logger.error("#{$DatabaseClusterDir} does not look like a proper database cluster directory. pg_controldata failed with status=#{preflightExitStatus}, error=#{msg}")
+    end
+    $logger.debug("Sleeping for #{XPG_CTL_LAUNCH_ATTEMPT_SLEEP}s")
+    sleep(XPG_CTL_LAUNCH_ATTEMPT_SLEEP)
+    retryCount += 1
+    
+  end
+
+  if (xpgExitStatus != 0)
+    $logger.error("Fatal error. Failed to launch database after #{MAX_XPG_CTL_LAUNCH_ATTEMPTS} attempts with a #{XPG_CTL_WAIT_SECONDS}s timeout (exit status is #{xpgExitStatus})")
+    exit(1)
+  end
+  
+  if $ShouldStartDatabase
+    $logger.info("Creating database user and database if they are needed")
+    system($ServerInstallPathPrefix+'/usr/bin/createuser', '-h', $PostgresSocketDir, '-U', '_teamsserver', '-d', '-s', 'collab')
+    if system($ServerInstallPathPrefix+'/usr/bin/createdb', '-h', $PostgresSocketDir, '-U', 'collab', 'collab')
+        system($ServerInstallPathPrefix+'/usr/bin/psql', '-h', $PostgresSocketDir, '-U', 'collab', '-c', 'CREATE EXTENSION intarray')
+        system($ServerInstallPathPrefix+'/usr/bin/psql', '-h', $PostgresSocketDir, '-U', 'collab', '-c', 'CREATE EXTENSION hstore')
+        system($ServerInstallPathPrefix+'/usr/bin/psql', '-h', $PostgresSocketDir, '-U', 'collab', '-f', $ServerInstallPathPrefix+'/usr/share/collabd/server/sql/schema.sql')
+    end
+  end
+  
+  $logger.info("Database was " + ($ShouldStartDatabase ? 'started' : 'stopped'))
+  
+end
+exit(0)

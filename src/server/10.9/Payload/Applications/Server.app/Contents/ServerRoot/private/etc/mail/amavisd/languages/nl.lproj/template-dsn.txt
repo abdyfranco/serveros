@@ -1,0 +1,138 @@
+# =============================================================================
+# Dit is een sjabloon voor neutrale AFLEVERSTATUSBERICHTEN aan de afzender
+# (geen virussen, spam of verboden inhoud).
+# Meer informatie over de syntaxis en het aanpassen van de
+# sjabloon vindt u in "README.customize". De koptekstvelden 'Van', 'Aan'
+# en 'Datum' worden automatisch toegevoegd. Lange koptekstvelden worden
+# automatisch door het programma over meerdere regels verdeeld.
+#
+Onderwerp: [?%#D|E-mail kan niet worden bezorgd|Afleverstatusbericht]\
+[? [:ccat|major] |||, DOOR MTA GEBLOKKEERD\
+|, TE GROOT bericht\
+|, ongeldige koptekst[=explain_badh|1]\
+[?[:ccat|minor]||: onjuiste MIME-structuur|: ongecodeerd 8-bits teken\
+|: onjuist gebruik van controlteken|: koptekstregel met alleen witruimte\
+|: koptekstregel langer dan 998 tekens|: syntaxisfout in koptekstveld\
+|: vereist koptekstveld ontbreekt|: dubbel koptekstveld|]\
+|, ONGEVRAAGDE BULKE-MAIL die van u afkomstig lijkt\
+|, ONGEVRAAGDE BULKE-MAIL die van u afkomstig lijkt\
+|, inhoud NIET GECONTROLEERD\
+|, VERBODEN type inhoud (%F)\
+|, VIRUS in bericht dat afkomstig lijkt van u (%V)\
+]
+Message-ID: <DSN%i@%h>
+
+[? %#D |#|Uw bericht IS DOORGESTUURD naar:[\n  %D]
+[~[:dsn_notify]|["\\bGESLAAGD\\b"]|\
+en u hebt uitdrukkelijk gevraagd om een statusbericht na een geslaagde aflevering.\n]\
+]
+[? %#N |#|Het bericht IS NIET DOORGESTUURD naar:[\n  %N]
+]
+[:wrap|78|||Dit bericht voor [?%#D|niet-aflevering|aflevering] is \
+aangemaakt door het programma amavisd-new op host %h. \
+Onze interne referentiecode voor uw bericht is %n/%i]
+
+# ccat_min 0: overige,  1: onjuiste MIME-structuur,  2: 8-bits teken,  3: NUL/CR,
+#          4: leeg,  5: lang,  6: syntaxis,  7: ontbrekend,  8: meerdere
+[? [:explain_badh] ||[? [:ccat|minor]
+|ONGELDIGE KOPTEKST
+|ONGELDIGE KOPTEKST: ONJUISTE MIME IN KOPTEKST OF ONJUISTE MIME-STRUCTUUR
+|ONGELDIGE KOPTEKST: ONGELDIGE 8-BITS TEKENS IN KOPTEKST
+|ONGELDIGE KOPTEKST: ONGELDIGE CONTROLTEKENS IN KOPTEKST
+|ONGELDIGE KOPTEKST: OVER MEERDERE REGELS VERDEELDE KOPTEKST BEVAT REGEL MET ALLEEN WITRUIMTE
+|ONGELDIGE KOPTEKST: KOPTEKSTREGEL IS LANGER DAN RFC2822-LIMIET VAN 998 TEKENS
+|ONGELDIGE KOPTEKST: SYNTAXISFOUT IN KOPTEKSTVELD
+|ONGELDIGE KOPTEKST: VEREIST KOPTEKSTVELD ONTBREEKT
+|ONGELDIGE KOPTEKST: DUBBEL KOPTEKSTVELD
+|ONGELDIGE KOPTEKST
+]
+[[:wrap|78|  |  |%X]\n]
+]\
+#
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %#X|#|[? [:useragent] |#|[:wrap|78||  |[:useragent]]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+# ccat_min 0: overige,  1: onjuiste MIME-structuur,  2: 8-bits teken,  3: NUL/CR,
+#          4: leeg,  5: lang,  6: syntaxis,  7: ontbrekend,  8: meerdere
+[? [:explain_badh] ||[? [:ccat|minor]
+|# 0: overige
+|# 1: onjuiste MIME-structuur
+|# 2: 8-bits teken
+WAT WORDT ER BEDOELD MET EEN ONGELDIG TEKEN IN DE KOPTEKST VAN EEN E-MAIL?
+
+  Het RFC 5322-document bevat regels voor het samenstellen van
+  internetberichten. Volgens deze regels mogen geen tekens met codes
+  hoger dan 127 rechtstreeks (ongecodeerd) in de koptekst van een
+  e-mail worden gebruikt.
+
+  Als dergelijke tekens (bijv. diacritische tekens) uit het ISO Latin-
+  alfabet of een ander alfabet in een koptekst worden gebruikt, moeten
+  deze tekens op de juiste manier volgens de RFC 2047-norm worden
+  gecodeerd. Deze codering wordt meestal op transparante wijze door de
+  e-maillezer (MUA) uitgevoerd. Als automatische codering echter niet
+  beschikbaar is (bijv. bij een oudere MUA), moeten gebruikers afzien
+  van het gebruik van dergelijke tekens in de koptekst of moeten ze de
+  tekens handmatig coderen. Veelvoorkomende ongeldige koptekstvelden in
+  deze categorie zijn 'Onderwerp', 'Organisatie' en opmerkingenvelden of
+  weergegeven namen voor e-mailadressen in 'Van', 'Aan' of 'Cc'.
+
+  Soms worden dergelijke ongeldige koptekstvelden automatisch door
+  een MUA, MTA, filter of andere voorziening voor e-mailverwerking
+  ingevoegd. In dit geval moet de voorziening worden aangepast of
+  juist geconfigureerd. Veelvoorkomende ongeldige koptekstvelden in deze
+  categorie zijn 'Datum', 'Ontvangen', 'X-Mailer', 'X-Priority', 'X-Scanned',
+  enz.
+
+  Als u niet weet hoe u het probleem moet verhelpen of voorkomen,
+  neemt u contact op met _uw_ e-mail- of systeembeheerder.
+#
+[~[:useragent]|^X-Mailer:\\s*Microsoft Outlook Express 6\\.00|["
+  Wanneer u Microsoft Outlook Express als uw MUA gebruikt, moet:
+  'MIME-indeling' zijn ingeschakeld en '8-bits tekens in berichtkoppen
+  toestaan' zijn uitgeschakeld onder 'Extra' -> 'Opties' -> 'Verzenden'
+   -> 'Indeling voor verzenden van e-mail' -> 'Tekst zonder opmaak en HTML'.
+"]]#
+|# 3: NUL/CR
+ONJUIST GEBRUIK VAN EEN CONTROLTEKEN IN DE KOPTEKST VAN EEN BERICHT
+
+  Het RFC 5322-document bevat regels voor het samenstellen van
+  internetberichten. Volgens deze regels is het verboden om de
+  controltekens 'NUL' en 'bare CR' direct in de koptekst van een e-mail
+  te gebruiken.
+|# 4: leeg
+OVER MEERDERE REGELS VERDEELDE KOPTEKST BEVAT REGEL MET ALLEEN WITRUIMTE
+
+  Het RFC 5322-document bevat regels voor het samenstellen van
+  internetberichten. Volgens paragraaf 3.2.2., "Folding white space and
+  comments", is het uitdrukkelijk verboden om koptekstvelden over
+  meerdere regels te verdelen als daarbij een regel van het afgebroken
+  koptekstveld uitsluitend uit witruimte bestaat (SP- en HTAB-controltekens).
+|# 5: lang
+KOPTEKSTREGEL IS LANGER DAN DE 998 TEKENS VAN DE RFC5322-LIMIET
+
+  Het RFC 5322-document bevat regels voor het samenstellen van
+  internetberichten. Volgens paragraaf 2.1.1., "Line Length Limits", mag
+  een koptekstregel niet langer zijn dan 998 tekens (exclusief de CRLF).
+|# 6: syntaxis
+|# 7: ontbrekend
+VEREIST KOPTEKSTVELD ONTBREEKT
+
+  Het RFC 5322-document bevat regels voor het samenstellen van
+  internetberichten. Volgens paragraaf 3.6., "Field Definitions", zijn
+  bepaalde koptekstvelden vereist (het veld met de aanmaakdatum en het veld
+  'Van:' met de afzender).
+|# 8: meerdere
+DUBBEL KOPTEKSTVELD
+
+  Het RFC 5322-document bevat regels voor het samenstellen van
+  internetberichten. Volgens paragraaf 3.6., "Field Definitions", mogen bepaalde
+  koptekstvelden maar één keer voorkomen in de koptekst van een bericht.
+|# overige
+]]#

@@ -1,0 +1,21 @@
+DOVECOT_CFLAGS="-std=gnu99 -arch x86_64 -g -Os -pipe  -Wall -W -Wmissing-prototypes -Wmissing-declarations -Wpointer-arith -Wchar-subscripts -Wformat=2 -Wbad-function-cast -Wno-duplicate-decl-specifier -Wstrict-aliasing=2 "
+DOVECOT_LIBS=""
+DOVECOT_SSL_LIBS="-lssl.35 -lcrypto.35 "
+DOVECOT_SQL_LIBS="  "
+DOVECOT_COMPRESS_LIBS=" -lz -lbz2"
+
+LIBDOVECOT='-L/Applications/Server.app/Contents/ServerRoot/usr/lib/dovecot -ldovecot'
+LIBDOVECOT_LOGIN='-ldovecot-login -lssl.35 -lcrypto.35 '
+LIBDOVECOT_SQL=-ldovecot-sql
+LIBDOVECOT_COMPRESS=-ldovecot-compression
+LIBDOVECOT_LDA=-ldovecot-lda
+LIBDOVECOT_STORAGE='-ldovecot-storage '
+
+
+LIBDOVECOT_INCLUDE=-I/Applications/Server.app/Contents/ServerRoot/usr/include/dovecot
+
+dovecot_pkgincludedir=/Applications/Server.app/Contents/ServerRoot/usr/include/dovecot
+dovecot_pkglibdir=/Applications/Server.app/Contents/ServerRoot/usr/lib/dovecot
+dovecot_pkglibexecdir=/Applications/Server.app/Contents/ServerRoot/usr/libexec/dovecot
+dovecot_docdir=/Applications/Server.app/Contents/ServerRoot/usr/share/doc/dovecot
+dovecot_moduledir=/Applications/Server.app/Contents/ServerRoot/usr/lib/dovecot

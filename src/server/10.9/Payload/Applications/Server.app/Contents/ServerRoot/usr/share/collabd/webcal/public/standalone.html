@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="caldav_principal_path" content="%(principalURL)s"/>
+		<meta name="tzid" content="%(tzid)s"/>
+		<title>Web Calendar</title>
+		<link rel="stylesheet" href="/__collabd/webcal/stylesheets/compressed.css?version=05132014173618" type="text/css" media="screen" charset="utf-8"/>
+		<script type="text/javascript" charset="utf-8">
+			// Map of navigator languages to installed lproj names.
+			var LANGUAGE_TO_LPROJ_MAP = {
+			  'de': 'de',
+			  'en': 'en',
+			  'es': 'es',
+			  'fr': 'fr',
+			  'it': 'it',
+			  'ja': 'ja',
+			  'ko': 'ko',
+			  'nl': 'nl',
+			  'zh-cn': 'zh_CN',
+			  'zh-tw': 'zh_TW'
+			};
+			// Have we included en.lproj yet?
+			var ENGLISH_INCLUDED = false;
+			// Writes a script tag including a specific locale (if it is supported).
+			function write_language_tag (inOptLocale) {
+			  var navigatorLanguage = (inOptLocale || (navigator.language ? navigator.language : navigator.browserLanguage || 'en')).toLowerCase();
+			  var lproj;
+			  // Use the language-region locale if it is supported, otherwise fall back on the language locale if it is supported.
+			  if (LANGUAGE_TO_LPROJ_MAP[navigatorLanguage]) {
+			      lproj = LANGUAGE_TO_LPROJ_MAP[navigatorLanguage];
+			  } else {
+			      var splitNavigatorLanguage = navigatorLanguage.split('-')[0];
+			      if (LANGUAGE_TO_LPROJ_MAP[splitNavigatorLanguage]) {
+			          lproj = LANGUAGE_TO_LPROJ_MAP[splitNavigatorLanguage];
+			      }
+			  }
+			  if (!lproj || (lproj == 'en' && ENGLISH_INCLUDED)) return;
+			  document.write("<scr"+"ipt src=\"/__collabd/webcal/locales/"+lproj+".lproj/strings.js\" type=\"text/javascript\" charset=\"utf-8\"></scr"+"ipt>\n");
+			  document.write("<scr"+"ipt src=\"/__collabd/coreclientbase/locales/"+lproj+".lproj/strings.js\" type=\"text/javascript\" charset=\"utf-8\"></scr"+"ipt>\n");
+			  if (lproj == 'en') ENGLISH_INCLUDED = true;
+			}
+			write_language_tag('en');
+			write_language_tag();
+		</script>
+		<script src="/__collabd/coreclientbase/javascripts/sprockets.js?version=05132014173618" type="text/javascript" charset="utf-8"></script>
+		<script src="/__collabd/webcal/javascripts/sprockets.js?version=05132014173618" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="standalone">
+		<h1 id="calendar_title"><span></span></h1>
+		<div id="module_calendars"></div>
+		<script type="text/javascript">
+			setTimeout(function() {
+				calendarViewController();
+			}, 10);
+		</script>
+	</body>
+</html>

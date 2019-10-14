@@ -1,0 +1,2 @@
+#!/bin/sh
+/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/config/mtWrapper --refresh

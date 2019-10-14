@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Proxy Service Shared Setup</string>
+	<key>dependencies</key>
+	<array>
+		<string>ServerSupport</string>
+		<string>DeviceManager_preflight</string>
+	</array>
+	<key>environment</key>
+	<dict>
+		<key>_service_proxy_conf_dir</key>
+		<string>/Library/Server/Web/Config/Proxy</string>
+		<key>_service_proxy_logs_dir</key>
+		<string>/var/log/apache2</string>
+	</dict>
+	<key>defaults</key>
+	<dict>
+		<key>group</key>
+		<string>wheel</string>
+		<key>owner</key>
+		<string>root</string>
+	</dict>
+	<key>setup</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Service Proxy Config Directory</key>
+			<dict>
+				<key>description</key>
+				<string>Config Directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}</string>
+			</dict>
+			<key>Service Proxy Logs Directory</key>
+			<dict>
+				<key>description</key>
+				<string>Logs Directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>path</key>
+				<string>${_service_proxy_logs_dir}</string>
+			</dict>
+			<key>Service Proxy Config</key>
+			<dict>
+				<key>description</key>
+				<string>Copy Service Proxy Config Defaults</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}</string>
+				<key>source</key>
+				<string>${serverRoot}${_service_proxy_conf_dir}</string>
+				<key>overwrite</key>
+				<true/>
+			</dict>
+		</dict>
+		<key>files</key>
+		<dict>
+			<key>apache_serviceproxy.conf</key>
+			<dict>
+				<key>description</key>
+				<string>verify: apache_serviceproxy.conf default</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/apache_serviceproxy.conf</string>
+			</dict>
+			<key>apache_serviceproxy_slash_default.conf</key>
+			<dict>
+				<key>description</key>
+				<string>verify: apache_serviceproxy_slash_default.conf default</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/apache_serviceproxy_slash_default.conf</string>
+			</dict>
+			<key>servermgr_serviceproxy_configure.plist.default</key>
+			<dict>
+				<key>description</key>
+				<string>verify: servermgr_serviceproxy_configure.plist.default</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/servermgr_serviceproxy_configure.plist.default</string>
+			</dict>
+			<key>servermgr_serviceproxy_webapp.plist.default</key>
+			<dict>
+				<key>description</key>
+				<string>verify: servermgr_serviceproxy_webapp.plist.default</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/servermgr_serviceproxy_webapp.plist.default</string>
+			</dict>
+			<key>ServiceProxySettings.plist.default</key>
+			<dict>
+				<key>description</key>
+				<string>verify: ServiceProxySettings.plist.default</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/ServiceProxySettings.plist.default</string>
+			</dict>
+		</dict>
+		<key>services</key>
+		<dict>
+			<key>com.apple.serviceproxy</key>
+			<dict>
+				<key>description</key>
+				<string>initialize web proxy service off</string>
+				<key>state</key>
+				<string>disabled</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Run promotion script</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/serviceproxy/ServiceProxyPromotion.py</string>
+				<key>arguments</key>
+				<array>
+					<string>--sourceRoot</string>
+					<string>/Library/Server</string>
+					<string>--sourceSystem</string>
+					<string>v${previousSystemVersion}</string>
+					<string>--destinationSystem</string>
+					<string>v${currentSystemVersion}</string>
+					<string>--previousServer</string>
+					<string>v${previousServerVersion}</string>
+					<string>--currentServer</string>
+					<string>v${currentServerVersion}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>migration</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Run promotion script for migration for now</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/serviceproxy/ServiceProxyPromotion.py</string>
+				<key>arguments</key>
+				<array>
+					<string>--sourceRoot</string>
+					<string>/Library/Server/Previous</string>
+					<string>--sourceSystem</string>
+					<string>v${previousSystemVersion}</string>
+					<string>--destinationSystem</string>
+					<string>v${currentSystemVersion}</string>
+					<string>--sourceServer</string>
+					<string>v${previousSystemVersion}</string>
+					<string>--destinationSystem</string>
+					<string>v${currentSystemVersion}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>servermgr_serviceproxy_configure.plist.default</key>
+			<dict>
+				<key>description</key>
+				<string>verify: servermgr_serviceproxy_configure.plist.default</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/servermgr_serviceproxy_configure.plist.default</string>
+			</dict>
+			<key>servermgr_serviceproxy_webapp.plist.default</key>
+			<dict>
+				<key>description</key>
+				<string>verify: servermgr_serviceproxy_webapp.plist.default</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/servermgr_serviceproxy_webapp.plist.default</string>
+			</dict>
+			<key>ServiceProxySettings.plist.</key>
+			<dict>
+				<key>description</key>
+				<string>verify: ServiceProxySettings.plist</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/ServiceProxySettings.plist</string>
+			</dict>
+			<key>apache_serviceproxy.conf</key>
+			<dict>
+				<key>description</key>
+				<string>verify: apache_serviceproxy.conf</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/apache_service_proxy.conf</string>
+			</dict>
+			<key>servermgr_serviceproxy_customsites.plist</key>
+			<dict>
+				<key>description</key>
+				<string>verify: servermgr_serviceproxy_customsites.plist</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>path</key>
+				<string>${_service_proxy_conf_dir}/servermgr_serviceproxy_customsites.plist</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

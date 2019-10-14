@@ -1,0 +1,143 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-activity-item
+{
+	clear: both;
+	position: relative;
+	padding: 0px 5px;
+}
+
+.cc-activity-item-entity
+{
+	padding: 15px 12px 16px 0px;
+}
+
+.cc-activity-item-entity .cc-entity-unread-toggle,
+.cc-activity-item-entity .cc-entity-favorite-toggle
+{
+	width: 25px !important;
+	height: 35px !important;
+}
+
+.cc-activity-item .cc-activity-icon
+{
+	margin-left: 8px;
+}
+
+.cc-activity-item .moreupdates
+{
+	padding-top: 15px;
+}
+
+.cc-activity-item .moreupdates .count,
+.cc-activity-item .moreupdates .hide
+{
+	color: #7096BB;
+	cursor: default;
+	display: block;
+	font-weight: bold;
+	margin: 0px;
+	padding: 3px 0px 0px 0px;
+	text-align: right;
+}
+
+.cc-activity-item .modtime .cc-activity-item-action
+{
+	color: #B5B5B7;
+}
+
+.cc-activity-item:not(.collapsed) .count,
+.cc-activity-item.collapsed .hide
+{
+	display: none !important;
+}
+
+.cc-activity-item-actions
+{
+	background-color: #EAEAEA;
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0E0E0), to(#EAEAEA), color-stop(0.23, #E4E4E4), color-stop(0.75, #EAEAEA));
+	box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.1);
+	clear: both;
+	font-size: 12px;
+	margin: 0px -5px;
+	position: relative;
+	overflow: hidden;
+	text-align: right;
+	-webkit-transition: height ease-in-out 0.4s;
+}
+
+.cc-activity-item-actions-wrapper
+{
+	border-top: 1px solid #D1D1D1;
+}
+
+.cc-activity-item:not(.collapsed) .cc-activity-item-actions
+{
+	border-bottom: 1px solid #D9D9D9;
+}
+
+.cc-activity-item:last-child:not(.collapsed) .cc-activity-item-actions
+{
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+.cc-activity-item.collapsed + .cc-activity-item .cc-activity-item-entity
+{
+	border-top: 1px solid #E9E9E9;
+}
+
+.cc-activity-item-actions .norgie
+{
+	background: #FFFFFF;
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.2);
+	display: block;
+	height: 9px;
+	position: absolute;
+	right: 23px;
+	top: -5px;
+	width: 9px;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.cc-activity-item-actions-inner
+{
+	padding: 13px 20px 12px 20px;
+}
+
+.cc-activity-item.collapsed .cc-activity-item-actions
+{
+	height: 0px;
+}
+
+.cc-activity-item-action
+{
+	color: #5F5F5F;
+	display: block;
+}
+
+.cc-activity-item-actions .cc-activity-item-action
+{
+	height: 30px;
+	line-height: 30px;
+}
+
+.cc-activity-item-action .user
+{
+	color: #5184AA !important;
+	font-weight: bold !important;
+}

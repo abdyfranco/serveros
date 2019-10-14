@@ -1,0 +1,1731 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<depends_on path='@loader_path/../../../SMDClient.framework'/>
+<depends_on path='/System/Library/Frameworks/CoreServices.framework'/>
+<depends_on path='/System/Library/Frameworks/CoreWLAN.framework'/>
+<depends_on path='/System/Library/Frameworks/Foundation.framework'/>
+<depends_on path='/System/Library/Frameworks/OpenDirectory.framework'/>
+<depends_on path='/System/Library/Frameworks/Security.framework'/>
+<depends_on path='/System/Library/Frameworks/SecurityFoundation.framework'/>
+<depends_on path='/System/Library/Frameworks/SystemConfiguration.framework'/>
+<depends_on path='/System/Library/Frameworks/ServiceManagement.framework'/>
+<depends_on path='/System/Library/Frameworks/GSS.framework'/>
+<depends_on path='/System/Library/Frameworks/DirectoryService.framework'/>
+<depends_on path='/System/Library/Frameworks/CFNetwork.framework'/>
+<depends_on path='/System/Library/Frameworks/CoreFoundation.framework'/>
+<constant name='XSAPAlertIdKey' type64='@'/>
+<constant name='XSAPAlertReadCommand' type64='@'/>
+<constant name='XSAPClearPendingAlertsCommand' type64='@'/>
+<constant name='XSAPCommandKey' type64='@'/>
+<constant name='XSAPHostNameKey' type64='@'/>
+<constant name='XSAPPendingAlertCountCommand' type64='@'/>
+<constant name='XSAPPendingAlertCountKey' type64='@'/>
+<constant name='XSAPTokenKey' type64='@'/>
+<constant name='XSAPTokenTransferCommand' type64='@'/>
+<constant name='XSAPTopicInfoKey' type64='@'/>
+<constant name='XSAPTopicKey' type64='@'/>
+<constant name='XSAPTopicPendingAlertsKey' type64='@'/>
+<constant name='XSAPTopicTransferCommand' type64='@'/>
+<constant name='XSAPXPCServiceName' type64='*'/>
+<constant name='XSAccountsConfigAddressBookProfileKey' type64='@'/>
+<constant name='XSAccountsConfigCalendarProfileKey' type64='@'/>
+<constant name='XSAccountsConfigChatProfileKey' type64='@'/>
+<constant name='XSAccountsConfigLDAPProfileKey' type64='@'/>
+<constant name='XSAccountsConfigMailProfileKey' type64='@'/>
+<constant name='XSAccountsConfigVPNProfileKey' type64='@'/>
+<constant name='XSActionErrorActionsKey' type64='@'/>
+<constant name='XSActionErrorDomain' type64='@'/>
+<constant name='XSActionFinishedNotification' type64='@'/>
+<constant name='XSActionStartedNotification' type64='@'/>
+<constant name='XSAdminActionArrayObjectIdentifierKey' type64='@'/>
+<constant name='XSAdminKeychainServicePrefix' type64='@'/>
+<constant name='XSAlertsDirectory' type64='@'/>
+<constant name='XSAlertsXPCServiceName' type64='@'/>
+<constant name='XSAuthenticatorRoleClient' type64='q'/>
+<constant name='XSAuthenticatorRoleServer' type64='q'/>
+<constant name='XSAuthenticatorStatusBegin' type64='q'/>
+<constant name='XSAuthenticatorStatusContinue' type64='q'/>
+<constant name='XSAuthenticatorStatusFail' type64='q'/>
+<constant name='XSAuthenticatorStatusSucceed' type64='q'/>
+<constant name='XSAuthenticatorTypeBasic' type64='q'/>
+<constant name='XSAuthenticatorTypeDigest' type64='q'/>
+<constant name='XSAuthenticatorTypeNegotiate' type64='q'/>
+<constant name='XSAuthenticatorVariantAutomatic' type64='q'/>
+<constant name='XSAuthenticatorVariantDigestRFC2069' type64='q'/>
+<constant name='XSAuthenticatorVariantDigestRFC2617' type64='q'/>
+<constant name='XSAuthenticatorVariantDigestSASL' type64='q'/>
+<constant name='XSAuthenticatorVariantDigestSASLAuthenticationOnly' type64='q'/>
+<constant name='XSAuthenticatorVariantDigestSASLAuthenticationWithConfidentiality' type64='q'/>
+<constant name='XSAuthenticatorVariantDigestSASLAuthenticationWithIntegrity' type64='q'/>
+<constant name='XSBonjourInstanceNamesKey' type64='@'/>
+<constant name='XSCertificateSignatureTypeSHA1WithRSA' type64='@'/>
+<constant name='XSCertificateSignatureTypeSHA256WithRSA' type64='@'/>
+<constant name='XSCertificateSignatureTypeSHA512WithRSA' type64='@'/>
+<constant name='XSClientServicesConfigAccountDescriptionKey' type64='@'/>
+<constant name='XSClientServicesConfigAddressBookCardDAVKey' type64='@'/>
+<constant name='XSClientServicesConfigAddressBookKey' type64='@'/>
+<constant name='XSClientServicesConfigCalendarCalDAVKey' type64='@'/>
+<constant name='XSClientServicesConfigCalendarKey' type64='@'/>
+<constant name='XSClientServicesConfigChatKey' type64='@'/>
+<constant name='XSClientServicesConfigChatXMPPKey' type64='@'/>
+<constant name='XSClientServicesConfigEnableSSLKey' type64='@'/>
+<constant name='XSClientServicesConfigHostnameKey' type64='@'/>
+<constant name='XSClientServicesConfigKerberosRealm' type64='@'/>
+<constant name='XSClientServicesConfigMailIMAPKey' type64='@'/>
+<constant name='XSClientServicesConfigMailKey' type64='@'/>
+<constant name='XSClientServicesConfigMailSMTPKey' type64='@'/>
+<constant name='XSClientServicesConfigNotificationKey' type64='@'/>
+<constant name='XSClientServicesConfigNotificationXMPPKey' type64='@'/>
+<constant name='XSClientServicesConfigPortKey' type64='@'/>
+<constant name='XSClientServicesConfigRecordName' type64='@'/>
+<constant name='XSClientServicesConfigVPNKey' type64='@'/>
+<constant name='XSClientServicesConfigVPNL2TPKey' type64='@'/>
+<constant name='XSClientServicesConfigVPNL2TPSharedSecretKey' type64='@'/>
+<constant name='XSEventHandlersBundleDirectory' type64='@'/>
+<constant name='XSEventsdXPCServiceName' type64='@'/>
+<constant name='XSFileAccessControlEntryFlags' type64='@'/>
+<constant name='XSFileAccessControlEntryFlagsMask' type64='i'/>
+<constant name='XSFileAccessControlEntryGID' type64='@'/>
+<constant name='XSFileAccessControlEntryGroupFullName' type64='@'/>
+<constant name='XSFileAccessControlEntryGroupName' type64='@'/>
+<constant name='XSFileAccessControlEntryIsDeny' type64='@'/>
+<constant name='XSFileAccessControlEntryPermissions' type64='@'/>
+<constant name='XSFileAccessControlEntryPermissionsMask' type64='i'/>
+<constant name='XSFileAccessControlEntryUID' type64='@'/>
+<constant name='XSFileAccessControlEntryUUID' type64='@'/>
+<constant name='XSFileAccessControlEntryUserFullName' type64='@'/>
+<constant name='XSFileAccessControlEntryUserName' type64='@'/>
+<constant name='XSGraphDataDescriptionASLMessageKeyKey' type64='@'/>
+<constant name='XSGraphDataDescriptionASLSenderKey' type64='@'/>
+<constant name='XSGraphDataDescriptionEndDateKey' type64='@'/>
+<constant name='XSGraphDataDescriptionIdentifierKey' type64='@'/>
+<constant name='XSGraphDataDescriptionStartDateKey' type64='@'/>
+<constant name='XSGraphDataDescriptionVariableResolutionsKey' type64='@'/>
+<constant name='XSHelperAgentDomainSystem' type64='@'/>
+<constant name='XSHelperAgentDomainUser' type64='@'/>
+<constant name='XSHelperAgentErrorDomain' type64='@'/>
+<constant name='XSIsEmptyTransformerName' type64='@'/>
+<constant name='XSIsNotEmptyTransformerName' type64='@'/>
+<constant name='XSLDAPAdminKeychainServicePrefix' type64='@'/>
+<constant name='XSNetworkErrorDomain' type64='@'/>
+<constant name='XSNetworkServiceActiveLinkKey' type64='@'/>
+<constant name='XSNetworkServiceAdminPasswordKey' type64='@'/>
+<constant name='XSNetworkServiceAdminUserNameKey' type64='@'/>
+<constant name='XSNetworkServiceAvailableMediaOptionsKey' type64='@'/>
+<constant name='XSNetworkServiceAvailableMediaSubTypesKey' type64='@'/>
+<constant name='XSNetworkServiceBSDNameKey' type64='@'/>
+<constant name='XSNetworkServiceConnectedNetworkKey' type64='@'/>
+<constant name='XSNetworkServiceDNSAddressesFromDHCPKeyPath' type64='@'/>
+<constant name='XSNetworkServiceDNSAddressesFromUserKeyPath' type64='@'/>
+<constant name='XSNetworkServiceDNSKey' type64='@'/>
+<constant name='XSNetworkServiceDNSSearchDomainsFromDHCPKeyPath' type64='@'/>
+<constant name='XSNetworkServiceDNSSearchDomainsFromUserKeyPath' type64='@'/>
+<constant name='XSNetworkServiceEnabledKey' type64='@'/>
+<constant name='XSNetworkServiceHardwareAddressKey' type64='@'/>
+<constant name='XSNetworkServiceIPv4AddressKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv4ConfigMethodKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv4DHCPClientIDKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv4Key' type64='@'/>
+<constant name='XSNetworkServiceIPv4RouterKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv4SubnetMaskKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv6AddressKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv6ConfigMethodKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv6Key' type64='@'/>
+<constant name='XSNetworkServiceIPv6PrefixLengthKeyPath' type64='@'/>
+<constant name='XSNetworkServiceIPv6RouterKeyPath' type64='@'/>
+<constant name='XSNetworkServiceLayersKey' type64='@'/>
+<constant name='XSNetworkServiceLocalizedNameKey' type64='@'/>
+<constant name='XSNetworkServiceMTUKey' type64='@'/>
+<constant name='XSNetworkServiceMappedPortBSDNameKey' type64='@'/>
+<constant name='XSNetworkServiceMaximumMTUKey' type64='@'/>
+<constant name='XSNetworkServiceMediaConfigMethodKey' type64='@'/>
+<constant name='XSNetworkServiceMediaOptionsKey' type64='@'/>
+<constant name='XSNetworkServiceMediaSubTypeKey' type64='@'/>
+<constant name='XSNetworkServiceMinimumMTUKey' type64='@'/>
+<constant name='XSNetworkServicePortIsMappableKey' type64='@'/>
+<constant name='XSNetworkServiceReservedKey' type64='@'/>
+<constant name='XSNetworkServiceServiceIDKey' type64='@'/>
+<constant name='XSNetworkServiceTypeKey' type64='@'/>
+<constant name='XSNetworkServiceUserDefinedNameKey' type64='@'/>
+<constant name='XSServerFoundationErrorDomain' type64='@'/>
+<constant name='XSServerPluginNameAFP' type64='@'/>
+<constant name='XSServerPluginNameAccounts' type64='@'/>
+<constant name='XSServerPluginNameAddressBook' type64='@'/>
+<constant name='XSServerPluginNameAlerts' type64='@'/>
+<constant name='XSServerPluginNameBonjour' type64='@'/>
+<constant name='XSServerPluginNameCalendar' type64='@'/>
+<constant name='XSServerPluginNameCertificates' type64='@'/>
+<constant name='XSServerPluginNameCollaboration' type64='@'/>
+<constant name='XSServerPluginNameConfig' type64='@'/>
+<constant name='XSServerPluginNameDHCP' type64='@'/>
+<constant name='XSServerPluginNameDNS' type64='@'/>
+<constant name='XSServerPluginNameDirectoryServices' type64='@'/>
+<constant name='XSServerPluginNameDocuments' type64='@'/>
+<constant name='XSServerPluginNameEdgeCache' type64='@'/>
+<constant name='XSServerPluginNameFTP' type64='@'/>
+<constant name='XSServerPluginNameFileBrowser' type64='@'/>
+<constant name='XSServerPluginNameFirewall' type64='@'/>
+<constant name='XSServerPluginNameHistory' type64='@'/>
+<constant name='XSServerPluginNameIPFirewall' type64='@'/>
+<constant name='XSServerPluginNameInfo' type64='@'/>
+<constant name='XSServerPluginNameJabber' type64='@'/>
+<constant name='XSServerPluginNameMail' type64='@'/>
+<constant name='XSServerPluginNameNAT' type64='@'/>
+<constant name='XSServerPluginNameNFS' type64='@'/>
+<constant name='XSServerPluginNameNetBoot' type64='@'/>
+<constant name='XSServerPluginNameNetwork' type64='@'/>
+<constant name='XSServerPluginNamePodcast' type64='@'/>
+<constant name='XSServerPluginNameProfileManager' type64='@'/>
+<constant name='XSServerPluginNameRADIUS' type64='@'/>
+<constant name='XSServerPluginNameSAN' type64='@'/>
+<constant name='XSServerPluginNameSMB' type64='@'/>
+<constant name='XSServerPluginNameSharing' type64='@'/>
+<constant name='XSServerPluginNameSignaler' type64='@'/>
+<constant name='XSServerPluginNameSoftwareUpdate' type64='@'/>
+<constant name='XSServerPluginNameStatus' type64='@'/>
+<constant name='XSServerPluginNameTimeMachine' type64='@'/>
+<constant name='XSServerPluginNameVPN' type64='@'/>
+<constant name='XSServerPluginNameWeb' type64='@'/>
+<constant name='XSServerPluginNameWiki' type64='@'/>
+<constant name='XSServerPluginNameXcode' type64='@'/>
+<constant name='XSServiceDiscoveryAddressBook' type64='@'/>
+<constant name='XSServiceDiscoveryAnyService' type64='@'/>
+<constant name='XSServiceDiscoveryAppleFileService' type64='@'/>
+<constant name='XSServiceDiscoveryCalendar' type64='@'/>
+<constant name='XSServiceDiscoveryDHCP' type64='@'/>
+<constant name='XSServiceDiscoveryDNS' type64='@'/>
+<constant name='XSServiceDiscoveryDirectoryServices' type64='@'/>
+<constant name='XSServiceDiscoveryFTP' type64='@'/>
+<constant name='XSServiceDiscoveryIPFirewall' type64='@'/>
+<constant name='XSServiceDiscoveryJabber' type64='@'/>
+<constant name='XSServiceDiscoveryMail' type64='@'/>
+<constant name='XSServiceDiscoveryMySQL' type64='@'/>
+<constant name='XSServiceDiscoveryNAT' type64='@'/>
+<constant name='XSServiceDiscoveryNFS' type64='@'/>
+<constant name='XSServiceDiscoveryNetBoot' type64='@'/>
+<constant name='XSServiceDiscoveryPodcast' type64='@'/>
+<constant name='XSServiceDiscoveryPrint' type64='@'/>
+<constant name='XSServiceDiscoveryProxy' type64='@'/>
+<constant name='XSServiceDiscoveryQTSS' type64='@'/>
+<constant name='XSServiceDiscoveryRadius' type64='@'/>
+<constant name='XSServiceDiscoverySWUpdate' type64='@'/>
+<constant name='XSServiceDiscoveryTimeMachine' type64='@'/>
+<constant name='XSServiceDiscoveryUsers' type64='@'/>
+<constant name='XSServiceDiscoveryVPN' type64='@'/>
+<constant name='XSServiceDiscoveryWeb' type64='@'/>
+<constant name='XSServiceDiscoveryWebObjects' type64='@'/>
+<constant name='XSServiceDiscoveryWindows' type64='@'/>
+<constant name='XSServiceDiscoveryXgrid' type64='@'/>
+<constant name='XSSharePointServerDocsIsSharedKey' type64='@'/>
+<constant name='XSSupervisorLabel' type64='@'/>
+<constant name='XSWebConfigChangeActionFactoryRestoreServiceWithBackup' type64='@'/>
+<constant name='XSWebConfigChangeActionRemovedErrorFile' type64='@'/>
+<constant name='XSWebConfigChangeActionRestoredPreviousOrDefaultFile' type64='@'/>
+<constant name='XSWebConfigChangeActionType' type64='@'/>
+<constant name='XSWebConfigChangeConfigBackupPath' type64='@'/>
+<constant name='XSWebConfigChangeErrorCertificate' type64='@'/>
+<constant name='XSWebConfigChangeErrorMissingFile' type64='@'/>
+<constant name='XSWebConfigChangeErrorSyntax' type64='@'/>
+<constant name='XSWebConfigChangeErrorType' type64='@'/>
+<constant name='XSWebConfigChangeErrorUnknown' type64='@'/>
+<constant name='XSXsanErrorDomain' type64='@'/>
+<constant name='kSCNetworkInterfaceTypeBMC' type64='^{__CFString=}'/>
+<constant name='kSCValNetIPv4ConfigMethodOff' type64='^{__CFString=}'/>
+<constant name='kSCValNetIPv6ConfigMethodOff' type64='^{__CFString=}'/>
+<constant name='kXSServerFoundationVersionNumber' type64='d'/>
+<string_constant name='SERVER_INSTALL_PATH_PREFIX' value='/Applications/Server.app/Contents/ServerRoot'/>
+<string_constant name='SERVER_LIBRARY_PATH' value='/Library/Server'/>
+<string_constant name='SERVER_PREFERENCES_PATH' value='/Library/Preferences'/>
+<string_constant name='XSAdminTransactionGotErrorNotification' nsstring='true' value='XSAdminTransactionGotErrorNotification'/>
+<string_constant name='XSAdminTransactionGotResponseNotification' nsstring='true' value='XSAdminTransactionGotResponseNotification'/>
+<string_constant name='XSAdminTransactionSentRequestNotification' nsstring='true' value='XSAdminTransactionSentRequestNotification'/>
+<string_constant name='XSAdminTransactionShouldReloadSystemKeychainNotification' nsstring='true' value='XSAdminTransactionShouldReloadSystemKeychainNotification'/>
+<string_constant name='kGotAuthenticationFailure' nsstring='true' value='kGotAuthenticationFailure'/>
+<string_constant name='kGotAuthorizationFailure' nsstring='true' value='kGotAuthorizationFailure'/>
+<string_constant name='kNetworkError' nsstring='true' value='kNetworkError'/>
+<string_constant name='kReceivedUnknownError' nsstring='true' value='kReceivedUnknownError'/>
+<enum name='XSActionCancelledByUserErrorCode' value64='498'/>
+<enum name='XSActionCannotLoadBundleErrorCode' value64='404'/>
+<enum name='XSActionFailedToAuthenticateErrorCode' value64='401'/>
+<enum name='XSActionFailedToAuthorizeErrorCode' value64='403'/>
+<enum name='XSActionNetworkErrorCode' value64='499'/>
+<enum name='XSActionServerNotFoundErrorCode' value64='-1000'/>
+<enum name='XSActionTimeoutErrorCode' value64='408'/>
+<enum name='XSActionUnexpectedCommandErrorCode' value64='501'/>
+<enum name='XSActionUnknownErrorCode' value64='1000'/>
+<enum name='XSAdminSessionSubscriptionAutomaticallyResubscribe' value64='1'/>
+<enum name='XSAdminSessionSubscriptionThrottleNotifications' value64='2'/>
+<enum name='XSAdminTransactionStateDone' value64='30'/>
+<enum name='XSAdminTransactionStateInProgress' value64='20'/>
+<enum name='XSAdminTransactionStateInitial' value64='0'/>
+<enum name='XSAdminTransactionStateQueued' value64='10'/>
+<enum name='XSConfigCodeFactoryRestore' value64='102'/>
+<enum name='XSConfigCodeFileRestore' value64='101'/>
+<enum name='XSConfigCodeNoError' value64='0'/>
+<enum name='XSErrorNetworkErrorEnd' value64='316'/>
+<enum name='XSErrorNetworkErrorStart' value64='300'/>
+<enum name='XSFileAccessControlConfigurationError' value64='30001'/>
+<enum name='XSFileAccessControlCreationError' value64='30000'/>
+<enum name='XSFileAccessControlErrorMaximum' value64='30100'/>
+<enum name='XSFileAccessControlErrorMinimum' value64='30000'/>
+<enum name='XSFileAccessControlInsufficientPermissionsError' value64='30002'/>
+<enum name='XSFileAccessControlInvalidACLError' value64='30004'/>
+<enum name='XSFileAccessControlInvalidFlagsError' value64='30012'/>
+<enum name='XSFileAccessControlInvalidGIDError' value64='30007'/>
+<enum name='XSFileAccessControlInvalidGroupFullNameError' value64='30011'/>
+<enum name='XSFileAccessControlInvalidGroupNameError' value64='30010'/>
+<enum name='XSFileAccessControlInvalidPermissionsError' value64='30013'/>
+<enum name='XSFileAccessControlInvalidUIDError' value64='30006'/>
+<enum name='XSFileAccessControlInvalidUUIDError' value64='30005'/>
+<enum name='XSFileAccessControlInvalidUserFullNameError' value64='30009'/>
+<enum name='XSFileAccessControlInvalidUserNameError' value64='30008'/>
+<enum name='XSFileAccessControlMissingEntityError' value64='30014'/>
+<enum name='XSFileAccessControlReadError' value64='30003'/>
+<enum name='XSHelperAgentCommandAuthorizationFailedError' value64='42003'/>
+<enum name='XSHelperAgentCommandDispatchFailedError' value64='42002'/>
+<enum name='XSHelperAgentConnectionFailedError' value64='42001'/>
+<enum name='XSHelperAgentInternalError' value64='42006'/>
+<enum name='XSHelperAgentInvalidArgumentError' value64='42000'/>
+<enum name='XSHelperAgentInvalidResponseError' value64='42004'/>
+<enum name='XSHelperAgentTimeoutError' value64='42005'/>
+<enum name='XSLoggerLevelAlert' value64='1'/>
+<enum name='XSLoggerLevelCritical' value64='2'/>
+<enum name='XSLoggerLevelDebug' value64='7'/>
+<enum name='XSLoggerLevelEmergency' value64='0'/>
+<enum name='XSLoggerLevelError' value64='3'/>
+<enum name='XSLoggerLevelInfo' value64='6'/>
+<enum name='XSLoggerLevelNotice' value64='5'/>
+<enum name='XSLoggerLevelWarning' value64='4'/>
+<enum name='XSMatchExact' value64='0'/>
+<enum name='XSMatchRegularExpression' value64='1'/>
+<enum name='XSNetworkErrorBMCNotSupported' value64='301'/>
+<enum name='XSNetworkErrorRemoveServiceFailure' value64='305'/>
+<enum name='XSNetworkErrorSetBMCFailure' value64='302'/>
+<enum name='XSNetworkErrorSetServiceDNSFailure' value64='306'/>
+<enum name='XSNetworkErrorSetServiceEnabledFailure' value64='307'/>
+<enum name='XSNetworkErrorSetServiceIPv4Failure' value64='308'/>
+<enum name='XSNetworkErrorSetServiceIPv6Failure' value64='309'/>
+<enum name='XSNetworkErrorSetServiceMTUFailure' value64='311'/>
+<enum name='XSNetworkErrorSetServiceMediaOptionsFailure' value64='310'/>
+<enum name='XSNetworkErrorSetServiceTimeout' value64='313'/>
+<enum name='XSNetworkErrorSetServiceUserDefinedNameFailure' value64='312'/>
+<enum name='XSNetworkErrorSetServicesFailure' value64='303'/>
+<enum name='XSNetworkErrorSetServicesOrderFailure' value64='304'/>
+<enum name='XSNetworkErrorValidateServiceIPv4Collision' value64='315'/>
+<enum name='XSNetworkErrorValidateServicesFailure' value64='314'/>
+<enum name='XSSharePointAFPFileSystemType' value64='0'/>
+<enum name='XSSharePointNFSFileSystemType' value64='1'/>
+<enum name='XSSharePointSMBFileSystemType' value64='2'/>
+<enum name='XSUseSSLAlways' value64='1'/>
+<enum name='XSUseSSLAndNonSSL' value64='4'/>
+<enum name='XSUseSSLNever' value64='3'/>
+<enum name='XSUseSSLOnlyWhenCertificateIsTrustable' value64='2'/>
+<enum name='XSUseSSLWhenEnabled' value64='0'/>
+<enum name='XSXsanACFSErrorNSError' value64='506'/>
+<enum name='XSXsanACFSErrorNameMismatch' value64='502'/>
+<enum name='XSXsanACFSErrorNoConfig' value64='501'/>
+<enum name='XSXsanACFSErrorNoName' value64='504'/>
+<enum name='XSXsanACFSErrorNoServer' value64='505'/>
+<enum name='XSXsanACFSErrorSANDead' value64='500'/>
+<enum name='XSXsanACFSErrorUUIDMismatch' value64='503'/>
+<enum name='XSXsanCVUpdateFSErrorCaseConversionCollisions' value64='4'/>
+<enum name='XSXsanCVUpdateFSErrorConfigurationOrVolumeState' value64='2'/>
+<enum name='XSXsanCVUpdateFSErrorICBImproperVolumeFound' value64='3'/>
+<enum name='XSXsanCVUpdateFSNoErrorVolumeChanged' value64='1'/>
+<enum name='XSXsanCVUpdateFSNoErrorVolumeUnchanged' value64='0'/>
+<enum name='XSXsanSANErrorAuthenticating' value64='1024'/>
+<enum name='XSXsanSANErrorBuildingConfig' value64='1012'/>
+<enum name='XSXsanSANErrorCantDisableNEA' value64='1015'/>
+<enum name='XSXsanSANErrorCantRemovePrimary' value64='1019'/>
+<enum name='XSXsanSANErrorCaseCollision' value64='1027'/>
+<enum name='XSXsanSANErrorClientsBusy' value64='1004'/>
+<enum name='XSXsanSANErrorDeterminingHostname' value64='1025'/>
+<enum name='XSXsanSANErrorDeterminingODM' value64='1023'/>
+<enum name='XSXsanSANErrorGettingConfig' value64='1006'/>
+<enum name='XSXsanSANErrorInitializing' value64='1013'/>
+<enum name='XSXsanSANErrorLUNBusy' value64='1010'/>
+<enum name='XSXsanSANErrorMissingParameter' value64='1018'/>
+<enum name='XSXsanSANErrorNameMismatch' value64='1002'/>
+<enum name='XSXsanSANErrorNoAuthSecret' value64='1026'/>
+<enum name='XSXsanSANErrorNotPrimary' value64='1007'/>
+<enum name='XSXsanSANErrorOpeningSNFSConnection' value64='1017'/>
+<enum name='XSXsanSANErrorPrimaryNotInSAN' value64='1005'/>
+<enum name='XSXsanSANErrorRemovingAll' value64='1022'/>
+<enum name='XSXsanSANErrorRemovingNonMember' value64='1020'/>
+<enum name='XSXsanSANErrorSANDead' value64='1000'/>
+<enum name='XSXsanSANErrorSANExists' value64='1001'/>
+<enum name='XSXsanSANErrorStoragePoolLUNCountBad' value64='1009'/>
+<enum name='XSXsanSANErrorStoragePoolNoLUNs' value64='1008'/>
+<enum name='XSXsanSANErrorUUIDMismatch' value64='1003'/>
+<enum name='XSXsanSANErrorUnableToGetConfig' value64='1021'/>
+<enum name='XSXsanSANErrorVolumeBusy' value64='1016'/>
+<enum name='XSXsanSANErrorVolumeDoesntExist' value64='1014'/>
+<enum name='XSXsanSANErrorVolumeExists' value64='1011'/>
+<enum name='kXSServerFoundationVersionNumber10_5' value64='1.0'/>
+<function name='XSAccountsConfigCopyBonjourNames'>
+<retval type64='@'/>
+</function>
+<function name='XSAccountsConfigGetProfiles'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg function_pointer='true' type64='^?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^v'/>
+<retval type64='v'/>
+</arg>
+<arg type64='^v'/>
+<arg type64='^@'/>
+<retval type64='B'/>
+</function>
+<function name='XSBundleForClass'>
+<arg type64='#'/>
+<retval type64='@'/>
+</function>
+<function name='XSCheckAvailabilityOfPorts'>
+<arg type64='@'/>
+<retval type64='B'/>
+</function>
+<function name='XSCreateAndUnlockUserKeychain'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='B'/>
+</function>
+<function name='XSDebugModeEnabled'>
+<retval type64='B'/>
+</function>
+<function name='XSDisableDebugMode'>
+<retval type64='v'/>
+</function>
+<function name='XSEnableDebugMode'>
+<retval type64='v'/>
+</function>
+<function name='XSGetAddressesForHostName'>
+<arg type64='@'/>
+<arg type64='d'/>
+<retval type64='@'/>
+</function>
+<function name='XSGetAlertBundleForClass'>
+<arg type64='#'/>
+<retval type64='@'/>
+</function>
+<function name='XSGetAllConnectedNetworkServicesInServices'>
+<arg type64='@'/>
+<retval type64='@'/>
+</function>
+<function name='XSGetAllNetworkServicesInServicesNotMatchingServiceIDs'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='@'/>
+</function>
+<function name='XSGetBMCInterfaces'>
+<retval type64='@'/>
+</function>
+<function name='XSGetHostNamesForAddress'>
+<arg type64='@'/>
+<arg type64='d'/>
+<retval type64='@'/>
+</function>
+<function name='XSGetInterfaceTypesSupportingPPPoE'>
+<retval type64='@'/>
+</function>
+<function name='XSGetKeychainEntry'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<arg type64='^@'/>
+<retval type64='B'/>
+</function>
+<function name='XSGetListeningPorts'>
+<retval type64='@'/>
+</function>
+<function name='XSGetNetworkServices'>
+<retval type64='@'/>
+</function>
+<function name='XSGetPrimaryConnectedNetworkServiceInServices'>
+<arg type64='@'/>
+<retval type64='@'/>
+</function>
+<function name='XSGetPrimaryEthernetService'>
+<retval type64='@'/>
+</function>
+<function name='XSHelperAgentPerformCommand'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='@'/>
+</function>
+<function name='XSHelperAgentPerformCommandAsync'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='d'/>
+<arg function_pointer='true' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='XSHelperAgentRun'>
+<arg type64='@'/>
+<retval type64='q'/>
+</function>
+<function name='XSLoadAlertBundle'>
+<arg type64='@'/>
+<retval type64='B'/>
+</function>
+<function name='XSLoadAllAlertBundles'>
+<retval type64='B'/>
+</function>
+<function name='XSRunRemoteTask'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<arg type64='^@'/>
+<arg type64='@'/>
+<retval type64='q'/>
+</function>
+<function name='XSRunTask'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<arg type64='^@'/>
+<arg type64='@'/>
+<retval type64='q'/>
+</function>
+<function name='XSSaveKeychainEntry'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSaveKeychainEntryWithAllowedApplications'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSaveKeychainEntryWithAllowedApplicationsInUserKeychain'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSetBMCInterfaces'>
+<arg type64='@'/>
+<retval type64='@'/>
+</function>
+<function name='XSSetNetworkServices'>
+<arg type64='@'/>
+<arg type64='B'/>
+<retval type64='@'/>
+</function>
+<function name='XSStringFromTimeInterval'>
+<arg type64='d'/>
+<retval type64='@'/>
+</function>
+<function name='XSSupervisorBeginPromotion'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='^@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSupervisorClientPerformCommand'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='d'/>
+<arg type64='^@'/>
+<retval type64='@'/>
+</function>
+<function name='XSSupervisorClientPerformCommandAsync'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='d'/>
+<arg function_pointer='true' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='XSSupervisorCreateCommandAuthorizationWithCredentials'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval already_retained='true' type64='^{AuthorizationOpaqueRef=}'/>
+</function>
+<function name='XSSupervisorCreatePromotionAuthorizationWithCredentials'>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval already_retained='true' type64='^{AuthorizationOpaqueRef=}'/>
+</function>
+<function name='XSSupervisorCreateService'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSupervisorDestroyService'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSupervisorEndPromotion'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='^@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSupervisorGetProgramArguments'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='@'/>
+</function>
+<function name='XSSupervisorGetServiceEnabled'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='B'/>
+</function>
+<function name='XSSupervisorGetSockets'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='@'/>
+</function>
+<function name='XSSupervisorGetStartCalendarIntervals'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='@'/>
+</function>
+<function name='XSSupervisorGetStatus'>
+<arg type64='^@'/>
+<retval type64='@'/>
+</function>
+<function name='XSSupervisorRestorePreviouslyEnabledServices'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='^@'/>
+<retval type64='v'/>
+</function>
+<function name='XSSupervisorSetProgramArguments'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='v'/>
+</function>
+<function name='XSSupervisorSetServiceEnabled'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='B'/>
+<arg type64='^@'/>
+<retval type64='v'/>
+</function>
+<function name='XSSupervisorSetSockets'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='v'/>
+</function>
+<function name='XSSupervisorSetStartCalendarIntervals'>
+<arg type64='^{AuthorizationOpaqueRef=}'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='@'/>
+<arg type64='^@'/>
+<retval type64='v'/>
+</function>
+<function name='XSValidateNetworkServices'>
+<arg type64='@'/>
+<retval type64='@'/>
+</function>
+<class name='NSArray'>
+<method selector='deepMutableCopyWithMutableLeaves:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='filter:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='B'/>
+</arg>
+</method>
+<method selector='map:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='@'/>
+</arg>
+</method>
+<method selector='objectPassingTest:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='Q'/>
+<arg type64='^B'/>
+<retval type64='B'/>
+</arg>
+</method>
+<method selector='objectsPassingTest:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='Q'/>
+<arg type64='^B'/>
+<retval type64='B'/>
+</arg>
+</method>
+</class>
+<class name='NSData'>
+<method selector='dataDecryptedWithAESUsingPassphrase:error:'>
+<arg index='1' type_modifier='o'/>
+</method>
+<method selector='dataEncryptedWithAESUsingPassphrase:error:'>
+<arg index='1' type_modifier='o'/>
+</method>
+</class>
+<class name='NSDictionary'>
+<method selector='boolValueForKey:withDefaultValue:'>
+<arg index='1' type64='B'/>
+<retval type64='B'/>
+</method>
+<method selector='deepMutableCopyWithMutableLeaves:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='isServiceAccessControlGroup'>
+<retval type64='B'/>
+</method>
+<method selector='isSystemAccount'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='NSFileManager'>
+<method selector='accessControlEntriesAtPath:error:'>
+<arg index='1' type_modifier='o'/>
+</method>
+<method selector='addAccessControlEntries:atPath:error:'>
+<arg index='2' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+<method selector='copyItemAtPath:toServer:atPath:userName:password:error:'>
+<arg index='5' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+<method selector='copyItemFromServer:atPath:toPath:userName:password:error:'>
+<arg index='5' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+<method selector='fileAttributesAtPath:ownerName:groupName:posixPermissions:'>
+<retval type64='B'/>
+</method>
+<method selector='fileExistsOnServer:atPath:userName:password:error:'>
+<arg index='4' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+<method selector='isXsanVolumeAtPath:'>
+<retval type64='B'/>
+</method>
+<method selector='setAccessControlEntries:atPath:error:'>
+<arg index='2' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+</class>
+<class name='NSMutableDictionary'>
+<method selector='setBoolValue:forKey:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='NSObject'>
+<method selector='addMailRecipients:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addPushRecipients:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='adminTransaction:didReceiveCertificateError:'>
+<retval type64='B'/>
+</method>
+<method selector='authenticationAction:didReceiveCertificateError:'>
+<retval type64='B'/>
+</method>
+<method selector='deleteAlertsBeforeDate:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='deleteAlertsWithIds:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='disableAlertBundle:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='disableMonitorBundle:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='enableAlertBundle:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='enableMonitorBundle:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getAlertBundleNamesWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getAlertBundleSettingsWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getAlertsFromDate:toDate:callback:'>
+<arg function_pointer='true' index='2' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getAlertsOfBundle:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getAlertsOfType:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getAllMonitorBundleSettingsWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getAttributesWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getBundlePathsWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getBundlesWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getLastAlertOfBundle:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getLastAlertOfType:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getMailRecipientsWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getMonitorBundleSettings:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='getPushRecipientsWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='loadBundleWithPath:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='markAlertAsReadWithAlertId:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='markAlertAsResolvedWithAlertId:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='performRecoveryAction:forAlertId:callback:'>
+<arg function_pointer='true' index='2' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='postAlert:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='runMonitor:fromBundle:callback:'>
+<arg function_pointer='true' index='2' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='runMonitorBundle:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='saveAlerts:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='setAlertBundleSettings:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='setAttributes:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='setMailRecipients:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='setPushRecipients:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='unloadBundleWithPath:callback:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+</class>
+<class name='NSSet'>
+<method selector='deepMutableCopyWithMutableLeaves:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='map:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='@'/>
+</arg>
+</method>
+</class>
+<class name='NSString'>
+<method selector='containsCharacterInSet:'>
+<retval type64='B'/>
+</method>
+<method selector='containsSubstring:'>
+<retval type64='B'/>
+</method>
+<method selector='isBroadcastIPAddressWithSubnetMask:'>
+<retval type64='B'/>
+</method>
+<method selector='isEthernetAddress'>
+<retval type64='B'/>
+</method>
+<method selector='isLoopbackAddress'>
+<retval type64='B'/>
+</method>
+<method selector='isPrivateIPAddress'>
+<retval type64='B'/>
+</method>
+<method selector='isSelfAssignedIPAddress'>
+<retval type64='B'/>
+</method>
+<method selector='isValidIntegerString'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='ODRecord'>
+<method selector='isServiceAccessControlGroup'>
+<retval type64='B'/>
+</method>
+<method selector='isSystemAccount'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSAction'>
+<method class_method='true' selector='actionWithExecutionBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='@'/>
+</arg>
+</method>
+<method selector='addBeginHandler:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addCancelHandler:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addErrorHandler:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addFinishHandler:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addFinishRecoveryHandler:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='isCanceled'>
+<retval type64='B'/>
+</method>
+<method selector='isCancelled'>
+<retval type64='B'/>
+</method>
+<method selector='isFinished'>
+<retval type64='B'/>
+</method>
+<method selector='isRecoverable'>
+<retval type64='B'/>
+</method>
+<method selector='isRunning'>
+<retval type64='B'/>
+</method>
+<method selector='needsRecovery'>
+<retval type64='B'/>
+</method>
+<method selector='setCanceled:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setRecoverable:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setUpdatesOnMainThread:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='updatesOnMainThread'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSActionFactory'>
+<method class_method='true' selector='actionToAddODServer:userName:password:clientComputerID:addCertificates:session:'>
+<arg index='4' type64='B'/>
+</method>
+<method class_method='true' selector='actionToDecommissionDirectoryServerReplicaWithRootPassword:dirAdminShortName:dirAdminPassword:makeStandalone:session:'>
+<arg index='3' type64='B'/>
+</method>
+<method class_method='true' selector='actionToSetRemoteAdministrationState:session:'>
+<arg index='0' type64='B'/>
+</method>
+<method class_method='true' selector='actionToSetRemoteManagementState:session:'>
+<arg index='0' type64='B'/>
+</method>
+<method class_method='true' selector='actionToSetSSHState:session:'>
+<arg index='0' type64='B'/>
+</method>
+<method class_method='true' selector='actionToSetScreenSharingState:session:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSActionQueue'>
+<method selector='queueAction:afterAction:withShouldProceedHandler:'>
+<arg function_pointer='true' index='2' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='B'/>
+</arg>
+</method>
+<method selector='queueAction:withShouldProceedHandler:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='B'/>
+</arg>
+</method>
+<method selector='queueActionCreationBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='@'/>
+</arg>
+</method>
+</class>
+<class name='XSAdminSession'>
+<method selector='addSubscriberForKey:options:queue:block:'>
+<arg function_pointer='true' index='3' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+</class>
+<class name='XSAlertAction'>
+<method selector='hasBeenResolved'>
+<retval type64='B'/>
+</method>
+<method selector='runWithLocalization:error:'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSAuthenticator'>
+<method selector='validateChallenge:generateResponse:'>
+<retval type64='B'/>
+</method>
+<method selector='validateChallengeData:generateResponseData:'>
+<retval type64='B'/>
+</method>
+<method class_method='true' selector='verifyUserName:password:'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSCertificate'>
+<method selector='hasAccessiblePrivateKey'>
+<retval type64='B'/>
+</method>
+<method selector='isSelfSigned'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSCharacterSetFormatter'>
+<method selector='allowsEmptyString'>
+<retval type64='B'/>
+</method>
+<method selector='allowsNilValue'>
+<retval type64='B'/>
+</method>
+<method selector='lengthIsLimitedByBytes'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsEmptyString:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowsNilValue:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setLengthIsLimitedByBytes:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSDaemonProxy'>
+<method selector='remoteObjectProxyWithCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='remoteObjectProxyWithReturningCallback:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='@'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+</class>
+<class name='XSDomainNameFormatter'>
+<method selector='allowsMultipleValues'>
+<retval type64='B'/>
+</method>
+<method selector='allowsPortSuffix'>
+<retval type64='B'/>
+</method>
+<method selector='allowsWildcardDomain'>
+<retval type64='B'/>
+</method>
+<method selector='allowsWildcardDomains'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsMultipleValues:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowsPortSuffix:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowsWildcardDomain:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowsWildcardDomains:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSEmailAddressFormatter'>
+<method selector='allowsMultipleAddresses'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsMultipleAddresses:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSEventHandler'>
+<method selector='isEventPerformed'>
+<retval type64='B'/>
+</method>
+<method selector='isEventRead'>
+<retval type64='B'/>
+</method>
+<method class_method='true' selector='resolveVariablesInObject:withResolutions:error:'>
+<arg index='2' type_modifier='o'/>
+</method>
+<method selector='setEventPerformed:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setEventRead:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSEventMonitorConfig'>
+<method selector='readAndReturnError:'>
+<arg index='0' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+<method selector='synchronizeAndReturnError:'>
+<arg index='0' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSEventMonitorRule'>
+<method selector='allowsPartialCriterionMatch'>
+<retval type64='B'/>
+</method>
+<method selector='isEnabled'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsPartialCriterionMatch:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setEnabled:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSIPv4AddressFormatter'>
+<method selector='allowsCIDRNotation'>
+<retval type64='B'/>
+</method>
+<method selector='requiresCIDRNotation'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsCIDRNotation:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setRequiresCIDRNotation:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSIPv6AddressFormatter'>
+<method selector='allowsCIDRNotation'>
+<retval type64='B'/>
+</method>
+<method selector='requiresCIDRNotation'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsCIDRNotation:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setRequiresCIDRNotation:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSIntegerFormatter'>
+<method selector='allowsEmptyString'>
+<retval type64='B'/>
+</method>
+<method selector='allowsNilValue'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsEmptyString:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowsNilValue:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSLogMessageSet'>
+<method selector='canLoadEarlierMessages'>
+<retval type64='B'/>
+</method>
+<method selector='canLoadLaterMessages'>
+<retval type64='B'/>
+</method>
+<method selector='initWithMessages:startDate:endDate:canLoadEarlierMessages:canLoadLaterMessages:'>
+<arg index='3' type64='B'/>
+<arg index='4' type64='B'/>
+</method>
+</class>
+<class name='XSLogger'>
+<method selector='debugInfoEnabled'>
+<retval type64='B'/>
+</method>
+<method selector='initWithSender:facility:debugInfoEnabled:systemLoggingEnabled:systemMaximumLevel:stderrLoggingEnabled:stderrMaximumLevel:'>
+<arg index='2' type64='B'/>
+<arg index='3' type64='B'/>
+<arg index='5' type64='B'/>
+</method>
+<method selector='logAlert:' variadic='true'/>
+<method selector='logAtLevel:format:' variadic='true'/>
+<method selector='logCritical:' variadic='true'/>
+<method selector='logDebug:' variadic='true'/>
+<method selector='logEmergency:' variadic='true'/>
+<method selector='logError:' variadic='true'/>
+<method selector='logInfo:' variadic='true'/>
+<method selector='logNotice:' variadic='true'/>
+<method selector='logWarning:' variadic='true'/>
+<method selector='setDebugInfoEnabled:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setStderrLoggingEnabled:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setSystemLoggingEnabled:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='stderrLoggingEnabled'>
+<retval type64='B'/>
+</method>
+<method selector='systemLoggingEnabled'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSNFSExportRecord'>
+<method selector='allowsMountingOfSubdirectories'>
+<retval type64='B'/>
+</method>
+<method selector='isDeleted'>
+<retval type64='B'/>
+</method>
+<method selector='isReadOnly'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsMountingOfSubdirectories:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setDeleted:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setReadOnly:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSNetworkAddressFormatter'>
+<method selector='allowsCIDRNotation'>
+<retval type64='B'/>
+</method>
+<method selector='allowsDomainNames'>
+<retval type64='B'/>
+</method>
+<method selector='allowsPortSuffix'>
+<retval type64='B'/>
+</method>
+<method selector='requiresCIDRNotation'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowsCIDRNotation:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowsDomainNames:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowsPortSuffix:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setRequiresCIDRNotation:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSNumberToStringTransformer'>
+<method class_method='true' selector='allowsReverseTransformation'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSSharePointRecord'>
+<method selector='isAutomounted'>
+<retval type64='B'/>
+</method>
+<method selector='isDeleted'>
+<retval type64='B'/>
+</method>
+<method selector='isEncryptedOverSMB'>
+<retval type64='B'/>
+</method>
+<method selector='isGuestAccessEnabledOverAFP'>
+<retval type64='B'/>
+</method>
+<method selector='isGuestAccessEnabledOverFTP'>
+<retval type64='B'/>
+</method>
+<method selector='isGuestAccessEnabledOverSMB'>
+<retval type64='B'/>
+</method>
+<method selector='isGuestAccessEnabledOverWebDAV'>
+<retval type64='B'/>
+</method>
+<method selector='isIndexingEnabled'>
+<retval type64='B'/>
+</method>
+<method selector='isSharedOverAFP'>
+<retval type64='B'/>
+</method>
+<method selector='isSharedOverFTP'>
+<retval type64='B'/>
+</method>
+<method selector='isSharedOverSMB'>
+<retval type64='B'/>
+</method>
+<method selector='isSharedOverServerDocs'>
+<retval type64='B'/>
+</method>
+<method selector='isSharedOverWebDAV'>
+<retval type64='B'/>
+</method>
+<method selector='isTimeMachineBackup'>
+<retval type64='B'/>
+</method>
+<method selector='ntfsStreamsEnabled'>
+<retval type64='B'/>
+</method>
+<method selector='setAutomounted:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setDeleted:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setEncryptedOverSMB:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setGuestAccessEnabledOverAFP:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setGuestAccessEnabledOverFTP:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setGuestAccessEnabledOverSMB:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setGuestAccessEnabledOverWebDAV:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setIndexingEnabled:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setNTFSStreamsEnabled:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setSharedOverAFP:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setSharedOverFTP:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setSharedOverSMB:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setSharedOverServerDocs:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setSharedOverWebDAV:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setTimeMachineBackup:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setUsesOplocksOverSMB:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setUsesParentOwnerForItemsCreatedOverAFP:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setUsesParentPermissionsForItemsCreatedOverAFP:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setUsesParentPermissionsForItemsCreatedOverSMB:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setUsesStrictLockingOverSMB:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='usesOplocksOverSMB'>
+<retval type64='B'/>
+</method>
+<method selector='usesParentOwnerForItemsCreatedOverAFP'>
+<retval type64='B'/>
+</method>
+<method selector='usesParentPermissionsForItemsCreatedOverAFP'>
+<retval type64='B'/>
+</method>
+<method selector='usesParentPermissionsForItemsCreatedOverSMB'>
+<retval type64='B'/>
+</method>
+<method selector='usesStrictLockingOverSMB'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSStrand'>
+<method selector='addCancelBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addCleanupBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addCompletionBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='addFinishBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='cancelWithCompletionBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='continueWithBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='continueWithBlock:elseWithBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+<arg function_pointer='true' index='1' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='finishWithCompletionBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='startWithBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+</class>
+<class name='XSStrandBouncer'>
+<method selector='enterWithBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+</class>
+<class name='XSStrandEventSource'>
+<method selector='addCompletionBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+<method class_method='true' selector='asyncDelayWithInterval:eventHandler:'>
+<arg function_pointer='true' index='1' type64='@?'>
+<arg type64='Q'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='asyncHandleEveryEvent:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='Q'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method class_method='true' selector='asyncHandleInterruptSignalAndExit:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='Q'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='asyncHandleNextEvent:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<arg type64='Q'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</arg>
+</method>
+<method selector='cancelWithCompletionBlock:'>
+<arg function_pointer='true' index='0' type64='@?'>
+<retval type64='v'/>
+</arg>
+</method>
+</class>
+<class name='XSURLFormatter'>
+<method selector='escapesInvalidCharacters'>
+<retval type64='B'/>
+</method>
+<method selector='setEscapesInvalidCharacters:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSWebApp'>
+<method selector='requiresSSL'>
+<retval type64='B'/>
+</method>
+<method selector='setRequiresSSL:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<class name='XSWebConfig'>
+<method selector='disablewebapp:'>
+<retval type64='B'/>
+</method>
+<method selector='enablewebapp:'>
+<retval type64='B'/>
+</method>
+<method selector='readAndReturnError:'>
+<arg index='0' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+<method selector='setUseLegacyRubyTask:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='synchronizeAndReturnError:'>
+<arg index='0' type_modifier='o'/>
+<retval type64='B'/>
+</method>
+<method selector='useLegacyRubyTask'>
+<retval type64='B'/>
+</method>
+</class>
+<class name='XSWebVirtualHost'>
+<method selector='allowAllOverrides'>
+<retval type64='B'/>
+</method>
+<method selector='allowCGIExecution'>
+<retval type64='B'/>
+</method>
+<method selector='allowFolderListing'>
+<retval type64='B'/>
+</method>
+<method selector='enableServerSideIncludes'>
+<retval type64='B'/>
+</method>
+<method selector='requiresSSL'>
+<retval type64='B'/>
+</method>
+<method selector='setAllowAllOverrides:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowCGIExecution:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setAllowFolderListing:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setEnableServerSideIncludes:'>
+<arg index='0' type64='B'/>
+</method>
+<method selector='setRequiresSSL:'>
+<arg index='0' type64='B'/>
+</method>
+</class>
+<informal_protocol name='XSAdminAuthenticationActionDelegate'>
+<method selector='authenticationAction:didReceiveCertificateError:' type64='B32@0:8@16@24'/>
+</informal_protocol>
+<informal_protocol name='XSAdminTransactionDelegateProtocol'>
+<method selector='adminTransaction:didReceiveCertificateError:' type64='B32@0:8@16@24'/>
+</informal_protocol>
+</signatures>

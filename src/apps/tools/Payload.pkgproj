@@ -226,36 +226,7 @@
 							</dict>
 							<dict>
 								<key>CHILDREN</key>
-								<array>
-									<dict>
-										<key>BUNDLE_CAN_DOWNGRADE</key>
-										<false/>
-										<key>BUNDLE_POSTINSTALL_PATH</key>
-										<dict>
-											<key>PATH_TYPE</key>
-											<integer>1</integer>
-										</dict>
-										<key>BUNDLE_PREINSTALL_PATH</key>
-										<dict>
-											<key>PATH_TYPE</key>
-											<integer>1</integer>
-										</dict>
-										<key>CHILDREN</key>
-										<array/>
-										<key>GID</key>
-										<integer>0</integer>
-										<key>PATH</key>
-										<string>Payload/Library/PreferencePanes/Hosts.prefPane</string>
-										<key>PATH_TYPE</key>
-										<integer>1</integer>
-										<key>PERMISSIONS</key>
-										<integer>493</integer>
-										<key>TYPE</key>
-										<integer>3</integer>
-										<key>UID</key>
-										<integer>0</integer>
-									</dict>
-								</array>
+								<array/>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -271,24 +242,7 @@
 							</dict>
 							<dict>
 								<key>CHILDREN</key>
-								<array>
-									<dict>
-										<key>CHILDREN</key>
-										<array/>
-										<key>GID</key>
-										<integer>0</integer>
-										<key>PATH</key>
-										<string>Payload/Library/Preferences/com.apple.xgrid.agent.plist</string>
-										<key>PATH_TYPE</key>
-										<integer>1</integer>
-										<key>PERMISSIONS</key>
-										<integer>493</integer>
-										<key>TYPE</key>
-										<integer>3</integer>
-										<key>UID</key>
-										<integer>0</integer>
-									</dict>
-								</array>
+								<array/>
 								<key>GID</key>
 								<integer>0</integer>
 								<key>PATH</key>
@@ -450,22 +404,6 @@
 						<key>GID</key>
 						<integer>0</integer>
 						<key>PATH</key>
-						<string>Payload/private</string>
-						<key>PATH_TYPE</key>
-						<integer>1</integer>
-						<key>PERMISSIONS</key>
-						<integer>493</integer>
-						<key>TYPE</key>
-						<integer>3</integer>
-						<key>UID</key>
-						<integer>0</integer>
-					</dict>
-					<dict>
-						<key>CHILDREN</key>
-						<array/>
-						<key>GID</key>
-						<integer>0</integer>
-						<key>PATH</key>
 						<string>Payload/System</string>
 						<key>PATH_TYPE</key>
 						<integer>1</integer>
@@ -509,22 +447,6 @@
 						<key>UID</key>
 						<integer>0</integer>
 					</dict>
-					<dict>
-						<key>CHILDREN</key>
-						<array/>
-						<key>GID</key>
-						<integer>0</integer>
-						<key>PATH</key>
-						<string>Payload/usr</string>
-						<key>PATH_TYPE</key>
-						<integer>1</integer>
-						<key>PERMISSIONS</key>
-						<integer>493</integer>
-						<key>TYPE</key>
-						<integer>3</integer>
-						<key>UID</key>
-						<integer>0</integer>
-					</dict>
 				</array>
 				<key>GID</key>
 				<integer>0</integer>
@@ -561,8 +483,6 @@
 			</dict>
 			<key>PREINSTALL_PATH</key>
 			<dict>
-				<key>PATH</key>
-				<string>pre.sh</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -575,22 +495,6 @@
 					<integer>0</integer>
 					<key>PATH</key>
 					<string>post.sh</string>
-					<key>PATH_TYPE</key>
-					<integer>1</integer>
-					<key>PERMISSIONS</key>
-					<integer>420</integer>
-					<key>TYPE</key>
-					<integer>3</integer>
-					<key>UID</key>
-					<integer>0</integer>
-				</dict>
-				<dict>
-					<key>CHILDREN</key>
-					<array/>
-					<key>GID</key>
-					<integer>0</integer>
-					<key>PATH</key>
-					<string>pre.sh</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 					<key>PERMISSIONS</key>
@@ -627,7 +531,7 @@
 			<key>FOLLOW_SYMBOLIC_LINKS</key>
 			<true/>
 			<key>IDENTIFIER</key>
-			<string>com.apple.servertools</string>
+			<string>co.abdyfran.servertools</string>
 			<key>LOCATION</key>
 			<integer>0</integer>
 			<key>NAME</key>
@@ -643,7 +547,7 @@
 			<key>USE_HFS+_COMPRESSION</key>
 			<false/>
 			<key>VERSION</key>
-			<string>10.6</string>
+			<string>1.0</string>
 		</dict>
 		<key>PROJECT_COMMENTS</key>
 		<dict>
@@ -829,7 +733,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Legacy Server Tools</string>
+			<string>Legacy Server Management Tools</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 		</dict>

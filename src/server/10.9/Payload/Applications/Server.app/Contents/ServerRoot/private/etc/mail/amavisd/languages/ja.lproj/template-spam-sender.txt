@@ -1,0 +1,47 @@
+# =============================================================================
+# This is a template for SPAM SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+件名：未承諾の大量メールを送信しようとした可能性があります
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <SS%i@%h>
+
+%s からのメッセージ[
+（宛先：%R）]
+
+は、未承諾の大量メール（UBE）と判断されました。
+
+このメッセージの内部参照コードは %n/%i です。
+
+あなたの返信アドレスに通知メッセージが届いたということは、メールが実際に
+あなたから送信されたか、差出人アドレスが偽装され、あなたのメールアドレスが
+第三者に悪用されていることになります。心当たりのない場合は申し訳ございません。
+
+これは、UBE や感染メールの後方散乱を最小限に抑えるための取り組みの一環
+ですが、迷惑メールかどうかの判定が難しい場合、正規のメールが削除されて
+しまうか、後方散乱メールを送ってしまうかのどちらかのリスクが常につきま
+とうことをご理解ください。
+
+[? %a |#|[:wrap|78||  |最初のアップストリーム SMTP クライアント IP アドレス：¥[%a¥] %g]]
+[? %e |#|[:wrap|78||  |「Received:」のトレースに基づく¥
+メッセージの発信元：¥[%e¥], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|¥
+[:wrap|78||  |Sender: [:header_field|Sender|100]¥
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+# [? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+[? %#X |#|¥n[[:wrap|78||  |%X]¥n]]
+
+[? %#D |メールの配信は中止されました。
+]#
+#
+# SpamAssassin レポート：
+# [%A
+# ]¥

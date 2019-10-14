@@ -1,0 +1,157 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved.
+ *
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ *
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-filter-bar-view
+{
+	position: relative;
+	height: 29px;
+	line-height: 23px;
+	font-size: 12px;
+	border-radius: 6px 6px 0 0;
+	top: -1px;
+	margin-right: -1px;
+	margin-left: -1px;
+	font-weight: bold;
+}
+
+.cc-filter-bar-view .section
+{
+	display: block;
+	height: 18px;
+	position: absolute;
+	top: 3px;
+	text-align: center;
+}
+
+.cc-filter-bar-view .section.first
+{
+	left: 12px;
+	top: 50%;
+	margin-top: -10px;
+	text-align: left;
+	z-index: 10;
+	white-space: nowrap;
+}
+
+.cc-filter-bar-view .section.last
+{
+	right: 11px;
+	text-align: right;
+}
+
+.cc-filter-bar-view .section.last div
+{
+	display: inline;
+}
+
+.cc-filter-bar-view span
+{
+	height: 18px;
+	line-height: 18px;
+}
+
+.cc-filter-bar-view a
+{
+	font-weight: bold;
+	text-decoration:none;
+	height: 18px;
+	line-height: 18px;
+}
+
+.cc-filter-bar-view .button
+{
+	cursor: pointer;
+	display: inline-block;
+	margin: 0px;
+	padding: 1px 9px 0px 9px;
+	border-radius: 2em;
+	max-width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.cc-filter-bar-view .button.selected
+{
+	color: #fff;
+	cursor: default;
+	text-decoration: none !important;
+}
+
+.cc-filter-bar-view .cc-filter-bar-view-popup
+{
+	background-position: right center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	padding-right: 11px;
+	right: 3px;
+	line-height: 24px;
+}
+
+.cc-filter-bar-view .cc-filter-bar-view-popup a
+{
+	font-weight: normal;
+}
+
+.cc-filter-bar-view .cc-filter-bar-view-popup-selected
+{
+	padding-left: 4px
+}
+
+.cc-filter-bar-popup-menu
+{
+	text-align: right;
+}
+
+.cc-filter-bar-view-keyword
+{
+	margin-left: 12px;
+}
+
+.cc-filter-bar-view-keyword input
+{
+	background-image: url(./img/filter_bar_view_keyword.png);
+	background-position: 4px center;
+	background-repeat: no-repeat;
+    background-size: 11px 12px;
+	border-radius: 1em;
+	border: 1px solid #A4A4A4;
+	box-shadow: inset 0px 0px 3px #EAEAEA;
+	height: 18px;
+	line-height: 18px;
+	padding: 0px 6px 0px 18px;
+	width: 122px;
+}
+
+body.hidpi .cc-filter-bar-view-keyword input
+{
+    background-image: url(./img/filter_bar_view_keyword@2x.png);
+}
+
+.cc-filter-bar-view-keyword input:focus {
+	outline: none;
+}
+
+.cc-filter-bar-right-button
+{
+	cursor: pointer;
+	display: inline-block;
+	margin: 2px 0px;
+	padding: 0px 8px;
+	border-radius: 2em;
+	max-width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	float: right;
+}

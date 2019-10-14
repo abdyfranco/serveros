@@ -1,0 +1,169 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+ 
+/* @group Non-standalone overrides */
+ 
+#calendar_logout_link {
+	display: none;
+}
+
+/* @end */
+
+body.standalone {
+	font-family: "Helvetica Neue", Helvetica, "Lucida Grande", Lucida, Verdana, sans-serif;
+	font-size: 0.8em;
+	margin: 0px;
+	padding: 0px;
+}
+
+body.standalone a
+{
+	color: #326fda;
+}
+
+body.standalone #module_calendars
+{
+	border-radius: 10px;
+	border: 1px solid #A7A7A7;
+	margin: 0px 10px;
+}
+
+/* @group Delegates */
+
+body.standalone h1
+{
+	color: #6e6e6e;
+	text-shadow: #fff 0 1px 0;
+	text-align: center;
+	margin: 0;
+	padding: 6px 0px;
+	font: 14px "Helvetica Neue", Helvetica, "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+body.standalone h1#calendar_title span span.popuphandle
+{
+	/*color: #999;*/
+	padding-left: 4px;
+	font-size: 10px;
+	line-height: 18px;
+}
+
+body.standalone h1 a
+{
+	color: #6e6e6e;
+	font-size: 31px;
+	line-height: 5px;
+	height: 5px;
+	display: inline-block;
+	vertical-align: bottom;
+	padding-left: 2px;
+}
+
+body.standalone h1 > span
+{
+	display: inline-block;
+	position: relative;
+}
+
+body.standalone h1 select
+{
+	opacity: .001;
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	right: -14px;
+	bottom: 0;
+	left: 0;
+	cursor: pointer;
+	height: 100%;
+	border: 1px solid transparent;
+}
+
+body.standalone #calendar_delegates_button
+{
+	position: relative;
+	margin-top: 6px;
+	background: red;
+}
+
+body.standalone #calendar_delegates_button span
+{
+	display: inline-block;
+	position: relative;
+	left: 27px;
+	padding: 1px 7px 2px;
+}
+
+body.standalone #calendar_delegates_button a
+{
+	text-decoration: none;
+	color: #8191a3;
+	text-shadow: #fff 0 1px 0;
+	font-size: 11px;
+}
+
+body.standalone #calendar_delegates_button:hover a
+{
+	text-decoration: underline;
+}
+
+body.standalone p#calendar_logout_link
+{
+	text-align: center;
+	font-size: 12px;
+	line-height: 12px;
+	border: 0;
+	display: block;
+}
+
+body.standalone p#calendar_logout_link a
+{
+	text-decoration: none;
+}
+
+body.standalone p#calendar_logout_link a:hover
+{
+	text-decoration: underline;
+}
+
+body.standalone #calendar_settings_dialog_new_delegate
+{
+	width: 296px;
+}
+
+body.standalone #calendar_settings_dialog_delegates
+{
+	width: 300px;
+	height: 140px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	margin-top: 3px;
+	border: 1px solid #b7b7b7;
+}
+
+body.standalone #calendar_settings_dialog_delegates div
+{
+	margin-top: 3px;
+	margin-left: 4px;
+	margin-right: 3px;
+	clear: both;
+}
+
+body.standalone #calendar_settings_dialog_delegates select
+{
+	font-size: 9px;
+	float: right;
+	margin-top: 1px;
+}
+
+/* @end */

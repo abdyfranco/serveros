@@ -1,0 +1,31 @@
+Pigeonhole Sieve Plugins
+========================
+
+The Pigeonhole Sieve interpreter can be dynamically extended with new features
+by means of plugins. Plugins can be configured using the 'sieve_plugins'
+setting in the 'plugin' section of the Dovecot configuration, as explained on
+the <Pigeonhole Sieve Configuration page> [Pigeonhole.Sieve.Configuration.txt].
+
+The following plugins are currently available for the Pigeonhole Sieve
+interpeter:
+
+ * <Extdata> [Pigeonhole.Sieve.Plugins.Extdata.txt] /(custom language
+   extension, experimental)/
+ * This plugin adds support for the Dovecot-specific 'vnd.dovecot.extdata'
+   extension, which allows access to external string data. Any type of Dovecot
+   dict lookup can be specified as data source.
+ * <Pipe> [Pigeonhole.Sieve.Plugins.Pipe.txt] [*Pigeonhole v0.2*] /(custom
+   language extension, experimental)/
+ * This plugin adds support for the Dovecot-specific 'vnd.dovecot.pipe'
+   extension, which allows piping messages to a pre-defined set of external
+   programs. For Pigeonhole v0.3, the same functionality (and more) is provided
+   by the extprograms plugin.
+ * <Extprograms> [Pigeonhole.Sieve.Plugins.Extprograms.txt] [*Pigeonhole v0.3*
+   and beyond]/(custom language extensions, experimental)/
+ * This plugin adds support for the Dovecot-specific 'vnd.dovecot.pipe',
+   'vnd.dovecot.filter' and 'vnd.dovecot.execute' extensions. These extensions
+   add new action commands for invoking a predefined set of external programs
+   (typically shell scripts. Messages can be piped to or filtered through those
+   programs and string data can be input to and retrieved from those programs.
+
+(This file was created from the wiki on 2013-08-05 04:42)

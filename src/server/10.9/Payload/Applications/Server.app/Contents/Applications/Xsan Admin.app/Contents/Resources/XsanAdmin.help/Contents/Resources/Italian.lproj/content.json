@@ -1,0 +1,284 @@
+{
+  "content" : {
+    "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD" : {
+      "name" : "RIVEDERE SOLO BOZZA",
+      "navigation" : "false"
+    },
+    "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17" : {
+      "name" : "Gestire archivi SAN"
+    },
+    "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4" : {
+      "name" : "Gestire client e utenti"
+    },
+    "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21" : {
+      "navigation" : "false",
+      "content" : "<div id='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21' class='apd-topic'><div class='subjectids'><a name='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21'><\/a><\/div><h1 class='title topictitle1'>L'argomento selezionato non è al momento disponibile<\/h1><div class='body conbody'><p class='p'>Assicurati di essere connesso a Internet. Per assistenza su come configurare la connessione a Internet, scegli menu Apple > Preferenze di Sistema, fai clic su Network, quindi su Aiutami.<\/p><p class='p'>Se sei connesso a Internet, ma non puoi visualizzare il contenuto, riprova più tardi.<\/p><\/div><\/div>",
+      "alternativeName" : "L'argomento selezionato non è al momento disponibile",
+      "name" : "L'argomento selezionato non è al momento disponibile",
+      "class" : "content-not-available-message",
+      "excludefromsearch" : "1"
+    },
+    "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><div class='subjectids'><a name='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><\/a><\/div><h1 class='title topictitle1'>Copyright<\/h1><div class='body conbody'><p class='p copyrightTagline'>© 2012 Apple Inc. Tutti i diritti riservati.<\/p><p class='p'>© 2012 Apple Inc. Tutti i diritti riservati.<\/p><\/div><\/div>",
+      "alternativeName" : "Copyright",
+      "name" : "Copyright",
+      "class" : "copyright",
+      "excludefromsearch" : "1"
+    },
+    "button-0" : {
+      "type" : "navigation",
+      "howdyPageID" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+      "alternativeNameStyle" : "replace"
+    },
+    "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7" : {
+      "name" : "Gestire l'archivio SAN"
+    },
+    "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F" : {
+      "name" : "Gestire i controller metadati"
+    },
+    "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><div class='subjectids'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><\/a><\/div><h1 class='title topictitle1'>Aiuto Xsan Admin<\/h1><div class='body conbody'><div class='section'><p class='p'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A'><!-- --><\/a><img class='image' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A' src='..\/media\/Xsan_welcome.png' alt='Icona dell&apos;applicazione Xsan Admin' height='205' width='184'><\/p><\/div><div class='section'><h2 class='title sectiontitle'>Aiuto Xsan Admin<\/h2><p class='p'>Impostare e gestire un'area di archivio sul network.<\/p><\/div><\/div><\/div>",
+      "alternativeName" : "Aiuto Xsan Admin",
+      "name" : "Aiuto Xsan Admin",
+      "class" : "default",
+      "excludefromsearch" : "1"
+    },
+    "apdB665BFF6-498C-47E6-A30D-BA873A992FE7" : {
+      "name" : "Verificare lo stato di SAN"
+    }
+  },
+  "hierarchy" : [
+    {
+      "id" : "button-0",
+      "children" : [
+        {
+          "id" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+          "class" : "default"
+        },
+        {
+          "id" : "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21",
+          "class" : "content-not-available-message"
+        },
+        {
+          "id" : "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267",
+          "class" : "copyright"
+        },
+        {
+          "id" : "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7",
+          "children" : [
+            {
+              "name" : "Aggiungere un archivio",
+              "href" : "#t_AddStorage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Configurare una cartella affinità",
+              "href" : "#t_FolderAffinity",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Modificare le impostazioni avanzate del volume",
+              "href" : "#t_AdvancedVolumeSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Modificare le impostazioni di un gruppo di archiviazione",
+              "href" : "#t_StoragePoolSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Manutenzione dei volumi SAN",
+              "href" : "#t_MaintainVolumes",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4",
+          "children" : [
+            {
+              "name" : "Aggiungi un client",
+              "href" : "#t_AddClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Aggiungere un numero di serie di Xsan",
+              "href" : "#t_AddSerialNo",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Spostare un client su un altro SAN",
+              "href" : "#t_MoveClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Attivare un volume su un client",
+              "href" : "#t_MountVolume",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Verificare le opzioni di attivazione",
+              "href" : "#t_ChangeMountOpts",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Gestire utenti e gruppi",
+              "href" : "#t_ManageUsersGroups",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Controllare gli accessi di client e utenti",
+              "href" : "#t_ClientUserAccess",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Modificare le quote per utenti e gruppi SAN",
+              "href" : "#t_SetQuotas",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Gestire computer client in remoto",
+              "href" : "#t_RemoteManage",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F",
+          "children" : [
+            {
+              "name" : "Aggiungere un controller metadati",
+              "href" : "#t_AddMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Impostare la priorità failover di un controller",
+              "href" : "#t_FailoverPriority",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Passare a un controller metadati in standby",
+              "href" : "#t_StandbyMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Scoprire quale controller sta ospitando un volume",
+              "href" : "#t_WhichController",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Elencare i volumi ospitati da un controller",
+              "href" : "#t_WhichVolumes",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Modificare l'indirizzo IP di un controller",
+              "href" : "#t_ChangeIP",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Rendere un controller in standby il controller principale",
+              "href" : "#t_PromoteStandby",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Convertire un controller in un client",
+              "href" : "#t_DowngradeController",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17",
+          "children" : [
+            {
+              "name" : "Utilizzare un computer amministratore di Xsan",
+              "href" : "#t_UseAdminComputer",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Rinominare un SAN",
+              "href" : "#t_Rename",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Impostare un altro SAN",
+              "href" : "#t_SetupAnotherSAN",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Gestire più SAN",
+              "href" : "#t_ManageMultiple",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Distruggere un SAN",
+              "href" : "#t_DestroySAN",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apdB665BFF6-498C-47E6-A30D-BA873A992FE7",
+          "children" : [
+            {
+              "name" : "Verifica lo stato di SAN",
+              "href" : "#t_SANStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Verificare lo stato del volume",
+              "href" : "#t_VolumeStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Verificare lo spazio libero",
+              "href" : "#t_FreeSpace",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Utilizzo di risorse grafiche SAN",
+              "href" : "#t_GraphUsage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Impostare le notifiche di stato",
+              "href" : "#t_StatusNotifications",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Visualizzare i resoconti di Xsan",
+              "href" : "#t_ViewLogs",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Verificare i client del volume",
+              "href" : "#t_CheckClients",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD",
+          "children" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "settings" : {
+    "ShowVersionNumber" : false,
+    "BuildVersion" : "3.9",
+    "Design" : "Default",
+    "CategoryArt" : "xsanic.png",
+    "AppVersion" : "3.9",
+    "FolderName" : "XsanAdmin.help",
+    "LocalizationISOCode" : "it",
+    "buildID" : "E8583AA2-1D5E-11E2-9AE4-B275339F86BF",
+    "Title" : "Aiuto Xsan",
+    "RemoteURL" : "https:\/\/help.apple.com\/xsanadmin\/mac\/3.0\/help\/"
+  }
+}

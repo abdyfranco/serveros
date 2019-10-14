@@ -1,0 +1,90 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Subject: [? [:ccat|major]
+|您发出的干净邮件\
+|您发出的干净邮件\
+|您发出的干净邮件（被 MTA 阻止）\
+|您发出的邮件太大\
+|您发出的邮件中包含错误标题\
+|垃圾邮件似乎出自您这里\
+|垃圾邮件似乎出自您这里\
+|您发出的邮件中包含未检查内容\
+|被阻止的内容出自您这里 (%F)\
+|邮件中的病毒似乎出自您这里 (%V)\
+]
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <VS%i@%h>
+
+[? [:ccat|major] |干净|干净|被 MTA 阻止|太大|标题无效|\
+垃圾邮件|垃圾邮件|未检查内容|内容被阻止警报|病毒警报]
+
+我们的检查程序发现
+[? %#V |#|[:wrap|78|    |  |[? %#V |viruses|virus|viruses]: %V]]
+[? %#F |#|[:wrap|78|    |  |已阻止[? %#F |名称|名称|名称]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+可能出自您 %s
+发给以下[? %#R |收件人|收件人|收件人]:[
+-> %R]的电子邮件
+
+您邮件的内部参考码为 %n/%i
+
+[? %a |#|[:wrap|78||  |第一个上游 SMTP 客户端 IP 地址:\[%a\] %g]]
+[? %e |#|[:wrap|78||  |根据“接收时间:”追踪结果，\
+邮件似乎出自: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+[? %#D |已停止投递该电子邮件！
+
+]#
+[? %#V ||请检查系统中是否存在病毒，
+或者请求系统管理员帮助检查病毒。
+
+]#
+[? %#V |[? %#F ||#
+邮件[?%#D|已被阻止|触发此警告]，因为其包含的组件
+（MIME 的一部分或嵌套在其中）的声明名称
+或 MIME 类型或内容类型违反我们的访问策略。
+
+若要传送可能被站点策略认为危险或不想接受
+的内容、或者只是因太大而无法邮寄的内容，请考虑
+将内容发布到网上，然后仅将文稿的 URL
+发送给收件人。
+
+取决于收件人和发件人的站点策略，
+仍有可能通过一些手段发送任意内容（包括
+病毒），包括以下方法：
+
+- 使用 pgp、gpg 或其他加密方法进行加密；
+
+- 隐藏在受密码保护或杂乱的数据包或归档中
+（例如: zip -e、arj -g、arc g、rar -p 或其他方法）
+
+请注意，如果内容并非有意加密，
+则加密密钥或密码可能就包含在同一封邮件中，
+以便收件人使用。
+
+如果内容并不是恶意的，很抱歉给您带来的任何不便。
+
+这些限制的目的是切断
+病毒或其他恶意软件常用的传播方式。它们往往会利用
+大部分流行的邮件阅读器的自动机制和安全漏洞（Microsoft
+邮件阅读器和浏览器常常成为目标）。通过要求收件人采取明确的
+操作来解码邮件，恶意软件的自动传播风险
+会大大降低。
+#
+# 我们的邮件限制策略的详细信息位于...
+
+]]#

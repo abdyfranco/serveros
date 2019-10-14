@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- #########################################################################
+ Copyright (c) 2014 Apple Inc. All Rights Reserved.
+
+ IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ computers and is subject to the terms and conditions of the Apple Software
+ License Agreement accompanying the package this file is a part of.
+ You may not port this file to another platform without Apple's written consent.
+######################################################################### -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head profile="http://www.w3.org/2005/10/profile">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title><%= t :portal_title %></title>
+    <meta name = "viewport" content = "width = device-width, user-scalable = no" />
+
+    <link rel="apple-touch-icon"                 href="/devicemanagement/api/start_ota/portal57.png" />
+    <link rel="apple-touch-icon" sizes="72x72"   href="/devicemanagement/api/start_ota/portal72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/devicemanagement/api/start_ota/portal114.png" />
+    <!-- <link rel="apple-touch-icon" sizes="144x144" href="/devicemanagement/api/start_ota/portal144.png" /> -->
+
+    <%= csrf_meta_tag %>
+
+    <!-- localized strings -->
+    <script type="text/javascript">
+      window.localized = {
+        portal_remove_device_button: "<%= t :portal_remove_device_button %>",
+        portal_serial_number: "<%= t :portal_serial_number %>",
+        portal_lock_task: "<%= t :portal_lock_task %>",
+        portal_wipe_task: "<%= t :portal_wipe_task %>",
+        portal_clear_passcode_task: "<%= t :portal_clear_passcode_task %>",
+        portal_enter_a_passcode: "<%= t :portal_enter_a_passcode %>",
+        portal_reenter_your_passcode: "<%= t :portal_reenter_your_passcode %>",
+        portal_this_device_cannot_be_unlocked_remotely: "<%= t :portal_this_device_cannot_be_unlocked_remotely %>",
+        portal_task_completed: "<%= t :portal_task_completed %>",
+        portal_task_failed: "<%= t :portal_task_failed %>",
+        portal_task_cancelled: "<%= t :portal_task_cancelled %>",
+        portal_task_timestamp_format: "<%= t :portal_task_timestamp_format %>",
+        portal_task_is_in_progress: "<%= t :portal_task_is_in_progress %>",
+        portal_this: "<%= t :portal_this %>",
+        portal_old_os: "<%= t :portal_old_os %>",
+        portal_are_you_sure_you_want_to_remove_this_device: "<%= t :portal_are_you_sure_you_want_to_remove_this_device %>",
+        portal_passcode_is_required: "<%= t :portal_passcode_is_required %>",
+        portal_passcodes_did_not_match: "<%= t :portal_passcodes_did_not_match %>",
+        portal_passcode_was_not_six_digit_number: "<%= t :portal_passcode_was_not_six_digit_number %>",
+        portal_are_you_sure_you_want_to_perform_the: "<%= t :portal_are_you_sure_you_want_to_perform_the %>",
+        portal_task_on_this_device: "<%= t :portal_task_on_this_device %>",
+        portal_certificate: "<%= t :portal_certificate %>",
+        portal_download_and_install_profile: "<%= t :portal_download_and_install_profile %>",
+        portal_install: "<%= t :portal_install %>",
+        portal_profile_show_details: "<%= t :portal_profile_show_details %>",
+        portal_profile_hide_details: "<%= t :portal_profile_hide_details %>",
+        portal_enroll_button: "<%= t :portal_enroll_button %>",
+        portal_enroll_this_generic_device_type: "<%= t :portal_enroll_this_generic_device_type %>",        
+        portal_once_enrolled_you_will: "<%= t :portal_once_enrolled_you_will %>",
+        portal_this_generic_device_type: "<%= t :portal_this_generic_device_type %>",              
+        eof:null
+      };
+    </script>
+
+    <script type="text/javascript" src="/devicemanagement/api/start_ota/jquery-2.1.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/devicemanagement/api/start_ota/main.css" />
+    <link rel="stylesheet" type="text/css" href="/devicemanagement/api/start_ota/knob-sets.css" />
+    <script type="text/javascript" src="/devicemanagement/api/start_ota/user_portal.js"></script>
+    <link rel="icon" type="image/png" href="/devicemanagement/api/start_ota/favicon.png" />
+
+    <!-- Styling for the two tabs-->
+    <link rel="stylesheet" type="text/css" href="/devicemanagement/api/start_ota/twoTabs.css" />
+    <!-- Styling for the addDevice-->
+    <link rel="stylesheet" type="text/css" href="/devicemanagement/api/start_ota/addDevice.css" />
+    <!-- Styling for each device -->
+    <link rel="stylesheet" type="text/css" href="/devicemanagement/api/start_ota/eachDevice.css" />
+    <!-- Change button to platform-->
+    <script type="text/javascript" src="/devicemanagement/api/start_ota/changeButtonToPlatform.js"></script>
+    <!-- URL Canonicalization -->
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/devicemanagement/api/device/start_ota')>-1) window.location.pathname = '/mydevices/';
+    </script>
+    <!-- Clickjacking protection-->
+    <script type="text/javascript">
+      if (self !== top) top.location = self.location;
+    </script>
+    <!-- Auto updater for Devices, Profiles, and Tasks-->
+    <script type="text/javascript" src="/devicemanagement/api/start_ota/autoUpdater.js"></script>
+  </head>
+  <body>
+    <form id="performTaskForm" style="display:none;" action="/devicemanagement/api/task/start_task_from_portal" method="post">
+      <%= hidden_field_tag 'authenticity_token', form_authenticity_token if protect_against_forgery? %>
+      <input name="TargetId"/>
+      <input name="TaskType"/>
+      <input name="PIN"/>
+    </form>
+    <form id="removeDeviceForm" style="display:none;" action="/devicemanagement/api/device/remove_users_device" method="post">
+      <%= hidden_field_tag 'authenticity_token', form_authenticity_token if protect_against_forgery? %>
+      <input name="id"/>
+    </form>
+
+    <div id="container" class="<%= (@cur_settings["od_active"] == true && @cur_settings["apns_active"] == true && @allow_enrollment_via_portal == true ? 'devicesShown' : 'settingsShown') %>">
+
+      <h1><%= t :portal_title %></h1>
+
+      <div class="control-tower-icon"></div>
+
+      <% if @cur_settings["od_active"] == true && @cur_settings["apns_active"] == true %>
+        <div id="tabs">
+          <a id="devicesTab" href="javascript:void(0)"><%= t :portal_devices_tab %></a>          
+          <a id="settingsTab" href="javascript:void(0)"><%= t :portal_profiles_downloads_settings_tab %></a>          
+        </div>
+      <% end %>
+
+      <!-- devices container -->
+      <div id="devices">                
+      </div>
+      
+      <div id="unmanaged_settings">
+
+        <div id="alacarte_profiles">
+          <!-- profiles will rendered by the javascript layer -->
+        </div>
+
+        <% if @profile_data.length == 0 && !@show_trust%>
+          <p style="color: #888;" id="no_profile_available"><%= t :portal_no_profiles_are_currently_available_to_you %></p>
+        <% end %>
+
+        <% if @show_trust %>
+          <div class="profile">
+            <div class="name"><%= t :portal_trust_profile %> <%= h @server_organization %></div>
+            <a class="showDetails" href="javascript:void(0)"><%= t :portal_profile_show_details %></a>
+            <a class="hideDetails" href="javascript:void(0)"><%= t :portal_profile_hide_details %></a>
+            <div class="details">
+              <div class="detail"><div class="icon admin-certificate-knob-set-large-icon"></div><div class="detailName"><%= t :portal_certificate %></div></div>
+            </div>
+            <div class="button"><a title="<%= t :portal_download_and_install_profile %>" href="/devicemanagement/api/profile/get_ssl_cert_profile"><canvas></canvas></a></div>
+            <p class="getJoin"><%= t :portal_install %></p>
+          </div>
+        <% end %>
+
+        <% if @user_is_admin %>
+          <div id="enrollment_profiles" style="padding-bottom: 10px;">
+            <!-- <h2><%= t :portal_enrollment_profiles %></h2> -->
+            <% @enrollment_profiles.each do |enrollment_profile| %>
+            <div class="profile">
+              <div class="name"><%= h enrollment_profile.name %></div>
+              <div style="position:absolute;top:60px;left:0px;font-weight:bold;font-size:13px;"><%= t :portal_enrollment_profile %></div>
+              <div class="button"><a title="<%= t :portal_download_and_install_profile %>" href="/devicemanagement/api/auto_join_profile/get_auto_join_profile/<%= enrollment_profile.id %>"><canvas></canvas></a></div>
+              <p class="getJoin"><%= t :portal_install %></p>
+            </div>
+          <% end %>
+          </div>
+        <% end %>
+      </div> <!-- id="unmanaged_settings" -->
+
+      <div id="logout">
+        <form action="/devicemanagement/api/authentication/user_logout" method="post" style="display: inline;">
+          <%= hidden_field_tag 'authenticity_token', form_authenticity_token if protect_against_forgery? %>
+          <button><%= t :portal_logout %></button>
+        </form>
+      </div>
+    </div> <!-- id="container" -->
+
+    <script>
+      var UserPortalConfig = {
+        profiles: <%= @profile_data_json %>,
+        devices: <%= @devices_json %>,
+        last_txid_snapshot: '<%= @last_txid_snapshot %>',
+        apns_active: <%= @cur_settings["apns_active"] %>,
+        od_active: <%= @cur_settings["od_active"] %>,
+        allow_enrollment_via_portal: <%= @allow_enrollment_via_portal %>,
+        authenticity_token: '<%= form_authenticity_token %>',
+        can_wipe_device: <%= @task_privileges['wipe_device'] %>,
+        can_lock_device: <%= @task_privileges['lock_device'] %>,
+        can_clear_passcode_on_device: <%= @task_privileges['clear_passcode'] %>
+      }
+    </script>
+  </body>
+</html>

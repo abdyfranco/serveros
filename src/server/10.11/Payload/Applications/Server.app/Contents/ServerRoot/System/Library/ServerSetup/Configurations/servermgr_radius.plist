@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Perform setup for RADIUS service</string>
+	<key>dependencies</key>
+	<array/>
+	<key>environment</key>
+	<dict/>
+	<key>setup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/radius_common.pl</string>
+				<key>arguments</key>
+				<array/>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

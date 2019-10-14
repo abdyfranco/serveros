@@ -1,0 +1,164 @@
+'\" t
+.\"     Title: CREATE EXTENSION
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "CREATE EXTENSION" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+CREATE_EXTENSION \- install an extension
+.\" CREATE EXTENSION
+.SH "SYNOPSIS"
+.sp
+.nf
+CREATE EXTENSION [ IF NOT EXISTS ] \fIextension_name\fR
+    [ WITH ] [ SCHEMA \fIschema_name\fR ]
+             [ VERSION \fIversion\fR ]
+             [ FROM \fIold_version\fR ]
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBCREATE EXTENSION\fR
+loads a new extension into the current database\&. There must not be an extension of the same name already loaded\&.
+.PP
+Loading an extension essentially amounts to running the extension\*(Aqs script file\&. The script will typically create new
+SQL
+objects such as functions, data types, operators and index support methods\&.
+\fBCREATE EXTENSION\fR
+additionally records the identities of all the created objects, so that they can be dropped again if
+\fBDROP EXTENSION\fR
+is issued\&.
+.PP
+Loading an extension requires the same privileges that would be required to create its component objects\&. For most extensions this means superuser or database owner privileges are needed\&. The user who runs
+\fBCREATE EXTENSION\fR
+becomes the owner of the extension for purposes of later privilege checks, as well as the owner of any objects created by the extension\*(Aqs script\&.
+.SH "PARAMETERS"
+.PP
+IF NOT EXISTS
+.RS 4
+Do not throw an error if an extension with the same name already exists\&. A notice is issued in this case\&. Note that there is no guarantee that the existing extension is anything like the one that would have been created from the currently\-available script file\&.
+.RE
+.PP
+\fIextension_name\fR
+.RS 4
+The name of the extension to be installed\&.
+PostgreSQL
+will create the extension using details from the file
+SHAREDIR/extension/\fIextension_name\fR\&.control\&.
+.RE
+.PP
+\fIschema_name\fR
+.RS 4
+The name of the schema in which to install the extension\*(Aqs objects, given that the extension allows its contents to be relocated\&. The named schema must already exist\&. If not specified, and the extension\*(Aqs control file does not specify a schema either, the current default object creation schema is used\&.
+.sp
+Remember that the extension itself is not considered to be within any schema: extensions have unqualified names that must be unique database\-wide\&. But objects belonging to the extension can be within schemas\&.
+.RE
+.PP
+\fIversion\fR
+.RS 4
+The version of the extension to install\&. This can be written as either an identifier or a string literal\&. The default version is whatever is specified in the extension\*(Aqs control file\&.
+.RE
+.PP
+\fIold_version\fR
+.RS 4
+FROM
+\fIold_version\fR
+must be specified when, and only when, you are attempting to install an extension that replaces an
+\(lqold style\(rq
+module that is just a collection of objects not packaged into an extension\&. This option causes
+\fBCREATE EXTENSION\fR
+to run an alternative installation script that absorbs the existing objects into the extension, instead of creating new objects\&. Be careful that
+SCHEMA
+specifies the schema containing these pre\-existing objects\&.
+.sp
+The value to use for
+\fIold_version\fR
+is determined by the extension\*(Aqs author, and might vary if there is more than one version of the old\-style module that can be upgraded into an extension\&. For the standard additional modules supplied with pre\-9\&.1
+PostgreSQL, use
+unpackaged
+for
+\fIold_version\fR
+when updating a module to extension style\&.
+.RE
+.SH "NOTES"
+.PP
+Before you can use
+\fBCREATE EXTENSION\fR
+to load an extension into a database, the extension\*(Aqs supporting files must be installed\&. Information about installing the extensions supplied with
+PostgreSQL
+can be found in
+Additional Supplied Modules\&.
+.PP
+The extensions currently available for loading can be identified from the
+pg_available_extensions
+or
+pg_available_extension_versions
+system views\&.
+.PP
+For information about writing new extensions, see
+Section 35.15, \(lqPackaging Related Objects into an Extension\(rq, in the documentation\&.
+.SH "EXAMPLES"
+.PP
+Install the
+hstore
+extension into the current database:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+CREATE EXTENSION hstore;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Update a pre\-9\&.1 installation of
+hstore
+into extension style:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+CREATE EXTENSION hstore SCHEMA public FROM unpackaged;
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Be careful to specify the schema in which you installed the existing
+hstore
+objects\&.
+.SH "COMPATIBILITY"
+.PP
+
+\fBCREATE EXTENSION\fR
+is a
+PostgreSQL
+extension\&.
+.SH "SEE ALSO"
+ALTER EXTENSION (\fBALTER_EXTENSION\fR(7)), DROP EXTENSION (\fBDROP_EXTENSION\fR(7))

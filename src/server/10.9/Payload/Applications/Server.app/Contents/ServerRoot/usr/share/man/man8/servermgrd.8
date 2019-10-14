@@ -1,0 +1,123 @@
+.\"	$Id: servermgrd.8,v 1.3 2005/02/03 02:32:14 gregv Exp $
+.\"
+.\" Copyright (c) 2000-2012 Apple Computer, Inc., all rights reserved.
+.\" Distributed only as part of Mac OS X Server
+.\" 
+.\" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\" computers and is subject to the terms and conditions of the Apple Software
+.\" License Agreement accompanying the package this file is a part of.
+.\" You may not port this file to another platform without Apple's written consent.
+.\" 
+.Dd 04 January 2005
+.Dt servermgrd 8
+.Os "Mac OS X Server"
+.sp
+.Sh NAME
+.Nm servermgrd
+.Nd Mac OS X Server administrative daemon
+.Sh SYNOPSIS
+.Nm
+.Op Fl d | Fl x
+.Op Fl i Ar interval
+.Op Fl p Ar port
+.Op Fl S Ar port
+.Pp
+.Nm
+.Op Fl h | Fl v
+.Sh DESCRIPTION
+.Nm
+allows the Server Admin application to control the machine
+.Nm
+is running on.
+.Pp
+.Nm
+is typically launched at boot time under the control of
+.Xr launchd 8 .
+.Sh OPTIONS
+The following options are available:
+.Bl -tag -width ".Fl i Ar interval" -compact
+.It Fl d
+Do not move to background and print log strings to the terminal.
+.Pp
+.It Fl h
+Print usage summary and exit.
+.Pp
+.It Fl i Ar interval
+perform doIdle every
+.Ar interval
+seconds. This option is primarily used when debugging.
+Valid range of values is 1 through 300. Default is 60.
+.Pp
+.It Fl p Ar port
+Use the specified
+.Ar port
+for cleartext communications instead of the default value of 687.
+.Pp
+.It Fl S Ar port
+Use the specified
+.Ar port
+for encrypted (SSL) communications instead of the default value of 311.
+.Pp
+.It Fl v
+Print build version and exit.
+.Pp
+.It Fl x
+Do not move to background.
+.El
+.Sh KEYS
+The following keys are recognized in the default configuration file,
+.Pa /Library/Preferences/com.apple.servermgrd.plist :
+.Bl -tag -width ".Cm listenForRegularConnections= Ns {true|false}" -compact
+.Pp
+.It Cm idlePeriod= Ns Ar integer
+Same as
+.Fl i .
+.It Cm listenForRegularConnections= Ns {true|false}
+Enables or disables cleartext connections.
+.Pp
+.It Cm listenForSSLConnections= Ns {true|false}
+Enables or disables encrypted connections.
+.Pp
+.It Cm moduleAuthAnonymous= Ns Ar array
+Unknown / unused.
+.Pp
+.It Cm regularPort= Ns Ar integer
+Same as
+.Fl p .
+.Pp
+.It Cm sslPort= Ns Ar integer
+Same as
+.Fl S .
+.El
+.Sh FILES & FOLDERS
+.Bl -ohang -width ".Pa /System/Library/LaunchDaemons/com.apple.servermgrd.plist/buffer" -compact
+.It Pa /usr/sbin/servermgrd
+.Bl -dash -offset indent -compact
+.It
+daemon
+.El
+.It Pa /usr/share/servermgrd
+.Bl -dash -offset indent -compact
+.It
+directory of administrative plug-ins
+.El
+.It Pa /Library/Preferences/com.apple.servermgrd.plist
+.Bl -dash -offset indent -compact
+.It
+current configuration file
+.El
+.It Pa /System/Library/LaunchDaemons/com.apple.servermgrd.plist
+.Bl -dash -offset indent -compact
+.It
+.Xr launchd 8
+configuration file.
+.El
+.El
+.Sh DIAGNOSTICS
+.Ex -std
+.Pp
+Invalid arguments will silently be converted to their default values.
+.Sh SEE ALSO
+.Xr launchctl 8 ,
+.Xr launchd 8 ,
+.Xr serveradmin 8

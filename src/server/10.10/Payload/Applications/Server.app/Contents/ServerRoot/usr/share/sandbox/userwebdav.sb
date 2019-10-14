@@ -1,0 +1,43 @@
+(version 1)
+(deny default)
+
+(import "bsd.sb")
+
+(allow file-ioctl
+       (literal "/private/etc/php.ini"))
+
+(allow file-read*
+       (subpath (param "userHomeDir"))
+       (literal "/")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/libexec/webdavsharing/webdavsharing_virtual_root")
+	   (subpath "/Library/Server/Web/Config/apache2")
+       (subpath "/Library/Server/Web/Config/php")
+       (literal "/private/etc/php.ini")
+       (literal "/private/etc/protocols")
+	   (subpath "/Applications/Server.app/Contents/ServerRoot/usr/libexec/apache2")
+       (subpath "/"))
+
+(import "userwebdav_file-write.sb")
+
+(allow network* (local ip))
+
+(allow network*
+       (remote tcp (param "userHostPort"))
+       (local tcp (param "userHostPort")))
+
+(allow process-exec
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/libexec/webdavsharing/webdavsharing_virtual_root")
+       (literal "/usr/sbin/httpd")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby"))
+
+(allow process-fork)
+
+(allow mach-per-user-lookup)
+
+(allow signal)
+
+(allow mach-lookup)
+
+(allow network-outbound)
+
+(allow system-socket)

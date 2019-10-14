@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>enabled</key>
+	<true/>
+	<key>contentServiceURL</key>
+	<string>http://localhost:4444/svc</string>
+	<key>smtp</key>
+	<dict>
+			<key>server</key>
+			<string></string>
+			<key>domain</key>
+			<string></string>
+			<key>start_tls</key>
+			<true/>
+			<key>tls</key>
+			<false/>
+			<key>port</key>
+			<integer>25</integer>
+			<key>username</key>
+			<string></string>
+			<key>password</key>
+			<string></string>
+			<key>authentication</key>
+			<dict>
+				<key>crammd5</key>
+				<false/>
+				<key>login</key>
+				<false/>
+				<key>plain</key>
+				<false/>
+			</dict>
+			<key>sender</key>
+			<string></string>
+	</dict>
+	<key>processInterval</key>
+	<integer>600</integer>
+</dict>
+</plist>

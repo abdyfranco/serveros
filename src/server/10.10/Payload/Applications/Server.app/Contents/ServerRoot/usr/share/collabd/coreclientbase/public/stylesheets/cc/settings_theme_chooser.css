@@ -1,0 +1,200 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.settings_theme_chooser
+{
+	display: block;
+}
+
+.settings_theme_chooser .theme_swatches
+{
+	list-style-type: none;
+	width: 256px;
+	margin: 16px 0 0 12px !important;
+	padding: 0;
+}
+
+.settings_theme_chooser .theme_swatches:after
+{
+	display: block;
+	clear: both;
+	content: "";
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+.settings_theme_chooser .theme_swatch
+{
+	display: block;
+	float: left;
+	width: 48px;
+	height: 46px;
+	margin: 0 6px 4px 0;
+	border-radius: 7px;
+	border: 2px solid transparent;
+	padding: 3px;
+}
+
+.settings_theme_chooser .theme_swatch.selected {
+	border: 2px solid #5880c6;
+}
+
+.settings_theme_chooser .theme_swatch_container
+{
+	width: 46px;
+	height: 44px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	cursor: pointer;
+	border: 1px solid #808080;
+	position: relative;
+}
+
+.settings_theme_chooser .theme_swatch .theme_main_swatch
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 46px;
+	height: 44px;
+	border: none;
+	border-radius: 3px;
+	background-color: #AAAAAA;
+}
+
+.settings_theme_chooser .theme_swatch .theme_sidebar_swatch
+{
+	position: absolute;
+	top: 14px;
+	right: 0;
+	width: 46px;
+	height: 30px;
+	background-color: #CCCCCC;
+	background-color: rgba(255,255,255,0.9);
+	border-left: 1px solid transparent;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+}
+
+/* @group Theme swatches */
+
+.settings_theme_chooser .theme_swatch.blue .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.blue .theme_sidebar_swatch
+{
+	border-color: #3078BD;
+}
+
+.settings_theme_chooser .theme_swatch.blue .theme_main_swatch
+{
+	background-color: #3078BD;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#528BC4), to(#3078BD));
+	background-image: -moz-linear-gradient(top, #528BC4, #3078BD);
+}
+
+.settings_theme_chooser .theme_swatch.green .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.green .theme_sidebar_swatch
+{
+	border-color: #0e5c3a;
+}
+
+.settings_theme_chooser .theme_swatch.green .theme_main_swatch
+{
+	background-color: #0e5c3a;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#167b4d), to(#0e5c3a));
+	background-image: -moz-linear-gradient(top, #167b4d, #0e5c3a);
+}
+
+.settings_theme_chooser .theme_swatch.scarlet .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.scarlet .theme_sidebar_swatch
+{
+	border-color: #9c1323;
+}
+
+.settings_theme_chooser .theme_swatch.scarlet .theme_main_swatch
+{
+	background-color: #9c1323;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#b71529), to(#9c1323));
+	background-image: -moz-linear-gradient(top, #b71529, #9c1323);
+}
+
+.settings_theme_chooser .theme_swatch.carbon .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.carbon .theme_sidebar_swatch
+{
+	border-color: #242424;
+}
+
+.settings_theme_chooser .theme_swatch.carbon .theme_main_swatch
+{
+	background-color: #242424;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#343434), to(#242424));
+	background-image: -moz-linear-gradient(top, #343434, #242424);
+}
+
+.settings_theme_chooser .theme_swatch.steel .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.steel .theme_sidebar_swatch
+{
+	border-color: #555555;
+}
+
+.settings_theme_chooser .theme_swatch.steel .theme_main_swatch
+{
+	background-color: #717171;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#8E8E8E), to(#717171));
+	background-image: -moz-linear-gradient(top, #8E8E8E, #717171);
+}
+
+.settings_theme_chooser .theme_swatch.royal .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.royal .theme_sidebar_swatch
+{
+	border-color: #0f3c7c;
+}
+
+.settings_theme_chooser .theme_swatch.royal .theme_main_swatch
+{
+	background-color: #0f3c7c;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#0b4398), to(#0f3c7c));
+	background-image: -moz-linear-gradient(top, #0b4398, #0f3c7c);
+}
+
+.settings_theme_chooser .theme_swatch.purple .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.purple .theme_sidebar_swatch
+{
+	border-color: #3f277b;
+}
+
+.settings_theme_chooser .theme_swatch.purple .theme_main_swatch
+{
+	background-color: #3f277b;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#5535a4), to(#3f277b));
+	background-image: -moz-linear-gradient(top, #5535a4, #3f277b);
+}
+
+.settings_theme_chooser .theme_swatch.orange .theme_swatch_container,
+.settings_theme_chooser .theme_swatch.orange .theme_sidebar_swatch
+{
+	border-color: #d24f22;
+}
+
+.settings_theme_chooser .theme_swatch.orange .theme_main_swatch
+{
+	background-color: #d24f22;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#eb5a27), to(#d24f22));
+	background-image: -moz-linear-gradient(top, #eb5a27, #d24f22);
+}
+
+/* @end */

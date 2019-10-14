@@ -1,0 +1,51 @@
+/*-------------------------------------------------------------------------
+  Copyright (c) 2016 Apple Inc. All rights reserved.
+
+ IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ computers and is subject to the terms and conditions of the Apple Software
+ License Agreement accompanying the package this file is a part of.
+ You may not port this file to another platform without Apple's written consent.
+------------------------------------------------------------------------- */
+
+#addDevice {
+  /*margin-top: 10px;
+          margin-bottom: 10px;*/
+  border: 1px solid #628FBF;
+  background-color: #B1D1F3;
+  background: -webkit-gradient(linear, left top, left bottom, from(#B1D1F3), to(#6692C2));
+  background: -moz-linear-gradient(top, #B1D1F3, #6692C2);
+  border-radius: 5px;
+  text-align: center;
+  height: 30px;
+  margin-top: 27px;
+  padding-top: 10px;
+  position: relative;
+}
+
+#addDevice:active {
+  background: -webkit-gradient(linear, left top, left bottom, from(#6692C2), to(#B1D1F3));
+  background: -moz-linear-gradient(top, #6692C2, #B1D1F3);
+}
+
+#addDevice > button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  bottom: 0;
+  margin: 0px;
+  padding: 0px;
+  background: none;
+  border: none;
+  color: #FEFFFE;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* TODO: Why do we need to have two different font-sizes depending on platform? */
+@media screen and (max-device-width: 480px){ /* TODO: Do this only for iPhone */
+  #addDevice > button {
+    font-size: 17px;
+  }
+}

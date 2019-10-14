@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Perform setup for servermgr_config</string>
+	<key>setup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>DisableWatchDog if requirement is met</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/DisableWatchDog.sh</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>AddAppServerUserToAppServerGroups-_appserveradm</string>
+				<key>path</key>
+				<string>/usr/bin/dscl</string>
+				<key>arguments</key>
+				<array>
+					<string>.</string>
+					<string>-merge</string>
+					<string>/Groups/_appserveradm</string>
+					<string>dsAttrTypeNative:users</string>
+					<string>_appserver</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>AddAppServerUserToAppServerGroups-_appserverusr</string>
+				<key>path</key>
+				<string>/usr/bin/dscl</string>
+				<key>arguments</key>
+				<array>
+					<string>.</string>
+					<string>-merge</string>
+					<string>/Groups/_appserverusr</string>
+					<string>dsAttrTypeNative:users</string>
+					<string>_appserver</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>AutoDiskMountEnable</string>
+				<key>path</key>
+				<string>/usr/bin/defaults</string>
+				<key>arguments</key>
+				<array>
+					<string>write</string>
+					<string>/Library/Preferences/SystemConfiguration/autodiskmount</string>
+					<string>AutomountDisksWithoutUserLogin</string>
+					<string>-bool</string>
+					<string>YES</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>DisableBootP</string>
+				<key>path</key>
+				<string>/usr/bin/dscl</string>
+				<key>arguments</key>
+				<array>
+					<string>.</string>
+					<string>-create</string>
+					<string>/Config/dhcp</string>
+					<string>bootp_enabled</string>
+					<string>1</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

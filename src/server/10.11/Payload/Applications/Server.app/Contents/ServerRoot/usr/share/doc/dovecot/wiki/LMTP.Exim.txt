@@ -1,0 +1,84 @@
+Contents
+
+
+ 1. Using LMTP over TCP Socket
+
+ 2. Using LMTP over UNIX Socket
+
+ 3. Verifying recipients using LMTP
+
+Exim provides support for LMTP over UNIX sockets using the LMTP transport
+[http://www.exim.org/exim-html-current/doc/html/spec_html/ch-the_lmtp_transport.html],
+your distribution may/not provide this, run exim -bV and check for 'lmtp' in
+'Transports:'. Support for LMTP over TCP sockets is provided by the SMTP
+transport
+[http://www.exim.org/exim-html-current/doc/html/spec_html/ch-the_smtp_transport.html].
+
+Using LMTP over TCP Socket
+--------------------------
+
+Example router:
+
+---%<-------------------------------------------------------------------------
+myusers:
+        transport = mylmtp
+        domains = +local_domains
+        driver = manualroute
+        route_list = "* 192.168.1.0 byname"
+        #if destination server is the local host enable this
+        #self = send
+---%<-------------------------------------------------------------------------
+
+Example transport:
+
+---%<-------------------------------------------------------------------------
+mylmtp:
+        driver = smtp
+        protocol = lmtp
+        port = 2525
+---%<-------------------------------------------------------------------------
+
+Set IP and port as appropriate to your setup.
+
+Using LMTP over UNIX Socket
+---------------------------
+
+Example transport:
+
+---%<-------------------------------------------------------------------------
+mylmtp:
+        driver = lmtp
+        socket = /var/run/dovecot/lmtp
+        #maximum number of deliveries per batch, default 1
+        batch_max = 200
+---%<-------------------------------------------------------------------------
+
+Example router:
+
+---%<-------------------------------------------------------------------------
+myusers:
+        transport = mylmtp
+        domains = +local_domains
+        driver = manualroute
+        route_data = whatmeworry # required but not useful
+---%<-------------------------------------------------------------------------
+
+Verifying recipients using LMTP
+-------------------------------
+
+You can use callout verification to avoid accepting mail for addresses which do
+not exist in Dovecot. Below is a config snippet which could be used in
+acl_check_rcpt to achieve this:
+
+---%<-------------------------------------------------------------------------
+deny
+        message = invalid recipient
+        domains = +local_domains
+        !verify = recipient/callout=no_cache
+---%<-------------------------------------------------------------------------
+
+For more information on address verification see the related section of the
+Exim specification
+[http://www.exim.org/exim-html-current/doc/html/spec_html/ch-access_control_lists.html#SECTaddressverification].
+
+(This file was created from the wiki on 2013-08-05 04:42)

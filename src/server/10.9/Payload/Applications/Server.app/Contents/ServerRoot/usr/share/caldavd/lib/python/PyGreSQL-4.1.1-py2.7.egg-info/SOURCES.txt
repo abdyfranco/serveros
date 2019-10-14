@@ -1,0 +1,8 @@
+pg.py
+pgdb.py
+pgmodule.c
+setup.py
+PyGreSQL.egg-info/PKG-INFO
+PyGreSQL.egg-info/SOURCES.txt
+PyGreSQL.egg-info/dependency_links.txt
+PyGreSQL.egg-info/top_level.txt

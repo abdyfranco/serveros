@@ -1,0 +1,45 @@
+# Do not edit -- this file documents how Postfix was built for your machine.
+#----------------------------------------------------------------
+# Start of summary of user-configurable 'make makefiles' options.
+# CCARGS=-DNO_NETINFO 		-DUSE_TLS  -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/usr/local/libressl/include 		-DUSE_CYRUS_SASL -DUSE_SASL_AUTH -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/usr/include/sasl 		-DEVENTS_STYLE=EVENTS_STYLE_KQUEUE 		-D__APPLE_OS_X_SERVER__ -DHAS_DEV_URANDOM 		-DUSE_SYSV_POLL -DHAS_PCRE -DHAS_LDAP 		-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/System/Library/Frameworks 		-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/System/Library/PrivateFrameworks 		-g -Os -arch x86_64 -pipe  -Wall -Wno-comment -Wformat -Wimplicit -Wmissing-prototypes -Wparentheses -Wstrict-prototypes -Wswitch -Wuninitialized -Wunused -Wno-missing-braces -Wno-deprecated
+# AUXLIBS=-lssl.35 -lcrypto.35 -lpcre -lsasl2.2.0.1 -lgssapi_krb5 -lldap -licucore 		-framework OpenDirectory -framework CoreDaemon -framework CoreFoundation -framework SystemConfiguration
+# shared=
+# dynamicmaps=
+# pie=
+# End of summary of user-configurable 'make makefiles' options.
+#--------------------------------------------------------------
+# System-dependent settings and compiler/linker overrides.
+SYSTYPE	= MACOSX
+_AR	= ar
+ARFL	= rv
+_RANLIB	= ranlib
+SYSLIBS	= -lssl.35 -lcrypto.35 -lpcre -lsasl2.2.0.1 -lgssapi_krb5 -lldap -licucore 		-framework OpenDirectory -framework CoreDaemon -framework CoreFoundation -framework SystemConfiguration -flat_namespace -lresolv -lpthread -lm -licucore 
+CC	= /Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.13.xctoolchain/usr/bin/cc -I. -I../../include -DNO_NETINFO 		-DUSE_TLS -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/usr/local/libressl/include 		-DUSE_CYRUS_SASL -DUSE_SASL_AUTH -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/usr/include/sasl 		-DEVENTS_STYLE=EVENTS_STYLE_KQUEUE 		-D__APPLE_OS_X_SERVER__ -DHAS_DEV_URANDOM 		-DUSE_SYSV_POLL -DHAS_PCRE -DHAS_LDAP 		-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/System/Library/Frameworks 		-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/System/Library/PrivateFrameworks 		-g -Os -arch x86_64 -pipe -Wall -Wno-comment -Wformat -Wimplicit -Wmissing-prototypes -Wparentheses -Wstrict-prototypes -Wswitch -Wuninitialized -Wunused -Wno-missing-braces -Wno-deprecated -DBIND_8_COMPAT -DNO_NETINFO -DRESOLVE_H_NEEDS_ARPA_NAMESER_COMPAT_H -I/usr/local/include -DHAS_DEV_URANDOM -UUSE_DYNAMIC_LIBS -DDEF_SHLIB_DIR=\"no\" -UUSE_DYNAMIC_MAPS $(WARN)
+OPT	= -g -Os
+DEBUG	= -g
+AWK	= awk
+STRCASE = 
+EXPORT	= CCARGS='-I. -I../../include -DNO_NETINFO 		-DUSE_TLS -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/usr/local/libressl/include 		-DUSE_CYRUS_SASL -DUSE_SASL_AUTH -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/usr/include/sasl 		-DEVENTS_STYLE=EVENTS_STYLE_KQUEUE 		-D__APPLE_OS_X_SERVER__ -DHAS_DEV_URANDOM 		-DUSE_SYSV_POLL -DHAS_PCRE -DHAS_LDAP 		-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/System/Library/Frameworks 		-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/System/Library/PrivateFrameworks 		-g -Os -arch x86_64 -pipe -Wall -Wno-comment -Wformat -Wimplicit -Wmissing-prototypes -Wparentheses -Wstrict-prototypes -Wswitch -Wuninitialized -Wunused -Wno-missing-braces -Wno-deprecated -DBIND_8_COMPAT -DNO_NETINFO -DRESOLVE_H_NEEDS_ARPA_NAMESER_COMPAT_H -I/usr/local/include -DHAS_DEV_URANDOM -UUSE_DYNAMIC_LIBS -DDEF_SHLIB_DIR=\"no\" -UUSE_DYNAMIC_MAPS' OPT='-g -Os' DEBUG='-g'
+WARN	= -Wall -Wno-comment -Wformat -Wimplicit -Wmissing-prototypes \
+	-Wparentheses -Wstrict-prototypes -Wswitch -Wuninitialized \
+	-Wunused -Wno-missing-braces
+DEFINED_MAP_TYPES = dev_urandom pcre ldap
+MAKE_FIX = 
+# Switch between Postfix static and dynamically-linked libraries.
+AR	= ar
+RANLIB	= ranlib
+LIB_PREFIX = 
+LIB_SUFFIX = .a
+SHLIB_CFLAGS = 
+SHLIB_DIR = no
+SHLIB_LD = :
+SHLIB_SYSLIBS = 
+SHLIB_RPATH = 
+# Switch between dynamicmaps.cf plugins and hard-linked databases.
+NON_PLUGIN_MAP_OBJ = $(MAP_OBJ)
+PLUGIN_MAP_OBJ = 
+PLUGIN_MAP_OBJ_UPDATE = 
+PLUGIN_MAP_SO_MAKE = 
+PLUGIN_MAP_SO_UPDATE = 
+PLUGIN_LD = 
+# Application-specific rules.

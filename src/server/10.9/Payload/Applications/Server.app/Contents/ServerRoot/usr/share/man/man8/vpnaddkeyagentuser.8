@@ -1,0 +1,42 @@
+.\"     @(#)vpnaddkeyagentuser.8	1.0
+.\"
+.\" Copyright (c) 2000-2012 Apple Computer, Inc., all rights reserved.
+.\" Distributed only as part of Mac OS X Server
+.\" 
+.\" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\" computers and is subject to the terms and conditions of the Apple Software
+.\" License Agreement accompanying the package this file is a part of.
+.\" You may not port this file to another platform without Apple's written consent.
+.\" 
+.Dd February 5, 2004
+.Dt vpnaddkeyagentuser 8
+.Os "Mac OS X Server"
+.Sh NAME
+.Nm vpnaddkeyagentuser
+.Nd utility to add a keyagent user to a directory node for VPN PPTP server
+.Sh SYNOPSIS
+.Nm
+.Ar directory_node_path
+.Sh DESCRIPTION
+The
+.Nm
+utility adds the VPN PPTP keyagent user to the directory node specified by
+.Ar directory_node_path
+which contains the users. To enable the PPTP protocol in your VPN server, 
+a keyagent user is required to be present in the ldap directory that hosts
+your users. Run this utility for each directory that has users served by the
+VPN server. The utility will prompt you for the administrator username 
+and password of the directory. It will then set up the keyagent user. You are
+now ready to set up the VPN PPTP server.
+.Pp
+.Nm
+must be run as root. 
+.Sh EXAMPLES
+To add the keyagent user to the Open LDAP master on the local machine:
+.Pp
+.Dl "vpnaddkeyagentuser /LDAPv3/127.0.0.1"
+.Sh DIAGNOSTICS
+.Ex -std
+.Sh SEE ALSO
+.Xr pppd 8 ,
+.Xr vpnd 8

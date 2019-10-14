@@ -1,0 +1,56 @@
+local / remote blocks
+=====================
+
+Use 'local' and 'remote' blocks in this order:
+
+---%<-------------------------------------------------------------------------
+local 127.0.0.1 {
+# next block is used only, if TLS SNI extension is used. It expands to the TLS
+SNI hostname.
+# Typically this is only used to configure per-host TLS certificates.
+  local_name foo {
+    remote 127.0.0.1 {
+      protocol imap {
+      }
+    }
+  }
+}
+---%<-------------------------------------------------------------------------
+
+The protocol block is the innermost block always, you can leave some blocks
+out.
+
+Change a Setting
+================
+
+Typically you can change each setting in another block, like so:
+
+---%<-------------------------------------------------------------------------
+mail_location = maildir:~/Maildir
+mail_plugins = quota
+protocol imap {
+  # overwrites a setting
+  mail_location = mbox:~/mbox
+  # adds other values to the setting
+  mail_plugins = $mail_plugins imap_quota
+}
+---%<-------------------------------------------------------------------------
+
+This way, you can keep all settings for a feature, e.g. ACL in one .conf file.
+
+Unfortunately, you cannot access variables from the plugin section, e.g.:
+
+---%<-------------------------------------------------------------------------
+plugin {
+  sieve_plugins = extdata
+}
+
+# other file or later
+
+plugin {
+  # this won't work !!!
+  sieve_plugins = $sieve_plugins extdata
+}
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2016-04-26 04:43)

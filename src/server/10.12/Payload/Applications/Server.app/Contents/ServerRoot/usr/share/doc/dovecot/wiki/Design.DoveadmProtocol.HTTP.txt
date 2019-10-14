@@ -1,0 +1,105 @@
+Doveadm HTTP API
+================
+
+Doveadm HTTP API is available since v2.2.22. It is considered *experimental* in
+v2.2.22, non-experimental version has not been yet announced. It lets you
+perform doveadm commands over HTTP transport.
+
+Configuration
+-------------
+
+To enable HTTP API, add following to your config file:
+
+---%<-------------------------------------------------------------------------
+service doveadm {
+   inet_listener http {
+      port = 8080
+      #ssl = yes # uncomment to enable https
+   }
+}
+---%<-------------------------------------------------------------------------
+
+To enable SSL make sure 'ssl=yes' or 'ssl=required' in global settings, and set
+'ssl=yes' in the listener.
+
+You can use unix listener too, and define host to listen on. You also need to
+either define 'doveadm_password', or 'doveadm_api_key'. With
+'doveadm_password', the username is doveadm. This is going to change in future
+release. With API Key you are expected to send
+
+---%<-------------------------------------------------------------------------
+Authorization: X-Doveadm-API Base64(apikey)
+---%<-------------------------------------------------------------------------
+
+header to access the API.
+
+Usage
+-----
+
+You can see valid commands and their parameters by accessing
+'http://host:port/doveadm/v1'.
+
+To send command(s), you can send following with 'Content-Type:
+application/json'
+
+---%<-------------------------------------------------------------------------
+[
+  ["command", {"parameter":"value"}, "optional identifer"]
+]
+---%<-------------------------------------------------------------------------
+
+In following examples, you can either use Basic or X-Dovecot-API authorization.
+X-Dovecot-API usage:
+
+---%<-------------------------------------------------------------------------
+curl -H "Authorization: X-Dovecot-API <base64 dovecot_api_key>"
+---%<-------------------------------------------------------------------------
+
+Basic authorization uses "doveadm" as the username, and doveadm_password
+setting as the password:
+
+---%<-------------------------------------------------------------------------
+curl -H "Authorization: Basic <base64 doveadm:doveadm_password>"
+---%<-------------------------------------------------------------------------
+
+To get acceptable routes
+
+---%<-------------------------------------------------------------------------
+curl -H "Authorization: Basic <base64 doveadm:doveadm_password>"
+http://server:8080/
+---%<-------------------------------------------------------------------------
+
+To get acceptable commands and their parameters
+
+---%<-------------------------------------------------------------------------
+curl -H "Authorization: Basic <base64 doveadm:doveadm_password>"
+http://server:8080/doveadm/v1
+---%<-------------------------------------------------------------------------
+
+an example command would be
+
+---%<-------------------------------------------------------------------------
+curl -H "Content-Type: application/json" -H "Authorization: Basic <base64
+doveadm:doveadm_password>" -d
+'[["fetch",{"user":"username","field":["uid"],"query":["mailbox","INBOX"]},"c01"]]'
+http://server:8080/doveadm/v1
+---%<-------------------------------------------------------------------------
+
+You can have multiple commands in the array, but for now it is safest *not* to
+do so, as some commands may kill the server in certain error conditions and
+leaving you without any response.
+
+Responses are in same format, command is replaced with either "error" or
+"doveadmResponse" and parameters with array of response variables. In case of
+*successful* command which has *no* output, response is going to be [].
+
+Errors are indicated with "error" and type, exit-code in response part.
+
+Logging
+-------
+
+The logs will indicated execute command(s) and also Apache access.log format
+strings on requests. In case of fatal errors, the access.log string might be
+missing.
+
+(This file was created from the wiki on 2016-04-26 04:43)

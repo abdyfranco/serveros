@@ -1,0 +1,315 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Core revisions support */
+
+.cc-sidebar-section[data-guid="sidebar/updates"] > .content
+{
+	margin: 0px -12px;
+}
+
+body.revisions #wikieditor,
+body.revisions #content-primary > .files.info
+{
+	display: none;
+}
+
+/* @end */
+
+/* @group Revisions listing */
+
+.revisions.listing .placeholder
+{
+	display: none;
+}
+
+.revisions.listing.empty .placeholder
+{
+	display: block;
+}
+
+.revisions.listing .revision
+{
+	cursor: default;
+	height: 16px;
+	line-height: 16px;
+	margin: 1px 1px 1px 3px;
+	position: relative;
+	border: 1px solid transparent;
+	border-radius: 10px;
+}
+
+.revisions.listing .revision.selected
+{
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.revisions.listing .revision span
+{
+	display: block;
+	overflow: hidden;
+	padding: 0px 10px;
+	position: absolute;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 11px;
+}
+
+.revisions.listing .revision span.author
+{
+	left: 0px;
+	width: 90px;
+}
+
+.revisions.listing .revision span.time
+{
+	right: 0px;
+	width: 115px;
+	text-align: right;
+}
+
+/* @end */
+
+/* @group Revisions detail */
+
+.revisions.detail,
+.revisions.detail .controls
+{
+	overflow: hidden;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+}
+
+.revisions.detail .controls
+{
+	height: 29px;
+	left: 0px;
+	line-height: 30px;
+	padding: 0px 12px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	text-align: center;
+	z-index: 20;
+}
+
+.revisions.detail .controls .button
+{
+	background-color: #FFFFFF;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	height: 16px;
+	line-height: 16px;
+	padding: 0px 15px;
+	text-shadow: #FFFFFF 0px 1px 0px;
+	border-radius: 1em;
+	-webkit-transition: opacity 0.2s linear;
+}
+
+.revisions.detail .controls .button.close
+{
+	background-repeat: no-repeat;
+	border: none;
+	cursor: default;
+	height: 20px;
+	padding: 0px;
+	position: absolute;
+	right: 10px;
+	top: 4px;
+	text-indent: -9999px;
+	width: 19px;
+}
+
+.revisions.detail .controls .button + .button
+{
+	margin-left: 5px;
+}
+
+.revisions.detail.diffing .controls .button.hidechanges,
+.revisions.detail.browsing .controls .button.showchanges
+{
+	display: inline-block;
+}
+
+.revisions.detail.browsing .controls .button.hidechanges,
+.revisions.detail.diffing .controls .button.showchanges,
+body.files .revisions.detail .controls .button.hidechanges,
+body.files .revisions.detail .controls .button.showchanges,
+.revisions.detail .revision
+{
+	display: none;
+}
+
+.revisions.detail
+{
+	display: none;
+	margin-top: 30px;
+}
+
+.revisions.detail > .previews > .revision > .header
+{
+	left: 0px;
+	position: absolute;
+	right: 0px;
+	top: 30px;
+	z-index: 100;
+}
+
+body.revisions .revisions.detail,
+.revisions.detail.diffing .revision .diff
+{
+	display: block;
+}
+
+.revisions.detail .revision.selected
+{
+	display: block;
+}
+
+.revisions.detail h1.empty
+{
+	color: #999999;
+	font-size: 22px;
+	height: 200px;
+	line-height: 180px;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.revisions.detail .current,
+.revisions.detail.diffing .revision .diff
+{
+	padding: 0px 0px 20px 0px;
+}
+
+/* @end */
+
+/* @group Diffs */
+
+ins
+{
+	background-color: #D1ECFF !important;
+	text-decoration: none !important;
+}
+
+del
+{
+	background-color: #FFD1D1 !important;
+	text-decoration: line-through;
+}
+
+.revisions.detail .revision .diff,
+.revisions.detail.diffing .revision .current
+{
+	display: none;
+}
+
+.revisions.detail.diffing .revision .diff,
+.revisions.detail .revision .current
+{
+	display: block;
+}
+
+/* @end */
+
+/* @group Editor overrides */
+
+.revisions.detail > .block.text .editable
+{
+	padding: 0px;
+}
+
+.revisions.detail .block.table
+{
+	margin-left: 0px;
+}
+
+.revisions.detail .block.table > .wrapper::-webkit-scrollbar-track
+{
+	margin-left: 1px;
+}
+
+.revisions.detail .block.table > .wrapper
+{
+	max-width: 696px; /* 768px - 2*36px */
+}
+
+.revisions.detail .block.table table
+{
+	table-layout: auto !important;
+}
+
+.revisions.detail .block.table table td
+{
+	min-width: 40px;
+	min-height: 16px;
+}
+
+.revisions.detail .block.table table.gridlines td
+{
+	border: 1px solid transparent !important;
+	border-top-color: #D7D7D7 !important;
+	border-left-color: #D7D7D7 !important;
+}
+
+.revisions.detail .block.table table.gridlines tr:last-child td
+{
+	border-bottom-color: #D7D7D7 !important;
+}
+
+.revisions.detail .block.table table.gridlines td:last-child
+{
+	border-right-color: #D7D7D7 !important;
+}
+
+.revisions.detail .block.table table.alternating tr:nth-child(even) td
+{
+	background: #FFFFFF;
+}
+
+.revisions.detail .block.table table.alternating tr:nth-child(odd) td
+{
+	background: #F6F6F6;
+}
+
+/* 11109972 */
+
+.revisions.detail .block.table table.headingrow tr:first-child + tr td,
+.revisions.detail .block.table table.headingcolumn tr td:first-child + td,
+.revisions.detail .block.table table.headingrow tr:first-child + tr td .editable,
+.revisions.detail .block.table table.headingcolumn tr td:first-child + td .editable
+{
+	background-color: inherit !important;
+	font-size: inherit !important;
+	font-weight: inherit !important;
+}
+
+.revisions.detail .block.table table.headingrow tr:first-child td,
+.revisions.detail .block.table table.headingcolumn tr td:first-child
+{
+	background-color: #E7E7E7 !important;
+}
+
+.revisions.detail .block.table table.headingrow tr:first-child td .editable,
+.revisions.detail .block.table table.headingcolumn tr td:first-child .editable
+{
+	font-size: 13px !important;
+	font-weight: bold !important;
+}
+
+/* @end */

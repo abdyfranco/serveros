@@ -1,0 +1,195 @@
+/**
+ * Copyright (c) 2012, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+#cc-navpopover {
+	position: absolute;
+	top: 25px;
+	left: 4px;
+}
+
+#cc-navpopover .content {
+	overflow: hidden;
+	width: 240px;
+}
+
+#cc-navpopover .content a + a {
+	border-top: 1px dotted #5a5a5a;
+}
+
+#cc-navpopover .content a.subitem {
+	background-color: #707070;
+	border-top: none;
+	padding-left: 10px;
+}
+
+#cc-navpopover .content a.subitem + a.subitem {
+	border-top: 1px dotted #5c5c5c;
+}
+
+#cc-navpopover .content a:not(.subitem) + a.subitem,
+#cc-navpopover .content a.subitem + a:not(.subitem) {
+	border-top: 1px solid #5c5c5c;
+}
+
+#cc-navpopover .cc-navpopover-item {
+	display: block;
+	height: 42px;
+	color: #fff;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+#cc-navpopover > .cc-navpopover-item {
+	border-top: none;
+}
+
+#cc-navpopover .cc-navpopover-item .title {
+	display: block;
+	float: left;
+	margin-left: 10px;
+	height: 42px;
+	line-height: 44px;
+	font-size: 11pt;
+	font-weight: bold;
+}
+
+#cc-navpopover .cc-navpopover-item .icon {
+	width: 32px;
+	height: 32px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	display: block;
+	float: left;
+	margin-top: 5px;
+	margin-left: 16px;
+}
+
+#cc-navpopover .cc-navpopover-item.xcode .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Xcode.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Xcode.png) 1x
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Xcode@2x.png) 2x);
+}
+
+#cc-navpopover .cc-navpopover-item.wiki .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Wiki.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Wiki.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Wiki@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.changepassword .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/ChangePassword.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/ChangePassword.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/ChangePassword@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.webcal .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/WebCalendar.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/WebCalendar.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/WebCalendar@2x.png) 2x);
+}
+
+#cc-navpopover .cc-navpopover-item.activity .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllActivity.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllActivity.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllActivity@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.projects .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllWikis.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllWikis.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllWikis@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.people .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllPeople.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllPeople.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllPeople@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.my_activity .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyActivity.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyActivity.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyActivity@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.my_documents .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyDocuments.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyDocuments.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyDocuments@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.my_favorites .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyFavorites.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyFavorites.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/MyFavorites@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.home .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Home.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Home.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/Home@2x.png) 2x);
+}
+
+#cc-navpopover .cc-navpopover-item.allbots .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllBots.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllBots.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/AllBots@2x.png) 2x);
+}
+#cc-navpopover .cc-navpopover-item.big-screen .icon {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/BigScreen.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/BigScreen.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/navigation/BigScreen@2x.png) 2x);
+}
+
+#cc-navpopover .user {
+	height: 96px;
+	padding-top: 12px;
+	border-bottom: 1px dotted #5a5a5a;
+}
+
+#cc-navpopover .user .avatar {
+	margin: 0 auto;
+	width: 60px;
+	height: 60px;
+	position: relative;
+}
+
+#cc-navpopover .user .avatar .avatar_img {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 56px;
+	height: 56px;
+	border-radius: 60px;
+}
+
+#cc-navpopover .user .avatar .avatar_mask {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 60px;
+	height: 60px;
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/avatar/avatar_frame_60x60.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/avatar/avatar_frame_60x60.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/avatar/avatar_frame_60x60@2x.png) 2x);
+}
+
+#cc-navpopover .user .avatar.default .avatar_mask {
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/avatar/default_avatar_60x60.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/avatar/default_avatar_60x60.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/avatar/default_avatar_60x60@2x.png) 2x);
+}
+
+#cc-navpopover .user .avatar.default .avatar_img {
+	display: none;
+}
+
+#cc-navpopover .user .fullname {
+	font-size: 11pt;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+	margin-top: 3px;
+}

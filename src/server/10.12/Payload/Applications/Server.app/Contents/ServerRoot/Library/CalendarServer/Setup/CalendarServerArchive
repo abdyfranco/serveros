@@ -1,0 +1,505 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+# -*- test-case-name: ServerSetup.tests.test_archive -*-
+#
+# Utility for archiving Calendar and Contacts data
+#
+# Copyright (c) 2014-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+import grp
+import os
+import plistlib
+import pwd
+import subprocess
+import sys
+import tarfile
+from getopt import getopt, GetoptError
+
+from time import sleep
+from twisted.python.filepath import FilePath
+from calendar_setup_util import log, serverRootLocation
+
+DU = "/usr/bin/du"
+DF = "/bin/df"
+DITTO = "/usr/bin/ditto"
+SUDO = "/usr/bin/sudo"
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+CALENDARSERVER_SETUP = "{}/Library/CalendarServer/Setup".format(SERVER_APP_ROOT)
+CALENDARSERVER_CONFIG = "{}/usr/sbin/calendarserver_config".format(SERVER_APP_ROOT)
+COMMAND_ROOT = "/var/run/caldavd"
+COMMAND_FILE = "{}/_archive_command".format(COMMAND_ROOT)
+PROGRESS_FILE = "{}/_archive_progress".format(COMMAND_ROOT)
+ERROR_FILE = "{}/_archive_error".format(COMMAND_ROOT)
+SERVERCTL = "{}/usr/sbin/serverctl".format(SERVER_APP_ROOT)
+LAUNCHCTL = "/bin/launchctl"
+PGCTL = "{}/usr/bin/pg_ctl".format(SERVER_APP_ROOT)
+PREFS_FILE = "/Library/Server/Preferences/CalendarServer.plist"
+NEWSYSLOGCONF = "{}/CalendarServerLogRotationConf".format(CALENDARSERVER_SETUP)
+
+
+
+class ArchiveError(Exception):
+    """
+    Data archive error
+    """
+
+
+
+def getConfigKeys(keys):
+    """
+    Ask calendarserver_config for the value of list of keys
+    """
+    results = {}
+    args = [CALENDARSERVER_CONFIG]
+    args.extend(keys)
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    # log("Looking up %s" % (keys,))
+    output, error = child.communicate()
+    # log("Output from calendarserver_config: %s" % (output,))
+    if child.returncode:
+        log("Error from calendarserver_config: %d, %s" % (child.returncode, error))
+    else:
+        for line in [l for l in output.split("\n") if "=" in l]:
+            key, value = line.strip().split("=", 1)
+            results[key] = value
+
+    return results
+
+
+
+def writeProgressFile(filename, command, percentComplete):
+    """
+    Write a plist with command, percentComplete, and status keys
+    @param filename: the full path of the file to write to
+    @type filename: C{str}
+    @param command: the name of the command to write into the file
+    @type command: C{str}
+    @param percentComplete: 0-100
+    @type percentComplete: C{int}
+    """
+    filepath = FilePath(filename)
+    command = (
+        u"getImportServiceArchiveProgressWithRequest"
+        if command == "import"
+        else u"getExportServiceArchiveProgressWithRequest"
+    )
+    d = {
+        "command": command,
+        "percentComplete": percentComplete,
+        "status": u"COMPLETED" if percentComplete == 100 else u"RUNNING",
+    }
+    content = plistlib.writePlistToString(d)
+    try:
+        filepath.setContent(content)
+    except:
+        pass
+
+
+def writeErrorFile(filename, command, msg):
+    """
+    Write a plist with command and error keys
+    @param filename: the full path of the file to write to
+    @type filename: C{str}
+    @param command: the name of the command to write into the file
+    @type command: C{str}
+    @param msg: the error message
+    @type msg: C{str}
+    """
+    filepath = FilePath(filename)
+    command = (
+        u"getImportServiceArchiveProgressWithRequest"
+        if command == "import"
+        else u"getExportServiceArchiveProgressWithRequest"
+    )
+    d = {
+        "command": command,
+        "error": msg.decode("utf-8"),
+    }
+    content = plistlib.writePlistToString(d)
+    try:
+        filepath.setContent(content)
+    except:
+        pass
+
+
+def readCommandFile(filename):
+    """
+    Read the given plist file and return the command name, archivePath and
+    (optional) dataPath values.  If the dataPath value is an empty string it
+    is assumed that ServerRoot is to be used.
+    @param filename: the full path of the file to read from
+    @type filename: C{str}
+    @return: a tuple with command name, archivePath, and optional dataPath
+    @rtype: C{tuple} of three C{str}
+    """
+    d = plistlib.readPlist(filename)
+    return (
+        d.get("command", u"").encode("utf-8"),  # "import" or "export"
+        d.get("archivePath", u"").encode("utf-8"),
+        d.get("dataPath", u"").encode("utf-8")  # Optional, for testing.
+    )
+
+
+def writeMetadataFile(filename, archiveFileName, archiveSize):
+    """
+    Write a plist containing metadata about the archive
+    @param filename: the full path of the file to write to
+    @type filename: C{str}
+    @param archiveFileName: the name of the corresponding archive file
+    @type archiveFileName: C{str}
+    @param archiveSize: size in bytes of the original (expanded) data
+    @type archiveSize: C{int}
+    """
+    filepath = FilePath(filename)
+    d = {
+        "archive": archiveFileName,
+        "size": archiveSize,
+    }
+    content = plistlib.writePlistToString(d)
+    try:
+        filepath.setContent(content)
+    except:
+        pass
+
+
+def removeFile(filename):
+    """
+    Remove the file or directory (recursive) at filename
+    @param filename: the full path of the file or directory to remove
+    @type filename: C{str}
+    """
+    filepath = FilePath(filename)
+    if filepath.exists():
+        filepath.remove()
+
+
+def fileExists(filename):
+    """
+    Return True if file exists, False otherwise
+    @param filename: the full path of the file to remove
+    @type filename: C{str}
+    @return: True if file exists, False otherwise
+    @rtype: C{boolean}
+    """
+    return FilePath(filename).exists()
+
+
+def sizeOfDirectory(dirName):
+    total = 0
+    for dirPath, dirNames, fileNames in os.walk(dirName):
+        for fileName in fileNames:
+            filePath = os.path.join(dirPath, fileName)
+            total += os.path.getsize(filePath)
+    return total
+
+
+def exportArchive(command, dataPath, archivePath):
+
+    if archivePath.exists():
+        archivePath.remove()
+
+    if not dataPath.exists():
+        exitWithError(command, "{path} does not exist".format(dataPath.path))
+
+    archiveSize = sizeOfDirectory(dataPath.path)
+    os.chdir(dataPath.parent().path)
+    tar = tarfile.open(archivePath.path, "w:gz")
+    tar.add(dataPath.basename())
+    tar.close()
+
+    metadataFile = archivePath.sibling(archivePath.basename() + ".plist")
+    if metadataFile.exists():
+        metadataFile.remove()
+
+    writeMetadataFile(metadataFile.path, archivePath.basename(), archiveSize)
+
+
+
+def importArchive(command, archivePath, dataPath):
+    if not archivePath.exists():
+        exitWithError(command, "{path} does not exist".format(archivePath.path))
+
+    if dataPath.exists():
+        dataPath.remove()
+
+    os.chdir(dataPath.parent().path)
+    tar = tarfile.open(archivePath.path, "r:gz")
+    tar.extractall()
+    tar.close()
+
+
+def setAgentState(enable):
+    """
+    Use serverctl to enable/disable agent
+    """
+    args = [SERVERCTL, "enable" if enable else "disable", "service=org.calendarserver.agent"]
+    try:
+        log("Executing: %s" % (" ".join(args)))
+        child = subprocess.Popen(args,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        output, error = child.communicate()
+        log("Output: %s" % (output,))
+        if child.returncode:
+            log("Non-zero exit code: %d, %s" % (child.returncode, error))
+    except Exception, e:
+        log(e)
+
+    if enable:
+        # Also launch the agent
+        args = [LAUNCHCTL, "start", "org.calendarserver.agent"]
+        try:
+            log("Executing: %s" % (" ".join(args)))
+            subprocess.Popen(args)
+        except Exception, e:
+            log(e)
+
+
+def setServiceState(enable):
+    """
+    Use serverctl to enable/disable calendar/contacts service
+    """
+    args = [SERVERCTL, "enable" if enable else "disable", "service=org.calendarserver.calendarserver"]
+    try:
+        log("Executing: %s" % (" ".join(args)))
+        child = subprocess.Popen(args,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        output, error = child.communicate()
+        log("Output: %s" % (output,))
+        if child.returncode:
+            log("Non-zero exit code: %d, %s" % (child.returncode, error))
+    except Exception, e:
+        log(e)
+
+
+def updateConfig(path):
+    """
+    Update the preferences plist with the new ServerRoot value
+    """
+    prefs = plistlib.readPlist(PREFS_FILE)
+    prefs["ServerRoot"] = path.decode("utf-8")
+    content = plistlib.writePlistToString(prefs)
+    filepath = FilePath(PREFS_FILE)
+    filepath.setContent(content)
+    log("Updated prefs file %s with new ServerRoot: %s" % (PREFS_FILE, path))
+
+
+def isPostgresRunning(dataDirectory):
+    """
+    Ask pg_ctl if postgres is running on the given dataDirectory
+    @param dataDirectory: path to data directory
+    @type dataDirectory: C{str}
+    @return: True if we can connect, False otherwise
+    @rtype: C{boolean}
+    """
+    args = [SUDO, "-u", "calendar", PGCTL, "status", "-D", dataDirectory]
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    output, error = child.communicate()
+    if child.returncode:
+        log("Output from pg_ctl: %d, %s" % (child.returncode, error))
+        return False
+    return True
+
+
+def configureLogRotation():
+    args = [NEWSYSLOGCONF]
+    try:
+        log("Executing: %s" % (" ".join(args)))
+        subprocess.Popen(args)
+    except Exception, e:
+        log(e)
+
+
+def exitWithError(command, msg):
+    writeErrorFile(ERROR_FILE, command, msg)
+    removeFile(PROGRESS_FILE)
+    sys.exit(0)
+
+
+def usage(e=None):
+    if e:
+        print(e)
+        print("")
+
+    name = os.path.basename(sys.argv[0])
+    print("usage: {name} -c [import|export] -a <path to archive> -d <path to service data directory>".format(name=name))
+
+    if e:
+        sys.exit(64)
+    else:
+        sys.exit(0)
+
+
+def main(command=None, archivePath=None, dataPath=None):
+
+    # command is "import", "export" or None
+
+    try:
+        log("Beginning archive procedure")
+
+        try:
+            keys = getConfigKeys(["EnableCalDAV", "EnableCardDAV"])
+            enableCalDAV = keys["EnableCalDAV"] == "True"
+            log("EnableCalDAV: %s" % (enableCalDAV,))
+            enableCardDAV = keys["EnableCardDAV"] == "True"
+            log("EnableCardDAV: %s" % (enableCardDAV,))
+        except:
+            enableCalDAV = enableCardDAV = False
+
+        serverRoot = serverRootLocation()
+        databaseRoot = os.path.join(serverRoot, "Data", "Database")
+        log("DatabaseRoot: %s" % (databaseRoot,))
+
+        if not command:
+            # Read and remove command file
+            command, archivePath, dataPath = readCommandFile(COMMAND_FILE)
+            log(
+                "Command file says {cmd}: {archive} {data}".format(
+                    cmd=command, archive=archivePath, data=dataPath
+                )
+            )
+            removeFile(COMMAND_FILE)
+
+        if not dataPath:
+            dataPath = serverRootLocation()
+
+        archivePath = FilePath(archivePath)
+        dataPath = FilePath(dataPath)
+
+        writeProgressFile(PROGRESS_FILE, command, 5)
+
+
+        if command == "import":
+
+            # Import Archive
+
+            log("Stopping agent")
+            setAgentState(False)
+            if enableCalDAV or enableCardDAV:
+                log("Stopping service")
+                setServiceState(False)
+
+            writeProgressFile(PROGRESS_FILE, command, 25)
+
+            # See if postgres has actually shut down
+            dataDirectory = os.path.join(databaseRoot, "cluster.pg")
+            if os.path.exists(dataDirectory):
+                tries = 5
+                while tries:
+                    log("Seeing if postgres is still running at %s" % (dataDirectory,))
+                    if not isPostgresRunning(dataDirectory):
+                        log("Postgres is not running")
+                        break
+                    log("Postgres is still running")
+                    sleep(10)
+                    tries -= 1
+                else:
+                    msg = "Postgres never shut down"
+                    log(msg)
+                    exitWithError(command, msg)
+
+            writeProgressFile(PROGRESS_FILE, command, 50)
+            importArchive(command, archivePath, dataPath)
+            try:
+                uid = pwd.getpwnam("calendar").pw_uid
+                gid = grp.getgrnam("calendar").gr_gid
+                os.chown(dataPath.path, uid, gid)
+            except:
+                pass
+
+            if enableCalDAV or enableCardDAV:
+                log("Starting service")
+                setServiceState(True)
+
+        else:
+
+            # Export Archive
+
+            writeProgressFile(PROGRESS_FILE, command, 25)
+            exportArchive(command, dataPath, archivePath)
+
+
+        writeProgressFile(PROGRESS_FILE, command, 95)
+
+
+    except Exception as e:
+        exitWithError(command, str(e))
+
+    log("Removing error file")
+    removeFile(ERROR_FILE)
+
+
+if __name__ == "__main__":
+
+
+    if fileExists(PROGRESS_FILE):
+        log("Already in progress, exiting")
+        sys.exit(0)
+
+    try:
+        (optargs, args) = getopt(
+            sys.argv[1:], "a:c:d:h", [
+                "help",
+                "archivepath=",
+                "command=",
+                "datapath=",
+            ],
+        )
+    except GetoptError, e:
+        usage(e)
+
+    command = None
+    archivePath = None
+    dataPath = None
+
+    for opt, arg in optargs:
+
+        # Args come in as encoded bytes
+        arg = arg.decode("utf-8")
+
+        if opt in ("-h", "--help"):
+            usage()
+
+        elif opt in ("-a", "--archivepath"):
+            archivePath = arg
+
+        elif opt in ("-c", "--command"):
+            command = arg
+            if command not in ("import", "export"):
+                usage("--command must be either 'import' or 'export'")
+
+        elif opt in ("-d", "--datapath"):
+            dataPath = arg
+
+
+    if not command and not fileExists(COMMAND_FILE):
+        log("No command file, exiting")
+        sys.exit(0)
+
+    try:
+        main(command=command, archivePath=archivePath, dataPath=dataPath)
+        log("Successful")
+    finally:
+        log("Removing progress file")
+        removeFile(PROGRESS_FILE)
+        log("Starting agent")
+        setAgentState(True)

@@ -1,0 +1,45 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED/BAD-HEADER RECIPIENTS NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+Da: %f
+Data: %d
+Oggetto: [? [:ccat|major] |Mail pulita|Mail pulita|Mail bloccata da MTA|\
+Mail TROPPO GRANDE|INTESTAZIONE NON VALIDA nella mail|spam|SPAM|Contenuto NON VERIFICATO nella mail|\
+Contenuti VIETATI (%F) nella mail|VIRUS (%V) nella mail] A TE da %s
+[? [:header_field|A] |A: destinatari-riservati:;|A: [:campo_intestazione|A]]
+[? [:header_field|Cc] |#|Cc: [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||AVVISO CONTENUTI VIETATI]|AVVISO VIRUS]
+
+Le nostre verifiche sui contenuti hanno rilevato
+[? %#V |#|[:wrap|78|    |  |[?%#V|virus|virus|virus]: %V]]
+[? %#F |#|[:wrap|78|    |  |vietato [?%#F|nomi|nome|nomi]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+in una email inviata a te [? %S |dal mittente probabilmente falsificato:|da:]
+  %o
+[? %S |afferma di essere: %s|#]
+
+Tipo di contenuto: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, bloccato per [:ccat|name]]
+Il codice di riferimento interno per il messaggio è %n/%i
+
+[? %a |#|[:wrap|78||  |Primo upstream indirizzo IP client SMTP: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Secondo una traccia di 'Ricevuti:',\
+ il messaggio apparentemente è stato originato da: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Non in quarantena.|Il messaggio è stato messo in quarantena come: %q]
+
+Contatta l'amministratore di sistema per i dettagli.

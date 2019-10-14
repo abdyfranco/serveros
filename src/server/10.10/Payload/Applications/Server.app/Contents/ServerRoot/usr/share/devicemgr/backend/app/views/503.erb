@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--  -------------------------------------------------------------------------
+  Copyright (c) 2015 Apple Inc. All Rights Reserved.
+
+  IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+  computers and is subject to the terms and conditions of the Apple Software
+  License Agreement accompanying the package this file is a part of.
+  You may not port this file to another platform without Apple's written consent.
+  -------------------------------------------------------------------------
+ -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name = "viewport" content = "width = device-width" />
+  <title><%= I18n.t("503_title") %></title>
+  <style type="text/css">
+    body { 
+      background-color: #eeeeee;
+      color: #666; 
+      text-align: center; 
+      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
+    }
+
+    div.dialog {      
+      padding: 0 4em;
+      margin: 4em auto 0 auto;
+    }
+
+    h1 { 
+      font-size: 15pt;
+      color: #000;
+    }
+
+    <% if @refresh %>
+    div.bar {
+      width: 200px;
+      height: 10px;
+      background-size: 10px 10px;
+      background-repeat: repeat-x;
+      background-image: url(<%= @app_uri_root %>/bar.gif);
+      margin: 0 auto 1.2em auto;
+      border: 1px solid #999999;
+      border-radius: 5px;
+    }
+    <% end %>    
+
+    /* Smartphones */
+    @media only screen 
+      and (min-device-width : 320px) 
+      and (max-device-width : 480px) {
+
+      div.dialog {
+        padding: 0 8px;
+      }  
+      div.bar {
+        width: 100%;
+      }  
+    }
+
+    /* Smartphones (landscape) */
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 568px) 
+    and (orientation : landscape) { 
+      div.dialog {
+        margin-top: 5px;
+      }
+    }
+
+    /* iPad and desktop */
+    @media only screen 
+      and (min-device-width : 768px) {
+        div.dialog {
+        width: 25em;
+      }
+    }
+
+  </style>
+  <% if @refresh %>
+    <script type="text/javascript" src="<%= @app_uri_root %>/start_ota/jquery-2.1.0.min.js"></script>    
+    <script type="text/javascript">
+      var PM_WEBAPP_URI_ROOT     = "<%= @app_uri_root %>";    // Setup the constants for our JS code
+      var kPeriodicCheckInterval = 10 * 1000;                 // 10 seconds
+
+      if (self !== top) top.location = self.location;
+
+      window.periodicUpdate = function() {
+        var opts = {
+          type: 'HEAD',
+        };
+        jQuery.ajax({type: 'HEAD'})
+        .done(function() {
+          window.location.reload(false);  // Website is functional now, reload to get going
+        })
+        .fail(function() {
+          setTimeout(window.periodicUpdate, kPeriodicCheckInterval); // Just try again in a bit
+        })
+      };
+
+      window.onpageshow = function() {
+        setTimeout(window.periodicUpdate, kPeriodicCheckInterval);
+      };
+
+    </script>
+  <% end %>
+</head>
+
+<body>
+  <!-- This file lives in views/503.erb -->
+  <div class="dialog">
+    <h1><%= I18n.t(@reason) %></h1>
+    <% if @refresh %>
+      <p><%= I18n.t("error_page_will_refresh") %></p>
+      <div class="bar">
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

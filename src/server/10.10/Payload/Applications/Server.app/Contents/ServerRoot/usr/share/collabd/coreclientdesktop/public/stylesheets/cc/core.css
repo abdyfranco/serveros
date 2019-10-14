@@ -1,0 +1,218 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+ 
+html,
+body
+{
+	background-color: #f5f6f7;
+	color: #565656;
+	font-family: Helvetica, Arial, Geneva, sans-serif;
+	font-size: 13px;
+	height: 100%;
+	line-height: 1.4;
+	width: 100%;
+}
+
+.spinner
+{
+	background: url(./img/spinner_f0f0f0.gif) top left no-repeat;
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+}
+
+a,
+a:active,
+a:hover,
+a:target,
+a:visited
+{
+	color: inherit;
+	text-decoration: none;
+}
+
+#main
+{
+	background-color: #f5f6f7;
+	bottom: 0px;
+	left: 0px;
+	overflow: auto;
+	padding-bottom: 24px;
+	position: absolute;
+	right: 0px;
+	top: 31px;
+	z-index: 1;
+	min-width: 1026px;
+}
+
+#content-inner
+{
+	margin: 0px auto 0px auto;
+	padding: 20px 0px 20px;
+	width: 1026px;
+}
+
+.toplevel #content-inner
+{
+	padding-top: 0px;
+}
+
+#content-primary,
+#content-secondary
+{
+	background: #FFFFFF;
+	border: 1px solid #D5D5D6;
+	border-top-color: #E0E1E2;
+	border-bottom-color: #C0C1C2;
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+	border-radius: 6px;
+}
+
+#content-primary
+{
+	float: left;
+	min-height: 40px;
+	position: relative;
+	width: 768px;
+	z-index: 1;
+}
+
+#content-primary.loading
+{
+	background: #FFFFFF url(./img/spinner_transparent.gif) center center no-repeat;
+	min-height: 300px;
+}
+
+#content.animates #content-primary
+{
+	-webkit-transition-property: left, box-shadow, border-color;
+	-webkit-transition-duration: 0.35s, 0.35s, 0.35s;
+	-webkit-transition-timing-function: ease-in-out, linear, linear;
+}
+
+#content-secondary
+{
+	border-left-color: #D5D5D6;
+	border-right-color: #D5D5D6;
+	margin-left: 778px;
+	width: 246px;
+}
+
+#content.animates #content-secondary
+{
+	-webkit-transition-property: opacity, box-shadow, border-color;
+	-webkit-transition-duration: 0.35s, 0.35s, 0.35s;
+	-webkit-transition-timing-function: linear, linear, linear;
+}
+
+body.toplevel #content-primary,
+#content-primary.full-width
+{
+	left: 0px !important;
+	width: 1026px;
+}
+
+.toplevel #content-secondary
+{
+	display: none;
+}
+
+#content.no-secondary #content-primary
+{
+	left: 128px; /* (#content[width] - #content-primary[width]) / 2 */
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+	#content.no-secondary #content-primary
+	{
+		margin-left: 0px;
+	}
+}
+
+#content.no-secondary #content-secondary
+{
+	opacity: 0;
+}
+
+#content .noscript
+{
+	background: #FFFFFF;
+	border: 1px solid #D5D5D6;
+	border-top-color: #E0E1E2;
+	border-bottom-color: #C0C1C2;
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+	border-radius: 6px;
+	font-size: 22px;
+	font-weight: bold;
+	font-weight: 500;
+	float: left;
+	min-height: 40px;
+	position: relative;
+	width: 748px;
+	z-index: 1;
+	padding: 18px 0px 0px 20px;
+}
+
+/* @group Selection */
+
+body
+{
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
+
+.selectable
+{
+	user-select: text !important;
+	-webkit-user-select: text !important;
+	-moz-user-select: text !important;
+}
+
+/* @end */
+
+/* @group Core view support */
+
+.cc-view {
+	
+}
+
+.cc-view.loading {
+	background-image: url(./img/spinner_transparent.gif);
+	background-position: center center;
+	background-repeat: no-repeat;
+	text-indent: -9999px;
+}
+
+.cc-view.loading * {
+	display: none;
+}
+
+/* @end */
+
+a.cc-restore-content-link,
+a.cc-restore-content-link:link,
+a.cc-restore-content-link:visited,
+a.cc-restore-content-link:active,
+a.cc-restore-content-link:hover
+{
+	font-size: 0.8em;
+	color: #4B8ABA;
+}
+
+a.cc-restore-content-link:hover
+{
+	cursor: default;
+	text-decoration: underline;
+}

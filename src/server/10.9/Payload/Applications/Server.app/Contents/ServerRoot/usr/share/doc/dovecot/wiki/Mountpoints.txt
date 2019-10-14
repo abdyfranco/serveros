@@ -1,0 +1,53 @@
+Mountpoints
+===========
+
+---%<-------------------------------------------------------------------------
+master: Warning: /mnt/foo is no longer mounted. See
+http://wiki2.dovecot.org/Mountpoints
+---%<-------------------------------------------------------------------------
+
+Dovecot wants to keep track of mountpoints that might contain emails. If such a
+mountpoint is suddenly not mounted, it's handled as an error condition rather
+than as "this is a new user". This prevents other confusion that follows such a
+situation.
+
+Removing mountpoints
+--------------------
+
+If you permanently removed a mountpoint, you can tell Dovecot to forget about
+it with:
+
+---%<-------------------------------------------------------------------------
+doveadm mount remove /mnt/foo
+---%<-------------------------------------------------------------------------
+
+Ignoring mountpoints
+--------------------
+
+Dovecot already internally filters out many mountpoints and filesystems that
+are pretty much guaranteed not to contain any emails, but of course it can't
+know about everything. This is especially problematic with filesystems that are
+sometimes mounted and sometimes not. You can permanently tell Dovecot to ignore
+a mountpoint with:
+
+---%<-------------------------------------------------------------------------
+doveadm mount add /mnt/foo ignore
+---%<-------------------------------------------------------------------------
+
+or ignore all mountpoints under '/mnt':
+
+---%<-------------------------------------------------------------------------
+doveadm mount add '/mnt/*' ignore
+---%<-------------------------------------------------------------------------
+
+Adding mountpoints
+------------------
+
+Mountpoints are added automatically when Dovecot starts up. If you mount a new
+filesystem with mails while Dovecot is running you can also add it manually:
+
+---%<-------------------------------------------------------------------------
+doveadm mount add /mnt/foo
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2013-08-05 04:42)

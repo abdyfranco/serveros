@@ -1,0 +1,124 @@
+User Databases
+==============
+
+After a user has been successfully authenticated, Dovecot looks up the user's
+userdb information. The userdb lookup is also done by <LDA.txt> to find out how
+to deliver mails for the user.
+
+The user database lookup returns these fields:
+
+ * *uid*: User's <UID> [UserIds.txt] (UNIX user ID), overrides the global
+   'mail_uid' setting.
+ * *gid*: User's <GID> [UserIds.txt] (UNIX group ID), overrides the global
+   'mail_gid' setting.
+ * *home*: User's <home directory> [VirtualUsers.Home.txt], overrides the
+   global 'mail_home' setting. Although not required, it's <highly recommended
+   even for virtual users> [VirtualUsers.Home.txt].
+ * Optional <extra fields> [UserDatabase.ExtraFields.txt]
+    * Overwriting all mail-related settings, for example:
+       * *mail*: <Mail location> [MailLocation.txt], overrides the global
+         'mail_location' setting.
+       * *quota_rule* to specify per-user quota limit
+    * The extra fields are also passed to <post-login scripts>
+      [PostLoginScripting.txt]
+
+The user and <password databases> [PasswordDatabase.txt] may be the same or
+they may be different depending on your needs. You can also have <multiple
+databases> [Authentication.MultipleDatabases.txt].
+
+Currently supported user databases are:
+
+ * <Passwd> [AuthDatabase.Passwd.txt]: System users (NSS, '/etc/passwd', or
+   similiar)
+ * <Passwd-file> [AuthDatabase.PasswdFile.txt]: '/etc/passwd'-like file in
+   specified location
+ * <NSS> [UserDatabase.NSS.txt]: Name Service Switch
+ * <LDAP> [AuthDatabase.LDAP.txt]: Lightweight Directory Access Protocol
+ * <SQL> [AuthDatabase.SQL.txt]: SQL database (PostgreSQL, MySQL, SQLite)
+ * <Dict> [AuthDatabase.Dict.txt]: Dict key-value database (Redis, memcached,
+   etc.)
+ * <Static> [UserDatabase.Static.txt]: Userdb information generated from a
+   given template
+ * <VPopMail> [AuthDatabase.VPopMail.txt]: External software used to handle
+   virtual domains
+ * <Prefetch> [UserDatabase.Prefetch.txt]: This assumes that the passdb already
+   returned also all the required user database information
+
+Userdb settings
+---------------
+
+An example userdb entry might look like this:
+
+---%<-------------------------------------------------------------------------
+userdb {
+  driver = passwd-file
+  args = username_format=%n /etc/dovecot/users
+
+  default_fields = uid=vmail gid=vmail
+  override_fields =
+
+  # v2.2.10+:
+  skip = never
+  result_failure = continue
+  result_internalfail = continue
+  result_success = return-ok
+
+  # v2.2.24+:
+  auth_verbose = default
+}
+---%<-------------------------------------------------------------------------
+
+First we have the settings that provide content for the userdb lookup:
+
+ * driver: The userdb backend name
+ * args: Arguments for the userdb backend. The format of this value depends on
+   the userdb driver. Each one uses different args.
+ * default_fields: Userdb fields (and <extra fields>
+   [UserDatabase.ExtraFields.txt]) that are used, unless overwritten by the
+   userdb backend. They are in format 'key=value key2=value2 ...'. The values
+   can contain <%variables> [Variables.txt].
+ * override_fields: Same as default_fields, but instead of providing the
+   default values, these values override what the userdb backend returned. For
+   example useful with <userdb passwd> [AuthDatabase.Passwd.txt] for overriding
+   e.g. home directory or the uid/gid.
+ * auth_verbose: If this is explicitly set to yes or no, it overrides the
+   global auth_verbose setting. (However, auth_debug=yes overrides the
+   auth_verbose setting.) (v2.2.24+)
+
+Then we have the setting which specify when the userdb is used (v2.2.10+):
+
+ * skip: Do we sometimes want to skip over this userdb?
+    * never
+    * found: Skip if an earlier userdb already found the user
+    * notfound: Skip if previous userdbs haven't yet found the user
+
+And finally we can control what happens when we're finished with this userdb
+(v2.2.10+):
+
+ * result_success: What to do if the user was found from the userdb (default:
+   return-ok)
+ * result_failure: What to do if the user wasn't found from the userdb
+   (default: continue)
+ * result_internalfail: What to do if the userdb lookup had an internal failure
+   (default: continue). If any of the userdbs had an internal failure and the
+   final userdb also returns "continue", the lookup will fail with "internal
+   error".*WARNING*: If multiple userdbs are required (results are merged),
+   it's important to set result_internalfail=return-fail to them, otherwise the
+   userdb lookup could still succeed but not all the intended extra fields are
+   set.
+
+The result values that can be used:
+
+ * return-ok: Return success, don't continue to the next userdb.
+ * return-fail: Return "user doesn't exist", don't continue to the next userdb.
+
+ * return: Return earlier userdb's success or failure, don't continue to the
+   next userdb. If this was the first userdb, return "user doesn't exist".
+ * continue-ok: Set the current user existence state to "found", and continue
+   to the next userdb.
+ * continue-fail: Set the current user existence state to "not found", and
+   continue to the next userdb.
+ * continue: Continue to the next userdb without changing the user existence
+   state. The initial state is "not found".
+
+(This file was created from the wiki on 2016-04-26 04:43)

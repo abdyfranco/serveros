@@ -1,0 +1,53 @@
+# =============================================================================
+# This is a template for non-spam (e.g. VIRUS,...) ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+寄件人：%f
+日期：%d
+標題：[? [:ccat|major] |清除郵件|清除郵件|MTA-阻擋的郵件|\
+超大郵件|郵件中的無效頭標|垃圾郵件|垃圾郵件|郵件中未檢查的內容|\
+郵件中被阻擋的內容 (%F)|郵件中的病毒 (%V)]\
+ 來自 [?%l||LOCAL ][?%a||\[%a\] ]%s
+傳送至：[? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <VA%i@%h>
+
+[? %#V |未發現病毒。
+|發現 1 個病毒：%V
+|發現 2 個病毒：\n  %V
+|發現 %#V 個病毒：\n  %V
+]
+[? %#F |#|[:wrap|78||  |阻擋 [?%#F|名稱|名稱|名稱]: %F]]
+[? %#X |#|錯誤頭標：[\n[:wrap|78|  |  |%X]]]
+[? %#W |#\
+|掃描器偵測到 1 個病毒：%W
+|掃描器偵測到 1 個病毒：%W
+]
+內容類型：[:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, 阻擋：[:ccat|name]]
+郵件的內部參考代碼為 %n/%i
+
+[? %a |#|[:wrap|78||  |首次上傳 SMTP 用戶端 IP 位址：\[%a\] %g]]
+[? %e |#|[:wrap|78||  |根據“接收日期：”追蹤,\
+郵件製作於：\[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |未隔離。|郵件已隔離為：%q]
+
+[? %#S |將不會寄送給寄件人的通知。
+
+]#
+[? %#D |#|郵件將不會傳送至：[\n%D]
+]
+[? %#N |#|郵件未傳送至：[\n%N]
+]
+[? %#V |#|[? %#v |#|病毒掃描器輸出：[\n  %v]
+]]

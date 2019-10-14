@@ -1,0 +1,6180 @@
+/* ======== css/controller.css ======== */
+/*=================================*/
+/* START CONTROLLER*/
+/*=================================*/
+
+/* @group Reset */
+
+/* Normalizes margin, padding */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td 
+{ margin : 0; padding : 0; }
+
+/* Normalizes font-size for headers */
+h1,h2,h3,h4,h5,h6 { font-size : 100%; }
+
+/* Removes list-style from lists */
+ol,ul { list-style : none; }
+
+/* Normalizes font-style and font-weight to normal */
+address, caption, cite, code, dfn, em, strong, th, var
+{ font-style : normal; font-weight : normal; }
+
+/*open toolkit inserts br tags in various places */
+br { display: none; }
+
+/* @end */
+
+/* @group Page Setup */
+
+body {
+	background-color: #fff;
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 18px;
+	min-width: 350px;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+.orangeflamingo body,
+.blackflamingo body {
+	font-family: Helvetica !important;
+}
+.redflamingo body {
+	margin-bottom: 15px;
+	margin-left: 15px;
+	margin-right:  15px;
+	overflow: visible;
+}
+.RightToLeft body {
+	direction: rtl;
+}
+.ios body {
+	overflow: visible;
+	-webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
+}
+/* @end */
+
+/* @group button menu */
+/*menu bar*/
+div#menuWrapper {
+	background-color: #d3d2d3;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#cfcfcf));
+	-webkit-background-origin: border;
+	background: -moz-linear-gradient(top, #f3f3f3, #cfcfcf);
+	border-top: 1px solid #e6e6e6;
+	border-bottom: 1px solid #ACACAC;
+	height: 2.4em;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 99;
+}
+.RightToLeft div#menuWrapper {
+	right: 0;
+}
+.helpviewer.flamingo2 div#menuWrapper {
+	display:  none;
+}
+.flamingo2 div#menuWrapper {
+	background-color: #fff;
+	background-image: none;
+	background-image:
+	-webkit-gradient(linear, left top, left bottom, from(#E7E7E7), to(#C3C3C3));
+	border-bottom: 1px solid #7e7e7e;
+	border-top: none;
+	height: 23px;
+}
+.blackflamingo div#menuWrapper,
+.orangeflamingo div#menuWrapper {
+	border-bottom: none;
+	border-top: none;
+	height: 2.8em;
+}
+.blackflamingo div#menuWrapper {
+	background: transparent url(../images/blackflamingo/menu-background.png) repeat-x;
+}
+.orangeflamingo div#menuWrapper {
+	background: transparent url(../images/orangeflamingo/menu-background.png) repeat-x;
+}
+.redflamingo div#menuWrapper {
+	display: none;
+}
+div#menuWrapper a {
+	cursor: pointer;
+}
+
+/*menu bar*/
+div#title {
+	margin-left: 22px;
+	margin-top: 10px;
+}
+.RightToLeft div#title {
+	margin-left: 0;
+	margin-right: 14px;
+}
+.flamingo2 div#title {
+	background: transparent url(../images/logo_sm.png);
+	background-repeat: no-repeat;
+	background-position: 0 1px;
+	margin-left: 14px;
+	padding-left: 21px;
+	margin-top: 1px;
+}
+.RightToLeft.flamingo2 div#title {
+	background-position: right;
+	margin-left: 0;
+	margin-right: 14px;
+	padding-left: 0;
+	padding-right: 21px;
+}
+div#title > a {
+	color: #4e4e4e;
+	font-size: 1em;
+	font-weight: normal;
+	letter-spacing: normal;
+	text-decoration: none;
+}
+.flamingo2 div#title > a {
+	font-size: .7em;
+	font-weight: bold;
+}
+.flamingo2 div#title > a:hover {
+	color:  #888888;
+}
+.orangeflamingo div#title,
+.blackflamingo div#title {
+	display: none;
+}
+div#title.hidden {
+	display: none;
+}
+
+/* Back, Forward and Home Buttons */
+
+/* hide in Default design */
+a#backButton,
+a#forwardButton,
+a#homeButton {
+	display: none;
+}
+
+/* show in Orange and Black Flamingo */
+.orangeflamingo a#backButton,
+.orangeflamingo a#forwardButton,
+.orangeflamingo a#homeButton,
+.blackflamingo a#backButton,
+.blackflamingo a#forwardButton,
+.blackflamingo a#homeButton {
+	display: block;
+	height: 25px;
+	position: absolute;
+	top: 8px;
+}
+.blackflamingo a#backButton,
+.orangeflamingo a#backButton {
+	left: 8px;
+	width: 31px;
+}
+.RightToLeft.blackflamingo a#backButton,
+.RightToLeft.orangeflamingo a#backButton {
+	left: 0;
+	right: 8px;
+}
+.blackflamingo a#forwardButton,
+.orangeflamingo a#forwardButton {
+	left: 38px;
+	width: 31px;
+}
+.RightToLeft.blackflamingo a#forwardButton,
+.RightToLeft.orangeflamingo a#forwardButton {
+	left: 0;
+	right: 38px;
+}
+.blackflamingo a#homeButton,
+.orangeflamingo a#homeButton {
+	left: 81px;
+	top: 7px;
+	width: 27px;
+}
+.RightToLeft.blackflamingo a#homeButton,
+.RightToLeft.orangeflamingo a#homeButton {
+	left: 0;
+	right: 81px;
+}
+.blackflamingo a#backButton {
+	background-image: url(../images/blackflamingo/arrow-back.png);
+}
+.blackflamingo a#backButton:active {
+	background-image: url(../images/blackflamingo/arrow-back-active.png);
+}
+.blackflamingo a#forwardButton {
+	background-image: url(../images/blackflamingo/arrow-forward.png);
+}
+.blackflamingo a#forwardButton:active {
+	background-image: url(../images/blackflamingo/arrow-forward-active.png);
+}
+.blackflamingo a#homeButton {
+	background-image: url(../images/blackflamingo/home.png);
+}
+.blackflamingo a#homeButton:hover {
+	background-image: url(../images/blackflamingo/home-hover.png);
+}
+.blackflamingo a#homeButton:active {
+	background-image: url(../images/blackflamingo/home-active.png);
+}
+.orangeflamingo a#backButton {
+	background-image: url(../images/orangeflamingo/arrow-back.png);
+}
+.orangeflamingo a#backButton:active {
+	background-image: url(../images/orangeflamingo/arrow-back-active.png);
+}
+.orangeflamingo a#forwardButton {
+background-image: url(../images/orangeflamingo/arrow-forward.png);
+}
+.orangeflamingo a#forwardButton:active {
+	background-image: url(../images/orangeflamingo/arrow-forward-active.png);
+}
+.orangeflamingo a#homeButton {
+	background-image: url(../images/orangeflamingo/home.png);
+}
+.orangeflamingo a#homeButton:hover {
+	background-image: url(../images/orangeflamingo/home-hover.png);
+}
+.orangeflamingo a#homeButton:active {
+	background-image: url(../images/orangeflamingo/home-active.png);
+}
+
+/* menu buttons */
+div#menu {
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 26.425em;
+	padding-left: 1.355em;
+	padding-right: 1.355em;
+}
+div#menu.hidden {
+	display: none;
+}
+div#menu table {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#deddde));
+	-webkit-background-origin: border;
+	background: -moz-linear-gradient(top, #fefefe, #deddde);
+	background: #fefefe;
+	-webkit-border-radius: .2em;
+	-moz-border-radius: .2em;
+	border-color: #9e9e9e;
+	border-spacing: 0;
+	border-style: solid;
+	border-width: 1px;
+    margin-top: .4em;
+	padding: 0;
+	table-layout: fixed;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+}
+.msie table {
+	border-collapse: collapse;
+	width: 50%;
+}
+div#menu table tr {
+	display: table-row;
+	height: 1.55em;
+}
+div#menu td {
+	border-left: 1px solid #9e9e9e;
+	display: table-cell;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: center;
+	white-space: nowrap;
+}
+.RightToLeft div#menu td {
+	border-left: none;
+	border-right: 1px solid #9e9e9e;
+}
+div#menu td:first-of-type {
+	border-left: none;
+}
+.RightToLeft div#menu td:first-of-type {
+	border-right: none;
+}
+.mozilla div#menu td:first-child {
+	border-left: none;
+}
+div#menu td > a {
+	display: block;
+	color: #22171f;
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+	font-size: .8em;
+	height: 22px;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	padding: 2px 1.15em 0;
+	outline:  none;
+}
+.mozilla.blueflamingo div#menu td > a {
+	height: 22px;
+	padding: 4px 1.15em 0;
+}
+div#menu td > a.selected {
+	background: #d7ecf9;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#d7ecf9), to(#a6d3f1));
+	background: -moz-linear-gradient(top, #d7ecf9, #a6d3f1);
+}
+.msie div#menu td > a.selected {
+	background-color: #a6d3f1;
+}
+div#menu td:first-of-type > a.selected {
+	-webkit-border-top-left-radius: .2em .2em;
+	-webkit-border-bottom-left-radius: .2em .2em;
+	-moz-border-radius-topleft: .2em .2em;
+	-moz-border-radius-bottomleft: .2em .2em;
+}
+div#menu td:last-of-type > a.selected {
+	-webkit-border-top-right-radius: .2em .2em;
+	-webkit-border-bottom-right-radius: .2em .2em;
+	-moz-border-radius-topright: .2em .2em;
+	-moz-border-radius-bottomright: .2em .2em;
+}
+div#menu td > a:active {
+	background-image: 
+	-webkit-gradient(linear, 
+	left top, left bottom, 
+    color-stop(0, #959595),
+    color-stop(0.25, #cecece),
+	color-stop(0.5, #eaeaea),
+	color-stop(1.0, #f5f5f5)
+	);
+	background: 
+	-moz-linear-gradient(top, #959595, #cecece 25%, #eaeaea 50%, #f5f5f5);
+}
+div#menu td > a.selected:active {
+	background-image: 
+	-webkit-gradient(linear, 
+	left top, left bottom, 
+    color-stop(0, #808e95),
+    color-stop(0.25, #9eb3c0),
+	color-stop(0.5, #a0cbe8),
+	color-stop(0.65, #a6d3f1),
+	color-stop(1.0, #a6d3f1)
+	);
+	background: 
+	-moz-linear-gradient(top, #808e95, #9eb3c0 25%, #a0cbe8 50%, #a6d3f1 65%, #a6d3f1);
+
+}
+div#menu td:first-of-type > a:active {
+	-webkit-border-top-left-radius: .2em .2em;
+	-webkit-border-bottom-left-radius: .2em .2em;
+	-moz-border-radius-topleft: .2em .2em;
+	-moz-border-radius-bottomleft: .2em .2em;
+}
+div#menu td:last-of-type > a:active {
+	-webkit-border-top-right-radius: .2em .2em;
+	-webkit-border-bottom-right-radius: .2em .2em;
+	-moz-border-radius-topright: .2em .2em;
+	-moz-border-radius-bottomright: .2em .2em;
+}
+
+/* @end */
+
+/* @group container divs */
+
+div#container {
+	position: absolute;
+	top: 2.45em;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.helpviewer.flamingo2 div#container {
+	top: -1px;
+}
+.flamingo2 div#container {
+	top: 23px;
+}
+.redflamingo div#container {
+	margin-top: auto;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+.blackflamingo div#container,
+.orangeflamingo div#container {
+	top: 2.8em;
+}
+/* @end */
+
+
+/* @group debug version number */
+
+div#debugVersionNumber {
+	background: white;
+	border-bottom: 1px solid red;
+	border-left: 1px solid red;
+	color: grey;
+	font-size: 10px;
+	line-height: 14px;
+	text-align: center;
+	padding: 3px 10px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	z-index: 100;
+	width: auto;
+}
+.redflamingo div#debugVersionNumber {
+	padding: 10px 3px;
+	right: 20px;
+	border-right: 1px solid red;
+}
+.RightToLeft.redflamingo div#debugVersionNumber {
+	left: 20px;
+	right: auto;
+	border-left: 1px solid red;
+	border-right: none;
+	width:  200px;
+}
+.flamingo2 div#debugVersionNumber {
+	border: 1px solid red;
+	/*height:  24px;*/
+	line-height: 12px;
+	padding: 2px 3px;
+	right: 50px;
+	top:  3px;
+	vertical-align: middle;	
+}
+.RightToLeft.flamingo2 div#debugVersionNumber {
+	left: 50px;
+	right: 0;
+}
+.helpviewer.flamingo2 div#debugVersionNumber {
+	right: 10px;
+}
+.RightToLeft.helpviewer.flamingo2 div#debugVersionNumber {
+	left: 10px;
+	right: 0;
+}
+.blueflamingo div#debugVersionNumber,
+.orangeflamingo div#debugVersionNumber,
+.blackflamingo div#debugVersionNumber {
+	right: 50px;
+	border-right: 1px solid red;
+}
+.RightToLeft.blueflamingo div#debugVersionNumber,
+.RightToLeft.orangeflamingo div#debugVersionNumber,
+.RightToLeft.blackflamingo div#debugVersionNumber {
+	left: 50px;
+	right: auto;
+	top:  8px;
+	border: 1px solid red;
+}
+.msie div#debugVersionNumber {
+	color: black;
+	border: none;
+}
+.redflamingo div#debugVersionNumber a.toggleButton {
+	background: grey;
+	color: white;
+	display: block;
+	float: right;
+	height: 20px;
+	margin-left: 10px;
+	padding: 5px;
+	text-decoration: none;
+}
+.RightToLeft.redflamingo div#debugVersionNumber a.toggleButton {
+	float: left;
+	margin-left: 0;
+	margin-right: 10px;
+}
+div#currentURL {
+	background: red;
+	bottom: 0px;
+	font-size: 10px;
+	padding: 0px 5px;
+	position: absolute;
+	right: 20px;
+	z-index: 499;
+}
+.RightToLeft div#currentURL {
+	left: 20px;
+	right: 0;
+}
+
+/* @end */
+/* @group Javascript Disabled */
+
+div#javascriptDisabled {
+	border: 1px solid #eaeaea;
+	-webkit-border-radius: 6px;
+    -webkit-box-shadow: 0em 0.1em 0.25em #cccccc;
+	border-radius: 6px;
+	display: none;
+	font-size: 12px;
+	line-height: 18px;
+	margin: 50px auto 0 auto;
+	padding: 17px 30px;
+	width: 500px;
+}
+.nojs div#javascriptDisabled {
+	display: table;
+}
+div#javascriptDisabled div {
+	margin: 8px 0;
+}
+div#javascriptDisabled p {
+	font-weight: bold;
+	font-size: 14px;
+}
+div#javascriptDisabled a {
+	color: #0a8dE9;
+	text-decoration: none;
+}
+
+/* @end */
+
+/* @group history iFrame */
+
+iframe#historyiFrame {
+	border: none;
+	height: 0px;
+	position: absolute;
+	width: 0px;
+}
+
+/* @end */
+
+/*=================================*/
+/* END CONTROLLER*/
+/*=================================*/
+
+
+/* ======== css/browsecontroller.css ======== */
+/* ============================= */
+/* START BROWSE CONTROLLER CSS ==*/
+/* ============================= */
+
+
+/* ======================= */
+/* BEGIN NAV ==============*/
+/* ======================= */
+
+/* 04-05-2011 */
+
+
+/* @group Navigation */
+
+.browse #navigationView {
+	background-color: #f6f6f6;
+	border-right: 1px solid #d8d7d7;
+	height: 100%;
+	position: absolute;
+	width: 200px;
+	z-index: 1;
+}
+.RightToLeft .browse #navigationView {
+	left: auto;
+	right: 0;
+	border-right: none;
+	border-left: 1px solid #d8d7d7;
+}
+/*hides search field in help viewer*/
+/*.helpviewer.flamingo2 .browse #navigationView {
+	padding-top: 11px;
+}*/
+.browse #navigationView ul > li.hasIcon.alternativeNameprefix > a {
+	background-repeat: no-repeat;
+	background-position: 14px 14px;
+	padding-left: 35px;
+	padding-bottom: 8px;
+	padding-top: 2px;
+}
+.RightToLeft .browse #navigationView ul > li.hasIcon.alternativeNameprefix > a {
+	background-position: 14px 14px;
+	padding-left: auto;
+	padding-right: 35px;
+}
+.browse #navigationView ul > li.hasIcon > a,
+.browse #navigationView ul > li.hasChildren.hasIcon > a {
+	background-repeat: no-repeat;
+	background-position: 14px 2px;
+	padding-left: 35px;
+	padding-bottom: 8px;
+	padding-top: 2px;
+}
+.RightToLeft .browse #navigationView ul > li.hasIcon > a,
+.RightToLeft .browse #navigationView ul > li.hasChildren.hasIcon > a {
+	background-position: 91% 4px !important;
+	padding-left: 0;
+	padding-right: 35px;
+}
+.msie.RightToLeft .browse #navigationView ul > li.hasIcon > a,
+.msie.RightToLeft .browse #navigationView ul > li.hasChildren.hasIcon > a {
+	background-position: 91% 3px !important;
+	padding-left: 0;
+	padding-right: 35px;
+}
+.browse #navigationView > ul > li.hasChildren.hasIcon > ul {
+	padding-left: 34px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.RightToLeft .browse #navigationView > ul > li.hasChildren.hasIcon > ul {
+	padding-left: 0;
+	padding-right: 34px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+.browse #navigationView > ul > li.hasChildren.hasIcon > ul ul {
+	padding-left: 14px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.RightToLeft .browse #navigationView > ul > li.hasChildren.hasIcon > ul ul {
+	padding-left: 0;
+	padding-right: 14px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+/*lesson nav*/
+.browse #navigationView > ul > li.alternativeNameprefix {
+	margin-left: -4px;
+}
+.RightToLeft .browse #navigationView > ul > li.alternativeNameprefix {
+	margin-left: 0;
+	margin-right: -4px;
+}
+/* navigation spacing */
+
+.browse #navigationView > #search + ul {
+	overflow: auto;
+	padding: 10px 24px 0 12px;
+	position: absolute;
+	top: 43px;
+	bottom: 0;
+}
+.RightToLeft .browse #navigationView > #search + ul {
+	padding: 10px 12px 0 24px;
+}
+.browse #navigationView > ul {
+	overflow: auto;
+	padding: 20px 24px 0 12px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width:  164px;
+	overflow-x: hidden;
+}
+.RightToLeft .browse #navigationView > ul {
+	padding: 20px 10px 0 24px;
+}
+.flamingo2 .browse #navigationView > ul {
+	width: 204px;
+}
+.helpviewer.flamingo2 .browse #navigationView > ul {
+	padding-top: 22px;
+	width: 214px;
+}
+
+.ios .browse #navigationView > #search + ul,
+.ios .browse #navigationView > ul {
+	overflow: visible;
+	bottom: auto;
+}
+
+.orangeflamingo .browse #navigationView > ul,
+.blackflamingo .browse #navigationView > ul {
+	top: 47px;
+}
+.browse #navigationView > ul > li > ul,
+.browse #navigationView > ul > li > ul ul {
+	padding-left: 14px;
+}
+.RightToLeft.flamingo2 .browse #navigationView > ul > li > ul,
+.RightToLeft.flamingo2 .browse #navigationView > ul > li > ul ul {
+	padding-right: 14px;
+	padding-left: 0;
+}
+.RightToLeft.flamingo2 .browse #navigationView > ul > li > ul > li:first-of-type {
+	padding-top: 2px;
+}
+.RightToLeft.flamingo2 .browse #navigationView > ul > li > ul > li> ul> li:first-of-type {
+	padding-top: 0;
+}
+
+.RightToLeft.flamingo2 .browse #navigationView > ul > li > ul > li:last-of-type {
+	margin-bottom: 0;
+}
+/* navigation for flamingo2 */
+
+.flamingo2 .browse #navigationView {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#fff));
+	background: -moz-linear-gradient(top, #f3f3f3, #ffffff);
+	border-right: none;
+	width: 240px;
+}
+.RightToLeft.flamingo2 .browse #navigationView {
+	border-left: none;
+}
+.flamingo2 .browse #navigationView > ul {
+	padding: 10px 14px 0 12px;
+}
+.RightToLeft.flamingo2 .browse #navigationView > ul {
+	padding: 10px 12px 0 14px;
+}
+
+/* normalizes all spacing of ul and li */
+
+.browse #navigationView>ul>li,
+.browse #navigationView>ul>li>ul,
+.browse #navigationView>ul>li>ul>li,
+.browse #navigationView>ul>li>ul>li>ul,
+.browse #navigationView>ul>li>ul>li>ul>li,
+.flamingo2 .browse #navigationView>ul>li,
+.flamingo2 .browse #navigationView>ul>li>ul,
+.flamingo2 .browse #navigationView>ul>li>ul>li,
+.flamingo2 .browse #navigationView>ul>li>ul>li>ul,
+.flamingo2 .browse #navigationView>ul>li>ul>li>ul>li,
+.blackflamingo .browse #navigationView>ul>li,
+.blackflamingo .browse #navigationView>ul>li>ul,
+.blackflamingo .browse #navigationView>ul>li>ul>li>ul,
+.orangeflamingo .browse #navigationView>ul>li,
+.orangeflamingo .browse #navigationView>ul>li>ul,
+.orangeflamingo .browse #navigationView>ul>li>ul>li>ul {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.blackflamingo .browse #navigationView>ul>li>ul>li,
+.blackflamingo .browse #navigationView>ul>li>ul>li>ul>li,
+.orangeflamingo .browse #navigationView>ul>li>ul>li,
+.orangeflamingo .browse #navigationView>ul>li>ul>li>ul>li {
+	margin-bottom: 0;
+	padding-top: 1px;
+}
+.browse #navigationView > ul > li,
+.flamingo2 .browse #navigationView>ul>li.closed,
+.blackflamingo .browse #navigationView>ul>li.closed,
+.orangeflamingo .browse #navigationView>ul>li.closed {
+	margin-bottom: 1px;
+}
+.flamingo2 .browse #navigationView>ul>li.hasChildren,
+.flamingo2 .browse #navigationView>ul>li>ul>li.hasChildren,
+.blackflamingo .browse #navigationView>ul>li.hasChildren,
+.blackflamingo .browse #navigationView>ul>li>ul>li.hasChildren,
+.orangeflamingo .browse #navigationView>ul>li.hasChildren,
+.orangeflamingo .browse #navigationView>ul>li>ul>li.hasChildren {
+	margin-top: 0;
+}
+.flamingo2 .browse #navigationView>ul>li>ul>li:first-child,
+.blackflamingo .browse #navigationView>ul>li>ul>li:first-child,
+.orangeflamingo .browse #navigationView>ul>li>ul>li:first-child {
+	margin-top: -2px;
+}
+.flamingo2 .browse #navigationView>ul>li>ul>li:last-child {
+	margin-bottom: 2px;
+}
+.blackflamingo .browse #navigationView>ul>li>ul>li:last-child,
+.orangeflamingo .browse #navigationView>ul>li>ul>li:last-child {
+	margin-bottom: 3px;
+}
+/* navigation links */
+.browse #navigationView a {
+	display: block;
+	line-height: .8125em;
+	outline: none;
+	padding: 4px 2px 6px 15px;
+	text-decoration: none;
+}
+.RightToLeft .browse #navigationView a {
+	padding: 4px 15px 6px 2px;
+}
+.browse #navigationView > ul > li > a.hasIcon + ul {
+	padding-left: 35px;
+}
+.RightToLeft .browse #navigationView > ul > li > a.hasIcon + ul {
+	padding-left: 0;
+	padding-right: 35px;
+}
+/* first level */
+.browse #navigationView > ul > li > a {
+	padding-bottom: 8px;
+	padding-top: 2px;
+}
+/* text */
+.browse #navigationView span.alternativename {
+	color: #333;
+	display: block;
+	font-size: 0.7em;
+}
+.browse #navigationView li.alternativeNameprefix span.alternativename {
+	color: #8b8b8b;
+	font-size: 8px !important;
+	letter-spacing: 0.13em;
+	line-height: 1.25em;
+	margin-top: 2px;
+	text-transform: uppercase;
+}
+.browse #navigationView span.name {
+	font-size: 0.7em;
+	color: #333;
+}
+.flamingo2 .browse #navigationView span.name {
+	color: #666;
+	font-size:  .6em;
+	font-weight: bold;
+}
+.orangeflamingo .browse #navigationView span.name,
+.blackflamingo .browse #navigationView span.name {
+	font-size: 0.75em;
+}
+/* chapter icons */
+.browse #navigationView ul > li.hasIcon > a,
+.browse #navigationView ul > li.hasChildren.hasIcon > a {
+	background-repeat: no-repeat;
+	background-position: 14px 3px;
+	padding-left: 35px;
+}
+.RightToLeft .browse #navigationView ul > li.hasIcon > a,
+.RightToLeft .browse #navigationView ul > li.hasChildren.hasIcon > a {
+	background-position: 14px 3px;
+	padding-left: 0;
+	padding-right: 35px;
+}
+.blackflamingo .browse #navigationView ul > li.hasIcon > a,
+.blackflamingo .browse #navigationView ul > li.hasChildren.hasIcon > a,
+.orangeflamingo .browse #navigationView ul > li.hasIcon > a,
+.orangeflamingo .browse #navigationView ul > li.hasChildren.hasIcon > a {
+	background-position: 14px 1px;
+}
+.RightToLeft.blackflamingo .browse #navigationView ul > li.hasIcon > a,
+.RightToLeft.blackflamingo .browse #navigationView ul > li.hasChildren.hasIcon > a,
+.RightToLeft.orangeflamingo .browse #navigationView ul > li.hasIcon > a,
+.RightToLeft.orangeflamingo .browse #navigationView ul > li.hasChildren.hasIcon > a {
+	background-position: 100% 1px;
+}
+
+/* disclosure triangles */
+.browse #navigationView li.hasChildren {
+	background-image: url(../images/disclosure-open.png);
+	background-repeat: no-repeat;
+	background-position: 0px 6px;
+	cursor: pointer;
+}
+.RightToLeft.blueflamingo .browse #navigationView li.hasChildren {
+	background-position: 100% 9px;
+}
+.msie.RightToLeft.blueflamingo .browse #navigationView li.hasChildren {
+	background-position: 100% 7px;
+	*background-position: 100% 9px; /*fix for IE7*/
+}
+.RightToLeft.flamingo2 .browse #navigationView li.hasChildren {
+	background-position: 100% 9px;
+}
+.RightToLeft.blackflamingo .browse #navigationView li.hasChildren,
+.RightToLeft.orangeflamingo .browse #navigationView li.hasChildren {
+	background-position: 153px 9px;
+}
+.msie .browse #navigationView li.hasChildren {
+	*background-position: 0 9px;/* disclosure triangles */
+}
+.blackflamingo .browse #navigationView li.hasChildren,
+.orangeflamingo .browse #navigationView li.hasChildren {
+	background-position: 0px 5px;
+	*background-position: 0px 8px;/* disclosure triangles */
+}
+.browse #navigationView li.hasChildren ul li.hasChildren {
+	background-position: 0px 7px;
+}
+.RightToLeft.flamingo2 .browse #navigationView li.hasChildren ul li.hasChildren {
+	background-position: 100% 9px;
+}
+.msie .browse #navigationView li.hasChildren ul li.hasChildren {
+	background-position: 0px 8px;
+	*background-position: 0px 9px;/* disclosure triangles */
+}
+.msie.RightToLeft .browse #navigationView li.hasChildren ul li.hasChildren {
+	background-position: 100% 8px;
+	*background-position: 100% 9px;/* disclosure triangles */
+}
+.blackflamingo .browse #navigationView li.hasChildren ul li.hasChildren,
+.orangeflamingo .browse #navigationView li.hasChildren ul li.hasChildren {
+	background-position: 0px 6px;
+	*background-position: 0px 7px;/* disclosure triangles */
+}
+.msie.blackflamingo .browse #navigation li.hasChildren ul li.hasChildren,
+.msie.orangeflamingo .browse #navigation li.hasChildren ul li.hasChildren {
+	background-position: 0px 7px;
+}
+
+/* hover */
+.browse #navigationView ul li a:hover > .name {
+	color: #000;
+	text-decoration: underline;
+}
+.flamingo2 .browse #navigationView ul li a:hover > .name {
+	color: #666;
+	text-decoration: underline;
+}
+.blackflamingo .browse #navigationView ul li a:hover > .name,
+.orangeflamingo .browse #navigationView ul li a:hover > .name {
+	color: #0a8de0;
+	text-decoration: none;
+}
+
+/* selected */
+.browse #navigationView ul li.selected > a > .name,
+.browse #navigationView ul li.selected:hover > a > .name {
+	color: #000;
+	font-weight: bold;
+}
+
+/* closed state */
+.browse #navigationView ul li.closed ul {
+	display: none;
+}
+.flamingo2 .browse #navigationView ul li.closed {
+	margin-bottom: 0;
+}
+.browse #navigationView ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed.png);
+}
+.RightToLeft.blueflamingo .browse #navigationView ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed-rtl.png);
+	background-position: 100% 9px;
+}
+.msie.RightToLeft.blueflamingo .browse #navigationView ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed-rtl.png);
+	background-position: 100% 7px;
+	*background-position: 100% 9px;
+}
+.RightToLeft.blackflamingo .browse #navigationView ul li.hasChildren.closed,
+.RightToLeft.orangeflamingo .browse #navigationView ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed-rtl.png);
+	background-position: 100% 7px;
+}
+.RightToLeft.flamingo2 .browse #navigationView ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed-rtl.png);
+	background-position: 100% 9px;
+}
+.browse #navigationView ul li.hasChildren ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed.png);
+	background-position: 0px 8px;
+}
+.RightToLeft.blueflamingo .browse #navigationView ul li.hasChildren ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed-rtl.png);
+	background-position: 100% 9px;
+}
+.RightToLeft.flamingo2 .browse #navigationView ul li.hasChildren ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed-rtl.png);
+	background-position: 100% 9px;
+}
+.RightToLeft.blackflamingo .browse #navigationView ul li.hasChildren ul li.hasChildren.closed,
+.RightToLeft.orangeflamingo .browse #navigationView ul li.hasChildren ul li.hasChildren.closed {
+	background-image: url(../images/disclosure-closed-rtl.png);
+	background-position: 100% 7px;
+}
+.msie .browse #navigationView ul li.hasChildren ul li.hasChildren.closed {
+	*background-position: 0 10px;/* disclosure triangles */
+}
+.msie.blackflamingo .browse #navigation ul li.hasChildren ul li.hasChildren.closed, 
+.msie.orangeflamingo .browse #navigation ul li.hasChildren ul li.hasChildren.closed {
+	background-position: 0px 8px;
+	*background-position: 0 8px;/* disclosure triangles */
+}
+/* @end */
+/* ================== */
+/*  END NAV ==========*/
+/* ================== */
+
+/* ============================= */
+/* END BROWSE CONTROLLER CSS ===*/
+/* ============================= */
+
+/* ======== css/landingcontrollerapplicationlistcontroller.css ======== */
+/*=================================*/
+/* START LANDINGCONTROLLER*/
+/*=================================*/
+
+/* @group Red Flamingo Container */
+.redflamingo .landingController,
+.redflamingo .applicationListController {
+	overflow: visible;
+	position: static;
+	top: auto;
+	/*bottom: auto;*/
+	left: auto;
+	right: auto;
+	max-width: 830px;
+	min-width: 330px;
+	padding: 0 15px;
+}
+
+
+/* @end */
+
+/* @group Marquee Styles */
+
+/* START marquee styles */
+
+#navigationView .hasMarquee .contentIcon,
+#navigationView .hasMarquee .contentName {
+	display: none;
+}
+
+.marquee-item { /* hide authored marquee items */
+	display: none;
+}
+
+/* shared styles for all marquee types */
+.marquee {
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	padding: 0 !important;
+}
+.marquee p {
+	position: absolute;
+	color: #000;
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 12px;
+/* text shadow makes it more readable at small sizes, but a bit thicker than the comps */
+/*	text-shadow: #ccc 1px 1px 1px; */
+}
+
+/* top-level marquee container on app landing pages */
+.marquee.landing {
+	height: 92px;
+	width: 158px;
+	float: right;
+	margin: 8px 0 21px 18px;
+}
+.RightToLeft .marquee.landing {
+	float: left;
+	margin: 8px 18px 21px 0;
+}
+.marquee.landing p {
+	bottom: 2px;
+	left: 4px;
+	right: 4px;
+	text-align: center;
+}
+
+/* top-level marquee container on help center page */
+.marquee.helpcenter {
+	background-repeat: no-repeat;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-shadow: 0 1px #cccccc;
+	position: relative;
+	margin: 0 0 0;
+	height: 73px;
+	min-width: 330px;
+	overflow: hidden;
+}
+
+.marquee.helpcenter p {
+	display: none; /* at the moment, the text is in the image, so this is basically alt text */
+	top: 2px;
+	left: 4px;
+	color:  #333;
+	position: static;
+	width: 35%;
+	padding-left: 184px;
+	font-size: 18px;
+	font-weight: normal !important;
+	line-height: 22px;
+}
+
+.marquee.helpcenter .spacer {
+	-webkit-box-flex: 1;
+}
+
+/* END marquee styles */
+
+/* @end */
+
+/* @group Red Flamingo Navigation */
+
+/*=================================*/
+/* RED FLAMINGO NAV*/
+/*=================================*/
+
+/* sets position from top */
+.redflamingo .landingController #navigationView {
+	display: block;
+	min-height: 197px;
+	margin: 15px auto 0;
+	padding-top: 0;
+	width: 100%;
+}
+
+/* main nav ul */
+.redflamingo .landingController #navigationView > ul {
+	float: left;
+	height: 100%;
+	position: relative;
+	width: 100%;
+	margin: 15px 0 10px;
+	padding: 0;
+}
+.RightToLeft.redflamingo .landingController #navigationView > ul {
+	float: right;
+}
+
+.redflamingo .landingController #navigationView ul > li {
+	border-top: 1px solid #e3e3e3;
+	color: #000;
+	font-size: .70em;
+	line-height: 1.3;
+	padding: 6px 20px 7px 8px;
+	width: 133px;
+}
+.RightToLeft.redflamingo .landingController #navigationView ul > li {
+	border-right: none;
+	padding: 6px 8px 7px 20px;
+}
+/* adds gradient to li*/
+.redflamingo .landingController #navigationView ul > li.hasChildren {
+	background: 
+	url(../images/rightTOCarrow_blue.png) 145px center no-repeat,
+	-webkit-gradient(linear, 
+	0% 0%, 100% 100%, 
+	from(rgba(255, 255, 255, 0)), 
+	to(rgba(91, 161, 220, 1)));
+}
+
+.RightToLeft.redflamingo .landingController #navigationView ul > li.hasChildren {
+	background: 
+	url(../images/rightTOCarrow_blue_rtl.png) 4px center no-repeat,
+	-webkit-gradient(linear, 
+	0% 0%, 100% 100%, 
+	from(rgba(91, 161, 220, 1)), 
+	to(rgba(255, 255, 255, 0)));
+}
+.redflamingo .landingController #navigationView ul > li:first-of-type {
+	border-top: 1px solid #bcbbbb;
+}
+.redflamingo .landingController #navigationView ul > li:last-of-type {
+	border-bottom: 1px solid #bcbbbb;
+}
+/* left link default state */
+.redflamingo .landingController #navigationView ul > li.closed.hasChildren > a {
+	color: #999999;
+	text-decoration: none;
+}
+
+/* left link selected state */
+.redflamingo .landingController #navigationView ul li.hasChildren a,
+.redflamingo .landingController #navigationView ul li a {
+	color: #000;
+	text-decoration: none;
+}
+
+/* hover state on gray links only*/
+.redflamingo .landingController #navigationView ul > li.hasChildren.closed:hover {
+	text-decoration: underline;
+	color: #999999;
+}
+
+/* removes gradient when li is closed*/
+.redflamingo .landingController #navigationView ul > li.hasChildren.closed,
+.redflamingo .landingController #navigationView ul > li> ul > li {
+	background-image: none;
+}
+
+/* adds selected link arrow */
+.redflamingo .landingController #navigationView ul > li.hasChildren> a {
+	display: block;
+	position:  relative;
+	width:  99%;
+}
+
+/* adds dimmed link arrow */
+.redflamingo .landingController #navigationView ul > li.hasChildren.closed {
+	background: 
+	url(../images/rightTOCarrow.png) 145px center no-repeat;
+}
+.RightToLeft.redflamingo .landingController #navigationView ul > li.hasChildren.closed {
+	background: 
+	url(../images/rightTOCarrow_rtl.png) 4px center no-repeat;
+}
+.RightToLeft.redflamingo .landingController #navigationView ul > li > ul > li.hasChildren.closed {
+	background-image: none;
+}
+/* removes link arrow on subordinate ul li */
+.redflamingo .landingController #navigationView ul ul li,
+.redflamingo .landingController #navigationView ul ul li.hasChildren.closed {
+	background-image: none;
+}
+
+/*positions subordinate list position when visible */
+.redflamingo .landingController #navigationView ul > li.hasChildren > ul {
+	margin-left: 176px;
+	margin-right: 10px;
+	position: absolute;
+	top:  0;
+}
+.RightToLeft.redflamingo .landingController #navigationView ul > li.hasChildren > ul {
+	margin-right: 176px;
+	margin-left: 10px;
+}
+.redflamingo .landingController #navigationView ul > li.hasChildren > ul > li,
+.redflamingo .landingController #navigationView ul ul li.closed.hasChildren {
+	border:  none;
+	color:  #000;
+	font-size: 12px;
+	line-height: 16px;
+	padding: 6px 0 4px;
+	width: 100%;
+}
+.redflamingo .landingController #navigationView ul ul li.closed.hasChildren > a {
+	color:  #000 !important;
+}
+
+/* removes borders on subordinate list */
+.redflamingo .landingController #navigationView ul > li.hasChildren > ul > li > a {
+	border: none;
+}
+
+/*subordinate list hover */
+.redflamingo .landingController #navigationView ul > li.hasChildren > ul > li:hover {
+	text-decoration: underline;
+}
+
+/*hides second list when left is closed */
+.redflamingo .landingController #navigationView ul li.closed.hasChildren > ul,
+.redflamingo .landingController #navigationView ul li.closed.hasChildren > ul > li > ul {
+	display: none;
+}
+
+/*hides third list, not allowed in redflamingo */
+.redflamingo .landingController #navigationView ul ul ul {
+	display: none;
+}
+
+/* @end */
+
+/* @group App List */
+
+.applicationListController {
+	position: absolute;
+	top: 0em;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0 auto !important;
+	overflow: auto;
+	padding: 0;
+}
+.applicationListController .applist {
+	border-top: 1px solid #ccc;
+	background: #fff;
+	width:  100%;
+	display: table;
+	margin: 10px auto 12px;
+	padding: 0;
+	text-align: center;
+	margin-top: 0;
+}
+.applicationListController .applist:first-child {
+	border-top: none;
+	margin-top: 10px;
+}
+.applicationListController .moreThanTwelve {
+	-webkit-transition: height 0.5s ease-in-out;
+	overflow: hidden;
+}
+.applicationListController .closed .moreThanTwelve {
+	height: 0px;
+}
+.applicationListController .applist .title {
+	float: left;
+	font-size: 9px;
+	line-height: 10px;
+	color: #666;
+	padding: 4px 0 6px 6px;
+}
+.RightToLeft .applicationListController .applist .title {
+	float: right;
+	padding: 4px 6px 6px 0;
+}
+.applicationListController .applist .showHide {
+	color: #2c81b0;
+	float: right;
+	font-size: 9px;
+	line-height: 10px;
+	padding: 4px 6px 6px 8px;
+	text-decoration: none;
+	cursor: pointer;
+}
+.RightToLeft .applicationListController .applist .showHide {
+	float: left;
+	padding: 4px 8px 6px 6px;
+}
+.applicationListController .applist .showHide:hover {
+	text-decoration: underline;
+}
+.applicationListController .applist .clear {
+	clear: both;
+}
+.applicationListController .applist .book {
+	text-decoration: none;
+	display: inline-block;
+	/*width: 66px;*/
+	padding: 0 0 7px;
+	vertical-align: top;
+	font-size: 9px;
+	font-weight: bold;
+	line-height: 10px;
+	color: #666;
+	text-align: center;
+	width: 20%;
+	margin: auto;
+}
+
+/* gradients for 3+ lines */
+.applicationListController .applist .book > div {
+	padding: 0 3px;
+	background-image: -webkit-gradient(linear,left top,left bottom,
+		color-stop(0, #666),
+		color-stop(.25, #666),
+		color-stop(.5, transparent),
+		color-stop(1, transparent));
+	background-size: 0px 60px;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.applicationListController .applist .book img {
+	height: 32px;
+	width: 32px;
+	padding: 5px 10px 3px;
+}
+
+/* @end */
+
+/*=================================*/
+/* END LANDINGCONTROLLER*/
+/*=================================*/
+
+/* ======== css/contentviewcontroller.css ======== */
+/*=================================*/
+/* START CONTENT VIEW CONTROLLER*/
+/*=================================*/
+
+/* @group High Resolution Graphics in Content */
+
+.HighResolutionGraphics .contentView img {
+	zoom: 0.5;
+}
+
+/* @end */
+
+/* @group Content */
+
+.contentView.hidden {
+	display: none;
+}
+.landingController .contentView {
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.browse .contentView {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	margin-left: 0;
+	overflow: auto;
+	margin-left: 200px;
+	padding-top: 0;
+	position: absolute;
+	right: 0;
+}
+.RightToLeft .browse .contentView {
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 32px;
+	margin-right: 200px;
+}
+
+.flamingo2 .browse .contentView {
+	margin-left: 240px;
+	padding-top: 6px;
+}
+.RightToLeft.flamingo2 .browse .contentView {
+	padding-right: 32px;
+	margin-left: 0;
+	margin-right: 240px;
+}
+
+.ios .browse .contentView {
+	overflow: visible;
+	bottom: auto;
+}
+.browse .contentView #contentWrapper {
+	height: 100%;
+}
+.contentView .content,
+.contentView {
+	color: #333;
+	font-size: .75em;
+	line-height: 1.5;
+	min-width: 350px;
+	overflow: auto;
+	padding: 0 36px 36px;
+}
+.flamingo2 .contentView {
+	color:  #555;
+	font-size: .75em;
+	line-height: 1.5;
+	min-width: 350px;
+	overflow: auto;
+	padding: 0 32px 36px 32px;
+}
+.redflamingo .contentView {
+	color:  #555;
+	font-size: .75em;
+	line-height: 1.5;
+	min-width: 314px;
+	overflow: visible;
+	padding: 10px 23px 23px;
+}
+#lightbox .contentView .content,
+.blackflamingo #lightbox .contentView,
+.orangeflamingo #lightbox .contentView {
+	padding: 0 19px 17px 0;
+}
+.RightToLeft #lightbox .contentView .content {
+	padding: 0 30px 17px 19px;
+}
+#lightbox .contentView {
+	padding: 0 30px 17px 0;
+}
+.RightToLeft #lightbox .contentView {
+	padding: 0 30px 17px 30px;
+}
+.redflamingo #lightbox .contentView {
+	padding: 0 16px 17px 0;
+	min-width: 300px;
+}
+.RightToLeft.redflamingo #lightbox .contentView {
+	padding: 0 30px 17px 16px;
+}
+
+/* @end */
+
+/* @group Howdy Page */
+
+.browse .contentView.howdy,
+.flamingo2 .browse .contentView.howdy,
+.blackflamingo .browse .contentView.howdy,
+.orangeflamingo .browse .contentView.howdy {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding-bottom:  0;
+	padding-left: 232px;
+}
+.RightToLeft .browse .contentView.howdy,
+.RightToLeft.blackflamingo .browse .contentView.howdy,
+.RightToLeft.orangeflamingo .browse .contentView.howdy {
+	padding-left:  0;
+	padding-right:  200px;
+}
+.flamingo2 .browse .contentView.howdy {
+	padding-left: 272px;
+}
+.RightToLeft.flamingo2 .browse .contentView.howdy {
+	padding-left: 0;
+	padding-right:  272px;
+}
+.browse .contentView.howdy .apd-topic,
+.flamingo2 .browse .contentView.howdy .apd-topic,
+.blackflamingo .browse .contentView.howdy .apd-topic,
+.orangeflamingo .browse .contentView.howdy .apd-topic {
+	display:  table;
+	height:  100%;
+	padding-top: 0;
+	margin: auto;
+	text-align: center;
+	width:  100%;
+}
+.msie .contentView.howdy .apd-topic {
+	display: block;
+}
+.contentView.howdy .contentRow {
+	display: table-row;
+	height: 100%;
+	vertical-align: middle;
+}
+.msie .contentView.howdy .contentRow {
+	display: block;
+	height: 335px;
+}
+.msie.RightToLeft .contentView.howdy .contentRow {
+	display: block;
+	height: 80%;
+	height: 325px;
+}
+.browse .howdy .content .contentRow.footer {
+	height: auto;
+}
+.msie .browse .howdy .content .contentRow.footer {
+	display: block;
+	*margin-top: 25px;
+}
+.contentView.howdy .contentRow .contentCell {
+	display: table-cell;
+	vertical-align: middle;
+}
+.msie .contentView.howdy .contentRow .contentCell {
+	display: block;
+	position: relative; 
+	top: 15%;
+}
+.contentView.howdy a {
+	float: none;
+}
+.contentView.howdy .Figure,
+.contentView.howdy p.Figure {
+	text-align: center;
+	margin-bottom: 0;
+	margin-top: 2.2em;
+	padding-bottom: 0;
+}
+.contentView.howdy .content img.image,
+.contentView.howdy img.image,
+.contentView.howdy .contentRow .image {
+	text-align: center;
+	margin-bottom: 0;
+	margin-top: 5em;
+	padding-bottom: 0;
+}
+.helpviewer .contentView.howdy img image.browser-only {
+	display:none;
+}
+.contentView.howdy .Subhead > .Name,
+.contentView.howdy .contentRow div.section > h2.title  {
+	color: #000;
+	display: block;
+	font-size: 2.5em !important;
+	font-weight: normal !important;
+	letter-spacing: -.05em;
+	line-height: 1.3;
+	margin-top: -.2em;
+	margin-bottom: .2em;
+	padding-top: 0;
+}
+.blackflamingo .contentView.howdy .Subhead > .Name,
+.blackflamingo .contentView.howdy .contentRow div.section > h2.title,
+.orangeflamingo .contentView.howdy .Subhead > .Name,
+.orangeflamingo .contentView.howdy .contentRow div.section > h2.title  {
+	margin-bottom: 0;
+}
+.flamingo2 .contentView.howdy .body.conbody > div.section:first-child {
+	margin-top:  30%; /*for browser access without graphic*/
+}
+.msie .contentView.howdy .content .Subhead > .Name,
+.msie .contentView.howdy .content div.section > h2.title,
+.msie .contentView.howdy .Subhead > .Name,
+.msie .contentView.howdy .contentRow div.section > h2.title  {
+	letter-spacing: normal;
+}
+.contentView.howdy .Para,
+.contentView.howdy div.section > p.p,
+.contentView.howdy h2 + p {
+	color: #737373;
+	font-size: 1.25em;
+	line-height: 1.35em;
+	margin-bottom: 1.1em;
+	margin-top: 0;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 0;
+}
+.orangeflamingo .contentView.howdy p,
+.blackflamingo .contentView.howdy p {
+	font-size: 1.45em;
+	line-height: 1.3em;
+}
+
+/* @end */
+
+/* @group Red Flamingo Howdy Page */
+
+/*book icon only appears in Help Viewer on howdy page*/
+.redflamingo #navigationView img.bookIcon {
+    float: left;
+	height: 64px;
+	margin-top: 13px;
+	padding: 0 16px 4px 8px;
+	position:static;
+	width: 64px;
+}
+.RightToLeft.redflamingo #navigationView img.bookIcon {
+    float: right;
+	padding: 0 8px 4px 16px;
+}
+
+/* Dita sets min height for nav top position start*/
+.redflamingo .howdy {
+	border: none;
+	margin: 0 auto 0;
+	padding: 0;
+	min-height: 112px;
+	min-width: 330px;
+	width: 100%;
+}
+.redflamingo .howdy.hasMarquee {
+		min-height: 73px;
+}
+.redflamingo .howdy h1.title.topictitle1 {
+	display: none;
+}
+/* howdy title*/
+.redflamingo .contentName {
+	bottom: 0;
+	color: #000;
+	font-size: 1.1em;
+	font-weight: normal;
+	letter-spacing:  normal;
+	line-height: 1.4;
+	margin-bottom: 0;
+	min-width: 350px;
+	padding: 12px 35px 0 32px;	
+	position: relative;
+}
+.RightToLeft.redflamingo .contentName {
+	padding: 12px 32px 0 35px;	
+}
+
+/* hide the h2 in Dita and Subhead name in Sweet, use contentName instead*/
+.redflamingo .howdy h2.title,
+.redflamingo .howdy .Subhead > .Name {
+	display: none;
+}
+/* Dita and Sweet howdy subtext*/
+.redflamingo .howdy .section > p.p,
+.redflamingo .howdy .Subhead p.Para {
+	color:  #666;
+	font-size: .7em;
+	line-height: 1.3;
+	padding: 0;
+	position: relative;
+	margin: 6px 15px 0 88px;
+}
+.RightToLeft.redflamingo .howdy .section > p.p,
+.RightToLeft.redflamingo .howdy .Subhead p.Para {
+	margin: 6px 88px 0 15px;
+}
+.redflamingo #howdyPage div.body.conbody > div.section:only-child {
+	padding-left: 8px;
+	padding-top:  8px;
+}
+.RightToLeft.redflamingo #howdyPage div.body.conbody > div.section:only-child {
+	padding-left: 0;
+	padding-right: 8px;
+}
+.redflamingo #howdyPage div.body.conbody {
+	position: relative;
+	width: 100%;
+}
+.redflamingo #navigationWrapper {
+	clear: both;
+}
+/*SUPPORT LINK*/
+.section.linkTagline {
+	display: none;
+}
+.redflamingo .section.linkTagline {
+	display: block;
+	font-size: 12px;
+	font-size: 0.7em;
+	max-width: 830px;
+	min-width: 330px;
+	padding-top: 1px;
+	position: static;
+	bottom:  20px;
+}
+.redflamingo .section.linkTagline p {
+	color: #5ba1dc;
+	margin: 0;
+	text-align: left;
+	text-decoration: none;
+	padding: 0 8px 14px;
+}
+.RightToLeft.redflamingo .section.linkTagline p {
+	text-align: right;
+}
+.redflamingo .section.linkTagline a {
+	background: 
+	url(../images/supportlinkarrow.png) 
+	center right no-repeat;
+	color: #5ba1dc;
+	text-decoration: none;
+	padding-right: 12px;
+	padding-bottom: 2px;
+}
+.RightToLeft.redflamingo .section.linkTagline a {
+	background: 
+	url(../images/supportlinkarrow_rtl.png) 
+	center left no-repeat;
+	padding-left: 12px;
+	padding-right: 0;
+}
+.redflamingo .section.linkTagline a:hover {
+	text-decoration: underline;
+}
+
+/* @end */
+
+/* @group LinkAppleWebMovie */
+
+.contentView .content > .LinkAppleWebMovie img {
+	border: none;
+}
+/* @end */
+
+/* @group Custom */
+
+.contentView .custom .content {
+	padding: 0 50px;
+	position: relative;
+	text-align: center;
+	top: 20%;
+	vertical-align: middle;
+}
+.contentView .custom .content a {
+	float: none;
+}
+.contentView .custom .content .Figure {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	text-align: center;
+}
+.contentView .custom .content .Subhead > .Name {
+	display: block;
+	font-size: 2.2em !important;
+	font-weight: normal !important;
+	line-height: 1.2;
+	margin-bottom:.1em;
+	margin-top: -.2em;
+	padding-top: 0;
+}
+.contentView .custom .Para {
+	color: #737373;
+	font-size: 1.25em;
+	line-height: 1.4em;
+	margin-bottom: 1.1em;
+	margin-top: 0;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 0;
+}
+.contentView .custom .LinkCustomWeb {
+    margin-top: -.35em;
+}
+.contentView .custom span.LinkExternal {
+    display: none;
+}
+.contentView .custom .LinkCustomWeb > a:after {
+    color : #2c81b0;
+    content: "\25B6";
+	font-size : 8px !important;
+    padding-left: .35em;
+}
+.RightToLeft .contentView .custom .LinkCustomWeb > a:after {
+    padding-left: 0;
+    padding-right: .35em;
+}
+.contentView .custom >.contentAlternativeName,
+.contentView .custom >.contentName,
+.contentView .custom  div.Feedback {
+	display: none;
+}
+
+/* @end */
+
+/* @group Typography */
+
+/* @group Content Header */	
+
+/*=================================*/
+/* BOOK ICON
+/*=================================*/
+.flamingo2 .contentIcon > img.bookIcon {
+	display: block;
+	float: left;
+	height: 32px;
+	left: 32px;
+	/*margin-bottom:  10px;*/
+	margin-top: 0px;
+	margin-left: -1px;
+	position: relative;
+	top: .875em;
+	width: 32px;
+	padding: 0 40px 0 0;
+}
+.RightToLeft.flamingo2 .contentIcon > img.bookIcon {
+	float: right;
+	left: 0;
+	margin-left: 0;
+	margin-right: -1px;
+	padding: 0;
+}
+.default .contentIcon > img.bookIcon,
+.blueflamingo .contentIcon > img.bookIcon,
+.blackflamingo .contentIcon > img.bookIcon,
+.orangeflamingo .contentIcon > img.bookIcon {
+	display: none;
+}
+.flamingo2 .contentView .contentIcon > img.bookIcon {
+	display: block;
+	float: left;
+	height: 32px;
+	left: 0;
+	margin-bottom:  10px;
+	margin-top: 0;
+	margin-left: -1px;
+	position: relative;
+	top: .875em;
+	width: 32px;
+	padding: 4px 8px 0 0;
+}
+.RightToLeft.flamingo2 .contentView .contentIcon > img.bookIcon {
+	float: right;
+	right:  0;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-right: -1px;
+	padding: 4px 0 0 8px;
+}
+#lightbox .contentIcon,
+.flamingo2 .howdy .contentIcon,
+.flamingo2 .contentView.howdy .contentIcon,
+.blackflamingo .howdy .contentIcon,
+.blackflamingo .contentView.howdy .contentIcon,
+.orangeflamingo .howdy .contentIcon,
+.orangeflamingo .contentView.howdy .contentIcon,
+.contentNotAvailableMessage .contentIcon {
+	display: none;
+}
+/*content page book icon only appears in Help Viewer*/
+.redflamingo .contentView .contentIcon > img.bookIcon {
+	display: block;
+	float: left;
+	height: 32px;
+	left: 0;
+	margin-bottom:  10px;
+	margin-top: -1px;
+	margin-left: -1px;
+	position: relative;
+	top: .875em;
+	width: 32px;
+	padding: 0 8px 0 0;
+	/*padding: 0 .25em 0 0;*/
+}
+.RightToLeft.redflamingo .contentView .contentIcon > img.bookIcon {
+	float: right;
+	right: 0;
+	margin-left: 0;
+	margin-right: -1px;
+	padding: 0 0 0 8px;
+	/*padding: 0 .25em 0 0;*/
+}
+.contentIcon:empty {
+	display:  none;
+}
+
+/*=================================*/
+/*END BOOK ICOM
+/*=================================*/
+
+/* hides contentName on howdy */
+.contentView.howdy .contentName {
+	display: none;
+}
+/* page header */
+.contentName, 
+.contentView .contentName {
+	bottom: 0;
+	color: #000;
+	font-weight: bold;
+	font-size: 1.35em;
+	line-height: 1.25;
+	letter-spacing: normal;
+	margin-bottom: 0;
+	min-width: 350px;
+	padding: 22px 35px 0 0;
+	position: relative;
+}
+.default .contentName,
+.blueflamingo .contentName {
+	padding-bottom: 3px;
+}
+.RightToLeft .contentName, 
+.RightToLeft .contentView .contentName {
+	padding: 22px 0 0 35px;
+}
+.flamingo2 .contentName,
+.flamingo2 .contentName,
+.flamingo2 .contentView .contentName,
+.redflamingo .contentView .contentName {
+	font-size: 1.1em;
+	font-size: 1.5em;
+	font-weight: normal;
+	line-height: 1.4;
+	margin-bottom: 0.7em;
+	padding: 18px 35px 0 32px;	
+	padding: 18px 35px 0 0;
+	overflow:  auto;
+}
+.RightToLeft.flamingo2 .contentName,
+.RightToLeft.flamingo2 .contentView .contentName,
+.RightToLeft.redflamingo .contentView .contentName {
+	padding: 18px 0 0 35px;	
+}
+.redflamingo .contentView .contentName {
+	padding: 13px 35px 0 0;
+	min-width: 314px;
+}
+.RightToLeft.redflamingo .contentView .contentName {
+	padding: 13px 0 0 35px;
+}
+.redflamingo .contentWrapper .contentName {
+	padding: 4px 35px 0 0;
+}
+.RightToLeft.redflamingo .contentWrapper .contentName {
+	padding: 4px 0 0 35px;
+}
+/*.redflamingo #contentName {
+	padding: 4px 15px 0 23px;
+}
+.redflamingo #contentIcon + #contentName + #content {
+	clear: both;
+}*/
+h1.title {
+	display: none;
+}
+.contentAlternativeName {
+	bottom: 0;
+	color: #8a8a8a;
+	font-size: .75em;
+	font-weight: normal;
+	line-height: 1.35;
+	padding: 27px 35px 0 37px;
+}
+.RightToLeft .contentAlternativeName {
+	padding: 27px 37px 0 35px;
+}
+.contentAlternativeName +.contentName {
+	padding-top: 0;
+}
+#lightbox .contentName {
+	bottom: 0;
+	color:  black;
+	/*font-size: .9em;
+	font-weight: bold;
+	line-height: 1.45em;*/
+	margin-bottom: 0;
+	padding: 0;
+}
+.flamingo2 #lightbox .contentName,
+.flamingo2 #lightbox .contentView .contentName,
+.redflamingo #lightbox .contentName,
+.redflamingo #lightbox .contentView .contentName {
+	font-size: 1.2em;
+	font-weight: normal;
+	line-height: 1.4em;
+}
+
+/* @end */
+
+
+/* @group Content Not Available */
+.contentNotAvailableMessage .contentName,
+.contentNotAvailableMessage .contentAlternativeName,
+.contentNotAvailableMessage .Feedback {
+	display: none;
+}
+.redflamingo .contentView .contentNotAvailableMessage {
+	min-width: 314px;
+	overflow: visible;
+	padding: 10px 23px 23px;
+}
+.redflamingo .contentNotAvailableMessage h1.title {
+	display: block;
+	background-image: url(../images/xicnhv.png);
+	background-repeat: no-repeat;
+	background-position: 0 15px;
+	border: none;
+	color:  #000;
+	margin-top: -6px;
+	min-width: 300px;
+	font-size: 1.5em;
+	font-size: 1.5em;
+	font-weight: normal;
+	line-height: 1.4;
+	margin-bottom: 0.7em;
+	padding-top: 19px;
+	padding-bottom: 32px;
+	padding-left: 40px;
+}
+.redflamingo .contentNotAvailableMessage .body.conbody {
+	margin-top: -32px;
+}
+
+.contentNotAvailableMessage div.content#content,
+.contentNotAvailableMessage div.content#lightboxContent {
+	display: table;
+	margin: 0 auto;
+	padding: 28px;
+	width: 448px;
+}
+.flamingo2 .contentNotAvailableMessage div.content#content,
+.flamingo2 .contentNotAvailableMessage div.content#lightboxContent {
+	padding: 0;
+	min-width: 350px;
+	margin-top: -6px;
+	width: auto;
+}
+.contentNotAvailableMessage .Subhead {
+	border: 1px solid #eaeaea;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	padding: 30px;
+    -webkit-box-shadow: 0em 0.1em 0.25em #cccccc;
+}
+.flamingo2 .contentNotAvailableMessage .Subhead {
+	background-image: url(../images/xicnhv.png);
+	background-repeat: no-repeat;
+	background-position: 0 21px;
+	border: none;
+	margin-top: -6px;
+	min-width: 350px;
+	padding: 26px 32px 32px 0;
+    -webkit-box-shadow: none;
+}
+.RightToLeft.flamingo2 .contentNotAvailableMessage .Subhead {
+	padding: 26px 0 32px 32px;
+}
+.contentNotAvailableMessage .Subhead .Name {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 18px;
+	margin-top: 0 !important;
+}
+.flamingo2 .contentNotAvailableMessage .Subhead .Name {
+	font-size: 18px;
+	font-weight: normal;
+	line-height: 24px;
+	margin-left: 40px;
+}
+.RightToLeft.flamingo2 .contentNotAvailableMessage .Subhead .Name {
+	margin-left: 0;
+	margin-right: 40px;
+}
+.contentNotAvailableMessage .Subhead .Name + .Para {
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 18px;
+	margin-top: .65em !important;
+	padding-top: 0;
+}
+.flamingo2 .contentNotAvailableMessage .Subhead .Name + .Para {
+	margin-top: 1em !important;
+}
+.contentNotAvailableMessage p.LinkCustomWeb {
+	margin-top: 1.25em;
+	text-align: center;
+}
+.flamingo2 .contentNotAvailableMessage p.LinkCustomWeb {
+	margin-top: 1.5em;
+	text-align: left;
+}
+.RightToLeft.flamingo2 .contentNotAvailableMessage p.LinkCustomWeb {
+	text-align: right;
+}
+.contentNotAvailableMessage p.LinkCustomWeb > a:link {
+	background-image: 
+	-webkit-gradient(linear, 0% 0%, 0% 100%, to(#c8c8c8), from(#d7d7d7));
+	border-radius: 18px;
+	color: #ffffff;
+	font-size: 11px;
+	padding: 3px 12px 4px 12px;
+	-webkit-border-radius: 18px;
+}
+
+/* @end */
+/* @group Alerts */	
+
+.contentView li p.Note, 
+.contentView li p.Important, 
+.contentView li p.Notice, 
+.contentView li p.Caution, 
+.contentView li p.Tip {
+	margin-top: .75em; 
+}
+.contentView span.Note, 
+.contentView span.Tip, 
+.contentView span.Important, 
+.contentView span.Warning {
+	font-size: 100%;
+    font-weight: bold;
+    margin-right: -.25em;
+}
+.RightToLeft .contentView span.Note, 
+.RightToLeft .contentView span.Tip, 
+.RightToLeft .contentView span.Important, 
+.RightToLeft .contentView span.Warning {
+	float: right;
+    margin-right: 0;
+    margin-left: -.25em;
+}
+div.note.note > span.notetitle, 
+div.note.tip > span.tiptitle, 
+div.note.attention > span.attentiontitle, 
+div.note.caution > span.cautiontitle, 
+div.note.important > span.importanttitle, 
+div.dangertitle, 
+div.warningtitle,
+div.note.warning > span.warningtitle {
+	font-size: 100%;
+    font-weight: bold;
+    display:  inline;
+   /* margin-right: .35em;*/
+}
+
+.RightToLeft div.note.note > span.notetitle, 
+.RightToLeft div.note.tip > span.tiptitle, 
+.RightToLeft div.note.attention > span.attentiontitle, 
+.RightToLeft div.note.caution > span.cautiontitle, 
+.RightToLeft div.note.important > span.importanttitle, 
+.RightToLeft div.dangertitle, 
+.RightToLeft div.warningtitle,
+.RightToLeft div.note.warning > span.warningtitle {
+    float:  right;
+    margin-left: .25em;
+}
+div.note.note > span.notetitle + p {
+	display: inline;
+    margin-left: .35em;
+}
+.RightToLeft div.note.note > span.notetitle + p {
+	display: inline;
+    margin-right: .25em;
+}
+div.note.note > span.notetitle + p + p {
+	margin-top: .7em;
+}
+.contentView span.Warning {
+    text-transform: uppercase;
+}
+div.dangertitle, 
+div.note.warningtitle, 
+span.note.warning, 
+div.note.warning > span.warningtitle {
+    display: inline !important;
+    text-transform: uppercase;
+    margin-right: 0;
+}
+RightToLeft div.dangertitle, 
+RightToLeft div.note.warningtitle, 
+RightToLeft span.note.warning, 
+RightToLeft div.note.warning > span.warningtitle {
+    margin-left: 0;
+}
+div.note.danger {
+	display: inline !important;
+}
+.contentView .Task .Alert,
+div.note {
+	margin-bottom: .75em;
+	margin-top: .75em;
+}
+.contentView p.Warning {
+	margin-bottom:.75em;
+}
+.content > .Alert,
+.contentView .Alert + .Alert {
+	margin-top: .75em;
+}
+.contentView .yNote {
+	font-style: italic;
+	font-weight: bold; 
+}
+
+/* @end */
+
+/* @group Code */
+
+.contentView .CodeLines,
+.contentView p.CodeLine {
+	font-family:"Courier New", Courier, monospace;
+	font-size: 13px;
+	margin-bottom:.75em;
+	margin-top:.25em;
+}
+.contentView p.CodeLine {
+	margin-bottom:.25em;
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+pre.codeblock, 
+pre.pre, 
+samp.ph.codeph, 
+tt.ph.systemoutput, 
+kbd.ph.userinput, 
+.keyword.cmdname, 
+.systemoutput, 
+.codeph {
+	font-family:Courier, "Courier New", monospace;
+	font-size: 12px;
+	line-height: 1.75;
+	margin-bottom:.25em;
+	margin-top: .25em; 
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+pre.codeblock + p, 
+pre.pre + p, 
+samp.ph.codeph + p, 
+tt.ph.systemoutput + p, 
+kbd.ph.userinput + p, 
+.keyword.cmdname + p, 
+.systemoutput + p, 
+.varname + p, 
+.codeph + p {
+	margin-top: .9em; 
+}
+.varname {
+	font-style: italic;
+}
+/*indent for code in single list */
+.li.step.p > span.ph.cmd + pre.pre {
+	margin-left: 1.85em;
+}	
+
+td > pre,
+td > pre.codeblock {
+	font-family:Courier, "Courier New", monospace;
+	font-size: 11px !important;
+	margin-bottom: .25em;
+	margin-top: -.25em; 
+	padding: 0;
+}
+td > p > .keyword.varname {
+	font-style: italic;
+	font-size: 11px !important;
+}
+.contentView li > .CodeLines {
+	margin-bottom: 1em;
+	margin-top: .25em;
+}
+.contentView li > .CodeLines > .CodeLine {
+	font-family:"Courier New", Courier, monospace; 
+	font-size: 13px;
+	margin-bottom: .25em;
+	margin-top: .25em;
+}
+.contentView li > .CodeLines + .Para {
+	margin-top: -.35em !important;
+}
+.contentView ol > li > .CodeLines > .CodeLine {
+	font-family:"Courier New", Courier, monospace; 
+	font-size: 13px;
+	margin-bottom: .25em;
+	margin-top: .25em;
+}
+.contentView .CodeBody  {
+	font-family:"Courier New", Courier, monospace;
+	font-size: 13px;
+}
+.contentView .CodeEmphasis {
+	font-family:"Courier New", Courier, monospace;
+	font-size: 13px; 
+	font-style: italic; 
+	font-weight: normal;
+	padding-right: 2px;
+}
+.RightToLeft .contentView .CodeEmphasis {
+	padding-left: 2px;
+	padding-right: 0;
+}
+.contentView .CodeLine .CodeEmphasis {
+	font-family:"Courier New", Courier, monospace;
+	font-weight: normal;
+	font-size: 13px; 
+	font-style: italic; 
+	padding-right:0;
+}
+.RightToLeft .contentView .CodeLine .CodeEmphasis {
+	padding-left: 0;
+}
+.contentView .CodeEmphasisDisplay {
+	font-family:"Courier New", Courier, monospace;
+	font-size:13px;
+	font-weight: bold;
+}
+.contentView .CodeUnderline {
+	font-family:"Courier New", Courier, monospace;
+	font-size: 13px;
+	text-decoration:underline;
+}
+
+/* @end */
+
+/* @group Comments */
+
+.comment, 
+.ConditionComment {
+	color: red;
+	margin-bottom: .8em;
+	margin-top: .7em;
+}
+.comment:before, 
+.ConditionComment:before {
+	content: "COMMENT: ";
+	font-size: 90%;
+	font-weight: bold;
+}
+li > .comment, li > .ConditionComment,
+ol li > .comment, 
+li > .ConditionComment,
+.ListBullet li > .comment, 
+.ListBullet li > .ConditionComment, 
+.ListSingle li > .comment, 
+.ListSingle li > .ConditionComment {
+	margin-bottom: .8em;
+	margin-left: .25em;
+}
+.RightToLeft li > .comment, li > .ConditionComment,
+.RightToLeft ol li > .comment, 
+.RightToLeft li > .ConditionComment,
+.RightToLeft .ListBullet li > .comment, 
+.RightToLeft .ListBullet li > .ConditionComment, 
+.RightToLeft .ListSingle li > .comment, 
+.RightToLeft .ListSingle li > .ConditionComment {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.ListNumber li > .comment {
+	margin-left: 0;
+}
+.RightToLeft .ListNumber li > .comment {
+	margin-right: 0;
+}
+.Task > .comment {
+	margin-left: 1.25em;
+}
+.RightToLeft .Task > .comment {
+	margin-left: 0;
+	margin-right: 1.25em;
+}
+.ListBullet li > .comment, 
+.ListBullet li > .ConditionComment, 
+.ListSingle li > .comment, 
+.ListSingle li > .ConditionComment {
+	margin-left: 0;
+}
+.RightToLeft .ListBullet li > .comment, 
+.RightToLeft .ListBullet li > .ConditionComment, 
+.RightToLeft .ListSingle li > .comment, 
+.RightToLeft .ListSingle li > .ConditionComment {
+	margin-right: 0;
+}
+.ListBullet li > div.comment, 
+.ListBullet li > div.ConditionComment,
+.ListSingle > li > .ListDescriptor li > .comment,
+.ListSingle > li > .ListDescriptor li > .div.ConditionComment,
+.ListNumber > li > .ListDescriptor li > .comment,
+.ListNumber > li > .ListDescriptor li > .div.ConditionComment {
+	margin-left: .25em;
+}
+.RightToLeft .ListBullet li > div.comment, 
+.RightToLeft .ListBullet li > div.ConditionComment,
+.RightToLeft .ListSingle > li > .ListDescriptor li > .comment,
+.RightToLeft .ListSingle > li > .ListDescriptor li > .div.ConditionComment,
+.RightToLeft .ListNumber > li > .ListDescriptor li > .comment,
+.RightToLeft .ListNumber > li > .ListDescriptor li > .div.ConditionComment {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.ListSingle li > div.comment, 
+.ListSingle li > div.ConditionComment {
+	margin-left: .5em;
+}
+.RightToLeft .ListSingle li > div.comment, 
+.RightToLeft .ListSingle li > div.ConditionComment {
+	margin-left: 0;
+	margin-right: .5em;
+}
+div.draft-comment {
+	background-color: white !important;
+	border:  none !important;
+	color:  red;
+}
+div.draft-comment:before {
+	content: "COMMENT: ";
+	font-size: 90%;
+	font-weight: bold;
+}
+.RightToLeft div.draft-comment:before {
+	content: "COMMENT: ";
+	font-size: 90%;
+	font-weight: bold;
+	float: right;
+	padding-top: 1px;
+	margin-left: 3px;
+}
+.RightToLeft td div.draft-comment:before {
+	content: "COMMENT: ";
+	font-size: 90%;
+	font-weight: bold;
+	float: right;
+	padding-top: 2px;
+	margin-left: 3px;
+}
+div.draft-comment > strong {
+	display: none;
+}
+.shortdesc + div.draft-comment {
+	display: inline; 
+}
+
+/* @end */
+
+/* @group Copyright Tagline */
+
+.contentView div.copyrightTagline {
+	color: #999 !important;
+	font-size: 9px;
+	line-height: 12px;
+	margin-right:.25em;
+	margin-top: 1px;
+	padding-top: 0;
+	text-align: left;
+}
+.RightToLeft .contentView div.copyrightTagline {
+	margin-left:.25em;
+	margin-right:0;
+	text-align: right;
+}
+#lightbox .contentView div.copyrightTagline {
+	display: none;
+}
+/*DITA landing page*/
+#navigationWrapper + div.copyrightTagline .body.conbody > .p.copyrightTagline {
+	margin-left: 8px;
+	margin-top: .75em;
+}
+.RightToLeft #navigationWrapper + div.copyrightTagline .body.conbody > .p.copyrightTagline {
+	margin-left: 0;
+	margin-right: 8px;
+}
+
+.contentView .howdy div.copyrightTagline,
+.contentView.howdy div.copyrightTagline {
+	margin-top: 7px;
+	padding-bottom: 28px;
+	text-align: center;
+}
+.contentView.howdy div.copyrightTagline > p,
+.flamingo2 .contentView.howdy div.copyrightTagline p,
+.orangeflamingo .contentView.howdy .copyrightTagline p,
+.blackflamingo .contentView.howdy .copyrightTagline p {
+	color: #999 !important;
+	font-size: 9px !important;
+	line-height: 12px;
+	margin-bottom: 0;
+	margin-top: 0px;
+	padding-left: 0!important;
+	padding-right: 0 !important;
+	padding-top: 0px;
+}
+#navigationView .copyrightTagline {
+	color: #999;
+	font-size: 9px !important;
+	line-height: 12px;
+	padding: 0;
+	margin: 0 0 6px 4px;
+}
+.RightToLeft #navigationView .copyrightTagline {
+	margin: 0 4px 6px 0;
+}
+
+
+/* @end */
+
+/* @group Feedback */
+
+#lightbox .Feedback,
+.howdy .Feedback {
+	display: none;
+}
+div.Feedback {
+	font-size: 85%;
+	margin-top: 1.5em;
+}
+span.LinkFeedback {
+	margin-right: 2px;
+}
+.RightToLeft span.LinkFeedback {
+	float:  right;
+	margin-right: 0;
+	margin-left: 2px;
+}
+
+/* @end */
+
+/* @group Figure */
+
+.contentView > p.Figure:first-child {
+	padding-top: 0;
+}
+.contentView p.Figure {
+	margin-bottom: .9em;
+	margin-top: 1.25em;
+}
+/*.contentView li > ul > li > p.Figure,
+.contentView li > ol > li > p.Figure {
+	margin-left: .25em;
+}
+.RightToLeft .contentView li > ul > li > p.Figure,
+.RightToLeft .contentView li > ol > li > p.Figure {
+	margin-left: 0;
+	margin-right: .25em;
+}*/
+.contentView p.Para > img.inlineGraphic, 
+img.inlineGraphic {
+	display: inline; 
+	margin-top: -.4em;
+	padding: 0 .15em 0;
+	position: relative;
+	vertical-align: middle;
+	z-index: 1;/* prevents pushing bullets and numbers down */
+}
+.contentView img.image {
+	margin-bottom: .5em;
+	margin-top: .5em;
+	padding: 0;
+}
+.contentView span > img.image, 
+.contentView p > img.image {
+	display: inline;
+	margin-bottom: 0;
+	vertical-align: text-bottom;
+}
+.helpviewer .browser-only {
+	display:none;
+}
+
+/* @end */
+
+/* @group HIStrings */
+
+.contentView > ul.HIStrings-child {
+	margin-top: .65em;
+	padding-top: 0;
+}
+.contentView ul.HIStrings {
+	list-style-type: none; 
+	margin-bottom:.25em;
+	margin-left: 0;
+	margin-top: 0;
+	padding-left: 0;
+}
+.RightToLeft .contentView ul.HIStrings {
+	margin-right: 0;
+	padding-right: 0;
+}
+.contentView ul.HIStrings > li {
+	list-style-type: none; 
+	margin-bottom: .25em;
+	margin-top: .25em;
+}
+.contentView ul.HIStrings > li > ul.HISubString {
+	list-style-type: disc; 
+	margin-left: -1.5em;
+	margin-bottom: .25em;
+	margin-top: .25em;
+}
+.RightToLeft .contentView ul.HIStrings > li > ul.HISubString {
+	margin-left: 0;
+	margin-right: -1.5em;
+}
+.contentView ul.HIStrings > li > ul.HISubString li > ul.HISubString {
+	list-style-type: none; 
+	margin-left: -3.35em;
+	margin-bottom: .25em;
+	margin-top: .25em;
+}
+.RightToLeft .contentView ul.HIStrings > li > ul.HISubString li > ul.HISubString {
+	margin-left: 0;
+	margin-right: -3.35em;
+}
+.contentView ul.HIStrings li > p.Para {
+	font-size: 100%!important;
+}
+.contentView ul.HIStrings + ul.HIStrings {
+	margin-top:.5em;
+}
+	
+/* @end */
+
+/* @group inline */
+
+.contentView .Emphasis, 
+cite.cite, 
+i, 
+em.ph.i {
+	font-style: italic; 
+	font-weight: normal;
+}
+.contentView .EmphasisDisplay {
+	font-weight: bold;
+}
+b,
+.uicontrol, 
+.wintitle, 
+.menucascade, 
+.option {
+	font-weight: normal;
+}
+/* @end */
+
+/* @group Links */
+
+.contentView a:link, 
+.contentView a:visited, 
+.contentView p.Para a:link, 
+.contentView p.Para a:visited {
+	color: #2c81b0; 
+	line-height:inherit; 
+	outline: none;
+	position: relative;
+	text-decoration: none; 
+}
+.contentView a:hover, 
+.contentView p.Para a:hover {
+	text-decoration: underline;
+}
+.contentView .LinkTopicPage, 
+.contentView .LinkSubjectAnchor, 
+.contentView .LinkAppleWeb, 
+.contentView .LinkHandBuilt {
+	margin-bottom: 0;
+	margin-top: .2em;
+}
+		
+.blackflamingo .contentView a:link, 
+.blackflamingo .contentView a:visited, 
+.blackflamingo .contentView p.Para a:link, 
+.blackflamingo .contentView p.Para a:visited,
+.orangeflamingo .contentView a:link, 
+.orangeflamingo .contentView a:visited, 
+.orangeflamingo .contentView p.Para a:link, 
+.orangeflamingo .contentView p.Para a:visited {
+	color: #0a8de9; 
+}
+.contentView .LinkInternal, 
+.contentView .LinkExternal, 
+.contentView .LinkUniversal {
+	margin-top: 1.25em;
+}
+.contentView span.LinkInternal, 
+.contentView span.LinkExternal, 
+.contentView span.LinkUniversal {
+	color: #555;
+    display: block;
+    font-size: 85%;
+    font-weight: bold;
+    margin-bottom: .45em;
+    margin-top: 1.3em;
+    text-transform: uppercase;
+}
+
+/* @end */
+
+/* @group LinkAppleWebMovie */
+
+.LinkAppleWebMovie,
+.TaskWrapper .LinkAppleWebMovie {
+	-webkit-border-bottom-left-radius: .45em .45em;
+	-webkit-border-bottom-right-radius: .45em .45em;
+	-webkit-border-top-left-radius: .45em .45em;
+	-webkit-border-top-right-radius: .45em .45em;
+
+	background-image: 
+          -webkit-gradient(linear,
+            left top, left bottom,
+            color-stop(0, #efefef),
+            color-stop(0.05, #fefefe), 
+            color-stop(0.4, #fff),
+            color-stop(0.8, #fefefe),
+            color-stop(0.92, #f6f6f6),
+            color-stop(0.97, #efefef)
+          );
+	-webkit-background-origin: border;
+	border-color: #e4e4e4;
+	border-style: solid;
+	border-width: 1px;
+	margin: 1.7em 0 2.1em;
+	padding: .8em 1.5em .95em .5em;
+}
+.RightToLeft .LinkAppleWebMovie, 
+.RightToLeft .TaskWrapper .LinkAppleWebMovie {
+	padding: .8em .5em .95em 1.5em;
+}
+
+.content .LinkAppleWebMovie > a,
+.contentView .LinkAppleWebMovie > a {
+	background-image: url(../images/movie-play.png);
+	background-repeat: no-repeat;
+	background-position: 0px 1px;
+	cursor: pointer;
+	min-height:  29px;
+	min-width:  33px;
+}
+.flamingo2 .content .LinkAppleWebMovie > a,
+.flamingo2 .contentView .LinkAppleWebMovie > a {
+	margin-left: 0;
+}
+.RightToLeft.flamingo2 .content .LinkAppleWebMovie > a,
+.RightToLeft.flamingo2 .contentView .LinkAppleWebMovie > a {
+	margin-right: 0;
+}
+.flamingo2 .LinkAppleWebMovie,
+.flamingo2 .TaskWrapper .LinkAppleWebMovie {
+	background-image: none;
+	border-bottom:  1px solid #e4e4e4;
+	border-left: none;
+	border-right: none;
+	border-top: 1px solid #e4e4e4;
+	padding: .85em 1.5em .75em 0em;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	margin: 1.15em 0 1.5em;
+}
+.RightToLeft.flamingo2 .LinkAppleWebMovie,
+.RightToLeft.flamingo2 .TaskWrapper .LinkAppleWebMovie {
+	padding: .85em 0 .75em 1.5em;
+}
+.flamingo2 .TaskWrapper .LinkAppleWebMovie {
+	margin: .6em -1.25em 1.15em 1.25em;
+}
+.RightToLeft.flamingo2 .TaskWrapper .LinkAppleWebMovie {
+	margin: .6em 1.25em 1.15em -1.25em;
+}
+.flamingo2 .content > .LinkAppleWebMovie + div.TaskWrapper,
+.flamingo2 .contentView > .LinkAppleWebMovie + div.TaskWrapper {
+	margin-top: 10px;
+}
+.LinkAppleWebMovie > a, 
+.contentView > .TaskWrapper .LinkAppleWebMovie > a {
+	float: left;
+	margin-left: .25em;
+	margin-top: .15em;
+}
+.RightToLeft .LinkAppleWebMovie > a, 
+.RightToLeft .contentView > .TaskWrapper .LinkAppleWebMovie > a {
+	float: right;
+	margin-left: 0;
+	margin-right: .25em;
+}
+.LinkAppleWebMovie > a + p.Para, 
+.contentView > .TaskWrapper .LinkAppleWebMovie > a + p.Para {
+	font-style: normal !important;
+	font-weight: normal !important;
+	line-height: 1.2em;
+	margin-bottom: .2em;
+	margin-left: 3.25em;
+	margin-top: 0;
+	padding: 0;
+}
+.RightToLeft .LinkAppleWebMovie > a + p.Para, 
+.RightToLeft .contentView > .TaskWrapper .LinkAppleWebMovie > a + p.Para {
+	margin-left: 0;
+	margin-right: 3.25em;
+}
+.content > .LinkAppleWebMovie:first-child,
+.contentView > .LinkAppleWebMovie:first-child {
+	margin-top: 1em;
+}
+.flamingo2 .contentName + .LinkAppleWebMovie{
+	margin-top: 1.35em;
+	margin-bottom: 1.15em;
+}
+.flamingo2 .LinkAppleWebMovie p.Para, 
+.flamingo2 .contentView > .TaskWrapper .LinkAppleWebMovie p.Para {
+	color: #555;
+	font-size: 85%;
+	font-weight: normal;
+	line-height: 1.7;
+	margin-bottom: 0;
+	margin-left: 40px;
+}
+.RightToLeft.flamingo2 .LinkAppleWebMovie p.Para, 
+.RightToLeft.flamingo2 .contentView > .TaskWrapper .LinkAppleWebMovie p.Para {
+	margin-left: 0;
+	margin-right: 40px;
+}
+.LinkAppleWebMovie > p.Para > span.EmphasisDisplay {
+	font-style: normal;
+	font-weight: bold;
+}
+.flamingo2 .LinkAppleWebMovie > p.Para > span.EmphasisDisplay {
+	font-style: normal;
+	font-weight: normal;
+}
+.LinkAppleWebMovie > .LinkAppleWeb a, 
+.TaskWrapper .LinkAppleWebMovie > .LinkAppleWeb a {
+	display: block;
+	line-height: 1.2em;
+	margin-left: 3.25em;
+	margin-top: 0;
+}
+.RightToLeft .LinkAppleWebMovie > .LinkAppleWeb a, 
+.RightToLeft .TaskWrapper .LinkAppleWebMovie > .LinkAppleWeb a {
+	margin-left: 0;
+	margin-right: 3.25em;
+}
+.flamingo2 .LinkAppleWebMovie > p.LinkAppleWeb > a,
+.flamingo2 .TaskWrapper .LinkAppleWebMovie > .LinkAppleWeb a {
+	color: #2c81b0;
+	font-weight: bold;
+	line-height: 1;
+}
+.flamingo2 .LinkAppleWebMovie > p.LinkAppleWeb {
+	margin-top: .1em !important;
+}
+.msie div.Task > .LinkAppleWebMovie > a > img.play {
+	border: none;
+}
+.contentView > .LinkAppleWebMovie:first-child {
+	margin-top: 1em;
+}
+.contentView > .LinkAppleWebMovie + .Para {
+	margin-top: -.35em;
+}	
+.LinkAppleWebMovie + .LinkAppleWebMovie {
+	margin-top: -1.1em;
+}
+
+/* @end */
+
+
+/* @group ListBullet */
+
+.contentView ul.ListBullet {
+	list-style-type: none; 
+	margin-bottom: .9em;
+	margin-left: 1.5em;
+	margin-top: .3em;
+	padding-left: 0;
+}
+.RightToLeft .contentView ul.ListBullet {
+	margin-left: 0;
+	margin-right: 1.5em;
+	padding-right: 0;
+}
+.contentView ul.ListBullet > li {
+	list-style: disc; 
+	margin-bottom: .9em;
+	margin-top: .3em; 
+}
+.contentView ul.ListBullet li > p.Para,
+.contentView ul.ListBullet li > .Alert,
+.contentView ul.ListBullet li > .Figure {
+	margin-left: .25em;
+}
+.RightToLeft .contentView ul.ListBullet li > p.Para,
+.RightToLeft .contentView ul.ListBullet li > .Alert,
+.RightToLeft .contentView ul.ListBullet li > .Figure {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.orangeflamingo .contentView ul.ListBullet,
+.blackflamingo .contentView ul.ListBullet {
+	font-size: 100%; 
+	font-weight: normal;
+	list-style-position: outside;
+	list-style: disc; 
+	margin-bottom: .9em;
+	margin-left: 1.5em;
+	margin-top: .3em;
+}
+.RightToLeft.orangeflamingo .contentView ul.ListBullet,
+.RightToLeft.blackflamingo .contentView ul.ListBullet {
+	margin-left: 0;
+	margin-right: 1.5em;
+}
+.orangeflamingo .contentView ul.ListBullet li > p.Para,
+.blackflamingo .contentView ul.ListBullet li > p.Para {
+	font-size: 12px;
+	margin-bottom: .5em;
+	margin-top: .7em;
+}
+.orangeflamingo .contentView ul.ListBullet li > .Alert,
+.blackflamingo .contentView ul.ListBullet li > .Alert {
+	font-size: 12px;
+}
+.contentView ul.ListBullet li ul.ListBullet {
+	margin-left: 1.5em;
+}
+.RightToLeft .contentView ul.ListBullet li ul.ListBullet {
+	margin-left: 0;
+	margin-right: 1.5em;
+}
+.contentView .Task > ul.ListBullet {
+	margin-top: .7em;
+	margin-left: 1em;
+}
+.RightToLeft .contentView .Task > ul.ListBullet {
+	margin-left: 0;
+	margin-right: 1em;
+}
+.blueflamingo .contentView .Task > ul.ListBullet,
+.default .contentView .Task > ul.ListBullet {
+	margin-left: 1.65em;
+}
+.RightToLeft.blueflamingo .contentView .Task > ul.ListBullet,
+.RightToLeft.default .contentView .Task > ul.ListBullet {
+	margin-left: 0;
+	margin-right: 1.65em;
+}
+.redflamingo .contentView .Task > ul.ListBullet {
+	margin-top: .7em;
+	margin-left: 1.15em;
+}
+.RightToLeft.redflamingo .contentView .Task > ul.ListBullet {
+	margin-left: 0;
+	margin-right: 1.15em;
+}
+.flamingo2 .contentView .Task > ul.ListBullet {
+	margin-bottom: .9em;
+	margin-top: .3em;
+	margin-left: 2.25em;
+}
+.RightToLeft.flamingo2 .contentView .Task > ul.ListBullet {
+	margin-left: 0;
+	margin-right: 2.25em;
+}
+.contentView .Task > ul.ListBullet > li {
+    margin-bottom: .9em;
+	margin-left: .5em;
+	margin-top: .3em;
+}
+.RightToLeft .contentView .Task > ul.ListBullet > li {
+	margin-left: 0;
+	margin-right: .5em;
+}
+.contentView .Task > ul.ListBullet > li > ul.ListBullet {
+	margin-left: 1.5em;
+}
+.RightToLeft .contentView .Task > ul.ListBullet > li > ul.ListBullet {
+	margin-left: 0;
+	margin-right: 1.5em;
+}
+.contentView .Task > ul.ListBullet > li > ol{
+	margin-left: 1.75em;
+}
+.RightToLeft .contentView .Task > ul.ListBullet > li > ol{
+	margin-left: 0;
+	margin-right: 1.75em;
+}
+
+/* @end */
+
+/* @group Dita List */
+
+ul.ul.choices, 
+ul.ul.steps-unordered, 
+ul.ul, 
+ul.sl.simple {
+	font-size: 100%; 
+	font-weight: normal;
+	list-style-position: outside;
+	list-style: disc; 
+	margin-bottom: .9em;
+	margin-left: 1.45em;
+	margin-top: .3em;
+}
+.RightToLeft ul.ul.choices, 
+.RightToLeft ul.ul.steps-unordered, 
+.RightToLeft ul.ul, 
+.RightToLeft ul.sl.simple {
+	margin-left: 0;
+	margin-right: 1.45em;
+}
+ul.ul.steps-unordered ul.ul,
+ul.ul.steps-unordered ul.sl.simple,
+ul.ul.steps-unordered ul.ul.choices {
+	margin-left: 1.6em;
+}
+.RightToLeft ul.ul.steps-unordered ul.ul,
+.RightToLeft ul.ul.steps-unordered ul.sl.simple,
+.RightToLeft ul.ul.steps-unordered ul.ul.choices {
+	margin-left: 0;
+	margin-right: 1.6em;
+}
+.topic.task.nested1 > .body.taskbody > .section.context > ul.ul {
+	margin-left:  2em;
+}
+.RightToLeft .topic.task.nested1 > .body.taskbody > .section.context > ul.ul {
+	margin-left:  0;
+	margin-right:  2em;
+}
+ul.ul.steps-unordered {
+	margin-left: 1em;
+}
+.RightToLeft ul.ul.steps-unordered {
+	margin-left: 0;
+	margin-right: 1em;
+}
+ul.ul.choices > li.li.choice, 
+ul.ul > li.li, 
+ul.sl.simple > li.sli {
+	font-size: 100%; 
+	margin-bottom: .9em;
+	margin-top: .3em;
+	padding-left: .25em; 
+}
+.RightToLeft ul.ul.choices > li.li.choice, 
+.RightToLeft ul.ul > li.li, 
+.RightToLeft ul.sl.simple > li.sli {
+	padding-left: 0; 
+	padding-right: .25em; 
+}
+ul.ul.steps-unordered > li.li.step {
+    margin-bottom: .9em;
+	margin-left: .5em;
+	margin-top: .3em;
+}
+.RightToLeft ul.ul.steps-unordered > li.li.step {
+	margin-left: 0;
+	margin-right: .5em;
+}
+
+/* @end */
+
+/* @group ListDescriptor */
+.contentView ul.ListDescriptor {
+	list-style-type: none; 
+	margin-bottom: .9em;
+	margin-left: 1.5em;
+	margin-top: .3em;
+	padding-left: 0;
+}
+.RightToLeft .contentView ul.ListDescriptor {
+	margin-left: 0;
+	margin-right: 1.5em;
+	padding-right: 0;
+}
+.flamingo2 .contentView .Task  ol > li> ul.ListDescriptor {
+	margin-left: 1.25em;
+}
+.RightToLeft.flamingo2 .contentView .Task  ol > li> ul.ListDescriptor {
+	margin-left: 0;
+	margin-right: 1.25em;
+}
+.flamingo2 .contentView .Task ul.ListDescriptor {
+	margin-left: 2.75em;
+}
+.RightToLeft.flamingo2 .contentView .Task ul.ListDescriptor {
+	margin-left: 0;
+	margin-right: 2.75em;
+}
+.redflamingo .contentView ul.ListDescriptor {
+	margin-left:  -.25em;
+}
+.RightToLeft.redflamingo .contentView ul.ListDescriptor {
+	margin-left:  0;
+	margin-right:  -.25em;
+}
+.ListNumber > li > ul.ListDescriptor {
+	margin-left: 1.4em;
+}
+.RightToLeft .ListNumber > li > ul.ListDescriptor {
+	margin-left: 0;
+	margin-right: 1.4em;
+}
+.contentView ul.ListDescriptor > li,
+.contentView .ListSingle > li > ul.ListDescriptor > li {
+	list-style-type: disc !important; 
+}
+.msie.RightToLeft .contentView ul.ListDescriptor > li,
+.msie.RightToLeft .contentView .ListSingle > li > ul.ListDescriptor > li {
+	list-style: none !important;
+	margin-right: -1.6em;
+}
+.redflamingo .contentView ul.ListDescriptor > li,
+.redflamingo .contentView .ListSingle > li > ul.ListDescriptor > li {
+	list-style-type: none !important;
+}
+.contentView .Description {
+	margin-bottom: .9em;
+	margin-left: .25em;
+	margin-top: .3em; 
+}
+.RightToLeft .contentView .Description {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.contentView .Description + .Alert,
+.contentView .Description + .Figure,
+.contentView .Description + .Para {
+	margin-left: .25em;
+}
+.RightToLeft .contentView .Description + .Alert,
+.RightToLeft .contentView .Description + .Figure,
+.RightToLeft .contentView .Description + .Para {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.contentView .Term {
+	display: inline; 
+	font-style: italic;
+	font-weight: normal;
+	margin-right: 0;
+}
+.RightToLeft .contentView .Term {
+	float: right;
+	margin-left: .25em;
+	margin-right: -1px;
+}
+
+.contentView ul.ListDescriptor + .Alert {
+	margin-top: -.25em !important;
+}
+.contentView .ListSingle > li > .ListDescriptor > li {
+	margin-bottom: .9em;
+	margin-top: .3em; 
+}
+.contentView .Description + .Para {
+	margin-bottom: .9em;
+	margin-left: .25em;
+	margin-top: .3em; 
+}
+.RightToLeft .contentView .Description + .Para {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.contentView ul.ListDescriptor > li .Figure {
+	margin-bottom: 1.25em;
+	margin-left: .25em;
+}
+.RightToLeft .contentView ul.ListDescriptor > li .Figure {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.contentView .ListDescriptor + .LinkTopicPage {
+	margin-bottom: .5em;
+	margin-top: -.75em;
+}
+	
+/* @end */
+
+/* @group ListNumber */
+
+.contentView ol.ListNumber {
+	font-size: 100%; 
+	margin-left: 1.9em;
+	margin-top: .7em;
+}
+.RightToLeft .contentView ol.ListNumber {
+	margin-left: 0;
+	margin-right: 1.9em;
+}
+.default .contentView ol.ListNumber,
+.blueflamingo .contentView ol.ListNumber {
+	margin-left: 2.25em;
+}
+.RightToLeft.default .contentView ol.ListNumber,
+.RightToLeft.blueflamingo .contentView ol.ListNumber {
+	margin-left: 0;
+	margin-right: 2.25em;
+}
+.flamingo2 .contentView ol.ListNumber {
+	font-size: 100%; 
+	margin-left: 3em;  /*needed to hang double-digits*/
+	margin-top: .3em;
+}
+.RightToLeft.flamingo2 .contentView ol.ListNumber {
+	margin-left: 0;
+	margin-right: 3em;
+}
+.flamingo2 .contentView .Task ol.ListNumber + p,
+.flamingo2 .contentView .Task ol.ListNumber + .Alert,
+.flamingo2 .contentView .Task ul.ListBullet + p,
+.flamingo2 .contentView .Task ul.ListBullet + .Alert {
+	margin-left: 1.25em;
+}
+.RightToLeft.flamingo2 .contentView .Task ol.ListNumber + p
+.RightToLeft.flamingo2 .contentView .Task ol.ListNumber + .Alert,
+.RightToLeft.flamingo2 .contentView .Task ul.ListBullet + p,
+.RightToLeft.flamingo2 .contentView .Task ul.ListBullet + .Alert {
+	margin-left: 0;
+	margin-right: 1.25em;
+}
+.flamingo2 .contentView .Task ol.ListNumber + p.Figure {
+	margin-left: 0;
+}
+.RightToLeft.flamingo2 .contentView .Task ol.ListNumber + p.Figure {
+	margin-left: 0;
+	margin-right: 0;
+}
+.flamingo2 .contentView .Task ol.ListNumber > li > ul.ListBullet + .Alert,
+.flamingo2 .contentView .Task ol.ListNumber > li > ul.ListBullet + .Figure {
+	margin-left: 0;
+}
+.RightToLeft.flamingo2 .contentView .Task ol.ListNumber > li > ul.ListBullet + .Alert,
+.RightToLeft.flamingo2 .contentView .Task ol.ListNumber > li > ul.ListBullet + .Figure {
+	margin-left: 0;
+	margin-right: 0;
+}
+.contentView > div.topic.task > div.body.taskbody ol.ol.steps {
+	font-size: 100%; 
+	margin-top: .5em;
+}
+.contentView ol.ListNumber > li, 
+ol.ol.steps > li.li.step {
+	list-style: decimal; 
+    margin-bottom: .9em;
+	margin-top: .3em;
+}
+.flamingo2 .contentView ol.ListNumber > li > p.Para {
+	margin-left: -.05em;
+}    	
+.RightToLeft.flamingo2 .contentView ol.ListNumber > li > p.Para {
+	margin-left: 0;
+	margin-right: -.05em;
+}    	    	
+.contentView ol.ListNumber > li > .ListBullet {
+	margin-left: 1.4em;
+}
+.RightToLeft .contentView ol.ListNumber > li > .ListBullet {
+	margin-left: 0;
+	margin-right: 1.4em;
+}
+.contentView ol.ListNumber > li > .ListBullet > li > .ListBullet {
+	margin-left: 1.75em;
+}
+.RightToLeft .contentView ol.ListNumber > li > .ListBullet > li > .ListBullet {
+	margin-left: 0;
+	margin-right: 1.75em;
+}
+.contentView ol.ListNumber > li > .ListDescriptor li {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+	
+/* @end */
+
+/* @group ListSingle */
+
+.contentView ul.ListSingle {
+	font-weight: normal;
+	margin-bottom: .9em;
+	margin-left: 0;
+	margin-top: .7em;
+	*margin-top: 1.25em;/*msie fix*/
+}
+.RightToLeft .contentView ul.ListSingle {
+	margin-right: 0;
+}
+.contentView ul.ListSingle > li {
+	display: list-item;
+	font-weight: normal;
+	list-style-type: square; 
+	list-style-position: outside;
+	margin-bottom: .9em;
+	margin-left: 1.2em;
+	margin-top: .3em; 
+	padding-left: .6em;
+	list-style-image: 
+	-webkit-gradient(radial, 
+	50% 50%, 3,
+	50% 50%, 6, 
+	from(#aaa), 
+	color-stop(0.8, #aaa), 
+	to(#aaa));
+}
+.RightToLeft .contentView ul.ListSingle > li {
+	margin-left: 0;
+	margin-right: 1.2em;
+	padding-left: 0;
+	padding-right: .6em;
+}
+.blueflamingo .contentView ul.ListSingle > li,
+.default .contentView ul.ListSingle > li {
+	margin-left: 1.7em;
+}
+.RightToLeft.blueflamingo .contentView ul.ListSingle > li,
+.RightToLeft.default .contentView ul.ListSingle > li {
+	margin-left: 0;
+	margin-right: 1.7em;
+}
+.contentView ul.ListSingle > li:hover {
+	list-style-image: 
+	-webkit-gradient(radial, 
+	50% 50%, 3,
+	50% 50%, 6, 
+	from(#aaa), 
+	color-stop(0.8, #aaa), 
+	to(#aaa));	
+}
+.contentView ul.ListSingle li > p.Para {
+	margin-top: .25em;
+}
+.flamingo2 .content ul.ListSingle, 
+.flamingo2 .contentView ul.ListSingle,
+div.body.taskbody > div.li.step.p {
+	font-weight: normal;
+	margin-top: .3em;
+	margin-left: 1.3em;
+	margin-bottom: .9em;
+}
+.RightToLeft.flamingo2 .content ul.ListSingle, 
+.RightToLeft.flamingo2 .contentView ul.ListSingle,
+.RightToLeft div.body.taskbody > div.li.step.p {
+	margin-left: 0;
+	margin-right: 1.3em;
+}	
+.flamingo2 .content ul.ListSingle > li,
+.flamingo2 .contentView ul.ListSingle > li {
+	margin-top: .3em; 
+	margin-bottom: .9em;
+	margin-left: 1.25em; /*needed to hang double-digits*/
+	padding-left: 0;
+}
+.RightToLeft.flamingo2 .content ul.ListSingle > li,
+.RightToLeft.flamingo2 .contentView ul.ListSingle > li {
+	margin-left: 0;
+	margin-right: 1.25em;
+	padding-right: 0;
+}
+.flamingo2 .contentView ul.ListSingle > li > .Alert {
+	margin-left: .5em;
+}
+.RightToLeft.flamingo2 .contentView ul.ListSingle > li > .Alert {
+	margin-left: 0;
+	margin-right: .5em;
+}
+.contentView ul.ListSingle > li > .ListBullet {
+	margin-left: 1.9em;
+}
+.RightToLeft .contentView ul.ListSingle > li > .ListBullet {
+	margin-left: 0;
+	margin-right: 1.9em;
+}
+.blackflamingo .contentView ul.ListSingle > li > .ListBullet,
+.orangeflamingo .contentView ul.ListSingle > li > .ListBullet {
+	margin-left: 1.3em;
+}
+.RightToLeft.blackflamingo .contentView ul.ListSingle > li > .ListBullet,
+.RightToLeft.orangeflamingo .contentView ul.ListSingle > li > .ListBullet {
+	margin-left: 0;
+	margin-right: 1.3em;
+}
+.contentView ul.ListSingle li ul.ListBullet li > p.Para {
+	margin-left: .25em; 
+}
+.RightToLeft .contentView ul.ListSingle li ul.ListBullet li > p.Para {
+	margin-left: 0; 
+	margin-right: .25em; 
+}	
+.flamingo2 .content ul.ListSingle li > .ListDescriptor,
+.flamingo2 .contentView ul.ListSingle li > .ListDescriptor {   /*needed to hang double-digits*/
+	margin-top: .3em; 
+	margin-bottom: .9em;
+	margin-left: 1.75em;
+}
+.RightToLeft.flamingo2 .content ul.ListSingle li > .ListDescriptor,
+.RightToLeft.flamingo2 .contentView ul.ListSingle li > .ListDescriptor {
+	margin-left: 0;
+	margin-right: 1.75em;
+}
+.redflamingo .content ul.ListSingle li > .ListDescriptor,
+.redflamingo .contentView ul.ListSingle li > .ListDescriptor {
+	margin-top: .3em; 
+	margin-bottom: .9em;
+	margin-left: -.25em;
+}
+.RightToLeft.redflamingo .content ul.ListSingle li > .ListDescriptor,
+.RightToLeft.redflamingo .contentView ul.ListSingle li > .ListDescriptor {
+	margin-left: 0;
+	margin-right: -.25em;
+}	
+.flamingo2 .content ul.ListSingle li> p.Para,
+.flamingo2 .contentView ul.ListSingle li> p.Para,
+.flamingo2 .content ul.ListSingle li> .Figure,
+.flamingo2 .contentView ul.ListSingle li> .Figure  {
+	margin-left: .5em;
+}
+.RightToLeft.flamingo2 .content ul.ListSingle li> p.Para,
+.RightToLeft.flamingo2 .contentView ul.ListSingle li> p.Para,
+.RightToLeft.flamingo2 .content ul.ListSingle li> .Figure,
+.RightToLeft.flamingo2 .contentView ul.ListSingle li> .Figure {
+	margin-left: 0;
+	margin-right: .5em;
+}
+.flamingo2 .contentView ul.ListSingle li> ul>li>.Figure {
+	margin-left: .25em;
+}
+.RightToLeft.flamingo2 .contentView ul.ListSingle li> ul>li>.Figure {
+	margin-left: 0;
+	margin-right: .25em;
+}		
+.flamingo2 .content .Task > ul.ListSingle + .Para  ~ .Para:last-child, 
+.flamingo2 .content .Task > ul.ListBullet + .Para  ~ .Para:last-child {
+	margin-bottom: 1em;
+}
+.flamingo2 .contentView ul.ListSingle + p  {
+	margin-left: 1.3em;
+}
+.RightToLeft.flamingo2 .contentView ul.ListSingle + p  {
+	margin-left: 0;
+	margin-right: 1.3em;
+} 
+.flamingo2 .content .Task > ul.ListBullet + .Para:last-child {
+	margin-bottom: 1em;
+}
+
+/* @end */
+
+/* @group Nested ListNumber */
+
+.flamingo2 .contentView ol.ListNumber > li > ol.ListNumber {
+	margin-left: 1.7em;
+}
+.RightToLeft.flamingo2 .contentView ol.ListNumber > li > ol.ListNumber {
+	margin-left: 0;
+	margin-right: 1.7em;
+}
+ol.ListNumber.decimal {
+	margin-top: 0;
+}
+ol.ListNumber.decimal > li {
+	display: list-item;
+	list-style: decimal;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+ol.ListNumber.alpha {
+	margin-top: 0;
+}
+ol.ListNumber.alpha > li {
+	display: list-item;
+	list-style: lower-alpha !important;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+/* Dita nested substeps */
+ol[type="a"].ol.substeps {
+	list-style: lower-alpha !important;
+	margin-left: 1.7em;
+}
+.RightToLeft ol[type="a"].ol.substeps {
+	margin-left: 0;
+	margin-right: 1.7em;
+}
+/* Dita nested substeps */
+ul > li > ol.ol.substeps > li {
+	list-style: decimal;
+	margin-bottom: .9em;
+	margin-left: 1.95em;
+	margin-top: .3em;
+}
+.RightToLeft ul > li > ol.ol.substeps > li {
+	margin-left: 0;
+	margin-right: 1.95em;
+}
+ul > li > ul > li {
+	margin-left: 0;
+}
+.RightToLeft ul > li > ul > li {
+	margin-right: 0;
+}
+
+/* @end */
+
+/* @group Nested AppleTopic */
+
+/* H2 */
+
+div.NestedChild > div.NestedChildName {
+	color:  black;
+	font-size: 120%;
+	font-weight: normal;
+	line-height: 1.4;
+	margin-bottom: .3em;
+	margin-top: 1.5em;
+}
+div.NestedChild + div.NestedChild {
+	margin-top: 2.15em;
+}
+/* H3 */
+
+div.NestedChild > div.NestedChild > div.NestedChildName {
+	color:  black;
+	font-size: 120%;
+	font-weight: normal;
+	line-height: 1.3;
+	margin-bottom: -.13em;
+	margin-top: 1.55em;
+}
+
+/* @end */
+
+/* @group Para, Subhead */
+
+.contentView p.Para, 
+p.p,
+p.Note,
+p.Important,
+p.Tip,
+p.Warning {
+	margin-bottom:.9em;
+	margin-top:.3em; 
+}
+.contentView td.TableCell > p {
+	margin-bottom:.3em !important;
+	margin-top:.4em !important;
+}
+.contentView .CopyrightAddress {
+	margin-bottom:0;
+	margin-top:0; 
+}
+.contentView .CopyrightAddress + .Para {
+	margin-top:0;
+}
+.contentView span.GlossaryTerm > a, 
+a.xref.lightbox {
+	border-bottom: 1px dotted #aeaeae;
+	color: #333 !important;
+	text-decoration: none;
+}	
+.flamingo2 .contentView span.GlossaryTerm > a, 
+a.xref.lightbox {
+	color: #555 !important;
+}	
+.contentView td > p > span.GlossaryTerm, 
+td > a.xref.lightbox {
+	border-bottom: 1px dotted #aeaeae;
+	display: inline;
+	font-size: 95%;
+	text-decoration: none;
+}	
+.flamingo2 .contentView td > p > span.GlossaryTerm, 
+td > a.xref.lightbox {
+	color: #555 !important;
+}	
+.contentView span.GlossaryTerm > a:hover, 
+a:hover.xref.lightbox {
+	border-bottom: 1px dotted #aeaeae;
+	color: #888 !important;
+	text-decoration: none !important;
+}
+.orangeflamingo .contentView span.GlossaryTerm > a:hover,
+.blackflamingo .contentView span.GlossaryTerm > a:hover {
+	border-bottom: 1px dotted #0a8de9;
+	color: #0a8de9 !important;
+}
+.contentView .Subhead > p.Name {
+	color: #000;
+	font-weight: bold;
+	margin-bottom:.25em;
+	margin-top: 1.25em;
+}
+.content .LinkAppleWebMovie + .Subhead > .Name {
+	margin-top: -.45em !important;
+}
+.contentView .Subhead > p.Name + p.Para {
+	margin-top:0;
+}
+.flamingo2 .contentView .Subhead ul + .Alert {
+	margin-left: 0;
+}
+.RightToLeft.flamingo2 .contentView .Subhead ul + .Alert {
+	margin-right: 0;
+}
+
+/* @end */
+
+/* @group Tables */
+
+/* sets OT defaults to none */
+.cellrowborder,
+.row-nocellborder,
+.cell-norowborder,
+.nocellnorowborder,
+table, 
+table tn, 
+table td, 
+table tr, 
+table th { 
+	border: none; 
+}
+.contentView > .Table:first-child {
+	margin-top: 1.25em;
+}
+.contentView > .Table:first-child > tbody:first-child {
+	border-top-color: #fff !important;
+}
+.contentView .Table, 
+.simpletable, 
+div.tablenoborder > table.table, 
+.simpletable.properties {
+	border-collapse: collapse;
+	display: table;
+	font-size: 85%;
+	line-height: 1.6;
+	margin-bottom: 2em;
+	margin-left: -.5em;
+	margin-top: 1.65em;
+	padding-top: 0;
+	table-layout: fixed;
+	text-align:left;
+	width: 100%;
+}
+.RightToLeft .contentView .Table, 
+.RightToLeft .simpletable, 
+.RightToLeft div.tablenoborder > table.table, 
+.RightToLeft .simpletable.properties {
+	margin-left: 0;
+	margin-right: -.5em;
+	text-align: right;
+}
+.body .Table:first-child, 
+.body .simpletable:first-child, 
+.body div.tablenoborder:first-child > table.table, 
+.body .simpletable.properties:first-child {
+	margin-top: 1.25em;
+}
+li.li.step > table.simpletable {
+	margin-bottom: 1.5em;
+	margin-left: 0;
+	margin-top: 1.5em;
+}		
+.RightToLeft li.li.step > table.simpletable {
+	margin-right: 0;
+}		
+.contentView table.Table[type="At a glance"], 
+.contentView table.Table[type="Icons"] {
+	border-top: 1px solid #e4e4e4;
+}
+.contentView thead .TableHeadingRow, 
+tbody > tr.sthead, 
+thead > tr, 
+.simpletable.properties > tbody > tr:first-of-type {
+	background: #999;
+	border-spacing: 1px 1px;
+	display: table-row;
+}
+.msie .contentView thead > tr.TableHeadingRow {
+	background: #999;
+	border-spacing: 1px 1px;
+	display: table-row;
+}
+.contentView .Table tbody tr.TableRow {
+	border-bottom: 1px solid #e4e4e4;
+	display: table-row;
+	margin-bottom: .75em;
+	margin-top: .75em;
+}
+.msie .contentView table.Table tbody > tr.TableRow > td {
+	border-bottom: 1px solid #e4e4e4;
+}
+tbody > tr.strow, 
+tbody.tbody > tr.row {
+	display: table-row;
+	border-bottom: 1px solid #e4e4e4;
+	border-top: 1px solid #e4e4e4;
+	margin-bottom:  .75em;
+	margin-top: .75em;
+}	
+.contentView .Table tbody > tr.TableRow:last-child, 
+tbody > tr.strow:last-child {
+	border-bottom: 1px solid #e4e4e4;
+}
+.contentView tbody tr.TableRow.TableDisplayRow {
+	background: #f3f3f3;
+}
+.msie .contentView tbody > tr.TableRow.TableDisplayRow > td {
+	background: #f3f3f3;
+}	
+.contentView thead + tbody tr.TableRow.TableDisplayRow:first-child {
+	border-top: none !important;
+}	
+tbody > tr.sthead + tr.strow, 
+thead > tr + tr.strow, 
+thead + tbody > tr, 
+.simpletable.properties > tbody > tr:first-of-type + tr {
+	border-top: none !important;
+}	
+.contentView .Table thead > tr.TableHeadingRow th > p.TableHead, 
+p.TableHead, 
+.simpletable > tbody > .sthead > th.stentry, 
+.simpletable thead > tr > th, 
+thead.thead > tr.row > th.entry, 
+.simpletable.properties > tbody > tr > th {
+	color: #fff;
+	font-weight: bold; 
+	margin-bottom: -.2em;
+}
+.contentView td, 
+.contentView th {
+	display: table-cell; 
+	padding: .25em .6em .35em .5em;
+	text-align: left;
+	vertical-align: top; 
+}
+.RightToLeft .contentView td, 
+.RightToLeft .contentView th {
+	text-align: right;
+	padding: .25em .5em .35em .6em;
+}
+.blackflamingo .contentView th,
+.orangeflamingo .contentView th {
+	padding: .15em .6em .45em .5em;
+}
+.RightToLeft.blackflamingo .contentView th,
+.RightToLeft.orangeflamingo .contentView th {
+	padding: .15em .5em .45em .6em;
+}
+.contentView .Table tbody > tr.TableRow td > p.Para + p.Para {
+	margin-top: .65em !important;
+}
+.contentView .Table tbody > tr.TableRow td > p.Figure {
+	margin-bottom: .25em !important;
+	margin-top: 1em !important; 
+	padding-left: .15em;
+}
+.RightToLeft .contentView .Table tbody > tr.TableRow td > p.Figure {
+	padding-left: 0;
+	padding-right: .15em;
+}
+.contentView .Table tbody > tr.TableRow td > p.Figure:first-child {
+	margin-top: .5em !important;
+}
+.contentView .Table tbody > tr.TableRow td > p.Figure:first-child + .TableDisplay {
+	margin-top: -.75em !important;
+}
+.contentView .Table tbody > tr.TableRow td > p.TableDisplay {
+	font-weight: bold; 
+	margin-bottom: .25em; 
+	margin-top: .25em; 
+	vertical-align: top;
+}
+.contentView .Table tbody > tr.TableRow td > p.TableDisplay + p.Para {
+	margin-top: .5em; 
+	vertical-align: top;
+}
+.contentView .Table tbody > tr > td > ul.ListBullet {
+	margin-bottom: .6em; 
+}
+.contentView .Table tbody > tr > td > ul.ListBullet > li {
+	margin-bottom: .25em; 
+	margin-top: .25em; 
+}
+.contentView .Table tbody > tr > td > ul.ListBullet li > p.Para {
+	margin-bottom: 0; 
+	margin-top: .25em; 
+}
+/*Dita list */
+td > ul.ul {
+	margin-left: 1.75em;	
+}
+.RightToLeft td > ul.ul {
+	margin-left: 0;	
+	margin-right: 1.75em;	
+}
+td > ul.ul > li.li {
+	margin-bottom: 0; 
+	margin-top: .25em; 
+}
+td > ul.ul > li.li:last-child {
+	margin-bottom: -.5em; 
+}
+.contentView ol > li > .Table {
+	margin-top: 1em !important;
+}
+.contentView .ListDescriptor + .Table {
+	margin-top: 1.5em !important;
+}
+.subth {
+	font-weight: bold;
+	color:  #000;
+}
+	
+/* @end */
+
+/* @group Table As List */
+
+/*.contentView .TableAsList > p.TableDisplay:after {
+	content:": "; 
+	padding-right: .25em;
+}*/	
+.contentView .TableAsList > p.TableDisplay {
+	display: run-in; 
+	font-weight: bold;
+	padding-right: .25em;
+}
+.RightToLeft .contentView .TableAsList > p.TableDisplay {
+	float:  right;
+	padding-left: .25em;
+	padding-right: 0;
+}
+	
+/* @end */
+
+/* @group Task */
+
+/* open Task box */
+.contentView .TaskWrapper {
+	border:  1px solid #e4e4e4;
+	margin-bottom: 1.75em;
+	margin-top: 1.6em;
+	padding: 0;
+	-webkit-border-radius: .45em;
+	-moz-border-radius: .45em;
+}
+.contentView .TaskWrapper .taskToggle {
+	cursor: pointer;
+}
+.redflamingo .contentView .TaskWrapper {
+	border-bottom:  1px solid #e4e4e4;
+	border-left: none;
+	border-right: none;
+	border-top: 1px solid #e4e4e4;
+	margin-bottom: 1em;
+	margin-top: 1em;
+	padding: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+}
+/*F2*/
+.flamingo2 .contentView .TaskWrapper {
+	background: none;
+	border-bottom:  1px solid #e4e4e4;
+	border-left: none;
+	border-right: none;
+	border-top: 1px solid #e4e4e4;
+	margin-bottom: .9em;
+	margin-top: 1.2em;
+	padding: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+}
+.flamingo2 .contentView .TaskWrapper:first-child {
+	margin-top: 1.4em;
+}
+.contentView div.topic.task {
+	border-bottom:  1px solid #ccc;
+	border-top: 1px solid #ccc;
+	margin-bottom: 1.75em;
+	margin-top: 1.15em;
+	padding: 0;
+}
+.contentView div.topic.task.nested1 + div > .relinfo {
+	margin-top: -.5em;
+}
+span.ph.cmd {
+	display: block;
+	margin-bottom:.8em;
+}	
+.contentView .TaskWrapper > a {
+	display: block;
+	padding: 1px;
+	-webkit-border-top-right-radius: .45em;
+	-webkit-border-top-left-radius: .45em;
+	-moz-border-radius-topright: .45em;
+	-moz-border-radius-topleft: .45em;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, to(rgba(243, 243, 243, 1.0)), from(rgba(253, 253, 253, .75)));
+	-webkit-background-origin: border;
+	background: -moz-linear-gradient(top, #fdfdfd, #f3f3f3);
+}
+/*F2*/
+.redflamingo .contentView .TaskWrapper > a {
+	display: block;
+	padding: 1px;
+	-webkit-border-radius: none;
+	-moz-border-radius: none;
+	background-image: none;
+	background: none;
+}
+/*F2*/
+.flamingo2 .contentView .TaskWrapper > a {
+	background-image: none;
+	background: none;
+	padding: 0;
+}
+
+/*task without step intro */
+div.body.taskbody > ol.ol.steps, 
+div.body.taskbody > ul.ul.steps-unordered {
+	border-bottom:  1px solid #e4e4e4;
+	border-top: 1px solid #e4e4e4;
+	font-size: 100%;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-top: 1.2em;
+	overflow: hidden;
+	z-index: 0;
+}
+.RightToLeft div.body.taskbody > ol.ol.steps, 
+.RightToLeft div.body.taskbody > ul.ul.steps-unordered {
+	margin-right: 0;
+}
+div.body.taskbody > ol.ol.steps:first-child {
+	padding-top:  .15em; 
+}
+div.body.taskbody > ul.ul.steps-unordered {
+	padding-top:  .45em; 
+}
+div.body.taskbody > div.section.context + ul.ul.steps-unordered,
+div.body.taskbody > div.abstract + ul.ul.steps-unordered,
+div.body.taskbody > div.section.prereq.p + ul.ul.steps-unordered {
+	/*margin-left: -.5em;*/
+	padding-top: .5em;
+}
+.RightToLeft div.body.taskbody > div.section.context + ul.ul.steps-unordered,
+.RightToLeft div.body.taskbody > div.abstract + ul.ul.steps-unordered,
+.RightToLeft div.body.taskbody > div.section.prereq.p + ul.ul.steps-unordered {
+	margin-left: 0;
+	margin-right: -.5em;
+}
+div.topic.task > div.body.taskbody > ul.ul.steps-unordered {
+	border: none;
+}
+div.topic.task > div.body.taskbody > ul.ul.steps-unordered > li > ul.ul {
+	margin-left: 1.45em;
+	margin-top: .15em;
+}
+.RightToLeft div.topic.task > div.body.taskbody > ul.ul.steps-unordered > li > ul.ul {
+	margin-left: 0;
+	margin-right: 1.45em;
+}
+div.body.taskbody > ol.ol.steps > .step {
+	list-style: decimal;
+	margin-bottom: .9em;
+	margin-left: 2.25em;
+	margin-top: .3em;
+}
+.RightToLeft div.body.taskbody > ol.ol.steps > .step {
+	margin-left: 0;
+	margin-right: 2.25em;
+}
+/* task without step intro */
+div.body.taskbody > ol.ol.steps > .step:first-child {
+	margin-top: .9em;
+}
+div.body.taskbody > ul.ul.steps-unordered >.step {
+	list-style: disc;
+	margin-bottom: .9em;
+	margin-left: 2em;
+	margin-top: .3em;
+	padding-left: 3px;
+}
+.RightToLeft div.body.taskbody > ul.ul.steps-unordered >.step {
+	margin-left: 0;
+	margin-right: 2em;
+	padding-left: 0;
+	padding-right: 3px;
+}
+/*nested task */
+div.topic.task > div.body.taskbody > ol.ol.steps {
+	border: none;
+	margin-bottom: -.5em;
+	margin-top: -.7em;
+	padding-bottom: .25em;
+}
+.nested1 div.body.taskbody > ul.ul.steps-unordered {
+	margin-bottom: -.9em;
+	margin-top: -.5em;
+}
+.nested1 div.body.taskbody > ul.ul.steps-unordered:last-child {
+	margin-bottom: 0;
+}
+.nested1 div.body.taskbody > ul.ul.steps-unordered:first-child {
+	margin-top: -.15em;
+}
+/*task single without step intro */
+.contentView .apd-topic > div.body.taskbody > div.li.step.p {
+	border-bottom:  1px solid #ccc;
+	border-top: 1px solid #ccc;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-top: 1.2em;
+	padding: .5em 1.5em 0 0;
+}
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p {
+	margin-left: 0;
+	margin-right: 0;
+	padding: .5em 0 0 1.5px;
+}
+.topic.task.nested1 > div.body.taskbody > div.li.step.p {
+	border:  none;
+	margin-top: -.2em !important;
+}
+.contentView .apd-topic > div.body.taskbody > div.li.step.p > table.simpletable.choicetable {
+	margin-left: .25em;
+}
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p > table.simpletable.choicetable {
+	margin-left: 0;
+	margin-right: .25em;
+}
+.contentView .apd-topic > div.body.taskbody > div.li.step.p > table.simpletable.choicetable:last-child {
+	margin-bottom: 0;
+}
+
+/*task single without step intro marker has to be on cmd*/
+.contentView .apd-topic > div.body.taskbody > div.li.step.p > span.ph.cmd {
+	display: list-item;
+	font-weight: normal;
+	list-style-type: square; 
+	list-style-position: outside;
+	list-style-image: 
+	-webkit-gradient(radial, 
+	50% 50%, 3,
+	50% 50%, 6, 
+	from(#aaa), 
+	color-stop(0.8, #aaa), 
+	to(#aaa));
+	margin-bottom: .9em;
+	margin-left: 1.25em;
+	margin-top: .3em; 
+	padding-left: .6em;		
+}
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p > span.ph.cmd {
+	margin-left: 0;
+	margin-right: 1.25em;
+	padding-left: 0;		
+	padding-right: .6em;		
+}
+.contentView .apd-topic > div.body.taskbody > div.li.step.p > span.ph.cmd:hover {
+	list-style-image: 
+	-webkit-gradient(radial, 
+	50% 50%, 3,
+	50% 50%, 6, 
+	from(#aaa), 
+	color-stop(0.8, #aaa), 
+	to(#aaa));
+}
+div.li.step.p ul.ul,
+div.li.step.p ul.sl.simple,
+div.li.step.p ul.ul.choices {
+	margin-left: 1.6em;
+}
+.RightToLeft div.li.step.p ul.ul,
+.RightToLeft div.li.step.p ul.sl.simple,
+.RightToLeft div.li.step.p ul.ul.choices {
+	margin-left: 0;
+	margin-right: 1.6em;
+}
+.contentView .apd-topic > div.body.taskbody > div.li.step.p > ul.ul,
+.contentView .apd-topic > div.body.taskbody > div.li.step.p > .substeps {
+	margin-left: 3.25em;
+}
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p > ul.ul,
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p > .substeps {
+	margin-left: 0;
+	margin-right: 3.25em;
+}
+.contentView .apd-topic > div.body.taskbody > div.li.step.p p {
+	margin-left: 0;
+}
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p p {
+	margin-right: 0;
+}
+.contentView .apd-topic > div.body.taskbody > div.li.step.p > p.p {
+	margin-left: 1.85em;
+}
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p > p.p {
+	margin-left: 0;
+	margin-right: 1.85em;
+}
+.contentView .apd-topic > div.body.taskbody > div.li.step.p >  img.image {
+	margin-left: 1.85em;
+}
+.RightToLeft .contentView .apd-topic > div.body.taskbody > div.li.step.p >  img.image {
+	margin-left: 0;
+	margin-right: 1.85em;
+}
+/*task single inside multi topic*/
+.contentView div.topic.task div.body.taskbody > div.li.step.p {
+	display: list-item;
+	font-weight: normal;
+	list-style-type: square; 
+	list-style-position: outside;
+	list-style-image: 
+	-webkit-gradient(radial, 
+	50% 50%, 3,
+	50% 50%, 6, 
+	from(#aaa), 
+	color-stop(0.8, #aaa), 
+	to(#aaa));
+	margin-bottom: .9em;
+	margin-left: 1.6em;
+	margin-top: .2em; 
+	padding-left: .6em;
+}
+.RightToLeft .contentView div.topic.task div.body.taskbody > div.li.step.p {
+	margin-left: 0;
+	margin-right: 1.6em;
+	padding-left: 0;
+	padding-right: .6em;
+}
+div.li.step.p > span.ph.cmd, div.li.step.p > p.p {
+	display: block;
+	margin-left: 0;
+}
+.RightToLeft div.li.step.p > span.ph.cmd, div.li.step.p > p.p {
+	margin-right: 0;
+}
+.mozilla .contentView .TaskWrapper > a,
+.mozilla a {
+	outline: none;
+}
+.contentView .TaskWrapper > a > p.Name {
+	border-bottom: 1px solid #efefef;
+	color: #333;
+	display:block;
+	font-weight: bold;
+	margin-top: 0;
+	padding: .55em .685em .55em 1.2em;
+}
+.RightToLeft .contentView .TaskWrapper > a > p.Name {
+	padding: .55em 1.2em .55em .685em;
+}
+.redflamingo .contentView .TaskWrapper > a > p.Name {
+	border-bottom: none;
+	color: #333;
+	display:block;
+	font-weight: bold;
+	margin-top: 0;
+	padding: .55em .685em .55em .2em;
+}
+.RightToLeft.redflamingo .contentView .TaskWrapper > a > p.Name {
+	padding: .55em .2em .55em .685em;
+}
+/*F2*/
+.flamingo2 .contentView .TaskWrapper > a > p.Name {
+	border-bottom: none;
+	display:block;
+	font-weight: bold;
+	margin-top: 0;
+	padding: .5em .685em 0.5em 0;
+}
+.RightToLeft.flamingo2 .contentView .TaskWrapper > a > p.Name {
+	padding: .5em 0 0.5em .685em;
+}
+.contentView div.topic.task > a.title.topictitle2 {
+	color: #000;
+	display:block;
+	font-weight: bold;
+	margin-top: 0;
+	padding: .5em 0 .5em 0;
+}
+.contentView div.topic.task > a.title.topictitle2 + a +  div.body.taskbody {
+	margin-top: 0em;
+}
+.msie .contentView .TaskWrapper > a > p.Name {
+	background: #F2F2F2;
+}
+.msie.flamingo2 .contentView .TaskWrapper > a > p.Name {
+	background: #ffffff !important;
+}
+.contentView .TaskWrapper > a:hover {
+	color: inherit;
+	text-decoration: none;
+}
+.contentView .Task > a:hover > p.Name {
+	color: #333 !important;
+	text-decoration: none;
+}
+.contentView .TaskWrapper p.Name:hover {
+	color: #2c81b0 !important;
+	text-decoration: underline !important;
+}
+.redflamingo .contentView .TaskWrapper p.Name:hover {
+	color: #000 !important;
+	text-decoration: underline !important;
+}
+/*F2*/
+.flamingo2 .contentView .TaskWrapper p.Name:hover {
+	color: #000 !important;
+	text-decoration: underline !important;
+}
+.contentView .task > a.title.topictitle2:hover {
+	text-decoration: underline !important;
+}
+.contentView .TaskWrapper > a > p.Name {
+	color: #333 !important;
+	text-decoration: none;
+}
+.flamingo2 .contentView .TaskWrapper > a > p.Name {
+	color: #000 !important;
+	text-decoration: none;
+}
+.contentView .TaskWrapper > a > span.showHideSteps {
+	color: #2c81b0;
+	float: right;
+	font-size: .75em;
+	padding: 7px 0 0 20px;
+}
+.RightToLeft .contentView .TaskWrapper > a > span.showHideSteps {
+	float: left;
+	padding: 7px 20px 0 0;
+}
+.default .contentView .TaskWrapper > a > span.showHideSteps, 
+.blueflamingo .contentView .TaskWrapper > a > span.showHideSteps {
+	color: #2c81b0;
+	padding: 9px 17px 0px 10px;
+}
+.RightToLeft.default .contentView .TaskWrapper > a > span.showHideSteps, 
+.RightToLeft.blueflamingo .contentView .TaskWrapper > a > span.showHideSteps {
+	padding: 9px 10px 0px 17px;
+}
+.blackflamingo .contentView .TaskWrapper > a > span.showHideSteps, 
+.orangeflamingo .contentView .TaskWrapper > a > span.showHideSteps {
+	font-weight: normal !important;
+	padding: 10px 17px 0 10px;
+}
+.RightToLeft.blackflamingo .contentView .TaskWrapper > a > span.showHideSteps, 
+.RightToLeft.orangeflamingo .contentView .TaskWrapper > a > span.showHideSteps {
+	padding: 10px 10px 0 17px;
+}
+.contentView .task > a.title.topictitle2 > span.showHideSteps {
+	color: #2c81b0;
+	float: right;
+	font-size: .75em;
+	padding: 3px 0 0 20px;
+}
+.RightToLeft .contentView .task > a.title.topictitle2 > span.showHideSteps {
+	float: left;
+	padding: 3px 20px 0 0;
+}
+/*F2*/
+.flamingo2 .contentView .TaskWrapper > a > span.showHideSteps {
+	color: #2c81b0;
+	padding: 9px 0 0 20px;
+}
+.RightToLeft.flamingo2 .contentView .TaskWrapper > a > span.showHideSteps {
+	padding: 9px 20px 0 0;
+}
+.contentView .TaskWrapper > a:hover > span.showHideSteps {
+	color: #2c81b0 !important;
+	text-decoration: underline;
+}
+.contentView .task > a.title.topictitle2:hover > span.showHideSteps {
+	text-decoration: underline;
+}
+.orangeflamingo .contentView .showHideSteps,
+.blackflamingo .contentView .showHideSteps {
+	color: #0a8de9!important;
+}
+/* closed Task box */
+.contentView .TaskWrapper.closed > a {
+	-webkit-border-radius: .45em;
+	-moz-border-radius: .45em;
+}
+.contentView .TaskWrapper.closed > a > p.Name {
+	margin-bottom: 0px;
+}
+.topic.task + .topic.task {
+	margin-top: -.7em !important;
+}
+.redflamingo .contentView .TaskWrapper + .TaskWrapper {
+	margin-top: -1.15em !important;
+}
+/*F2*/
+.flamingo2 .contentView .TaskWrapper + .TaskWrapper {
+	margin-top: -11px !important;
+}
+.msie.flamingo2 .contentView .TaskWrapper + div.TaskWrapper  {
+	margin-top: -12px !important;
+}
+/* removes top rule for multi tasks */
+.topic.task + .topic.task {
+	border-top:  none;
+	margin-top: -1.7em !important;
+}	
+/* hides all children */
+.contentView .TaskWrapper.closed > div.Task,
+.contentView .task.closed > div.body.taskbody {
+	display: none;
+}
+.contentView .Task {
+	margin: .5em 1.5em .125em 1.25em;
+	padding-bottom: 6px;
+	overflow: hidden;
+	z-index: 0;
+}
+.RightToLeft .contentView .Task {
+	margin: .5em 1.25em .125em 1.5em;
+}
+.redflamingo .contentView .Task {
+	margin: -.75em 1.5em .125em .25em;
+	overflow: hidden;
+	padding-bottom: 0;
+	z-index: 0;
+}
+.RightToLeft.redflamingo .contentView .Task {
+	margin: -.75em .25em .125em 1.5em;
+}
+/*F2*/
+.flamingo2 .contentView .Task {
+	margin: 0 0 .125em -1.25em;
+	overflow: hidden;
+	padding-bottom: 0;
+	z-index: 0;
+}
+.RightToLeft.flamingo2 .contentView .Task {
+	margin: 0 -1.25px .125em 0;
+}
+.flamingo2 .content .Task > p.Para,
+.flamingo2 .content .Task > .Alert {
+	margin-left: 1.25em;
+}
+.RightToLeft.flamingo2 .content .Task > p.Para,
+.RightToLeft.flamingo2 .content .Task > .Alert {
+	margin-left: 0;
+	margin-right: 1.25em;
+}
+.contentView div.topic.task > div.body.taskbody {
+	margin: .5em 1.5em .25em 0;
+	overflow: hidden;
+	z-index: 0;
+}
+.RightToLeft .contentView div.topic.task > div.body.taskbody {
+	margin: .5em 0 .25em 1.5em;
+}
+.contentView div.topic.task.nested1 > div.body.taskbody {
+	margin-right: 0;
+}
+.RightToLeft .contentView div.topic.task.nested1 > div.body.taskbody {
+	margin-left: 0;
+}
+.contentView .Task .Alert {
+	z-index: 0;
+}
+.contentView .Task li {
+	z-index: 1;
+}
+.contentView .Task > .Para:first-child, 
+.contentView .Task > .Alert:first-child {
+	margin-top: .3em; 
+}
+.flamingo2 .contentView .Task > .Para:first-child, 
+.flamingo2 .contentView .Task > .Alert:first-child,
+.flamingo2 .contentView .Task > p.Figure,
+.flamingo2 .contentView .Task > p + p,
+.flamingo2 .contentView .Task > p,
+.flamingo2 .contentView .Task > .Alert {
+	margin-left: 1.25em; /*needed to hang double-digits*/
+}
+.RightToLeft.flamingo2 .contentView .Task > .Para:first-child, 
+.RightToLeft.flamingo2 .contentView .Task > .Alert:first-child,
+.RightToLeft.flamingo2 .contentView .Task > p.Figure,
+.RightToLeft.flamingo2 .contentView .Task > p,
+.RightToLeft.flamingo2 .contentView .Task > p + p,
+.RightToLeft.flamingo2 .contentView .Task > .Alert {
+	margin-left: 0;
+	margin-right: 1px;
+}
+
+/* @end */
+
+/* @group Dita Postreq, Result, Example */
+
+.content > .apd-topic > div.body.taskbody > div.section.result,
+.content > .apd-topic > div.body.taskbody > div.postreq,
+.content > .apd-topic > div.body.taskbody > div.section.postreq,
+.content > .apd-topic > div.body.taskbody > div.example,
+.content > .apd-topic > div.body.taskbody > div.section.example   {
+	margin-bottom:.9em;
+	margin-top: 1em;
+}
+.contentView .apd-topic > div.body.taskbody + div.section.result,
+.contentView .apd-topic > div.body.taskbody + div.postreq,
+.contentView .apd-topic > div.body.taskbody + div.section.postreq,
+.contentView .apd-topic > div.body.taskbody + div.example,
+.contentView .apd-topic > div.body.taskbody + div.section.example   {
+	margin-bottom:.9em;
+	margin-top: 1em;
+}
+.contentView .apd-topic > div.body.taskbody + div.section.example   {
+	margin-bottom:.9em;
+	margin-top: 1em;
+}
+ol.steps + .section.postreq,
+.nested1 ol.steps + .section.postreq  {
+	margin-top: .55em;	
+}
+div.body.taskbody + div.postreq,
+.result + .example,
+div.body.taskbody + div.example,
+div.result,
+div.example,
+div.postreq {
+	margin-bottom:.5em;
+	margin-top: .5em;
+}
+div.body.taskbody > div.result,
+div.body.taskbody > div.example,
+div.body.taskbody > div.postreq {
+	margin-bottom:.5em;
+	margin-top: 1em !important;
+}
+.result + .example {
+	margin-bottom:.5em;
+	margin-top: .5em;
+}
+ol.ol.steps + div.result,
+ul.ul.steps + .result,
+ul.ul.steps-unordered + .result,
+ol.ol.steps + .example,
+ul.ul.steps + .example,
+ul.ul.steps-unordered + .example,
+ol.ol.steps + .postreq,
+ul.ul.steps + .postreq, 
+ul.ul.steps-unordered + .postreq {
+	margin-bottom:.5em;
+	margin-top: 1em;
+}
+.result + .example,
+.result + .postreq,
+.example + .postreq {
+	margin-top: .5em;
+}
+.nested1 + .postreq {
+	margin-top: -.9em;
+}
+
+/* @end */
+
+/* @group Dita Prereq, Shortdesc, Abstract */
+
+div.body.taskbody .shortdesc.suppress-summary + div.section.prereq, 
+div.body.conbody .shortdesc.suppress-summary + div.section.prereq, 
+div.body.refbody .shortdesc.suppress-summary + div.section.prereq, 
+div.abstract + div.section.prereq.p, 
+div.abstract + div.section.context, 
+#mainContent > section > h1.title.topictitle1 + p.shortdesc,
+h1 + p.shortdesc,
+p.shortdesc + div.section.context, 
+p.shortdesc + div.section.refsyn, 
+p.shortdesc + div.section.prereq, 
+div.section.prereq + div.section.context,
+.abstract,
+.abstract > p,
+div.body.taskbody .shortdesc, 
+div.body.conbody .shortdesc,
+div.body.taskbody div.abstract,
+.nested1 ol + div.section.postreq {
+	margin-bottom:.9em;
+	margin-top: .3em;
+}
+.abstract > div.shortdesc, 
+.abstract > div.shortdesc + p.p,
+div.body.refbody > p.shortdesc {
+	margin-top: .3em;
+}
+.shortdesc.summary-only {
+	display: none;
+}
+
+/* @end */
+
+
+/* @group Dita Choice table */
+
+/* choice table displays block with run-in heads */
+table.simpletable.choicetable {
+	list-style-type: none; 
+	border: none;
+	font-size: 100%;
+	margin-bottom: -.8em;
+	margin-left: -1.55em;
+	margin-top: -.25em;
+	text-align: left;
+}
+.RightToLeft table.simpletable.choicetable {
+	margin-left: 0;
+	margin-right: -1.55em;
+	text-align: right;
+}
+table.simpletable.choicetable > thead {
+	display: none;
+}
+table.simpletable.choicetable > tbody > tr.strow.chrow {
+	border: none;
+	display: block;
+	margin-bottom:.8em;
+	margin-left: 1.5em;
+	margin-top:.3em; 
+	padding: 0;
+}
+.RightToLeft table.simpletable.choicetable > tbody > tr.strow.chrow {
+	margin-left: 0;
+	margin-right: 1.5em;
+}
+.contentView table.simpletable.choicetable > tbody > tr > td.stentry.choption {
+	padding: 0 .25em 0 0;
+}
+.RightToLeft .contentView table.simpletable.choicetable > tbody > tr > td.stentry.choption {
+	padding: 0 0 0 .25em;
+}
+.contentView table.simpletable.choicetable > tbody > tr > td.stentry.choption, 
+td.stentry.choption > strong {
+	display: inline;
+	font-style: italic;
+	font-weight: normal;
+}
+.RightToLeft .contentView table.simpletable.choicetable > tbody > tr > td.stentry.choption, 
+.RightToLeft td.stentry.choption > strong {
+	float: right;
+}
+table.simpletable.choicetable > tbody > tr td.stentry.chdesc  {
+	display: inline;
+	padding: 0;
+	position: relative;
+}
+.RightToLeft table.simpletable.choicetable > tbody > tr td.stentry.chdesc  {
+	float: right;
+}
+table.simpletable.choicetable > tbody > tr > td.stentry.chdesc > p.p:first-child  {
+	display: block;
+	padding: 0;
+}
+table.simpletable.choicetable > tbody > tr > td.stentry.chdesc > p.p  {
+	display: block;
+	margin-bottom:.8em;
+	margin-top:.25em;
+}
+a + table.simpletable.choicetable {
+	margin-top: -.5em;
+}
+div.topic.task > div.body.taskbody li.li.step .choicetable {
+	margin-top: -.5em;
+}
+div.topic.task > div.body.taskbody > ol.ol.steps .choicetable:last-child {
+	/*margin-bottom: -.9em;*/
+}
+td.stentry  {
+	padding-bottom: .75em;
+	padding-top: .5em;
+}
+td.stentry p.p  {
+	margin-bottom: .65em;
+}
+td.stentry p.p:last-child  {
+	margin-bottom: 0;
+}
+li.li.step > table.choicetable {
+	margin-left: -1.5em;
+	margin-top: -.25em;
+	margin-bottom: -.25em;
+}
+.RightToLeft li.li.step > table.choicetable {
+	margin-left: 0;
+	margin-right: -1.5em;
+}
+li.li.step > table.choicetable:last-child {
+	margin-bottom: .75em;
+}
+
+/* @end */
+
+/* @group Dita Definition List dl */
+dl.dl {
+	margin-left: 0;
+}
+.RightToLeft dl.dl {
+	margin-right: 0;
+}
+.dthd,
+.ddhd {
+	display:  none;
+}
+dt.dlterm {
+	display: run-in;
+	font-style: italic;
+	margin-right: .25em;
+	padding: 0;
+	position: relative;
+}
+.RightToLeft dt.dlterm {
+	float: right;
+	margin-right: 0;
+	margin-left: .25em;
+}
+dd.dd {	
+	font-style: normal;
+	margin-bottom: .9em;
+	margin-top:.3em; 
+	padding: 0;
+}
+/* @end */
+/* @group Dita Leafnode */
+
+/* H2 and H3 in concept and reference */
+
+div.topic.concept > h2.title.topictitle2, 
+div.topic.reference > h2.title.topictitle2,
+div.topic.concept > h3.title.topictitle3, 
+div.topic.reference > h3.title.topictitle3 {
+	color: #000;
+	font-size: 120%;
+	font-weight: normal;
+	line-height: 1.4;
+	margin-bottom: .3em;
+	margin-top: 1.5em;
+}
+
+/* @end */
+
+/* @group Dita Section */
+
+/* subheads in concept, reference, and task */
+div.body.conbody > div.section > h2.title, 
+div.body.conbody > div.section > h3.title, 
+div.body.conbody > div.section > h4.title, 
+div.body.conbody > div.example > h2.title, 
+div.body.conbody > div.example > h3.title, 
+div.body.conbody > div.example > h4.title,
+div.body.refbody > div.section > h2.title, 
+div.body.refbody > div.section > h3.title, 
+div.body.refbody > div.section > h4.title, 
+div.body.refbody > div.example > h2.title, 
+div.body.refbody > div.example > h3.title, 
+div.body.refbody > div.example > h4.title,
+div.body.taskbody > div.example > h2.title {
+	color: #000;
+	margin-bottom: .25em;	
+	margin-top: 1.25em;
+}
+h2.title + table {
+	margin-top: 1em;
+}
+
+/* @end */
+
+/* @group Dita related links */
+.topic.task + .related-links {
+	margin-top: -.5em;
+	padding-top: 0;
+}
+.body.taskbody + .related-links,
+.related-links,
+.relinfo + .linklist,
+.linklist + .linklist {
+	margin-top: 1.3em;
+}
+div.relinfo > strong, 
+div.linklist.linklist > strong {
+	color: #555;
+    display: block;
+    font-size: 85%;
+    font-weight: bold;
+    margin-bottom: .3em;
+    text-transform: uppercase;
+}
+div.relinfo > br, div.linklist.linklist > strong + br {
+	display: none;
+}
+div.linklist:last-of-type {
+	margin-bottom: 1em;
+}
+
+/* @end */
+
+
+/* @group DITA Rich Media */
+
+div.fig.fignone.richmedia,
+div.fig.fignone.movie {
+	background-image: url(../images/movie-play.png);
+	background-repeat: no-repeat;
+	background-position: 0px 12px;
+	cursor: pointer;
+	border-bottom:  1px solid #e4e4e4;
+	border-left: none;
+	border-right: none;
+	border-top: 1px solid #e4e4e4;
+	padding: .75em 1.5em .5em 0em;
+	margin: 1.7em 0 1.5em;
+}
+.RightToLeft div.fig.fignone.richmedia,
+.RightToLeft div.fig.fignone.movie {
+	background-image: url(../images/movie-play.png);/*need reversed image and position*/
+	background-repeat: no-repeat;
+	background-position: 0px 12px;
+	padding: .75em 0 .5em 1.5em;
+}
+div.fig.fignone.richmedia > a,
+div.fig.fignone.movie > a {
+	color:  #2c81b0;
+	font-weight: bold;
+	line-height: 1.45em;
+	margin-bottom: -.2em;
+	margin-left: 3em;
+	margin-top: 0;
+	padding: 0;
+}
+.RightToLeft div.fig.fignone.richmedia > a,
+.RightToLeft div.fig.fignone.movie > a {
+	margin-left: 0;
+	margin-right: 3em;
+}
+div.fig.fignone.movie > a {
+	margin-left: 1.55em;
+	margin-top: 0;
+	padding: 0;
+}
+.RightToLeft div.fig.fignone.movie > a {
+	margin-left: 0;
+	margin-right: 1.55em;
+}
+div.fig.fignone.richmedia > a + p.p,
+div.fig.fignone.movie > a + p.p {
+	font-style: normal !important;
+	font-weight: normal !important;
+	line-height: 1.7em;
+	margin-bottom: .2em;
+	margin-left: 3.7em;
+	margin-top: 0;
+	padding: 0;
+}
+.RightToLeft div.fig.fignone.richmedia > a + p.p,
+.RightToLeft div.fig.fignone.movie > a + p.p {
+	margin-left: 0;
+	margin-right: 3.7em;
+}
+div.fig.fignone.richmedia p.p,
+div.fig.fignone.movie p.p {
+	color: #555;
+	display: block;
+	font-size: 85%;
+	font-weight: normal;
+	line-height: 1.7;
+	margin-bottom: 0;
+	margin-left: 40px;
+}
+.RightToLeft div.fig.fignone.richmedia p.p,
+.RightToLeft div.fig.fignone.movie p.p {
+	margin-left: 0;
+	margin-right: 40px;
+}
+
+/* @end */
+/* @end */
+
+/*=================================*/
+/* END CONTENT VIEW CONTROLLER*/
+/*=================================*/
+
+/* ======== css/lightboxcontroller.css ======== */
+/*=================================*/
+/* START LIGHTBOX CONTROLLER ======*/
+/*=================================*/
+
+
+/* @group Lightbox */
+
+div#lightbox .background {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: white;
+	opacity: 0.5;
+	z-index: 100;
+}
+
+.msie div#lightbox .background {
+	filter: alpha(opacity = 50);
+}
+
+div#lightbox #lightboxOuterWrapper {
+	position: absolute;
+	top: 40px;
+	bottom: 80px;
+	left: 80px;
+	right: 80px;
+	z-index: 101;
+	overflow: auto;
+	max-width: 560px;
+	min-width: 450px;
+	min-height: 320px;
+	margin: 0 auto;
+	-webkit-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 40px;
+	background: white;
+}
+.flamingo2 div#lightbox #lightboxOuterWrapper {
+	top: 24px;
+}
+.blackflamingo div#lightbox #lightboxOuterWrapper,
+.orangeflamingo div#lightbox #lightboxOuterWrapper {
+	top: 43px;
+}
+
+.redflamingo div#lightbox #lightboxOuterWrapper {
+	left:  32px;
+	right:  32px;
+	min-width: 300px;
+}
+
+div#lightbox #lightboxInnerWrapper, 
+.msie.blackflamingo div#lightbox #lightboxInnerWrapper, 
+.msie.orangeflamingo div#lightbox #lightboxInnerWrapper {
+	position: absolute;
+	top: 17px;
+	bottom: 20px;
+	left: 30px;
+	right: 20px;
+	z-index: 102;
+	overflow: auto;
+}
+.msie div#lightbox #lightboxInnerWrapper {
+	padding-bottom:  20px;
+	bottom:  auto;
+}
+.RightToLeft div#lightbox #lightboxInnerWrapper {
+	left: 20px;
+	right: 0;
+}
+
+.msie div#lightbox #lightboxOuterWrapper  {
+	border: 1px solid #999999;
+	*left: 220px;
+}
+.RightToLeft.msie div#lightbox #lightboxOuterWrapper  {
+	*left: 0;
+	*right: 220px;
+}
+
+.msie.blackflamingo div#lightbox #lightboxOuterWrapper, 
+.msie.orangeflamingo div#lightbox #lightboxOuterWrapper  {
+	border: 1px solid #999999;
+	*left: 220px;
+}
+
+div#lightbox #lightboxContentWrapper {
+	z-index: 103;
+	overflow: auto;
+}
+
+div#lightbox #closeButtonWrapper, 
+.msie.blackflamingo div#lightbox #closeButtonWrapper, 
+.msie.orangeflamingo div#lightbox #closeButtonWrapper {
+	position: absolute;
+	top: 40px;
+	left: 80px;
+	right: 80px;
+	z-index: 101;
+	max-width: 560px;
+	min-width: 450px;
+	margin: 0 auto;
+	z-index: 104;
+}
+.flamingo2 div#lightbox #closeButtonWrapper {
+	top: 24px;
+}
+.blackflamingo div#lightbox #closeButtonWrapper,
+.orangeflamingo div#lightbox #closeButtonWrapper {
+	top: 43px;
+}
+
+.redflamingo div#lightbox #closeButtonWrapper {
+	left:  32px;
+	right:  32px;
+	min-width: 300px;
+}
+
+div#lightbox .closeButton {
+	position: absolute;
+	margin-top: -10px;
+	margin-left: -10px;
+	height: 24px;
+	width: 24px;
+	background-image: url(../images/lightbox-close.png);
+}
+.RightToLeft div#lightbox .closeButton {
+	margin-left: 0;
+	margin-right: -10px;
+}
+
+.msie div#lightbox .closeButton {
+	*left: 140px;
+}
+.RightToLeft.msie div#lightbox .closeButton {
+	*left: 0;
+	*right: 140px;
+}
+
+div#lightbox .closeButton:hover {
+	background-image: url(../images/lightbox-close-hover.png);
+}
+/*Flamingo2 glossary popup positioning*/
+
+.msie.flamingo2 div#lightbox #lightboxOuterWrapper,
+.msie.flamingo2 div#lightbox #closeButtonWrapper {
+	top: 39px;
+}
+
+/* @end */
+
+
+/* @group Lightbox Scroll Bar */
+
+/* Turn off the scroll arrows */
+div#lightbox ::-webkit-scrollbar-button:start:increment,
+div#lightbox ::-webkit-scrollbar-button:start:decrement,
+div#lightbox ::-webkit-scrollbar-button:end:increment,
+div#lightbox ::-webkit-scrollbar-button:end:decrement {
+    display: none;
+}
+
+div#lightbox ::-webkit-scrollbar:vertical,
+div#lightbox ::-webkit-scrollbar:horizontal {
+	-webkit-border-image: none;
+	background-image: none;
+}
+
+div#lightbox ::-webkit-scrollbar-track-piece:vertical:start {
+    margin-top: 0px;
+}
+
+div#lightbox ::-webkit-scrollbar-track-piece:vertical:end {
+    margin-bottom: 0px;
+}
+
+div#lightbox ::-webkit-scrollbar-track-piece:horizontal:start {
+    margin-left: 0px;
+}
+
+div#lightbox ::-webkit-scrollbar-track-piece:horizontal:end {
+    margin-right: 0px;
+}
+
+div#lightbox ::-webkit-scrollbar-corner {
+    background-image: none;
+}
+
+/* @end */
+
+/*=================================*/
+/* END LIGHTBOX CONTROLLER ======*/
+/*=================================*/
+
+
+/* ======== css/localizationcontroller.css ======== */
+/*=================================*/
+/* START LOCALIZATION CONTROLLER ==*/
+/*=================================*/
+
+
+/* @group Localizations */
+
+div#localizations {
+	text-align: center;
+	margin-top: 7px;
+	padding-bottom: 3px;
+}
+div.contentCell > div#localizations:only-child {
+	padding-bottom: 28px;
+}
+
+div#localizations select {
+	background: none;
+	border: 1px solid gray;
+}
+
+/* @end */
+
+/*=================================*/
+/* END LOCALIZATION CONTROLLER ====*/
+/*=================================*/
+
+
+/* ======== css/movielightboxcontroller.css ======== */
+/*===================================*/
+/* START MOVIE LIGHTBOX CONTROLLER ==*/
+/*===================================*/
+
+
+/* @group Lightbox */
+
+/* 02-18-11*/
+
+div#movieLightbox .background {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: white;
+	opacity: 0.5;
+	z-index: 100;
+}
+
+.msie div#movieLightbox .background {
+	filter: alpha(opacity = 50);
+}
+
+div#movieLightbox .closeButton {
+	position: absolute;
+	margin-top: -10px;
+	margin-left: -10px;
+	height: 24px;
+	width: 24px;
+	z-index: 103;
+	background-image: url(../images/lightbox-close.png);
+}
+.RightToLeft div#movieLightbox .closeButton {
+	margin-left: 0;
+	margin-right: -10px;
+}
+div#movieLightbox .closeButton:hover {
+	background-image: url(../images/lightbox-close-hover.png);
+}
+div#movieLightbox > div#centeringDiv {
+	height: 100%;
+	position: absolute;
+	left: 50px;
+	right: 50px;
+	min-width: 400px;
+	z-index: 101;
+	margin-top: 40px;
+}
+.flamingo2 div#movieLightbox > div#centeringDiv {
+	margin-top: 24px;
+}
+div#movieLightbox > div#centeringDiv > div {
+	display: table;
+	margin: 0 auto;
+	width: 640px;
+}
+div#movieLightbox > div#centeringDiv > div > div {
+	max-width: 800px;
+	margin: 0 auto;
+	height: 100px;
+}
+div#movieLightbox .content {
+	text-align: center;
+	-webkit-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: #999999 1px 1px 25px;
+	background: white;
+	padding: 0 36px 36px;
+}
+.msie div#movieLightbox .content  {
+	border: 1px solid #999999;
+	*width: 712px; /*fix for IE7*/
+	*height: 400px; /*fix for IE7*/
+}
+/* @end */
+
+/* @group Video CSS */
+
+div#movieLightbox div.containingBlock {
+	width: 640px;
+	background: white;
+	padding-bottom: 31px;
+}
+.webkit div#movieLightbox div.containingBlock {
+	border: none;
+}
+div#movieLightbox div.videoWrapper {
+	position: relative;
+	padding-bottom: 57%;
+	height: 0;
+}
+div#movieLightbox div.videoWrapper video {
+	position: absolute;
+	top: 34px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+.RightToLeft div#movieLightbox div.videoWrapper video {
+	right: 0;
+}
+
+/*Flamingo2 movie styles*/
+.msie.flamingo2 div#movieLightbox > div#centeringDiv {
+	margin-top: 23px;
+}
+.flamingo2 div#movieLightbox .content {
+	padding: 0 20px 20px;
+}
+.mozilla.flamingo2 div#movieLightbox .content {
+	padding: 0 20px 40px;
+}
+.msie.flamingo2 div#movieLightbox .content {
+	padding: 0 20px 40px;
+}
+.flamingo2 div#movieLightbox div.containingBlock {
+	width: 640px;
+	padding-bottom: 18px;
+}
+.flamingo2 div#movieLightbox div.videoWrapper video {
+	position: absolute;
+	top: 18px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+.RightToLeft.flamingo2 div#movieLightbox div.videoWrapper video {
+	right: 0;
+}
+
+/* @end */
+
+/*===================================*/
+/* END MOVIE LIGHTBOX CONTROLLER ==*/
+/*===================================*/
+
+
+/* ======== css/printcontroller.css ======== */
+/*==========================*/
+/* START PRINT CONTROLLER ==*/
+/*==========================*/
+
+
+/* @group Print Styles */
+
+#print {
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	z-index: 100;
+	width: 30px;
+	height: 25px;
+}
+.RightToLeft #print {
+	left: 10px;
+	right: auto;
+}
+.flamingo2 #print {
+	position: absolute;
+	top: 4px;
+	right: 14px;
+	z-index: 100;
+	width: 17px;
+	height: 15px;
+}
+.RightToLeft.flamingo2 #print {
+	left: 14px;
+	right: auto;
+}
+.redflamingo div#print {
+	display: none;
+}
+div#print > a#printImageSpacer {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url("../images/print.png");
+	outline: none;
+}
+.flamingo2 div#print > a#printImageSpacer {
+	background: url("../images/print-sm.png");
+	top: 8px;
+}
+.helpviewer.flamingo2 div#print > a#printImageSpacer {
+	display:  none;
+}
+div#print > a#printImageSpacer:hover,
+div#print > a#printImageSpacer.pressed {
+	background: url("../images/print-pressed.png");
+}
+.flamingo2 div#print > a#printImageSpacer:hover,
+.flamingo2 div#print > a#printImageSpacer.pressed {
+	background: url("../images/print-pressed-sm.png");
+}
+
+/* Orange and Black Flamingo: different print graphic */
+.orangeflamingo div#print > a#printImageSpacer {
+	top: 6px;
+	right: 12px;
+	background-image: url(../images/orangeflamingo/print.png);
+}
+.blackflamingo div#print > a#printImageSpacer {
+	top: 6px;
+	right: 12px;
+	background-image: url(../images/blackflamingo/print.png);
+}
+.RightToLeft.orangeflamingo div#print > a#printImageSpacer,
+.RightToLeft.blackflamingo div#print > a#printImageSpacer {
+	left: 12px;
+	right: 0;
+}
+.orangeflamingo div#print > a#printImageSpacer:hover {
+	background-image: url(../images/orangeflamingo/print-hover.png);
+}
+.blackflamingo div#print > a#printImageSpacer:hover {
+	background-image: url(../images/blackflamingo/print-hover.png);
+}
+.orangeflamingo div#print > a#printImageSpacer:active,
+.orangeflamingo div#print > a#printImageSpacer.pressed {
+	background-image: url(../images/orangeflamingo/print-active.png);
+}
+.blackflamingo div#print > a#printImageSpacer:active,
+.blackflamingo div#print > a#printImageSpacer.pressed {
+	background-image: url(../images/blackflamingo/print-active.png);
+}
+
+/* print options */
+div#print > div#printOptions {
+	position: absolute;
+	top: 20px;
+	right: 4px;
+	z-index: 101;
+	width: 250px;
+	min-width: 222px;
+	max-width: 222px;
+	padding: 0;
+	background-color: rgba(255, 255, 255, 0.95);
+	-webkit-border-radius: 3px;
+	-webkit-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
+	-moz-border-radius: 3px;
+	-moz-box-shadow: #999999 1px 1px 25px;
+}
+.RightToLeft div#print > div#printOptions {
+	left: -35px;
+	right: 0;
+	margin-left: 40px;
+	margin-right: auto;
+}
+.blackflamingo div#print > div#printOptions,
+.orangeflamingo div#print > div#printOptions {
+	background-color: rgba(255, 255, 255, 0.949219);
+	border:  none;
+	min-width: 260px;
+	max-width: 260px;
+	right: 4px;
+	top: 20px;
+	-webkit-border-radius: 0px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.339844) 0px 0px 80px;
+	-moz-border-radius: 0px;
+	-moz-box-shadow: #999999 1px 1px 25px;
+}
+.RightToLeft.blackflamingo div#print > div#printOptions,
+.RightToLeft.orangeflamingo div#print > div#printOptions {
+	left: -35px;
+	right: 0;
+	margin-left: 40px;
+	margin-right: auto;
+}
+.flamingo2 div#print > div#printOptions {
+	-webkit-border-radius: 0;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.339844) 0px 0px 80px;
+	top: 13px;	
+	right: 0;
+}
+
+.RightToLeft.flamingo2 div#print > div#printOptions {
+	left: -35px;
+	right: 0;
+	margin-left: 40px;
+	margin-right: auto;
+}
+.blackflamingo div#print > div#printOptions,
+.orangeflamingo div#print > div#printOptions {
+	right: 2px;
+	top: 24px;
+	-webkit-border-radius: 3px;
+	-webkit-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
+	-moz-border-radius: 3px;
+	-moz-box-shadow: #999999 1px 1px 25px;
+}
+.RightToLeft.blackflamingo div#print > div#printOptions,
+.RightToLeft.orangeflamingo div#print > div#printOptions {
+	left: -35px;
+	right: 0;
+	margin-left: 40px;
+	margin-right: auto;
+}
+.blueflamingo div#print > div#printOptions {
+	right: 7px;
+	top: 24px;
+}
+.msie div#print > div#printOptions {
+	background: white;
+	border: 1px solid #999;
+	right: -60px;
+	*right: 13px;
+	margin-right: 40px;
+	top: 20px;
+}
+.RightToLeft.msie div#print > div#printOptions {
+	left: -35px;
+	right: 0;
+	*left: 13px;
+	*right: 0;
+	margin-left: 40px;
+	margin-right: auto;
+}
+
+div#print > div#printOptions.hidden {
+	display: none;
+}
+div#print > div#printOptions > table {
+	display: table;
+	overflow:hidden;
+    text-overflow:ellipsis;
+	width: 100%;
+}
+div#print > div#printOptions > table > tbody > tr {
+	font-size: .6em;
+	line-height: 14px;
+	line-height: 1.55em;
+	text-align: left;
+	vertical-align: top;
+}
+.RightToLeft div#print > div#printOptions > table > tbody > tr {
+	text-align: right;
+}
+div#print > div#printOptions > table > tbody > tr.hidden {
+	display: none;
+}
+tr#printOptionsPage > td {
+	padding-top: 11px!important;
+}
+tr#printOptionsSection > td {
+	padding-top: 2px!important;
+}
+.flamingo2 tr#printOptionsSection > td,
+.blackflamingo tr#printOptionsSection > td,
+.orangeflamingo tr#printOptionsSection > td {
+	padding-top: 4px!important;
+}
+tr#printOptionsBook > td {
+	padding-top: 2px!important;
+}
+.flamingo2 tr#printOptionsBook > td,
+.blackflamingo tr#printOptionsBook > td,
+.orangeflamingo tr#printOptionsBook > td {
+	padding-top: 4px!important;
+}
+div#print > div#printOptions > table > tbody > tr > td.title {
+	text-align: right;
+	font-weight: bold;
+	padding-left: 14px;
+	padding-bottom: 2px;
+	color: #737373;
+}
+.RightToLeft div#print > div#printOptions > table > tbody > tr > td.title {
+	text-align: left;
+	padding-left: 0;
+	padding-right: 14px;
+}
+.flamingo2 div#print > div#printOptions > table > tbody > tr > td.title,
+.blackflamingo div#print > div#printOptions > table > tbody > tr > td.title,
+.orangeflamingo div#print > div#printOptions > table > tbody > tr > td.title {
+	padding-left: 13px;
+	text-align: left;
+	padding-right: 11px;
+}
+.RightToLeft.flamingo2 div#print > div#printOptions > table > tbody > tr > td.title,
+.RightToLeft.blackflamingo div#print > div#printOptions > table > tbody > tr > td.title,
+.RightToLeft.orangeflamingo div#print > div#printOptions > table > tbody > tr > td.title {
+	padding-left: 11px;
+	text-align: right;
+	padding-right: 13px;
+}
+div#print > div#printOptions > table > tbody > tr#printOptionsSection > td.title {
+	padding-top: 0px;
+	padding-bottom: 2px;
+}
+div#print > div#printOptions > table > tbody > tr#printOptionsBook > td.text {
+	padding-bottom: 12px!important;
+}
+div#print > div#printOptions > table > tbody > tr > td.dash {
+	padding: 0px 0px 0px 2px;
+	color: #737373;
+}
+.RightToLeft div#print > div#printOptions > table > tbody > tr > td.dash {
+	padding: 0px 2px 0px 0;
+}
+.flamingo2 div#print > div#printOptions > table > tbody > tr > td.dash,
+.blackflamingo div#print > div#printOptions > table > tbody > tr > td.dash,
+.orangeflamingo div#print > div#printOptions > table > tbody > tr > td.dash {
+	display:  none;
+}
+div#printOptions td.text {
+	padding: 0px 14px 2px 2px;
+	color: #333333;
+}
+.RightToLeft div#printOptions td.text {
+	padding: 0px 2px 2px 14px;
+}
+.flamingo2 div#printOptions td.text {
+	color: #555555;
+}
+div#printOptions > table > tbody > tr:hover {
+	background-color: transparent;
+}
+tr#printOptionsPage:hover > td.text, tr#printOptionsSection:hover > td.text, tr#printOptionsBook:hover > td.text {
+	color: #2f95ce;
+	cursor: pointer;
+}
+.flamingo2 tr#printOptionsPage:hover > td.text, 
+.flamingo2 tr#printOptionsSection:hover > td.text, 
+.flamingo2 tr#printOptionsBook:hover > td.text {
+	color: #888888;
+	cursor: pointer;
+}
+.orangeflamingo tr#printOptionsPage:hover > td.text, .orangeflamingo tr#printOptionsSection:hover > td.text, .orangeflamingo tr#printOptionsBook:hover > td.text,
+.blackflamingo tr#printOptionsPage:hover > td.text, .blackflamingo tr#printOptionsSection:hover > td.text, .blackflamingo tr#printOptionsBook:hover > td.text {
+	color: #0a8de0;
+}
+tr#printOptionsPage.hidden + tr#printOptionsSection.hidden + tr#printOptionsBook > td {
+	padding-top: 11px!important;
+}
+
+/* iframe */
+iframe#printiFrame {
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	border: none;
+}
+/* print copyright */
+.printElement .copyright {
+	font-size: .85em;
+	line-height: 1.4em;
+}
+
+/* @end */
+
+/*==========================*/
+/* END PRINT CONTROLLER ====*/
+/*==========================*/
+/* ======== css/scrollbar.css ======== */
+/*==============================*/
+/* START SCROLLBAR CONTROLLER ==*/
+/*==============================*/
+
+
+/* @group Scrollbar Styles */
+
+/*
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+::-webkit-scrollbar-corner {
+    background-image: url(../images/corner.png);
+    background-repeat: no-repeat;
+}
+
+::-webkit-resizer {
+    background-image: url(../images/resizer.png);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
+::-webkit-scrollbar-button:start {
+    display: none;
+}
+
+::-webkit-scrollbar-button:end {
+    display: block;
+}
+*/
+
+/* Horizontal Scrollbar Styles */
+
+/*
+::-webkit-scrollbar:horizontal {
+    -webkit-border-image: url(../images/horizontal-button.png) 0 2 0 2;
+    border-color: transparent;
+    border-width: 0 2px;
+    background-image: url(../images/horizontal-button-background.png);
+    background-repeat: repeat-x;
+}
+
+.orangeflamingo ::-webkit-scrollbar:horizontal {
+    -webkit-border-image: url(../images/orangeflamingo/horizontal-button.png) 0 2 0 2;
+    background-image: url(../images/orangeflamingo/horizontal-button-background.png);
+}
+
+.blackflamingo ::-webkit-scrollbar:horizontal {
+    -webkit-border-image: url(../images/blackflamingo/horizontal-button.png) 0 2 0 2;
+    background-image: url(../images/blackflamingo/horizontal-button-background.png);
+}
+
+::-webkit-scrollbar:horizontal:corner-present {
+    border-right-width: 0;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    -webkit-border-image: url(../images/horizontal-thumb.png) 0 15 0 15;
+    border-color: transparent;
+    border-width: 0 15px;
+    min-width: 20px;
+}
+
+.orangeflamingo ::-webkit-scrollbar-thumb:horizontal {
+    -webkit-border-image: url(../images/orangeflamingo/horizontal-thumb.png) 0 15 0 15;
+}
+
+.blackflamingo ::-webkit-scrollbar-thumb:horizontal {
+    -webkit-border-image: url(../images/blackflamingo/horizontal-thumb.png) 0 15 0 15;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:start {
+    margin-left: 6px;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:end {
+    margin-right: -6px;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:decrement {
+    -webkit-border-image: url(../images/horizontal-track.png) 0 15 0 15;
+    border-color: transparent;
+    border-width: 0 0 0 15px;
+}
+
+.orangeflamingo ::-webkit-scrollbar-track-piece:horizontal:decrement {
+    -webkit-border-image: url(../images/orangeflamingo/horizontal-track.png) 0 15 0 15;
+}
+
+.blackflamingo ::-webkit-scrollbar-track-piece:horizontal:decrement {
+    -webkit-border-image: url(../images/blackflamingo/horizontal-track.png) 0 15 0 15;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:increment {
+    -webkit-border-image: url(../images/horizontal-track.png) 0 15 0 15;
+    border-color: transparent;
+    border-width: 0 15px 0 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-track-piece:horizontal:increment {
+    -webkit-border-image: url(../images/orangeflamingo/horizontal-track.png) 0 15 0 15;
+}
+
+.blackflamingo ::-webkit-scrollbar-track-piece:horizontal:increment {
+    -webkit-border-image: url(../images/blackflamingo/horizontal-track.png) 0 15 0 15;
+}
+
+::-webkit-scrollbar-button:horizontal {
+    width: 21px;
+    -webkit-border-image: url(../images/horizontal-button.png) 0 2 0 2;
+    border-color: transparent;
+    border-width: 0 2px;
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:horizontal {
+    -webkit-border-image: url(../images/orangeflamingo/horizontal-button.png) 0 2 0 2;
+}
+
+.blackflamingo ::-webkit-scrollbar-button:horizontal {
+    -webkit-border-image: url(../images/blackflamingo/horizontal-button.png) 0 2 0 2;
+}
+
+::-webkit-scrollbar-button:horizontal:decrement {
+    background-image: url(../images/horizontal-decrement-arrow.png), url(../images/horizontal-button-background.png);
+    background-repeat: no-repeat, repeat-x;
+    background-position: 7px 4px, 0 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:horizontal:decrement {
+    background-image: url(../images/orangeflamingo/horizontal-decrement-arrow.png), url(../images/orangeflamingo/horizontal-button-background.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:horizontal:decrement {
+    background-image: url(../images/blackflamingo/horizontal-decrement-arrow.png), url(../images/blackflamingo/horizontal-button-background.png);
+}
+
+::-webkit-scrollbar-button:horizontal:decrement:active {
+    -webkit-border-image: url(../images/horizontal-button-active.png) 0 2 0 2;
+    background-image: url(../images/horizontal-decrement-arrow.png), url(../images/horizontal-button-background-active.png);
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:horizontal:decrement:active {
+    -webkit-border-image: url(../images/orangeflamingo/horizontal-button-active.png) 0 2 0 2;
+    background-image: url(../images/orangeflamingo/horizontal-decrement-arrow.png), url(../images/orangeflamingo/horizontal-button-background-active.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:horizontal:decrement:active {
+    -webkit-border-image: url(../images/blackflamingo/horizontal-button-active.png) 0 2 0 2;
+    background-image: url(../images/blackflamingo/horizontal-decrement-arrow.png), url(../images/blackflamingo/horizontal-button-background-active.png);
+}
+
+::-webkit-scrollbar-button:horizontal:increment {
+    background-image: url(../images/horizontal-increment-arrow.png), url(../images/horizontal-button-background.png);
+    background-repeat: no-repeat, repeat-x;
+    width: 16px;
+    border-left-width: 0;
+    background-position: 3px 4px, 0 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:horizontal:increment {
+    background-image: url(../images/orangeflamingo/horizontal-increment-arrow.png), url(../images/orangeflamingo/horizontal-button-background.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:horizontal:increment {
+    background-image: url(../images/blackflamingo/horizontal-increment-arrow.png), url(../images/blackflamingo/horizontal-button-background.png);
+}
+
+::-webkit-scrollbar-button:horizontal:increment:active {
+    -webkit-border-image: url(../images/horizontal-button-active.png) 0 2 0 2;
+    background-image: url(../images/horizontal-increment-arrow.png), url(../images/horizontal-button-background-active.png);
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:horizontal:increment:active {
+    -webkit-border-image: url(../images/orangeflamingo/horizontal-button-active.png) 0 2 0 2;
+    background-image: url(../images/orangeflamingo/horizontal-increment-arrow.png), url(../images/orangeflamingo/horizontal-button-background-active.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:horizontal:increment:active {
+    -webkit-border-image: url(../images/blackflamingo/horizontal-button-active.png) 0 2 0 2;
+    background-image: url(../images/blackflamingo/horizontal-increment-arrow.png), url(../images/blackflamingo/horizontal-button-background-active.png);
+}
+
+::-webkit-scrollbar-button:horizontal:end:increment:corner-present {
+    border-right-width: 0;
+    width: 15px;
+}
+*/
+
+/* Vertical Scrollbar Styles */
+
+/*
+::-webkit-scrollbar:vertical {
+    -webkit-border-image: url(../images/vertical-button.png) 2 0 2 0;
+    border-color: transparent;
+    border-width: 2px 0;
+    background-image: url(../images/vertical-button-background.png);
+    background-repeat: repeat-y;
+}
+
+.orangeflamingo ::-webkit-scrollbar:vertical {
+    -webkit-border-image: url(../images/orangeflamingo/vertical-button.png) 2 0 2 0;
+    background-image: url(../images/orangeflamingo/vertical-button-background.png);
+}
+
+.blackflamingo ::-webkit-scrollbar:vertical {
+    -webkit-border-image: url(../images/blackflamingo/vertical-button.png) 2 0 2 0;
+    background-image: url(../images/blackflamingo/vertical-button-background.png);
+}
+
+::-webkit-scrollbar:vertical:corner-present {
+    border-bottom-width: 0;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    -webkit-border-image: url(../images/vertical-thumb.png) 15 0 15 0;
+    border-color: transparent;
+    border-width: 15px 0;
+    min-height: 20px;
+}
+
+.orangeflamingo ::-webkit-scrollbar-thumb:vertical {
+    -webkit-border-image: url(../images/orangeflamingo/vertical-thumb.png) 15 0 15 0;
+}
+
+.blackflamingo ::-webkit-scrollbar-thumb:vertical {
+    -webkit-border-image: url(../images/blackflamingo/vertical-thumb.png) 15 0 15 0;
+}
+
+::-webkit-scrollbar-track-piece:vertical:start {
+    margin-top: 6px;
+}
+
+::-webkit-scrollbar-track-piece:vertical:end {
+    margin-bottom: -6px;
+}
+
+::-webkit-scrollbar-track-piece:vertical:decrement {
+    -webkit-border-image: url(../images/vertical-track.png) 15 0 15 0;
+    border-color: transparent;
+    border-width: 15px 0 0 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-track-piece:vertical:decrement {
+    -webkit-border-image: url(../images/orangeflamingo/vertical-track.png) 15 0 15 0;
+}
+
+.blackflamingo ::-webkit-scrollbar-track-piece:vertical:decrement {
+    -webkit-border-image: url(../images/blackflamingo/vertical-track.png) 15 0 15 0;
+}
+
+::-webkit-scrollbar-track-piece:vertical:increment {
+    -webkit-border-image: url(../images/vertical-track.png) 15 0 15 0;
+    border-color: transparent;
+    border-width: 0 0 15px 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-track-piece:vertical:increment {
+    -webkit-border-image: url(../images/orangeflamingo/vertical-track.png) 15 0 15 0;
+}
+
+.blackflamingo ::-webkit-scrollbar-track-piece:vertical:increment {
+    -webkit-border-image: url(../images/blackflamingo/vertical-track.png) 15 0 15 0;
+}
+
+::-webkit-scrollbar-button:vertical {
+    height: 21px;
+    -webkit-border-image: url(../images/vertical-button.png) 2 0 2 0;
+    border-color: transparent;
+    border-width: 2px 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:vertical {
+    -webkit-border-image: url(../images/orangeflamingo/vertical-button.png) 2 0 2 0;
+}
+
+.blackflamingo ::-webkit-scrollbar-button:vertical {
+    -webkit-border-image: url(../images/blackflamingo/vertical-button.png) 2 0 2 0;
+}
+
+::-webkit-scrollbar-button:vertical:decrement {
+    background-image: url(../images/vertical-decrement-arrow.png), url(../images/vertical-button-background.png);
+    background-repeat: no-repeat, repeat-y;
+    background-position: 4px 7px, 0 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:vertical:decrement {
+    background-image: url(../images/orangeflamingo/vertical-decrement-arrow.png), url(../images/orangeflamingo/vertical-button-background.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:vertical:decrement {
+    background-image: url(../images/blackflamingo/vertical-decrement-arrow.png), url(../images/blackflamingo/vertical-button-background.png);
+}
+
+::-webkit-scrollbar-button:vertical:decrement:active {
+    -webkit-border-image: url(../images/vertical-button-active.png) 2 0 2 0;
+    background-image: url(../images/vertical-decrement-arrow.png), url(../images/vertical-button-background-active.png);
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:vertical:decrement:active {
+    -webkit-border-image: url(../images/orangeflamingo/vertical-button-active.png) 2 0 2 0;
+    background-image: url(../images/orangeflamingo/vertical-decrement-arrow.png), url(../images/orangeflamingo/vertical-button-background-active.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:vertical:decrement:active {
+    -webkit-border-image: url(../images/blackflamingo/vertical-button-active.png) 2 0 2 0;
+    background-image: url(../images/blackflamingo/vertical-decrement-arrow.png), url(../images/blackflamingo/vertical-button-background-active.png);
+}
+
+::-webkit-scrollbar-button:vertical:increment {
+    background-image: url(../images/vertical-increment-arrow.png), url(../images/vertical-button-background.png);
+    background-repeat: no-repeat, repeat-y;
+    height: 16px;
+    border-top-width: 0;
+    background-position: 4px 5px, 0 0;
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:vertical:increment {
+    background-image: url(../images/orangeflamingo/vertical-increment-arrow.png), url(../images/orangeflamingo/vertical-button-background.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:vertical:increment {
+    background-image: url(../images/blackflamingo/vertical-increment-arrow.png), url(../images/blackflamingo/vertical-button-background.png);
+}
+
+::-webkit-scrollbar-button:vertical:increment:active {
+    -webkit-border-image: url(../images/vertical-button-active.png) 2 0 2 0;
+    background-image: url(../images/vertical-increment-arrow.png), url(../images/vertical-button-background-active.png);
+}
+
+.orangeflamingo ::-webkit-scrollbar-button:vertical:increment:active {
+    -webkit-border-image: url(../images/orangeflamingo/vertical-button-active.png) 2 0 2 0;
+    background-image: url(../images/orangeflamingo/vertical-increment-arrow.png), url(../images/orangeflamingo/vertical-button-background-active.png);
+}
+
+.blackflamingo ::-webkit-scrollbar-button:vertical:increment:active {
+    -webkit-border-image: url(../images/blackflamingo/vertical-button-active.png) 2 0 2 0;
+    background-image: url(../images/blackflamingo/vertical-increment-arrow.png), url(../images/blackflamingo/vertical-button-background-active.png);
+}
+
+::-webkit-scrollbar-button:vertical:end:increment:corner-present {
+    border-bottom-width: 0;
+    height: 15px;
+}
+*/
+
+/* Disabled Styles */
+/*
+::-webkit-scrollbar:disabled {
+	background: red;
+	-webkit-border-image: none;
+	display: none;
+}
+*/
+
+/* @end */
+
+/*==============================*/
+/* END SCROLLBAR CONTROLLER ==*/
+/*==============================*/
+/* ======== css/searchcontroller.css ======== */
+/*===========================*/
+/* START SEARCH CONTROLLER ==*/
+/*===========================*/
+
+
+/* @group Search Styles */
+
+#search {
+	height: 43px;
+}
+.default #search,
+.blueflamingo #search {
+	width: 200px;
+}
+.redflamingo #search {
+	display: none;
+}
+
+/* navigation search box */
+div#search > div#searchField {
+	width: 200px;
+	border-bottom: 1px solid #cccccc;
+}
+.flamingo2 div#search > div#searchField {
+	width: 240px;
+	background-color: #f3f3f3;
+	border-right: none;
+}
+.RightToLeft.flamingo2 div#search > div#searchField {
+	border-left: none;
+}
+
+div#search > div#searchField > input {
+	margin: 12px 10px 11px 13px;
+	width: 180px;
+}
+.RightToLeft div#search > div#searchField > input {
+	margin: 12px 13px 11px 10px;
+}
+
+.mozilla.blueflamingo div#search > div#searchField > input {
+	width: 170px;
+}
+.flamingo2 div#search > div#searchField > input {
+	width: 214px;
+}
+
+/* search results list */
+div#search > div#searchResults {
+	position: absolute;
+	top: 43px;
+	bottom: 0px;
+	width: 200px;
+	background-color: #f6f6f6;
+	border-right: 1px solid #d8d7d7;
+	z-index: 2;
+}
+.flamingo2 div#search > div#searchResults {
+	width: 240px;
+	background-color: #f3f3f3;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#fff));
+	border-right: none;
+}
+.RightToLeft.flamingo2 div#search > div#searchResults {
+	border-left: none;
+}
+div#search > div#searchResults > div#searchResultsTopBar {
+	background: #cacaca;
+	font-size: 10px;
+	height: 19px;
+	padding: 2px 0 1px;
+	border-bottom: 1px solid #cacaca;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsTopBar {
+	background: #999;
+	font-weight: bold;
+	border-bottom: none;
+	padding: 2px 0 1px 4px;
+}
+.RightToLeft.flamingo2 div#search > div#searchResults > div#searchResultsTopBar {
+	padding: 2px 4px 1px 0;
+}
+div#search > div#searchResults > div#searchResultsTopBar > span {
+	color: white;
+	font-weight: bold;
+	padding-left: 10px;
+}
+.RightToLeft div#search > div#searchResults > div#searchResultsTopBar > span {
+	padding-left: 0;
+	padding-right: 10px;
+}
+.orangeflamingo div#search > div#searchResults > div#searchResultsTopBar,
+.blackflamingo div#search > div#searchResults > div#searchResultsTopBar {
+	height: 17px;
+	padding: 2px 0 3px;
+}
+div#search > div#searchResults > div#searchResultsTopBar > a {
+	cursor: pointer;
+	color: white;
+	text-decoration: none;
+	float: right;
+	padding-right: 10px;
+	outline: none;
+}
+.RightToLeft div#search > div#searchResults > div#searchResultsTopBar > a {
+	float: left;
+	padding-right: 0;
+	padding-left: 10px;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsTopBar > a {
+	padding-right: 12px;
+}
+.RightToLeft.flamingo2 div#search > div#searchResults > div#searchResultsTopBar > a {
+	padding-right: 0;
+	padding-left: 12px;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsTopBar > a:hover {
+	text-decoration: underline;
+}
+div#search > div#searchResults > div#searchResultsListContainer {
+	overflow: auto;
+	position: absolute;
+	top: 22px;
+	bottom: 0px;
+	width: 200px;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer {
+	width: 240px;
+}
+div#search > div#searchResults > div#searchResultsListContainer > ul > li {
+	border-bottom: 1px solid #d8d7d7;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li {
+	border-bottom: 1px solid #e4e4e4;
+}
+div#search > div#searchResults > div#searchResultsListContainer > ul > li > a {
+	cursor: pointer;
+	color: #4c4c4c;
+	display: block;
+	width: 164px;
+	text-decoration: none;
+	font-size: .7em;
+	line-height: 1.3;
+	padding: 10px;
+	outline: none;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li > a {
+	font-size: .6em;
+	font-weight: bold;
+	color:  #666;
+	padding: 10px 10px 10px 14px;
+}
+.RightToLeft.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li > a {
+	padding: 10px 14px 10px 10px;
+}
+div#search > div#searchResults > div#searchResultsListContainer > ul > li:hover > a {
+	color: #2f95ce;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li:hover > a {
+	color: #666;
+	text-decoration: underline;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li:hover > a:hover > span:hover {
+	text-decoration: none;
+}
+div#search > div#searchResults > div#searchResultsListContainer > ul > li.selectedSearchResult > a,
+div#search > div#searchResults > div#searchResultsListContainer > ul > li.selectedSearchResult:hover > a {
+	font-weight: bold;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li.selectedSearchResult > a,
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li.selectedSearchResult:hover > a {
+	font-weight: bold;
+	color: #000;
+}
+div#search > div#searchResults > div#searchResultsListContainer > ul > li > a > span {
+	display: block;
+	font-size: 9px;
+	line-height: 10px;
+	margin-top: 2px;
+	font-weight: normal;
+	color: #8b8b8b;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li > a > span {
+	color: #666;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li > a > span:hover {
+	text-decoration: none !important;
+}
+div#search > div#searchResults > div#searchResultsListContainer > ul > li > a > span > span.breadcrumbArrow {
+	font-size: 6px;
+	color: #AAAAAA;
+	padding: 0 0 0 2px;
+}
+.RightToLeft div#search > div#searchResults > div#searchResultsListContainer > ul > li > a > span > span.breadcrumbArrow {
+	font-size: 6px;
+	color: #AAAAAA;
+	padding: 0 2px 0 0;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li > a > span > span.breadcrumbArrow {
+	font-size: 6px;
+	color: #666;
+	padding: 0 0 0 2px;
+}
+.RightToLeft.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li > a > span > span.breadcrumbArrow {
+	padding: 0 2px 0 0;
+}
+div#search > div#searchResults > div#searchResultsListContainer > ul > li:hover > a > span {
+	color: #8b8b8b;
+}
+.flamingo2 div#search > div#searchResults > div#searchResultsListContainer > ul > li:hover > a > span {
+	color: #666;
+	text-decoration: none;
+}
+
+/* @end */
+
+/*===========================*/
+/* END SEARCH CONTROLLER ==*/
+/*===========================*/
+
+/* ======== css/updatecontroller.css ======== */
+
+div#updating {
+	display: table;
+	margin: 0 auto;
+	margin-top: 200px;
+	text-align: center;
+}
+
+div#updating > div#updatingText {
+	font-size: 0.7em;
+	color: #737373;
+	margin-top: 3px;
+}
+
+div#updating > div#updatingText.hidden {
+	display: none;
+}
+
+/* @group activity indicator */
+
+div#updating img {
+	width: 30px;
+	height: 30px;
+	
+	-webkit-animation-name: "activityIndicatorAnimation";
+	-webkit-animation-duration: 0.75s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes activityIndicatorAnimation {
+  0% {
+	-webkit-transform: rotate(0deg);
+  }
+  
+  8.32% {
+	-webkit-transform: rotate(0deg);
+  }
+  8.33% {
+	-webkit-transform: rotate(30deg);
+  }
+  
+  16.66% {
+	-webkit-transform: rotate(30deg);
+  }
+  16.67% {
+	-webkit-transform: rotate(60deg);
+  }
+  
+  24.99% {
+	-webkit-transform: rotate(60deg);
+  }
+  25% {
+	-webkit-transform: rotate(90deg);
+  }
+  
+  33.32% {
+	-webkit-transform: rotate(90deg);
+  }
+  33.33% {
+	-webkit-transform: rotate(120deg);
+  }
+  
+  41.66% {
+	-webkit-transform: rotate(120deg);
+  }
+  41.67% {
+	-webkit-transform: rotate(150deg);
+  }
+  
+  49.99% {
+	-webkit-transform: rotate(150deg);
+  }
+  50% {
+	-webkit-transform: rotate(180deg);
+  }
+  
+  58.32% {
+	-webkit-transform: rotate(180deg);
+  }
+  58.33% {
+	-webkit-transform: rotate(210deg);
+  }
+  
+  66.66% {
+	-webkit-transform: rotate(210deg);
+  }
+  66.67% {
+	-webkit-transform: rotate(240deg);
+  }
+  
+  74.99% {
+	-webkit-transform: rotate(240deg);
+  }
+  75% {
+	-webkit-transform: rotate(270deg);
+  }
+  
+  83.32% {
+	-webkit-transform: rotate(270deg);
+  }
+  83.33% {
+	-webkit-transform: rotate(300deg);
+  }
+  
+  91.66% {
+	-webkit-transform: rotate(300deg);
+  }
+  91.67% {
+	-webkit-transform: rotate(330deg);
+  }
+  
+  99.99% {
+	-webkit-transform: rotate(330deg);
+  }
+  100% {
+	-webkit-transform: rotate(360deg);
+  }
+}
+
+/* @end */
+

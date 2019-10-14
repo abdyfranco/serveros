@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en-us</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.Server.help</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>141.0</string>
+	<key>CFBundleSignature</key>
+	<string>hbwr</string>
+	<key>CFBundleVersion</key>
+	<string>141.0</string>
+	<key>HPDBookAccessPath</key>
+	<string>redirect.html</string>
+	<key>HPDBookIconPath</key>
+	<string>../GlobalArt/spfic.png</string>
+	<key>HPDBookIndexPath</key>
+	<string>search.helpindex</string>
+	<key>HPDBookKBProduct</key>
+	<string>kmosxserver106 kxa</string>
+	<key>HPDBookKBURL</key>
+	<string>http://www.info.apple.com/searchredir.html?bucket=helpviewer&amp;lang='lang'&amp;as_oq='product'&amp;val='query'</string>
+	<key>HPDBookRemoteURL</key>
+	<string>https://help.apple.com/serverapp/mac/5.3/</string>
+	<key>HPDBookType</key>
+	<string>3</string>
+	<key>HPDBookUsesExternalViewer</key>
+	<false/>
+	<key>HPDMaxWindowWidth</key>
+	<integer>938</integer>
+</dict>
+</plist>

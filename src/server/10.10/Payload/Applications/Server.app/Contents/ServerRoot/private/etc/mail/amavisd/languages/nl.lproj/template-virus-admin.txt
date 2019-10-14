@@ -1,0 +1,55 @@
+# =============================================================================
+# Dit is een sjabloon voor BEHEERDERSBERICHTEN over andere zaken
+# dan spam (bijv. VIRUSSEN).
+# Meer informatie over de syntaxis en het aanpassen van de
+# sjabloon vindt u in "README.customize". Lange koptekstvelden worden
+# automatisch door het programma over meerdere regels verdeeld.
+#
+Van: %f
+Datum: %d
+Onderwerp: [? [:ccat|major] |Goedgekeurde mail|Goedgekeurde mail|Door MTA geblokkeerde mail|\
+TE GROTE mail|ONGELDIGE KOPTEKST in mail|spam|SPAM|ONGECONTROLEERDE inhoud in mail|\
+VERBODEN inhoud (%F) in mail|VIRUS (%V) in mail]\
+ VAN [?%l||LOCAL ][?%a||\[%a\] ]%s
+To: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <VA%i@%h>
+
+[? %#V |Geen virussen gevonden.
+|Er is een virus gevonden: %V
+|Er zijn twee virussen gevonden:\n  %V
+|Er zijn %#V virussen gevonden:\n  %V
+]
+[? %#F |#|[:wrap|78||  |Verboden [?%#F|namen|naam|namen]: %F]]
+[? %#X |#|Onjuiste koptekst:[\n[:wrap|78|  |  |%X]]]
+[? %#W |#\
+|Scanner die een virus heeft gedetecteerd: %W
+|Scanners die een virus hebben gedetecteerd: %W
+]
+Type inhoud: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, gebokkeerd voor [:ccat|name]]
+Interne referentiecode voor het bericht is %n/%i
+
+[? %a |#|[:wrap|78||  |IP-adres van eerste upstream SMTP-client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Volgens een tracering van 'Ontvangen:'\
+ lijkt het bericht afkomstig van: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Niet in quarantaine geplaatst.|Dit bericht is in quarantaine geplaatst als: %q]
+
+[? %#S |Er wordt geen bericht aan de afzender gestuurd.
+
+]#
+[? %#D |#|Het bericht WORDT doorgestuurd naar:[\n%D]
+]
+[? %#N |#|Het bericht IS NIET doorgestuurd naar:[\n%N]
+]
+[? %#V |#|[? %#v |#|Uitvoer virusscanner:[\n  %v]
+]]

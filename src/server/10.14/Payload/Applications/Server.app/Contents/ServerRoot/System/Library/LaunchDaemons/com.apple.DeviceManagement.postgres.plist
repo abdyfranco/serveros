@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Disabled</key>
+  <true/>
+  <key>Label</key>
+  <string>com.apple.DeviceManagement.postgres</string>
+  <key>UserName</key>
+  <string>_devicemgr</string>
+  <key>GroupName</key>
+  <string>_devicemgr</string>
+  <key>ProcessType</key>
+  <string>Interactive</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Applications/Server.app/Contents/ServerRoot/usr/bin/postgres_real</string>
+    <string>-D</string>
+    <string>/Library/Server/ProfileManager/Config/ServiceData/Data/PostgreSQL</string>
+    <string>-c</string>
+    <string>unix_socket_directories=/Library/Server/ProfileManager/Config/var/PostgreSQL</string>
+    <string>-c</string>
+    <string>archive_mode=on</string>
+    <string>-c</string>
+    <string>archive_command=/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/config/postgres/wal_archive_tool.sh %p %f</string>
+    <string>-c</string>
+    <string>max_wal_senders=2</string>
+    <string>-c</string>
+    <string>wal_level=hot_standby</string>
+  </array>
+  <key>OnDemand</key>
+  <false/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Library/Logs/ProfileManager/postgres-stdout.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Library/Logs/ProfileManager/postgres-stderr.log</string>
+</dict>
+</plist>

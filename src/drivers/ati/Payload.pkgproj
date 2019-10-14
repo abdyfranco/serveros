@@ -500,7 +500,7 @@
 			<key>FOLLOW_SYMBOLIC_LINKS</key>
 			<true/>
 			<key>IDENTIFIER</key>
-			<string>com.apple.atiradeon</string>
+			<string>co.abdyfran.legacyatidriver</string>
 			<key>LOCATION</key>
 			<integer>0</integer>
 			<key>NAME</key>
@@ -702,7 +702,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>ATI Radeon Driver</string>
+			<string>Legacy ATI Radeon Driver</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 		</dict>

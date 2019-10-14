@@ -1,0 +1,442 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+# -*- test-case-name: tests.test_calendar_commonextra -*-
+#
+# CommonExtra script for calendar server.
+#
+# Copyright (c) 2012-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+from calendar_setup_util import (
+    checkVolume,
+    fixPermissions,
+    getConfigKey,
+    getKeyPath,
+    log,
+    removeKeyPath,
+    runWithExitStatus,
+    serverRootLocation,
+    setKeyPath,
+)
+
+import os
+import shutil
+import subprocess
+from plistlib import readPlist, writePlist
+from pwd import getpwnam
+from grp import getgrnam
+
+
+CALENDAR_SERVER_ROOT = serverRootLocation()
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+CALENDARSERVER_BIN = os.path.join(SERVER_APP_ROOT, "Library/CalendarServer/bin")
+CALENDARSERVER_SETUP = os.path.join(SERVER_APP_ROOT, "Library/CalendarServer/Setup")
+DEST_CONFIG_DIR = os.path.join(CALENDAR_SERVER_ROOT, "Config")
+LOG_DIR = os.path.join(CALENDAR_SERVER_ROOT, "Logs")
+DEST_DATA_DIR = os.path.join(CALENDAR_SERVER_ROOT, "Data")
+POSTGRESQL_LOG_DIR = os.path.join(LOG_DIR, "postgresql")
+RUN_DIR = "/var/run/caldavd"
+OLD_CALDAVD_PLIST = os.path.join(CALENDAR_SERVER_ROOT, "Config/caldavd.plist")
+NEW_CALDAVD_PLIST = os.path.join(CALENDAR_SERVER_ROOT, "Config/caldavd-system.plist")
+LAUNCHCTL = "/bin/launchctl"
+SERVERCTL = os.path.join(SERVER_APP_ROOT, "usr/sbin/serverctl")
+SHARE_DIR = os.path.join(SERVER_APP_ROOT, "usr/share/caldavd/share")
+UPGRADE_LAUNCHD_PLIST = os.path.join(SHARE_DIR, "org.calendarserver.upgrade.plist")
+SERVER_ADMIN = os.path.join(SERVER_APP_ROOT, "usr/sbin/serveradmin")
+CALENDARSERVER_UPGRADE = os.path.join(CALENDARSERVER_BIN, "calendarserver_upgrade")
+LEGACYINDICATORFILE = os.path.join(CALENDAR_SERVER_ROOT, "Config/legacy_migration")
+DEFAULT_DATABASE_ROOT = os.path.join(DEST_DATA_DIR, "Database.xpg")
+DEFAULT_CLUSTER_NAME = "cluster.pg"
+USER_NAME = "calendar"
+GROUP_NAME = "calendar"
+RELOCATE_CMD = os.path.join(SERVER_APP_ROOT, "usr/libexec/relocate_postgres_service_cluster")
+RELOCATE_SERVICE_NAME = "calendar"
+FORKED_CLUSTER_DIR = "/Library/Server/postgres_service_clusters/calendar"
+NEWSYSLOGCONF = os.path.join(CALENDARSERVER_SETUP, "CalendarServerLogRotationConf")
+CERT_ADMIN = os.path.join(SERVER_APP_ROOT, "usr/sbin/certadmin")
+
+
+def startUpgrade():
+    """
+    Start calendarserver_upgrade
+    """
+    child = subprocess.Popen(
+        args=[CALENDARSERVER_UPGRADE, "--postprocess"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    log("Calling calendarserver_upgrade --postprocess")
+    output, error = child.communicate()
+    log("Output from calendarserver_upgrade: {}".format(output))
+    if child.returncode:
+        log(
+            "Error from calendarserver_upgrade: {code}, {error}".format(
+                code=child.returncode, error=error
+            )
+        )
+
+
+def relocateFromServerCluster():
+    """
+    Use the postgres relocation script to fork the calendar data from the
+    server-wide cluster.
+    """
+    databaseRoot = getConfigKey("DatabaseRoot", DEFAULT_DATABASE_ROOT)
+    workingDir = os.path.join(databaseRoot, "working")
+    clusterName = getConfigKey("Postgres.ClusterName", DEFAULT_CLUSTER_NAME)
+    clusterPath = os.path.join(databaseRoot, clusterName)
+    if not os.path.exists(databaseRoot):
+        log("DatabaseRoot does not yet exist: {}".format(databaseRoot))
+        if os.path.exists(FORKED_CLUSTER_DIR):
+            log("Forked calendar server cluster does exist: {}".format(FORKED_CLUSTER_DIR))
+            os.mkdir(databaseRoot)
+            os.mkdir(workingDir)
+            uid = getpwnam(USER_NAME).pw_uid
+            gid = getgrnam(GROUP_NAME).gr_gid
+            os.chown(databaseRoot, uid, gid)
+            os.chown(workingDir, uid, gid)
+            log("Created DatabaseRoot")
+            child = subprocess.Popen(
+                args=[RELOCATE_CMD, "-d", clusterPath, "-s", RELOCATE_SERVICE_NAME],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            log("Relocating data to {}".format(clusterPath))
+            output, error = child.communicate()
+
+            log("Output: {}".format(output))
+            if child.returncode:
+                log(
+                    "Error from calendarserver_config: {code}, {error}".format(
+                        code=child.returncode, error=error
+                    )
+                )
+
+        else:
+            log("Forked calendar server cluster does not exist: {}".format(FORKED_CLUSTER_DIR))
+
+
+
+def loadJob(jobName):
+    """
+    Uses serverctl to load a job
+    """
+    args = [SERVERCTL, "enable", "service={}".format(jobName)]
+    try:
+        log("Executing: {}".format(" ".join(args)))
+        child = subprocess.Popen(args, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        output, error = child.communicate()
+        log("Output: {}".format(output))
+        if child.returncode:
+            log(
+                "Non-zero exit code: {code}, {error}".format(
+                    code=child.returncode, error=error
+                )
+            )
+
+    except Exception, e:
+        log(e)
+
+
+
+def startAgent():
+    """
+    Uses launchctl to launch the agent
+    """
+    args = [LAUNCHCTL, "start", "org.calendarserver.agent"]
+    try:
+        log("Executing: {}".format(" ".join(args)))
+        subprocess.Popen(args)
+    except Exception, e:
+        log(e)
+
+
+def configureLogRotation():
+    args = [NEWSYSLOGCONF]
+    try:
+        log("Executing: {}".format(" ".join(args)))
+        subprocess.Popen(args)
+    except Exception, e:
+        log(e)
+
+
+def relocateLogDirectory(parentDirectory):
+    """
+    Moves /var/log/caldavd/ into a child directory of parentDirectory (named
+    "migrated").
+    """
+    if os.path.exists("/var/log/caldavd"):
+        dest = os.path.join(parentDirectory, "migrated")
+        if not os.path.exists(dest):
+            shutil.copytree("/var/log/caldavd", dest)
+
+        # clean up
+        shutil.rmtree("/var/log/caldavd")
+
+
+def updateKeys(oldPlist):
+    """
+    Update key names that have changed from previous versions
+    """
+    if "Notifications" in oldPlist:
+        if "Services" in oldPlist["Notifications"]:
+            services = oldPlist["Notifications"]["Services"]
+            if "ApplePushNotifier" in services:
+                services["APNS"] = services["ApplePushNotifier"]
+                del services["ApplePushNotifier"]
+    return oldPlist
+
+def extractKeys(keys, oldPlist):
+    changes = {}
+    for keyPath in keys:
+        value = getKeyPath(oldPlist, keyPath)
+        if value is not None:
+            setKeyPath(changes, keyPath, value)
+    return changes
+
+
+# These keys are processed from legacy caldavd.plist
+CONFIG_KEYS = [
+    "Authentication.Basic.AllowedOverWireUnencrypted",
+    "Authentication.Basic.Enabled",
+    "Authentication.Digest.AllowedOverWireUnencrypted",
+    "Authentication.Digest.Enabled",
+    "Authentication.Kerberos.AllowedOverWireUnencrypted",
+    "Authentication.Kerberos.Enabled",
+    "Authentication.Wiki.Enabled",
+    "DataRoot",
+    "DefaultLogLevel",
+    "DirectoryAddressBook.params.queryPeopleRecords",
+    "DirectoryAddressBook.params.queryUserRecords",
+    "EnableCalDAV",
+    "EnableCardDAV",
+    "EnableSearchAddressBook",
+    "EnableSSL",
+    "LogLevels",
+    "Notifications.Services.APNS.Enabled",
+    "RedirectHTTPToHTTPS",
+    "Scheduling.iMIP.Enabled",
+    "Scheduling.iMIP.Receiving.Port",
+    "Scheduling.iMIP.Receiving.Server",
+    "Scheduling.iMIP.Receiving.Type",
+    "Scheduling.iMIP.Receiving.Username",
+    "Scheduling.iMIP.Receiving.UseSSL",
+    "Scheduling.iMIP.Sending.Address",
+    "Scheduling.iMIP.Sending.Port",
+    "Scheduling.iMIP.Sending.Server",
+    "Scheduling.iMIP.Sending.Username",
+    "Scheduling.iMIP.Sending.UseSSL",
+    "ServerHostName",
+]
+
+
+def processLegacyPlist():
+    log(
+        "Checking for existence of legacy caldavd.plist: {}".format(
+            OLD_CALDAVD_PLIST.encode("utf-8")
+        )
+    )
+    if os.path.exists(OLD_CALDAVD_PLIST):
+        log("Legacy caldavd.plist exists")
+        if not os.path.exists(NEW_CALDAVD_PLIST):
+            log("Extracting keys from old caldavd.plist")
+            oldPlist = readPlist(OLD_CALDAVD_PLIST)
+            for key in ("EnableCalDAV", "EnableCardDAV"):
+                value = oldPlist.get(key, None)
+                if value is None:
+                    log(
+                        "{key} is not in the old caldavd.plist".format(key=key)
+                    )
+                else:
+                    log(
+                        "In old caldavd.plist, {key} = {value}".format(
+                            key=key, value=value
+                        )
+                    )
+            updatedPlist = updateKeys(oldPlist)
+            changes = extractKeys(CONFIG_KEYS, updatedPlist)
+
+            writePlist(changes, NEW_CALDAVD_PLIST)
+            os.remove(OLD_CALDAVD_PLIST)
+        else:
+            log("...but new caldavd-system.plist exists, so ignoring old one.")
+    else:
+        log("Legacy caldavd.plist does not exist")
+
+
+
+
+def main():
+
+    # If our volume is not ready, do not proceed
+    checkVolume(CALENDAR_SERVER_ROOT)
+
+    # Also, check the DataRoot value in case this is an older config since
+    # DataRoot could point to a volume other than server root
+    systemPlistPath = os.path.join(CALENDAR_SERVER_ROOT, "Config", "caldavd-system.plist")
+    if os.path.exists(systemPlistPath):
+        systemPlist = readPlist(systemPlistPath)
+        dataRoot = systemPlist.get("DataRoot", "")
+        if dataRoot.startswith("/Volumes/"):
+            checkVolume(dataRoot)
+
+    # Set the PATH so calendar server can find tools like initdb
+    os.environ["PATH"] = "{}/usr/bin:{}/usr/sbin:{}".format(
+        SERVER_APP_ROOT, SERVER_APP_ROOT, os.environ["PATH"]
+    )
+
+    # We can skip upgrade work if this is a clean install
+    isCleanInstall = not os.path.exists(DEST_CONFIG_DIR)
+
+    # Make sure key directories exist with proper permissions
+    for dirName in (
+        CALENDAR_SERVER_ROOT,
+        DEST_CONFIG_DIR,
+        DEST_DATA_DIR,
+        LOG_DIR,
+        POSTGRESQL_LOG_DIR,
+        RUN_DIR
+    ):
+        if os.path.exists(dirName):
+            log("Path exists: {}".format(dirName.encode("utf-8")))
+        else:
+            log("Path does not exist: {} (creating now)".format(dirName.encode("utf-8")))
+            try:
+                os.mkdir(dirName)
+            except Exception, e:
+                log("Could not mkdir: {} {}".format(dirName.encode("utf-8"), str(e)))
+
+        try:
+            uid = getpwnam(USER_NAME).pw_uid
+            gid = getgrnam(GROUP_NAME).gr_gid
+            os.chown(dirName, uid, gid)
+        except Exception, e:
+            log("Unable to chown {}: {}".format(dirName, e))
+
+    log("Clean install: {}".format(isCleanInstall))
+
+    # Move /var/log/caldavd/ into LOG_DIR/migrated
+    relocateLogDirectory(LOG_DIR)
+
+    if os.path.exists(LEGACYINDICATORFILE):
+        # We have just migrated from a legacy OS and we need to
+        # enable the service ourselves
+        log("Legacy indicator file exists")
+        legacyUpgrade = True
+        os.remove(LEGACYINDICATORFILE)
+    else:
+        # Since this is either a new promotion or was from an install
+        # with supervisor support, we don't need to enable the service
+        # ourselves
+        log("Legacy indicator file does not exist")
+        legacyUpgrade = False
+
+    # Extract keys from legacy caldavd.plist
+    processLegacyPlist()
+
+    # Create a new empty caldavd-system.plist if it's not there
+    if not os.path.exists(NEW_CALDAVD_PLIST):
+        writePlist({}, NEW_CALDAVD_PLIST)
+
+    # Enable SSL
+    newPlist = readPlist(NEW_CALDAVD_PLIST)
+    newPlist["EnableSSL"] = True
+
+    # Remove obsolete keys:
+    for key in (
+        "HTTPPort",
+        "SSLAuthorityChain",
+        "SSLCertificate",
+        "SSLPort",
+        "SSLPrivateKey",
+        "Notifications.Services.APNS.CalDAV.AuthorityChainPath",
+        "Notifications.Services.APNS.CalDAV.CertificatePath",
+        "Notifications.Services.APNS.CalDAV.PrivateKeyPath",
+        "Notifications.Services.APNS.CardDAV.AuthorityChainPath",
+        "Notifications.Services.APNS.CardDAV.CertificatePath",
+        "Notifications.Services.APNS.CardDAV.PrivateKeyPath",
+    ):
+        removeKeyPath(newPlist, key)
+
+    writePlist(newPlist, NEW_CALDAVD_PLIST)
+
+    # defaultCertPath = getDefaultCert()
+    # log("Default cert path: {}".format(defaultCertPath))
+    # if defaultCertPath:
+    #     if not isSSLEnabled(NEW_CALDAVD_PLIST):
+    #         setCert(NEW_CALDAVD_PLIST, defaultCertPath)
+
+    # Get run states from new plist
+    # newPlist = readPlist(NEW_CALDAVD_PLIST)
+    enableCalDAV = newPlist.get("EnableCalDAV", False)
+    enableCardDAV = newPlist.get("EnableCardDAV", False)
+    log("EnableCalDAV={}".format(enableCalDAV))
+    log("EnableCardDAV={}".format(enableCardDAV))
+
+    # Migrate calendar and contacts data from shared cluster
+    if not isCleanInstall:
+        relocateFromServerCluster()
+
+    # Fix permissions
+    fixPermissions()
+
+    # Start calendarserver_upgrade
+    if not isCleanInstall:
+        startUpgrade()
+
+    # Load the servermgr_calendar agent
+    loadJob("org.calendarserver.agent")
+
+    # Load the relocation job
+    loadJob("org.calendarserver.relocate")
+
+    # Load the archive job
+    loadJob("org.calendarserver.archive")
+
+    # Start the agent first
+    startAgent()
+
+    # Generate the newsyslog.d conf file
+    configureLogRotation()
+
+    # Start the service
+    if enableCalDAV or enableCardDAV:
+
+        if legacyUpgrade:
+            # We must start the service ourselves for a legacy upgrade
+            input = "calendar:command = setState\n"
+            if enableCalDAV:
+                input += "calendar:calendarState = START\n"
+            if enableCardDAV:
+                input += "calendar:contactsState = START\n"
+            child = subprocess.Popen(
+                args=[SERVER_ADMIN, "command"],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            log("Sending to serveradmin: {}".format(input))
+            output, error = child.communicate(input=input)
+            if child.returncode:
+                log("Error starting service ({}): {}".format(child.returncode, error))
+            else:
+                log("Starting service")
+        else:
+            log("Allowing supervisor to enable service")
+
+    else:
+        log("Service was not previously enabled")
+
+
+
+
+if __name__ == "__main__":
+    runWithExitStatus(main)

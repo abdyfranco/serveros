@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>org.amavis.amavisd</string>
+	<key>OnDemand</key>
+	<false/>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/bin/amavisd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/bin/amavisd</string>
+		<string>-c</string>
+		<string>/Library/Server/Mail/Config/amavisd/amavisd.conf</string>
+	</array>
+	<key>ServiceIPC</key>
+	<false/>
+	<key>StandardErrorPath</key>
+	<string>/Library/Logs/Mail/amavis.log</string>
+	<key>StandardOutPath</key>
+	<string>/Library/Logs/Mail/amavis.log</string>
+	<key>UserName</key>
+	<string>_amavisd</string>
+</dict>
+</plist>

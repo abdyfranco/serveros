@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Caching Service</string>
+
+	<key>promotion</key>
+	<dict>
+		<key>directories</key>
+		<array>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>group</key>
+				<string>wheel</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0775</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching/Data</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0750</string>
+			</dict>
+		</array>
+	</dict>
+
+	<key>migration</key>
+	<dict>
+		<key>directories</key>
+		<array>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>group</key>
+				<string>wheel</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0775</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching/Data</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0750</string>
+			</dict>
+		</array>
+	</dict>
+
+	<key>postSetup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<string>${serverRoot}/usr/libexec/AssetCache/CachingSetup.sh</string>
+		</array>
+	</dict>
+</dict>
+</plist>

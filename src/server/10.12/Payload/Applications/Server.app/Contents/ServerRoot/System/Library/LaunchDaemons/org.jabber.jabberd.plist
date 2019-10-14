@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>UserName</key>
+	<string>_jabber</string>
+	<key>GroupName</key>
+	<string>daemon</string>
+	<key>Label</key>
+	<string>org.jabber.jabberd</string>
+	<key>OnDemand</key>
+	<false/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/jabberd/jabberd</string>
+		<string>-c</string>
+		<string>/Library/Server/Messages/Config/jabberd/jabberd.cfg</string>
+	</array>
+	<key>SoftResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>10240</integer>
+	</dict>
+	<key>HardResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>10240</integer>
+	</dict>
+	<key>PreventsSleep</key>
+	<true/>
+</dict>
+</plist>

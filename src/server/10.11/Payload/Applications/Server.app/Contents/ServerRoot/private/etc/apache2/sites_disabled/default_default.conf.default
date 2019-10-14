@@ -1,0 +1,39 @@
+<VirtualHost default>
+	ServerName default
+	ServerAdmin admin@example.com
+	DocumentRoot "/Library/Server/Web/Data/Sites/Default"
+	DirectoryIndex index.html index.php default.html
+	CustomLog "/var/log/apache2/access_log" combinedvhost
+	ErrorLog "/var/log/apache2/error_log"
+	
+	<IfModule mod_ssl.c>
+		SSLEngine Off
+		SSLCipherSuite "HIGH:MEDIUM:!MD5:!RC4"
+		SSLProtocol -all +TLSv1 +TLSv1.1 +TLSv1.2
+		SSLProxyEngine On
+		SSLProxyProtocol -all +TLSv1 +TLSv1.1 +TLSv1.2
+		SSLProxyCheckPeerCN off
+		SSLProxyCheckPeerName off
+	</IfModule>
+
+	<IfModule mod_secure_transport.c>
+		MSTEngine Off
+		MSTCipherSuite HIGH, MEDIUM
+		MSTProtocolRange TLSv1.2 TLSv1.2
+		MSTProxyEngine On
+		MSTProxyProtocolRange TLSv1.2 TLSv1.2
+	</IfModule>
+	
+	<Directory "/Library/Server/Web/Data/Sites/Default">
+		Options All +MultiViews -ExecCGI -Indexes -Includes
+		AllowOverride None
+		<IfModule mod_dav.c>
+			DAV Off
+		</IfModule>
+		<IfDefine !WEBSERVICE_ON>
+			Require all denied
+			ErrorDocument 403 /customerror/websitesoff403.html
+		</IfDefine>
+	</Directory>
+
+</VirtualHost> 

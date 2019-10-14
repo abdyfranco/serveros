@@ -1,0 +1,95 @@
+.Dd 4/19/06               \" DATE 
+.Dt ServerBackup 1           \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                  \" Section Header - required - don't modify 
+.Nm ServerBackup
+.Sh SYNOPSIS              \" Section Header - required - don't modify
+.Nm
+.Op Fl cmd path source target service opt              \" [cmd path source target service opt]
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm 
+is the main program that will perform actions supported by the Server Backup (
+.Nm
+).
+.Nm 
+supports the following options: 
+.Pp
+ServerBackup -cmd backup -source SOURCE_VOLUME 
+                               Will start the backup process for the 
+                               supplied SOURCE_VOLUME.  This should 
+                               always be / for Server. 
+                               e.g.; 
+                               ServerBackup -cmd backup -source / 
+
+                               Note: the SOURCE_VOLUME for backup 
+                               must be at version 1080 or later. 
+.Pp
+ServerBackup -cmd browse -path PATH -service SERVICE -opt OPT 
+                               Will obtain browse listing of service. 
+                               SERVICE can be specified as 
+                               [all] to get all service browsable items. 
+                               e.g.; 
+                               ServerBackup -cmd browse -path /xxx -service sharePoints 
+.Pp
+ServerBackup -cmd postBackupComplete
+                               Removes the .ServerBackups folder from the 
+                               boot drive. 
+.Pp
+ServerBackup -cmd destination
+                               Show current destination for backup. Can 
+                               be a local volume or a network volume. 
+.Pp
+ServerBackup -cmd prefs
+                               Show current settings for ServerAdmin 
+                               backup. 
+.Pp
+ServerBackup -cmd purgeSnapShot -path xxx 
+                               Will remove a snapshot at the path xxx. 
+                               Since data could be removed 
+                               this should be used with care. 
+                               Use with care!!! 
+.Pp
+ServerBackup -cmd restore -path PATH -target DESTINATION_VOLUME 
+                               Will start the restore process with 
+                               the supplied PATH for the indicated 
+                               DESTINATION_VOLUME.  Note: the 
+                               DESTINATION_VOLUME is always / 
+                               e.g.; 
+                               ServerBackup -cmd restore -path / -target / 
+
+                               Since data could be overwritten 
+                               this should be used with care.  Also, 
+                               any special service handling should 
+                               be considered!!! 
+                               Use with care!!! 
+                               Note: the DESTINATION_VOLUME for restore 
+                               must be version 1080 or later. 
+.Pp
+ServerBackup -cmd services
+                               Lists the names of services. 
+.Pp
+ServerBackup -cmd size
+                               Calculates the size requirements for 
+                               doing a backup. 
+                               The line returned represents the number 
+                               of Kilobytes required for storage. 
+e.g.; total := 1872
+.Pp
+ServerBackup -cmd version
+                               Returns version information for 
+                               this binary. 
+e.g.; Server Backup (ServerBackup), Apple Inc., Version 10.10
+.Pp
+ServerBackup -cmd verify -path PATH -service SERVICE -opt log | image 
+                               Will verify the data using the log file for that service. 
+                               e.g.; 
+                               /ServerBackup -cmd verify -path /xxx -service sharePoints 
+.Pp
+Server Backup (ServerBackup), Apple Inc., Version 10.10
+.Sh FILES                \" File used or created by the topic of the man page
+.Nm
+.Bl -tag -width "/Applications/Server.app/Contents/ServerRoot/usr/sbin/ServerBackup" -compact
+.It Pa /Applications/Server.app/Contents/ServerRoot/usr/sbin/ServerBackup
+.El                      \" Ends the list
+.Sh SEE ALSO
+.Xr tmutil 8

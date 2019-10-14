@@ -1,0 +1,284 @@
+{
+  "content" : {
+    "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD" : {
+      "name" : "REVIEW DRAFT ONLY",
+      "navigation" : "false"
+    },
+    "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17" : {
+      "name" : "Gestionar SAN"
+    },
+    "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4" : {
+      "name" : "Gestionar clientes y usuarios"
+    },
+    "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21" : {
+      "navigation" : "false",
+      "content" : "<div id='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21' class='apd-topic'><div class='subjectids'><a name='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21'><\/a><\/div><h1 class='title topictitle1'>El tema seleccionado no está disponible en este momento<\/h1><div class='body conbody'><p class='p'>Asegúrese de estar conectado a Internet. Si necesita ayuda para conectarse, seleccione Menú Apple > “Preferencias del Sistema”, haga clic en Red y, a continuación, haga clic en Asistente.<\/p><p class='p'>Si está conectado a Internet y el contenido sigue sin aparecer, inténtelo más tarde.<\/p><\/div><\/div>",
+      "alternativeName" : "El tema seleccionado no está disponible en este momento",
+      "name" : "El tema seleccionado no está disponible en este momento",
+      "class" : "content-not-available-message",
+      "excludefromsearch" : "1"
+    },
+    "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><div class='subjectids'><a name='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><\/a><\/div><h1 class='title topictitle1'>Copyright<\/h1><div class='body conbody'><p class='p copyrightTagline'>© 2012 Apple Inc. Todos los derechos reservados.<\/p><p class='p'>© 2012 Apple Inc. Todos los derechos reservados.<\/p><\/div><\/div>",
+      "alternativeName" : "Copyright",
+      "name" : "Copyright",
+      "class" : "copyright",
+      "excludefromsearch" : "1"
+    },
+    "button-0" : {
+      "type" : "navigation",
+      "howdyPageID" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+      "alternativeNameStyle" : "replace"
+    },
+    "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7" : {
+      "name" : "Gestionar el almacenamiento SAN"
+    },
+    "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F" : {
+      "name" : "Gestionar controladores de metadatos"
+    },
+    "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><div class='subjectids'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><\/a><\/div><h1 class='title topictitle1'>Ayuda Admin Xsan<\/h1><div class='body conbody'><div class='section'><p class='p'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A'><!-- --><\/a><img class='image' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A' src='..\/media\/Xsan_welcome.png' alt='Icono de la aplicación Admin Xsan' height='205' width='184'><\/p><\/div><div class='section'><h2 class='title sectiontitle'>Ayuda Admin Xsan<\/h2><p class='p'>Configure y gestione una red de área de almacenamiento.<\/p><\/div><\/div><\/div>",
+      "alternativeName" : "Ayuda Admin Xsan",
+      "name" : "Ayuda Admin Xsan",
+      "class" : "default",
+      "excludefromsearch" : "1"
+    },
+    "apdB665BFF6-498C-47E6-A30D-BA873A992FE7" : {
+      "name" : "Monitorizar el estado de la SAN"
+    }
+  },
+  "hierarchy" : [
+    {
+      "id" : "button-0",
+      "children" : [
+        {
+          "id" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+          "class" : "default"
+        },
+        {
+          "id" : "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21",
+          "class" : "content-not-available-message"
+        },
+        {
+          "id" : "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267",
+          "class" : "copyright"
+        },
+        {
+          "id" : "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7",
+          "children" : [
+            {
+              "name" : "Añadir almacenamiento",
+              "href" : "#t_AddStorage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Configurar una afinidad de carpeta",
+              "href" : "#t_FolderAffinity",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Cambiar ajustes de volumen avanzados",
+              "href" : "#t_AdvancedVolumeSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Cambiar ajustes de grupo de almacenamiento",
+              "href" : "#t_StoragePoolSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Mantener volúmenes SAN",
+              "href" : "#t_MaintainVolumes",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4",
+          "children" : [
+            {
+              "name" : "Añadir un cliente",
+              "href" : "#t_AddClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Añadir un número de serie de Xsan",
+              "href" : "#t_AddSerialNo",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Mover un cliente a una SAN diferente",
+              "href" : "#t_MoveClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Montar un volumen en un cliente",
+              "href" : "#t_MountVolume",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Cambiar opciones de montaje",
+              "href" : "#t_ChangeMountOpts",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Gestionar usuarios y grupos",
+              "href" : "#t_ManageUsersGroups",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Controlar el acceso de clientes y usuarios",
+              "href" : "#t_ClientUserAccess",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Modificar cuotas de usuarios y grupos SAN",
+              "href" : "#t_SetQuotas",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Gestionar remotamente ordenadores cliente",
+              "href" : "#t_RemoteManage",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F",
+          "children" : [
+            {
+              "name" : "Añadir un controlador de metadatos",
+              "href" : "#t_AddMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Establecer la prioridad de conmutación de controlador por fallo",
+              "href" : "#t_FailoverPriority",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Cambiar a un controlador de metadatos en espera",
+              "href" : "#t_StandbyMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Sepa qué controlador aloja un volumen",
+              "href" : "#t_WhichController",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Listar los volúmenes alojados por un controlador",
+              "href" : "#t_WhichVolumes",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Cambiar la dirección IP de un controlador",
+              "href" : "#t_ChangeIP",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Hacer de un controlador en espera el controlador principal",
+              "href" : "#t_PromoteStandby",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Convertir un controlador en cliente",
+              "href" : "#t_DowngradeController",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17",
+          "children" : [
+            {
+              "name" : "Utilizar un ordenador administrador de SAN",
+              "href" : "#t_UseAdminComputer",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Cambiar el nombre de una SAN",
+              "href" : "#t_Rename",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Configurar otra SAN",
+              "href" : "#t_SetupAnotherSAN",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Gestionar varias SAN",
+              "href" : "#t_ManageMultiple",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Destruir una SAN",
+              "href" : "#t_DestroySAN",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apdB665BFF6-498C-47E6-A30D-BA873A992FE7",
+          "children" : [
+            {
+              "name" : "Consultar el estado de la SAN",
+              "href" : "#t_SANStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Ver el estado de los volúmenes",
+              "href" : "#t_VolumeStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Comprobar el espacio libre",
+              "href" : "#t_FreeSpace",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Gráficas del uso de recursos de SAN",
+              "href" : "#t_GraphUsage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Configurar las notificaciones de estado",
+              "href" : "#t_StatusNotifications",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Ver registros de Xsan",
+              "href" : "#t_ViewLogs",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Comprobar los clientes del volumen",
+              "href" : "#t_CheckClients",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD",
+          "children" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "settings" : {
+    "ShowVersionNumber" : false,
+    "BuildVersion" : "3.9",
+    "Design" : "Default",
+    "CategoryArt" : "xsanic.png",
+    "AppVersion" : "3.9",
+    "FolderName" : "XsanAdmin.help",
+    "LocalizationISOCode" : "es",
+    "buildID" : "E742FE54-1D5E-11E2-9AE4-B275339F86BF",
+    "Title" : "Ayuda Xsan",
+    "RemoteURL" : "https:\/\/help.apple.com\/xsanadmin\/mac\/3.0\/help\/"
+  }
+}

@@ -1,0 +1,52 @@
+#!/usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+
+##
+# Copyright (c) 2009-2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+# of the Apple Software and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is part of.
+##
+
+$LOAD_PATH << File.join(File.expand_path(File.dirname(__FILE__)), 'lib')
+
+require 'collaboration'
+require 'yaml'
+
+svc = Collaboration::ServiceClient.new
+ssn = responseData = svc.execute('AuthService', 'currentOrNewSession')
+svc.session_guid = ssn.guid
+
+refobjs = false
+sudo = false
+i = 0
+if ARGV[i+0] == '-r'
+  refobjs = true
+  i = i+1
+end
+if ARGV[i+0] == '-s'
+  sudo = true
+  i = i+1
+end
+
+if Process.uid == 0 and sudo
+  svc.execute('AuthService', 'sudoToBestGuessForUserWithLogin:', ENV['SUDO_USER'] || ENV['USER'])
+end
+
+r = svc.execute(ARGV[i+0], ARGV[i+1], *ARGV[i+2..-1].map{|x|eval(x)}) { self.expand_referenced_objs = refobjs }
+if r==nil
+  puts 'nil'
+elsif r.kind_of?(String) or r.kind_of?(Numeric) or r.kind_of?(Collaboration::CSDateTime)
+  puts r
+else
+  print YAML::dump(r)
+  if refobjs
+    print "refobjs:\n" + YAML::dump(svc.referenced_objs)
+  end
+end
+

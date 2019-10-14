@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "Japanese.lproj",
+		"isoCodes": ["ja"],
+		"isoName": "Japanese",
+		"name": "日本語"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>ヘルプを表示するには、JavaScript を有効にする必要があります。</p>詳しくは <a href=\"http://help.apple.com/resources/javascript/?lang=ja\">この Apple のサポート記事</a> にアクセスしてください。</div>",
+		"loadfailed": "<div>ヘルプは現在利用できません。</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@ 件の検索結果",
+		"Apple applications": "Apple アプリケーション",
+		"Cancel": "キャンセル",
+		"Change Language": "言語を変更",
+		"Close": "閉じる",
+		"Featured application help": "お勧めのアプリケーションヘルプ",
+		"Go to the homepage": "ホームページに移動",
+		"Help for:": "表示中のヘルプ：",
+		"Hide": "隠す",
+		"Home": "ホーム",
+		"Loading latest help...": "最新のヘルプを読み込み中...",
+		"Other applications": "ほかのアプリケーション",
+		"Print Book": "ブックをプリント",
+		"Print Options": "プリントオプション",
+		"Print Page": "ページをプリント",
+		"Print Section": "プリントセクション",
+		"Recent applications": "最近使ったアプリケーション",
+		"Search": "検索",
+		"Send feedback.": "フィードバックを送信",
+		"Show all": "すべてを表示",
+		"Show less": "一部を表示",
+		"Show the previous page": "前のページを表示",
+		"Show the next page": "次のページを表示",
+		"Show": "表示",
+		"Was this page helpful?": "このページは役立ちましたか？"
+	}
+}

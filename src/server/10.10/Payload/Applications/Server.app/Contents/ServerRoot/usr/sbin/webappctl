@@ -1,0 +1,188 @@
+#!/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+
+# Copyright (c) 2011-2015 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+
+require 'fileutils'
+require 'cfpropertylist'
+SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+
+$MainConfigDir = "/Library/Server/Web/Config/apache2/"
+usage = <<EOU
+usage: #{File.basename($0)} start|stop <webapp-name>|- [<vhostname>]
+usage: #{File.basename($0)} stop -
+usage: #{File.basename($0)} restart <webapp-name>|-
+usage: #{File.basename($0)} status <webapp-name>|-
+usage: #{File.basename($0)} status-pre-upgrade <webapp-name>
+
+This convenience wrapper for serveradmin web set/getWebAppState commands allows
+an adminstrator to control the state of web apps. See man webapp.plist(8) for details.
+
+If vhostname is not specified, the default wild-card vhost is used.
+
+EOU
+def requiredWebApps(webapp, depth)
+	filePath = "#{$MainConfigDir}webapps/#{webapp}.plist"
+	raise "No such webapp: #{filePath}" if !File.exist?(filePath)
+	plist = CFPropertyList::List.new(:file => filePath)
+	dict = CFPropertyList.native_types(plist.value)
+	raise "Invalid webapp plist" if dict.nil?
+	prefix = ". " * depth
+	if dict["launchKeys"].nil?
+		suffix = ""
+	else
+		suffix = ": #{dict["launchKeys"].join(", ")}"
+	end
+	$stdout.puts("#{prefix}#{webapp}#{suffix}")
+	dict["requiredWebAppNames"].each do |subWebAppName|
+		requiredWebApps(subWebAppName, depth + 1)
+	end unless dict["requiredWebAppNames"].nil?
+end
+
+begin
+	if Process.euid != 0
+		raise "Must run as root"
+	end
+	if ARGV.count <= 1
+		raise ArgumentError, "Invalid arg count"
+	end
+	action = ARGV[0].downcase
+	webappName = ""
+	vhostName = "*"
+	variant = ""
+	if ARGV.count == 2
+		webappName = ARGV[1]
+	elsif ARGV.count == 3
+		webappName = ARGV[1]
+		if "no-restart" == ARGV[2]
+			variant = ARGV[2]
+		else
+			vhostName = ARGV[2]
+		end
+	elsif ARGV.count == 4
+		webappName = ARGV[1]
+		vhostName = ARGV[2]
+		variant =  ARGV[3]
+	else
+		raise ArgumentError, "Invalid arg count"
+	end
+	if webappName == "-"
+		webappName = "*"
+	end
+	if vhostName == "-"
+		vhostName = "*"
+	end
+	case action
+		when "start"
+		$stdout.puts(`/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command <<EOF
+web:command=setWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:variant=#{variant}
+web:state=START
+EOF`)
+		when "stop"
+		$stdout.puts(`/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command <<EOF
+web:command=setWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:variant=#{variant}
+web:state=STOP
+EOF`)
+		when "status"
+		$stdout.puts(`/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command <<EOF
+web:command=getWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:state=START
+EOF`)
+		when "status-pre-upgrade"
+			result = 'web:state = "STOPPED"'
+			webappsFile = "#{$MainConfigDir}/previous_enabled_webapps.plist"
+			if FileTest.exists?(webappsFile)
+				plist = CFPropertyList::List.new(:file => webappsFile)
+				webappList = CFPropertyList.native_types(plist.value)
+				webappList.each do |webapp|
+					if webapp == webappName
+						result = 'web:state = "RUNNING"'
+						break
+					end
+				end
+			end
+			$stdout.puts(result)
+
+		when "restart"
+		tempFileName = `/usr/bin/mktemp /tmp/webappctl-XXXXXX`.chomp
+		statusStr = `/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin -x command > #{tempFileName}  <<EOF
+web:command=getWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:state=START
+EOF`
+		plist = CFPropertyList::List.new(:file => tempFileName)
+		statusDict = CFPropertyList.native_types(plist.value)
+		FileUtils.rm_f(tempFileName)
+		if webappName == "*"
+			statusArray = statusDict["webAppState"]
+			restartDict = {}
+			statusArray.each do |itemDict|
+				vHostNameToUse = itemDict["virtualHostName"] == "" ? "*" : itemDict["virtualHostName"]
+				if restartDict[vHostNameToUse].nil?
+					restartDict[vHostNameToUse] = [itemDict["webAppName"]]
+				else
+					restartDict[vHostNameToUse].push(itemDict["webAppName"]).uniq!
+				end
+			end
+			$stdout.puts(`/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command <<EOF
+web:command=setWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:state=STOP
+EOF`)
+			restartDict.each do |vhostName, webappNames|
+				webappNames.each do |webappName|
+					$stdout.puts(`/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command <<EOF
+web:command=setWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:state=START
+EOF`)
+				end
+			end			
+		else	# Not "-", assume single webapp
+			$stdout.puts(`/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command <<EOF
+web:command=setWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:state=STOP
+EOF`)
+
+			$stdout.puts(`/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command <<EOF
+web:command=setWebAppState
+web:webAppName=#{webappName}
+web:virtualHostName=#{vhostName}
+web:state=START
+EOF`)
+		end
+		when "tree"
+			requiredWebApps(webappName, 0)
+		when "trees"
+			Dir.new("#{$MainConfigDir}webapps").each do |path|
+				next if path == "." || path == ".." || path !~ /.*\.plist$/
+				webappName = path.sub(/.plist$/,'')
+				next if webappName == "com.example.mywebapp"
+				$stdout.puts("\n")
+				requiredWebApps(webappName, 0)
+			end
+		else
+		raise ArgumentError, "Invalid action"
+	end
+rescue ArgumentError => e
+	$stderr.puts e.message
+	$stderr.puts usage
+end

@@ -1,0 +1,73 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Server homepage overrides */
+
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-title,
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-first-paragraph,
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-services-header,
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-services-summary,
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-second-paragraph,
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-links
+{
+	color: #333333;
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
+	font-size: 14px;
+	line-height: 21px;
+	margin: 0px;
+	word-spacing: -1px;
+}
+
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-title
+{
+	color: #000000;
+	font-size: 28px;
+	font-weight: normal;
+	line-height: 36px;
+	margin: -4px 0px 8px 0px;
+}
+
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-services-table
+{
+	margin-top: 18px;
+	margin-bottom: 10px;
+}
+
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-services-header
+{
+	color: #000000;
+	font-size: 16px;
+	line-height: 18px;
+	margin: 8px 0px 4px 0px;
+}
+
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-services-summary
+{
+	color: #252525;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-second-paragraph
+{
+	margin-bottom: 53px;
+}
+
+.page.blocks[data-tiny-id="serverhome"] .block.text .content .editable .serverhome-links
+{
+	color: #646464;
+	font-size: 12px;
+	margin-bottom: -2px;
+}
+
+/* @end */

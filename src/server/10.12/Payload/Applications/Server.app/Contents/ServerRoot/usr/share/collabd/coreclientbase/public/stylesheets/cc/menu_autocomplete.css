@@ -1,0 +1,44 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-menu-autocomplete
+{
+	position: absolute;
+	min-width: 200px;
+	max-width: 500px;
+	text-align: left;
+	border: solid 1px #929292;
+	background: #FFFFFF;
+	z-index: 999;
+}
+
+.cc-menu-autocomplete li
+{
+	cursor: pointer;
+}
+
+.cc-menu-autocomplete li 
+.cc-menu-autocomplete .selected,
+.cc-menu-autocomplete .suggested,
+.cc-menu-autocomplete a:hover
+{
+	background: #DDDDDD;
+}
+
+.cc-menu-autocomplete li a
+{
+	display: block !important;
+	font-weight: normal !important;
+	padding: 2px;
+	width: auto !important;
+}

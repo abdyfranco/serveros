@@ -1,0 +1,284 @@
+{
+  "content" : {
+    "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD" : {
+      "name" : "REVIEW DRAFT ONLY",
+      "navigation" : "false"
+    },
+    "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17" : {
+      "name" : "管理 SAN"
+    },
+    "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4" : {
+      "name" : "管理客户端和用户"
+    },
+    "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21" : {
+      "navigation" : "false",
+      "content" : "<div id='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21' class='apd-topic'><div class='subjectids'><a name='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21'><\/a><\/div><h1 class='title topictitle1'>所选主题当前不可用<\/h1><div class='body conbody'><p class='p'>请确定您的电脑已接入互联网。若要获取接入互联网的帮助，请选取苹果菜单 >“系统偏好设置”，点按“网络”，然后点按“向导”。<\/p><p class='p'>如果您的电脑已接入互联网，但是内容仍未显示，请稍后再试一次。<\/p><\/div><\/div>",
+      "alternativeName" : "所选主题当前不可用",
+      "name" : "所选主题当前不可用",
+      "class" : "content-not-available-message",
+      "excludefromsearch" : "1"
+    },
+    "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><div class='subjectids'><a name='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><\/a><\/div><h1 class='title topictitle1'>版权<\/h1><div class='body conbody'><p class='p copyrightTagline'>© 2012 Apple Inc. 保留一切权利。<\/p><p class='p'>© 2012 Apple Inc. 保留一切权利。<\/p><\/div><\/div>",
+      "alternativeName" : "版权",
+      "name" : "版权",
+      "class" : "copyright",
+      "excludefromsearch" : "1"
+    },
+    "button-0" : {
+      "type" : "navigation",
+      "howdyPageID" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+      "alternativeNameStyle" : "replace"
+    },
+    "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7" : {
+      "name" : "管理 SAN 储存"
+    },
+    "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F" : {
+      "name" : "管理元数据控制器"
+    },
+    "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><div class='subjectids'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><\/a><\/div><h1 class='title topictitle1'>Xsan Admin 帮助<\/h1><div class='body conbody'><div class='section'><p class='p'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A'><!-- --><\/a><img class='image' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A' src='..\/media\/Xsan_welcome.png' alt='Xsan Admin 应用程序图标' height='205' width='184'><\/p><\/div><div class='section'><h2 class='title sectiontitle'>Xsan Admin 帮助<\/h2><p class='p'>设置和管理储存区域网络。<\/p><\/div><\/div><\/div>",
+      "alternativeName" : "Xsan Admin 帮助",
+      "name" : "Xsan Admin 帮助",
+      "class" : "default",
+      "excludefromsearch" : "1"
+    },
+    "apdB665BFF6-498C-47E6-A30D-BA873A992FE7" : {
+      "name" : "监视 SAN 状态"
+    }
+  },
+  "hierarchy" : [
+    {
+      "id" : "button-0",
+      "children" : [
+        {
+          "id" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+          "class" : "default"
+        },
+        {
+          "id" : "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21",
+          "class" : "content-not-available-message"
+        },
+        {
+          "id" : "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267",
+          "class" : "copyright"
+        },
+        {
+          "id" : "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7",
+          "children" : [
+            {
+              "name" : "添加储存",
+              "href" : "#t_AddStorage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "设置文件夹亲缘关系",
+              "href" : "#t_FolderAffinity",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "更改高级宗卷设置",
+              "href" : "#t_AdvancedVolumeSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "更改储存池设置",
+              "href" : "#t_StoragePoolSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "维护 SAN 宗卷",
+              "href" : "#t_MaintainVolumes",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4",
+          "children" : [
+            {
+              "name" : "添加客户端",
+              "href" : "#t_AddClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "添加 Xsan 序列号",
+              "href" : "#t_AddSerialNo",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "将客户端移到其他 SAN",
+              "href" : "#t_MoveClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "在客户端上装载宗卷",
+              "href" : "#t_MountVolume",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "更改装载选项",
+              "href" : "#t_ChangeMountOpts",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "管理用户和群组",
+              "href" : "#t_ManageUsersGroups",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "控制客户端和用户访问",
+              "href" : "#t_ClientUserAccess",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "修改 SAN 用户和群组配额",
+              "href" : "#t_SetQuotas",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "以远程方式管理客户端电脑",
+              "href" : "#t_RemoteManage",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F",
+          "children" : [
+            {
+              "name" : "添加元数据控制器",
+              "href" : "#t_AddMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "设定控制器故障转移优先级",
+              "href" : "#t_FailoverPriority",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "切换到备用元数据控制器",
+              "href" : "#t_StandbyMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "找出正在托管宗卷的控制器",
+              "href" : "#t_WhichController",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "列出控制器所托管的宗卷",
+              "href" : "#t_WhichVolumes",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "更改控制器的 IP 地址",
+              "href" : "#t_ChangeIP",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "将备用控制器设为首选控制器",
+              "href" : "#t_PromoteStandby",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "将控制器转换为客户端",
+              "href" : "#t_DowngradeController",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17",
+          "children" : [
+            {
+              "name" : "使用 Xsan 管理员电脑",
+              "href" : "#t_UseAdminComputer",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "给 SAN 重新命名",
+              "href" : "#t_Rename",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "设置其他 SAN",
+              "href" : "#t_SetupAnotherSAN",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "管理多个 SAN",
+              "href" : "#t_ManageMultiple",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "销毁 SAN",
+              "href" : "#t_DestroySAN",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apdB665BFF6-498C-47E6-A30D-BA873A992FE7",
+          "children" : [
+            {
+              "name" : "检查 SAN 状态",
+              "href" : "#t_SANStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "检查宗卷状态",
+              "href" : "#t_VolumeStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "检查可用空间",
+              "href" : "#t_FreeSpace",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "绘制 SAN 资源使用率图表",
+              "href" : "#t_GraphUsage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "设置状态通知",
+              "href" : "#t_StatusNotifications",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "查看 Xsan 日志",
+              "href" : "#t_ViewLogs",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "检查宗卷客户端",
+              "href" : "#t_CheckClients",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD",
+          "children" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "settings" : {
+    "ShowVersionNumber" : false,
+    "BuildVersion" : "3.9",
+    "Design" : "Default",
+    "CategoryArt" : "xsanic.png",
+    "AppVersion" : "3.9",
+    "FolderName" : "XsanAdmin.help",
+    "LocalizationISOCode" : "zh_CN",
+    "buildID" : "ECAFA84C-1D5E-11E2-9AE4-B275339F86BF",
+    "Title" : "Xsan 帮助",
+    "RemoteURL" : "https:\/\/help.apple.com\/xsanadmin\/mac\/3.0\/help\/"
+  }
+}

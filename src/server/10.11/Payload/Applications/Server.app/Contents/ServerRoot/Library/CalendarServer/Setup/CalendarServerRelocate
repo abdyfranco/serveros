@@ -1,0 +1,447 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+# -*- test-case-name: ServerSetup.tests.test_relocate -*-
+#
+# Utility for relocating Calendar and Contacts data
+#
+# Copyright (c) 2013-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+import grp
+import os
+import plistlib
+import pwd
+import subprocess
+import sys
+from time import sleep
+from twisted.python.filepath import FilePath
+from calendar_setup_util import log
+
+DU = "/usr/bin/du"
+DF = "/bin/df"
+DITTO = "/usr/bin/ditto"
+SUDO = "/usr/bin/sudo"
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+CALENDARSERVER_SETUP = "{}/Library/CalendarServer/Setup".format(SERVER_APP_ROOT)
+CALENDARSERVER_CONFIG = "{}/usr/sbin/calendarserver_config".format(SERVER_APP_ROOT)
+COMMAND_ROOT = "/var/run/caldavd"
+COMMAND_FILE = "{}/_relocate_command".format(COMMAND_ROOT)
+PROGRESS_FILE = "{}/_relocate_progress".format(COMMAND_ROOT)
+ERROR_FILE = "{}/_relocate_error".format(COMMAND_ROOT)
+SERVERCTL = "{}/usr/sbin/serverctl".format(SERVER_APP_ROOT)
+LAUNCHCTL = "/bin/launchctl"
+PGCTL = "{}/usr/bin/pg_ctl".format(SERVER_APP_ROOT)
+PREFS_FILE = "/Library/Server/Preferences/Calendar.plist"
+NEWSYSLOGCONF = "{}/CalendarServerLogRotationConf".format(CALENDARSERVER_SETUP)
+SERVER_ADMIN = os.path.join(SERVER_APP_ROOT, "usr/sbin/serveradmin")
+
+
+
+class RelocationError(Exception):
+    """
+    Data relocation error
+    """
+
+
+
+def getConfigKeys(keys):
+    """
+    Ask calendarserver_config for the value of list of keys
+    """
+    results = {}
+    args = [CALENDARSERVER_CONFIG]
+    args.extend(keys)
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    output, error = child.communicate()
+    if child.returncode:
+        log("Error from calendarserver_config: {}, {}".format(child.returncode, error))
+    else:
+        for line in [l for l in output.split("\n") if "=" in l]:
+            key, value = line.strip().split("=", 1)
+            results[key] = value
+
+    return results
+
+
+
+def writeProgressFile(filename, percentComplete):
+    """
+    Write a plist with command, percentComplete, and status keys
+    @param filename: the full path of the file to write to
+    @type filename: C{str}
+    @param percentComplete: 0-100
+    @type percentComplete: C{int}
+    """
+    filepath = FilePath(filename)
+    d = {
+        "command": "getMoveDataLocationProgress",
+        "percentComplete": percentComplete,
+        "status": "COMPLETED" if percentComplete == 100 else "RUNNING",
+    }
+    content = plistlib.writePlistToString(d)
+    filepath.setContent(content)
+
+
+def writeErrorFile(filename, msg):
+    """
+    Write a plist with command and error keys
+    @param filename: the full path of the file to write to
+    @type filename: C{str}
+    @param msg: the error message
+    @type msg: C{str}
+    """
+    filepath = FilePath(filename)
+    d = {
+        "command": "getMoveDataLocationProgress",
+        "error": msg.decode("utf-8"),
+    }
+    content = plistlib.writePlistToString(d)
+    filepath.setContent(content)
+
+
+def readCommandFile(filename):
+    """
+    Read the given plist file and return the volumePath value
+    @param filename: the full path of the file to read from
+    @type filename: C{str}
+    @return: the value of the volumpePath key within the plist
+    @rtype: C{str}
+    """
+    d = plistlib.readPlist(filename)
+    return d.get("volumePath", u"").encode("utf-8")
+
+
+def removeFile(filename):
+    """
+    Remove the file or directory (recursive) at filename
+    @param filename: the full path of the file or directory to remove
+    @type filename: C{str}
+    """
+    filepath = FilePath(filename)
+    if filepath.exists():
+        filepath.remove()
+
+
+def fileExists(filename):
+    """
+    Return True if file exists, False otherwise
+    @param filename: the full path of the file to remove
+    @type filename: C{str}
+    @return: True if file exists, False otherwise
+    @rtype: C{boolean}
+    """
+    return FilePath(filename).exists()
+
+
+def copyData(source, dest):
+    """
+    Ditto source to dest
+    """
+    args = [DITTO, source, dest]
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    output, error = child.communicate()
+    if child.returncode:
+        raise(
+            RelocationError(
+                "Could not copy from {} to {}: {}".format(source, dest, error)
+            )
+        )
+
+
+def setAgentState(enable):
+    """
+    Use serverctl to enable/disable agent
+    """
+    args = [SERVERCTL, "enable" if enable else "disable", "service=org.calendarserver.agent"]
+    try:
+        log("Executing: %s" % (" ".join(args)))
+        child = subprocess.Popen(args,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        output, error = child.communicate()
+        log("Output: %s" % (output,))
+        if child.returncode:
+            log("Non-zero exit code: %d, %s" % (child.returncode, error))
+    except Exception, e:
+        log(e)
+
+    if enable:
+        # Also launch the agent
+        args = [LAUNCHCTL, "start", "org.calendarserver.agent"]
+        try:
+            log("Executing: %s" % (" ".join(args)))
+            subprocess.Popen(args)
+        except Exception, e:
+            log(e)
+
+
+def setServiceState(enable):
+    """
+    Use serverctl to enable/disable calendar/contacts service
+    """
+    args = [SERVERCTL, "enable" if enable else "disable", "service=org.calendarserver.calendarserver"]
+    try:
+        log("Executing: %s" % (" ".join(args)))
+        child = subprocess.Popen(args,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        output, error = child.communicate()
+        log("Output: %s" % (output,))
+        if child.returncode:
+            log("Non-zero exit code: %d, %s" % (child.returncode, error))
+    except Exception, e:
+        log(e)
+
+
+def updateConfig(path):
+    """
+    Update the preferences plist with the new ServerRoot value
+    """
+    prefs = plistlib.readPlist(PREFS_FILE)
+    prefs["ServerRoot"] = path.decode("utf-8")
+    content = plistlib.writePlistToString(prefs)
+    filepath = FilePath(PREFS_FILE)
+    filepath.setContent(content)
+    log("Updated prefs file %s with new ServerRoot: %s" % (PREFS_FILE, path))
+
+
+def isPostgresRunning(dataDirectory):
+    """
+    Ask pg_ctl if postgres is running on the given dataDirectory
+    @param dataDirectory: path to data directory
+    @type dataDirectory: C{str}
+    @return: True if we can connect, False otherwise
+    @rtype: C{boolean}
+    """
+    args = [SUDO, "-u", "calendar", PGCTL, "status", "-D", dataDirectory]
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    output, error = child.communicate()
+    if child.returncode:
+        log("Output from pg_ctl: %d, %s" % (child.returncode, error))
+        return False
+    return True
+
+
+def configureLogRotation():
+    args = [NEWSYSLOGCONF]
+    try:
+        log("Executing: %s" % (" ".join(args)))
+        subprocess.Popen(args)
+    except Exception, e:
+        log(e)
+
+
+def exitWithError(msg):
+    writeErrorFile(ERROR_FILE, msg)
+    removeFile(PROGRESS_FILE)
+    sys.exit(0)
+
+
+
+def xpgCtl(command, clusterDirectory, socketDirectory):
+    """
+    Spawn xpg_ctl with the given command
+
+    @param command: either "lock" or "unlock"
+    @type command: C{str}
+    @param clusterDirectory: Path to the postgres cluster to lock/unlock
+    @type clusterDirectory: C{str}
+    @param socketDirectory: Path to the postgres socket directory
+    @type socketDirectory: C{str}
+    """
+
+    log("Calling xpg_ctl {} {}".format(command, clusterDirectory))
+
+    args = [
+        "/usr/bin/sudo", "-u", "_calendar",
+        "/Applications/Server.app/Contents/ServerRoot/usr/bin/xpg_ctl",
+        command,
+        "-D", clusterDirectory,
+        "-o", "-c unix_socket_directories={}".format(socketDirectory)
+    ]
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    output, error = child.communicate()
+    log("Output from xpg_ctl lock:")
+    log(output)
+    log(error)
+
+
+def main():
+
+    log("Beginning relocation")
+
+    keys = getConfigKeys(
+        [
+            "EnableCalDAV", "EnableCardDAV", "ServerRoot", "RunRoot",
+            "DatabaseRoot", "Postgres.SocketDirectory",
+            "Postgres.ClusterName"
+        ]
+    )
+    serviceSourcePath = FilePath(keys["ServerRoot"])
+    log("Source: %s" % (serviceSourcePath.path))
+    enableCalDAV = keys["EnableCalDAV"] == "True"
+    log("EnableCalDAV: %s" % (enableCalDAV,))
+    enableCardDAV = keys["EnableCardDAV"] == "True"
+    log("EnableCardDAV: %s" % (enableCardDAV,))
+    runRoot = keys["RunRoot"]
+    log("RunRoot: %s" % (runRoot,))
+    databaseRoot = keys["DatabaseRoot"]
+    log("DatabaseRoot: %s" % (databaseRoot,))
+    clusterName = keys["Postgres.ClusterName"]
+    clusterDirectory = os.path.join(databaseRoot, clusterName)
+    socketDirectory = keys["Postgres.SocketDirectory"]
+
+    writeProgressFile(PROGRESS_FILE, 0)
+
+    # Read and remove command file
+    destinationVolume = readCommandFile(COMMAND_FILE)
+    log("Command file says destination volume is: %s" % (destinationVolume,))
+    removeFile(COMMAND_FILE)
+
+    # Examine destination
+    serviceDestination = os.path.join(destinationVolume, "Library", "Server",
+                                      "Calendar and Contacts")
+    serviceDestinationPath = FilePath(serviceDestination)
+
+    if serviceSourcePath.path == serviceDestinationPath.path:
+        # NO-OP
+        writeProgressFile(PROGRESS_FILE, 100)
+        log("Destination is the same as source; exiting")
+        removeFile(ERROR_FILE)
+        return
+
+    if serviceDestinationPath.exists():
+        msg = "Destination already exists: %s" % (serviceDestinationPath.path,)
+        log(msg)
+        # If destination is boot volume, i.e. destinationVolume == "/", remove
+        # any existing data
+        if destinationVolume == "/":
+            log("Destination is boot volume; removing %s first" %
+                (serviceDestinationPath.path,))
+            serviceDestinationPath.remove()
+        else:
+            log("Destination is not boot volume; exiting")
+            exitWithError(msg)
+
+    if not serviceDestinationPath.exists():
+        # Calendar and Contacts directory
+        log("Creating directory: %s" % (serviceDestination,))
+        os.mkdir(serviceDestination)
+
+    try:
+        uid = pwd.getpwnam("calendar").pw_uid
+        gid = grp.getgrnam("calendar").gr_gid
+        os.chown(serviceDestination, uid, gid)
+    except:
+        pass
+
+    writeProgressFile(PROGRESS_FILE, 25)
+
+    log("Stopping agent")
+    setAgentState(False)
+    if enableCalDAV or enableCardDAV:
+        log("Stopping service")
+        setServiceState(False)
+
+    writeProgressFile(PROGRESS_FILE, 50)
+
+    # Issue the xpg_ctl lock
+    try:
+        xpgCtl("lock", clusterDirectory, socketDirectory)
+    except Exception, e:
+        log("xpg_ctl exception: {}".format(str(e)))
+
+    try:
+        log("Copying Calendar Service from %s to %s" %
+            (serviceSourcePath.path, serviceDestinationPath.path))
+        copyData(serviceSourcePath.path, serviceDestinationPath.path)
+        # Update config now so future log messages go to new location
+        updateConfig(serviceDestinationPath.path)
+        log("Updated configuration for ServerRoot to %s" %
+            (serviceDestinationPath.path,))
+        log("Done with copy")
+    except RelocationError as e:
+        exitWithError(str(e))
+
+    # Issue the xpg_ctl unlock in the source location
+    try:
+        xpgCtl("unlock", clusterDirectory, socketDirectory)
+    except Exception, e:
+        log("xpg_ctl exception: {}".format(str(e)))
+
+    # Issue the xpg_ctl unlock in the destination location
+    keys = getConfigKeys(
+        [
+            "DatabaseRoot", "Postgres.ClusterName"
+        ]
+    )
+    databaseRoot = keys["DatabaseRoot"]
+    clusterName = keys["Postgres.ClusterName"]
+    clusterDirectory = os.path.join(databaseRoot, clusterName)
+
+    try:
+        xpgCtl("unlock", clusterDirectory, socketDirectory)
+    except Exception, e:
+        log("xpg_ctl exception: {}".format(str(e)))
+
+    writeProgressFile(PROGRESS_FILE, 75)
+
+    # Generate the newsyslog.d conf file (since logs have moved)
+    configureLogRotation()
+
+    if enableCalDAV or enableCardDAV:
+        log("Starting service")
+        setServiceState(True)
+        sleep(5)  # don't start agent at same time as service
+
+    log("Removing error file")
+    removeFile(ERROR_FILE)
+
+
+if __name__ == "__main__":
+
+    if fileExists(PROGRESS_FILE):
+        log("Already in progress, exiting")
+        sys.exit(0)
+
+    if not fileExists(COMMAND_FILE):
+        log("No command file, exiting")
+        sys.exit(0)
+
+    try:
+        main()
+        log("Relocation successful")
+    finally:
+        log("Removing progress file")
+        removeFile(PROGRESS_FILE)
+        log("Starting agent")
+        setAgentState(True)

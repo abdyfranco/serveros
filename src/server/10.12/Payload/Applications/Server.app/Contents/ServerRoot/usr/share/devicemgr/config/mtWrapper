@@ -1,0 +1,104 @@
+#!/bin/bash
+
+save_cwd=`pwd`
+SERVER_ROOT="/Applications/Server.app/Contents/ServerRoot"
+DEVICEMGR_PATH="$SERVER_ROOT/usr/share/devicemgr"
+
+source $DEVICEMGR_PATH/config/common.sh       # Loads all our path definitions and some other common variables
+
+STOPPED=`$SERVERADMIN status devicemgr | grep "STOPPED"`
+
+if [ -z "$STOPPED" ]; then
+  echo "Stopping devicemgr service..."
+  $SERVERADMIN stop devicemgr
+  ERR=$?
+  if [ $ERR -eq 0 ]; then
+    STATUS=`$SERVERADMIN status devicemgr`
+    STOPPING=`echo "$STATUS" | grep "STOPPING"`
+    until [ -z "$STOPPING"]; do
+      echo "$STATUS"
+      sleep 1
+      STATUS=`$SERVERADMIN status devicemgr`
+      STOPPING=`echo "$STATUS" | grep "STOPPING"`
+    done
+    echo "$STATUS"
+  else
+    echo "Failed to stop devicemgr service ($ERR)."
+    exit 2
+  fi
+fi
+
+# Stop our "always on" devicemgrd so we can drop the DB
+echo "Stopping devicemgrd..."
+$SERVERCTL disable service=com.apple.DeviceManagement.devicemgrd 1> /dev/null
+ERR=$?
+if [ $ERR -eq 0 ]; then
+  # Have to manually stop and restart PostgreSQL on our cluster
+  # echo "Stopping dmpgHelper..."
+  $SERVERCTL disable service=com.apple.DeviceManagement.dmpgHelper 1> /dev/null
+  echo "Stopping PostgreSQL..."
+  $SERVERCTL disable service=com.apple.DeviceManagement.postgres 1> /dev/null
+  ERR=$?
+  if [ $ERR -eq 0 ]; then
+    echo "Restarting PostgreSQL..."
+    $SERVERCTL enable service=com.apple.DeviceManagement.postgres 1> /dev/null
+    ERR=$?
+    if [ $ERR -eq 0 ]; then
+      # Load dmpgHelper immediately after postgres
+      echo "Starting dmpgHelper..."
+      $SERVERCTL enable service=com.apple.DeviceManagement.dmpgHelper 1> /dev/null
+      ERR=$?
+      if [ $ERR -eq 0 ]; then
+        # Load dm_helper before migration because we might need it to sign profile caches that we re-generate during migration
+        echo "Starting dm_helper..."
+        $SERVERCTL enable service=com.apple.DeviceManagement.DMHelper 1> /dev/null
+        ERR=$?
+        if [ $ERR -eq 0 ]; then
+          sudo /bin/rm -f /Library/Server/ProfileManager/Config/ServiceData/Data/models
+
+          # migration_tool will drop and re-create the database
+          echo "Running migration_tool..."
+          sudo -u _devicemgr $MIGRATION_PATH/migration_tool "$@"
+          ERR=$?
+          if [ $ERR -ne 0 ]; then
+            echo "**************************************************************************"
+            echo "***    Failed to create/update new Profile Manager database!           ***"
+            echo "**************************************************************************"
+            echo "*** Please check $PM_MIGRATION_LOG_FILE       ***"
+            echo "*** for more information. Profile Manager will be non-functional until ***"
+            echo "*** the database can be successfully updated or a new one is created.  ***"
+            echo "**************************************************************************"
+            echo "Error code: $ERR"
+            exit $ERR
+          fi
+
+          # The above might cause PM_RAILS_LOG_FILE to be owned by root, so fix that
+          if [ -f $PM_RAILS_LOG_FILE ]; then
+            chown $PM_USERNAME:admin $PM_RAILS_LOG_FILE
+          fi
+        else
+          echo "Failed to start dm_helper ($ERR)."
+        fi
+      else
+        echo "Failed to start dmpgHelper ($ERR)."
+      fi
+    else
+      echo "Failed to start PostgreSQL ($ERR)."
+    fi
+  else
+    echo "Failed to stop PostgreSQL ($ERR)."
+  fi
+
+  $SERVERCTL enable service=com.apple.DeviceManagement.devicemgrd 1> /dev/null
+else
+  echo "Failed to stop devicemgrd ($ERR)."
+fi
+
+if [ -z "$STOPPED" -a $ERR -eq 0 ]; then
+  echo "Starting devicemgr service..."
+  $SERVERADMIN start devicemgr
+  cd $BACKEND_LIB_PATH
+  sudo ./dm_tool -a noOp    # Get devicemgrd running
+fi
+
+cd "$save_cwd"

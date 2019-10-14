@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>ServerDocsMaster     setup</string>
+	<key>minimumSystemVersion</key>
+	<string>10.11</string>
+	<key>setup</key>
+	<dict>
+		<key>services</key>
+		<dict>
+			<key>com.apple.serverdocs.sdmd</key>
+			<dict>
+				<key>state</key>
+				<string>disabled</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>path</key>
+				<string>${serverRoot}/usr/sbin/serveradmin</string>
+				<key>arguments</key>
+                                <array>
+                                        <string>command</string>
+                                        <string>certs:command</string>
+                                        <string>=</string>
+                                        <string>startIfNeeded</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

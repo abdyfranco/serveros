@@ -1,0 +1,167 @@
+VPopMail
+========
+
+Dovecot supports authenticating against external VPopMail
+[http://www.inter7.com/index.php?page=vpopmail] virtual domain manager. Dovecot
+must have been configured with '--with-vpopmail' to enable this. You can check
+this with 'dovecot --build-options'. See also <VMailMgr> [HowTo.VMailMgr.txt]
+for another similar virtual domain manager.
+
+If the vpopmail database contains plaintext passwords, it can be used for
+non-plaintext authentication as well.
+
+passdb parameters:
+
+ * cache_key: If set, you can use 'auth_cache' with VPopMail. See <PAM>
+   [PasswordDatabase.PAM.txt] for more information about it.
+ * webmail=IP: If IP address is specified, connections from it are assumed to
+   come from webmail and VPopMail's webmail usage restrictions apply.
+
+userdb parameters:
+
+ * cache_key: Like in passdb.
+ * quota_template=TEMPLATE: Template to specify quota rule, %q in value expands
+   to Maildir++ quota.
+
+Example
+-------
+
+---%<-------------------------------------------------------------------------
+passdb {
+  driver = vpopmail
+  args = webmail=127.0.0.1
+}
+userdb {
+  driver = vpopmail
+  args = quota_template=quota_rule=*:backend=%q
+}
+---%<-------------------------------------------------------------------------
+
+VPopMail + MySQL
+================
+
+Alternatively, you can use the SQL backend with the following configuration:
+
+---%<-------------------------------------------------------------------------
+driver = mysql
+connect = host=/var/run/mysqld/mysqld.sock user=vpopmail
+password=YOURPASSWORDHERE dbname=vpopmail
+
+default_pass_scheme = PLAIN
+password_query = SELECT CONCAT(pw_name, '@', pw_domain) AS user, \
+  pw_clear_passwd AS password \
+  FROM vpopmail \
+  WHERE pw_name = '%n' AND pw_domain = '%d'
+user_query = SELECT pw_dir as home, \
+  89 AS uid, 89 AS gid \
+  FROM vpopmail \
+  WHERE pw_name = '%n' AND pw_domain = '%d'
+---%<-------------------------------------------------------------------------
+
+VPopMail + MySQL + pw_gid (disable_imap, disable_webmail) and vlimits support
+=============================================================================
+
+The above example doesn't support vpopmail's abilities to disable access to
+services like IMAP, webmail etc. which is controlled by vmoduser and
+vmoddomlimits.
+
+VPopMail uses pw_gid column in the database to store this information. It has a
+binary format and every bit of the number stored in this column is responsible
+for a different access limit.
+
+As defined in the vpopmail.h:
+
+---%<-------------------------------------------------------------------------
+/* gid flags */
+#define NO_PASSWD_CHNG 0x01
+#define NO_POP         0x02
+#define NO_WEBMAIL     0x04
+#define NO_IMAP        0x08
+#define BOUNCE_MAIL    0x10
+#define NO_RELAY       0x20
+#define NO_DIALUP      0x40
+#define V_USER0       0x080
+#define V_USER1       0x100
+#define V_USER2       0x200
+#define V_USER3       0x400
+#define NO_SMTP       0x800
+#define QA_ADMIN     0x1000
+#define V_OVERRIDE   0x2000
+---%<-------------------------------------------------------------------------
+
++ if vpopmail has been compiled with domain limits (--enable-mysql-limits)
+domain wise limits will be defined in a table called "limits" where there are
+fields like disable_imap and disable_webmail which values by default are NULL
+and 1 if option is set. The use of NULLs in limits table is a bit problematic
+because in order to properly handle this situation we're going to have replace
+NULL with a numeric value. Of course we're going to join vpopmail table (the
+table holding users) with limits table using LEFT JOIN.
+
+Here's the config taken directly from my install:
+
+---%<-------------------------------------------------------------------------
+#
+user_query = SELECT pw_name,89 as uid, 89 as gid, pw_dir as home FROM vpopmail
+WHERE pw_name = '%n' AND pw_domain = '%d'
+#The below passes all users and doesn't care for vpopmail limits (pw_gid column
+or vlimits table)
+#password_query = SELECT pw_passwd as password FROM vpopmail WHERE pw_name =
+'%n' AND pw_domain = '%d'
+#
+#A little bit more complicated query to support vpopmail pw_gid flags and
+vlimits for domain
+#explanation:
+#We're using bitwise operations on pw_gid.
+#as defined in vpopmail.h:
+#- 0x04 - disable webmail flag
+#- 0x08 - disable imap flag
+#
+# !(pw_gid & 8) means - if 8th bit of pw_gid is not set
+# !(pw_gid & 4) means - if 4th bit of pw_gid is not set
+# (pw_gid & 8192) means - if 14th bit of pw_gid is set (ignore vlimits)
+#
+# additionally because we're using LEFT JOIN we have to take care of NULLs for
+rows that don't return any records from the right table hence the use of
+COALESCE() function
+# !(pw_gid & 4) (disable webmail flag) is used in conjuntion with
+'%r'!="127.0.0.1" which means that it will only apply to connections
+originating from hosts other than localhost
+#
+# So the below query supports pw_gid and vlimits settings for user account and
+domains but no domain limit overrides
+#
+#password_query = select pw_passwd as password FROM vpopmail LEFT JOIN limits
+ON vpopmail.pw_domain=limits.domain WHERE pw_name='%n' and pw_domain='%d' and (
+!(pw_gid & 8) and ('%r'!='127.0.0.1' or !(pw_gid & 4)) and ( '%r'!='127.0.0.1'
+or COALESCE(disable_webmail,0)!=1) and COALESCE(disable_imap,0)!=1);
+#
+# The below adds support for vlimits override on user account (vmoduser -o)
+#
+#logically this means: show password for user=%n at domain=%d when imap on the
+account is not disabled and connection is not comming from localhost when
+webmail access on the account is not disabled and if imap for the domain is not
+disabled and (connection is not comming from localhost when webmail access for
+the domain is not disabled) when vlimits are not overriden on the account
+#
+password_query = select pw_passwd as password FROM vpopmail LEFT JOIN limits ON
+vpopmail.pw_domain=limits.domain WHERE pw_name='%n' and pw_domain='%d' and
+!(pw_gid & 8) and ('%r'!='127.0.0.1' or !(pw_gid & 4)) and ( ('%r'!='127.0.0.1'
+or COALESCE(disable_webmail,0)!=1) and COALESCE(disable_imap,0)!=1 or (pw_gid &
+8192) );
+---%<-------------------------------------------------------------------------
+
+Please be aware that disable_webmail is strictly binded to the IP address hard
+coded in the query. In this example webmail connections come from the same
+machine that the IMAP server is running on using 127.0.0.1 IP address. So the
+webmail client is configured with something like eg. $IMAP_SERVER="127.0.0.1". 
+If your webmail client is on a different machine you need to change 127.0.0.1
+to your webmail's server IP.
+
+Also - be aware that dovecot caches SQL results (configurable) so if you're
+testing the above config on an account that has logged on succesfully within
+the cache timeout period and you changed the settings on it using eg. vmoduser
+-i test@example.com account which effectively disabled IMAP access for this
+account dovecot can still log this user on because the result of the password
+query has been stored in cache and used.
+
+(This file was created from the wiki on 2013-08-05 04:42)

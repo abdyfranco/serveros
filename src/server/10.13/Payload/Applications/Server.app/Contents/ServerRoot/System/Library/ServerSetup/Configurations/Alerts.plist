@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Server Alerts</string>
+	<key>dependencies</key>
+	<array>
+		<string>servermgr_netboot</string>
+		<string>Mail</string>
+	</array>
+	<key>setup</key>
+	<dict>
+		<key>services</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Enable ServerEventsDaemon for loading alert bundle event monitors.</string>
+				<key>state</key>
+				<string>enabled</string>
+				<key>name</key>
+				<string>com.apple.server.eventsd</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Enable ServerAlertsDaemon for receiving and posting server alerts.</string>
+				<key>state</key>
+				<string>enabled</string>
+				<key>name</key>
+				<string>com.apple.server.alertsd</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Enable SMART disk status monitor.</string>
+				<key>state</key>
+				<string>enabled</string>
+				<key>name</key>
+				<string>com.apple.disks.smart.status</string>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Remove Unsupported Alerts</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/sbin/serveradmin</string>
+				<key>arguments</key>
+				<array>
+					<string>command</string>
+					<string>alerts:command</string>
+					<string>=</string>
+					<string>clearUnsupportedAlerts</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<string>${serverRoot}/usr/libexec/ServerAlertsMigrator</string>
+		</array>
+	</dict>
+	<key>migration</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<string>${serverRoot}/usr/libexec/ServerAlertsMigrator</string>
+		</array>
+	</dict>
+</dict>
+</plist>

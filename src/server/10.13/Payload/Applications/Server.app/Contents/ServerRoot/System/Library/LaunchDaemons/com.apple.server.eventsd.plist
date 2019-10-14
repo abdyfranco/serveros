@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MachServices</key>
+	<dict>
+		<key>com.apple.xserver.eventsd</key>
+		<true/>
+	</dict>
+	<key>Label</key>
+	<string>com.apple.server.eventsd</string>
+	<key>KeepAlive</key>
+	<true/>
+	<key>OnDemand</key>
+	<false/>
+	<key>Disabled</key>
+	<false/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ServerEventsDaemon.framework/eventsd</string>
+	</array>
+	<key>ProcessType</key>
+	<string>Background</string>
+</dict>
+</plist>

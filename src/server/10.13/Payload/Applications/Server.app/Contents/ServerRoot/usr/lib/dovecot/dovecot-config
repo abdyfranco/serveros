@@ -1,0 +1,25 @@
+DOVECOT_INSTALLED=yes
+DOVECOT_CFLAGS="-std=gnu99 -arch x86_64 -g -Os -pipe  -Wall -W -Wmissing-prototypes -Wmissing-declarations -Wpointer-arith -Wchar-subscripts -Wformat=2 -Wbad-function-cast -Wno-deprecated -Wno-duplicate-decl-specifier -Wstrict-aliasing=2 -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.Internal.sdk/usr/local/libressl/include"
+DOVECOT_LIBS=""
+DOVECOT_SSL_LIBS="-lssl.35 -lcrypto.35 "
+DOVECOT_SQL_LIBS="   "
+DOVECOT_COMPRESS_LIBS=" -lz -lbz2 -llzma"
+
+LIBDOVECOT='-L/Applications/Server.app/Contents/ServerRoot/usr/lib/dovecot -ldovecot'
+LIBDOVECOT_LOGIN='-ldovecot-login -lssl.35 -lcrypto.35 '
+LIBDOVECOT_SQL=-ldovecot-sql
+LIBDOVECOT_COMPRESS=-ldovecot-compression
+LIBDOVECOT_LDA=-ldovecot-lda
+LIBDOVECOT_STORAGE='-ldovecot-storage '
+LIBDOVECOT_DSYNC=-ldovecot-dsync
+LIBDOVECOT_LIBFTS=-ldovecot-fts
+
+
+LIBDOVECOT_INCLUDE=-I/Applications/Server.app/Contents/ServerRoot/usr/include/dovecot
+
+dovecot_pkgincludedir=/Applications/Server.app/Contents/ServerRoot/usr/include/dovecot
+dovecot_pkglibdir=/Applications/Server.app/Contents/ServerRoot/usr/lib/dovecot
+dovecot_pkglibexecdir=/Applications/Server.app/Contents/ServerRoot/usr/libexec/dovecot
+dovecot_docdir=/Applications/Server.app/Contents/ServerRoot/usr/share/doc/dovecot
+dovecot_moduledir=/Applications/Server.app/Contents/ServerRoot/usr/lib/dovecot
+dovecot_statedir=/Library/Server/Mail/Data/dovecot/lib/dovecot

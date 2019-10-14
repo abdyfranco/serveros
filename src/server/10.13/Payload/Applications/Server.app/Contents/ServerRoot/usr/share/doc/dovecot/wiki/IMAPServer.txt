@@ -1,0 +1,16 @@
+Dovecot as an IMAP server
+=========================
+
+Dovecot was optimized since the beginning to work as an efficient IMAP server.
+Dovecot supports a lot of IMAP extensions [http://imapwiki.org/Specs].
+
+Some of the extensions need to be explicitly enabled:
+
+ * <METADATA> [ImapMetadata.txt]
+ * <COMPRESS> [Plugins.Compress.txt]
+ * <SEARCH=FUZZY> [Plugins.FTS.txt]
+ * <SPECIAL-USE> [MailboxSettings.txt]
+ * NOTIFY: Set mailbox_list_index=yes
+ * URLAUTH: Set imap_urlauth_host and mail_attribute_dict
+
+(This file was created from the wiki on 2017-05-30 16:30)

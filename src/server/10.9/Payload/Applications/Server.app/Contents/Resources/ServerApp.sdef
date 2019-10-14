@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="Server Terminology" xmlns:xi="http://www.w3.org/2003/XInclude">
+	<suite name="Standard Suite" code="????" description="Common classes and commands for all applications.">
+		<xi:include href="file:///System/Library/ScriptingDefinitions/CocoaStandard.sdef" xpointer="xpointer(/dictionary/suite)"/>
+	</suite>
+	<suite name="Server Suite" code="svrc" description="Classes just for the Server app.">
+		<class name="application" code="capp" description="The Server app">
+			<cocoa class="SVApplication"/>
+			<element type="document">
+				<cocoa key="orderedDocuments"/>
+			</element>
+			<property name="name" code="pnam" description="The name of the application." type="text" access="r"/>
+			<property name="frontmost" code="pisf" description="Is this the active application?" type="boolean" access="r">
+				<cocoa key="isActive"/>
+			</property>
+			<property name="version" code="vers" description="The version number of the application." type="text" access="r"/>
+			<responds-to name="quit">
+				<cocoa method="handleQuitScriptCommand:"/>
+			</responds-to>
+			<responds-to name="connect">
+				<cocoa method="handleConnectScriptCommand:"/>
+			</responds-to>
+		</class>
+		<command name="connect" code="svprconn" description="Connect to a server.">
+			<direct-parameter description="The host name of the server to connect to." type="text"/>
+		</command>
+		<class name="document" code="docu" description="A Server app document.">
+			<cocoa class="SVDocument"/>
+			<element type="server" access="r">
+				<cocoa key="servers"/>
+			</element>
+			<element type="pane" access="r">
+				<cocoa key="scriptablePanes"/>
+			</element>
+			<responds-to name="close">
+				<cocoa method="handleCloseScriptCommand:"/>
+			</responds-to>
+		</class>
+		<class name="server" code="serv" description="An OS X Server.">
+			<cocoa class="SVServer"/>
+			<property name="host name" code="htnm" description="The host name of the server" type="text" access="r">
+				<cocoa key="hostName"/>
+			</property>
+			<property name="local" code="locl" description="If the server is the local host or not" type="boolean" access="r">
+				<cocoa key="isLocalhost"/>
+			</property>
+		</class>
+		<class name="pane" code="pane" description="A Server app pane.">
+			<cocoa class="SVPane"/>
+			<element type="element" access="r">
+				<cocoa key="scriptableElements"/>
+			</element>
+			<property name="id" code="ID  " description="The identifier for the pane" type="text" access="r">
+				<cocoa key="identifier"/>
+			</property>
+			<property name="name" code="pnam" description="The English display name of the pane" type="text" access="r">
+				<cocoa key="shortName"/>
+			</property>
+			<responds-to name="reveal">
+				<cocoa method="handleRevealScriptCommand:"/>
+			</responds-to>
+		</class>
+		<class name="element" code="elmt" description="A Server app pane element.">
+			<cocoa class="SVPaneScriptableElement"/>
+			<property name="id" code="ID  " description="The identifier for the element" type="text" access="r">
+				<cocoa key="identifier"/>
+			</property>
+			<property name="name" code="pnam" description="The English display name of the element" type="text" access="r">
+				<cocoa key="name"/>
+			</property>
+			<responds-to name="reveal">
+				<cocoa method="handleRevealScriptCommand:"/>
+			</responds-to>
+		</class>
+		<command name="reveal" code="svprrevl" description="Reveal a certain UI object">
+			<direct-parameter description="The UI object to reveal" type="specifier"/>
+		</command>
+	</suite>
+</dictionary>

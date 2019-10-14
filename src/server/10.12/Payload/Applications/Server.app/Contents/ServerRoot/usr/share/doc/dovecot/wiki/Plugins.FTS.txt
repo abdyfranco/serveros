@@ -1,0 +1,78 @@
+Full text search indexing
+=========================
+
+The following FTS indexers (in preferred order) are supported:
+
+ * <Solr> [Plugins.FTS.Solr.txt] communicates with Lucene's Solr server
+   [http://lucene.apache.org/solr/].
+ * <Lucene> [Plugins.FTS.Lucene.txt] uses Lucene's C++ library. (Requires
+   v2.1+)
+ * <fts-dovecot> [Plugins.FTS.Dovecot.txt] is Dovecot Pro's new search index,
+   under development. (Requires v2.2+)
+ * <Squat> [Plugins.FTS.Squat.txt] is Dovecot's own search index. (Obsolete in
+   v2.1+)
+
+Indexing
+--------
+
+By default the FTS indexes are updated *only* while searching, so neither the
+<LDA.txt> nor an IMAP APPEND command updates the indexes immediately. This
+means that if user has received a lot of mail since the last indexing (==
+search operation), it may take a while to index all the mails before replying
+to the search command. Dovecot sends periodic "* OK Indexed n% of the mailbox"
+updates which can be caught by webmail implementations to implement a progress
+bar.
+
+In v2.2.9+ the indexing can be done automatically with 'fts_autoindex=yes'
+setting (see below).
+
+The indexing can be done manually (e.g. cronjob) or by a LDA script by running:
+
+ * v2.1: 'doveadm index -u user@domain -q INBOX'
+ * v2.0: 'printf "a select INBOX\nb search text xyzzy\nc logout\n" |
+   /usr/local/libexec/dovecot/imap -u user@domain'
+
+Of course the INBOX needs to be replaced with whatever mailbox needs to be
+indexed.
+
+Indexing Attachments (v2.1+)
+----------------------------
+
+Attachments can be indexed either via a script that translates the attachment
+to UTF-8 plaintext or Apache Tika server.
+
+ * 'fts_decoder = <service>': Decode attachments to plaintext using this
+   service and index the resulting plaintext. See the 'decode2text.sh' script
+   included in Dovecot for how to use this. (v2.1+)
+ * 'fts_tika = http://tikahost:9998/tika/': This URL needs to be running Apache
+   Tika server (e.g. started with 'java -jar
+   tika-server/target/tika-server-1.5.jar') (v2.2.13+)
+
+Rescan (v2.1+)
+--------------
+
+Since v2.1 Dovecot keeps track of indexed messages in the dovecot.index files.
+If this becomes out of sync with the actual FTS indexes (either too many or too
+few mails), you'll need to do a rescan:
+
+---%<-------------------------------------------------------------------------
+doveadm fts rescan -u user@domain
+---%<-------------------------------------------------------------------------
+
+Other Settings
+--------------
+
+All the FTS settings go inside 'plugin {} ' section of 90-plugin.conf.
+
+ * 'fts_autoindex=yes': Index new messages immediately after they've been
+   saved/copied. (v2.2.9+)
+ * 'fts_autoindex_max_recent_msgs=n': Skip autoindexing the mailbox if it has
+   more than n \Recent messages (implying that the mailbox is never actually
+   being accessed). (v2.2.9+)
+ * 'fts_index_timeout': When SEARCH notices that index isn't up to date, it
+   tells indexer to index the mails and waits until it is finished. This
+   setting adds a maximum timeout to this wait. If the timeout is reached, the
+   SEARCH fails with:'NO [INUSE] Timeout while waiting for indexing to finish'
+   (v2.1+)
+
+(This file was created from the wiki on 2016-04-26 04:43)

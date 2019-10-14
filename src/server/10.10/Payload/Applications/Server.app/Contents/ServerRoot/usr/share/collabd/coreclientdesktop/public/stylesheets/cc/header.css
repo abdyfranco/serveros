@@ -1,0 +1,117 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+#header
+{
+	border-bottom: 1px solid rgb(73,73,74);
+	position: relative;
+	height: 31px; /* 1px bottom border added by theme */
+	line-height: 32px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #E4E4E4;
+	text-shadow: rgba(0,0,0,0.29) 0px 1px 0px;
+	background: transparent url(./img/header_bg.png) 0 0 repeat-x;
+	background-image: transparent url(./img/header_bg.png) 0 0 repeat-x;
+	box-shadow: 0px 1px 4px rgba(0,0,0,0.5);
+	z-index: 500;
+	min-width: 1026px;
+}
+
+body:not(.toplevel) #header
+{
+	border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+#header a
+{
+	color: #E4E4E4;
+}
+
+/* general button styles */
+#header .buttonbar
+{
+	height: 31px;
+	overflow:hidden
+}
+#header .buttonbar li
+{
+	display: inline-block;
+}
+#header .buttonbar li a
+{
+	display: block;
+	height: 32px;
+}
+
+
+/* breadcrumb styles */
+#header .buttonbar.hierarchy
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#header .buttonbar.hierarchy li
+{
+	padding: 0 20px 0 10px;
+	background: transparent url(./img/header_divider.png) right -1px no-repeat;
+	background-image: -webkit-image-set(url(./img/header_divider.png) 1x,
+										url(./img/header_divider@2x.png) 2x);
+	max-width: 300px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#header .buttonbar.hierarchy li:first-child
+{
+	padding: 0px 8px 0px 0px;
+}
+#header .buttonbar.hierarchy li:first-child a
+{
+	width: 48px;
+	text-indent: -9999px;
+	background: transparent url(./img/task.png) center center no-repeat;
+	background-image: -webkit-image-set(url(./img/task.png) 1x,
+										url(./img/task@2x.png) 2x);
+}
+
+/* right-hand global button styles */
+#header .buttonbar.actions
+{
+	position: absolute;
+	top: 0px;
+	right: 8px;
+}
+
+#header .buttonbar.actions li
+{
+	margin-left: 5px;
+}
+
+#header .buttonbar.actions a
+{
+	width: 32px;
+	text-indent: -9999px;
+	background: transparent url(./img/header_icons.png) 0 0 no-repeat;
+	background-image: -webkit-image-set(url(./img/header_icons.png) 1x,
+										url(./img/header_icons@2x.png) 2x);
+}
+
+#header .buttonbar.actions a.download                    { background-position:  -224px 0px; }
+#header .buttonbar.actions a.edit                        { background-position:  -32px 0px; }
+#header .buttonbar.actions a.add                         { background-position:  -64px 0px; }
+#header .buttonbar.actions a.gear                        { background-position:  -96px 0px; }
+#header .buttonbar.actions a.login                       { background-position: -160px 0px; }
+#header .buttonbar.actions a.logout                      { background-position:  -128px 0px; }
+#header .buttonbar.actions a.quicksearch                 { background-position: -192px 0px; }

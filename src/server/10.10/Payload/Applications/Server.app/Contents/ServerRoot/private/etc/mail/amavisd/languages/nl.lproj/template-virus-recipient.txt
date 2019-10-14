@@ -1,0 +1,47 @@
+# =============================================================================
+# Dit is een sjabloon voor BERICHTEN AAN ONTVANGERS OVER VIRUSSEN/VERBODEN
+# INHOUD/ONJUISTE KOPTEKSTEN.
+# Meer informatie over de syntaxis en het aanpassen van de
+# sjabloon vindt u in "README.customize". Lange koptekstvelden worden
+# automatisch door het programma over meerdere regels verdeeld.
+#
+Van: %f
+Datum: %d
+Onderwerp: [? [:ccat|major] |Goedgekeurde mail|Goedgekeurde mail|Door MTA geblokkeerde mail|\
+TE GROTE mail|ONGELDIGE KOPTEKST in mail|SPAM|SPAM|NIET GECONTROLEERDE inhoud in mail|\
+VERBODEN inhoud (%F) in mail|VIRUS (%V) in mail] AAN U van %s
+[? [:header_field|To] |To: undisclosed-recipients:;|To: [:header_field|To]]
+[? [:header_field|Cc] |#|Cc: [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||WAARSCHUWING VOOR VERBODEN INHOUD]|VIRUSWAARSCHUWING]
+
+Tijdens de controle van de inhoud is het volgende gevonden:
+[? %#V |#|[:wrap|78|    |  |[?%#V|virussen|virus|virussen]: %V]]
+[? %#F |#|[:wrap|78|    |  |verboden [?%#F|namen|naam|namen]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+in een e-mail aan u [? %S |van een vermoedelijk valse afzender:|van:]
+  %o
+[? %S |die beweert %s|# te zijn]
+
+Type inhoud: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, geblokkeerd voor [:ccat|name]]
+Onze interne referentiecode voor het bericht is %n/%i
+
+[? %a |#|[:wrap|78||  |IP-adres van eerste upstream SMTP-client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Volgens een tracering van 'Ontvangen:'\
+ lijkt het bericht afkomstig van: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Niet in quarantaine geplaatst.|Dit bericht is in quarantaine geplaatst als: %q]
+
+Neem contact op met de systeembeheerder voor meer informatie.

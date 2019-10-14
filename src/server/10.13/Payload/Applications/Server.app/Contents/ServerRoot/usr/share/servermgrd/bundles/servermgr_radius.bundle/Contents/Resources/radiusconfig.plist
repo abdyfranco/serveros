@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>8021X</key>
+	<array>
+		<dict>
+			<key>ConnectByDefault</key>
+			<true/>
+			<key>IPSec</key>
+			<dict/>
+			<key>Network Port</key>
+			<string>en1</string>
+			<key>PPP</key>
+			<dict>
+				<key>UserDefinedName</key>
+				<string>802.1X Configuration</string>
+			</dict>
+			<key>Protocols</key>
+			<array>
+				<dict>
+					<key>On</key>
+					<integer>1</integer>
+					<key>Protocol</key>
+					<string>TTLS</string>
+				</dict>
+				<dict>
+					<key>On</key>
+					<integer>0</integer>
+					<key>Protocol</key>
+					<string>TLS</string>
+				</dict>
+				<dict>
+					<key>On</key>
+					<integer>0</integer>
+					<key>Protocol</key>
+					<string>LEAP</string>
+				</dict>
+				<dict>
+					<key>On</key>
+					<integer>0</integer>
+					<key>Protocol</key>
+					<string>PEAP</string>
+				</dict>
+				<dict>
+					<key>On</key>
+					<integer>0</integer>
+					<key>Protocol</key>
+					<string>MD5</string>
+				</dict>
+			</array>
+			<key>TTLSInnerAuthentication</key>
+			<string>MSCHAPv2</string>
+			<key>Wireless Network</key>
+			<string>Put WiFi Network Name Here</string>
+		</dict>
+	</array>
+</dict>
+</plist>

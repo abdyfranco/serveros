@@ -1,0 +1,225 @@
+Key-value authentication database (v2.1.9+)
+===========================================
+
+Key-value databases can be used as auth backends. They probably should be used
+only for caching in front of e.g. SQL auth backends, since they don't currently
+support user iteration.
+
+Auth configuration
+------------------
+
+'dovecot.conf':
+
+---%<-------------------------------------------------------------------------
+passdb {
+  driver = dict
+  args = /etc/dovecot/dovecot-dict-auth.conf
+}
+userdb {
+  driver = dict
+  args = /etc/dovecot/dovecot-dict-auth.conf
+}
+---%<-------------------------------------------------------------------------
+
+Dict configuration
+------------------
+
+See the 'dovecot-dict-auth.conf.ext' file from example-config for full list of
+configuration options. Basically you need these:
+
+'/etc/dovecot/dovecot-dict-auth.conf.ext':
+
+---%<-------------------------------------------------------------------------
+uri = redis:host=127.0.0.1:port=6379
+
+password_key = dovecot/passdb/%u
+user_key = dovecot/userdb/%u
+iterate_disable = yes
+default_pass_scheme = plain
+---%<-------------------------------------------------------------------------
+
+Example values
+--------------
+
+Currently only JSON object values are supported. For example userdb lookup
+should return something like:
+
+---%<-------------------------------------------------------------------------
+{ "uid": 123, "gid": 123, "home": "/home/username" }
+---%<-------------------------------------------------------------------------
+
+Complete example for authenticating via a UNIX socket
+-----------------------------------------------------
+
+The Dict auth backend can be used to query a local UNIX socket for users. This
+can be handy for accessing user databases which would otherwise only be
+accessible via the <CheckPassword> [AuthDatabase.CheckPassword.txt] backend and
+a scripting language.
+
+When given a <"proxy:"> [Quota.Dict.txt] URL the Dict backend speaks a simple
+protocol over a UNIX socket. The protocol is defined in
+'src/lib-dict/dict-client.h' (Mercurial
+[http://hg.dovecot.org/dovecot-2.2/file/tip/src/lib-dict/dict-client.h]).
+
+Auth configuration
+------------------
+
+'dovecot.conf':
+
+---%<-------------------------------------------------------------------------
+passdb {
+  driver = dict
+  args = /etc/dovecot/dovecot-dict-auth.conf
+}
+userdb {
+  # optional
+  driver = prefetch
+}
+userdb {
+  driver = dict
+  args = /etc/dovecot/dovecot-dict-auth.conf
+}
+---%<-------------------------------------------------------------------------
+
+Dict configuration
+------------------
+
+The last "dictionary name" ("somewhere") argument is redundant here.
+
+'/etc/dovecot/dovecot-dict-auth.conf.ext':
+
+---%<-------------------------------------------------------------------------
+uri = proxy:/var/run/auth_proxy_dovecot/socket:somewhere
+
+password_key = passdb/%u
+user_key = userdb/%u
+iterate_disable = yes
+#default_pass_scheme = plain
+---%<-------------------------------------------------------------------------
+
+Server process for answering Dict lookups
+-----------------------------------------
+
+The server process listening on '/var/run/lookup_proxy_dovecot/socket' can be
+written in any language.Here's an example in Perl:
+
+---%<-------------------------------------------------------------------------
+package AuthProxyDovecot;
+use base qw( Net::Server::PreFork );
+
+use strict;
+use warnings;
+
+use JSON::XS;
+
+AuthProxyDovecot->run() or die "Could not initialize";
+
+sub default_values
+{
+  return {
+    port              => '/var/run/auth_proxy_dovecot/socket|unix',
+
+    log_level         => 2,
+    log_file          => 'Sys::Syslog',
+    syslog_logsock    => 'unix',
+    syslog_ident      => 'auth_proxy_dovecot',
+    syslog_facility   => 'daemon',
+
+    background        => 1,
+    setsid            => 1,
+    pid_file          => '/var/run/auth_proxy_dovecot.pid',
+
+    user              => 'root',
+    group             => 'root',
+
+    no_client_stdout  => 1,
+    max_spare_servers => 2,
+    min_spare_servers => 1,
+    min_servers       => 2,
+    max_servers       => 10,
+
+  };
+} ## end sub default_values
+
+##################################################
+
+sub process_request {
+    my $self   = shift;
+    my $socket = $self->{server}->{client};
+
+    my %L_handler = (
+        passdb => sub {
+            my ($arg) = @_;
+            my $ret = {
+                password        => '$1$JrTuEHAY$gZA1y4ElkLHtnsrWNHT/e.',
+                userdb_home     => "/home/username/",
+                userdb_uid      => 1000,
+                userdb_gid      => 1000,
+            };
+            return $ret;
+        },
+        userdb => sub {
+            my ($arg) = @_;
+            my $ret = {
+                home    => "/home/username/",
+                uid     => 1000,
+                gid     => 1000,
+            };
+            return $ret;
+        },
+    );
+
+    # protocol from src/lib-dict/dict-client.h
+    my $json = JSON::XS->new;
+    eval {
+        while (<$socket>) {
+            $self->log(2, "Got request: $_");
+            chomp;
+            my $cmd = substr($_,0,1);
+            next if $cmd eq 'H'; # "hello"
+            my $ret;
+            if ($cmd eq 'L') {
+                my ($namespace,$type,$arg) = split ('/',substr($_,1),3);
+                $self->log(4,"I:$namespace, $type, $arg");
+                if ($namespace eq 'shared') {
+                    my $f = $L_handler{$type};
+
+                    if (defined $f && defined $arg) {
+                        $ret = $f->($self->{lookup}, $arg);
+                    }
+                }
+            }
+            if ($ret) {
+                my $json = JSON::XS->new->indent(0)->utf8->encode($ret);
+                $self->log(4,"O:$json");
+                syswrite $socket, "O".$json."\n";
+            }
+            else {
+                syswrite $socket, "F\n" unless $ret;
+            }
+        }
+        1;
+    };
+    if ($@) {
+        $self->log(2, "Invalid request: $@");
+    }
+}
+
+sub pre_loop_hook {
+    my $self = shift;
+
+    $self->log(1, 'Starting server');
+}
+
+sub pre_server_close_hook {
+    my $self = shift;
+
+    $self->log(1, 'Server is shut down');
+}
+
+1;
+
+__END__
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2013-08-05 04:42)

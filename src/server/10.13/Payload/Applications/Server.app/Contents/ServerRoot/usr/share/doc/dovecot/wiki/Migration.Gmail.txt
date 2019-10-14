@@ -1,0 +1,73 @@
+Migration from Gmail to Dovecot
+===============================
+
+You can use <dsync migration via IMAP> [Migration.Dsync.txt] protocol, but
+there are a few things different with Gmail compared to other IMAP servers:
+
+ * With Gmail when you delete a mail from POP3, the mail is only hidden from
+   future POP3 sessions, but it's still available via IMAP. If you wish to
+   preserve this functionality, there's a 'pop3_deleted_flag' setting in
+   Dovecot v2.2.2+.
+ * Gmail has labels. If a message has multiple labels, it shows up in multiple
+   IMAP folders, but it's still the same message and uses quota only once for
+   that message. Dovecot currently doesn't have such support, so the migration
+   will copy the message to multiple folders and each instance will use up
+   quota. There's currently no easy fix for this, although there are some
+   future plans to optionally not count message copies towards quota.
+    * Even though the quota is duplicated, it doesn't mean that the storage
+      usage has to be duplicated. Use the dsync -v parameter to avoid this. See
+      https://github.com/dovecot/core/commit/70df8f39fb3db7c49b18c855178f8172176a037a
+ * Gmail has virtual folders: "All Mail", "Starred" and "Important". From
+   migration point of view this means that the migration should skip most of
+   these folders, since their mails are in other folders anyway. With v2.2.3+
+   you can tell dsync to skip these folders:'doveadm sync -x '\Flagged' -x
+   '\Important'' - by using the \flag parameters dsync finds the folders by
+   their SPECIAL-USE flag rather than their name (which may be different for
+   different user depending on their language).
+    * The "All Mail" folder actually contains also "archived mails" that don't
+      exist in any other folder. These mails need to be migrated. See below.
+ * Google requires that SSL/TLS be enabled to connect through IMAP. Make sure
+   that the following are enabled in your Dovecot configuration and set to
+   appropriate values based on your distribution (usually either one is
+   enough):
+
+   ---%<----------------------------------------------------------------------
+     ssl_client_ca_dir = (''your distribution's trusted TLS CA store (Fedora /
+   CentOS / Redhat uses /etc/pki/tls/ ))''
+     ssl_client_ca_file = (''your distribution's trusted TLS CA file (Fedora /
+   CentOS / Redhat uses /etc/pki/tls/cert.pem ))''
+   ---%<----------------------------------------------------------------------
+
+GMail Migration Feature (v2.2.16+)
+----------------------------------
+
+There's a new 'imapc_features=gmail-migration' setting that helps with this
+migration. It will:
+
+ * Set the pop3_deleted_flag to mails that no longer exist in POP3
+ * Return POP3 UIDL in GMail format so dsync can preserve it.
+ * Add a new $GmailHaveLabels keyword to archived mails in the \All mailbox,
+   which means those mails are not archived. You probably don't want to migrate
+   these mails.
+    * Note that mails in the \Important and \Flagged mailboxes are marked with
+      "\Important" and "\Starred" labels. If you don't migrate mails that have
+      $GmailHaveLabels then you must not exclude the \Flagged and \Important
+      mailboxes or some of the mails won't be migrated.
+
+For example use a command line:
+
+v2.2.16:
+
+---%<-------------------------------------------------------------------------
+doveadm backup -a 'virtual/All' -F '-$GmailHaveLabels' -R -u user@domain imapc:
+---%<-------------------------------------------------------------------------
+
+Unfortunately -F parameter isn't working in v2.2.17 & v2.2.18 because of
+another parameter collision caused -F to be accidentally used for another
+purpose. For v2.2.19+ use:
+
+---%<-------------------------------------------------------------------------
+doveadm backup -a 'virtual/All' -O '-$GmailHaveLabels' -R -u user@domain imapc:
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Reset OpenLDAP restore state.</string>
+	<key>dependencies</key>
+	<array>
+		<string>ServerSupport</string>
+	</array>
+	<key>postSetup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>path</key>
+				<string>/bin/rm</string>
+				<key>arguments</key>
+				<array>
+					<string>-f</string>
+					<string>/var/db/openldap/migration/.ODRestoreCompleted</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>
+

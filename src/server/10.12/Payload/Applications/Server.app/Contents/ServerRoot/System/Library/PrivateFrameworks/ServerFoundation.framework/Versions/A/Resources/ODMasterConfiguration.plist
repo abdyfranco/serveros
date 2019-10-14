@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Configured Security Level</key>
+	<dict>
+		<key>Binding Required</key>
+		<true/>
+		<key>Man In The Middle</key>
+		<false/>
+		<key>No ClearText Authentications</key>
+		<false/>
+		<key>Packet Encryption</key>
+		<false/>
+		<key>Packet Signing</key>
+		<false/>
+	</dict>
+	<key>Directory Binding</key>
+	<false/>
+	<key>LDAPMasterInfo</key>
+	<dict>
+		<key>LDAPMasterAdminName</key>
+		<string>diradmin</string>
+		<key>LDAPMasterAdminPassword</key>
+		<string>diradmin</string>
+	</dict>
+	<key>LDAPServerType</key>
+	<string>master</string>
+	<key>PWPolicyInfo</key>
+	<dict>
+		<key>mustChangeAtFirstLogin</key>
+		<false/>
+		<key>passwordDisableDate</key>
+		<real>0</real>
+		<key>passwordDisableFailedLogins</key>
+		<integer>0</integer>
+		<key>passwordDisableNumDays</key>
+		<integer>0</integer>
+		<key>passwordDisableNumDaysInactive</key>
+		<integer>0</integer>
+		<key>passwordExpireDays</key>
+		<integer>0</integer>
+		<key>passwordHistoryLen</key>
+		<integer>0</integer>
+		<key>passwordMinLen</key>
+		<integer>0</integer>
+		<key>passwordMustHaveAlpha</key>
+		<false/>
+		<key>passwordMustHaveNumber</key>
+		<false/>
+		<key>passwordNotAccount</key>
+		<false/>
+	</dict>
+	<key>masterConfig</key>
+	<dict>
+		<key>replicationIntervalSecs</key>
+		<string>3</string>
+	</dict>
+</dict>
+</plist>

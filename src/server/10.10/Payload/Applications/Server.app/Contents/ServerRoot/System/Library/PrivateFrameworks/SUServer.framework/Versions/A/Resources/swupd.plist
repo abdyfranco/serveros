@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PurgeUnused</key>
+	<true/>
+	<key>autoEnable</key>
+	<true/>
+	<key>autoMirror</key>
+	<true/>
+	<key>autoMirrorOnlyNew</key>
+	<false/>
+	<key>limitBandwidth</key>
+	<false/>
+	<key>maxDownloadSpeed</key>
+	<integer>0</integer>
+	<key>syncBandwidth</key>
+	<integer>0</integer>
+	<key>metaIndexURL</key>
+	<string>http://swscan.apple.com/content/meta/mirror-config-1.plist</string>
+	<key>otherCatalogs</key>
+	<array>
+		<string>index-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog</string>
+		<string>index-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog</string>
+		<string>index-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog</string>
+		<string>index-lion-snowleopard-leopard.merged-1.sucatalog</string>
+		<string>index-leopard-snowleopard.merged-1.sucatalog</string>
+	</array>
+	<key>portToUse</key>
+	<integer>8088</integer>
+	<key>updatesDocRoot</key>
+	<string>/Library/Server/Software Update/Data/</string>
+	<key>valueBandwidth</key>
+	<integer>0</integer>
+	<key>volumeReserve</key>
+	<integer>5</integer>
+	<key>systemVolumeReserve</key>
+	<integer>20</integer>
+</dict>
+</plist>

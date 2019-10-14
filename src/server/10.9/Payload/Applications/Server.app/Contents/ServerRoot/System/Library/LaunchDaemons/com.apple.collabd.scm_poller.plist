@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>Label</key>
+	<string>com.apple.collabd.scm_poller</string>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/scm_poller</string>
+	</array>
+	<key>UserName</key>
+	<string>root</string>
+	<key>GroupName</key>
+	<string>wheel</string>
+	<key>WatchPaths</key>
+	<array>
+		<string>/Library/Server/Xcode/Cache/KickFiles/com.apple.collabd.scm_poller</string>
+	</array>
+	<key>StartInterval</key>
+	<integer>300</integer><!-- 5 minutes -->
+</dict>
+</plist>

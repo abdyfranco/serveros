@@ -1,0 +1,41 @@
+.Dd May 21, 2010
+.Dt ROOMS_ADMIN_TOOL 8
+.Os "Mac OS X Server"
+.Sh NAME
+.Nm RoomsAdminTool
+.Nd Administration tool for Rooms XMPP chat rooms
+.Sh SYNOPSIS
+.Nm RoomsAdminTool
+.Ar [options] <command> [command arguments]
+.Sh DESCRIPTION
+RoomsAdminTool is an administration tool for Rooms XMPP chat rooms.
+.Pp
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl "D"
+Enable debug output and logging
+.It Fl "C <path>"
+Specify an alternate path to the Rooms service configuration file.
+.It Fl "n <room name>"
+The room's name, eg. "example_room".  The value is required create/destroy/update comamnds.
+.El
+.Pp
+.Sh COMMANDS
+.Bl -tag -width indent
+.It Fl "l"
+List all rooms that exist the XMPP domain as specified in the service configuration file.
+.It Fl "L"
+Display the current configuration of the specified room.
+.It Fl "c <key> <value> ..."
+Create a new room with the specified name and domain.  The room will use a default configuration unless key/value pairs are provided.  See below for valid keys and example values.
+.It Fl "d"
+Destroy a room with the specified name and domain.  Any occupants will be removed from the room, and any room configuration data or related files will also be deleted.
+.It Fl "u <key> <value> ..."
+Update an existing room's configuration.  See below for valid keys and example values.
+.It Fl "h, ?, v"
+Displays this message.
+.El
+.Pp
+.Sh Notes
+.Pp
+Execute "RoomsAdminTool -?" for a full list of available key/value pairs for room configuration and for execution examples.

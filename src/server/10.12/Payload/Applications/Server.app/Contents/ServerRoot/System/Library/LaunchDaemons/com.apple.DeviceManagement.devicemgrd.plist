@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>EnableTransactions</key>
+  <true/>
+  <key>EnablePressuredExit</key>
+  <true/>
+  <key>GroupName</key>
+  <string>_devicemgr</string>
+  <key>KeepAlive</key>
+  <false/>
+  <key>Label</key>
+  <string>com.apple.DeviceManagement.devicemgrd</string>
+  <key>ProcessType</key>
+  <string>Adaptive</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/devicemgrd</string>
+  </array>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>Sockets</key>
+  <dict>
+    <key>devicemgrd.sock</key>
+    <dict>
+      <key>SockPathGroup</key>
+      <integer>220</integer>
+      <key>SockPathMode</key>
+      <integer>432</integer>
+      <key>SockPathName</key>
+      <string>/Library/Server/ProfileManager/Config/var/devicemgrd.sock</string>
+      <key>SockPathOwner</key>
+      <integer>220</integer>
+    </dict>
+  </dict>
+  <key>StandardErrorPath</key>
+  <string>/dev/null</string>
+  <key>StandardOutPath</key>
+  <string>/dev/null</string>
+  <key>UserName</key>
+  <string>_devicemgr</string>
+</dict>
+</plist>

@@ -1,0 +1,122 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-paginating-list-view.loading .cc-paginating-list-view-pagination,
+.cc-paginating-list-view.loading .cc-paginating-list-view-content *,
+.cc-paginating-list-view .cc-paginating-list-view-placeholder,
+.cc-paginating-list-view.empty .cc-paginating-list-view-content,
+.cc-paginating-list-view.empty .cc-paginating-list-view-pagination
+{
+	display: none;
+}
+
+.cc-paginating-list-view .cc-paginating-list-view-content.loading
+{
+	background: url(./img/spinner_transparent.gif) center center no-repeat;
+	min-height: 255px;
+}
+
+.cc-paginating-list-view.empty
+{
+	min-height: 286px;
+}
+
+/* @group Loading and pagination */
+
+.cc-paginating-list-view.empty .cc-paginating-list-view-placeholder
+{
+	color: #BBBBBB;
+	display: block;
+	font-size: 18px;
+	height: 255px;
+	line-height: 255px;
+	text-align: center;
+}
+
+.cc-paginating-list-view-pagination
+{
+	color: #7096BB;
+	clear: both;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 15px;
+	height: 36px;
+	line-height: 36px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.cc-paginating-list-view-pagination.loading
+{
+	background: url(./img/spinner_transparent.gif) center center no-repeat;
+	background-size: 18px 18px;
+	text-indent: -9999px;
+}
+
+/* @end */
+
+/* @group Core list */
+
+.cc-paginating-list-view-content a,
+.cc-paginating-list-view-content a:link,
+.cc-paginating-list-view-content a:visited,
+.cc-paginating-list-view-content a:active,
+.cc-paginating-list-view-content a:hover
+{
+	color: inherit;
+	text-decoration: none;
+}
+
+.cc-paginating-list-view-content .title,
+.cc-paginating-list-view-content .owner
+{
+	font-weight: bold;
+	display: block;
+}
+
+.cc-paginating-list-view-content .title
+{
+	color: #5F5F5F;
+	font-size: 15px;
+	line-height: 18px;
+}
+
+.cc-paginating-list-view-content .owner
+{
+	color: #989898;
+	font-size: 12px;
+	line-height: 17px;
+}
+
+.cc-paginating-list-view-content .modtime
+{
+	color: #B5B5B7;
+	float: right;
+	font-size: 12px;
+	line-height: 20px;
+	max-width: 400px;
+}
+
+.cc-paginating-list-view-content .modtime a
+{
+	color: #7096b3 !important;
+	font-weight: bold !important;
+}
+
+.cc-paginating-list-view-content .cc-entity-icon
+{
+	float: left;
+	margin-right: 8px;
+}
+
+/* @end */

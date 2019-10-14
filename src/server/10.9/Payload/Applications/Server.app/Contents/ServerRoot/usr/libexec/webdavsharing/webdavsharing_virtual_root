@@ -1,0 +1,514 @@
+#!/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+#
+# Copyright (c) 2011-2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+#
+# Virtual Root for WebDAV Sharing
+# Runs under per-user Apache instance
+# For Wiki Files this includes a rudimentary WebDAV implementation
+#
+
+$SERVER_LIBRARY_PATH = "/Library/Server"
+$SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+
+ENV['GEM_PATH'] = "#{$SERVER_INSTALL_PATH_PREFIX}/usr/lib/ruby/gems/1.9.1"
+ENV["BUNDLE_GEMFILE"] = File.expand_path("#{$SERVER_INSTALL_PATH_PREFIX}/usr/share/collabd/gems/Gemfile", __FILE__)
+require 'rubygems'
+Gem.clear_paths
+require 'bundler'
+Bundler.setup
+$LOAD_PATH << "#{$SERVER_INSTALL_PATH_PREFIX}/usr/share/collabd/server/ruby/lib"
+
+require 'cfpropertylist'
+require 'cgi'
+require 'uri'
+require 'fileutils'
+require 'logger'
+require 'collaboration'
+require 'curb'
+require 'json'
+require 'time'
+
+$wikiFileServerURL = "http://localhost:4444"
+$MainConfigDir = "#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/"
+
+class Auth
+	# To do: Revise for new collabd auth
+	def initialize
+		@svc = Collaboration::ServiceClient.new
+		@svc.expand_referenced_objs = false
+		begin
+			ssn = responseData = @svc.execute('AuthService', 'currentOrNewSession')
+			@svc.session_guid = ssn.guid
+		rescue => e
+			$logger.warn("Failed to contact AuthService: #{e.message}")
+			@svc.session_guid = nil 
+		end
+	end
+	def getSessionGUID
+		username = ENV["UserName"]
+		secret = ENV["Secret"]
+		return nil if @svc.session_guid.nil?
+		begin
+			@session = @svc.execute('AuthService', 'sudoToBestGuessForUserWithLogin:withHashToken:', username, secret);
+		rescue => e
+			$logger.error("Failed to get session GUID for user #{username}: #{e.message}")
+			return nil
+		end
+		return @session.guid 
+	end
+end
+
+class WikiFileServer
+	def initialize
+		auth = Auth.new
+		@sessionGUID = auth.getSessionGUID
+	end
+	def wikis
+		return nil if @sessionGUID.nil?
+		begin
+			curlInstance = Curl::Easy.new("#{$wikiFileServerURL}/wikis")
+			curlInstance.headers["X-Apple-Collab-Session"] = @sessionGUID
+			curlInstance.perform
+			wikiJsonString = curlInstance.body_str
+			@wikiResultsDict = JSON.parse(wikiJsonString)
+		rescue => e
+			$logger.error("Failed to get wikis list from #{$wikiFileServerURL}/wikis: #{e.message}")
+			return nil
+		end
+		wikis = @wikiResultsDict.nil? ? nil : @wikiResultsDict["results"]
+		return wikis # Returns array of dictionaries
+	end
+	def uniqueFiles(fileDictArray)
+		uniqueFileDict = {}
+		fileDictArray.each do |fileDict|
+			thisName = fileDict["entity"]["longName"]
+			if uniqueFileDict[thisName].nil? || uniqueFileDict[thisName]["entity"]["updateTime"]["epochValue"] < fileDict["entity"]["updateTime"]["epochValue"]
+				uniqueFileDict[thisName] = fileDict
+			end
+		end
+		return uniqueFileDict.values
+	end
+	def files(wikiDict)
+		wikiID = wikiDict["guid"]
+		begin
+			curlInstance = Curl::Easy.new("#{$wikiFileServerURL}/wikis/#{wikiID}")
+			curlInstance.headers["X-Apple-Collab-Session"] = @sessionGUID unless @sessionGUID.nil?
+			curlInstance.perform
+			raise "Empty response body" if curlInstance.body_str.nil? || curlInstance.body_str.length < 2
+			filesJsonString = curlInstance.body_str
+			@filesResultsDict = JSON.parse(filesJsonString)
+		rescue => e
+			$logger.error("Failed to get files list from #{$wikiFileServerURL}/wikis/#{wikiID}: #{e.message}")
+			return nil
+		end
+		files = @filesResultsDict.nil? ? nil : @filesResultsDict["results"]
+		return files # Returns array of dictionaries
+	end
+	def getFileContent(fileDict)
+		return nil if fileDict.nil?
+		fileID = fileDict["guid"]
+		longName = fileDict["longName"]
+		begin
+			curlInstance = Curl::Easy.new("#{$wikiFileServerURL}/files/#{fileID}/#{longName}")
+			curlInstance.headers["X-Apple-Collab-Session"] = @sessionGUID unless @sessionGUID.nil?
+			curlInstance.perform
+		rescue => e
+			$logger.error("Failed to get file from #{$wikiFileServerURL}/files/#{wikiID}/#{longName}: #{e.message}")
+			return nil
+		end
+		contentLength = curlInstance.downloaded_content_length
+		fileStr = curlInstance.body_str
+		return [contentLength.to_i, fileStr] # Returns file content as string
+	end
+	def createOrUpdateFile(wikiDict, fileDict, body)
+		longName = fileDict["longName"]
+		@fileIsNew = true
+		allFiles = files(wikiDict)
+		if !allFiles.nil? && allFiles.count > 0
+			newestFile = allFiles[0]
+			allFiles.each do |file|
+				if file["entity"]["longName"] == longName
+					if file["entity"]["updateTime"]["epochValue"] > newestFile["entity"]["updateTime"]["epochValue"]
+						newestFile = file
+						newestDate = file["entity"]["updateTime"]["epochValue"]
+					end
+					@fileIsNew = false
+				end
+			end unless allFiles.nil?
+			@fileUpdateLocation = newestFile["entity"]["guid"]
+		end
+		if @fileIsNew
+			$logger.info("New file will be added: #{longName}")			
+			wikiID = wikiDict["entity"]["guid"]
+			curlInstance = Curl::Easy.new("#{$wikiFileServerURL}/wikis/#{wikiID}")
+			curlInstance.headers["Content-Disposition"] = "attachment; filename=#{URI::escape(longName, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))};"
+			curlInstance.headers["X-Apple-Collab-Session"] = @sessionGUID unless @sessionGUID.nil?
+			begin
+				curlInstance.http_post(body)
+				$logger.info("POST to #{$wikiFileServerURL}/wikis/#{wikiID} response code: #{curlInstance.response_code}")
+				return curlInstance.response_code
+			rescue => e
+				$logger.error("POST to #{$wikiFileServerURL}/wikis/#{wikiID} failed: #{e.message}")
+				return 500
+			end
+		else
+			$logger.info("Existing file will be updated: #{longName}")
+			curlInstance = Curl::Easy.new("#{$wikiFileServerURL}/files/#{@fileUpdateLocation}")
+			curlInstance.headers["Content-Disposition"] = "attachment; filename=#{URI::escape(longName, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))};"
+			curlInstance.headers["X-Apple-Collab-Session"] = @sessionGUID unless @sessionGUID.nil?
+			begin
+				curlInstance.http_put(body)
+				$logger.info("PUT to #{$wikiFileServerURL}/files/#{@fileUpdateLocation} response code: #{curlInstance.response_code}")
+				return curlInstance.response_code
+			rescue => e
+				$logger.error("PUT to #{$wikiFileServerURL}/files/#{@fileUpdateLocation} failed: #{e.message}")
+				return 500
+			end
+		end
+	end
+end
+
+class FileNode
+	attr_accessor :name
+	attr_accessor :fileDict
+	def initialize(name, fileDict)
+		@name = name
+		@fileDict = fileDict
+		@name = name.gsub(/ /,"%20").gsub(/''/,"%27")
+	end
+	def propfindXML
+		now = Time.now.to_i
+		# To do: Make a real etag
+		etag = "#{@name}#{now}";
+		if fileDict["entity"].nil? || fileDict["entity"]["updateTime"].nil?
+			updateTime = now
+		else
+			updateTime = fileDict["entity"]["updateTime"]["isoValue"]
+		end
+		#updateTime Time.parse(fileDict["updateTime"]).rfc2822
+		xml = <<-EOT
+<D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/" xmlns:g0="DAV:">
+<D:href>/#{ENV["UserUUID"]}/#{@name}</D:href>
+<D:propstat>
+<D:prop>
+<lp1:resourcetype/><lp1:getcontentlength>4</lp1:getcontentlength><lp2:executable>F</lp2:executable>
+<lp1:creationdate>#{updateTime}</lp1:creationdate>
+<lp1:getlastmodified>#{updateTime}</lp1:getlastmodified>
+<lp1:getetag>"#{etag}"</lp1:getetag>
+<D:lockdiscovery/>
+<D:getcontenttype>#{fileDict["contentType"]}</D:getcontenttype>
+</D:prop>
+<D:status>HTTP/1.1 200 OK</D:status>
+</D:propstat>
+<D:propstat>
+<D:prop>
+<g0:getcontentlength/>
+</D:prop>
+<D:status>HTTP/1.1 404 Not Found</D:status>
+</D:propstat>
+</D:response>
+		EOT
+		return xml
+	end
+end
+
+class SharePointNode
+	attr_accessor :name
+	attr_accessor :path
+	def initialize(name, path)
+		@name = name
+		@path = path
+		@name = name.gsub(/ /,"%20").gsub(/''/,"%27")
+	end
+	def userHasAccess
+		return true if path.nil? || path == "" || FileTest.writable?(path)
+		begin
+			Dir.entries(@path)
+		rescue
+			return false
+		end
+		return true
+	end
+	def propfindXML
+		now = Time.now.to_i
+		# To do: Make a real etag
+		etag = "#{@name}#{now}";
+		xml = <<-EOT
+<D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/" xmlns:g0="DAV:">
+<D:href>/#{ENV["UserUUID"]}/#{@name}</D:href>
+<D:propstat>
+<D:prop>
+<lp1:resourcetype><D:collection/></lp1:resourcetype>
+<lp1:creationdate>#{now}</lp1:creationdate>
+<lp1:getlastmodified>#{now}</lp1:getlastmodified>
+<lp1:getetag>"#{etag}"</lp1:getetag>
+<D:lockdiscovery/>
+<D:getcontenttype>httpd/unix-directory</D:getcontenttype>
+</D:prop>
+<D:status>HTTP/1.1 200 OK</D:status>
+</D:propstat>
+<D:propstat>
+<D:prop>
+<g0:getcontentlength/>
+</D:prop>
+<D:status>HTTP/1.1 404 Not Found</D:status>
+</D:propstat>
+</D:response>
+		EOT
+		return xml
+	end
+end
+class ConfiguredSharePoints
+	attr_accessor :sharePoints
+	def initialize(filePath)
+		@sharePoints = []
+		return if !FileTest.exists?(filePath)
+		plist = CFPropertyList::List.new(:file => filePath)
+		sharePointDict = CFPropertyList.native_types(plist.value)
+		sharePointDict.each do |name, path|
+			@sharePoints << SharePointNode.new(name, path) 
+		end unless sharePointDict.nil?
+	end
+end
+$logger = Logger.new("#{ENV["UserLogDir"]}/webdavsharing_virtual_root.log")
+$logger.level = Logger::INFO
+input = $stdin.read		# Keep CGI from gobbling up stdin
+cgi = CGI.new
+path = cgi.script_name
+topLevel = nil
+wikiID = nil
+fileName = nil
+if ENV["ShareWikiFiles"] == "true" && ENV["HTTP_X_APPLE_SERVICE_WIKI_ENABLED"] == "true"
+	# env vars won't pass as Booleans.
+	$wikiFileServerInstance = WikiFileServer.new
+	w = $wikiFileServerInstance
+	wikis = w.wikis
+	if wikis.nil? || wikis.count == 0
+		$synthesizeWikiSharePoint = false
+		$logger.info("No wikis")
+	else
+		$synthesizeWikiSharePoint = true
+		$logger.info("#{wikis.count} wiki(s). ")
+	end
+end
+if ENV["ShareUserHomeDir"] == "true" && !ENV["UserHomeDir"].nil? && ENV["UserHomeDir"] != "" && FileTest.directory?(ENV["UserHomeDir"])
+	$synthesizeHomeDirSharePoint = true
+else
+	$synthesizeHomeDirSharePoint = false
+end
+if !ENV["WikisVirtualSharePointName"].nil?
+	$wikisVirtualSharePointName = ENV["WikisVirtualSharePointName"]
+else
+	$wikisVirtualSharePointName = "Wikis"
+end
+
+# /<guid>/Wikis/wiki-name/filename.pages
+if cgi.request_method == 'PROPFIND' && (path =~ /\/[^\/]+\/(.*DropBox\/$)/ || path =~ /\/[^\/]+\/(.*dropbox\/$)/|| path =~ /\/[^\/]+\/(.*Drop\ Box\/$)/ || path =~ /\/[^\/]+\/(.*\.dropbox\/$)/)
+	# This folder-name heuristic is necessary until we can replace the Redirect that transfers control to this CGI with
+	# a rewritemap tool that can do a stat and determine file permissions or with a file-access-based rewrite.
+	# Note that "...Dropbox/" is avoided.
+	$logger.info("Special case handling for DropBox URI, path = #{$1}")
+	nodeXML = SharePointNode.new($1, nil).propfindXML
+	body = '<?xml version="1.0" encoding="utf-8"?>'
+	body += "\n<D:multistatus xmlns:D=\"DAV:\" xmlns:ns0=\"DAV:\">\n#{nodeXML}\n</D:multistatus>\n"
+	cgi.out(
+			"status" => "207 Multi-Status",
+			"type" => "text/xml",
+			"DAV" => "1,2"
+			){body}
+elsif path =~ /\/[^\/]+\/([^\/]+)\/([^\/]+)\/([^\/]+)/
+	topLevel = $1
+	wikiID = URI::unescape($2)
+	fileName = URI::unescape($3)
+elsif path =~ /\/[^\/]+\/([^\/]+)\/([^\/]+)/
+	topLevel = $1
+	wikiID = URI::unescape($2)
+elsif path =~ /\/[^\/]+\/([^\/]+)/
+	topLevel = $1
+else
+	#$logger.info("Unmatched path = #{path}")
+end
+
+$logger.info("cgi.request_method = #{cgi.request_method} cgi.script_name = #{cgi.script_name}, topLevel=#{topLevel}, wikiID = #{wikiID},  fileName = #{fileName}")
+case cgi.request_method
+	when 'PROPFIND'
+	# PROPFIND methods handled by this cgi may be for Wikis or for real share points
+	nodeXML = ""
+	if topLevel == $wikisVirtualSharePointName
+		if $wikiFileServerInstance.nil?
+			$logger.error("PROPFIND: Denying request because wiki file sharing via WebDAV is not available")
+			cgi.out(
+					"status" => "404"
+					) {""}
+		else
+			if wikiID.nil?
+				# show all wikis
+				w = $wikiFileServerInstance
+				if !w.nil?
+					wikis = w.wikis
+					wikis.each do |wiki| 
+						wikiNode = SharePointNode.new("#{$wikisVirtualSharePointName}/#{URI::escape(wiki['entity']['longName'], Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}/", nil)
+						nodeXML = nodeXML + wikiNode.propfindXML
+					end unless wikis.nil?
+				end
+			elsif fileName.nil?
+				# show all files for specified wiki, omitting dups		
+				w = $wikiFileServerInstance
+				wikis = w.wikis
+				theWikis = wikis.select { |wiki| wiki["entity"]["longName"] == wikiID }
+				if theWikis.nil? || theWikis.count == 0 
+					cgi.out(
+							"status" => "404 "
+							) {""}
+				else
+					theWiki = theWikis[0]
+					files = w.files(theWiki)
+					files = w.uniqueFiles(files)
+					files.each do |file|
+						fileNode = FileNode.new("#{$wikisVirtualSharePointName}/#{URI::escape(wikiID, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}/#{URI::escape(file['entity']['longName'], Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}", file)
+						nodeXML = nodeXML + fileNode.propfindXML
+					end
+				end
+			else 
+				$logger.error("Unexpected PROPFIND on fileName #{fileName}")
+				cgi.out(
+						"status" => "405 Method Not Allowed",
+						"Allow" => "GET,PUT"
+				) {""}
+			end
+		end
+	else
+		# topLevel != wikisVirtualSharePointName, so is a real share point or home dir
+		allSharePointNodes = ConfiguredSharePoints.new("#{$MainConfigDir}webdav_sharepoints.plist")
+		if $synthesizeHomeDirSharePoint
+			allSharePointNodes.sharePoints << SharePointNode.new(ENV["UserName"], ENV["UserHomeDir"])
+		end
+		if $synthesizeWikiSharePoint 
+			allSharePointNodes.sharePoints << SharePointNode.new($wikisVirtualSharePointName, nil)
+		end
+		allSharePointNodes.sharePoints.each do |sharePointNode|
+			nodeXML = nodeXML + sharePointNode.propfindXML if sharePointNode.userHasAccess
+		end
+	end
+	body = '<?xml version="1.0" encoding="utf-8"?>'
+	body += "\n<D:multistatus xmlns:D=\"DAV:\" xmlns:ns0=\"DAV:\">\n#{nodeXML}\n</D:multistatus>\n"
+	cgi.out(
+			"status" => "207 Multi-Status",
+			"type" => "text/xml",
+			"DAV" => "1,2"
+			){body}
+	when 'GET'
+	# GET methods handled by this cgi are always for Wikis
+	# To do: Consider just setting X-SENDFILE header and letting mod_xsendfile do the download
+	if $wikiFileServerInstance.nil?
+		$logger.error("GET: Denying request because wiki file sharing via WebDAV is not available")
+		cgi.out(
+			"status" => "404"
+			) {""}
+	else
+		w = $wikiFileServerInstance
+		wikis = w.wikis
+		theWikis = wikis.select { |wiki| wiki["entity"]["longName"] == wikiID }
+		if theWikis.count == 0
+			cgi.out(
+					"status" => "404"
+					) {""}
+		else
+			theWiki = theWikis[0]	# Assuming only one wiki with a given longName, first match is the match
+			files = w.files(theWiki)
+			if files.nil?
+				cgi.out(
+						"status" => "204 No Content"
+						) {""}
+			else
+				theFiles = files.select {|file| !file["entity"]["longName"].nil? && file["entity"]["longName"] == fileName.force_encoding('UTF-8') }
+
+				if theFiles.nil? || theFiles.count == 0
+					$logger.error("GET: no match on Wiki file name #{fileName}")
+					cgi.out(
+							"status" => "404"
+							) {""}
+				elsif theFiles.count == 1
+					theFile = theFiles[0]
+					length, body = w.getFileContent(theFile)
+					cgi.out(
+							"status" => "200",
+							"type" => "text/xml",
+							"Content-Length" => "#{length}"
+							){body}
+				else
+					newestFile = theFiles[0]
+					theFiles.each do |file| 
+						if file["entity"]["updateTime"]["epochValue"] > newestFile["entity"]["updateTime"]["epochValue"]
+							newestFile = file
+						end
+					end
+					length, body = w.getFileContent(newestFile)
+					cgi.out(
+						"status" => "200",
+						"type" => "text/xml",
+						"Content-Length" => "#{length}"
+						){body}
+				end
+			end
+		end
+	end
+	when 'PUT'
+	# PUT methods handled by this cgi are always for Wikis
+	# iOS client WebDAV upload is two PUTs -
+	# 1. First put has Content-Length: 0 or 1 to create the resource; client expects a 201
+	# 2. Second put with Content-Length > 1 contains file data in request body; client expects a 200 or 201
+	if $wikiFileServerInstance.nil?
+		$logger.error("PUT: Denying request because wiki file sharing via WebDAV is not available")
+		cgi.out(
+				"status" => "404"
+				) {""}
+	else
+		newContent = input
+		contentLength = ENV["CONTENT_LENGTH"]
+		w = $wikiFileServerInstance
+		wikis = w.wikis
+		theWikis = wikis.select { |wiki| wiki["entity"]["longName"] == wikiID }
+		if theWikis.count == 0
+			$logger.error("PUT: No wikis")
+			cgi.out(
+					"status" => "404"
+					) {""}
+		else
+			theWiki = theWikis[0]	# Assuming only one wiki with a given longName, first match is the match
+			$logger.info("PUT with Content-Length #{contentLength}")
+			theFile = {"longName" => fileName.force_encoding('UTF-8')}
+			if contentLength.to_i < 2
+				$logger.info("Ignoring first PUT for file #{theFile.inspect}")
+				cgi.out(
+						"status" => "201"
+						) {""}
+			else
+				$logger.info("PUT creating or updating file #{theFile.inspect}")
+				status = w.createOrUpdateFile(theWiki, theFile, newContent).to_s
+				cgi.out(
+						"status" => "#{status}",
+						"type" => "text/xml",
+						"Content-Length" => "#{length}"
+						){""}
+			end
+		end
+	end
+	when 'OPTIONS'
+	cgi.out(
+			"status" => "200",
+			"Allow" => "OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE,PROPFIND,PROPPATCH,LOCK,UNLOCK",
+			"DAV" => "1,2"
+			){""}
+	else
+	cgi.out(
+			"status" => "405 Method Not Allowed",
+			"Allow" => "GET,PUT,PROPFIND,OPTIONS"
+			){""}
+end

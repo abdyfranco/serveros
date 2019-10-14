@@ -1,0 +1,12 @@
+TLS SNI Client Support
+======================
+
+Works:
+
+ * Thunderbird (Linux)
+
+Doesn't work:
+
+ * K-9 on Droid X2 (any Android?)
+
+(This file was created from the wiki on 2013-08-05 04:42)

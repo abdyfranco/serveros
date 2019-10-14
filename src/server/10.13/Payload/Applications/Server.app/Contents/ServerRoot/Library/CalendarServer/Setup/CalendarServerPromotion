@@ -1,0 +1,151 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+#
+# PromotionExtra script for calendar server.
+#
+# Copyright (c) 2012-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+import os
+from plistlib import readPlist, writePlistToString
+import subprocess
+
+from calendar_setup_util import checkVolume, log, runWithExitStatus, serverRootLocation
+from twisted.python.filepath import FilePath
+
+
+
+def relocateData():
+    """
+    If DataRoot is not under ServerRoot, move the ServerRoot contents to be
+    siblings of DataRoot and update the ServerRoot value in the plist.
+    """
+
+    serverRoot = serverRootLocation()
+    log("Relocate data check (serverRoot: {})".format(serverRoot.encode("utf-8")))
+
+    oldSystemPlistPath = "/Library/Server/Calendar and Contacts/Config/caldavd.plist"
+    oldSystemPlistFilePath = FilePath(oldSystemPlistPath)
+
+    newSystemPlistPath = os.path.join(serverRoot, "Config", "caldavd-system.plist")
+    newSystemPlistFilePath = FilePath(newSystemPlistPath)
+
+    # remembers whether we want to update the legacy caldavd.plist or the
+    # modern caldavd-system.plist
+    # If True, we update the DataRoot in the legacy plist and let the
+    # CommonExtra do the job of pulling out the appropriate keys and writing
+    # to caldavd-system.plist
+    writeToOldPlist = False
+
+    if newSystemPlistFilePath.exists():
+        log("{} exists".format(newSystemPlistFilePath.path.encode("utf-8")))
+        systemPlist = readPlist(newSystemPlistFilePath.path)
+        dataRoot = systemPlist.get("DataRoot", "Data")
+    elif oldSystemPlistFilePath.exists():
+        log("Old {} exists".format(oldSystemPlistFilePath.path.encode("utf-8")))
+        systemPlist = readPlist(oldSystemPlistFilePath.path)
+        dataRoot = systemPlist.get("DataRoot", "Data")
+        writeToOldPlist = True
+    else:
+        log("{} does not exist".format(newSystemPlistFilePath.path.encode("utf-8")))
+        dataRoot = u"/Library/Server/Calendar and Contacts/Data"
+
+    log("DataRoot: {}".format(dataRoot.encode("utf-8")))
+
+    if dataRoot.startswith("/Volumes/"):
+        log("DataRoot is external; relocating...")
+
+        # Update DataRoot in caldavd-system.plist
+        serverRoot = os.path.dirname(dataRoot.rstrip("/"))  # parent of DataRoot
+        log("ServerRoot now: {}".format(serverRoot.encode("utf-8")))
+        # If the old DataRoot leaf directory is not named "Data", rename it
+        if os.path.basename(dataRoot) != "Data":
+            newDataRoot = os.path.join(serverRoot, "Data")
+            log(
+                "Renaming {} to {}".format(
+                    dataRoot.encode("utf-8"),
+                    newDataRoot.encode("utf-8")
+                )
+            )
+            os.rename(dataRoot, newDataRoot)
+        # Copy Config directory
+        src = "/Library/Server/Calendar and Contacts/Config"
+        dest = os.path.join(serverRoot, "Config")
+        log("Copying Config")
+        subprocess.call(["/usr/bin/ditto", src, dest])
+
+        if writeToOldPlist:
+            # Update the legacy plist which will be modernized in CommonExtra
+            targetFilePath = FilePath(os.path.join(serverRoot, "Config", "caldavd.plist"))
+        else:
+            # We've already got a modern plist, so just update it directly
+            targetFilePath = FilePath(os.path.join(serverRoot, "Config", "caldavd-system.plist"))
+
+        targetPlist = readPlist(targetFilePath.path)
+        targetPlist["DataRoot"] = "Data"
+        targetFilePath.setContent(writePlistToString(targetPlist))
+        log("Updated DataRoot to 'Data' in {}".format(targetFilePath.path.encode("utf-8")))
+    else:
+        log("No need to relocate data")
+
+    # Update ServerRoot in the prefs file
+    log("ServerRoot: {}".format(serverRoot.encode("utf-8")))
+    prefsFilePath = FilePath(
+        "/Library/Server/Preferences/Calendar.plist"
+    )
+    if prefsFilePath.exists():
+        prefs = readPlist(prefsFilePath.path)
+    else:
+        prefs = {}
+    prefs["ServerRoot"] = serverRoot
+    prefsFilePath.setContent(writePlistToString(prefs))
+
+
+
+def removeObsoleteFiles():
+    obsoletes = [
+        "/Library/Server/Web/Config/apache2/webapps/org.calendarserver.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contacts.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contacts.plist.default",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contactsssl.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contactsssl.plist.default",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.webcal.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.webcalssl.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.webcal.webssl.plist",
+    ]
+    for plistPath in obsoletes:
+        if os.path.exists(plistPath):
+            log("Obsolete plist exists: {}".format(plistPath))
+            try:
+                os.remove(plistPath)
+                log("Removed {}".format(plistPath))
+            except Exception, e:
+                log("Failed to remove {}: {}".format(plistPath, e))
+
+
+def main():
+
+    serverRoot = serverRootLocation()
+    checkVolume(serverRoot)
+
+    # Also, check the DataRoot value in case this is an older config since
+    # DataRoot could point to a volume other than server root
+    systemPlistPath = os.path.join(serverRoot, "Config", "caldavd-system.plist")
+    if os.path.exists(systemPlistPath):
+        systemPlist = readPlist(systemPlistPath)
+        dataRoot = systemPlist.get("DataRoot", "")
+        if dataRoot.startswith("/Volumes/"):
+            checkVolume(dataRoot)
+
+    removeObsoleteFiles()
+
+    relocateData()
+
+
+if __name__ == "__main__":
+    runWithExitStatus(main)

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Netboot Management (Bootpd)</string>
+	<key>dependencies</key>
+	<array>
+		<string>servermgr_dhcp</string>
+		<string>servermgr_web_ConfigDone</string>
+	</array>
+	<key>environment</key>
+	<dict>
+		<key>sourceRoot</key>
+		<string>/Library/Server/Previous</string>
+		<key>tftpDir</key>
+		<string>/private/tftpboot</string>
+		<key>bootpTab</key>
+		<string>/private/etc/bootptab</string>
+		<key>bootpPlist</key>
+		<string>/private/etc/bootpd.plist</string>
+		<key>serviceDataPath</key>
+		<string>${serverLibrary}/NetInstall</string>
+		<key>savedClientsPath</key>
+		<string>${serviceDataPath}/ClientData</string>
+		<key>savedImagesPath</key>
+		<string>${serviceDataPath}/ImageData</string>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Restoring client share data and relinking images</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/setup_netboot.sh</string>
+			</dict>
+		</array>
+	</dict>
+	<key>migration</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>bootptab</key>
+			<dict>
+				<key>description</key>
+				<string>Bootp Table (optional)</string>
+				<key>path</key>
+				<string>${bootpTab}</string>
+				<key>source</key>
+				<array>
+					<string>${sourceRoot}${bootpTab}</string>
+				</array>
+			</dict>
+			<key>bootpPlist</key>
+			<dict>
+				<key>description</key>
+				<string>Bootp Config</string>
+				<key>path</key>
+				<string>${bootpPlist}</string>
+				<key>source</key>
+				<string>${sourceRoot}${bootpPlist}</string>
+			</dict>
+		</dict>
+		<key>directories</key>
+		<dict>
+			<key>tftp dir</key>
+			<dict>
+				<key>path</key>
+				<string>${tftpDir}</string>
+				<key>source</key>
+				<string>${sourceRoot}${tftpDir}</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Enable Bootpd if needed</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/enableBootpd.pl</string>
+				<key>Note</key>
+				<string>This script is used by both servermgr_dhcp &amp; servermgr_netboot and will be run once by each migration phase</string>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>empty tftp dir</key>
+			<dict>
+				<key>description</key>
+				<string>default tftp directory</string>
+				<key>path</key>
+				<string>${tftpDir}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

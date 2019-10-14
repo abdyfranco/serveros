@@ -1,0 +1,249 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='blue'],
+.wk-fake-header[data-theme-name='blue'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='blue']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#528BC4), to(#3078BD));
+	color: #FFFFFF;
+	text-shadow: rgba(0,0,0,0.6) 0px -1px 1px;
+	border-bottom: 1px solid #245D94;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='blue'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='blue'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(72,133,194)), to(rgb(58,125,189)));
+}/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='carbon'],
+.wk-fake-header[data-theme-name='carbon'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='carbon']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#343434), to(#242424));
+	/* property=color value-ref=com.apple.collabd.theme.main_banner.color */
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+	border-bottom: 1px solid #242424;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='carbon'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='carbon'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(46,46,46)), to(rgb(41,41,41)));
+}/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='green'],
+.wk-fake-header[data-theme-name='green'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='green']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#167b4d), to(#0e5c3a));
+	/* property=color value-ref=com.apple.collabd.theme.main_banner.color */
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+	border-bottom: 1px solid #136f46;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='green'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='green'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(19,111,70)), to(rgb(16,100,63)));
+}/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='orange'],
+.wk-fake-header[data-theme-name='orange'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='orange']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#EB5A27), to(#D25023));
+	/* property=color value-ref=com.apple.collabd.theme.main_banner.color */
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+	border-bottom: 1px solid #d24f22;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='orange'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='orange'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(225,86,37)), to(rgb(218,83,36)));
+}/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='purple'],
+.wk-fake-header[data-theme-name='purple'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='purple']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#5535a4), to(#3f277b));
+	/* property=color value-ref=com.apple.collabd.theme.main_banner.color */
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+	border-bottom: 1px solid #3f277b;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='purple'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='purple'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(77,48,148)), to(rgb(70,43,135)));
+}/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='royal'],
+.wk-fake-header[data-theme-name='royal'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='royal']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#0b4398), to(#0f3c7c));
+	/* property=color value-ref=com.apple.collabd.theme.main_banner.color */
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+	border-bottom: 1px solid #0f3c7c;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='royal'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='royal'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(13,65,142)), to(rgb(13,62,132)));
+}/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='scarlet'],
+.wk-fake-header[data-theme-name='scarlet'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='scarlet']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#b71529), to(#9c1323));
+	/* property=color value-ref=com.apple.collabd.theme.main_banner.color */
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+	border-bottom: 1px solid #9c1323;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='scarlet'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='scarlet'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(173,21,39)), to(rgb(164,20,37)));
+}/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+ /* Header (in a container) and fake header (in wikis grid preview) */
+.wk-header[data-theme-name='steel'],
+.wk-fake-header[data-theme-name='steel'],
+body.ad-HiDPI .ad-tab-bar.wk-header[data-theme-name='steel']
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#8E8E8E), to(#717171));
+	color: #FFFFFF;
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+	border-bottom: 1px solid #565656;
+}
+
+/* Slider thumb */
+
+.wk-header[data-theme-name='steel'] .wk-header-slider-thumb,
+.wk-fake-header[data-theme-name='steel'] .wk-header-slider-thumb {
+	/* The two values for this gradients are the color of the banner gradient above sampled at the top and bottom of the slider thumb */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(133,133,133)), to(rgb(123,123,123)));
+}

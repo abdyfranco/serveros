@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logExceptionDetails</key>
+	<false/>
+	<key>forbiddenSSLCipherSuites</key>
+	<string>0,1,2,3,4,6,8,9,11,13,14,15,17,18,20,21,23,24,25,26,27,28,52,58,49153,49154,49155,49156,49157,49158,49159,49160,49161,49162,49163,49164,49165,49166,49167,49168,49169,49170,49171,49172,49173,49174,49175,49176,49177,49187,49188,49189,49190,49191,49192,49193,49194,49195,49196,49197,49198,49199,49200,49201,49202</string>
+	<key>moduleCommandAuthAnyUser</key>
+	<array>
+		<dict>
+			<key>module</key>
+			<string>servermgr_san</string>
+			<key>command</key>
+			<string>getSANConfig</string>
+		</dict>
+		<dict>
+			<key>module</key>
+			<string>servermgr_info</string>
+			<key>command</key>
+			<string>getSACLsForUser</string>
+		</dict>
+	</array>
+	<key>moduleCommandAuthAnonymous</key>
+	<array>
+		<dict>
+			<key>module</key>
+			<string>servermgr_info</string>
+			<key>command</key>
+			<string>getServicesInfo</string>
+		</dict>
+	</array>
+	<key>crashOnHangTimeout</key>
+	<false/>
+	<key>requireUserAgent</key>
+	<true/>
+	<key>onlyAcceptLocalConnections</key>
+	<true/>
+	<key>dumpFullDiagnostics</key>
+	<false/>
+	<key>collectPerformanceStats</key>
+	<false/>
+	<key>idlePeriod</key>
+	<integer>60</integer>
+	<key>listenForRegularConnections</key>
+	<false/>
+	<key>listenForSSLConnections</key>
+	<true/>
+	<key>listenForRegularConnectionsIPv6</key>
+	<false/>
+	<key>listenForSSLConnectionsIPv6</key>
+	<true/>
+	<key>moduleAuthAnonymous</key>
+	<array/>
+	<key>moduleAuthAnyUser</key>
+	<array>
+		<string>servermgr_signaler</string>
+		<string>servermgr_xserve</string>
+	</array>
+	<key>regularPort</key>
+	<integer>687</integer>
+	<key>sslPort</key>
+	<integer>311</integer>
+</dict>
+</plist>

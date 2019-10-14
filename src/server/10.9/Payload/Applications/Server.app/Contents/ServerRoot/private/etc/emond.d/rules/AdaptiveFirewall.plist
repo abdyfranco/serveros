@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Initialize</string>
+		<key>comment</key>
+		<string>Set the bad-login threshold and block time at startup</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>startup</string>
+		</array>
+		<key>variables</key>
+		<dict>
+			<key>hostBlockThreshold</key>
+			<integer>25</integer>
+			<key>hostMinBlockTime</key>
+			<integer>15</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Mark Hosts</string>
+		<key>comment</key>
+		<string>Each time we receive a notification that the IP failed to log in, increment a counter</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>auth.failure</string>
+		</array>
+		<key>criterion</key>
+		<array>
+			<dict>
+				<key>operator</key>
+				<string>Defined</string>
+				<key>operands</key>
+				<array>
+					<string>event:clientIP</string>
+				</array>
+			</dict>
+		</array>
+		<key>variables</key>
+		<dict>
+			<key>${event:clientIP}-BadAuthCount</key>
+			<string>${${event:clientIP}-BadAuthCount} + 1</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Check Hosts</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>auth.failure</string>
+		</array>
+		<key>criterion</key>
+		<array>
+			<dict>
+				<key>operator</key>
+				<string>GreaterThan</string>
+				<key>operands</key>
+				<array>
+					<string>${${event:clientIP}-BadAuthCount}</string>
+					<string>${hostBlockThreshold}</string>
+				</array>
+			</dict>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>Log</string>
+				<key>message</key>
+				<string>Host at ${event:clientIP} will be blocked for at least ${hostMinBlockTime} minutes</string>
+				<key>facility</key>
+				<string>AdaptiveFirewall</string>
+				<key>logLevel</key>
+				<string>Notice</string>
+				<key>logType</key>
+				<string>Syslog</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>RunCommand</string>
+				<key>user</key>
+				<string>root</string>
+				<key>command</key>
+				<string>/Applications/Server.app/Contents/ServerRoot/System/Library/CoreServices/AdaptiveFirewall.bundle/Contents/MacOS/afctl</string>
+				<key>arguments</key>
+				<array>
+					<string>-a</string>
+					<string>${event:clientIP}</string>
+					<string>-t</string>
+					<string>${hostMinBlockTime}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendNotification</string>
+				<key>name</key>
+				<string>EventMonitorNotification</string>
+				<key>message</key>
+				<string>EventMonitorNotification</string>
+				<key>details</key>
+				<dict>
+					<key>hostBlockedTime</key>
+					<string>${hostMinBlockTime}</string>
+					<key>message</key>
+					<string>HostBlocked</string>
+				</dict>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Clear Hosts</string>
+		<key>comment</key>
+		<string>Reset the number of bad auths if a successful auth happens</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>auth.success</string>
+		</array>
+		<key>variables</key>
+		<dict>
+			<key>${event:clientIP}-BadAuthCount</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+</array>
+</plist>

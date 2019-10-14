@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aslMessageKey</key>
+	<string>replies.fromcache.topeers</string>
+	<key>aslSender</key>
+	<string>Caching Server</string>
+	<key>description</key>
+	<string>The number of requests from other Caching servers which were served from the Caching server's cache</string>
+	<key>localizationBundlePath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/share/servermgrd/bundles/servermgr_caching.bundle</string>
+	<key>localizationTable</key>
+	<string>GraphMetadata</string>
+	<key>name</key>
+	<string>Requests served from cache to other Caching servers</string>
+	<key>unitLabel</key>
+	<string>requests</string>
+</dict>
+</plist>

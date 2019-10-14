@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ProgramArguments</key>
+	<array>
+		<string>-D</string>
+		<string>/Library/Server/ProfileManager/Config/ServiceData/Data/PostgreSQL</string>
+		<string>-c</string>
+		<string>unix_socket_directories=/Library/Server/ProfileManager/Config/var/PostgreSQL</string>
+		<string>-c</string>
+		<string>default_transaction_isolation=serializable</string>
+		<string>-c</string>
+		<string>logging_collector=on</string>
+		<string>-c</string>
+		<string>log_rotation_size=10MB</string>
+		<string>-c</string>
+		<string>log_connections=off</string>
+		<string>-c</string>
+		<string>log_lock_waits=on</string>
+		<string>-c</string>
+		<string>log_statement=none</string>
+		<string>-c</string>
+		<string>log_min_duration_statement=1000</string>
+		<string>-c</string>
+		<string>log_line_prefix=[%p] [%m] (%u-%x) </string>
+		<string>-c</string>
+		<string>listen_addresses=</string>
+		<string>-c</string>
+		<string>log_directory=/Library/Logs/ProfileManager</string>
+		<string>-c</string>
+		<string>log_filename=PostgreSQL-%F.log</string>
+		<string>-c</string>
+		<string>log_file_mode=0640</string>
+		<string>-c</string>
+		<string>log_min_messages=WARNING</string>
+		<string>-c</string>
+		<string>log_min_error_statement=WARNING</string>
+		<string>-c</string>
+		<string>unix_socket_group=_devicemgr</string>
+		<string>-c</string>
+		<string>unix_socket_permissions=0770</string>
+		<string>-c</string>
+		<string>max_connections=200</string>
+		<string>-c</string>
+		<string>shared_buffers=256MB</string>
+		<string>-c</string>
+		<string>max_locks_per_transaction=128</string>
+		<string>-c</string>
+		<string>max_pred_locks_per_transaction=128</string>
+		<string>-c</string>
+		<string>checkpoint_segments=10</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,35 @@
+;;
+;; Copyright (c) 2013 Apple Inc.  All Rights reserved.
+;;
+;; IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+;; computers and is subject to the terms and conditions of the Apple Software
+;; License Agreement accompanying the package this file is a part of.
+;; You may not port this file to another platform without Apple's written consent.
+;;
+;; WARNING: The sandbox rules in this file currently constitute
+;; Apple System Private Interface and are subject to change at any time and
+;; without notice. 
+;;
+(version 1)
+
+(deny default)
+
+(import "opendirectory.sb")
+(import "system.sb")
+
+(allow file-read*
+       (literal "/Library/Preferences/com.apple.AccountsConfigServer.plist")
+       (literal "/Library/Server/Configuration")
+       (literal "/Library/Server/Configuration/services.mobileconfig")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/libexec")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/libexec/scsd"))
+ 
+(allow ipc-posix-shm
+       (ipc-posix-name "apple.shm.notification_center"))
+
+(allow mach-lookup
+        (global-name "com.apple.distributed_notifications.2")
+        (global-name "com.apple.distributed_notifications@1v3")
+        (global-name "com.apple.distributed_notifications@Uv3"))
+
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Label</key>
+        <string>com.apple.serverdocs.sdmd</string>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>KeepAlive</key>
+        <true/>
+        <key>ProcessType</key>
+        <string>Interactive</string>
+        <key>EnablePressuredExit</key>
+        <false/>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ServerDocsMaster.framework/sdmd</string>
+        </array>
+        <key>MachServices</key>
+        <dict>
+                <key>com.apple.serverdocs.sdmd</key>
+                <true/>
+        </dict>
+        <key>EnvironmentVariables</key>
+        <dict>
+                <key>SDMD_SANDBOX</key>
+                <string>/Applications/Server.app/Contents/ServerRoot/System/Library/Sandbox/com.apple.serverdocs.sdmd.sb</string>
+                <key>SDM_FRAMEWORK_DIR</key>
+                <string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ServerDocsMaster.framework</string>
+        </dict>
+        <key>SoftResourceLimits</key>
+        <dict>
+                <key>NumberOfFiles</key>
+                <integer>10240</integer>
+        </dict>
+</dict>
+</plist>

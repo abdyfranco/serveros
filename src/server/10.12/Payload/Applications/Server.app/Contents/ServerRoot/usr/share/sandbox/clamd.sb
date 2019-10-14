@@ -1,0 +1,50 @@
+(version 1)
+
+; clamav.sb - ClamAV clamd(8) Sandbox Policy
+; Used when clamd(8) is run by launchd (the default).
+; Mac OS X Server only
+(deny default)
+
+(import "system.sb")
+
+; When the sandbox takes root, we're in the sandbox-exec(1) helper.  The helper needs to be able to
+; actually start clamd.
+(allow process-fork)
+(allow process-exec
+	(regex "^/usr/bin/perl5*")
+	(literal "/Applications/Server.app/Contents/ServerRoot/usr/libexec/clamav/clamd_preflight")
+	(literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin/clamd")
+)
+
+;allow processes to traverse symlinks
+(allow file-read-metadata)
+
+; Allow read access to several files...
+(allow file-read* 
+	(literal "/dev/null")
+	(literal "/dev/random")
+	(literal "/dev/urandom")
+	(literal "/Library/Logs/Mail/clamav.log")
+	(literal "/Library/Server/Mail/Config/clamav/clamd.conf")
+	(subpath "/usr/bin")
+	(subpath "/Library/Perl")
+	(subpath "/Library/Server/Mail/Data/scanner/amavis")
+	(subpath "/Library/Server/Mail/Data/scanner/clamav/db")
+	(subpath "/Applications/Server.app/Contents/ServerRoot/usr/lib")
+	(subpath "/Applications/Server.app/Contents/ServerRoot/usr/libexec/clamav")
+)
+
+; Allow write access to a few files...
+(allow file*
+	(subpath "/Library/Server/Mail/Data/scanner/amavis/tmp")
+	(literal "/Library/Server/Mail/Data/scanner/amavis/clamd.pid")
+	(literal "/Library/Logs/Mail/clamav.log")
+)
+
+; Allow access to the Unix socket...
+(allow file-write* network-bind (literal "/Library/Server/Mail/Data/scanner/amavis/clamd"))
+
+; Allow access to ipc-posix-shm
+(allow ipc-posix-shm
+	(ipc-posix-name "apple.shm.notification_center"))
+

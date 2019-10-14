@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CommonPaths</key>
+	<array>
+		<string>/Library/Logs/*</string>
+		<string>/var/db/PreviousSystemLogs.cpgz/*</string>
+		<string>/Library/Server/Wiki/Logs/*</string>
+		<string>/Library/Server/Logs/*</string>
+		<string>/var/log/radius/radius.log*</string>
+		<string>/Library/Logs/radiusconfig.log*</string>
+		<string>/Library/Server/Caching/Logs/Debug/*</string>
+		<string>/Library/Server/Caching/Logs/*</string>
+		<string>/var/log/xscertd.log</string>
+		<string>/Library/Server/Firewall/Anchors/default_anchor.txt</string>
+		<string>/Library/Server/Firewall/Anchors/custom_anchor.txt</string>
+		<string>/var/log/*</string>
+		<string>/var/root/Desktop/Server*.png</string>
+		<string>/System/Library/ServerSetup/.MigrationStatus.plist</string>
+		<string>/tmp/CalendarServerLogs.tar.gz</string>
+		<string>/var/run/webdav_sharing/*</string>
+		<string>/var/db/launchd.db/com.apple.launchd/overrides.plist</string>
+		<string>/var/db/com.apple.xpc.launchd/disabled.plist</string>
+		<string>/var/db/com.apple.xpc.launchd/disabled.migrated</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ProgramArguments</key>
+	<array>
+		<string>-D</string>
+		<string>/Library/Server/ProfileManager/Config/ServiceData/Data/PostgreSQL</string>
+		<string>-c</string>
+		<string>unix_socket_directory=/Library/Server/ProfileManager/Config/var/PostgreSQL</string>
+		<string>-c</string>
+		<string>logging_collector=on</string>
+		<string>-c</string>
+		<string>log_rotation_size=10MB</string>
+		<string>-c</string>
+		<string>log_connections=on</string>
+		<string>-c</string>
+		<string>log_lock_waits=on</string>
+		<string>-c</string>
+		<string>log_statement=ddl</string>
+		<string>-c</string>
+		<string>log_line_prefix=%t</string>
+		<string>-c</string>
+		<string>listen_addresses=</string>
+		<string>-c</string>
+		<string>log_directory=/Library/Logs/ProfileManager</string>
+		<string>-c</string>
+		<string>log_filename=PostgreSQL-%F.log</string>
+		<string>-c</string>
+		<string>log_min_messages=WARNING</string>
+		<string>-c</string>
+		<string>log_min_error_statement=WARNING</string>
+		<string>-c</string>
+		<string>unix_socket_group=_devicemgr</string>
+		<string>-c</string>
+		<string>unix_socket_permissions=0770</string>
+		<string>-c</string>
+		<string>max_connections=128</string>
+	</array>
+</dict>
+</plist>

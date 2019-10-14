@@ -1,0 +1,53 @@
+# =============================================================================
+# This is a template for non-spam (e.g. VIRUS,...) ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+From: %f
+Date: %d
+Subject: [? [:ccat|major] |メールは問題ありません|メールは問題ありません|メールが MTA でブロックされました|¥
+メールのサイズが大きすぎます|メールのヘッダが無効です|迷惑メール|迷惑メール|メールの内容がチェックされませんでした|¥
+メールに禁止されているコンテンツが含まれています（%F）|メールにウイルスが含まれています（%V）]¥
+ （送信元：[?%l||LOCAL ][?%a||¥[%a¥] ]%s）
+To: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <VA%i@%h>
+
+[? %#V |ウイルスは見つかりませんでした。
+|1 個のウイルスが見つかりました：%V
+|2 個のウイルスが見つかりました：¥n  %V
+|%#V  個のウイルスが見つかりました：¥n  %V
+]
+[? %#F |#|[:wrap|78||  |禁止項目[?%#F|名|名|名]: %F]]
+[? %#X |#|不適切なヘッダ：[¥n[:wrap|78|  |  |%X]]]
+[? %#W |#¥
+|ウイルスを検出したスキャナ：%W
+|ウイルスを検出したスキャナ：%W
+]
+コンテンツタイプ：[:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, ブロック内容：[:ccat|name]]
+このメッセージの内部参照コードは %n/%i です。
+
+[? %a |#|[:wrap|78||  |最初のアップストリーム SMTP クライアント IP アドレス：¥[%a¥] %g]]
+[? %e |#|[:wrap|78||  |「Received:」のトレースに基づく¥
+メッセージの発信元：¥[%e¥], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|¥
+[:wrap|78||  |Sender: [:header_field|Sender]¥
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |隔離されませんでした。|メッセージは隔離されました：%q]
+
+[? %#S |差出人に通知メールは送られません。
+
+]#
+[? %#D |#|メッセージは次の宛先に中継されます：[¥n%D]
+]
+[? %#N |#|メッセージは次の宛先に中継されませんでした：[¥n%N]
+]
+[? %#V |#|[? %#v |#|ウイルス・スキャナの出力：[¥n  %v]
+]]

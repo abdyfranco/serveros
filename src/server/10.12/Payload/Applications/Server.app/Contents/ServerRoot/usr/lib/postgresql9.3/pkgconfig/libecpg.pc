@@ -1,0 +1,9 @@
+Name: libecpg
+Description: PostgreSQL libecpg library
+Url: http://www.postgresql.org/
+Version: 9.3.11
+Requires: 
+Requires.private: libpq libpgtypes
+Cflags: -I/Applications/Server.app/Contents/ServerRoot/pgbuild_tmp
+Libs: -L/Applications/Server.app/Contents/ServerRoot/usr/lib/postgresql9.3 -lecpg
+Libs.private: -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.Internal.sdk/usr/lib -lm -lpthread

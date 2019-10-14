@@ -1,0 +1,138 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.\" test using groff -man afctl.8 -T ascii | more
+.Dd 4/18/11               \" DATE 
+.Dt certupdate 8      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm certupdate
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd Mac OS X Server certificate administration helper tool
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+remove                 \" Underlined argument - use .Ar anywhere to underline
+.Fl c Ar cert_path
+.Op -p Ar cert_ref
+.Fl i Ar cert_identifier
+.Nm
+replace                 \" Underlined argument - use .Ar anywhere to underline
+.Fl c Ar old_cert_path
+.Op -p Ar old_cert_ref_base64
+.Fl C Ar new_cert_path
+.Op -P Ar new_cert_ref_base64
+.Fl i Ar old_cert_identifier
+.Fl I Ar new_cert_identifier
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm
+is a tool to notify interested services to change their configurations when
+certificates are removed or replaced in the keychain.  Services
+interested in certificate changes register their interest 
+by placing a helper tool into the
+.Ar SERVER_INSTALL_PATH_PREFIX/usr/libexec/certupdate
+directory.  SERVER_INSTALL_PATH_PREFIX is a directory inside the Server application.
+Helper tools must return an exit status of 0 for don't care, 1 for don't remove, or 2 to indicate
+an error condition. When the 
+.Ar System Keychain
+changes, 
+.Nm 
+will be called with the remove or replace command.
+.Nm 
+will in turn call each of the helper tools and return the highest numbered exit 
+status from the helper tools.
+.Pp                      \" Inserts a space
+The
+.Nm
+tool is intended to allow the automated replacement of expiring certificates.
+.Pp
+.Nm
+commands
+.Bl -tag -width -indent  \" Begins a tagged list 
+.It remove               \" Each item preceded by .It macro
+Indicates that the certificate at 
+.Ar cert_path
+will be removed.
+.It replace
+Indicates that the certificate at 
+.Ar old_cert_path
+will be replaced with the certificate at
+.Ar new_cert_path
+.El                      \" Ends the list
+.Pp
+Command arguments
+.Bl -tag -width -indent  \" Differs from above in tag removed 
+.It -c path                 \"-a flag as a list item
+In both commands this is the path to a
+.Ar PEM
+formatted certificate.
+.It -p cert_ref_base64
+Optional a keychain persistant reference to the certificate in question
+expressed as a base64 string.
+.It -C new_path                 \"-a flag as a list item
+In the path to a
+.Ar PEM
+formatted certificate that replaces the certificated specified by -c
+.It -P new_cert_ref_base64
+Optional a keychain persistant reference to the certificate in question
+expressed as a base64 string.
+.It -i old_cert_identifier
+A string reference to a certificate in the system keychain used by mod_SecureTransport
+.It -I new_cert_identifier
+A string reference to a certificate in the system keychain used by mod_SecureTransport
+.El                      \" Ends the list
+.Pp
+Certificate Identifiers are a way to find a specific certificate in the System.keychain that
+is portable across different machines (keychain persistant references are limited to a single
+system). The identifier has three parts separated by colons ":".
+.Pp
+digest_tpe : digest : "subject"
+.Bl -tag
+.It digest_type
+the digest algorithm used, currently "SHA-256"
+.It digest
+a hex string of the apropriate length for the digest algorithm. This is a digest of the DER
+formatted certificate data.
+.It subject
+the subject of the certificate enclosed in quotes. Not really needed, but it provides readability.
+.El
+.Pp
+SHA-256:4c141865706f403...d0c0769ed0ef05cc89e9f49cb:"example.com"
+.\" .Sh ENVIRONMENT      \" May not be needed
+.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.\" .It Ev ENV_VAR_1
+.\" Description of ENV_VAR_1
+.\" .It Ev ENV_VAR_2
+.\" Description of ENV_VAR_2
+.\" .El                      
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "SERVER_INSTALL_PATH_PREFIX/usr/libexec/certupdate/helper" -compact
+.It Pa SERVER_INSTALL_PATH_PREFIX/usr/libexec/certupdate
+Directory containing the service specific helper tools called by
+.Nm
+.El                      \" Ends the list
+.Sh DIAGNOSTICS       \" May not be needed
+.Bl -diag
+.It 0
+None of the services are interested in the certificate or the replace command was successful
+.It 1
+One or more helper tools requested that the certificate file not be removed
+.It 2
+An error occurred in one of the helper tools, should be treated as don't remove, above
+.El
+.Sh EXAMPLES        \" these lines are way too long for a man page
+.Nm
+remove -c /path/to/certificates/example.com.6077F32D1323B18EB617323DE430E30628A2A925.cert.pem -i SHA-256:4c141865706f4030353ccdc87f167a88348e3e8d0c0769ed0ef05cc89e9f49cb:"example.com"
+.Pp
+remove -c /path/to/certificates/example.com.6077F32D1323B18EB617323DE430E30628A2A925.cert.pem -p 
+c3N1aQAAACCHGRyjD8kR1ISaAAUCtSEiAAAAAAAAAAAAAAAAAAAABmRibm0AAAAjL0xpYnJhcnkvS2V5Y2hhaW5zL1N5c3RlbS5rZXljaGFpbgBpdGVtAAAAQ4AAEAAAAAAEAQAAAAAAAC4wLDEdMBsGA1UEAwwUY29sb21iaWVyZS5hcHBsZS5jb20xCzAJBgNVBAYTAlVTAAAAAQE= -i SHA-256:4c141865706f4030353ccdc87f167a88348e3e8d0c0769ed0ef05cc89e9f49cb:"example.com" -I SHA-256:036cc95e6f0b1487921444a2c8876548594c820784678aef029ec39f5c4a2aaa:"example.com"
+.Pp
+.Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr certadmin 8  
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner

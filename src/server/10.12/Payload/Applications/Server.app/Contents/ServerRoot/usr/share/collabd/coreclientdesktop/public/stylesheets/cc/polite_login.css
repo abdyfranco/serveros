@@ -1,0 +1,50 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+#polite_login
+{
+	position: absolute;
+	top: 32px;
+	right: 163px;
+	display: inline-block;
+	background-color: #545555;
+	cursor: default;
+	z-index: 10;
+	height: 34px;
+	line-height: 34px;
+	color: #E6E9E9;
+	padding: 0 33px 0 13px;
+	box-shadow: 0 0 7px rgba(0,0,0,0.5);
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+#polite_login a
+{
+	color: #74B1E0;
+	padding: 7px 0;
+}
+
+#polite_login span
+{
+	display: block;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	right: 8px;
+	background: url(./img/header_polite_login_close.png) no-repeat;
+	background-image: -webkit-image-set(url(./img/header_polite_login_close.png) 1x,
+										url(./img/header_polite_login_close@2x.png) 2x);
+	top: 10px;
+ }
+ 

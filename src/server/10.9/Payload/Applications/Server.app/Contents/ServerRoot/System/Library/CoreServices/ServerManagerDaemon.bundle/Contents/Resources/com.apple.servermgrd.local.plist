@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.servermgrd</string>
+	<key>OnDemand</key>
+	<true/>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/System/Library/CoreServices/ServerManagerDaemon.bundle/Contents/MacOS/servermgrd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>servermgrd</string>
+		<string>-x</string>
+		<string>-l</string>
+	</array>
+	<key>ServiceIPC</key>
+	<false/>
+	<key>StandardErrorPath</key>
+	<string>/dev/null</string>
+	<key>StandardOutPath</key>
+	<string>/dev/null</string>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<array>
+			<dict>
+				<key>SockFamily</key>
+				<string>IPv6</string>
+				<key>SockServiceName</key>
+				<string>311</string>
+				<key>SockNodeName</key>
+				<string>::1</string>
+				<key>SockType</key>
+				<string>stream</string>
+			</dict>
+			<dict>
+				<key>SockFamily</key>
+				<string>IPv4</string>
+				<key>SockNodeName</key>
+				<string>127.0.0.1</string>
+				<key>SockServiceName</key>
+				<string>311</string>
+				<key>SockType</key>
+				<string>stream</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

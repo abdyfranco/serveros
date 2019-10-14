@@ -1,0 +1,91 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.\" test using groff -man hb_summary.8 -T ascii | more
+.Dd 12/8/09               \" DATE 
+.Dt hb_summary 8      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm hb_summary
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd automatic host blocking
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl t Ar threshold         \" [-a path] 
+.Op Fl m Ar email_addresses         \" [-a path] 
+.Op Fl s Ar interval_start         \" [-a path] 
+.Op Fl h Ar historic_start         \" [-a path] 
+.Op Fl e Ar interval_end         \" [-a path] 
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm 
+is a tool that summarizes the host blocking activity of
+.Ar afctl.
+It defaults to printing this report to standard out. If an email address (or list
+of addresses) is specified with the
+.Ar -m
+option, 
+.Nm
+will send the report via email. The report lists the addresses of the hosts blocked
+as well as the the count over two intervals. It also lists the last time the host 
+was blocked. The intervals are sample interval (defaults to the last 24 hours), and
+historic interval (defaults to the last 7 days). The history data is stored in the
+.Ar asl
+database used by
+.Ar syslog.
+The report calls out hosts that have been blocked more than
+.Ar threshold
+times, and provides hopefully useful information on how to proceed further.
+.Pp                      \" Inserts a space
+Options:
+.Bl -tag -width -indent  \" Differs from above in tag removed 
+.It Fl t Ar threshold                 \"-a flag as a list item
+Sets the threshold for the number of block events that triggers special recommendation.
+.It Fl m Ar email_addreses
+A comma separated list of email addresses.
+.It Fl s Ar sample_interval_start
+Sets the start of the sample interval: format is "YYYY-MM-DD HH:MM:SS ±HHMM"
+.It Fl h Ar historic_interval_start
+Sets the start of the sample interval: format is "YYYY-MM-DD HH:MM:SS ±HHMM"
+requires -s
+.It Fl e Ar interval_end
+Sets the end of the both the above intervals: format is "YYYY-MM-DD HH:MM:SS ±HHMM" 
+(default is the current time). requires -s
+.El                      \" Ends the list
+.Pp
+.\" .Sh EXAMPLES      \" May not be needed
+.\" .Sh ENVIRONMENT      \" May not be needed
+.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.\" .It Ev ENV_VAR_1
+.\" Description of ENV_VAR_1
+.\" .It Ev ENV_VAR_2
+.\" Description of ENV_VAR_2
+.\" .El                      
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "/System/Library/CoreServices/AdaptiveFirewall.bundle" -compact
+.It Pa /System/Library/CoreServices/AdaptiveFirewall.bundle
+Localization info
+.El                      \" Ends the list
+.\" .Sh DIAGNOSTICS       \" May not be needed
+.\" .Bl -diag
+.\" .It Diagnostic Tag
+.\" Diagnostic information here.
+.\" .It Diagnostic Tag
+.\" Diagnostic information here.
+.\" .El
+.Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr syslog 1 ,
+.Xr asl 3 ,
+.Xr afctl 8 , 
+.Xr emond 8 
+.Sh BUGS              \" Document known, unremedied bugs 
+The
+.Nm 
+command can take quite a while to create the report. The larger the interval, the longer 
+it will take.
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner

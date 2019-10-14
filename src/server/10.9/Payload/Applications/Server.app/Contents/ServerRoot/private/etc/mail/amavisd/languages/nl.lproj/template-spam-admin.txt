@@ -1,0 +1,40 @@
+# =============================================================================
+# Dit is een sjabloon voor BEHEERDERSBERICHTEN OVER SPAM.
+# Meer informatie over de syntaxis en het aanpassen van de
+# sjabloon vindt u in "README.customize". Lange koptekstvelden
+# worden #automatisch door het programma over meerdere regels
+# verdeeld.
+#
+Van: %f
+Datum: %d
+Onderwerp: SPAM VAN [?%l||LOCAL ][?%a||\[%a\] ]%s
+To: [? %#T ||undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <SA%i@%h>
+
+Type inhoud: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, gebokkeerd voor [:ccat|name]]
+Interne referentiecode voor het bericht is %n/%i
+
+[? %a |#|[:wrap|78||  |IP-adres van eerste upstream SMTP-client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Volgens een tracering van 'Ontvangen:'\
+ lijkt het bericht afkomstig van: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Niet in quarantaine geplaatst.|Dit bericht is in quarantaine geplaatst als: %q]
+
+[? %#D |#|Het bericht WORDT doorgestuurd naar:[\n%D]
+]
+[? %#N |#|Het bericht IS NIET doorgestuurd naar:[\n%N]
+]
+SpamAssassin-rapport:
+[%A
+]\

@@ -1,0 +1,112 @@
+.\"" Copyright (c) 2010-2016 Apple Inc. All Rights Reserved.
+.\""
+.\"" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\"" computers and is subject to the terms and conditions of the Apple Software
+.\"" License Agreement accompanying the package this file is a part of.
+.\"" You may not port this file to another platform without Apple's written consent.
+.\""
+
+.Dd November 8, 2016
+.Dt webapp.plist 8
+.Os "macOS Server"
+.Sh NAME
+.Nm webapp.plist
+.Nd plist file defining a managed webapp
+.Sh DESCRIPTION
+Web applications managed with webappctl(8) and via macOS Server's' Websites/Advanced/WebApps panel are defined by plists placed in /Library/Server/Web/Config/apache2/webapps/.
+.Pp
+In this context, a webapp is a set of Apache configuration directives and related behaviors. One common use is managing a set of processes listening on specific TCP ports responding to HTTP requests, routed through
+the web service via reverse proxy mechanism. Another common use is managing an Apache "Include" file. This mechanism is used for webapps bundled with macOS Server but can also be used for third-party or locally-developed web apps.
+.Pp
+This mechanism is the recommended way for managing changes to Apache's configuration, rather than modifying config files by hand.'
+.Pp
+.Sh ACTIVATION
+.Pp
+There are two ways to enable/disable webapps - via the command line interface, and via macOS Server's' UI. These mechanisms associate webapps with specific Websites (virtual hosts). See the man page for webappctl(8) for details on the command line interface; see the section below for details on the macOS Server UI.
+.Sh EXAMPLE XML PROPERTY LIST
+.Pp
+The following is an example of an XML Property List defining a webapp named com.example.mywebapp, which will proxy URI path
+/mywebapp to a balancer group of two URLs on the localhost, and activate one Apache include file and one Apache module in
+a designated virtual host config file, using the default SSL policy:
+.Pp
+.Bd -literal
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>com.example.mywebapp</string>		<!-- Name of the webapp; should match the name of the webapp.plist file, minus extension. (The prefix "com.apple.webapp" is reserved for certain specific Apple uses.) -->
+	<key>displayName</key>		<!-- Name shown in macOS Server, alongside a checkbox to enable/disable this webapp  -->
+	<string>MyWebApp</string>
+	<key>includeFiles</key>
+	<array>		<!-- Include files are activated in virtual host when webapp is started -->
+		<string>/Library/Server/Web/Config/apache2/httpd_myinclude.conf</string>
+	</array>
+	<key>launchKeys</key>		
+	<array>		<!-- Launchd plists in /Applications/Server.app/Contents/ServerRoot/System/Library/LaunchDaemons are loaded when webapp is started -->
+		<string>com.example.mywebapp</string>
+	</array>
+	<key>proxies</key>		<!-- ProxyPass/ProxyPassReverse directives are activated when webapp is started -->
+	<dict>
+		<key>/mywebapp</key>		<!-- Sets up a reverse proxy -->
+		<dict>
+			<key>keysAndValues</key>
+			<string></string>
+			<key>path</key>
+			<string>/mywebapp</string>
+			<key>urls</key>		<!-- URLs comprise a proxy_balancer group -->
+			<array>
+				<string>http://localhost:3000</string>
+				<string>http://localhost:3001</string>
+			</array>
+		</dict>
+	</dict>
+	<key>requiredModuleNames</key>
+	<array>		<!-- Apache plugin modules are enabled when webapp is started -->
+		<string>mystuff_module</string>
+	</array>
+	<key>requiredWebAppNames</key>
+	<array>		<!-- Required Web apps are started when this webapp is started -->
+		<string>com.example.myotherwebapp</string>
+	</array>
+	<key>preflightCommand</key>		<!-- return non-0 fails, return 0 means ok to start -->
+	<string>/usr/local/bin/preflightmywebapp</string>
+	<key>startCommand</key>
+	<string>/usr/local/bin/startmywebapp</string>
+	<key>stopCommand</key>
+	<string>/usr/local/bin/stopmywebapp</string>
+	<key>installationIndicatorFilePath</key>	<!-- The presence of this file indicates web app is installed -->
+	<string>/usr/local/bin/mywebapp</string>
+	<key>sslPolicy</key>	<!-- Determines webapp SSL behavior -->
+	<integer>0</integer>	<!-- 0: default, UseSSLWhenEnabled -->
+			<!-- 1:	UseSSLAlways -->
+			<!-- 2:	UseSSLOnlyWhenCertificateIsTrustable -->
+			<!-- 3:	UseSSLNever -->
+			<!-- 4:	UseSSLAndNonSSL -->
+	</dict>
+ </plist>
+.Ed
+.Sh KEYS FOR UI DISPLAY OF WEBAPPS
+The following keys affect the display of webapps in macOS Server's Websites/Advanced/WebApp panel.
+.Bl -tag -width flag
+.It Ar displayName
+A string to be presented in the UI if the webapp is usable. This is required.
+.It Ar preflightCommand
+A path to a command to run when before webapp is started for the first time; it performs any required one-time initialization (like setting up postgres relations) and returns true if and only if the webapp is fit for starting. This is optional; if the key is absent, the webapp can still be shown in the UI.
+.It Ar installationIndicatorFilePath
+A path to some file that is required by the webapp, which macOS Server uses to decide whether the webapp is usable and should be shown in the UI. (For example, in a webapp.plist file distributed separately from Wordpress, this key might specify the path to a file that indicates whether Wordpress is installed.) If the file exists, macOS Server shows the webapp in its UI (if the other keys allow). If the file does not exist, or if the key is absent, macOS Server does not show the webapp.
+.El
+.Pp
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /Library/Server/Web/Config/apache2/webapps/ 
+The directory where webapp plists must be placed
+.It Pa /Library/Server/Web/Config/apache2/webapp_scripts/ 
+The directory where scripts to manage third-party webapps can be placed
+.It Pa /Library/Server/Web/Config/apache2/webapps/com.example.mywebapp.plist
+An example webapp plist
+.It Pa /Library/Server/Web/Config/apache2/webapps/com.apple.webapp.wsgi.plist
+A functional webapp plist with keys that allow it to be shown and managed via macOS Server's Websites/Advanced/WebApp panel.
+.El
+.Sh SEE ALSO
+webappctl(8)

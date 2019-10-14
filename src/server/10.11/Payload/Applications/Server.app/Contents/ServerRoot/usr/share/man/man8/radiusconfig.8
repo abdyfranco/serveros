@@ -1,0 +1,96 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd Thu Feb 20 2003               \" DATE 
+.Dt radiusconfig 8      \" Program name and manual section number 
+.Os MacOSX
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm radiusconfig
+-- tool to configure radiusd
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\".Nm Other_name_for_same_program(),
+.\".Nm Yet another name for the same program.
+.\" Use .Nm macro to designate other names for the documented program.
+.\".Nd This line parsed for whatis database.
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+command
+.Op command-options
+.Op Fl q
+.Pp
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm
+is a utility for configuring radiusd and its configuration files. It must be run by root.
+.Sh USAGE
+.Bl -tag -width stringtosetspacing12
+.It Fl q
+Suppress prompts.
+.El
+.Ss Queries
+.Bl -ohang
+.It Fl getconfig Op RADIUS-DB-Directory
+Returns configuration data from radiusd.conf and eap.conf in plist format.
+Reads the configuration files from /Library/Server/radius/raddb unless RADIUS-DB-Directory is specified.
+.It Fl getconfigxml Op RADIUS-DB-Directory
+Returns configuration data from radiusd.conf and eap.conf in xml plist format.
+Reads the configuration files from /Library/Server/radius/raddb unless RADIUS-DB-Directory is specified.
+.It Fl nascount
+Returns the number of RADIUS clients.
+.It Fl naslist Op --with-status
+Returns the list of RADIUS clients in plist format. If the --with-status option is used,
+an IMCP ping is sent to each client and the responses, or lack thereof, are included in the results.
+.It Fl naslistxml Op --with-status
+Returns the list of RADIUS clients in xml plist format. If the --with-status option is used,
+an IMCP ping is sent to each client and the responses, or lack thereof, are included in the results.
+.It Fl help
+Print usage information.
+.It Fl ver
+Displays version information.
+.El
+.Ss Setup
+.Bl -ohang
+.It Fl --capture-base-station Ar base-station-IP Ar primary-RADIUS-IP Oo secondary=IP Oc Oo wpa-key-timeout=minutes Oc Op Ar wait-for-restart
+Pairs an Airport Base Station to a RADIUS server. The shared secret is set in the RADIUS client database and on the base station.
+.It Fl installcerts Ar private-key Ar certificate Op Ar trusted-ca-list Op Ar yes | no Op Ar common-name
+Changes eap.conf to contain an active TLS section and configures the certificates. The yes or no option specifies whether
+or not to check a certificate revocation list. The random file is replaced and the dh file is created if absent.
+.It Fl addclient Ar nas-name Ar shortname Op Ar type
+Adds a client.
+.It Fl importclients Ar xml-plist-file
+Imports a list of clients from a file.
+.It Fl removeclient Ar nas-name Op Ar nas-name ...
+Removes a client.
+.It Fl setconfig Ar key Ar value Op Ar key Ar value ...
+Sets parameters in the radiusd.conf and eap.conf files.
+.It Fl setgroup Ar nas-name Ar group-name
+Assigns an access control group for a specific client of the RADIUS server.
+.It Fl getssid Ar host
+Queries the base station at the host address for its WiFi network name (SSID).
+.It Fl start
+Tells launchd to keep RADIUS running.
+.It Fl stop
+Disables RADIUS in launchd.
+.El
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "/Applications/Server.app/Contents/ServerRoot/usr/sbin/radiusconfig" -compact
+.It Pa /Applications/Server.app/Contents/ServerRoot/usr/sbin/radiusconfig
+.It Pa /Library/Server/radius/raddb/eap.conf
+.It Pa /Library/Server/radius/raddb/radiusd.conf
+.\"radiusconfig description
+.El
+.\" .Sh DIAGNOSTICS       \" May not be needed
+.\" .Bl -diag
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .El
+.Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr radiusd 8
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner

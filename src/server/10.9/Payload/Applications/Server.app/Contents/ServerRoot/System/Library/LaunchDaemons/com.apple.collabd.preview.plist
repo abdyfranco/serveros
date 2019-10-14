@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>Label</key>
+	<string>com.apple.collabd.preview</string>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+        <string>sandbox-exec</string>
+        <string>-f</string>
+        <string>/Applications/Server.app/Contents/ServerRoot/System/Library/Sandbox/Profiles/collabpp.sb</string>
+        <string>-D</string>
+        <string>FileDataPath=/Library/Server/Wiki/FileData</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabpp</string>
+	</array>
+	<key>UserName</key>
+	<string>_teamsserver</string>
+	<key>GroupName</key>
+	<string>_teamsserver</string>
+	<key>WatchPaths</key>
+	<array>
+		<string>/var/run/kick-collabpp</string>
+	</array>
+	<key>StartInterval</key>
+	<integer>300</integer>
+</dict>
+</plist>

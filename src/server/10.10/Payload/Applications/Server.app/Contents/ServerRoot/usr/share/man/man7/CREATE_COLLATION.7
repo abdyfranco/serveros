@@ -1,0 +1,137 @@
+'\" t
+.\"     Title: CREATE COLLATION
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "CREATE COLLATION" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+CREATE_COLLATION \- define a new collation
+.\" CREATE COLLATION
+.SH "SYNOPSIS"
+.sp
+.nf
+CREATE COLLATION \fIname\fR (
+    [ LOCALE = \fIlocale\fR, ]
+    [ LC_COLLATE = \fIlc_collate\fR, ]
+    [ LC_CTYPE = \fIlc_ctype\fR ]
+)
+CREATE COLLATION \fIname\fR FROM \fIexisting_collation\fR
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBCREATE COLLATION\fR
+defines a new collation using the specified operating system locale settings, or by copying an existing collation\&.
+.PP
+To be able to create a collation, you must have
+CREATE
+privilege on the destination schema\&.
+.SH "PARAMETERS"
+.PP
+\fIname\fR
+.RS 4
+The name of the collation\&. The collation name can be schema\-qualified\&. If it is not, the collation is defined in the current schema\&. The collation name must be unique within that schema\&. (The system catalogs can contain collations with the same name for other encodings, but these are ignored if the database encoding does not match\&.)
+.RE
+.PP
+\fIlocale\fR
+.RS 4
+This is a shortcut for setting
+LC_COLLATE
+and
+LC_CTYPE
+at once\&. If you specify this, you cannot specify either of those parameters\&.
+.RE
+.PP
+\fIlc_collate\fR
+.RS 4
+Use the specified operating system locale for the
+LC_COLLATE
+locale category\&. The locale must be applicable to the current database encoding\&. (See
+CREATE DATABASE (\fBCREATE_DATABASE\fR(7))
+for the precise rules\&.)
+.RE
+.PP
+\fIlc_ctype\fR
+.RS 4
+Use the specified operating system locale for the
+LC_CTYPE
+locale category\&. The locale must be applicable to the current database encoding\&. (See
+CREATE DATABASE (\fBCREATE_DATABASE\fR(7))
+for the precise rules\&.)
+.RE
+.PP
+\fIexisting_collation\fR
+.RS 4
+The name of an existing collation to copy\&. The new collation will have the same properties as the existing one, but it will be an independent object\&.
+.RE
+.SH "NOTES"
+.PP
+Use
+\fBDROP COLLATION\fR
+to remove user\-defined collations\&.
+.PP
+See
+Section 22.2, \(lqCollation Support\(rq, in the documentation
+for more information about collation support in PostgreSQL\&.
+.SH "EXAMPLES"
+.PP
+To create a collation from the operating system locale
+fr_FR\&.utf8
+(assuming the current database encoding is
+UTF8):
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+CREATE COLLATION french (LOCALE = \*(Aqfr_FR\&.utf8\*(Aq);
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+To create a collation from an existing collation:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+CREATE COLLATION german FROM "de_DE";
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+This can be convenient to be able to use operating\-system\-independent collation names in applications\&.
+.SH "COMPATIBILITY"
+.PP
+There is a
+\fBCREATE COLLATION\fR
+statement in the SQL standard, but it is limited to copying an existing collation\&. The syntax to create a new collation is a
+PostgreSQL
+extension\&.
+.SH "SEE ALSO"
+ALTER COLLATION (\fBALTER_COLLATION\fR(7)), DROP COLLATION (\fBDROP_COLLATION\fR(7))

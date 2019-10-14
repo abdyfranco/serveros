@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Planner Statistics and Security</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.4.15 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="How the Planner Uses Statistics"
+HREF="planner-stats-details.html"><LINK
+REL="PREVIOUS"
+TITLE="Row Estimation Examples"
+HREF="row-estimation-examples.html"><LINK
+REL="NEXT"
+TITLE="Appendixes"
+HREF="appendixes.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2017-11-06T22:35:27"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="4"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.4.15 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="Row Estimation Examples"
+HREF="row-estimation-examples.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="planner-stats-details.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 61. How the Planner Uses Statistics</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="Appendixes"
+HREF="appendixes.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="PLANNER-STATS-SECURITY"
+>61.2. Planner Statistics and Security</A
+></H1
+><P
+>   Access to the table <TT
+CLASS="STRUCTNAME"
+>pg_statistic</TT
+> is restricted to
+   superusers, so that ordinary users cannot learn about the contents of the
+   tables of other users from it.  Some selectivity estimation functions will
+   use a user-provided operator (either the operator appearing in the query or
+   a related operator) to analyze the stored statistics.  For example, in order
+   to determine whether a stored most common value is applicable, the
+   selectivity estimator will have to run the appropriate <TT
+CLASS="LITERAL"
+>=</TT
+>
+   operator to compare the constant in the query to the stored value.
+   Thus the data in <TT
+CLASS="STRUCTNAME"
+>pg_statistic</TT
+> is potentially
+   passed to user-defined operators.  An appropriately crafted operator can
+   intentionally leak the passed operands (for example, by logging them
+   or writing them to a different table), or accidentally leak them by showing
+   their values in error messages, in either case possibly exposing data from
+   <TT
+CLASS="STRUCTNAME"
+>pg_statistic</TT
+> to a user who should not be able to
+   see it.
+  </P
+><P
+>   In order to prevent this, the following applies to all built-in selectivity
+   estimation functions.  When planning a query, in order to be able to use
+   stored statistics, the current user must either
+   have <TT
+CLASS="LITERAL"
+>SELECT</TT
+> privilege on the table or the involved
+   columns, or the operator used must be <TT
+CLASS="LITERAL"
+>LEAKPROOF</TT
+> (more
+   accurately, the function that the operator is based on).  If not, then the
+   selectivity estimator will behave as if no statistics are available, and
+   the planner will proceed with default or fall-back assumptions.
+  </P
+><P
+>   If a user does not have the required privilege on the table or columns,
+   then in many cases the query will ultimately receive a permission-denied
+   error, in which case this mechanism is invisible in practice.  But if the
+   user is reading from a security-barrier view, then the planner might wish
+   to check the statistics of an underlying table that is otherwise
+   inaccessible to the user.  In that case, the operator should be leak-proof
+   or the statistics will not be used.  There is no direct feedback about
+   that, except that the plan might be suboptimal.  If one suspects that this
+   is the case, one could try running the query as a more privileged user,
+   to see if a different plan results.
+  </P
+><P
+>   This restriction applies only to cases where the planner would need to
+   execute a user-defined operator on one or more values
+   from <TT
+CLASS="STRUCTNAME"
+>pg_statistic</TT
+>.  Thus the planner is permitted
+   to use generic statistical information, such as the fraction of null values
+   or the number of distinct values in a column, regardless of access
+   privileges.
+  </P
+><P
+>   Selectivity estimation functions contained in third-party extensions that
+   potentially operate on statistics with user-defined operators should follow
+   the same security rules.  Consult the PostgreSQL source code for guidance.
+  </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="row-estimation-examples.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="appendixes.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Row Estimation Examples</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="planner-stats-details.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Appendixes</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

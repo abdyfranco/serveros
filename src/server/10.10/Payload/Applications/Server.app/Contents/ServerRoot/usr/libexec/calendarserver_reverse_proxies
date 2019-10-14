@@ -1,0 +1,143 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+#
+# Utility for automatically configuring the reverse proxy webapps for
+# Calendar and Contacts
+#
+# Copyright (c) 2013-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+import subprocess
+import time
+
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+WEBAPPCTL = "%s/usr/sbin/webappctl" % (SERVER_APP_ROOT,)
+CALENDARSERVER_CONFIG = "%s/usr/sbin/calendarserver_config" % (SERVER_APP_ROOT,)
+
+
+def log(msg):
+    print(msg)
+
+
+
+def getConfigKeys(keys):
+    """
+    Ask calendarserver_config for the value of list of keys
+    """
+    results = {}
+    args = [CALENDARSERVER_CONFIG]
+    args.extend(keys)
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    # log("Looking up %s" % (keys,))
+    output, error = child.communicate()
+    # log("Output from calendarserver_config: %s" % (output,))
+    if child.returncode:
+        log("Error from calendarserver_config: %d, %s" % (child.returncode, error))
+    else:
+        for line in [l for l in output.split("\n") if "=" in l]:
+            key, value = line.strip().split("=", 1)
+            results[key] = value
+
+    return results
+
+
+def setWebAppState(webappname, state, noRestart=False):
+    """
+    Set a webapp state
+    """
+    args=[WEBAPPCTL, state, webappname]
+    if noRestart:
+        args.append("no-restart")
+
+    child = subprocess.Popen(
+        args=args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    log("Calling %s" % (args,))
+    startTime = time.time()
+    output, error = child.communicate()
+    # log("Output: %s" % (output,))
+    if child.returncode:
+        log("Error: %d, %s" % (child.returncode, error))
+    duration = time.time() - startTime
+    log("Duration: %.2f" % (duration,))
+    return duration
+
+
+def main():
+
+    keys = getConfigKeys(["EnableCalDAV", "EnableCardDAV", "EnableSSL",
+        "RedirectHTTPToHTTPS"])
+    enableCalDAV = keys["EnableCalDAV"] == "True"
+    enableCardDAV = keys["EnableCardDAV"] == "True"
+    enableSSL = keys["EnableSSL"] == "True"
+    redirectToSSL = keys["RedirectHTTPToHTTPS"] == "True"
+    enableNonSSL = not enableSSL or not redirectToSSL
+
+    totalTime = 0.0
+    messages = []
+
+    if enableSSL and enableCalDAV:
+        totalTime += setWebAppState("com.apple.webapp.calendarserverssl", "start",
+            noRestart=True)
+        messages.append("Port 443 --> port 8443 for Calendars")
+    else:
+        totalTime += setWebAppState("com.apple.webapp.calendarserverssl", "stop",
+            noRestart=True)
+
+    if enableNonSSL and enableCalDAV:
+        totalTime += setWebAppState("com.apple.webapp.calendarserver", "start",
+            noRestart=True)
+        messages.append("Port 80 --> port 8008 for Calendars")
+    else:
+        totalTime += setWebAppState("com.apple.webapp.calendarserver", "stop",
+            noRestart=True)
+
+    if enableSSL and enableCalDAV and not enableNonSSL:
+        totalTime += setWebAppState("com.apple.webapp.calendarserversslnonssl", "start",
+            noRestart=True)
+        messages.append("Header indicating Calendar is available on SSL only")
+    else:
+        totalTime += setWebAppState("com.apple.webapp.calendarserversslnonssl", "stop",
+            noRestart=True)
+
+    if enableSSL and enableCardDAV:
+        totalTime += setWebAppState("com.apple.webapp.contactsserverssl", "start",
+            noRestart=True)
+        messages.append("Port 443 --> port 8443 for Contacts")
+    else:
+        totalTime += setWebAppState("com.apple.webapp.contactsserverssl", "stop",
+            noRestart=True)
+
+    if enableNonSSL and enableCardDAV:
+        totalTime += setWebAppState("com.apple.webapp.contactsserver", "start",
+            noRestart=False)
+        messages.append("Port 80 --> port 8008 for Contacts")
+    else:
+        totalTime += setWebAppState("com.apple.webapp.contactsserver", "stop",
+            noRestart=False)
+
+    log("webappctl total time: %.2f" % (totalTime,))
+
+    if messages:
+        log("Reverse proxies:")
+        for message in messages:
+            log(message)
+    else:
+        log("No reverse proxies for Calendar and Contacts")
+
+if __name__ == "__main__":
+    main()

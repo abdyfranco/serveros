@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleDisplayName = "Gestionnaire des Services";
+NSPrefPaneIconLabel = "Gestionnaire des Services";
+CFBundleShortVersionString = "1.0";

@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# Copyright (c) 2011-2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+
+# A CommonExtras script
+# if there is a php.ini use it.
+# if not, use a previous with the same version as the php that is running. If not try 5.3 then 5.2 previous versions
+# if there is still no previous available use the default as the php.ini
+# set access privileges on the php.ini file and copy it to a previous version file.
+
+SERVER_INSTALL_PATH_PREFIX=/Applications/Server.app/Contents/ServerRoot
+SERVER_LIBRARY_PATH=/Library/Server
+SERVER_PHP_CONFIG_PATH=$SERVER_LIBRARY_PATH/Web/Config/php
+CURRENT_PHP_VERS=`php -v | awk '/PHP 5./' | awk '{print $2}' |  sed -e 's/\(5..\).*/\1/'`
+
+if [ ! -e /etc/php.ini ]; then
+	if [ -e /etc/php.ini-$CURRENT_PHP_VERS-previous ]; then
+		cp -p -f /etc/php.ini-$CURRENT_PHP_VERS-previous /etc/php.ini
+		cp -p -f /etc/php.ini-$CURRENT_PHP_VERS-previous /etc/php.ini-$CURRENT_PHP_VERS-previous-old 2>/dev/null
+	fi
+fi
+
+if [ ! -e /etc/php.ini ]; then
+	if [ -e /etc/php.ini-5.3-previous ]; then
+		cp -p -f /etc/php.ini-5.3-previous /etc/php.ini
+	fi
+fi
+
+if [ ! -e /etc/php.ini ]; then
+	if [ -e /etc/php.ini-5.2-previous ]; then
+		cp -p -f /etc/php.ini-5.2-previous /etc/php.ini
+	fi
+fi
+
+if [ ! -e /etc/php.ini ]; then
+	cp -p -f /etc/php.ini.default /etc/php.ini
+fi
+
+chmod u+w /etc/php.ini
+cp -p -f /etc/php.ini /etc/php.ini-$CURRENT_PHP_VERS-previous
+
+
+mkdir -p $SERVER_PHP_CONFIG_PATH
+cp -f $SERVER_INSTALL_PATH_PREFIX/private/etc/php.ini $SERVER_PHP_CONFIG_PATH
+_OS_tz=$(/usr/libexec/PlistBuddy -c 'Print com.apple.TimeZonePref.Last_Selected_City:3' /Library/Preferences/.GlobalPreferences.plist)
+perl -i -pe 's|^;date.timezone =.*$|date.timezone = "'"${_OS_tz}"'"|' $SERVER_PHP_CONFIG_PATH/php.ini
+if [ -e /usr/bin/pear ]; then
+	exit 0
+fi
+# Install pear since the build failed to install it
+_phar=/usr/lib/php/install-pear-nozlib.phar
+if [ ! -e ${_phar} ]; then
+	echo "Unable to install PEAR; missing phar."
+	exit 0
+fi
+echo "Running PEAR installer"
+/usr/bin/php -n \
+	-dphp_dir=/usr/lib/php -dshort_open_tag=0 -dsafe_mode=0 \
+	-dopen_basedir= -derror_reporting=1803 -dmemory_limit=-1 \
+	-ddetect_unicode=0 \
+	${_phar} -d "/usr/lib/php" -b "/usr/bin" -dp a -ds a

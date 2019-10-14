@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.AccountsConfigService</string>
+	<key>UserName</key>
+	<string>_scsd</string>
+	<key>GroupName</key>
+	<string>_scsd</string>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/scsd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/libexec/scsd</string>
+		<string>-l</string>
+	</array>
+	<key>OnDemand</key>
+	<true/>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<array>
+			<dict>
+				<key>SockFamily</key>
+				<string>IPv4</string>
+				<key>SockNodeName</key>
+				<string>127.0.0.1</string>
+				<key>SockServiceName</key>
+				<string>31415</string>
+				<key>SockType</key>
+				<string>stream</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

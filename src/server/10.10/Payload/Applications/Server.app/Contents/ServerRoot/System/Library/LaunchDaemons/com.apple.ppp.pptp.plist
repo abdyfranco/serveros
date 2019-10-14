@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.ppp.pptp</string>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Program</key>
+	<string>/usr/sbin/vpnd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>vpnd</string>
+		<string>-x</string>
+		<string>-i</string>
+		<string>com.apple.ppp.pptp</string>
+	</array>
+	<key>EnableTransactions</key>
+	<false/>
+	<key>EnablePressuredExit</key>
+	<false/>
+</dict>
+</plist>

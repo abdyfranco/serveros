@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>identifier</key>
+		<string>SEOpenDirectoryMasterAssistantIntroPage.SEOpenDirectoryMasterAssistantIntroPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SEOpenDirectoryMasterAssistantAdminPage.SEOpenDirectoryMasterAssistantAdminPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SEOpenDirectoryMasterAssistantOrganizationPage.SEOpenDirectoryMasterAssistantOrganizationPage</string>
+		<key>isNibOwner</key>
+		<true/>
+		<key>enabled</key>
+		<dict>
+			<key>showOrganizationInfoPage</key>
+			<true/>
+		</dict>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SEOpenDirectoryMasterAssistantConfirmPage.SEOpenDirectoryMasterAssistantConfirmPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+</array>
+</plist>

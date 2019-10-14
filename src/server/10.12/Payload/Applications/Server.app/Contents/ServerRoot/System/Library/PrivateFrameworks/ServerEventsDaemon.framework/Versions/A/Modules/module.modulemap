@@ -1,0 +1,6 @@
+framework module ServerEventsDaemon {
+  umbrella header "ServerEventsDaemon.h"
+
+  export *
+  module * { export * }
+}

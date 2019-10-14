@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html
+ xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1"
+ t:render="main"
+>
+
+  <head>
+    <title><t:slot name="title" /></title>
+
+    <link t:render="stylesheet" />
+    <style>
+
+      .log {
+        font-family: monospace;
+        /*font-size: 0.75em;*/
+
+        /*width: 100%;*/
+        height: 8em;
+
+        resize: vertical;
+
+        overflow: scroll;
+        white-space: nowrap;
+
+        border: 1px solid gray;
+        padding: 2pt;
+      }
+
+    </style>
+
+    <script type="text/javascript">
+    //<![CDATA[
+
+      window.onload = function() {
+
+        var registerForEvents = function(
+          eventSource, eventClass, statusElement, logViewElement
+        ) {
+          statusElement.innerHTML = "Connecting...";
+
+          eventSource.addEventListener(
+            "open",
+            function(e) {
+              statusElement.innerHTML = "Connected.";
+            },
+            false
+          );
+
+          eventSource.addEventListener(
+            "error",
+            function(e) {
+              if (e.readyState == EventSource.CLOSED) {
+                statusElement.innerHTML = "Connection closed.";
+              }
+              else {
+                statusElement.innerHTML = "Polling...";
+              }
+            },
+            false
+          );
+
+          eventSource.addEventListener(
+            eventClass,
+            function(e) {
+              // Append text
+
+              if (e.lastEventId == 0) {
+                logViewElement.appendChild(document.createElement("hr"))
+              } else {
+                logViewElement.appendChild(document.createTextNode(e.data))
+                logViewElement.appendChild(document.createElement("br"))
+              }
+
+
+              // Scroll to bottom
+              logViewElement.scrollTop = logViewElement.scrollHeight;
+            },
+            false
+          );
+        }
+
+        var eventSource = new EventSource("./events");
+
+        registerForEvents(
+          eventSource, "access",
+          document.getElementById("access-log-status"),
+          document.getElementById("access-log")
+        );
+
+        registerForEvents(
+          eventSource, "server",
+          document.getElementById("server-log-status"),
+          document.getElementById("server-log")
+        );
+
+      }
+
+    //]]>
+    </script>
+
+  </head>
+
+  <body>
+
+    <h1><t:slot name="title" /></h1>
+
+    <h2>Access Log</h2>
+
+    <div id="access-log-status" />
+    <pre id="access-log" class="log" />
+
+    <h2>Server Log</h2>
+
+    <div id="server-log-status" />
+    <pre id="server-log" class="log" />
+
+  </body>
+
+</html>

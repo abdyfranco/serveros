@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMAccepts</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Optional</key>
+		<false/>
+		<key>Types</key>
+		<array>
+			<string>com.apple.RemoteDesktop.computer-object</string>
+		</array>
+	</dict>
+	<key>AMApplication</key>
+	<string>Remote Desktop</string>
+	<key>AMCanShowSelectedItemsWhenRun</key>
+	<false/>
+	<key>AMCanShowWhenRun</key>
+	<true/>
+	<key>AMCategory</key>
+	<string>AMCategoryUtilities</string>
+	<key>AMDefaultParameters</key>
+	<dict>
+		<key>applicationName</key>
+		<string></string>
+		<key>bundleID</key>
+		<string></string>
+		<key>creatorCode</key>
+		<string></string>
+	</dict>
+	<key>AMDescription</key>
+	<dict>
+		<key>AMDAlert</key>
+		<string></string>
+		<key>AMDInput</key>
+		<string></string>
+		<key>AMDNote</key>
+		<string></string>
+		<key>AMDOptions</key>
+		<string></string>
+		<key>AMDRelatedActions</key>
+		<string></string>
+		<key>AMDRequires</key>
+		<string></string>
+		<key>AMDResult</key>
+		<string></string>
+		<key>AMDSummary</key>
+		<string></string>
+		<key>AMDWebsite</key>
+		<string></string>
+	</dict>
+	<key>AMIconName</key>
+	<string>RemoteDesktop</string>
+	<key>AMKeywords</key>
+	<array>
+		<string>ARD</string>
+		<string>Action Pack</string>
+	</array>
+	<key>AMName</key>
+	<string>Start Application</string>
+	<key>AMProvides</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Types</key>
+		<array>
+			<string>com.apple.RemoteDesktop.computer-object</string>
+		</array>
+	</dict>
+	<key>AMRequiredResources</key>
+	<array>
+		<dict>
+			<key>Display Name</key>
+			<string>Remote Desktop</string>
+			<key>Resource</key>
+			<string>com.apple.RemoteDesktop</string>
+			<key>Type</key>
+			<string>application</string>
+			<key>Version</key>
+			<string>3.0</string>
+		</dict>
+	</array>
+	<key>AMWarning</key>
+	<dict>
+		<key>Action</key>
+		<string></string>
+		<key>ApplyButton</key>
+		<string></string>
+		<key>IgnoreButton</key>
+		<string></string>
+		<key>Level</key>
+		<integer>0</integer>
+		<key>Message</key>
+		<string></string>
+	</dict>
+	<key>BuildMachineOSBuild</key>
+	<string>14D116</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.RemoteDesktop.Automator.StartApplication</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Quit Application</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.2</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.2</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>6D543p</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>14D116</string>
+	<key>DTSDKName</key>
+	<string>macosx10.10internal</string>
+	<key>DTXcode</key>
+	<string>0630</string>
+	<key>DTXcodeBuild</key>
+	<string>6D543p</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2009, 2011-2014 Apple Inc.  All rights reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>AMAppleScriptAction</string>
+</dict>
+</plist>

@@ -1,0 +1,87 @@
+(version 1)
+
+(deny default)
+
+;;; suppress logging of keychain access attempts 
+;;; unfortunately, since a deny file-read-metadata trumps an allow file-read* we need
+;;; to explicitly allow file-read-metadata for anything with a file-read*
+(deny file-read-metadata (with no-log))
+;;(deny file-read-metadata)
+
+(import "system.sb")
+
+(system-network)
+
+;; prevent non-System keychains from being read
+(deny file-read* (with no-log)
+       (subpath "/Library/Keychains"))
+
+(deny file-read* (with no-log)
+       (subpath "/private/var/root"))
+
+(allow file-read*
+       (subpath (param "APSP_FRAMEWORK_DIR"))
+       (literal "/Library/Keychains/System.keychain")
+       (subpath "/Library/Preferences/.GlobalPreferences.plist")
+       (literal "/Library/Preferences/ApplePushServiceProvider/com.apple.apspd.plist")
+       (subpath "/Library/Preferences/com.apple.security.plist")
+       (literal "/Library/Preferences/com.apple.security.revocation.plist")
+       (literal "/Library/Security/Trust Settings/Admin.plist")
+       (literal "/private/etc/hosts")
+       (subpath "/private/var/db/mds")
+       (subpath "/private/var/etc/hosts")
+       (literal "/private/var/run/systemkeychaincheck.done"))
+
+(allow file-read-metadata
+       (file-mode #o0005))
+
+(allow file-read-metadata
+       (literal "/")
+       (literal "/Library")
+       (literal "/Library/Keychains")
+       (literal "/private")
+       (literal "/private/var")
+       (literal "/private/var/db")
+       (literal "/private/var/root")
+       (subpath (param "APSP_FRAMEWORK_DIR"))
+       (literal "/Library/Keychains/System.keychain")
+       (subpath "/System/Library/Keychains")
+       (subpath "/usr/share/icu")
+       (subpath "/Library/Preferences/.GlobalPreferences.plist")
+       (literal "/Library/Preferences/ApplePushServiceProvider/com.apple.apspd.plist")
+       (subpath "/Library/Preferences/com.apple.security.plist")
+       (literal "/Library/Preferences/com.apple.security.revocation.plist")
+       (literal "/Library/Security/Trust Settings/Admin.plist")
+       (literal "/private/etc/hosts")
+       (subpath "/private/var/db/mds")
+       (subpath "/private/var/etc/hosts")
+       (literal "/private/var/run/systemkeychaincheck.done"))
+
+(allow file-write-create 
+       (literal "/Library/Preferences/ApplePushServiceProvider/com.apple.apspd.plist")
+       (literal "/private/var/root/Library/Logs"))
+
+(allow file-write*
+       (literal "/Library/Preferences/ApplePushServiceProvider/com.apple.apspd.plist")
+       (literal "/private/var/db/mds/system/mds.lock")
+       (subpath "/private/var/root/Library/Logs/CFNetwork"))
+
+(allow ipc-posix-shm-read-data
+       (ipc-posix-name "apple.shm.notification_center")
+       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+(allow ipc-posix-shm-write-data
+       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+(allow mach-lookup
+       (global-name "com.apple.CoreServices.coreservicesd")
+       (global-name "com.apple.coresymbolicationd")
+       (global-name "com.apple.distributed_notifications@1v3")
+       (global-name "com.apple.ocspd")
+       (global-name "com.apple.SecurityServer"))
+
+(allow network-outbound
+       (literal "/private/var/run/mDNSResponder")
+       (remote tcp  "*:2195")
+       (remote tcp  "*:2196"))
+

@@ -1,0 +1,11 @@
+Da: Amministratore di posta <Postmaster@esempio.com>
+Oggetto: [Avviso] L'utilizzo del server e-mail sta raggiungendo la quota massima di archiviazione
+
+Si informa che si sta raggiungendo la quota massima disponibile per l'archivio di e-mail sul server di posta. Il recapito delle prossime e-mail potrebbe essere respinto fino a quando non viene liberato spazio sufficiente per le nuove e-mail.
+
+Si consiglia di spostare tutti i messaggi non più necessari sul server in una cartella di posta locale. Verificare anche le cartelle "Messaggi inviati", "Cestino" o "Posta eliminata" per tutte le e-mail non più necessarie sul server.
+
+Grazie per l'attenzione!
+
+Cordiali saluti,
+Amministratore di posta

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.swupdate.host</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/sbin/httpd</string>
+		<string>-D</string>
+		<string>FOREGROUND</string>
+		<string>-f</string>
+		<string>/Library/Server/Software Update/Config/swupd.conf</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/var/log/swupd/swupd_error_log</string>
+	<key>UserName</key>
+	<string>root</string>
+	<key>KeepAlive</key>
+	<dict>
+		<key>NetworkState</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

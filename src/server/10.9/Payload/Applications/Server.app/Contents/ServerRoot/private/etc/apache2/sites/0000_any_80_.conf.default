@@ -1,0 +1,49 @@
+## Default Secure Virtual Host Configuration
+##
+## IMPORTANT: Guidelines For Editing This File 
+##
+##   Administrators are strongly encouraged to extend the Server application's Web panel
+##   by using the webapp.plist(8) mechanisms to manage custom Apache configuration directives.
+##
+##   If that's not viable, administrators can modify this file and still co-exist with
+##   Server app. Note the following guidelines:
+##
+##   Certain directives are reserved for the exclusive use of Server app:
+##     For the basic definition of this site: <VirtualHost>, ServerName, Port, SSLEngine
+##     For realms: AuthName, AuthType, Limit, Require, Options, AllowOverride, Dav, <Directory>
+##     For webapps: ProxyPass, ProxyPassReverse, BalancerMember
+##   Those directives are always regenerated in this file by Server app upon save.
+##
+##   You can create such directives when it make senes, you just have to place them in an 
+##   Include file and then add an appropriate Include directive to this file. The Include will 
+##   be preserved, or managed from the GUI as part of a webapp if accompanied by a webapp.plist(8).
+##   You can modify other directives in this file and your edits will be preserved, unless
+##   of course you specifically change the directive in Server app.
+
+<VirtualHost *:80 >
+	ServerAdmin admin@example.com
+	DocumentRoot "/Library/Server/Web/Data/Sites/Default"
+	DirectoryIndex index.html index.php /xcode/ /wiki/ default.html
+	CustomLog "/var/log/apache2/access_log" combinedvhost
+	ErrorLog "/var/log/apache2/error_log"
+	
+	<IfModule mod_ssl.c>
+		SSLEngine Off
+		SSLCipherSuite "ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM"
+		SSLProtocol -ALL +SSLv3 +TLSv1
+		SSLProxyEngine On
+		SSLProxyProtocol -ALL +SSLv3 +TLSv1
+	</IfModule>
+	
+	<Directory "/Library/Server/Web/Data/Sites/Default">
+		Options All +MultiViews -ExecCGI -Indexes -Includes
+		AllowOverride None
+		<IfModule mod_dav.c>
+			DAV Off
+		</IfModule>
+		<IfDefine !WEBSERVICE_ON>
+			Deny from all
+			ErrorDocument 403 /customerror/websitesoff403.html
+		</IfDefine>
+	</Directory>
+</VirtualHost> 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>index</key>
+	<integer>1</integer>
+	<key>subtitle</key>
+	<string>Optimized for DV, DVCAM, DVCPRO, and uncompressed SD video.</string>
+	<key>title</key>
+	<string>Standard Definition Video</string>
+	<key>affinities</key>
+	<array>
+		<string>Video</string>
+		<string>Audio</string>
+		<string>Other</string>
+	</array>
+	<key>volumeConfig</key>
+	<dict>
+		<key>fsBlockSize</key>
+		<integer>16384</integer>
+		<key>storagePoolIdealLUNCount</key>
+		<integer>4</integer>
+		<key>storagePoolStripeBreadth</key>
+		<integer>16</integer>
+	</dict>
+</dict>
+</plist>

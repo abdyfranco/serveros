@@ -1,0 +1,163 @@
+.\" Copyright (c) 2010 Dovecot authors, see the included COPYING file
+.TH DOVECOT 1 "2010-07-02" "Dovecot v2.2" "Dovecot"
+.SH NAME
+dovecotd \- a secure and highly configurable IMAP and POP3 server
+.\"------------------------------------------------------------------------
+.SH SYNOPSIS
+\fBdovecotd\fP [\fB\-Fp\fP] [\fB\-c\fP \fIconfig\-file\fP]
+.br
+.B dovecotd \-a
+[\fB\-c\fP \fIconfig\-file\fP]
+.br
+.B dovecotd \-n
+[\fB\-c\fP \fIconfig\-file\fP]
+.br
+.B dovecotd \-\-build\-options
+.br
+.B dovecotd \-\-help
+.br
+.B dovecotd \-\-version
+.br
+.B dovecotd reload
+.br
+.B dovecotd stop
+.\"------------------------------------------------------------------------
+.SH DESCRIPTION
+Dovecot is an open source IMAP and POP3 server for Linux/UNIX\-like
+systems, written with security primarily in mind.
+Dovecot is an excellent choice for both small and large installations.
+It\(aqs fast, simple to set up, requires no special administration and it
+uses very little memory.
+.\"------------------------------------------------------------------------
+.SH OPTIONS
+.TP
+.B \-a
+Dump all configuration settings to stdout and exit successfully.
+The same as
+.IR doveconf\ \-a .
+.TP
+.BI \-c\  config\-file
+Start
+.B dovecotd
+with an alternative configuration.
+.TP
+.B \-F
+Run
+.B dovecotd
+in foreground, do not daemonize.
+.TP
+.B \-n
+Dump non\-default settings to stdout and exit successfully.
+The same as
+.IR doveconf\ \-n .
+.TP
+.B \-p
+Prompt for the ssl key password for the configured
+.I ssl_key
+on startup.
+.TP
+.B \-\-build\-options
+Show Dovecot\(aqs build options and exit successfully.
+.TP
+.B \-\-help
+Print a usage message to stdout and exit successfully.
+.TP
+.B \-\-version
+Show Dovecot\(aqs version and exit successfully.
+.\"------------------------------------------------------------------------
+.SH COMMANDS
+.TP
+.B reload
+Force
+.B dovecotd
+to reload its configuration.
+.TP
+.B stop
+Shutdown
+.B dovecotd
+and all its child processes.
+.PP
+When
+.I shutdown_clients
+is set to
+.BR no ,
+existing sessions will continue to use the old settings, after a
+.BR "dovecotd reload" .
+Also all sessions will keep alive after a
+.BR "dovecotd stop" .
+.br
+By default all active sessions will be shut down.
+.\"------------------------------------------------------------------------
+.SH SIGNALS
+Dovecot handles the following
+.I signals
+as described:
+.TP
+.B HUP
+Force
+.B dovecotd
+to reload its configuration.
+.TP
+.B INT
+Shutdown
+.B dovecotd
+and all its child processes.
+.TP
+.B TERM
+Shutdown
+.B dovecotd
+and all its child processes.
+.TP
+.B USR1
+Force
+.B dovecotd
+to reopen all configured log files (\c
+.IR log_path ,
+.IR info_log_path\  and
+.IR debug_log_path ).
+.
+.PP
+The
+.I signals
+.BR ALARM\  and
+.B PIPE
+are ignored.
+.\"------------------------------------------------------------------------
+.SH FILES
+.TP
+.I /Library/Server/Mail/Config/dovecot/dovecot.conf
+Dovecot\(aqs main configuration file.
+.TP
+.I /Library/Server/Mail/Config/dovecot/dovecot\-ldap.conf.ext
+Dovecot\(aqs LDAP authdb/userdb module configuration file.
+.TP
+.I /Library/Server/Mail/Config/dovecot/dovecot\-sql.conf.ext
+Dovecot\(aqs SQL authdb/userdb module configuration file.
+.TP
+.I /Library/Server/Mail/Config/dovecot/dovecot\-dict\-sql.conf.ext
+Dovecot\(aqs dict configuration with SQL\-backend.
+.TP
+.I /Library/Server/Mail/Config/dovecot/conf.d/auth\-*\-conf.ext
+Configuration files of different authentication modules.
+.TP
+.I /Library/Server/Mail/Config/dovecot/conf.d/*.conf
+Configuration files of different services and settings.
+.\"------------------------------------------------------------------------
+.SH REPORTING BUGS
+Report bugs, including
+.I doveconf \-n
+output, to the Dovecot Mailing List <dovecot@dovecot.org>.
+Information about reporting bugs is available at:
+http://dovecot.org/bugreport.html
+.\"------------------------------------------------------------------------
+.SH AUTHOR
+Dovecot <http://dovecot.org> and its manual pages were written by the
+Dovecot authors <http://dovecot.org/doc/AUTHORS>, mainly Timo Sirainen <tss
+at iki.fi>, and are licensed under the terms of the MIT and LGPLv2.1
+licenses, see <http://dovecot.org/doc/COPYING> for details.
+.\"------------------------------------------------------------------------
+.SH SEE ALSO
+.BR doveadm (1),
+.BR doveconf (1),
+.BR dovecot\-lda (1),
+.BR dsync (1)

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>admins</key>
+	<array/>
+	<key>enable_imap</key>
+	<true/>
+	<key>enable_pop</key>
+	<false/>
+	<key>enable_quota_warnings</key>
+	<true/>
+	<key>imap_auth_clear</key>
+	<true/>
+	<key>imap_auth_cram_md5</key>
+	<false/>
+	<key>imap_auth_gssapi</key>
+	<false/>
+	<key>imap_auth_login</key>
+	<false/>
+	<key>imap_auth_plain</key>
+	<false/>
+	<key>quota_full_tempfail</key>
+	<false/>
+	<key>max_imap_connections</key>
+	<integer>100</integer>
+	<key>pop_auth_apop</key>
+	<false/>
+	<key>pop_auth_clear</key>
+	<true/>
+	<key>pop_auth_gssapi</key>
+	<false/>
+	<key>postmaster</key>
+	<string>postmaster</string>
+	<key>quotawarn</key>
+	<integer>90</integer>
+	<key>tls_ca_file</key>
+	<string></string>
+	<key>tls_cert_file</key>
+	<string></string>
+	<key>tls_key_file</key>
+	<string></string>
+	<key>tls_server_options</key>
+	<string>none</string>
+	<key>junk_mail_userid</key>
+	<string></string>
+	<key>not_junk_mail_userid</key>
+	<string></string>
+</dict>
+</plist>

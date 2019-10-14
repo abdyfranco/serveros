@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>org.clamav.clamd</string>
+	<key>OnDemand</key>
+	<false/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/sandbox-exec</string>
+		<string>-f</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/share/sandbox/clamd.sb</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/clamav/clamd_preflight</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/clamd</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>TMPDIR</key>
+		<string>/Library/Server/Mail/Data/scanner/amavis/tmp</string>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>/Library/Logs/Mail/clamav.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Library/Logs/Mail/clamav.log</string>
+	<key>ServiceIPC</key>
+	<false/>
+	<key>UserName</key>
+	<string>_amavisd</string>
+</dict>
+</plist>

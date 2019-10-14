@@ -1,0 +1,38 @@
+# =============================================================================
+# This is a template for SPAM ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+보낸 사람: %f
+날짜: %d
+제목: [?%l||LOCAL ][?%a||\[%a\] ]%s(으)로부터의 스팸 메시지
+To: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <SA%i@%h>
+
+콘텐츠 유형: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, [:ccat|name]] 차단
+메시지에 대한 인터넷 참조 코드는 %n/%i입니다
+
+[? %a |#|[:wrap|78||  |첫 번째 업스트리밍 SMTP 클라이언트 IP 주소: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |'수신됨:' 결과에 따라,\
+ 해당 메시지가 \[%e\], %t]에서 생성되었습니다]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |차단되지 않음.|메시지가 다음으로 차단되었음: %q]
+
+[? %#D |#|메시지가 다음으로 릴레이될 예정:[\n%D]
+]
+[? %#N |#|메시지가 다음으로 릴레이되지 않음:[\n%N]
+]
+SpamAssassin 리포트:
+[%A
+]\

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>ServerEventAgent setup</string>
+	<key>dependencies</key>
+	<array>
+		<string>servermgr_web_promotion</string>
+		<string>servermgr_web_migration</string>
+		<string>servermgr_web_restore</string>
+	</array>
+	<key>setup</key>
+	<dict>
+		<key>services</key>
+		<dict>
+			<key>com.apple.ServerEventAgent</key>
+			<dict>
+				<key>state</key>
+				<string>enabled</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ServiceName</key>
+	<string>MessageServer</string>
+
+	<key>BackupBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/MessageServer_backup</string>
+	<key>BackupLog</key>
+	<string>/private/var/log/server_backup/MessageServer_backup.log</string>
+	<key>BackupActions</key>
+	<dict>
+		<key>Configuration</key>
+		<string>configuration</string>
+		<key>Data</key>
+		<string>data</string>
+		<key>Default</key>
+		<string>all</string>
+		<key>Size</key>
+		<string>size</string>
+	</dict>
+
+	<key>RestoreBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/MessageServer_restore</string>
+	<key>RestoreLog</key>
+	<string>/private/var/log/server_backup/MessageServer_restore.log</string>
+	<key>RestoreActions</key>
+	<dict>
+		<key>Configuration</key>
+		<string>configuration</string>
+		<key>Data</key>
+		<string>data</string>
+		<key>Default</key>
+		<string>all</string>
+		<key>Browse</key>
+		<string>browse</string>
+	</dict>
+
+	<key>VerifyBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/MessageServer_verify</string>
+	<key>VerifyLog</key>
+	<string>/private/var/log/server_backup/MessageServer_verify.log</string>
+	<key>VerifyActions</key>
+	<dict>
+		<key>Configuration</key>
+		<string>configuration</string>
+		<key>Data</key>
+		<string>data</string>
+		<key>Default</key>
+		<string>all</string>
+	</dict>
+
+	<key>BrowseActions</key>
+	<dict/>
+	
+	<key>ConfigurationFilesToTar</key>
+	<array>
+		<string>/Library/Server/Messages/Config/jabberd/*.xml</string>
+		<string>/Library/Server/Messages/Config/jabberd/jabberd.cfg</string>
+		<string>/Library/Server/Messages/Config/com.apple.messageserver.plist</string>
+		<string>/Library/Server/Messages/Config/com.apple.Proxy65.plist</string>
+		<string>/Library/Server/Messages/Config/Rooms.plist</string>
+	</array>
+	
+	<key>DataFiles</key>
+	<array/>
+
+	<key>RoomsDataDirectory</key>
+	<string>/Library/Server/Messages/Data/Rooms</string>
+
+	<key>RoomsLogDataDirectory</key>
+	<string>/private/var/jabberd/muc_room_logs</string>
+
+	<key>Version</key>
+	<string>10.8</string>
+</dict>
+</plist>

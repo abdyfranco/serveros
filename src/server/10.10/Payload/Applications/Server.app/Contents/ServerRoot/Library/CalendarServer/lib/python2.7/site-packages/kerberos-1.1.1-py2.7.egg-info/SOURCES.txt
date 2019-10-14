@@ -1,0 +1,10 @@
+README.txt
+kerberos.egg-info/PKG-INFO
+kerberos.egg-info/SOURCES.txt
+kerberos.egg-info/dependency_links.txt
+kerberos.egg-info/top_level.txt
+src/base64.c
+src/kerberos.c
+src/kerberosbasic.c
+src/kerberosgss.c
+src/kerberospw.c

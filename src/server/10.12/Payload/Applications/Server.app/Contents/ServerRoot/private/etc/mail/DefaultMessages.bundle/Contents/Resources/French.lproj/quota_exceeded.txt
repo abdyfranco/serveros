@@ -1,0 +1,11 @@
+De : Administrateur de courrier <Postmaster@exemple.com>
+Sujet : [Erreur] Quota d’utilisation du serveur dépassé
+
+Vous avez dépassé votre quota de stockage de courrier électroniques sur le serveur. Les prochains courriers réceptionnés pourraient être refusés jusqu’à ce que vous ayez libéré assez d’espace.
+
+Veuillez déplacer les courriers dont vous n’avez plus besoin sur le serveur vers vos boîtes aux lettres locales. Vous pouvez également vérifier les Messages envoyés, la Corbeille ou les Éléments supprimés à la recherche de courriers dont vous n’avez plus besoin sur le serveur.
+
+Merci de rapidement prendre les dispositions nécessaires à ce sujet.
+
+Cordialement,
+L’administrateur de courrier

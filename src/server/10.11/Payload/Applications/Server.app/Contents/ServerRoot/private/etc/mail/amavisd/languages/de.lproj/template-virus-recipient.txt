@@ -1,0 +1,46 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED/BAD-HEADER RECIPIENTS NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+From: %f
+Date: %d
+Subject: [? [:ccat|major] |Clean mail|Clean mail|MTA-blocked mail|\
+OVERSIZED mail|INVALID HEADER in mail|SPAM|SPAM|UNCHECKED contents in mail|\
+BANNED contents (%F) in mail|VIRUS (%V) in mail] TO YOU from %s
+[? [:header_field|To] |To: undisclosed-recipients:;|To: [:header_field|To]]
+[? [:header_field|Cc] |#|Cc: [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||BANNED CONTENTS ALERT]|VIRUS ALERT]
+
+Unsere Inhaltsprüfung fand
+[? %#V |#|[:wrap|78|    |  |[?%#V|Virus|Virus|Viren]: %V]]
+[? %#F |#|[:wrap|78|    |  |verbotene(n) [?%#F|Namen|Namen|Namen]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+in einer E-Mail an Sie [? %S |Absender ist möglicherweise gefälscht:|from:]
+  %o
+[? %S |gibt vor zu sein: %s|#]
+
+Inhaltstyp: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, blockiert für [:ccat|name]]
+Unser interner Referenzcode für Ihre E-Mail ist %n/%i
+
+[? %a |#|[:wrap|78||  |IP-Adresse des ersten Upstream-SMTP-Client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Gemäß "Empfangen:"-Trace\
+ stammt die E-Mail anscheinend von: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Nicht isoliert.|Die E-Mail wurde isoliert als: %q]
+
+Wenden Sie sich an Ihren Systemadministrator, falls Sie weitere Informationen
+wünschen.

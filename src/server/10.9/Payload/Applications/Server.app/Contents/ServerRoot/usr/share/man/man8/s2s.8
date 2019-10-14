@@ -1,0 +1,26 @@
+.TH s2s 8 "28 August 2003" "2.2.17-409" "jabberd project"
+.SH NAME
+s2s \- server-to-server connector
+.SH SYNOPSIS
+.B s2s
+.I [-h] [-c config] [-D]
+.SH DESCRIPTION
+.BR s2s
+manages connections between local components and other Jabber servers.
+.SH OPTIONS
+.TP
+.B \-h
+Show summary of options.
+.TP
+.B \-c
+Alternate configuration file to use. The compiled-in default is /etc/jabberd/s2s.xml.
+.TP
+.B \-D
+Print debugging output. You should configure jabberd with the --enable-debug switch to enable this.
+.SH SEE ALSO
+.BR jabberd (8)
+.BR c2s (8)
+.BR router (8)
+.BR sm (8)
+.SH AUTHOR
+Robert Norris <rob@cataclysm.cx>

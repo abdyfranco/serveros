@@ -1,0 +1,65 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-avatar-editor
+{
+	position: relative;
+	height: 44px;
+}
+
+.cc-avatar-editor .cc-avatar-preview
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 40px;
+	height: 40px;
+	border: 2px solid #F3F9FF;
+	border-radius: 7px;
+	box-shadow: 0px 0px 2px rgba(0,0,0,0.3);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.cc-avatar-editor .cc-avatar-preview.default,
+.cc-avatar-editor .cc-avatar-preview.project.default
+{
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/wiki_44x44.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/wiki_44x44.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/wiki_44x44@2x.png) 2x);
+}
+
+.cc-avatar-editor .cc-avatar-preview.user.default
+{
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44@2x.png) 2x);
+	width: 44px;
+	height: 44px;
+	border: none;
+	border-radius: 0;
+	border-radius: 7px;
+	box-shadow: none;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.cc-avatar-editor .cc-avatar-controls
+{
+	position: absolute;
+	top: 12px;
+	left: 53px;
+	width: 274px;
+	height: 21px;
+	line-height: 21px;
+}

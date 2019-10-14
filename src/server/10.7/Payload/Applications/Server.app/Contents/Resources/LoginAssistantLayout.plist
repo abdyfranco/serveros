@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>identifier</key>
+		<string>SEAdminLoginAssistantPage.SEAdminLoginAssistantPage</string>
+		<key>isNibOwner</key>
+		<true/>
+		<key>enabled</key>
+		<dict>
+			<key>showAdminLoginPage</key>
+			<true/>
+		</dict>
+	</dict>
+</array>
+</plist>

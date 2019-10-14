@@ -1,0 +1,90 @@
+HAProxy Support
+===============
+
+For high availability, client connections can be spread across multiple backend
+servers using HAProxy [http://www.haproxy.org/]. This solution is often
+employed for large Dovecot installations as a replacement for a hardware load
+balancer. A common problem with such a reverse proxy
+[http://en.wikipedia.org/wiki/Reverse_proxy] is that Dovecot does not talk to
+the client directly. This means that the connection information (IP:port) that
+Dovecot uses for logging and authentication purposes points to the proxy,
+rather than the real client. To solve this, the proxy needs to convey the
+connection information to the backend somehow, so that that information is
+available there. The developers of HAProxy defined a custom Proxy Protocol
+[http://blog.haproxy.com/haproxy/proxy-protocol/] for this purpose. By this
+protocol, the proxy sends the connection information immediately after
+connection setup in a special initial header. Note that this isn't normally
+needed after the initial Dovecot proxies, because Dovecot internally uses
+IMAP/POP3/LMTP extensions to forward the original IP address. Dovecot supports
+both versions of the Proxy Protocol since Dovecot version 2.2.19.
+
+Dovecot Configuration
+---------------------
+
+The following global settings relate to HAProxy:
+
+haproxy_trusted_networks = :
+  A space-separated list of trusted network ranges for HAProxy connections.
+  Connections from networks outside these ranges to ports that are configured
+  for HAProxy are aborted immediately.
+
+haproxy_timeout = 3 :
+  The time in seconds after which a HAPRoxy connection is aborted when no
+  complete header is received.
+
+The HAPRoxy protocol can be enabled for specific <TCP listeners>
+[Services.txt]. This way, a service such as IMAP or POP3 can accept both normal
+and HAProxy connections. A TCP listener is configured for HAProxy by setting
+'haproxy=yes' for that listener. If 'haproxy=yes' is set for a listener, its
+use is mandatory on that port; i.e., if the client is not a proper proxy (its
+omits the PROXY header), the connection will be aborted.
+
+For example, to enable normal IMAP connections on port 143, SSL connections on
+port 993 and HAProxy connections on port 10143, the 'imap-login' service is
+configured as follows:
+
+---%<-------------------------------------------------------------------------
+service imap-login {
+  inet_listener imap {
+    port = 143
+  }
+  inet_listener imaps {
+    port = 993
+    ssl = yes
+  }
+  inet_listener imap_haproxy {
+    port = 10143
+    haproxy = yes
+  }
+}
+---%<-------------------------------------------------------------------------
+
+HAProxy Configuration
+---------------------
+
+The documentation of this feature on the HAProxy side is a bit fragmented
+between the HAProxy Configuration Manual
+[http://www.haproxy.org/download/1.6/doc/configuration.txt] and the Proxy
+Protocol documentation
+[http://www.haproxy.org/download/1.6/doc/proxy-protocol.txt]. In summary, it is
+enabled by including the 'send-proxy' setting in the 'server' lines. It is
+therefore only enabled on a per-server basis.
+
+For example, the 'frontend' and 'backend' configuration of HAProxy could look
+as follows:
+
+---%<-------------------------------------------------------------------------
+frontend ft_imap
+    bind :143
+    mode tcp
+    default_backend bk_imap
+
+backend bk_imap
+    mode tcp
+    balance leastconn
+    stick store-request src
+    stick-table type ip size 200k expire 30m
+    server s1 backend.example.com:10143 send-proxy-v2
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

@@ -1,0 +1,26 @@
+.TH c2s 8 "28 August 2003" "2.3.1-417" "jabberd project"
+.SH NAME
+c2s \- client-to-server connector
+.SH SYNOPSIS
+.B c2s
+.I [-h] [-c config] [-D]
+.SH DESCRIPTION
+.BR c2s
+accepts incoming connections from clients, performs authentication and registration functions, and communicates with the session manager on their behalf.
+.SH OPTIONS
+.TP
+.B \-h
+Show summary of options.
+.TP
+.B \-c
+Alternate configuration file to use. The compiled-in default is /etc/jabberd/c2s.xml.
+.TP
+.B \-D
+Print debugging output. You should configure jabberd with the --enable-debug switch to enable this.
+.SH SEE ALSO
+.BR jabberd (8)
+.BR router (8)
+.BR s2s (8)
+.BR sm (8)
+.SH AUTHOR
+Robert Norris <rob@cataclysm.cx>

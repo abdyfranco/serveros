@@ -1,0 +1,16 @@
+#!/bin/sh
+
+#  updateServermgrdCert
+#
+# Copyright (c) 2015 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+
+# tells the servermgr_info plugin to update the ACL on the com.apple.servermgrd identity cert
+
+echo "updating the ACL on the com.apple.servermgrd identity"
+/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin command info:command = updateServermgrCert

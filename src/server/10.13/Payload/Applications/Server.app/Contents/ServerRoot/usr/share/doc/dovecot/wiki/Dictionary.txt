@@ -1,0 +1,267 @@
+Dovecot Dictionaries
+====================
+
+Dovecot's lib-dict can be used to access simple key-value databases. This is
+used by for example <quota-dict> [Quota.Dict.txt], <passdb&userdb>
+[AuthDatabase.Dict.txt], <last-login plugin> [Plugins.LastLogin.txt],
+<METADATA> [ImapMetadata.txt], etc. The dictionaries can be accessed either
+directly by the mail processes or they can be accessed via <dict proxy>
+[Dict.txt] processes.
+
+Currently supported dict backends are:
+
+ * Flat files
+ * FS (lib-fs wrapper)
+ * Memcached (ASCII protocol)
+ * Memcached (Binary protocol)
+ * Redis
+ * Proxy
+ * SQL
+ * LDAP
+
+Flat Files
+----------
+
+---%<-------------------------------------------------------------------------
+file:<path>
+---%<-------------------------------------------------------------------------
+
+The file will simply contain all the keys that are used. Not very efficient for
+large databases, but good for small ones such as a single user's quota.
+
+FS (v2.2.11+)
+-------------
+
+---%<-------------------------------------------------------------------------
+fs:<driver>:<driver args>
+---%<-------------------------------------------------------------------------
+
+This is a wrapper for lib-fs, which most importantly has the "posix" backend.
+So using:
+
+---%<-------------------------------------------------------------------------
+fs:posix:prefix=/var/lib/dovecot/dict
+---%<-------------------------------------------------------------------------
+
+Would create a separate file under /var/lib/dovecot/dict for each key.
+
+Memcached (Binary Protocol) (v2.2.9+)
+-------------------------------------
+
+This driver uses the "new" Memcache binary protocol.
+
+https://code.google.com/p/memcached/wiki/MemcacheBinaryProtocol
+
+---%<-------------------------------------------------------------------------
+memcached:param=value:param2=value2:...
+---%<-------------------------------------------------------------------------
+
+Supported parameters are:
+
+ * host: Memcached server host (default: 127.0.0.1)
+ * port: Memcached server port (default: 11211)
+ * prefix: Prefix to add to all keys (default: empty)
+ * timeout_msecs: Abort lookups after specified number of milliseconds
+   (default: 30000)
+
+Memcached (ASCII Protocol) (v2.2.9+)
+------------------------------------
+
+This driver uses the "legacy" Memcache ASCII protocol.
+
+https://github.com/memcached/memcached/blob/master/doc/protocol.txt
+
+---%<-------------------------------------------------------------------------
+memcached_ascii:param=value:param2=value2:...
+---%<-------------------------------------------------------------------------
+
+Supported parameters are:
+
+ * host: Memcached server host (default: 127.0.0.1)
+ * port: Memcached server port (default: 11211)
+ * prefix: Prefix to add to all keys (default: empty)
+ * timeout_msecs: Abort lookups after specified number of milliseconds
+   (default: 30000)
+
+Redis (v2.2.9+)
+---------------
+
+---%<-------------------------------------------------------------------------
+redis:param=value:param2=value2:...
+---%<-------------------------------------------------------------------------
+
+Supported parameters are:
+
+ * host: Redis server host (default: 127.0.0.1)
+ * port: Redis server port (default: 6379)
+ * prefix: Prefix to add to all keys (default: empty)
+ * db: Database number (default: 0)
+ * expire_secs=<n>: Set expiration value to all the keys
+ * timeout_msecs: Abort lookups after specified number of milliseconds
+   (default: 30000)
+
+Proxy
+-----
+
+---%<-------------------------------------------------------------------------
+proxy:[<dict path>]:<destination dict>
+---%<-------------------------------------------------------------------------
+
+Proxying is used to perform all dictionary accessing via the dict processes.
+(The dict processes exist only if dict proxying is used.) This is especially
+useful with backends where their initialization is relatively expensive, such
+as SQL. The dict processes will then perform also connection pooling.
+
+If <dict path> is specified, it points to the socket where the dict server is
+answering. The default is to use $base_dir/dict. Usually there's no need to
+change this, but it may be useful for example if you wish to implement your own
+dict server accessing some proprietary database.
+
+The <destination dict> contains the actual dict settings that the dict process
+will use. For example:'proxy::mysql:/etc/dovecot/dovecot-sql-dict.conf'
+
+See <Dict.txt> for more information about the dict server.
+
+SQL
+---
+
+---%<-------------------------------------------------------------------------
+<sql driver>:<path to dict-sql config>
+---%<-------------------------------------------------------------------------
+
+The <sql driver> contains the SQL driver name, such as "mysql", "pgsql",
+"sqlite" or "cassandra".
+
+The dict-sql config file consists of SQL server configuration and mapping of
+keys to SQL tables/fields.
+
+SQL Connect String
+------------------
+
+---%<-------------------------------------------------------------------------
+connect = host=localhost dbname=mails user=sqluser password=sqlpass
+---%<-------------------------------------------------------------------------
+
+The connect setting is exactly the same as used for <SQL passdb/userdb>
+[AuthDatabase.SQL.txt]. See 'example-config/dovecot-sql.conf.ext' for detailed
+information.
+
+SQL Mapping
+-----------
+
+SQL mapping is done with a dict key pattern and fields. When a dict lookup or
+update is done, Dovecot goes through all the maps and uses the first one whose
+pattern matches the dict key.
+
+For example when using dict for a per-user quota value the map looks like:
+
+---%<-------------------------------------------------------------------------
+map {
+  pattern = priv/quota/storage
+  table = quota
+  username_field = username
+  value_field = quota_bytes
+}
+---%<-------------------------------------------------------------------------
+
+This means that:
+
+ * The dict key must match exactly "priv/quota/storage". The dict keys are
+   hardcoded in the Dovecot code, so depending on what functionality you're
+   configuring you need to know the available dict keys used it.
+ * This is a private dict key ("priv/" prefix), which means that there must be
+   a username_field. The username_field is assumed to be (at least part of) the
+   primary key. In this example we don't have any other primary keys.
+ * With MySQL the above map translates to SQL queries:
+    * 'SELECT quota_bytes FROM quota WHERE username = '$username_field''
+    * 'INSERT INTO quota (username, quota_bytes) VALUES ('$username_field',
+      '$value') ON DUPLICATE KEY UPDATE quota_bytes='$value''
+
+You can also access multiple SQL fields. For example acl_shared_dict can
+contain:
+
+---%<-------------------------------------------------------------------------
+map {
+  pattern = shared/shared-boxes/user/$to/$from
+  table = user_shares
+  value_field = dummy
+
+  fields {
+    from_user = $from
+    to_user = $to
+  }
+}
+---%<-------------------------------------------------------------------------
+
+ * The acl_shared_dict always uses "1" as the value, so here the value_field is
+   called "dummy".
+ * The SQL from_user and to_user fields are the interesting ones. Typically the
+   extra fields would be part of the primary key.
+ * With MySQL the above map translates to SQL queries:
+    * 'SELECT dummy FROM user_shares WHERE from_user = '$from' AND to_user =
+      '$to''
+    * 'INSERT INTO user_shares (from_user, to_user, dummy) VALUES ('$from',
+      '$to', '$value') ON DUPLICATE KEY UPDATE dummy='$value''
+
+LDAP (v2.2.24+)
+---------------
+
+LDAP support is very similar to SQL support.
+
+Configuration
+-------------
+
+---%<-------------------------------------------------------------------------
+dict {
+  somedict = ldap:/path/to/dovecot-ldap-dict.conf.ext
+}
+---%<-------------------------------------------------------------------------
+
+Then in ext file put
+
+---%<-------------------------------------------------------------------------
+uri = ldap://hostname
+bind_dn = optional bind dn
+password = optional password
+timeout = optional timeout
+debug = 0 or 1 (optional, as well)
+tls = yes|try|no (default is try)
+---%<-------------------------------------------------------------------------
+
+ * uri - LDAP connection URI as expected by OpenLDAP.
+ * bind_dn - DN or upn to use for binding
+ * password - password to use, only SIMPLE auth is supported at the moment
+ * timeout - How long to wait for reply, default is 30 seconds
+ * debug - 0 off, 1 on, will produce metric ton of output
+ * tls - yes = require either ldaps or successful start TLS, try = send start
+   TLS if necessary, no = do not send start TLS
+
+To map some key to a search do
+
+---%<-------------------------------------------------------------------------
+map {
+  pattern = priv/test/mail
+  filter = (mail=*)  # the () is required
+  base_dn = ou=container,dc=domain
+  username_attribute = uid # default is cn
+  value_attribute = mail
+}
+---%<-------------------------------------------------------------------------
+
+To do some more complex search
+
+---%<-------------------------------------------------------------------------
+map {
+  pattern = priv/test/mail/$location
+  filter = (&(mail=*)(location=%{location}) # the () is required
+  base_dn = ou=container,dc=domain
+  username_attribute = uid # default is cn
+  value_attribute = mail
+
+  fields {
+    location=$location
+  }
+}
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

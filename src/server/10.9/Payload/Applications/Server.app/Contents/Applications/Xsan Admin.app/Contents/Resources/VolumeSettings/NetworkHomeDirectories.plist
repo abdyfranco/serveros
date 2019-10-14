@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>index</key>
+	<integer>4</integer>
+	<key>subtitle</key>
+	<string>Optimized for NFS, AFP, and SMB home folder servers.</string>
+	<key>title</key>
+	<string>Home Folder Server</string>
+	<key>affinities</key>
+	<array>
+		<string>Homes</string>
+	</array>
+	<key>volumeConfig</key>
+	<dict>
+		<key>bufferCacheSize</key>
+		<integer>134217728</integer>
+		<key>fsBlockSize</key>
+		<integer>8192</integer>
+		<key>inodeCacheSize</key>
+		<integer>32768</integer>
+		<key>storagePoolIdealLUNCount</key>
+		<integer>2</integer>
+		<key>storagePoolStripeBreadth</key>
+		<integer>64</integer>
+	</dict>
+</dict>
+</plist>

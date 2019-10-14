@@ -1,0 +1,579 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Foreign Data Wrapper Callback Routines</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.2.8 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Writing A Foreign Data Wrapper"
+HREF="fdwhandler.html"><LINK
+REL="PREVIOUS"
+TITLE="Foreign Data Wrapper Functions"
+HREF="fdw-functions.html"><LINK
+REL="NEXT"
+TITLE="Foreign Data Wrapper Helper Functions"
+HREF="fdw-helpers.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2014-03-17T19:46:29"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="5"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.2.8 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="Foreign Data Wrapper Functions"
+HREF="fdw-functions.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="fdwhandler.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 50. Writing A Foreign Data Wrapper</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="Foreign Data Wrapper Helper Functions"
+HREF="fdw-helpers.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FDW-CALLBACKS"
+>50.2. Foreign Data Wrapper Callback Routines</A
+></H1
+><P
+>     The FDW handler function returns a palloc'd <TT
+CLASS="STRUCTNAME"
+>FdwRoutine</TT
+>
+     struct containing pointers to the following callback functions:
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>void
+GetForeignRelSize (PlannerInfo *root,
+                   RelOptInfo *baserel,
+                   Oid foreigntableid);</PRE
+><P>
+
+     Obtain relation size estimates for a foreign table.  This is called
+     at the beginning of planning for a query involving a foreign table.
+     <TT
+CLASS="LITERAL"
+>root</TT
+> is the planner's global information about the query;
+     <TT
+CLASS="LITERAL"
+>baserel</TT
+> is the planner's information about this table; and
+     <TT
+CLASS="LITERAL"
+>foreigntableid</TT
+> is the <TT
+CLASS="STRUCTNAME"
+>pg_class</TT
+> OID of the
+     foreign table.  (<TT
+CLASS="LITERAL"
+>foreigntableid</TT
+> could be obtained from the
+     planner data structures, but it's passed explicitly to save effort.)
+    </P
+><P
+>     This function should update <TT
+CLASS="LITERAL"
+>baserel-&gt;rows</TT
+> to be the
+     expected number of rows returned by the table scan, after accounting for
+     the filtering done by the restriction quals.  The initial value of
+     <TT
+CLASS="LITERAL"
+>baserel-&gt;rows</TT
+> is just a constant default estimate, which
+     should be replaced if at all possible.  The function may also choose to
+     update <TT
+CLASS="LITERAL"
+>baserel-&gt;width</TT
+> if it can compute a better estimate
+     of the average result row width.
+    </P
+><P
+>     See <A
+HREF="fdw-planning.html"
+>Section 50.4</A
+> for additional information.
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>void
+GetForeignPaths (PlannerInfo *root,
+                 RelOptInfo *baserel,
+                 Oid foreigntableid);</PRE
+><P>
+
+     Create possible access paths for a scan on a foreign table.
+     This is called during query planning.
+     The parameters are the same as for <CODE
+CLASS="FUNCTION"
+>GetForeignRelSize</CODE
+>,
+     which has already been called.
+    </P
+><P
+>     This function must generate at least one access path
+     (<TT
+CLASS="STRUCTNAME"
+>ForeignPath</TT
+> node) for a scan on the foreign table and
+     must call <CODE
+CLASS="FUNCTION"
+>add_path</CODE
+> to add each such path to
+     <TT
+CLASS="LITERAL"
+>baserel-&gt;pathlist</TT
+>.  It's recommended to use
+     <CODE
+CLASS="FUNCTION"
+>create_foreignscan_path</CODE
+> to build the
+     <TT
+CLASS="STRUCTNAME"
+>ForeignPath</TT
+> nodes.  The function can generate multiple
+     access paths, e.g., a path which has valid <TT
+CLASS="LITERAL"
+>pathkeys</TT
+> to
+     represent a pre-sorted result.  Each access path must contain cost
+     estimates, and can contain any FDW-private information that is needed to
+     identify the specific scan method intended.
+    </P
+><P
+>     See <A
+HREF="fdw-planning.html"
+>Section 50.4</A
+> for additional information.
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>ForeignScan *
+GetForeignPlan (PlannerInfo *root,
+                RelOptInfo *baserel,
+                Oid foreigntableid,
+                ForeignPath *best_path,
+                List *tlist,
+                List *scan_clauses);</PRE
+><P>
+
+     Create a <TT
+CLASS="STRUCTNAME"
+>ForeignScan</TT
+> plan node from the selected foreign
+     access path.  This is called at the end of query planning.
+     The parameters are as for <CODE
+CLASS="FUNCTION"
+>GetForeignRelSize</CODE
+>, plus
+     the selected <TT
+CLASS="STRUCTNAME"
+>ForeignPath</TT
+> (previously produced by
+     <CODE
+CLASS="FUNCTION"
+>GetForeignPaths</CODE
+>), the target list to be emitted by the
+     plan node, and the restriction clauses to be enforced by the plan node.
+    </P
+><P
+>     This function must create and return a <TT
+CLASS="STRUCTNAME"
+>ForeignScan</TT
+> plan
+     node; it's recommended to use <CODE
+CLASS="FUNCTION"
+>make_foreignscan</CODE
+> to build the
+     <TT
+CLASS="STRUCTNAME"
+>ForeignScan</TT
+> node.
+    </P
+><P
+>     See <A
+HREF="fdw-planning.html"
+>Section 50.4</A
+> for additional information.
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>void
+ExplainForeignScan (ForeignScanState *node,
+                    ExplainState *es);</PRE
+><P>
+
+     Print additional <TT
+CLASS="COMMAND"
+>EXPLAIN</TT
+> output for a foreign table scan.
+     This can just return if there is no need to print anything.
+     Otherwise, it should call <CODE
+CLASS="FUNCTION"
+>ExplainPropertyText</CODE
+> and
+     related functions to add fields to the <TT
+CLASS="COMMAND"
+>EXPLAIN</TT
+> output.
+     The flag fields in <TT
+CLASS="LITERAL"
+>es</TT
+> can be used to determine what to
+     print, and the state of the <TT
+CLASS="STRUCTNAME"
+>ForeignScanState</TT
+> node
+     can be inspected to provide run-time statistics in the <TT
+CLASS="COMMAND"
+>EXPLAIN
+     ANALYZE</TT
+> case.
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>void
+BeginForeignScan (ForeignScanState *node,
+                  int eflags);</PRE
+><P>
+
+     Begin executing a foreign scan. This is called during executor startup.
+     It should perform any initialization needed before the scan can start,
+     but not start executing the actual scan (that should be done upon the
+     first call to <CODE
+CLASS="FUNCTION"
+>IterateForeignScan</CODE
+>).
+     The <TT
+CLASS="STRUCTNAME"
+>ForeignScanState</TT
+> node has already been created, but
+     its <TT
+CLASS="STRUCTFIELD"
+>fdw_state</TT
+> field is still NULL.  Information about
+     the table to scan is accessible through the
+     <TT
+CLASS="STRUCTNAME"
+>ForeignScanState</TT
+> node (in particular, from the underlying
+     <TT
+CLASS="STRUCTNAME"
+>ForeignScan</TT
+> plan node, which contains any FDW-private
+     information provided by <CODE
+CLASS="FUNCTION"
+>GetForeignPlan</CODE
+>).
+    </P
+><P
+>     Note that when <TT
+CLASS="LITERAL"
+>(eflags &amp; EXEC_FLAG_EXPLAIN_ONLY)</TT
+> is
+     true, this function should not perform any externally-visible actions;
+     it should only do the minimum required to make the node state valid
+     for <CODE
+CLASS="FUNCTION"
+>ExplainForeignScan</CODE
+> and <CODE
+CLASS="FUNCTION"
+>EndForeignScan</CODE
+>.
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>TupleTableSlot *
+IterateForeignScan (ForeignScanState *node);</PRE
+><P>
+
+     Fetch one row from the foreign source, returning it in a tuple table slot
+     (the node's <TT
+CLASS="STRUCTFIELD"
+>ScanTupleSlot</TT
+> should be used for this
+     purpose).  Return NULL if no more rows are available.  The tuple table
+     slot infrastructure allows either a physical or virtual tuple to be
+     returned; in most cases the latter choice is preferable from a
+     performance standpoint.  Note that this is called in a short-lived memory
+     context that will be reset between invocations.  Create a memory context
+     in <CODE
+CLASS="FUNCTION"
+>BeginForeignScan</CODE
+> if you need longer-lived storage, or use
+     the <TT
+CLASS="STRUCTFIELD"
+>es_query_cxt</TT
+> of the node's <TT
+CLASS="STRUCTNAME"
+>EState</TT
+>.
+    </P
+><P
+>     The rows returned must match the column signature of the foreign table
+     being scanned.  If you choose to optimize away fetching columns that
+     are not needed, you should insert nulls in those column positions.
+    </P
+><P
+>     Note that <SPAN
+CLASS="PRODUCTNAME"
+>PostgreSQL</SPAN
+>'s executor doesn't care
+     whether the rows returned violate the <TT
+CLASS="LITERAL"
+>NOT NULL</TT
+>
+     constraints which were defined on the foreign table columns - but the
+     planner does care, and may optimize queries incorrectly if
+     <TT
+CLASS="LITERAL"
+>NULL</TT
+> values are present in a column declared not to contain
+     them.  If a <TT
+CLASS="LITERAL"
+>NULL</TT
+> value is encountered when the user has
+     declared that none should be present, it may be appropriate to raise an
+     error (just as you would need to do in the case of a data type mismatch).
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>void
+ReScanForeignScan (ForeignScanState *node);</PRE
+><P>
+
+     Restart the scan from the beginning.  Note that any parameters the
+     scan depends on may have changed value, so the new scan does not
+     necessarily return exactly the same rows.
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>void
+EndForeignScan (ForeignScanState *node);</PRE
+><P>
+
+     End the scan and release resources.  It is normally not important
+     to release palloc'd memory, but for example open files and connections
+     to remote servers should be cleaned up.
+    </P
+><P
+></P><PRE
+CLASS="PROGRAMLISTING"
+>bool
+AnalyzeForeignTable (Relation relation,
+                     AcquireSampleRowsFunc *func,
+                     BlockNumber *totalpages);</PRE
+><P>
+
+     This function is called when <A
+HREF="sql-analyze.html"
+>ANALYZE</A
+> is executed on
+     a foreign table.  If the FDW can collect statistics for this
+     foreign table, it should return <TT
+CLASS="LITERAL"
+>true</TT
+>, and provide a pointer
+     to a function that will collect sample rows from the table in
+     <TT
+CLASS="PARAMETER"
+>func</TT
+>, plus the estimated size of the table in pages in
+     <TT
+CLASS="PARAMETER"
+>totalpages</TT
+>.  Otherwise, return <TT
+CLASS="LITERAL"
+>false</TT
+>.
+     If the FDW does not support collecting statistics for any tables, the
+     <CODE
+CLASS="FUNCTION"
+>AnalyzeForeignTable</CODE
+> pointer can be set to <TT
+CLASS="LITERAL"
+>NULL</TT
+>.
+    </P
+><P
+>     If provided, the sample collection function must have the signature
+</P><PRE
+CLASS="PROGRAMLISTING"
+>int
+AcquireSampleRowsFunc (Relation relation, int elevel,
+                       HeapTuple *rows, int targrows,
+                       double *totalrows,
+                       double *totaldeadrows);</PRE
+><P>
+
+     A random sample of up to <TT
+CLASS="PARAMETER"
+>targrows</TT
+> rows should be collected
+     from the table and stored into the caller-provided <TT
+CLASS="PARAMETER"
+>rows</TT
+>
+     array.  The actual number of rows collected must be returned.  In
+     addition, store estimates of the total numbers of live and dead rows in
+     the table into the output parameters <TT
+CLASS="PARAMETER"
+>totalrows</TT
+> and
+     <TT
+CLASS="PARAMETER"
+>totaldeadrows</TT
+>.  (Set <TT
+CLASS="PARAMETER"
+>totaldeadrows</TT
+> to zero
+     if the FDW does not have any concept of dead rows.)
+    </P
+><P
+>     The <TT
+CLASS="STRUCTNAME"
+>FdwRoutine</TT
+> struct type is declared in
+     <TT
+CLASS="FILENAME"
+>src/include/foreign/fdwapi.h</TT
+>, which see for additional
+     details.
+    </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="fdw-functions.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="fdw-helpers.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Foreign Data Wrapper Functions</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="fdwhandler.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Foreign Data Wrapper Helper Functions</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

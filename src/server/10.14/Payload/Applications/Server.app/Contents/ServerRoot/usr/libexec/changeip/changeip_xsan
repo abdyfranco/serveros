@@ -1,0 +1,68 @@
+#!/bin/sh
+
+#
+# Copyright (c) 2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+
+#
+# Xsan plugin for changeip(8)
+#
+
+ECHO=/bin/echo
+
+_usage()
+{
+    $ECHO "Usage: changeip_xsan [-hv] <currentIP> <newIP> [<currentHost> <newHost>]"
+    $ECHO "  Options:"
+    $ECHO "    -h          - print this message and exit"
+    $ECHO "    -v          - print additional information when running"
+    $ECHO "  Arguments:"
+    $ECHO "    currentIP   - current IPv4 address of the server"
+    $ECHO "    newIP       - new IPv4 address of the server"
+    $ECHO "    currenHost  - current FQDN for the server"
+    $ECHO "    newHost     - new FQDN for the server"
+}
+
+# Parse the command line options.
+# changeip(8) will only pass '-v'
+verbose=0
+args=`/usr/bin/getopt hv $*`
+if [ $? != 0 ] ; then
+    _usage
+    exit -2
+fi
+
+set -- $args
+for i ; do
+    case "$i" in
+        -h)
+            _usage;
+            exit 0;;
+        -v)
+            verbose=1;
+            shift;;
+        --)
+            shift; break;;
+    esac
+done
+
+# Ensure the correct number of arguments
+if [ ${#@} == 2 ] ; then
+    $ECHO "Changing IP address for Xsan"
+elif [ ${#@} == 4 ] ; then
+    $ECHO "Changing IP address and hostname for Xsan"
+else
+    $ECHO "Not updating Xsan: invalid number of arguments, expected 2 or 4"
+    _usage
+    exit -1
+fi
+
+if [ $verbose == 1 ] ; then
+    $ECHO "/usr/sbin/xsanctl changeIP $@"
+fi
+
+/usr/sbin/xsanctl changeIP $@

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<!--
+	Add paths to your custom generators here...
+	e.g. <string>/Library/QuickLook/foo.qlgenerator</string>
+	-->
+	<string>/Library/QuickLook/iWork.qlgenerator</string>
+	<string>/System/Library/QuickLook/Audio.qlgenerator</string>
+	<string>/System/Library/QuickLook/EPS.qlgenerator</string>
+	<string>/System/Library/QuickLook/LocPDF.qlgenerator</string>
+	<string>/System/Library/QuickLook/Office.qlgenerator</string>
+	<string>/System/Library/QuickLook/PDF.qlgenerator</string>
+	<string>/System/Library/QuickLook/Package.qlgenerator</string>
+	<string>/System/Library/QuickLook/SceneKit.qlgenerator</string>
+	<string>/System/Library/QuickLook/Security.qlgenerator</string>
+	<string>/System/Library/QuickLook/StandardBundles.qlgenerator</string>
+	<string>/System/Library/QuickLook/Text.qlgenerator</string>
+</array>
+</plist>

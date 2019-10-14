@@ -1,0 +1,159 @@
+'\" t
+.\"     Title: CREATE FOREIGN TABLE
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "CREATE FOREIGN TABLE" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+CREATE_FOREIGN_TABLE \- define a new foreign table
+.\" CREATE FOREIGN TABLE
+.SH "SYNOPSIS"
+.sp
+.nf
+CREATE FOREIGN TABLE [ IF NOT EXISTS ] \fItable_name\fR ( [
+    \fIcolumn_name\fR \fIdata_type\fR [ OPTIONS ( \fIoption\fR \*(Aq\fIvalue\fR\*(Aq [, \&.\&.\&. ] ) ] [ COLLATE \fIcollation\fR ] [ \fIcolumn_constraint\fR [ \&.\&.\&. ] ]
+    [, \&.\&.\&. ]
+] )
+  SERVER \fIserver_name\fR
+[ OPTIONS ( \fIoption\fR \*(Aq\fIvalue\fR\*(Aq [, \&.\&.\&. ] ) ]
+
+where \fIcolumn_constraint\fR is:
+
+[ CONSTRAINT \fIconstraint_name\fR ]
+{ NOT NULL |
+  NULL |
+  DEFAULT \fIdefault_expr\fR }
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBCREATE FOREIGN TABLE\fR
+creates a new foreign table in the current database\&. The table will be owned by the user issuing the command\&.
+.PP
+If a schema name is given (for example,
+CREATE FOREIGN TABLE myschema\&.mytable \&.\&.\&.) then the table is created in the specified schema\&. Otherwise it is created in the current schema\&. The name of the foreign table must be distinct from the name of any other foreign table, table, sequence, index, or view in the same schema\&.
+.PP
+
+\fBCREATE FOREIGN TABLE\fR
+also automatically creates a data type that represents the composite type corresponding to one row of the foreign table\&. Therefore, foreign tables cannot have the same name as any existing data type in the same schema\&.
+.PP
+To be able to create a foreign table, you must have
+USAGE
+privilege on the foreign server, as well as
+USAGE
+privilege on all column types used in the table\&.
+.SH "PARAMETERS"
+.PP
+IF NOT EXISTS
+.RS 4
+Do not throw an error if a relation with the same name already exists\&. A notice is issued in this case\&. Note that there is no guarantee that the existing relation is anything like the one that would have been created\&.
+.RE
+.PP
+\fItable_name\fR
+.RS 4
+The name (optionally schema\-qualified) of the table to be created\&.
+.RE
+.PP
+\fIcolumn_name\fR
+.RS 4
+The name of a column to be created in the new table\&.
+.RE
+.PP
+\fIdata_type\fR
+.RS 4
+The data type of the column\&. This can include array specifiers\&. For more information on the data types supported by
+PostgreSQL, refer to
+Chapter 8, Data Types, in the documentation\&.
+.RE
+.PP
+NOT NULL
+.RS 4
+The column is not allowed to contain null values\&.
+.RE
+.PP
+NULL
+.RS 4
+The column is allowed to contain null values\&. This is the default\&.
+.sp
+This clause is only provided for compatibility with non\-standard SQL databases\&. Its use is discouraged in new applications\&.
+.RE
+.PP
+DEFAULT \fIdefault_expr\fR
+.RS 4
+The
+DEFAULT
+clause assigns a default data value for the column whose column definition it appears within\&. The value is any variable\-free expression (subqueries and cross\-references to other columns in the current table are not allowed)\&. The data type of the default expression must match the data type of the column\&.
+.sp
+The default expression will be used in any insert operation that does not specify a value for the column\&. If there is no default for a column, then the default is null\&.
+.RE
+.PP
+\fIserver_name\fR
+.RS 4
+The name of an existing foreign server to use for the foreign table\&. For details on defining a server, see
+CREATE SERVER (\fBCREATE_SERVER\fR(7))\&.
+.RE
+.PP
+OPTIONS ( \fIoption\fR \*(Aq\fIvalue\fR\*(Aq [, \&.\&.\&.] )
+.RS 4
+Options to be associated with the new foreign table or one of its columns\&. The allowed option names and values are specific to each foreign data wrapper and are validated using the foreign\-data wrapper\*(Aqs validator function\&. Duplicate option names are not allowed (although it\*(Aqs OK for a table option and a column option to have the same name)\&.
+.RE
+.SH "EXAMPLES"
+.PP
+Create foreign table
+films, which will be accessed through the server
+film_server:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+CREATE FOREIGN TABLE films (
+    code        char(5) NOT NULL,
+    title       varchar(40) NOT NULL,
+    did         integer NOT NULL,
+    date_prod   date,
+    kind        varchar(10),
+    len         interval hour to minute
+)
+SERVER film_server;
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COMPATIBILITY"
+.PP
+The
+\fBCREATE FOREIGN TABLE\fR
+command largely conforms to the
+SQL
+standard; however, much as with
+\fBCREATE TABLE\fR,
+NULL
+constraints and zero\-column foreign tables are permitted\&. The ability to specify a default value is also a
+PostgreSQL
+extension\&.
+.SH "SEE ALSO"
+ALTER FOREIGN TABLE (\fBALTER_FOREIGN_TABLE\fR(7)), DROP FOREIGN TABLE (\fBDROP_FOREIGN_TABLE\fR(7)), CREATE TABLE (\fBCREATE_TABLE\fR(7)), CREATE SERVER (\fBCREATE_SERVER\fR(7))

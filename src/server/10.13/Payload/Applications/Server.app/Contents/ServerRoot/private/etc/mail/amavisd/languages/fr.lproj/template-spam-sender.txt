@@ -1,0 +1,47 @@
+# =============================================================================
+# This is a template for SPAM SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Objet : Considéré comme un courrier électronique NON SOLLICITÉ ENVOYÉ EN MASSE dont vous semblez être l’expéditeur
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <SS%i@%h>
+
+Un message de %s[
+à : %R]
+
+a été considéré comme étant un courrier non sollicité envoyé en masse (UBE).
+
+Notre code de référencement interne du message correspond à %n/%i
+
+Le message a mentionné votre adresse pour la réponse ; il s’agit donc soit d’un courrier électronique authentique
+de votre part ou l’expéditeur a falsifié une adresse pour permettre de façon abusive
+à un tiers de la réutiliser, auquel cas nous vous présentons nos excuses pour la notification non désirée.
+
+Nous tentons de minimiser l’incidence des cas les plus usuels d’UBE par courrier électronique
+infectés par des virus, mais pour les cas les moins évidents, une évaluation la plus juste possible
+est recherchée entre la perte de courriers authentiques et l’envoi d’avis d’information indésirables,
+et des dommages collatéraux des deux côtés restent encore possibles.
+
+[? %a |#|[:wrap|78||  |Première adresse IP du client SMTP pour l’envoi : \[%a\] %g]]
+[? %e |#|[:wrap|78||  |D’après la traçage du champ « Reçu »,\
+ le message semble provenir de : \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+# [? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+[? %#X |#|\n[[:wrap|78||  |%X]\n]]
+
+[? %#D |La distribution du courrier électronique a été interrompue !
+]#
+#
+# Rapport SpamAssassin :
+# [%A
+# ]\

@@ -1,0 +1,24 @@
+#-------------------------------------------------------------------------
+# Copyright (c) 2018 Apple Inc. All rights reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#-------------------------------------------------------------------------
+
+class Widget < ActiveRecord::Base
+
+  has_and_belongs_to_many :mac_restrictions_knob_sets
+
+  #-------------------------------------------------------------------------
+
+  def self.table_name
+    return "widgets"
+  end
+
+  #-------------------------------------------------------------------------
+
+  include MDMRecordBase
+
+end

@@ -1,0 +1,45 @@
+# =============================================================================
+# This is a template for SPAM SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+標題：視為由您發送的未經許可大量郵件
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <SS%i@%h>
+
+來自 %s 的郵件[
+傳送至：%R]
+
+視為未經許可的大量郵件（UBE）。
+
+您的郵件在我們的內部參考代碼為 %n/%i
+
+郵件帶有您的回覆位址，因此它是由您傳送的真實郵件，或者傳送者的位址被
+偽造，而您的郵件位址遭第三方濫用，若是如此，我們對於未經您許可的通知感到抱歉。
+
+我們嘗試將較為明顯的 UBE 狀況和受感染郵件的回阻減至最低，
+但對於較不明顯的狀況，我們必須考量在遺失真正的郵件和寄送
+不必要的通知之間取得平衡，這樣或許會對雙方造成一些損害。
+
+[? %a |#|[:wrap|78||  |首次上傳 SMTP 用戶端 IP 位址：\[%a\] %g]]
+[? %e |#|[:wrap|78||  |根據“接收日期：”追蹤,\
+ 郵件製作於：\[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+# [? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+[? %#X |#|\n[[:wrap|78||  |%X]\n]]
+
+[? %#D |停止傳送郵件！
+]#
+#
+# SpamAssassin 報告：
+# [%A
+# ]\

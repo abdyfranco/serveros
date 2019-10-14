@@ -1,0 +1,11 @@
+From: Mail-Administrator <Postmaster@example.com>
+Subject: [Hinweis] E-Mail-Nutzung nähert sich Kontingent
+
+Du hast dein Mail-Speicherkontingent auf dem Mail-Server beinahe erreicht. Die Zustellung weiterer Mail könnte verweigert werden, falls du dein Kontingent überschreitest.
+
+Bitte bewege alle Nachrichten, die du nicht weiter auf dem Server benötigst, in deine lokalen Mail-Ordner. Durchsuche dabei auch die Ordner „Gesendet“, „Papierkorb“ oder „Gelöschte Objekte“ nach Mails, die sich nicht mehr auf dem Server befinden müssen.
+
+Vielen Dank im Voraus für deine schnelle Reaktion!
+
+Mit freundlichen Grüßen
+Mail-Administrator

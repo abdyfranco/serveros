@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Web Service Shared Setup</string>
+	<key>dependencies</key>
+	<array>
+		<string>ServerSupport</string>
+		<string>DeviceManager_preflight</string>
+	</array>
+	<key>environment</key>
+	<dict>
+		<key>_web_conf_dir</key>
+		<string>/Library/Server/Web/Config</string>
+		<key>_web_data_dir</key>
+		<string>/Library/Server/Web/Data</string>
+		<key>_web_logs_dir</key>
+		<string>/var/log/apache2</string>
+	</dict>
+	<key>defaults</key>
+	<dict>
+		<key>group</key>
+		<string>wheel</string>
+		<key>owner</key>
+		<string>root</string>
+	</dict>
+	<key>setup</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Web Config directory</key>
+			<dict>
+				<key>description</key>
+				<string>Web Service Config Directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>path</key>
+				<string>${_web_conf_dir}</string>
+			</dict>
+			<key>Web Data directory</key>
+			<dict>
+				<key>description</key>
+				<string>Web Service Data Directory</string>
+				<key>mode</key>
+				<string>0775</string>
+				<key>path</key>
+				<string>${_web_data_dir}</string>
+			</dict>
+			<key>Web Logs Directory</key>
+			<dict>
+				<key>description</key>
+				<string>Web Logs Directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>path</key>
+				<string>${_web_logs_dir}</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

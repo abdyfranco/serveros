@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>files</key>
+	<dict>
+		<key>Resources/Info.plist</key>
+		<data>
+		d3Plx/FICugWSA+rCZDI1MC3iyc=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/de.strings</key>
+		<data>
+		lUwOQ3RwFl8HIjQdfn0xzKDLvpM=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/en.strings</key>
+		<data>
+		1eSoz7GNSMSZmVtSupLdDXWZlrY=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/es.strings</key>
+		<data>
+		luPZ9yVgnOnP65WOKBZeXyI5P9o=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/fr.strings</key>
+		<data>
+		u5os285rmdAhynxHakcvEEVkBTA=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/it.strings</key>
+		<data>
+		wqVz+waKVFKzO4+CRnu0e6qwcDc=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/ja.strings</key>
+		<data>
+		rc45jUycBy8eJFHuCpbeTZ3z7Ec=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/ko.strings</key>
+		<data>
+		xR3Jt3H6ujhPvQnt20XfbqonN7k=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/nl.strings</key>
+		<data>
+		2e1qkpjXdF9E/S0OIh3Zx1lUSVY=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/zh_Hans.strings</key>
+		<data>
+		bBSgfRjWu2fSdFNqcGyokVvAV4g=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/zh_Hant.strings</key>
+		<data>
+		ZD39YMrhBohogqWK4osOO6/e8OY=
+		</data>
+		<key>Resources/ServerDocsConfig.plist</key>
+		<data>
+		Cd9RFy2jNVmjl1lv9aAt5bydTbQ=
+		</data>
+		<key>Resources/com.apple.serverdocs</key>
+		<data>
+		pGhN3j+J1LvtsjWfwM8N4cs4f/4=
+		</data>
+		<key>Resources/version.plist</key>
+		<data>
+		kSgrNEdI0h6vnFLiWg4QhN3WIoU=
+		</data>
+	</dict>
+	<key>files2</key>
+	<dict>
+		<key>Resources/Info.plist</key>
+		<data>
+		d3Plx/FICugWSA+rCZDI1MC3iyc=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/de.strings</key>
+		<data>
+		lUwOQ3RwFl8HIjQdfn0xzKDLvpM=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/en.strings</key>
+		<data>
+		1eSoz7GNSMSZmVtSupLdDXWZlrY=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/es.strings</key>
+		<data>
+		luPZ9yVgnOnP65WOKBZeXyI5P9o=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/fr.strings</key>
+		<data>
+		u5os285rmdAhynxHakcvEEVkBTA=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/it.strings</key>
+		<data>
+		wqVz+waKVFKzO4+CRnu0e6qwcDc=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/ja.strings</key>
+		<data>
+		rc45jUycBy8eJFHuCpbeTZ3z7Ec=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/ko.strings</key>
+		<data>
+		xR3Jt3H6ujhPvQnt20XfbqonN7k=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/nl.strings</key>
+		<data>
+		2e1qkpjXdF9E/S0OIh3Zx1lUSVY=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/zh_Hans.strings</key>
+		<data>
+		bBSgfRjWu2fSdFNqcGyokVvAV4g=
+		</data>
+		<key>Resources/Personal Folders.localized/.localized/zh_Hant.strings</key>
+		<data>
+		ZD39YMrhBohogqWK4osOO6/e8OY=
+		</data>
+		<key>Resources/ServerDocsConfig.plist</key>
+		<data>
+		Cd9RFy2jNVmjl1lv9aAt5bydTbQ=
+		</data>
+		<key>Resources/com.apple.serverdocs</key>
+		<data>
+		pGhN3j+J1LvtsjWfwM8N4cs4f/4=
+		</data>
+		<key>Resources/version.plist</key>
+		<data>
+		kSgrNEdI0h6vnFLiWg4QhN3WIoU=
+		</data>
+	</dict>
+	<key>rules</key>
+	<dict>
+		<key>^Resources/</key>
+		<true/>
+		<key>^Resources/.*\.lproj/</key>
+		<dict>
+			<key>optional</key>
+			<true/>
+			<key>weight</key>
+			<real>1000</real>
+		</dict>
+		<key>^Resources/.*\.lproj/locversion.plist$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>1100</real>
+		</dict>
+		<key>^version.plist$</key>
+		<true/>
+	</dict>
+	<key>rules2</key>
+	<dict>
+		<key>.*\.dSYM($|/)</key>
+		<dict>
+			<key>weight</key>
+			<real>11</real>
+		</dict>
+		<key>^(.*/)?\.DS_Store$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>2000</real>
+		</dict>
+		<key>^(Frameworks|SharedFrameworks|PlugIns|Plug-ins|XPCServices|Helpers|MacOS|Library/(Automator|Spotlight|LoginItems))/</key>
+		<dict>
+			<key>nested</key>
+			<true/>
+			<key>weight</key>
+			<real>10</real>
+		</dict>
+		<key>^.*</key>
+		<true/>
+		<key>^Info\.plist$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>20</real>
+		</dict>
+		<key>^PkgInfo$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>20</real>
+		</dict>
+		<key>^Resources/</key>
+		<dict>
+			<key>weight</key>
+			<real>20</real>
+		</dict>
+		<key>^Resources/.*\.lproj/</key>
+		<dict>
+			<key>optional</key>
+			<true/>
+			<key>weight</key>
+			<real>1000</real>
+		</dict>
+		<key>^Resources/.*\.lproj/locversion.plist$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>1100</real>
+		</dict>
+		<key>^[^/]+$</key>
+		<dict>
+			<key>nested</key>
+			<true/>
+			<key>weight</key>
+			<real>10</real>
+		</dict>
+		<key>^embedded\.provisionprofile$</key>
+		<dict>
+			<key>weight</key>
+			<real>20</real>
+		</dict>
+		<key>^version\.plist$</key>
+		<dict>
+			<key>weight</key>
+			<real>20</real>
+		</dict>
+	</dict>
+</dict>
+</plist>

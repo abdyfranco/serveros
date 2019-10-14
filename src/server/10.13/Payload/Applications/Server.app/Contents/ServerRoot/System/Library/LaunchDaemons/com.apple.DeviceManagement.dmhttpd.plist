@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>EnableTransactions</key>
+  <true/>
+  <key>GroupName</key>
+  <string>_devicemgr</string>
+  <key>KeepAlive</key>
+  <true/>
+  <key>Label</key>
+  <string>com.apple.DeviceManagement.dmhttpd</string>
+  <key>PreventsSleep</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Interactive</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/dmhttpd</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>Sockets</key>
+  <dict>
+    <key>dmhttpd.sock</key>
+    <dict>
+      <key>SockPathGroup</key>
+      <integer>70</integer>
+      <key>SockPathMode</key>
+      <integer>432</integer>
+      <key>SockPathName</key>
+      <string>/Library/Server/ProfileManager/Config/var/dmhttpd.sock</string>
+      <key>SockPathOwner</key>
+      <integer>70</integer>
+    </dict>
+  </dict>
+  <key>StandardErrorPath</key>
+  <string>/dev/null</string>
+  <key>StandardOutPath</key>
+  <string>/dev/null</string>
+  <key>UserName</key>
+  <string>_devicemgr</string>
+</dict>
+</plist>

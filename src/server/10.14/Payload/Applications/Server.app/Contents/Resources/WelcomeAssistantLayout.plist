@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>identifier</key>
+		<string>SVSetupAssistantWelcomePage.SVSetupAssistantWelcomePage</string>
+		<key>isNibOwner</key>
+		<true/>
+		<key>helpAnchor</key>
+		<string>apd309463A9-BC2C-4BD5-A781-7BEA2139FD99</string>
+		<key>helpBook</key>
+		<string>com.apple.serverappGetStarted.help</string>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>Promotion</string>
+		<key>grouping</key>
+		<true/>
+		<key>enabled</key>
+		<dict>
+			<key>setupType</key>
+			<integer>2</integer>
+		</dict>
+		<key>children</key>
+		<array>
+			<dict>
+				<key>identifier</key>
+				<string>SVSetupAssistantConfigureServicesPage.SVSetupAssistantConfigureServicesPage</string>
+				<key>isNibOwner</key>
+				<true/>
+				<key>helpAnchor</key>
+				<string>svrasst_config</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>Update</string>
+		<key>grouping</key>
+		<true/>
+		<key>enabled</key>
+		<dict>
+			<key>setupType</key>
+			<integer>3</integer>
+		</dict>
+		<key>children</key>
+		<array>
+			<dict>
+				<key>identifier</key>
+				<string>SVSetupAssistantConfigureServicesPage.SVSetupAssistantConfigureServicesPage</string>
+				<key>isNibOwner</key>
+				<true/>
+				<key>helpAnchor</key>
+				<string>svrasst_config</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

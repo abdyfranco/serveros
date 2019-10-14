@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CommonPaths</key>
+	<array>
+		<string>/Library/Logs/ServerSetup.log</string>
+		<string>/Library/Logs/ServerSetup_*.log</string>
+		<string>/var/log/system.log</string>
+		<string>/var/log/system.log.0.gz</string>
+		<string>/var/log/system.log.1.gz</string>
+		<string>/var/log/system.log.2.gz</string>
+		<string>/var/log/system.log.3.gz</string>
+		<string>/var/log/system.log.4.gz</string>
+		<string>/var/log/apache2/*</string>
+		<string>/Library/Logs/CrashReporter/*.crash</string>
+		<string>/Library/Logs/DiagnosticReports/*.crash</string>
+	</array>
+</dict>
+</plist>

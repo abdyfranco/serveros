@@ -1,0 +1,192 @@
+Code Design
+===========
+
+Most of the coding style design is about getting as many compiler warnings and
+errors as possible. Dovecot already has some patched-Clang-specific features to
+get more warnings, and will likely have more in future. Issues found by static
+analyzers should also be fixed in some way, e.g. adding extra asserts.
+
+Runtime errors should be caught by asserts or NULL pointer dereferences, which
+cleanly crash the program instead of it continuing and possibly corrupting data
+or causing other bad things. Dovecot's master process restarts the crashed
+processes anyway. Obviously the master process should be very careful to avoid
+crashing, but even then in some OSes a crashed Dovecot master gets restarted by
+the init process.
+
+Dovecot's bottlenecks are primarily disk I/O and secondarily memory usage, so
+using extra CPU for asserts and other extra checks costs practically nothing.
+
+Types
+-----
+
+ * Unsigned types are used whenever the value isn't allowed to be negative.
+   This makes it easier to do "value too large" checks when you don't also have
+   to check for negative values. Also in arithmetic it's better to have the
+   value wrap (and hopefully checked later!) than cause undefined behavior with
+   a signed integer overflow.
+ * 'char *' always points to a NUL-terminated string, 'unsigned char *'
+   doesn't.
+ * 'size_t' should generally be used when pointing to a large memory area,
+   especially for 'mmap()'. Since 'size_t' can be slower to access than
+   'unsigned int' (or at least use memory), it's fine to use 'unsigned int'
+   when it's "very unlikely" that the size ever goes beyond 4 GB
+   (e.g.'string_t').
+ * 'uoff_t' is used for file offsets/sizes. This is usually 64bit, even with
+   32bit machines.
+ * 'uint32_t' vs. 'unsigned int': Use 'uint32_t' when the type really should be
+   32bit, but don't spend too much energy trying to avoid mixing it with
+   'unsigned int', since they are going to be the same types probably for the
+   rest of Dovecot's life..
+ * 'uint8_t' vs. 'unsigned char': I doubt Dovecot will ever be compiled
+   anywhere where these differ from one another, but for readability use
+   'uint8_t' for binary data and 'unsigned char' for text data.
+
+Function parameters
+-------------------
+
+ * Try to avoid using/allowing NULL pointers. For example for a public API
+   instead of having 'foo(struct bar *bar)' where bar can be NULL, you could
+   have both 'foo(void)' and 'foo_with_bar(struct bar *bar)'. Of course don't
+   try too hard if it makes the API otherwise ugly.
+    * Dovecot v2.2+ marks all such parameters with ATTR_NULL. These can be
+      verified with a patched clang. Unfortunately the API isn't very nice, it
+      would be better to mark each parameter separately with ATTR_NULL instead
+      of having a numbered list. This will likely change in future.
+    * Also unless you know that a parameter can be NULL, don't bother wastine
+      code on checking if it is. Ideally those are noticed by the patched clang
+      check, but even if not, it's not that bad to crash on NULL pointer
+      dereference.
+ * '_r' suffix in parameter is used for values that are returned (e.g.
+   'foo(const char **error_r)').
+ * Use const for pointers pretty much whenever possible.
+ * Some day in future I'd like compiler to give warnings if function parameters
+   are modified by the function itself. There's probably a lot of code that
+   does this currently, but try avoiding it in future.
+
+Function return values
+----------------------
+
+ * 'int' type is commonly used for return values. Usually this is used to mean
+   one of:
+    * -1 = error, 0 = ok
+    * -1 = error, 0 = unfinished (e.g. non-blocking call), 1 = finished
+    * unfortunately there are also other uses. I've been wondering about using
+      different types for these some day, such as "err" and "err3", but haven't
+      figured out an easy enough to use design, especially one where compiler
+      verifies that types aren't accidentally mixed.
+ * 'bool' shouldn't be used as return value for ok/error, use int 0/-1 instead.
+   (Old code has some of these. Sometimes it's also not quite clear if
+   something is an "error" or not, so this rule isn't perfect.)
+ * Functions returning pointers shouldn't use NULL pointer to mean an error,
+   only for things like "not found". For example instead of 'if ((ctx = init())
+   == NULL)' use 'if (init(&ctx) < 0)'
+ * Usually when calling a function, either save/check the return value or
+   explicitly say that you don't care about it by saying '(void)func();'
+    * Some functions where the return value can nearly always be ignored it's
+      annoying to add the '(void)' prefix. You can avoid these by adding
+      ATTR_NOWARN_UNUSED_RESULT to such function's prototype. A patched clang
+      can be used to find missing return value checks.
+ * If a system call fails unexpectedly, always log an error about it, possibly
+   even kill the process if it's vital for correct functionality
+   (e.g.'gettimeofday()'). '%m' in Dovecot's 'printf()'-style functions expands
+   to 'strerror(errno)'.
+
+Boolean expressions
+-------------------
+
+Try to use boolean expressions the way they work in Java. C doesn't require
+this, but I think it makes the code easier to understand and reduces bugs in
+some cases (e.g.'if (!foo())' when thinking foo() returns bool/FALSE, but
+actually returns int/-1 on error). I'm planning on patching clang some day to
+give warnings when booleans aren't used properly.
+
+ * 'bool x' and 'unsigned int x:1' are the boolean types
+ * !=, ==, <, >, etc. create a boolean
+ * if, for, while, etc. require a boolean
+
+So:
+
+ * 'if (!ptr)' -> 'if (ptr == NULL)'
+ * 'if (!num)' -> 'if (num == 0)'
+ * 'if (flags & FLAG_FOO)' -> 'if ((flags & FLAG_FOO) != 0)'
+
+Memory
+------
+
+Memory is always allocated through one of Dovecot's wrappers, e.g. 'i_malloc()'
+or 'i_new()'. All of Dovecot's memory allocations always succeed or kill the
+process. There's no point in writing a lot of code to check for memory
+allocation failures that happen just about never. The only reason some memory
+allocations fail in Dovecot currently is because a process VSZ limit is
+reached, which usually indicates either a memory leak or trying to access a
+mailbox that is too large. In either of these cases it's better to just
+completely restart the process than try to limp along without getting anything
+useful done anymore.
+
+Memory allocations can be assumed to be zero-initialized. All of the memory
+allocation functions do it, except 't_malloc()' and 't_buffer_get()', which you
+should almost never use directly anyway. The code currently also assumes that
+pointers in zero-initialized memory area are NULL, which isn't guaranteed by
+ANSI-C, but practically Dovecot isn't going to be run in systems where it's not
+true and you're not going to remember to NULL-initialize all of your pointers
+anyway without compiler/runtime failure.
+
+When using a struct, always zero-initialize it with 'memset()' instead of
+setting each field separately to 0. It's too easy to cause bugs by adding a new
+field to the struct and forgetting to initialize it.
+
+Double-frees in C are bad. Better to crash with NULL pointer dereference than
+possibly allow an attacker to exploit heap corruption and run executable code.
+Most of the pointers are set to NULL when they are freed:
+
+ * 'i_free_and_null()' is a macro to free the memory and set the pointer to
+   NULL.
+ * 'i_free()' also currently sets the pointer to NULL, but another thought was
+   to set this pointing to some other invalid pointer. But arguably this should
+   be defined to be exactly the same as 'i_free_and_null()'.
+ * Most deinit() functions take a pointer-to-pointer parameter and set the
+   original one to NULL. There's no need to explicitly set the same pointer to
+   NULL afterwards.
+
+Buffers
+-------
+
+Use dynamically growing strings/buffers wherever necessary instead of a static
+sized buffer, where on larger input the function fails or truncates the data.
+It's of course not good to allow users to infinitely grow memory usage, so
+there should be some limits added, but it shouldn't fail even if the limit is
+set to infinite.
+
+Avoid explicitly calculating memory usage for allocations. If you do, mark it
+with '/* @UNSAFE */' comment unless it's the calculation is "so obvious that
+you see it's correct at the first glance". If in doubt, just mark it UNSAFE.
+The idea is that anyone can easily grep for these and verify their correctness.
+
+Type safety
+-----------
+
+ * Try to avoid using void pointers.
+ * Try to avoid casting types to other types, especially if the cast isn't
+   necessary to avoid a compiler warning.
+
+It's better if compiler can give a warning when something is accidentally used
+wrong.
+
+Callback functions
+------------------
+
+Callback functions make the code more difficult to follow, especially when a
+callback calls another callback, or when using function pointers to jump to
+different callbacks depending on state. Of course with asynchronous C code it's
+pretty much impossible to avoid callbacks. Still, try to avoid them where
+possible to keep the code readable.
+
+Often callback functions can be avoided by creating iterator functions instead.
+For example instead of 'parse(callback, context' use 'ctx = parse_init(); while
+(parse_next(ctx)) { .. } parse_deinit(&ctx);'
+
+Dovecot has some helper macros to make callbacks' context parameters type-safe.
+In v2.2+ see 'CALLBACK_TYPECHECK()' macro and for example 'io_add()' for
+example usage.
+
+(This file was created from the wiki on 2013-08-05 04:42)

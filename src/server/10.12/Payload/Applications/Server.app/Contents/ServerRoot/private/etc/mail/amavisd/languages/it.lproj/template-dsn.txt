@@ -1,0 +1,143 @@
+# =============================================================================
+# This is a template for (neutral: non-virus, non-spam, non-banned)
+# DELIVERY STATUS NOTIFICATIONS to sender.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Oggetto: [?%#D|Impossibile recapitare l'email|Notifica dello stato del recapito]\
+[? [:ccat|major] |||, BLOCCATA DA MTA\
+|, Messaggio TROPPO GRANDE\
+|, sezione intestazione non valida[=explain_badh|1]\
+[?[:ccat|minor]||: MIME errato|: carattere 8-bit non codificato\
+|: uso improprio di carattere di controllo|: linea intestazione tutti spazi bianchi\
+|: linea intestazione più lunga di 998 caratteri|: errore di sintassi campo intestazione\
+|: campo intestazione richiesto mancante|: campo intestazione duplicato|]\
+|, UBE (UNSOLICITED BULK EMAIL) inviata apparentemente da te\
+|, UBE (UNSOLICITED BULK EMAIL) inviata apparentemente da te\
+|, contenuti NON VERIFICATI\
+|, Tipo di contenuti VIETATO (%F)\
+|, VIRUS in un messaggio apparentemente inviato da te (%V)\
+]
+Message-ID: <DSN%i@%h>
+
+[? %#D |#|Il tuo messaggio È STATO INIOLTRATO CON SUCCESSO a:[\n  %D]
+[~[:dsn_notify]|["\\bSUCCESSO\\b"]|\
+e hai esplicitamente richiesto una notifica dello stato del recapito in caso di successo.\n]\
+]
+[? %#N |#|Il messaggio NON È STATO inoltrato a:[\n  %N]
+]
+[:wrap|78|||Questo resoconto di [?%#D|non recapito|recapito] è stato \
+generato dal programma amavisd-new sull'host %h. \
+Il nostro codice interno di riferimento per il messaggio è %n/%i]
+
+# ccat_min 0: altro,  1: MIME errato,  2: carattere 8-bit,  3: NUL/CR,
+#          4: vuoto,  5: lungo,  6: sintassi,  7: mancante,  8: multiplo
+[? [:explain_badh] ||[? [:ccat|minor]
+|INTESTAZIONE NON VALIDA
+|INTESTAZIONE NON VALIDA: SEZIONE INTESTAZIONE MIME ERRATA O STRUTTURA MIME ERRATA
+|INTESTAZIONE NON VALIDA: CARATTERI 8-BIT NON VALIDI NELLA SEZIONE INTESTAZIONE
+|INTESTAZIONE NON VALIDA: CARATTERI DI CONTROLLO NON VALIDI NELLA SEZIONE INTESTAZIONE
+|INTESTAZIONE NON VALIDA: LINEA DEL CAMPO INTESTAZIONE INTERAMENTE COSTITUITA DA SPAZI BIANCHI
+|INTESTAZIONE NON VALIDA: LINEA INTESTAZIONE PIÙ LUNGA DEL LIMITE RFC2822 DI 998 CARATTERI
+|INTESTAZIONE NON VALIDA: ERRORE DI SINTASSI NEL CAMPO INTESTAZIONE
+|INTESTAZIONE NON VALIDA: CAMPO INTESTAZIONE RICHIESTO MANCANTE
+|INTESTAZIONE NON VALIDA: CAMPO INTESTAZIONE DUPLICATO
+|INTESTAZIONE NON VALIDA
+]
+[[:wrap|78|  |  |%X]\n]
+]\
+#
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %#X|#|[? [:useragent] |#|[:wrap|78||  |[:useragent]]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+# ccat_min 0: altro,  1: MIME errato,  2: carattere 8-bit,  3: NUL/CR,
+#          4: vuoto,  5: lungo,  6: sintassi,  7: mancante,  8: multiplO
+[? [:explain_badh] ||[? [:ccat|minor]
+|# 0: altro
+|# 1: MIME errato
+|# 2: carattere 8-bit
+COS'È UN CARATTERE NON VALIDO NELLA SEZIONE INTESTAZIONE DI UNA MAIL?
+
+  Il documento RFC 5.322 specifica le regole per la composizione di 
+  messaggi internet. Non permette l'utilizzo diretto (non codificato)
+  di caratteri con codici al di sopra di 127 nella sezione 
+  intestazione di una mail.
+
+  Se tali caratteri (ad esempio, con segni diacritici), provenienti
+  da alfabeti ISO Latin o altri, devono essere inclusi in una sezione
+  intestazione, devono essere codificati in modo corretto secondo la
+  codifica RFC 2047. Tale codifica è spesso fatta in modo trasparente
+  dal lettore di posta (MUA), ma se la codifica automatica non è 
+  disponibile (ad esempio, per alcuni vecchi MUA), è responsabilità
+  dell'utente evitare di utilizzare tali caratteri nella sezione
+  intestazione, o codificarli manualmente. Generalmente, i campi
+  intestazione passibili d'errore in questa categoria sono 'Oggetto',
+  'Organizzazione' e campi di commento oppure i nomi a schermo degli
+  indirizzi e-mail inclusi in 'Da', 'A' o 'CC'.
+
+  Talvolta, questi campi intestazione non validi vengono inseriti
+  automaticamente da alcuni MUA, MTA, filtri contenuti, o da altri
+  servizi di gestione della posta. Se questo è il caso, tale servizio
+  deve essere sistemato e configurato in modo corretto. Generalmente,
+  i campi intestazione passibili d'errore in questa categoria sono
+  'Data', 'Ricevuto', 'Mailer-X', 'Priorità-X', 'Scansione-X', ecc.
+
+  Se non sai come risolvere o evitare il problema, segnalalo al _tuo_
+  gestore di posta o gestore del sistema.
+#
+[~[:useragent]|^X-Mailer:\\s*Microsoft Outlook Express 6\\.00|["
+  Se utilizzi Microsoft Outlook Express come MUA, verifica le
+  seguenti impostazioni:
+     Strumenti -> Opzioni -> Invio -> Formato invio posta -> Solo
+     testo & HTML
+  "Formato MIME" DEVE ESSERE selezionato,
+  e  "Consenti caratteri 8-bit nelle intestazioni" NON DEVE essere 
+  abilitato!
+"]]#
+|# 3: NUL/CR
+USO IMPROPRIO DI CARATTERI DI CONTROLLO NELLA SEZIONE INTESTAZIONE DI UNA MAIL
+
+  Il documento RFC 5.322 specifica le regole per la composizione di 
+  messaggi internet. Non permette l'utilizzo diretto di caratteri di 
+  controllo NUL e CR, nella sezione intestazione di una mail.
+|# 4: empty
+LINEA DEL CAMPO INTESTAZIONE INTERAMENTE COSTITUITA DA SPAZI BIANCHI
+
+  Il documento RFC 5.322 specifica le regole per la composizione di 
+  messaggi internet. Nella sezione '3.2.2. Folding white space and 
+  comments' proibisce esplicitamente la costituzione di campi, in modo
+  che le linee di un campo intestazione siano costituite interamente
+  da caratteri a spazi bianchi (caratteri di controllo SP e HTAB) e niente
+  altro.
+|# 5: long
+LINEA INTESTAZIONE PIÙ LUNGA DEL LIMITE RFC2822 DI 998 CARATTERI
+
+  Il documento RFC 5.322 specifica le regole per la composizione di 
+  messaggi internet. La sezione '2.1.1. Line Length Limits' proibisce a
+  tutte le linee della sezione intestazione di essere più lunghe di 998
+  caratteri (escluso CRLF).
+|# 6: syntax
+|# 7: missing
+CAMPO INTESTAZIONE RICHIESTO MANCANTE
+
+  Il documento RFC 5.322 specifica le regole per la composizione di 
+  messaggi internet. La sezione '3.6. Field Definitions' specifica che
+  alcuni campi intestazione sono richiesti (il campo data creazione e il
+  campo "Da:").
+|# 8: multiple
+CAMPO INTESTAZIONE DUPLICATO
+
+  Il documento RFC 5.322 specifica le regole per la composizione di 
+  messaggi internet. La sezione '3.6. Field Definitions' specifica che
+  alcuni campi intestazione non possano essere presenti più di una volta
+  nella sezione intestazione di un messaggio.
+|# altro
+]]#

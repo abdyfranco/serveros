@@ -1,0 +1,210 @@
+.\" Copyright (c) 2010-2011 Dovecot authors, see the included COPYING file
+.TH DOVEADM\-QUOTA 1 "2011-02-17" "Dovecot v2.2" "Dovecot"
+.SH NAME
+doveadm\-quota \- Initialize/recalculate or show current quota usage
+.\"------------------------------------------------------------------------
+.SH SYNOPSIS
+.BR doveadm " [" \-Dv "] [" \-f
+.IR formatter ]
+.BR quota " [" \-S
+.IR socket_path "] " command
+.\"-------------------------------------
+.br
+.BR doveadm " [" \-Dv "] [" \-f
+.IR formatter ]
+.BR quota " [" \-S
+.IR socket_path "]"
+.IB command\  \-A
+.\"-------------------------------------
+.br
+.BR doveadm " [" \-Dv "] [" \-f
+.IR formatter ]
+.BR quota " [" \-S
+.IR socket_path "]"
+.IB  command\  \-u \ user
+.\"------------------------------------------------------------------------
+.SH DESCRIPTION
+In the first form,
+.BR doveadm (1)
+will execute the
+.I command
+for the currently logged in user.
+.PP
+In the second form, the
+.I command
+will be performed for all users.
+.PP
+In the third form, the
+.I command
+will affect only the matching
+.IR user (s).
+.IP Note:
+The
+.B quota get
+and
+.B quota recalc
+commands are only available when the global
+.I mail_plugins
+setting contains the
+.B quota
+plugin.
+.\"------------------------------------------------------------------------
+.SH OPTIONS
+Global
+.BR doveadm (1)
+.IR options :
+.TP
+.B \-D
+Enables verbosity and debug messages.
+.TP
+.BI \-f\  formatter
+Specifies the
+.I formatter
+for formatting the output.
+Supported formatters are:
+.RS
+.TP
+.B flow
+prints each line with
+.IB key = value
+pairs.
+.TP
+.B pager
+prints each
+.IR key :\  value
+pair on its own line and separates records with form feed character
+.RB ( ^L ).
+.TP
+.B tab
+prints a table header followed by tab separated value lines.
+.TP
+.B table
+prints a table header followed by adjusted value lines.
+.RE
+.TP
+.B \-v
+Enables verbosity, including progress counter.
+.\" --- command specific options --- "/.
+.PP
+Command specific
+.IR options :
+.\"-------------------------------------
+.TP
+.B \-A
+If the
+.B \-A
+option is present, the
+.I command
+will be performed for all users.
+Using this option in combination with system users from
+.B userdb { driver = passwd }
+is not recommended, because it contains also users with a lower UID than
+the one configured with the
+.I first_valid_uid
+setting.
+.sp
+When the SQL userdb module is used make sure that the
+.I iterate_query
+setting in
+.I /Library/Server/Mail/Config/dovecot/dovecot\-sql.conf.ext
+matches your database layout.
+When using the LDAP userdb module, make sure that the
+.IR iterate_attrs " and " iterate_filter
+settings in
+.I /Library/Server/Mail/Config/dovecot/dovecot-ldap.conf.ext
+match your LDAP schema.
+Otherwise
+.BR doveadm (1)
+will be unable to iterate over all users.
+.\"-------------------------------------
+.TP
+.BI \-S\  socket_path
+The option\(aqs argument is either an absolute path to a local UNIX domain
+socket, or a hostname and port
+.RI ( hostname : port ),
+in order to connect a remote host via a TCP socket.
+.sp
+This allows an administrator to execute
+.BR doveadm (1)
+mail commands through the given socket.
+.\"-------------------------------------
+.TP
+.BI \-u\  user/mask
+Run the
+.I command
+only for the given
+.IR user .
+It\(aqs also possible to use
+.RB \(aq * \(aq
+and
+.RB \(aq ? \(aq
+wildcards (e.g. \-u *@example.org).
+.br
+When neither the
+.B \-A
+option nor
+.BI \-u\  user
+was specified, the
+.I command
+will be executed with the environment of the
+currently logged in user.
+.\"------------------------------------------------------------------------
+.SH COMMANDS
+.SS quota get
+.BR doveadm " [" \-f
+.IR formatter ]
+.B quota get
+[\fB\-A\fP|\fB\-u\fP \fIuser\fP]
+.PP
+The
+.B quota get
+command is used to display the current quota usage.
+The storage values are reported in kilobytes.
+.PP
+This command uses by default the output formatter
+.BR table .
+.\"-------------------------------------
+.SS quota recalc
+.B doveadm quota recalc
+[\fB\-A\fP|\fB\-u\fP \fIuser\fP]
+.PP
+The
+.B quota recalc
+command is used to recalculate the current quota usage.
+.\"------------------------------------------------------------------------
+.SH FILES
+.TP
+.I /Library/Server/Mail/Config/dovecot/dovecot.conf
+Dovecot\(aqs main configuration file, including the
+.I dict
+section.
+.TP
+.I /Library/Server/Mail/Config/dovecot/dovecot\-dict\-sql.conf.ext
+SQL dictionary proxy settings.
+.TP
+.I /Library/Server/Mail/Config/dovecot/conf.d/10\-mail.conf
+Mailbox locations and namespaces, including global
+.I mail_location
+.TP
+.I /Library/Server/Mail/Config/dovecot/conf.d/90\-quota.conf
+Quota configuration.
+.\"------------------------------------------------------------------------
+.SH EXAMPLE
+Get the current quota usage of user jane.
+.sp
+.nf
+.B doveadm quota get \-u jane
+Quota name                        Type    Value  Limit  %
+user                              STORAGE 90099 102400 87
+user                              MESSAGE 20548  30000 68
+.fi
+.\"------------------------------------------------------------------------
+.SH REPORTING BUGS
+Report bugs, including
+.I doveconf \-n
+output, to the Dovecot Mailing List <dovecot@dovecot.org>.
+Information about reporting bugs is available at:
+http://dovecot.org/bugreport.html
+.\"------------------------------------------------------------------------
+.SH SEE ALSO
+.BR doveadm (1)

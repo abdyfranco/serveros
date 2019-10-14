@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>XSActivityMonitor</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.ActivityMonitor</string>
+		<key>bundlePath</key>
+		<string>/Applications/Utilities/Activity Monitor.app</string>
+	</dict>
+	<key>XSAddressBook</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.AddressBook</string>
+		<key>bundlePath</key>
+		<string>/Applications/Contacts.app</string>
+	</dict>
+	<key>XSAirPort</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/PreferencePanes/Network.prefPane</string>
+		<key>resourceName</key>
+		<string>Airport</string>
+	</dict>
+	<key>XSAirPortUtility</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.airport.airportutility</string>
+		<key>bundlePath</key>
+		<string>/Applications/Utilities/AirPort Utility.app</string>
+		<key>resourceName</key>
+		<string>AirPortUtility</string>
+	</dict>
+	<key>XSBluetooth</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/PreferencePanes/Network.prefPane</string>
+		<key>resourceName</key>
+		<string>BlueTooth</string>
+	</dict>
+	<key>XSCertificate</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/Frameworks/SecurityInterface.framework</string>
+		<key>resourceName</key>
+		<string>CertLargeStd</string>
+	</dict>
+	<key>XSDirectoryUtility</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.DirectoryUtility</string>
+		<key>bundlePath</key>
+		<string>/System/Library/CoreServices/Directory Utility.app</string>
+	</dict>
+	<key>XSDiskUtility</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.DiskUtility</string>
+		<key>bundlePath</key>
+		<string>/Applications/Utilities/Disk Utility.app</string>
+	</dict>
+	<key>XSEthernet</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/PreferencePanes/Network.prefPane</string>
+		<key>resourceName</key>
+		<string>PPPoE</string>
+	</dict>
+	<key>XSFirewire</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/PreferencePanes/Network.prefPane</string>
+		<key>resourceName</key>
+		<string>Firewire</string>
+	</dict>
+	<key>XSiCal</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.iCal</string>
+		<key>bundlePath</key>
+		<string>/Applications/Calendar.app</string>
+	</dict>
+	<key>XSiChat</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.iChat</string>
+		<key>bundlePath</key>
+		<string>/Applications/iChat.app</string>
+	</dict>
+	<key>XSInstaller</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.installer</string>
+		<key>bundlePath</key>
+		<string>/System/Library/CoreServices/Installer.app</string>
+	</dict>
+	<key>XSMail</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.Mail</string>
+		<key>bundlePath</key>
+		<string>/Applications/Mail.app</string>
+	</dict>
+	<key>XSRootCertificate</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/Frameworks/SecurityInterface.framework</string>
+		<key>resourceName</key>
+		<string>CertLargeRoot</string>
+	</dict>
+	<key>XSCertificatesStack</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/Frameworks/SecurityInterface.framework</string>
+		<key>resourceName</key>
+		<string>CertStackLarge</string>
+	</dict>
+	<key>XSSafari</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.Safari</string>
+		<key>bundlePath</key>
+		<string>/Applications/Safari.app</string>
+	</dict>
+	<key>XSScreenSharing</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.ScreenSharing</string>
+		<key>bundlePath</key>
+		<string>/System/Library/CoreServices/Screen Sharing.app</string>
+	</dict>
+	<key>XSServerAdmin</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.ServerAdmin</string>
+		<key>bundlePath</key>
+		<string>/Applications/Server/Server Admin.app</string>
+	</dict>
+	<key>XSServerApp</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.Server</string>
+		<key>bundlePath</key>
+		<string>/Applications/Server.app</string>
+	</dict>
+	<key>XSServerAssistant</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.ServerAssistant</string>
+		<key>bundlePath</key>
+		<string>/System/Library/CoreServices/Server Assistant.app</string>
+	</dict>
+	<key>XSServerMonitor</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.servermonitor</string>
+		<key>bundlePath</key>
+		<string>/Applications/Server/Server Monitor.app</string>
+	</dict>
+	<key>XSServerPreferences</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.ServerPreferences</string>
+		<key>bundlePath</key>
+		<string>/Applications/Server/Server Preferences.app</string>
+	</dict>
+	<key>XSSharing</key>
+	<dict>
+		<key>bundlePath</key>
+		<string>/System/Library/PreferencePanes/SharingPref.prefPane</string>
+	</dict>
+	<key>XSSystemImageUtility</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.server.SystemImageUtility</string>
+		<key>bundlePath</key>
+		<string>/Applications/Server/System Image Utility.app</string>
+	</dict>
+	<key>XSTerminal</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.Terminal</string>
+		<key>bundlePath</key>
+		<string>/Applications/Utilities/Terminal.app</string>
+	</dict>
+	<key>XSTimeMachine</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.backup.launcher</string>
+		<key>bundlePath</key>
+		<string>/Applications/Time Machine.app</string>
+	</dict>
+	<key>XSWorkgroupManager</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.WorkgroupManager</string>
+		<key>bundlePath</key>
+		<string>/Applications/Server/Workgroup Manager.app</string>
+	</dict>
+	<key>XSXgridAdmin</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.xgrid.admin</string>
+		<key>bundlePath</key>
+		<string>/Applications/Server/Xgrid Admin.app</string>
+	</dict>
+	<key>XSXsanAdmin</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>com.apple.XsanAdmin</string>
+	</dict>
+	<key>__SAMPLE__</key>
+	<dict>
+		<key>bundleIdentifier</key>
+		<string>Checked first. Uses -[NSWorkspace absolutePathForAppBundleWithIdentifier]. Only works for app bundles.</string>
+		<key>bundlePath</key>
+		<string>Checked second. Looks for resourceName (if specified), then the resource specified by CFBundleIconFile in the bundle&apos;s Info.plist, and finally for a resource named NSApplicationIcon.</string>
+		<key>resourceName</key>
+		<string>The name of an image resource to load. If present, checked before anything else.</string>
+	</dict>
+</dict>
+</plist>

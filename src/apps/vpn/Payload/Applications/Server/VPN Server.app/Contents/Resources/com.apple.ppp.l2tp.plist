@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.apple.ppp.l2tp</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/sbin/vpnd</string>
+            <string>-x</string>
+            <string>-i</string>
+            <string>com.apple.ppp.l2tp</string>
+        </array>
+        <key>OnDemand</key>
+        <false/>
+    </dict>
+</plist>

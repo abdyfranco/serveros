@@ -1,0 +1,45 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED/BAD-HEADER RECIPIENTS NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+发件人: %f
+日期: %d
+主题: [? [:ccat|major] |干净邮件|干净邮件|邮件被 MTA 阻止|\
+邮件太大|邮件标题无效|垃圾邮件|垃圾邮件|邮件中包含未检查内容|\
+邮件中包含被阻止内容 (%F)|邮件中包含病毒 (%V)] 从 %s 发送给您
+[? [:header_field|收件人] |收件人: 未知收件人:;|收件人: [:标题栏|收件人]]
+[? [:header_field|Cc] |#|Cc: [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||内容被阻止警报]|病毒警报]
+
+我们的检查程序发现
+[? %#V |#|[:wrap|78|    |  |[?%#V|病毒|病毒|病毒]: %V]]
+[? %#F |#|[:wrap|78|    |  |已阻止[?%#F|名称|名称|名称]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+在发给您的电子邮件中[? %S |来自可能具有欺诈性质的发件人:|发件人:]
+%o
+[? %S |声称是 :%s|#]
+
+内容类型:[:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, 阻止原因是 [:ccat|name]]
+您邮件的内部参考码是 %n/%i
+
+[? %a |#|[:wrap|78||  |第一个上游 SMTP 客户端 IP 地址: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |根据“接收时间:”追踪结果，\
+邮件似乎出自: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |未隔离。|邮件已被隔离为: %q]
+
+请联系您的系统管理员了解详细信息。

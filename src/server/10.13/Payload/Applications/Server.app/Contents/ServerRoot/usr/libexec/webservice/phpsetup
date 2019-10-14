@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Copyright (c) 2011-2017 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+
+rm -f /etc/php.ini.README
+if [ ! -e /etc/php.ini ] && [ -e /etc/php.ini.default ]; then
+    cp -p -f /etc/php.ini.default /etc/php.ini
+else
+    SUM_ACTIVE=`cksum /etc/php.ini 2> /dev/null | awk '{print $1}'`
+    SUMS_KNOWN=(3693646161 4180876193 1520827597 1459724996 4162758035 1017282647 4092917641 1285158360 865763389 212235024 4033847060 2014637486 1353502723 1239757462 1092109197 2795643470 3600038351 3734356289 1806945335 1932665577 3638346990 609430386 3390930095 1015645337 2501271044 2927125159 1982944487 4195702639)
+    PRISTINE=0
+    for SUM in ${SUMS_KNOWN[@]}; do
+        if [ $SUM_ACTIVE = $SUM ]; then
+            PRISTINE=1
+            break
+        fi
+    done
+    if [ $PRISTINE -eq 1 ]; then
+        cp -p -f /etc/php.ini.default /etc/php.ini
+        echo "The previous /etc/php.ini had a checksum that indicated it was never customized," > /etc/php.ini.README
+        echo "so it has been replaced with the most current default php.ini file." >> /etc/php.ini.README
+    else
+        echo "The existing /etc/php.ini appears to have been customized so has been left alone." > /etc/php.ini.README
+        echo "Consider merging in any revised default settings from /etc/php.ini.default." >> /etc/php.ini.README
+    fi
+fi
+chmod u+w /etc/php.ini
+

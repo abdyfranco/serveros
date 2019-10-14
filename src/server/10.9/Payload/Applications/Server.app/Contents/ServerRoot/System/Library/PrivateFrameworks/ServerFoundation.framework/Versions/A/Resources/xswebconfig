@@ -1,0 +1,2523 @@
+#!/usr/bin/ruby
+#
+# Copyright (c) 2010-2012 Apple Inc. All Rights Reserved.
+# 
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+#	XSWebConfig.rb
+#	Server Foundation
+#
+=begin
+
+	New web config manager, using Ruby for implementation of object model
+	This is a helper command-line tool invoked by the XSWebConfig wrapper classes in ServerFoundation framework.
+
+	usage: xswebconfig [read | write | restorefactorysettings | [enablewebapp | disablewebapp] webappname ]
+	read - reads Apache config and writes specified objects to stdout, in NSKeyedArchiver XML format (JSON for now)
+	write - reads specified objects from stdin, in NSKeyedArchiver XML format (JSON for now) and updates Apache config
+	restorefactorysettings - Resets web service config to original state
+	enable/disablewebapp - short-cut action for "global" webapps which have no config file directives
+ 	
+=end
+require 'osx/foundation'
+include OSX
+require 'fileutils'
+require 'logger'
+require 'set'
+$XSMatchExact = 0
+$XSMatchRegularExpression = 1
+$SERVER_LIBRARY_PATH = "/Library/Server"
+$MainConfigDir = "#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/"
+$SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+$ApacheIsInServerBundle = FileTest.exists?("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/httpd")
+$ApacheCtlPath = $ApacheIsInServerBundle ? "#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/apachectl" : "/usr/sbin/apachectl"
+$HttpdPath = $ApacheIsInServerBundle ? "#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/httpd" : "/usr/sbin/httpd"
+$MainConfigFile = $ApacheIsInServerBundle ? "#{$MainConfigDir}httpd.conf" : "#{$MainConfigDir}httpd_server_app.conf"
+
+class ConfigException < RuntimeError
+end
+
+if !FileTest.exists?($MainConfigDir)
+	raise ConfigException.new, "Missing #{$MainConfigDir}"
+end
+
+class ParsedContainer
+	# A group of Apache config directives within a containing block
+	# such as <Directory dirname>...</Directory> or <IfModule modulename>...</IfModule>
+	attr_accessor :parsedLines
+	attr_accessor :cmd
+	attr_accessor :arg
+	attr_accessor :id
+	attr_accessor :containers
+	attr_accessor :parentContainer
+	def initialize(parsedLine, parentContainer)
+		@parsedLines = []
+		@parsedLines.push(parsedLine)
+		@containers = []
+		@cmd = parsedLine.cmd
+		@arg = parsedLine.args[0]
+		@parentContainer = parentContainer
+	end
+	def parse
+	end
+	def inspect
+		return "Container of #{@cmd} #{@parsedLines.length} lines #{@containers.length} subcontainers"
+	end
+end
+
+class Proxy
+	attr_accessor :path
+	attr_accessor :urls
+	attr_accessor :keysAndValues
+	def initialize
+		@path = ""
+		@urls = []
+		@keysAndValues = ""
+	end
+	def initWithCoder(coder)
+		initialize
+		@path = coder.decodeObjectForKey('path')
+		@urls = coder.decodeObjectForKey('urls')
+		@keysAndValues = coder.decodeObjectForKey('keysAndValues')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject(@path, forKey='path')
+		coder.encodeObject(@urls, forkey='urls')
+		coder.encodeObject(keysAndValues, forkey='keysAndValues')
+    end
+	def settings
+		return {
+			"path" => @path,
+			"urls" => @urls,
+			"keysAndValues" => @keysAndValues
+		}
+	end
+	def reconstruct(webAppName)
+		if @urls.count == 0
+			outStr = "\tProxyPass #{@path} !\n"
+		else
+			balancerGroupNameURL = "balancer://balancer-group-webapp-#{webAppName}-#{@path.gsub(/\//,'-')}"
+			outStr = "\tProxyPass #{@path} #{balancerGroupNameURL} #{@keysAndValues}\n"
+			outStr += "\tProxyPassReverse #{@path} #{balancerGroupNameURL}\n"
+			@urls.each { |url| outStr += "\t\tBalancerMember #{balancerGroupNameURL} #{url}\n" }
+		end
+		return outStr
+	end
+end
+
+class Realm
+	attr_accessor :folder
+	attr_accessor :browseGroups
+	attr_accessor :directoryContainer
+	attr_accessor :isDocumentRootRealm
+	def initialize
+		@browseGroups = []
+		@folder = ""
+		@authType = $config["RealmAuthType"]
+		@isDocumentRootRealm = false
+	end
+	def initWithCoder(coder)
+		initialize
+		@folder = coder.decodeObjectForKey('folder')
+		@browseGroups = coder.decodeObjectForKey('browseGroups')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject(@folder, forKey='folder')
+		coder.encodeObject(@browseGroups, forkey='browseGroups')
+    end
+	def settings
+		return {
+			"folder" => @folder,
+			"browseGroups" => @browseGroups
+		}
+	end
+	def metaDataEntry
+		return {
+			"AuthorGroups" => [],
+			"AuthorUsers" => [],
+			"BrowseUsers" => [],
+			"WebDAVReadOnlyGroups" => [],
+			"WebDAVReadOnlyUsers" => [],
+			"ContainerType" => "Directory",
+			"BrowseGroups" => @browseGroups,
+			"_id_" => @folder
+		}
+	end
+	def browseGroupsArg
+		if @browseGroups.nil? || @browseGroups.count == 0
+			string = "no-user"
+		else
+			string = "group"
+			@browseGroups.each do |group|
+				string += " "
+				string += WebConfig.quoteIfSpacey(group)
+			end
+		end
+		return string
+	end
+	def reconstruct
+		# reconstruct the whole directory container. Maybe change the way vhost reconstructs,
+		# to let containers reconstruct themselves
+		@authName = "Browse access #{@folder}"
+		outStr = ""
+		outStr += "\t<Directory \"#{@folder}\">\n" unless @isDocumentRootRealm
+		outStr += "\t\tAuthType #{@authType}\n"
+		outStr += "\t\tAuthName \"#{@authName}\"\n"
+		outStr += "\t\t<Limit PUT DELETE PROPPATCH PROPFIND MKCOL COPY MOVE LOCK UNLOCK>\n"
+		outStr += "\t\t  Require no-user\n"
+		outStr += "\t\t</Limit>\n"
+		outStr += "\t\t<Limit GET HEAD OPTIONS CONNECT POST>\n"
+		outStr += "\t\t  Require #{browseGroupsArg}\n"
+		outStr += "\t\t</Limit>\n"
+		outStr += "\t\t<IfDefine !WEBSERVICE_ON>\n"
+		outStr += "\t\t\tDeny from all\n"
+		outStr += "\t\t\tErrorDocument 403 /customerror/websitesoff403.html\n"
+		outStr += "\t\t</IfDefine>\n"
+		outStr += "\t</Directory>\n" unless @isDocumentRootRealm
+		return outStr
+	end
+end
+
+class Alias
+	attr_accessor :matchType
+	attr_accessor :urlPathOrRegularExpression
+	attr_accessor :fileSystemPath
+	def initialize(matchType=$XSMatchExact)
+		@matchType = matchType
+		@urlPathOrRegularExpression = ""
+		@fileSystemPath = ""
+		@parsedLines = []
+	end
+	def initWithCoder(coder)
+		initialize
+		@matchType = coder.decodeObjectForKey('matchType')
+		@urlPathOrRegularExpression = coder.decodeObjectForKey('urlPathOrRegularExpression')
+		@fileSystemPath = coder.decodeObjectForKey('fileSystemPath')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject @matchType, forKey='matchType'
+		coder.encodeObject @urlPathOrRegularExpression, forKey='urlPathOrRegularExpression'
+		coder.encodeObject @fileSystemPath, forKey='fileSystemPath'
+    end
+	def settings
+		return {
+			"matchType" => @matchType,
+			"urlPathOrRegularExpression" => @urlPathOrRegularExpression,
+			"fileSystemPath" => @fileSystemPath
+		}
+	end
+	def setSettings(settingsDict)
+		@matchType = settingsDict["matchType"]
+		@urlPathOrRegularExpression = settingsDict["urlPathOrRegularExpression"]
+		@fileSystemPath = settingsDict["fileSystemPath"]
+	end
+	def reconstruct
+		if @matchType == $XSMatchExact
+			outStr = "\tAlias #{@urlPathOrRegularExpression} \"#{@fileSystemPath}\"\n"
+		else
+			outStr = "\tAliasMatch #{@urlPathOrRegularExpression} \"#{@fileSystemPath}\"\n"
+		end
+		return outStr
+	end
+end
+
+class Redirect
+	attr_accessor :matchType
+	attr_accessor :status
+	attr_accessor :urlPathOrRegularExpression
+	attr_accessor :destinationURL
+	def initialize(matchType=$XSMatchExact)
+		@matchType = matchType
+		@status = ""
+		@urlPathOrRegularExpression = ""
+		@destinationURL = ""
+		@parsedLines = []
+	end
+	def initWithCoder(coder)
+		initialize
+		@matchType = coder.decodeObjectForKey('matchType')
+		@status	= coder.decodeObjectForKey('status')
+		@urlPathOrRegularExpression = coder.decodeObjectForKey('urlPathOrRegularExpression')
+		@destinationURL = coder.decodeObjectForKey('destinationURL')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject @matchType, forKey='matchType'
+		coder.encodeObject @status, forKey='status'
+		coder.encodeObject @urlPathOrRegularExpression, forKey='urlPathOrRegularExpression'
+		coder.encodeObject @destinationURL, forKey='destinationURL'
+    end
+	def settings
+		return {
+			"matchType" => @matchType,
+			"status" => @status,
+			"urlPathOrRegularExpression" => @urlPathOrRegularExpression,
+			"destinationURL" => @destinationURL
+		}
+	end
+	def setSettings(settingsDict)
+		@matchType = settingsDict["matchType"]
+		@status = settingsDict["status"]
+		@urlPathOrRegularExpression = settingsDict["urlPathOrRegularExpression"]
+		@destinationURL = settingsDict["destinationURL"]
+	end
+	def reconstruct
+		if @matchType == $XSMatchExact
+			outStr = "\tRedirect #{@status} #{@urlPathOrRegularExpression} #{@destinationURL}\n"
+			else
+			outStr = "\tRedirectMatch #{@status} #{@urlPathOrRegularExpression} #{@destinationURL}\n"
+		end
+		return outStr
+	end
+end
+
+class WebAppController
+	attr_accessor :webApps
+	attr_reader :definedWebApps
+	def initialize
+		@preflightCache = {}
+		@webApps = []
+		@definedWebApps = []
+		getDefinedWebAppsFromRepository
+	end
+	def path(key)
+		"#{$SERVER_INSTALL_PATH_PREFIX}/System/Library/LaunchDaemons/#{key}.plist"
+	end
+	def getDefinedWebAppsFromRepository
+		Dir.glob("#{$MainConfigDir}webapps/*.plist").each do |filePath|
+			dict = NSDictionary.dictionaryWithContentsOfFile(filePath).to_ruby
+			if dict.nil?
+				$logger.warn("WebApp plist #{filePath} is invalid; skipping")
+				next
+			end
+			webApp = WebApp.new
+			webApp.setSettings(dict)
+			@definedWebApps.push(webApp)
+		end
+	end
+	def webServerIsRequired
+		@webApps.each do |webApp|
+			return true if webApp.includeFiles.count > 0 || webApp.requiredModuleNames.count > 0 || webApp.proxies.count > 0
+		end
+		return false
+	end
+	def webAppWithName(name)
+		@definedWebApps.select { |webApp| webApp.name == name }[0]
+	end
+	def allWebAppNames
+		@webApps.collect { |webApp| webApp.name }
+	end
+	def allRequiredWebAppNames(webAppName)
+		allNames = []
+		webApp = webAppWithName(webAppName)
+		webApp.requiredWebAppNames.each do |subWebAppName| 
+			allNames << subWebAppName 
+			allNames = allNames | allRequiredWebAppNames(subWebAppName)
+		end unless webApp.nil? || webApp.requiredWebAppNames.nil?
+		return allNames
+	end
+	def markRequiredBy
+		# Set the requiredByWebAppNames property in each web app that appears 
+		# in the requiredWebAppNames property of another web app.
+		@webApps.each do |thisWebApp|
+			webAppsNamesThatRequireThisWebApp = allWebAppNames.select { |aname| allRequiredWebAppNames(aname).include?(thisWebApp.name) }.uniq
+			if webAppsNamesThatRequireThisWebApp.count > 0
+				thisWebApp.requiredByWebAppNames += webAppsNamesThatRequireThisWebApp
+				thisWebApp.requiredByWebAppNames.uniq!
+				thisWebApp.requiredByWebAppNames.delete(thisWebApp.name)
+				$logger.debug("markRequiredBy: #{thisWebApp.name} required by #{thisWebApp.requiredByWebAppNames.inspect}")
+			end
+		end
+	end
+	def isRequired(webApp)
+		if !webApp.nil? && webApp.requiredByWebAppNames.count > 0
+			return (allWebAppNames & webApp.requiredByWebAppNames).count > 0
+		else
+			return false
+		end
+	end
+	def isUsable(webApp)
+		if !webApp.nil? && !webApp.preflightCommand.nil? && !webApp.preflightCommand.empty?
+			return false if !FileTest.executable?(webApp.preflightCommand)
+			if @preflightCache[webApp.preflightCommand].nil?
+				$logger.info("Running preflight command #{webApp.preflightCommand} for webApp #{webApp.name}")
+				WebConfig.runCmd(webApp.preflightCommand)
+				@preflightCache[webApp.preflightCommand] = $?.exitstatus
+				if $?.exitstatus != 0
+					$logger.warn("Preflight command #{webApp.preflightCommand} failed for webApp #{webApp.name}, not usable")
+				end
+			end
+			return @preflightCache[webApp.preflightCommand] == 0
+		end
+		return true
+	end
+	def requiredModuleNames
+		allRequiredModuleNames = []
+		@webApps.each do |webApp| 
+			allRequiredModuleNames += webApp.requiredModuleNames
+		end
+		return allRequiredModuleNames.uniq
+	end
+	def launchKeyIsLoaded(launchKey)
+		msg = launch_data_alloc(LAUNCH_DATA_DICTIONARY)
+		jobLabel = launch_data_new_string(launchKey)
+		launch_data_dict_insert(msg, jobLabel, LAUNCH_KEY_GETJOB)
+		response = launch_msg(msg)
+		launch_data_free(msg)
+		return false if response.nil?
+		if launch_data_get_type(response) == LAUNCH_DATA_DICTIONARY
+			launch_data_free(response)
+			return true
+		else
+			launch_data_free(response)
+			return false
+		end
+	end
+	def loadLaunchKey(launchKey)
+		if !FileTest.exist?(path(launchKey))
+			$logger.error("webApp launchd plist does not exist: #{path(launchKey)}, won't try to load")
+		else
+			cmdStdOut = WebConfig.runCmd("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl enable service=#{launchKey} 2>&1")
+			if $?.exitstatus != 0
+                $logger.warn("Failed on first attempt to load #{path(launchKey)} for added webApp: #{cmdStdOut}")
+                sleep(1)
+                cmdStdOut = WebConfig.runCmd("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl enable service=#{launchKey} 2>&1")
+                if $?.exitstatus != 0
+                    $logger.error("Failed on second attempt to load #{path(launchKey)} for added webApp: #{cmdStdOut}")
+                    else
+                    $logger.info("Loaded on second attempt: #{path(launchKey)} for webApp")
+                end
+			else
+				$logger.info("Loaded: #{path(launchKey)} for webApp")
+			end
+		end
+	end
+
+	def unloadLaunchKey(launchKey)
+		if !FileTest.exist?(path(launchKey))
+			$logger.error("webApp launchd plist does not exist: #{path(launchKey)}, won't try to unload")
+		else
+			cmdStdOut = WebConfig.runCmd("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl disable service=#{launchKey} 2>&1")
+			if $?.exitstatus != 0
+                $logger.error("Failed on first attempt to unload #{path(launchKey)} for added webApp: #{cmdStdOut}")
+                sleep(1)
+                cmdStdOut = WebConfig.runCmd("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl disable service=#{launchKey} 2>&1")
+                if $?.exitstatus != 0
+                    $logger.error("Failed on second attempt to unload #{path(launchKey)} for added webApp: #{cmdStdOut}")
+                    else
+                    $logger.info("Unloaded on second attempt: #{path(launchKey)} for webApp")
+                end
+			else
+				$logger.info("Unloaded: #{path(launchKey)} for webApp")
+			end
+		end
+	end
+	def unloadAll
+		oldLaunchKeys = []
+		oldStopCommands = []
+		$logger.warn("Unloading and stopping all loaded webapps")
+		$metaData.oldSites.each do |oldSite|
+			if !oldSite["webApps"].nil?
+				oldSite["webApps"].each do |webAppDict|
+					oldLaunchKeys += webAppDict["launchKeys"] unless (webAppDict["launchKeys"].nil? || webAppDict["launchKeys"].count ==0)
+					oldStopCommands.push(webAppDict["stopCommand"]) unless webAppDict["stopCommand"].nil?
+				end
+			end
+		end
+		$metaData.oldGlobalWebAppNames.each do |oldGlobalWebAppName|
+			$logger.debug("oldGlobalWebAppName to unload = #{oldGlobalWebAppName}")
+			oldLaunchKeys += webAppWithName(oldGlobalWebAppName).launchKeys unless (webAppWithName(oldGlobalWebAppName).nil? || webAppWithName(oldGlobalWebAppName).launchKeys.nil?)
+		end
+		oldLaunchKeys.uniq.each { |launchKey| unloadLaunchKey(launchKey) }
+		oldStopCommands.uniq.each { |stopCommand| `#{stopCommand}` }
+	end
+	def reload
+		# Unload the previous configuration's launchKeys, if any, and load the new ones.
+		# Also unload secondary launchKeys (which may be shared) if no other webapps need them.
+		oldLaunchKeys = []
+		oldLaunchKeyRefs = {}
+		newLaunchKeys = []
+		oldStartCommands = []
+		oldStopCommands = []
+		newStartCommands = []
+		newStopCommands = []
+		
+		$metaData.oldSites.each do |oldSite|
+			if !oldSite["webApps"].nil?
+				oldSite["webApps"].each do |webAppDict|
+					oldLaunchKeys += webAppDict["launchKeys"] unless (webAppDict["launchKeys"].nil? || webAppDict["launchKeys"].count ==0)
+					oldStartCommands.push(webAppDict["startCommand"]) unless webAppDict["startCommand"].nil?
+					oldStopCommands.push(webAppDict["stopCommand"]) unless webAppDict["stopCommand"].nil?
+				end
+			end
+		end
+		$metaData.oldGlobalWebAppNames.each do |oldGlobalWebAppName|
+			oldLaunchKeys += webAppWithName(oldGlobalWebAppName).launchKeys unless (webAppWithName(oldGlobalWebAppName).nil? || webAppWithName(oldGlobalWebAppName).launchKeys.nil?)
+		end
+
+		oldLaunchKeys.flatten! unless oldLaunchKeys.nil?
+		oldLaunchKeys.uniq! unless oldLaunchKeys.nil?
+		
+		$logger.debug("oldLaunchKeys = #{oldLaunchKeys.inspect}")
+		newSiteWebApps = $metaData.newSites.collect { |site| site["webApps"] unless site["webApps"].nil? }.flatten.uniq
+		newSiteWebApps.each do |webAppDict|
+			next if webAppDict.nil?
+			next if !isRequired(webAppWithName(webAppDict["name"]))
+			next if !$webAppController.isUsable(webAppWithName(webAppDict["name"])) && $config["WebAppPreflightFailureBlocksExecutables"]
+			if !webAppDict["launchKeys"].nil?
+				newLaunchKeys += webAppDict["launchKeys"] unless (webAppDict["launchKeys"].nil? || webAppDict["launchKeys"].count ==0)
+			end
+			newStartCommands.push(webAppDict["startCommand"]) unless webAppDict["startCommand"].nil? || webAppDict["startCommand"] == ""
+			newStopCommands.push(webAppDict["stopCommand"]) unless webAppDict["stopCommand"].nil? || webAppDict["stopCommand"] == ""
+		end unless newSiteWebApps.nil?
+		$metaData.newGlobalWebAppNames.each do |newGlobalWebAppName|
+			newLaunchKeys += webAppWithName(newGlobalWebAppName).launchKeys unless (webAppWithName(newGlobalWebAppName).nil? || webAppWithName(newGlobalWebAppName).launchKeys.nil?)
+		end unless $metaData.newGlobalWebAppNames.nil?
+
+		newLaunchKeys.flatten! unless newLaunchKeys.nil?
+		newLaunchKeys.uniq! unless newLaunchKeys.nil?
+		$logger.debug("Leaving launchKeys loaded = #{oldLaunchKeys & newLaunchKeys}")
+		(oldLaunchKeys & newLaunchKeys).each do |launchKey|
+			if launchKeyIsLoaded(launchKey)
+				$logger.debug("Leaving launchKey loaded: #{launchKey}")
+			else
+				$logger.info("launchKey should have already been loaded. Loading: #{launchKey}")
+				loadLaunchKey(launchKey)
+			end
+		end
+		(oldLaunchKeys - newLaunchKeys).each { |launchKey| unloadLaunchKey(launchKey) }
+		(newLaunchKeys - oldLaunchKeys).each { |launchKey| loadLaunchKey(launchKey) }
+		(oldStopCommands - newStopCommands).uniq.each do |stopCommand|
+			next if stopCommand.empty?
+			$logger.info("Executing webApp stop command: #{stopCommand} for webApp")
+			`#{stopCommand}`
+		end
+		newStartCommands.uniq.each do |startCommand|
+			next if startCommand.empty?
+			$logger.info("Executing webApp start command: #{startCommand} for webApp")
+			`#{startCommand}`
+		end
+	end
+end
+
+class WebApp
+	attr_accessor :name
+	attr_accessor :displayName
+	attr_accessor :proxies
+	attr_accessor :launchKeys
+	attr_accessor :includeFiles
+	attr_accessor :requiredModuleNames
+	attr_accessor :requiredWebAppNames
+	attr_accessor :requiredByWebAppNames
+	attr_accessor :preflightCommand
+	attr_accessor :startCommand
+	attr_accessor :stopCommand
+	attr_accessor :sslPolicy
+	attr_accessor :requiresSSL
+	XSUseSSLWhenEnabled = 0
+	XSUseSSLAlways = 1
+	XSUseSSLOnlyWhenCertificateIsTrustable = 2
+	XSUseSSLNever = 3
+	XSUseSSLAndNonSSL = 4
+	def initialize
+		@name = ""
+		@displayName = ""
+		@proxies = {}
+		@launchKeys = []
+		@includeFiles = []
+		@requiredModuleNames = []
+		@requiredWebAppNames = []
+		@requiredByWebAppNames = []
+		@preflightCommand = ""
+		@startCommand = ""
+		@stopCommand = ""
+		@sslPolicy = XSUseSSLWhenEnabled
+		@requiresSSL = false
+	end
+	def initWithCoder(coder)
+		initialize
+		@name = coder.decodeObjectForKey('name')
+		@displayName = coder.decodeObjectForKey('displayName')
+		@proxies = coder.decodeObjectForKey('proxies')
+		@launchKeys = coder.decodeObjectForKey('launchKeys')
+		@includeFiles = coder.decodeObjectForKey('includeFiles')
+		@requiredModuleNames = coder.decodeObjectForKey('requiredModuleNames')
+		@requiredWebAppNames = coder.decodeObjectForKey('requiredWebAppNames')
+		@requiredByWebAppNames = coder.decodeObjectForKey('requiredByWebAppNames')
+		@preflightCommand = coder.decodeObjectForKey('preflightCommand')
+		@startCommand = coder.decodeObjectForKey('startCommand')
+		@stopCommand = coder.decodeObjectForKey('stopCommand')
+		@sslPolicy = coder.decodeObjectForKey('sslPolicy')
+		@requiresSSL = coder.decodeObjectForKey('requiresSSL')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject(@name, forKey='name')
+		coder.encodeObject(@displayName, forKey='displayName')
+		coder.encodeObject(@proxies, forKey='proxies')
+		coder.encodeObject(@launchKeys, forKey='launchKeys')
+		coder.encodeObject(@includeFiles, forKey='includeFiles')
+		coder.encodeObject(@requiredModuleNames, forKey='requiredModuleNames')
+		coder.encodeObject(@requiredWebAppNames, forKey='requiredWebAppNames')
+		coder.encodeObject(@requiredByWebAppNames, forKey='requiredByWebAppNames')
+		coder.encodeObject(@preflightCommand, forKey='preflightCommand')
+		coder.encodeObject(@startCommand, forKey='startCommand')
+		coder.encodeObject(@stopCommand, forKey='stopCommand')
+		coder.encodeObject(@sslPolicy, forKey='sslPolicy')
+		coder.encodeObject(@requiresSSL, forKey='requiresSSL')
+    end
+	def settings
+		proxyHashes = {}
+		@proxies.each { |path, proxy| proxyHashes[path] = proxy.settings unless proxy.nil? } unless @proxies.nil?
+		return {
+			"name" => @name,
+			"displayName" => @displayName,
+			"proxies" => proxyHashes,
+			"launchKeys" => @launchKeys,
+			"includeFiles" => @includeFiles,
+			"requiredModuleNames" => @requiredModuleNames,
+			"requiredWebAppNames" => @requiredWebAppNames,
+			"requiredByWebAppNames" => @requiredByWebAppNames,
+			"preflightCommand" => @preflightCommand,
+			"startCommand" => @startCommand,
+			"stopCommand" => @stopCommand,
+			"sslPolicy" => @sslPolicy,
+			"requiresSSL" => @requiresSSL,
+		}
+	end
+	def setSettings(settingsDict)
+		@name = settingsDict["name"]
+		@displayName = settingsDict["displayName"] unless settingsDict["displayName"].nil?
+		settingsDict["proxies"].each do |key, proxyDict| 
+				proxy = Proxy.new
+				proxy.path = proxyDict["path"]
+				proxy.urls = proxyDict["urls"] unless proxyDict["urls"].nil?
+				proxy.keysAndValues = ""
+				@proxies[key] = proxy
+		end unless settingsDict["proxies"].nil?
+		@launchKeys = settingsDict["launchKeys"] unless settingsDict["launchKeys"].nil?
+		@includeFiles = settingsDict["includeFiles"] unless settingsDict["includeFiles"].nil?
+		@requiredModuleNames = settingsDict["requiredModuleNames"] unless settingsDict["requiredModuleNames"].nil?
+		@requiredWebAppNames = settingsDict["requiredWebAppNames"] unless settingsDict["requiredWebAppNames"].nil?
+		@requiredByWebAppNames = settingsDict["requiredByWebAppNames"] unless settingsDict["requiredByWebAppNames"].nil?
+		@preflightCommand = settingsDict["preflightCommand"] unless settingsDict["preflightCommand"].nil?
+		@startCommand = settingsDict["startCommand"] unless settingsDict["startCommand"].nil?
+		@stopCommand = settingsDict["stopCommand"] unless settingsDict["stopCommand"].nil?
+		@sslPolicy = settingsDict["sslPolicy"] unless settingsDict["sslPolicy"].nil?
+		@requiresSSL = settingsDict["requiresSSL"] unless settingsDict["requiresSSL"].nil?
+	end
+	def isGlobal
+		return @includeFiles.count == 0 && @requiredModuleNames.count == 0 && @proxies.count == 0
+	end
+	def isMainOnly
+		# Do not accept in writeSettings on a site, to avoid overwriting setWebAppState
+		return @includeFiles.count == 0 && @requiredModuleNames.count > 0 && @proxies.count == 0
+	end
+
+	def reconstruct(sslConfig, includeFilesInVHost, rewriteExclusionsInVHost)
+=begin
+		Generate webApp directives according to this table.
+		Deprecated sslProperty value				http vhost			https vhost			new equivalent
+		XSUseSSLWhenEnabled									Y		|	Y					requiresSSL=false
+		XSUseSSLAlways										N -->	|	Y					requiresSSL=true
+		XSUseSSLOnlyWhenCertificateIsTrustable, (unused	)	Y		|	Y					requiresSSL=false
+		XSUseSSLNever										Y		|	N					requiresSSL=false
+		XSUseSSLAndNonSSL									Y		|	Y					requiresSSL=false
+=end
+		raise "nil sslConfig" if sslConfig.nil?
+		
+		@proxies.each_key { |path| rewriteExclusionsInVHost.add(path) } if !sslConfig.requiresSSL && @sslPolicy == XSUseSSLNever
+		outStr = ''
+		if (sslConfig.requiresSSL) || (!sslConfig.requiresSSL && @sslPolicy != XSUseSSLAlways)
+			# Do the proxies without any urls first, as those are exclusions and need to precede
+			# the regular proxies in config file
+			@proxies.select { |path, proxy| proxy.urls.count == 0}.each { |path, proxy| outStr += proxy.reconstruct(@name) }
+			@proxies.select { |path, proxy| proxy.urls.count > 0 && path.count("/") > 2 }.each { |path, proxy| outStr += proxy.reconstruct(@name) }		
+			@proxies.select { |path, proxy| proxy.urls.count > 0 && path.count("/") == 2 }.each { |path, proxy| outStr += proxy.reconstruct(@name) }		
+			@proxies.select { |path, proxy| proxy.urls.count > 0 && path.count("/") == 1 }.each { |path, proxy| outStr += proxy.reconstruct(@name) }
+			includeFilesInVHost.merge(@includeFiles)
+		end
+		return outStr
+	end
+end
+
+class MainHost
+	# The main Apache server configuration
+	attr_accessor :maxClients
+	attr_accessor :keepAliveTimeout
+	attr_accessor :configFile
+	attr_accessor :deleteDirectives
+	attr_accessor :miscDirectives
+	attr_accessor :enabledModules
+	attr_accessor :disabledModules
+	attr_accessor :additionalRequiredModuleNames
+	def initWithCoder(coder)
+		initialize
+		@maxClients = coder.decodeObjectForKey('maxClients')
+		@keepAliveTimeout = coder.decodeObjectForKey('keepAliveTimeout')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject(@maxClients, forKey='maxClients')
+		coder.encodeObject(@keepAliveTimeout, forKey='keepAliveTimeout')
+    end 
+	def initialize(configFile)
+		@configFile = configFile
+		@deleteDirectives = {}
+		@miscDirectives = {}
+		@enabledModules = []
+		@disabledModules = []
+		@additionalRequiredModuleNames = []
+		@moduleNamesToDisableWhenNotRequired = ["php5_module", "wsgi_module", "include_module"]
+		parse
+	end
+	def parse
+		@configFile.parsedLines.each do |parsedLine|
+			if parsedLine.cmd
+				case parsedLine.cmd.downcase
+				when "maxclients"
+					@maxClients = parsedLine.args[0]
+				when "keepalivetimeout"
+					@keepAliveTimeout = parsedLine.args[0]
+				when "loadmodule"
+					if parsedLine.isCommentedOut
+						@disabledModules.push(parsedLine.args[0])
+					else
+						@enabledModules.push(parsedLine.args[0])
+					end
+				else
+				end
+			end
+		end
+		@parsed = true
+	end
+	def settings
+		return  {
+			"maxClients" => @maxClients,
+			"keepAliveTimeout" => @keepAliveTimeout
+		}
+	end
+	def setSettings(newSettings)
+		@maxClients = newSettings["maxClients"] unless newSettings["maxClients"].nil?
+		@keepAliveTimeout = newSettings["keepAliveTimeout"].to_i.to_s unless newSettings["keepAliveTimeout"].nil?
+	end
+	def write
+		@configFile.write
+	end
+	def reconstruct
+		outStr = ""
+		maxClientsDone = false
+		serverLimitDone = false
+		keepAliveTimeoutDone = false
+		requiredModuleNames = $webAppController.requiredModuleNames
+		@configFile.parsedLines.each do |parsedLine|
+			case parsedLine.cmd.downcase
+			when "maxclients"
+				if !maxClientsDone
+					parsedLine.args[0] = @maxClients
+					outStr += parsedLine.reconstruct
+					maxClientsDone = true
+				end
+			when "serverlimit"
+				if !serverLimitDone
+					parsedLine.args[0] = @maxClients	# MaxClients and ServerLimit are kept in sync
+					outStr += parsedLine.reconstruct
+					serverLimitDone = true
+				end
+			when "keepalivetimeout"
+				if !keepAliveTimeoutDone
+					parsedLine.args[0] = @keepAliveTimeout
+					outStr += parsedLine.reconstruct
+					keepAliveTimeoutDone = true
+				end
+			when "loadmodule"
+				$metaData.newGlobalWebAppNames.each do |newGlobalWebAppName|
+					@additionalRequiredModuleNames += $webAppController.webAppWithName(newGlobalWebAppName).requiredModuleNames unless ($webAppController.webAppWithName(newGlobalWebAppName).nil? || $webAppController.webAppWithName(newGlobalWebAppName).requiredModuleNames.nil?)
+				end unless $metaData.newGlobalWebAppNames.nil?
+				if requiredModuleNames.include?(parsedLine.args[0]) || @additionalRequiredModuleNames.include?(parsedLine.args[0])
+					parsedLine.isCommentedOut = false
+				end
+				if @moduleNamesToDisableWhenNotRequired.include?(parsedLine.args[0]) && !requiredModuleNames.include?(parsedLine.args[0]) && !@additionalRequiredModuleNames.include?(parsedLine.args[0])
+					parsedLine.isCommentedOut = true
+				end
+				outStr += parsedLine.reconstruct
+			else
+				cmd = parsedLine.cmd.downcase
+				if @miscDirectives.has_key?(cmd)
+					outStr += @miscDirectives[cmd].reconstruct
+					@miscDirectives.delete(cmd)
+				end
+				if @deleteDirectives.has_key?(cmd) && deleteDirectives[cmd].reconstruct == parsedLine.reconstruct
+					# delete by omitting from outStr
+				else
+					outStr += parsedLine.reconstruct
+				end
+			end
+		end
+		return outStr
+	end
+end
+
+
+class WebVHost
+	# The configuration of a single Apache virtual host
+	attr_accessor :isDefaultSite
+	attr_accessor :filePath
+	attr_accessor :id
+	attr_accessor :serverAddress
+	attr_accessor :port
+	attr_accessor :documentRoot
+	attr_accessor :serverAdmin
+	attr_accessor :serverName
+	attr_accessor :serverAliases
+	attr_accessor :directoryIndexes
+	attr_accessor :aliases
+	attr_accessor :redirects
+	attr_accessor :fullSiteRedirectToOtherSite
+	attr_accessor :customLogPath
+	attr_accessor :errorLogPath
+	attr_accessor :sslConfig
+	attr_accessor :proxies
+	attr_accessor :webApps
+	attr_accessor :realms
+	attr_accessor :errorDocuments
+	attr_accessor :optionsConfig
+	attr_accessor :override
+	attr_accessor :dav
+	attr_accessor :miscDirectives
+	attr_accessor :deleteDirectives
+	attr_accessor :parsed
+	attr_accessor :container
+	attr_accessor :configFile
+	def initialize
+		@isDefaultSite = false
+		@parsed = false
+		@proxies = {}
+		@realms = {}
+		@errorDocuments = {}
+		@webApps = []
+		@optionsConfig = nil
+		@override = nil
+		@serverAliases = []
+		@directoryIndexes = []
+		@aliases = []
+		@redirects = []
+		@fullSiteRedirectToOtherSite = ""
+		@customLogPath = "/dev/null"
+		@errorLogPath = "/dev/null"
+		@deleteDirectives = {}
+		@miscDirectives = {}
+		@serverName = "*"
+		@sslConfig = SSLConfig.new
+		@sslConfig.vHost = self
+	end
+	def initWithCoder(coder)
+		initialize
+		@documentRoot = coder.decodeObjectForKey('documentRoot')
+		@serverAdmin = coder.decodeObjectForKey('serverAdmin')
+		@serverAddress = coder.decodeObjectForKey('serverAddress')
+		@serverName = coder.decodeObjectForKey('serverName')
+		@serverAliases = coder.decodeObjectForKey('serverAliases')
+		@override = coder.decodeObjectForKey('allowAllOverrides')
+		@allowFolderListing = coder.decodeObjectForKey('allowFolderListing')
+		@allowCGIExecution = coder.decodeObjectForKey('allowCGIExecution')
+		@enableServerSideIncludes = coder.decodeObjectForKey('enableServerSideIncludes')
+		@directoryIndexes = coder.decodeObjectForKey('directoryIndexes')
+		@aliases = coder.decodeObjectForKey('aliases')
+		@redirects = coder.decodeObjectForKey('redirects')
+		@fullSiteRedirectToOtherSite = coder.decodeObjectForKey('fullSiteRedirectToOtherSite')
+		@customLogPath = coder.decodeObjectForKey('customLogPath')
+		@errorLogPath = coder.decodeObjectForKey('errorLogPath')
+		@port = coder.decodeObjectForKey('port')
+		@sslConfig = coder.decodeObjectForKey('sslConfig')
+		@proxies = coder.decodeObjectForKey('proxies')
+		@realms = coder.decodeObjectForKey('realms')
+		@errorDocuments = coder.decodeObjectForKey('errorDocuments')
+		@webApps = coder.decodeObjectForKey('webApps')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject(@documentRoot, forKey='documentRoot')
+		coder.encodeObject(@serverAdmin, forKey='serverAdmin')
+		coder.encodeObject(@serverAddress, forKey='serverAddress')
+		coder.encodeObject(@serverName, forKey='serverName')
+		coder.encodeObject(@serverAliases, forKey='serverAliases')
+		coder.encodeObject(@override, forKey='allowAllOverrides')
+		coder.encodeObject(@allowFolderListing, forKey='allowFolderListing')
+		coder.encodeObject(@allowCGIExecution, forKey='allowCGIExecution')
+		coder.encodeObject(@enableServerSideIncludes, forKey='enableServerSideIncludes')
+		coder.encodeObject(@directoryIndexes, forKey='directoryIndexes')
+		coder.encodeObject(@aliases, forKey='aliases')
+		coder.encodeObject(@redirects, forKey='redirects')
+		coder.encodeObject(@fullSiteRedirectToOtherSite, forKey='fullSiteRedirectToOtherSite')
+		coder.encodeObject(@customLogPath, forKey='customLogPath')
+		coder.encodeObject(@errorLogPath, forKey='errorLogPath')
+		coder.encodeObject(@port, forKey='port')
+		coder.encodeObject(@sslConfig, forKey='sslConfig')
+		coder.encodeObject(@proxies, forKey='proxies')
+		coder.encodeObject(@realms, forKey='realms')
+		coder.encodeObject(@errorDocuments, forKey='errorDocuments')
+		coder.encodeObject(@webApps, forKey='webApps')
+    end
+	def parse
+		@id = @configFile.id
+		@configFile.parsedLines.each { |parsedLine|
+			if parsedLine.cmd
+				case parsedLine.cmd.downcase
+				when "documentroot"
+					@documentRoot = WebConfig.deQuote(parsedLine.argAsString)
+				when "serveradmin"
+					@serverAdmin = parsedLine.args[0]
+				when "servername"
+					if parsedLine.args[0].index(":").nil?
+						# port already obtained from VirtualHost directive
+						@serverName = parsedLine.args[0]
+					else
+						@serverName = parsedLine.args[0].split(":")[0]
+						@port = parsedLine.args[0].split(":")[1]
+					end
+				when "directoryindex"
+					@directoryIndexes = parsedLine.args
+				when "serveralias"
+				   @serverAliases = parsedLine.args
+				when "alias"
+				   newAlias = Alias.new($XSMatchExact)
+				   m = parsedLine.argAsString.match(/(\S+)\s+("?.*"?)/)
+				   newAlias.urlPathOrRegularExpression = m[1]
+				   newAlias.fileSystemPath = WebConfig.deQuote(m[2])
+				   @aliases << newAlias
+				when "aliasmatch"
+					newAlias = Alias.new($XSMatchRegularExpression)
+					m = parsedLine.argAsString.match(/(\S+)\s+("?.*"?)/)
+					newAlias.urlPathOrRegularExpression = m[1]
+					newAlias.fileSystemPath = WebConfig.deQuote(m[2])
+					@aliases << newAlias
+				when "redirect"
+				   newRedirect = Redirect.new($XSMatchExact)
+				   newRedirect.status = parsedLine.args[0]
+				   newRedirect.urlPathOrRegularExpression = parsedLine.args[1]
+				   newRedirect.destinationURL = parsedLine.args[2]
+				   @redirects << newRedirect
+				when "redirectmatch"
+				   newRedirect = Redirect.new($XSMatchRegularExpression)
+				   newRedirect.status = parsedLine.args[0]
+				   newRedirect.urlPathOrRegularExpression = parsedLine.args[1]
+				   newRedirect.destinationURL = parsedLine.args[2]
+				   @redirects << newRedirect
+				when "rewriterule"
+					if [".*", "(.*)"].include?(parsedLine.args[0])
+						@fullSiteRedirectToOtherSite = parsedLine.args[1].sub('%{REQUEST_URI}','')
+					end
+				when "customlog"
+				   @customLogPath = parsedLine.args[0]
+				when "errordocument"
+					next if parsedLine.args[1].match(/websitesoff403/)
+					m = parsedLine.argAsString.match(/(\S+)\s+("?.*"?)/)
+					@errorDocuments[m[1]] = WebConfig.deQuote(m[2])
+				when "errorlog"
+				   @errorLogPath = parsedLine.args[0]
+				when "sslengine"
+					@sslConfig.requiresSSL = parsedLine.args[0].downcase == "on"
+				when "sslcertificatefile", "sslcertificatekeyfile", "sslcertificatechainfile"
+					if @sslConfig.certID == ""
+						@sslConfig.setCertIDFromCertPath(WebConfig.deQuote(parsedLine.argAsString))
+					end
+				when "options"
+					@optionsConfig = OptionsConfig.new(parsedLine.args)
+				when "allowoverride"
+					@override = parsedLine.args[0]
+				when "dav"
+					@dav = parsedLine.args[0]
+				else
+				end
+			end
+		}
+		@optionsConfig = OptionsConfig.new if @optionsConfig.nil?
+		if @parsed
+			$logger.warn("Reparsed: #{vhid}")
+		end
+		@parsed = true
+	end
+	def vhid
+		return nil if @serverAddress.nil? || @port.nil? || @serverName.nil?
+		return "#{@serverAddress == '*' ? 'any' : @serverAddress}_#{@port}_#{@serverName == '*' ? '' : @serverName}"		
+	end
+	def metaDataKey
+		return "#{@serverAddress}:#{@port}_#{@serverName == '*' ? '' : @serverName}"
+	end
+	def configFilePath
+		return "#{$MainConfigDir}sites/0000_#{vhid}.conf"
+	end
+	def webAppNames
+		return @webApps.collect { |webApp| webApp.name }
+	end
+	def allWebAppIncludes
+		$webAppController.definedWebApps.collect { |webApp| webApp.includeFiles }.flatten.uniq
+	end
+	def reconstructWebApps
+		outStr = ""
+		webAppIncludes = Set.new
+		webAppRewriteExclusions = Set.new
+		if !@fullSiteRedirectsDone
+			if !@fullSiteRedirectToOtherSite.nil? && !@fullSiteRedirectToOtherSite.empty?
+				outStr += "\tRewriteEngine On\n\tRewriteRule .* #{@fullSiteRedirectToOtherSite}%{REQUEST_URI} [R]\n"
+			end
+			@fullSiteRedirectsDone = true
+		end
+		@webApps.each do |webApp|
+			next if !$webAppController.isRequired(webApp) || (!$webAppController.isUsable(webApp) && $config["WebAppPreflightFailureBlocksDirectives"])
+			outStr += webApp.reconstruct(@sslConfig, webAppIncludes, webAppRewriteExclusions)
+		end
+		webAppIncludes.each do |include| 
+			outStr += "\tInclude #{include}\n" 
+		end
+		if $config["CreateRedirectToSSLVirtualHost"] && @isDefaultSite
+			rewriteExclusionsSection = ""
+			webAppRewriteExclusions.each { |path| rewriteExclusionsSection += "\tRewriteRule #{path} - [L]\n"}
+			outStr += "\tRewriteEngine On\n\t#{rewriteExclusionsSection}\tRewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}\n"
+		end
+		return outStr
+	end
+	def reconstruct
+		outStr = ""
+		proxiesDone = false
+		realmsDone = false
+		errorDocumentsDone = false
+		documentRootDirectoryDone = false
+		sslDone = false
+		serverAliasDone = false
+		aliasesDone = false
+		redirectsDone = false
+		@fullSiteRedirectsDone = false
+		processingContainer = false
+		containerType = ""
+		@configFile.parsedLines.each do |parsedLine|
+			#$logger.debug("parsedLine #{parsedLine.cmd}")
+			next if processingContainer && parsedLine.cmd.downcase != containerType
+				# skip directives in container as they are regenerated in the container's when clause
+			case parsedLine.cmd.downcase
+			when "directory"
+				if parsedLine.isStartContainer
+					processingContainer = true
+					containerType = "directory"
+					thisDirectory = WebConfig.deQuote(parsedLine.args[0])
+					if !documentRootDirectoryDone || !@realms[thisDirectory].nil?
+						if !documentRootDirectoryDone
+							outStr += "\t<Directory \"#{@documentRoot}\">\n"
+							outStr += "#{@optionsConfig.reconstruct}"
+							outStr += "\t\tAllowOverride #{@override}\n"
+							outStr += "\t\t<IfModule mod_dav.c>\n"
+							outStr += "\t\t\tDAV #{@dav}\n"
+							outStr += "\t\t</IfModule>\n"
+							outStr += "\t\t<IfDefine !WEBSERVICE_ON>\n"
+							outStr += "\t\t\tDeny from all\n"
+							outStr += "\t\t\tErrorDocument 403 /customerror/websitesoff403.html\n"
+							outStr += "\t\t</IfDefine>\n"
+							if !@realms[thisDirectory].nil?
+								@realms[thisDirectory].isDocumentRootRealm = true
+								outStr += @realms[thisDirectory].reconstruct 
+							end
+							outStr += "\t</Directory>\n"
+							documentRootDirectoryDone = true
+						end
+					else
+						$logger.debug("Update of vhost deletes old directory block #{thisDirectory}")
+					end
+				elsif parsedLine.isCloseContainer
+					processingContainer = false
+					containerType = ""
+				end
+			when "authname", "authtype", "limit", "require", "options", "allowoverride", "dav" 	#omit becase these are handled by realms
+			when "rewriterule", "rewriteengine"	#omit because these are handled by webapp rewrite exclusions
+			when "include"
+				# Preserve non-webApp includes
+				if !allWebAppIncludes.include?(WebConfig.deQuote(parsedLine.args[0]))
+					outStr += parsedLine.reconstruct
+				end
+			when "proxypass", "proxypassreverse"
+				if parsedLine.args[1][0,32] == "balancer://balancer-group-webapp" || parsedLine.args[1] == "!"
+					if !proxiesDone
+						outStr += reconstructWebApps
+						proxiesDone = true
+					end
+				else
+					# it's not a directive we manage
+					outStr += parsedLine.reconstruct
+				end
+			when "errordocument"
+				if !@errorDocuments.nil? && @errorDocuments.count > 0
+					errorDocumentDirectives = @errorDocuments.each.collect { |code,string| "\tErrorDocument #{code} #{WebConfig.quoteIfSpacey(string)}\n" }
+					outStr += errorDocumentDirectives.join
+				end
+				errorDocumentsDone = true
+			when "balancermember"
+				if parsedLine.args[0][0,32] == "balancer://balancer-group-webapp"
+					# defer to webApps
+				else
+					outStr += parsedLine.reconstruct
+				end
+			when "virtualhost"
+				if parsedLine.isCloseContainer
+					if !proxiesDone
+						outStr += reconstructWebApps
+						proxiesDone = true
+					end
+					if !realmsDone
+						@realms.each { |realmKey, realm| outStr += realm.reconstruct unless realm.isDocumentRootRealm}
+						realmsDone = true
+					end
+					if !errorDocumentsDone
+						if !@errorDocuments.nil? && @errorDocuments.count > 0
+							errorDocumentDirectives = @errorDocuments.each.collect { |code,string| "\tErrorDocument #{code} #{WebConfig.quoteIfSpacey(string)}\n" }
+							outStr += errorDocumentDirectives.join
+						end
+						errorDocumentsDone = true
+					end
+					if !serverAliasDone
+						outStr += "\tServerAlias #{@serverAliases.join(" ")}\n" unless @serverAliases.nil? || @serverAliases.count < 1
+						serverAliasDone = true
+					end
+					if !aliasesDone
+						@aliases.each do |aliasInstance|
+						outStr += aliasInstance.reconstruct
+					end
+						aliasesDone = true
+					end
+					if !redirectsDone
+						@redirects.each do |redirect|
+						outStr += redirect.reconstruct
+					end
+						redirectsDone = true
+					end
+					if @miscDirectives.length > 0
+						@miscDirectives.each { |key, miscParsedLine| outStr += miscParsedLine.reconstruct }
+					end
+				else
+					parsedLine.args[0] = WebConfig.embraceIfIPv6(@serverAddress)
+					parsedLine.args[1] = @port
+				end
+				outStr += parsedLine.reconstruct
+			when "servername"
+				parsedLine.args[0] = @serverName
+				outStr += parsedLine.reconstruct
+			when "serveralias"
+				parsedLine.args = @serverAliases
+				outStr += parsedLine.reconstruct unless @serverAliases.nil? || @serverAliases.count < 1
+				serverAliasDone = true
+			when "directoryindex"
+				parsedLine.args = @directoryIndexes
+				outStr += parsedLine.reconstruct
+			when "alias", "aliasmatch"
+				@aliases.each do |aliasInstance|
+					outStr += aliasInstance.reconstruct
+				end unless aliasesDone
+				aliasesDone = true
+			when "redirect", "redirectmatch"
+				@redirects.each do |redirect|
+					outStr += redirect.reconstruct
+				end unless redirectsDone
+				redirectsDone = true
+			when "rewriterule"
+				if [".*", "(.*)"].include?(parsedLine.args[0])
+					parsedLine.args[1] = @fullSiteRedirectToOtherSite
+				end
+				outStr += parsedLine.reconstruct	
+				@fullSiteRedirectsDone = true
+			when "customlog"
+				parsedLine.args[0] = @customLogPath
+				outStr += parsedLine.reconstruct
+			when "errorlog"
+				parsedLine.args[0] = @errorLogPath
+				outStr += parsedLine.reconstruct
+			when "documentroot"
+				parsedLine.args = Array["\"#{@documentRoot}\""]
+				outStr += parsedLine.reconstruct
+			when "sslengine"
+				# Possible SSL improvement: move SSLEngine under reconstruct, to prevent SSL directives from getting out of sync.
+				raise "Attempt to reconstruct vhost with no SSL Config: #{vHost.serverName}" if @sslConfig.nil?
+				parsedLine.args[0] = @sslConfig.requiresSSL ? "On" : "Off"
+				outStr += parsedLine.reconstruct
+			when "sslcertificatefile", "sslcertificatekeyfile", "sslcertificatechainfile"
+				if !sslDone
+					outStr += @sslConfig.reconstruct
+					sslDone = true
+				end
+			when "sslproxyprotocol"
+				if !sslDone
+					outStr += @sslConfig.reconstruct
+					sslDone = true
+				end
+				outStr += parsedLine.reconstruct
+			else
+				cmd = parsedLine.cmd.downcase
+				if @miscDirectives.has_key?(cmd)
+					outStr +=  @miscDirectives[cmd].reconstruct
+					@miscDirectives.delete(cmd)
+				end
+				if @deleteDirectives.has_key?(cmd) && deleteDirectives[cmd].reconstruct == parsedLine.reconstruct
+					# delete by omitting from outStr
+				else
+					outStr += parsedLine.reconstruct
+				end
+			end
+		end
+		raise("No place to put proxies, vhost #{@serverName}") if !proxiesDone
+		raise("No place to put realms, vhost #{@serverName}") if !realmsDone
+		raise("No place to put error documents, vhost #{@serverName}") if !errorDocumentsDone
+		raise("No place to put SSL directives, vhost #{@serverName}") if !sslDone
+		return outStr
+	end
+	def settings
+		proxyHashes = {}
+		realmHashes = {}
+		webAppSettings = []
+		aliasSettings = []
+		redirectSettings = []
+		@proxies.each { |path, proxy| proxyHashes[path] = proxy.settings } unless @proxies.nil?
+		@siteMetaData = $metaData.oldSites.detect { |vhostDict| vhostDict["_id_"] == metaDataKey }
+		if @siteMetaData
+			@siteMetaData["webApps"].each { |webAppDict| webAppSettings.push(webAppDict) } if !@siteMetaData["webApps"].nil?
+			if !@siteMetaData["Realms"].nil?
+				@siteMetaData["Realms"].each do |realmDict| 
+					realmHashes[realmDict["_id_"]] = { 
+						"browseGroups" => realmDict["BrowseGroups"],
+						"folder" => realmDict["_id_"]
+					}
+				end
+			end 
+		end
+		@aliases.each { |aliasInstance| aliasSettings.push(aliasInstance.settings) } unless @aliases.nil?
+		@redirects.each { |redirect| redirectSettings.push(redirect.settings) } unless @redirects.nil?
+		@configDict = { 
+			"documentRoot" => @documentRoot,
+			"serverName" => (@serverName == "*") ? "" : @serverName,
+			"serverAddress" => @serverAddress,
+			"serverAliases" => @serverAliases,
+			"directoryIndexes" => @directoryIndexes,
+			"allowAllOverrides" => @override.nil? ? "" : @override.downcase == "all" ? true : false,
+			"allowFolderListing" => @optionsConfig.allowFolderListing,
+			"allowCGIExecution" => @optionsConfig.allowCGIExecution,
+			"enableServerSideIncludes" => @optionsConfig.enableServerSideIncludes,
+			"customLogPath" => @customLogPath,
+			"errorLogPath" => @errorLogPath,
+			"fileName" => @filePath,
+			"port" => @port.nil? ? 80 : @port.to_i,
+			"requiresSSL" => @sslConfig.requiresSSL,
+			"sslCertificateIdentifier" => @sslConfig.certID,
+			"proxies" => proxyHashes,
+			"realms" => realmHashes,
+			"errorDocuments" => errorDocuments,
+			"webApps" => webAppSettings,
+			"aliases" => aliasSettings,
+			"redirects" => redirectSettings,
+			"fullSiteRedirectToOtherSite" => @fullSiteRedirectToOtherSite,
+			"identifier" => @id
+		}
+		return @configDict
+	end
+	def write
+		raise ConfigException.new, "Attempt to write uninitialized VHost, path: #{path}" if vhid.nil?
+		$logger.info("Writing config file for vhost #{vhid}")
+		if @configFile.nil?
+			$logger.warn("No config file for vhost #{vhid}")				
+		end
+		webAppSettings = []
+		realmMetaDataSettings = []
+		@configFile.filePath = self.configFilePath
+		@webApps.each { |webApp| $logger.debug("app: #{webApp.name}, required=#{$webAppController.isRequired(webApp)}") unless webApp.nil? }
+		@webApps.each { |webApp| webAppSettings.push(webApp.settings) if $webAppController.isRequired(webApp) && $webAppController.isUsable(webApp) }
+		@realms.each { |realmKey, realm| realmMetaDataSettings.push(realm.metaDataEntry) }
+		sslPassPhraseDict = { 
+			"Port" => @port, 
+			"SSLCertificateKeyFile" => @sslConfig.certID == "" ? "" : "/etc/certificates/#{@sslConfig.certID}.key.pem",
+			"sslCertificateIdentifier" => @sslConfig.certID,
+			"ServerName" => serverName == "*" ? "" : @serverName,
+			"enabled" => @sslConfig.requiresSSL
+		}
+		if $config["InsureDocumentRootIsPopulated"]
+			insureDocumentRootIsPopulated
+		end
+		@configFile.write
+		vHostMetaData = { "_id_" => metaDataKey, "webApps" => webAppSettings, "Realms" => realmMetaDataSettings, "SSLPassPhrase" => sslPassPhraseDict}
+		$metaData.newSites.push(vHostMetaData)
+	end
+	def insureDocumentRootIsPopulated
+		if @documentRoot == "" && @serverName != "" && @serverName != "*"
+			@documentRoot = "#{$metaData.dataLocation}/Sites/#{@serverName}"
+			$logger.info("Setting documentRoot for #{@serverName} root to = #{@documentRoot}")
+		end
+		if !FileTest.directory?(@documentRoot)
+			if FileTest.exists?(@documentRoot)
+				$logger.warn("Configured documentRoot #{@documentRoot} exists as a file, not a directory.")
+			else
+				$logger.warn("Configured documentRoot #{@documentRoot} does not exist; creating.")
+				FileUtils.mkdir_p(@documentRoot, :mode=>0755)
+			end
+		end
+		if Dir.new(@documentRoot).entries.count == 2	# . and .. are always present
+			suffixLProjMap = {
+				"de"=>"de",
+				"en"=>"en",
+				"fr"=>"fr",
+				"ja"=>"ja",
+				"es"=>"es",
+				"it"=>"it",
+				"nl"=>"nl",
+				"ko"=>"ko",
+				"zh-CN"=>"zh_CN",
+				"zh-TW"=>"zh_TW"
+			}
+			suffixLProjMap.each do |suffix, lproj|
+				source="#{$SERVER_INSTALL_PATH_PREFIX}/usr/share/web/locales/#{lproj}.lproj/custom-default.html"
+				target="#{@documentRoot}/default.html.#{suffix}"
+				FileUtils.ln_s(source, target) unless FileTest.exist?(target)
+			end
+			$logger.warn("Populated empty documentRoot #{@documentRoot} with default.html files")
+			FileUtils.cp("#{$SERVER_INSTALL_PATH_PREFIX}/Library/Server/Web/Data/Sites/Default/Server.png","#{@documentRoot}") unless !FileTest.exist?("#{$SERVER_INSTALL_PATH_PREFIX}/Library/Server/Web/Data/Sites/Default/Server.png")
+		end
+	end
+	def delete
+		@configFile.delete
+	end
+	def inspect
+		return "vhost serverAddress = #{@serverAddress}\nport = #{@port}\nssl = #{@requiresSSL}\ndocumentRoot = #{@documentRoot}\ndirectoryIndexes = #{@directoryIndexes}\n#{super.inspect}"
+	end
+end
+
+class VHostGlobal
+# Always regenerated on write
+	attr_accessor :configFile
+	attr_accessor :filePath
+	def initialize
+		@prefixText = <<EOT
+#{WebConfig::AutoGenPrefix}
+# The Listen and NameVirtualHost directives are generated
+# based on the VirtualHost directive inside
+# each site configuration file found in this directory.
+#
+EOT
+		@nameVirtualHosts = []
+		@filePath = "#{$MainConfigDir}sites/virtual_host_global.conf"
+		@configFile = ConfigFile.new(@filePath)
+		@configFile.vHostGlobal = self
+	end
+	def update(vHosts)
+		vHostsWithEnableServerSideIncludes = 0
+		@nameVirtualHosts.push("*:443")
+		vHosts.each do |vHost|
+			$logger.debug("vhost global update: processing name=#{vHost.serverName}")
+			newEntry = "#{WebConfig.embraceIfIPv6(vHost.serverAddress)}:#{vHost.port}"
+			$logger.debug("vhost global update: name=#{vHost.serverName} #{WebConfig.embraceIfIPv6(vHost.serverAddress)}:#{vHost.port}")
+			@nameVirtualHosts.push(newEntry)
+			if vHost.sslConfig.requiresSSL && $config["CreateRedirectToSSLVirtualHost"]
+				redirectEntry = "#{vHost.serverAddress}:80"
+				@nameVirtualHosts.push(redirectEntry)
+			end
+			vHostsWithEnableServerSideIncludes += 1 if vHost.optionsConfig.enableServerSideIncludes
+		end
+		if vHostsWithEnableServerSideIncludes > 0
+			$webConfig.mainHost.additionalRequiredModuleNames << "include_module"
+		end
+	end	
+	def reconstruct
+		outStr = @prefixText
+		@nameVirtualHosts.uniq.each { |a| outStr += "Listen\t#{a}\nNameVirtualHost\t#{a}\n" }
+		return outStr
+	end
+	def write
+		@configFile.write
+	end
+end
+
+class SSLConfig
+	attr_accessor :requiresSSL
+	attr_accessor :certID
+	attr_accessor :vHost
+	def initialize
+		@requiresSSL = false
+		@certID = ""
+		@vHost = nil
+	end
+	def initWithCoder(coder)
+		initialize
+		@requiresSSL = coder.decodeObjectForKey('requiresSSL')
+		@certID = coder.decodeObjectForKey('certID')
+		self
+	end
+	def encodeWithCoder(coder)
+		coder.encodeObject(@requiresSSL, forkey='requiresSSL')
+		coder.encodeObject(@certID, forkey='certID')
+    end
+	def certFile
+		"/etc/certificates/#{@certID}.cert.pem"
+	end
+	def setDefaultCert
+		defaultCertPath = WebConfig.runCmd("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/certadmin --default-certificate-path").chomp
+		if defaultCertPath == ""
+			$logger.warn("No default SSL certificate; attempting to create one")
+			WebConfig.runCmd("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin command certs:command = createDefaultSelfSignedIdentity")
+			defaultCertPath = WebConfig.runCmd("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/certadmin --default-certificate-path").chomp
+			$logger.error("Failed to create and export default SSL certificate. Proceeding with disabled SSL virtual host.") if defaultCertPath == ""
+		end
+		setCertIDFromCertPath(defaultCertPath)
+	end
+	def setCertIDFromCertPath(path)
+		@certID = path.sub(/^\/etc\/certificates\//,'').sub(/\.\w+\.pem$/,'').sub(/\.ce*rt$/,'')
+	end
+	def reconstruct
+		if @certID == ""
+			return ""
+		else
+			outStr = "\t\tSSLCertificateFile \"/etc/certificates/#{@certID}.cert.pem\"\n"
+			outStr += "\t\tSSLCertificateKeyFile \"/etc/certificates/#{@certID}.key.pem\"\n"
+			outStr += "\t\tSSLCertificateChainFile \"/etc/certificates/#{@certID}.chain.pem\"\n"
+			return outStr
+		end
+	end
+end
+
+class OptionsConfig
+	attr_accessor :allowFolderListing
+	attr_accessor :allowCGIExecution
+	attr_accessor :enableServerSideIncludes
+	attr_accessor :enableMultiViews
+	attr_accessor :all
+	def initialize(args = nil)
+		@all = false
+		@allowFolderListing = false
+		@allowCGIExecution = false
+		@enableServerSideIncludes = false
+		@enableMultiViews = true
+		args.each do |arg| 
+			case arg.downcase
+				when "+indexes"
+				@allowFolderListing = true
+				when "-indexes"
+				@allowFolderListing = false
+				when "+execcgi"
+				@allowCGIExecution = true
+				when "-execcgi"
+				@allowCGIExecution = false
+				when "+includes"
+				@enableServerSideIncludes = true
+				when "-includes"
+				@enableServerSideIncludes = false
+				when "+multiviews"
+				@enableMultiViews = true
+				when "-multiviews"
+				@enableMultiViews = false
+				when "all"
+				@all = true
+			end
+		end unless args.nil?
+	end
+	def reconstruct
+		allString = @all ? "All" : ""
+		indexesSign = @allowFolderListing ? "+" : "-"
+		execCGISign = @allowCGIExecution ? "+" : "-"
+		includesSign = @enableServerSideIncludes ? "+" : "-"
+		multiViewsSign = @enableMultiViews ? "+" : "-"
+		outStr = "\t\tOptions #{allString} #{indexesSign}Indexes #{execCGISign}ExecCGI #{includesSign}Includes #{multiViewsSign}MultiViews\n"
+		return outStr
+	end
+end
+
+class ParsedLine
+	attr_accessor :line
+	attr_accessor :isCommentedOut
+	attr_accessor :isActiveDirective
+	attr_accessor :isStartContainer
+	attr_accessor :isCloseContainer
+	attr_accessor :isInclude
+	attr_accessor :indent
+	attr_accessor :cmd
+	attr_accessor :args
+	attr_accessor :argAsString
+	attr_accessor :filePath
+	attr_accessor :lineNumber
+	attr_accessor :containedBy
+	def initialize(line)
+		@line = line
+		@args = []
+		@argAsString = ""
+		@cmd = ""
+		@isCommentedOut = false
+		@isStartContainer = false
+		@isCloseContainer = false
+		@isActiveDirective = false
+		@containedBy = nil
+		@lineNumber = 0
+		@indent = line.scan(/^\s+/)[0]
+		if !@indent
+			@indent = ""
+		end
+		parts = line.strip.split(/\s+/)
+		if !parts[0]
+			@isActiveDirective = false
+		elsif parts[0] =~ /^#+$/
+			@isActiveDirective = false
+		else
+			if parts[0] =~ /^#.*/
+				@isCommentedOut = true
+				rexp = /^#/
+				parts[0].sub!(rexp, "")
+			end
+			@isActiveDirective = true
+			lineWithoutIndent = line.sub(/^\s+/, "").sub(/\s+$/,"")
+			if lineWithoutIndent[0,2] == "</"
+				@cmd = lineWithoutIndent[2..-2]
+				@isCloseContainer = true
+			elsif lineWithoutIndent[0,1] == "<"
+				subLine = lineWithoutIndent[1..-2]
+				parts = subLine.strip.split(/\s+/)
+				@cmd = parts.shift
+				@args = parts
+				singleArgArray = subLine.scan(/^\s*[a-zA-Z]+\s+(.*$)/)
+				if singleArgArray.count > 0 && singleArgArray[0].count > 0
+					@argAsString = singleArgArray[0][0]
+				end
+				@isStartContainer = true
+			else
+				@cmd = parts.shift
+				@args = parts
+				singleArgArray = line.scan(/^\s*[a-zA-Z]+\s+(.*$)/)
+				if singleArgArray.count > 0 && singleArgArray[0].count > 0
+					@argAsString = singleArgArray[0][0]
+				end
+			end
+		end
+	end
+	def reconstruct
+		if isActiveDirective
+			if isStartContainer
+				if cmd.downcase == "virtualhost"
+					return "#{@indent}<#{@cmd} #{@args.join(':')}>\n"
+				else
+					return "#{@indent}<#{@cmd} #{@args.join(' ')}>\n"
+				end
+			elsif isCloseContainer
+				return "#{@indent}</#{@cmd}>\n"
+			else
+				if isCommentedOut
+					return "#{@indent}##{@cmd} #{@args.join(' ')}\n"
+				else
+					if @args.nil? || @args.count == 0
+						$logger.error("command missing args: #{@cmd}")
+						return "#{@indent}##{@cmd} (Commented out because no args)\n"
+					else
+						return "#{@indent}#{@cmd} #{@args.join(' ')}\n"
+					end
+				end
+			end
+		else
+			return "#{@line}\n"
+		end
+	end
+end
+
+class ConfigFile
+	attr_accessor :parsedLines
+	attr_accessor :filePath
+	attr_accessor :includeLines
+	attr_accessor :includePaths
+	attr_accessor :includedBy
+	attr_accessor :vHostGlobal
+	attr_accessor :vHost
+	attr_accessor :mainHost
+	attr_accessor :isMain
+	attr_reader :id
+	def initialize(path)
+		@parsedLines = []
+		@vHost = nil
+		@vHostGlobal = nil
+		@includeLines = []
+		@includePaths = []
+		@filePath = path
+		@lineNumber = 1
+		@isMain = false
+		FileUtils.cp(@filePath + ".default", @filePath) if !FileTest.exists?(@filePath)
+		raise ConfigException.new, "Config file #{@filePath} is not readable" if !FileTest.readable?(@filePath)
+		@id = File.stat(@filePath).ino.to_s
+	end
+	def write
+		#raise ConfigException, "Config file #{@filePath} is not writable" if !FileTest.writable?(@filePath)
+		outStr = ""
+		if !@vHost.nil?
+			outStr += @vHost.reconstruct
+		elsif !vHostGlobal.nil?
+			outStr += @vHostGlobal.reconstruct
+		elsif isMain
+			outStr += @mainHost.reconstruct
+		else
+			@parsedLines.each { |parsedLine| outStr += parsedLine.reconstruct }
+		end
+		if $config["SavePreviousConfigFileWhenUpdating"]
+			FileUtils.cp(@filePath, @filePath + ".prev") if FileTest.exist?(@filePath)
+		end
+		$logger.info("Writing: #{filePath}")
+		f = File.new(@filePath, "w")
+		f.puts(outStr)
+		f.flush
+		f.close
+		return 0
+	end
+	def read
+		# Read all lines from file. Create and populate containers, including nested ones.
+		$logger.info("Processing #{@filePath}")
+		currentContainer = nil
+		containerStack = []
+		File.open(@filePath).each do |line|
+			line.chomp!
+			parsedLine = ParsedLine.new(line)
+			@lineNumber = @lineNumber + 1
+			parsedLine.lineNumber = @lineNumber
+			if parsedLine.isStartContainer == true
+				currentContainer = ParsedContainer.new(parsedLine, containerStack.last)
+				case parsedLine.cmd.downcase
+				when "virtualhost"
+					@vHost = WebVHost.new
+					@vHost.filePath = @filePath
+					@vHost.container = currentContainer
+					@vHost.configFile = self
+					if parsedLine.argAsString.count(":") > 1
+						# IPv6
+						m = parsedLine.argAsString.match(/\[(.*)\]:(.*)/)
+						@vHost.serverAddress = m[1]
+						@vHost.port = m[2]
+					else
+						@vHost.serverAddress = parsedLine.args[0].split(":")[0]
+						@vHost.port = parsedLine.args[0].split(":")[1]
+					end
+				else
+				end
+				currentContainer.id = parsedLine.args[0]
+				containerStack.push(currentContainer)
+			elsif parsedLine.isCloseContainer == true
+				case parsedLine.cmd.downcase
+				when "virtualhost"
+					@vHost.parse
+				else
+				end
+				currentContainer = containerStack.pop
+			else
+				if containerStack.last && containerStack.last.parsedLines
+					containerStack.last.parsedLines.push(parsedLine)
+				end
+			end
+			#p "containerstack =" + containerStack.to_s
+			if parsedLine.cmd
+				if parsedLine.cmd.downcase == "include" && !parsedLine.isCommentedOut
+					@includeLines.push(parsedLine)
+					@includePaths.push(WebConfig.deQuote(parsedLine.args[0]))				
+				end
+			end
+			parsedLine.containedBy = currentContainer
+			@parsedLines.push(parsedLine)
+			if currentContainer != nil
+				currentContainer.parsedLines.push(parsedLine)
+			end
+		end
+	end
+	def newPath(path)
+		return if @filePath == path
+		$logger.info("Renaming config file from path #{@filePath} to path #{path}")
+		FileUtils.cp(@filePath, @filePath + ".prev") if FileTest.exist?(@filePath) && $config["SavePreviousConfigFileWhenUpdating"]
+		FileUtils.mv(@filePath, path, :force => true) if FileTest.exist?(@filePath)
+		@filePath = path
+	end
+	def delete
+		$logger.info("Deleting config file at path #{@filePath}")
+		if $config["SavePreviousConfigFileWhenUpdating"]
+			FileUtils.mv(@filePath, @filePath + ".prev", :force => true) if FileTest.exist?(@filePath)
+		else
+			FileUtils.rm_f(@filePath)
+		end
+	end
+end
+
+class ConfigMetaData
+	attr_accessor :dict
+	attr_accessor :oldSites
+	attr_accessor :dataLocation
+	attr_accessor :newSites
+	attr_reader :oldWebAppNames
+	attr_reader :oldGlobalWebAppNames
+	attr_accessor :newGlobalWebAppNames
+	def initialize
+		@filePath = "#{$MainConfigDir}servermgr_web_apache2_config.plist"
+		@filePathDefault = @filePath + ".default"
+		@newSites = []
+		@oldSites = []
+		@oldWebAppNames = []
+		@oldGlobalWebAppNames = []
+		@newGlobalWebAppNames = []
+		@dataLocation = "#{$SERVER_LIBRARY_PATH}/Web/Data"
+	end
+	def read
+		if !FileTest.exist?(@filePath)
+			$logger.warn("meta data file #{@filePath} does not exist; creating it from .default")
+			raise ConfigException.new, "No #{@filePath} and no #(@filePathDefault}" if !FileTest.exist?(@filePathDefault)
+			FileUtils.cp(@filePathDefault, @filePath)
+		end
+		@dict = NSDictionary.dictionaryWithContentsOfFile(@filePath).to_ruby
+		@oldSites = @dict["Sites"] unless @dict["Sites"].nil?
+		@dataLocation = @dict["DataLocation"] unless @dict["DataLocation"].nil?
+		@oldSites.each do |oldSite|
+			if !oldSite["webApps"].nil?
+				oldSite["webApps"].each do |webAppDict|
+					@oldWebAppNames.push(webAppDict["name"])
+				end
+			end
+		end
+		@oldGlobalWebAppNames = @dict["GlobalWebAppNames"] unless @dict["GlobalWebAppNames"].nil?
+		@oldWebAppNames += @oldGlobalWebAppNames
+		@newGlobalWebAppNames = @oldGlobalWebAppNames.dup
+	end
+	def write
+		@dict["Sites"] = @newSites
+		@dict["GlobalWebAppNames"] = @newGlobalWebAppNames
+		@dict["DataLocation"] = @dataLocation
+		if !@dict.to_ns.writeToFile_atomically_(@filePath, true)
+			$logger.error("metaData writeToFile failed: not saveable as a plist:" + d.inspect)
+		else
+			$logger.info("Wrote metaData file #{@filePath}")
+		end
+	end
+end
+
+class WebConfig
+	# The set of objects comprising an Apache configuration
+	# Includes file objects representing config files 
+	# and other objects that can receive updates such as vhosts
+	attr_accessor :configFiles	# not currently used
+	attr_accessor :vHosts
+	attr_accessor :defaultVHost
+	attr_accessor :defaultSecureVHost
+	attr_accessor :mainHost
+	attr_accessor :dataLocation
+	attr_accessor :templateVHost
+	attr_accessor :vHostGlobal
+	attr_accessor :requiresFullRestart
+	attr_reader :version
+	AutoGenPrefix = "# This file is auto-generated by the web configuration\n# mechanism whenever settings are saved.\n"
+	def initialize(topFilePath = $MainConfigFile)
+		# initialize builds the tree of ConfigFile objects
+		# based on include directives
+		@version = "1.2"
+		@requiresFullRestart = false
+		@topFilePath = topFilePath
+		@webServer = WebServer.new
+		@configFiles = []
+		@vHosts = []
+		if !FileTest.exist?("#{$MainConfigDir}sites/0000_any_80_.conf") || !FileTest.exist?("#{$MainConfigDir}sites/0000_any_443_.conf") || !FileTest.exist?("#{$MainConfigDir}sites/virtual_host_global.conf")
+			$logger.error("Missing one or more required config files; corrupt configuration.")
+			restorefactorysettings
+		end
+		@topConfigFile = ConfigFile.new(topFilePath)
+		@configFiles.push(@topConfigFile)
+		@vHostGlobal = VHostGlobal.new
+		$metaData = ConfigMetaData.new
+		$webAppController = WebAppController.new
+		templatePath1 = "#{$MainConfigDir}sites_disabled/default_default.conf"
+		templatePath2 = "#{$MainConfigDir}sites_disabled/0000_default_default.conf"
+		if !FileTest.exist?(templatePath2)
+			FileUtils.cp(templatePath1, templatePath2)
+		end
+		@templateVHostConfigFile = ConfigFile.new(templatePath2)
+		#raise ConfigException.new, "Configuration contains no virtual hosts; can't do anything useful" if @vHosts.empty?
+	end
+	def syncObjectsFromFiles
+		@topConfigFile.read
+		@mainHost = MainHost.new(@topConfigFile)
+		@topConfigFile.isMain = true
+		@topConfigFile.mainHost = @mainHost
+		@mainHost.configFile = @topConfigFile
+		Dir.glob("#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/sites/*.conf").each do |path|
+			newConfigFile = ConfigFile.new(path)
+			newConfigFile.read unless path == @vHostGlobal.filePath	# write-only 
+			@configFiles.push(newConfigFile)
+			@vHosts.push(newConfigFile.vHost) unless newConfigFile.vHost.nil?
+			if path == "#{$MainConfigDir}sites/0000_any_80_.conf"
+				@defaultVHost = newConfigFile.vHost
+			elsif path ==  "#{$MainConfigDir}sites/0000_any_443_.conf"
+				@defaultSecureVHost = newConfigFile.vHost
+			end
+		end
+		if @defaultVHost.nil?
+			raise ConfigException.new("No defaultVHost")
+		end
+		if @defaultSecureVHost.nil?
+			raise ConfigException.new("No defaultSecureVHost")
+		end
+		@templateVHostConfigFile.read
+		@templateVHost = @templateVHostConfigFile.vHost
+	end
+	def settings
+		customSitesArray = []
+		vHostsDataArray = []
+		$metaData.read
+		@dataLocation = $metaData.dataLocation
+		@vHosts.each do |vHost|
+			#vHostsDataArray.push(NSKeyedArchiver.archivedDataWithRootObject vHost)
+			if vHost.serverName == "*" && vHost.serverAddress == "*" && vHost.port == "80"
+				@defaultVHost = vHost
+			elsif vHost.serverName == "*" && vHost.serverAddress == "*" && vHost.port == "443"
+				@defaultSecureVHost = vHost
+			else
+				customSitesArray.push(vHost.settings)
+			end
+		end
+		return {
+			"mainHost" => @mainHost.settings,
+			#:MainHostArchived => (NSKeyedArchiver.archivedDataWithRootObject @mainHost),
+			"defaultSite" => @defaultVHost.settings,
+			"defaultSecureSite" => @defaultSecureVHost.settings,
+			"customSites" => customSitesArray,
+			"definedWebApps" => $webAppController.definedWebApps.collect { |webApp| webApp.settings },
+			"dataLocation" => @dataLocation,
+			#"SitesArchived" => (NSKeyedArchiver.archivedDataWithRootObject vHostsDataArray) ,
+			"version" => @version
+		}
+	end	
+	def initWithCoder(coder)
+		initialize
+		@vHosts = coder.decodeObjectForKey('sites')
+		@mainHost = coder.decodeObjectForKey('mainHost')
+		@definedWebApps = coder.decodeObjectForKey('definedWebApps')
+		@dataLocation = coder.decodeObjectForKey('dataLocation')
+		self
+	end	
+	def encodeWithCoder(coder)
+		coder.encodeObject(@vHosts, forkey='sites')
+		coder.encodeObject(@mainHost, forkey='mainHost')
+		coder.encodeObject(@definedWebApps, forkey='definedWebApps')
+		coder.encodeObject(@dataLocation, forkey='dataLocation')
+	end 	
+	def read
+		# read settings from config files and display on stdout
+		syncObjectsFromFiles
+		theSettings = settings
+		archivedSettings = NSJSONSerialization.dataWithJSONObject_options_error_(theSettings, 0, nil)
+		if archivedSettings.nil?
+			raise "Cannot archive settings"
+		else
+			$logger.info("Outgoing settings, unarchived: #{theSettings.inspect}")
+			archivedSettings.writeToFile_atomically_("/dev/stdout", false)
+		end
+		return 0
+	end
+	def attemptRecovery
+		$logger.error(@webServer.configCheckMessage)
+		if @webServer.configErrorFile.nil? 
+			$logger.warn("Unable to identify offending file")
+		else
+			previousVersionOfConfigErrorFile = "#{@webServer.configErrorFile}.prev"
+			if FileTest.exist?(previousVersionOfConfigErrorFile)
+				FileUtils.mv(@webServer.configErrorFile, "#{@webServer.configErrorFile}.syntaxError")
+				FileUtils.mv(previousVersionOfConfigErrorFile, @webServer.configErrorFile)
+				if @webServer.configIsValid
+					$logger.warn("Eliminated Apache syntax error by using previous version of offending file #{@webServer.configErrorFile}")
+				else
+					FileUtils.rm(@webServer.configErrorFile)
+					$logger.warn("Eliminated Apache syntax error by removing offending file #{@webServer.configErrorFile}")
+				end
+			else
+				$logger.warn("Unable to recover; no previous version of offending file #{@webServer.configErrorFile}")
+			end
+		end
+	end
+	def write	# get settings from stdin and write to config files
+		archivedSettings = STDIN.gets
+		if archivedSettings.nil?
+			raise "No settings to write"
+		else
+			d = NSString.alloc.initWithString(archivedSettings).dataUsingEncoding(NSUTF8StringEncoding)
+			settings = NSJSONSerialization.JSONObjectWithData_options_error_(d, 0, nil).to_ruby
+			$logger.debug("Incoming settings to write, archived: #{archivedSettings}")
+			if settings.nil?
+				raise "Cannot unarchive settings"
+			else
+				if !defaultSiteSettingsAreAllowed(settings)
+					$logger.error("Rejecting attempt to modify read-only settings on default virtual host")
+					return 11
+				end
+				$logger.info("Writing settings") 
+				syncObjectsFromFiles
+				setSettings(settings)
+				$metaData.write
+				attemptRecovery if !@webServer.configIsValid
+				$webAppController.reload
+				if @webServer.isRunning
+					if $webAppController.webServerIsRequired || @webServer.isConfiguredForWebService
+						@webServer.restart	# For now graceful == restart
+					else
+						@webServer.stop
+					end
+				else 
+					if $webAppController.webServerIsRequired
+						@webServer.start
+					end
+				end
+			end
+		end
+		return 0
+	end
+	def setSettings(settingsDict)
+		$metaData.read	# Needed so that "Sites" can be updated while preserving other metadata
+		@mainHost.setSettings(settingsDict["mainHost"])
+		vHostDicts = settingsDict["customSites"]
+		vHostsOldIds = @vHosts.collect {|v| v.id unless v.id.nil?}
+		$logger.debug("vHostsOldIds  = " + vHostsOldIds.inspect)
+		vHostsNewIds = vHostDicts.collect {|v| v["identifier"] unless v["identifier"].nil?}
+		vHostsNewIds.push(settingsDict["defaultSite"]["identifier"]) unless settingsDict["defaultSite"]["identifier"].nil?
+		vHostsNewIds.push(settingsDict["defaultSecureSite"]["identifier"]) unless settingsDict["defaultSecureSite"]["identifier"].nil?
+		$logger.debug("vHostsNewIds  = " + vHostsNewIds.inspect)
+		# Add the new ones not among the old
+		vhostsAddedDicts = vHostDicts.select {|dict| !vHostsOldIds.include?(dict["identifier"])}
+		vhostsAddedNames = vhostsAddedDicts.collect {|v| v["serverName"]}
+		$logger.debug("vhostsAddedDicts  = " + vhostsAddedNames.inspect)
+		# Update the new ones that are among the old
+		vhostsUpdatedDicts = vHostDicts.select {|dict| vHostsOldIds.include?(dict["identifier"])}
+		vhostsUpdatedNames = vhostsUpdatedDicts.collect {|v| v["serverName"]}
+		$logger.debug("vhostsUpdatedDicts  = " + vhostsUpdatedNames.inspect)
+		# Delete the old ones not among the new
+		vhostsDeleted = @vHosts.select {|v| !vHostsNewIds.include?(v.id)}
+		vhostsDeletedNames = vhostsDeleted.collect {|v| v.serverName}
+		$logger.debug("vhostsDeleted  = " + vhostsDeletedNames.inspect)
+		#
+		# Now that vhost dictionaries have been prepared, use them to drive vhost deletions, additions, and updates
+		#
+		vhostsDeleted.each do |vHost|
+			#next if vHost.configFile.filePath == "#{$MainConfigDir}sites/0000_any_80_.conf"
+			$logger.info("deleting vhost: " + vHost.serverName)
+			@vHosts.delete(vHost)
+			vHost.delete
+		end
+		#
+		vhostsAddedDicts.each do |dict|
+			$logger.info("creating vhost: " + dict["serverName"].inspect)
+			newVhost = WebVHost.new
+			newVhost.configFile = @templateVHostConfigFile
+			newVhost.parse
+			newVhost.serverName = (dict["serverName"].nil? || dict["serverName"].empty?) ? "*" : dict["serverName"]
+			newVhost.port = dict["port"].nil? ? "80" : dict["port"].to_i.to_s
+			newVhost.serverAddress = dict["serverAddress"].nil? ? "*" : dict["serverAddress"]
+			if !$metaData.oldSites.detect { |vhostDict| vhostDict["_id_"] == newVhost.metaDataKey }.nil?
+				$logger.error("Skipping attempted new site with signature of existing site: #{newVhost.metaDataKey}")
+				next
+			end
+			newVhost.documentRoot = (dict["documentRoot"].nil? || dict["documentRoot"].empty?) && newVhost.serverName == "*" ? "#{$SERVER_LIBRARY_PATH}/Web/Data/Sites/#{newVhost.vhid}" : dict["documentRoot"]
+			newVhost.serverAliases = dict["serverAliases"]
+			newVhost.directoryIndexes = dict["directoryIndexes"]
+			newVhost.override = (dict["allowAllOverrides"].nil? || !dict["allowAllOverrides"]) ? "None" : "All"
+			newVhost.optionsConfig.allowFolderListing = dict["allowFolderListing"]
+			newVhost.optionsConfig.allowCGIExecution = dict["allowCGIExecution"]
+			newVhost.optionsConfig.enableServerSideIncludes = dict["enableServerSideIncludes"]
+			newVhost.errorLogPath = dict["errorLogPath"]
+			newVhost.customLogPath = dict["customLogPath"]
+			newVhost.fullSiteRedirectToOtherSite = dict["fullSiteRedirectToOtherSite"]
+			newSSLConfig = SSLConfig.new
+			newSSLConfig.vHost = newVhost
+			newSSLConfig.requiresSSL = dict["requiresSSL"]
+			newSSLConfig.certID = dict["sslCertificateIdentifier"]
+			newVhost.sslConfig = newSSLConfig
+			dict["proxies"].each do |key, proxyDict| 
+				proxy = Proxy.new
+				proxy.path = proxyDict["path"]
+				proxy.urls = proxyDict["urls"] unless proxyDict["urls"].nil?
+				proxy.keysAndValues = ""
+				newVhost.proxies[key] = proxy
+			end unless dict["proxies"].nil?
+			dict["realms"].each do |key, realmDict| 
+				realm = Realm.new
+				realm.folder = realmDict["folder"]
+				realm.browseGroups = realmDict["browseGroups"]
+				newVhost.realms[key] = realm
+			end unless dict["realms"].nil?
+			newVhost.errorDocuments = dict["errorDocuments"]
+			dict["webApps"].each do |webAppDict|
+				webApp = $webAppController.webAppWithName(webAppDict["name"])
+				if webApp.nil?
+					$logger.warn("Ignoring undefined webapp #{webAppDict['name']} referenced for new vhost #{newVhost.serverName}")
+					next
+				end
+				webApp.requiredByWebAppNames.push(webApp.name).uniq!
+				newVhost.webApps.push(webApp)
+				$webAppController.webApps.push(webApp).uniq!
+				$webAppController.allRequiredWebAppNames(webApp.name).each do |name|
+					requiredWebApp = $webAppController.webAppWithName(name)
+					newVhost.webApps.push(requiredWebApp) unless newVhost.webAppNames.include?(name)
+					$webAppController.webApps.push(requiredWebApp).uniq!
+				end
+			end unless dict["webApps"].nil?
+			dict["aliases"].each do |aliasDict|
+				aliasInstance = Alias.new
+				aliasInstance.setSettings(aliasDict)
+				newVhost.aliases.push(aliasInstance)
+			end unless dict["aliases"].nil?
+			dict["redirects"].each do |redirectDict|
+				redirect = Redirect.new
+				redirect.setSettings(redirectDict)
+				newVhost.redirects.push(redirect)
+			end unless dict["redirects"].nil?
+			@vHosts.push(newVhost)
+			newVhost.configFile.vHost = newVhost
+			newVhost.write
+		end
+		#
+		vhostsUpdatedDicts.each do |dict|
+			$logger.info("updating vhost: " + dict["serverName"].inspect)
+			vHost = @vHosts.detect{|v| v.id == dict["identifier"]}
+			raise "Unexpected nil vHost. dict = #{dict}" if vHost.nil?
+			vHost.parse
+			vHost.serverName = (dict["serverName"].nil? || dict["serverName"].empty?) ? "*" : dict["serverName"]
+			vHost.port = dict["port"].nil? ? "80" : dict["port"].to_i.to_s
+			vHost.serverAddress = dict["serverAddress"].nil? ? "*" : dict["serverAddress"]
+			vHost.configFile.newPath(vHost.configFilePath)
+			vHost.documentRoot = (dict["documentRoot"].nil? || dict["documentRoot"].empty?) && newVhost.serverName == "*" ? "#{$SERVER_LIBRARY_PATH}/Web/Data/Sites/#{vHost.vhid}" : dict["documentRoot"]
+			vHost.serverAliases = dict["serverAliases"]
+			vHost.directoryIndexes = dict["directoryIndexes"]
+			vHost.override = (dict["allowAllOverrides"].nil? || !dict["allowAllOverrides"]) ? "None" : "All"
+			vHost.optionsConfig.allowFolderListing = dict["allowFolderListing"]
+			vHost.optionsConfig.allowCGIExecution = dict["allowCGIExecution"]
+			vHost.optionsConfig.enableServerSideIncludes = dict["enableServerSideIncludes"]
+			vHost.customLogPath = dict["customLogPath"]
+			vHost.errorLogPath = dict["errorLogPath"]
+			vHost.fullSiteRedirectToOtherSite = dict["fullSiteRedirectToOtherSite"]
+			raise "Attempt to update vhost with no SSL Config: #{vHost.serverName}" if vHost.sslConfig.nil?
+			vHost.sslConfig.requiresSSL = dict["requiresSSL"]
+			vHost.sslConfig.certID = dict["sslCertificateIdentifier"]
+			if vHost.sslConfig.requiresSSL
+				@requiresFullRestart = true
+				$metaData.oldSites.each do |oldSite|
+					if oldSite["_id_"] == vHost.metaDataKey
+						# look for reasons not to require full restart
+						break if oldSite["SSLPassPhrase"].nil?
+						break if oldSite["SSLPassPhrase"]["enabled"].nil?
+						break if oldSite["SSLPassPhrase"]["enabled"] != vHost.sslConfig.requiresSSL
+						break if oldSite["SSLPassPhrase"]["sslCertificateIdentifier"] != vHost.sslConfig.certID
+						@requiresFullRestart = false
+					end
+				end
+			end
+			vHost.proxies = {}	# clears old proxies
+			dict["proxies"].each do |key, proxyDict| 
+				proxy = Proxy.new
+				proxy.path = proxyDict["path"]
+				proxy.urls = proxyDict["urls"] unless proxyDict["urls"].nil?
+				proxy.keysAndValues = ""
+				vHost.proxies[key] = proxy
+			end unless dict["proxies"].nil?
+			dict["realms"].each do |key, realmDict| 
+				realm = Realm.new
+				realm.folder = realmDict["folder"]
+				realm.browseGroups = realmDict["browseGroups"]
+				vHost.realms[key] = realm
+			end unless dict["realms"].nil?
+			vHost.errorDocuments = dict["errorDocuments"]
+			vHost.webApps = []	# clears old webApps
+			dict["webApps"].each do |webAppDict| 
+				webApp = $webAppController.webAppWithName(webAppDict["name"])
+				if webApp.nil?
+					$logger.warn("Ignoring undefined webapp #{webAppDict['name']} referenced by updated vhost #{vHost.serverName}")
+					next
+				end
+				next if webApp.isGlobal || webApp.isMainOnly
+				webApp.requiredByWebAppNames.push(webApp.name).uniq!
+				vHost.webApps.push(webApp)
+				$webAppController.webApps.push(webApp).uniq!
+				$webAppController.allRequiredWebAppNames(webApp.name).each do |name|
+					requiredWebApp = $webAppController.webAppWithName(name)
+					vHost.webApps.push(requiredWebApp) unless vHost.webAppNames.include?(name)
+					$webAppController.webApps.push(requiredWebApp).uniq!
+				end
+			end unless dict["webApps"].nil?
+			vHost.aliases = []	# clears old aliases
+			dict["aliases"].each do |aliasDict|
+				aliasInstance = Alias.new
+				aliasInstance.setSettings(aliasDict)
+				vHost.aliases.push(aliasInstance)
+			end unless dict["aliases"].nil?
+			vHost.redirects = []	# clears old redirects
+			dict["redirects"].each do |redirectDict|
+				redirect = Redirect.new
+				redirect.setSettings(redirectDict)
+				vHost.redirects.push(redirect)
+			end unless dict["redirects"].nil?
+			checkAndUpdateDataLocation(settingsDict["dataLocation"], vHost)
+			vHost.write
+		end
+		dict = settingsDict["defaultSite"]
+		$logger.info("updating default vhost")
+		@defaultVHost.parse
+		@defaultVHost.isDefaultSite = true
+		@defaultVHost.documentRoot = dict["documentRoot"]
+		@defaultVHost.serverAliases = dict["serverAliases"]
+		@defaultVHost.directoryIndexes = dict["directoryIndexes"]
+		@defaultVHost.override = (dict["allowAllOverrides"].nil? || !dict["allowAllOverrides"]) ? "None" : "All"
+		@defaultVHost.optionsConfig.allowFolderListing = dict["allowFolderListing"]
+		@defaultVHost.optionsConfig.allowCGIExecution = dict["allowCGIExecution"]
+		@defaultVHost.optionsConfig.enableServerSideIncludes = dict["enableServerSideIncludes"]
+		@defaultVHost.customLogPath = dict["customLogPath"]
+		@defaultVHost.errorLogPath = dict["errorLogPath"]
+		@defaultVHost.fullSiteRedirectToOtherSite = dict["fullSiteRedirectToOtherSite"]
+		@defaultVHost.proxies = {}	# clears old proxies
+		dict["proxies"].each do |key, proxyDict| 
+			proxy = Proxy.new
+			proxy.path = proxyDict["path"]
+			proxy.urls = proxyDict["urls"] unless proxyDict["urls"].nil?
+			proxy.keysAndValues = ""
+			@defaultVHost.proxies[key] = proxy
+		end unless dict["proxies"].nil?
+		dict["realms"].each do |key, realmDict| 
+			realm = Realm.new
+			realm.folder = realmDict["folder"]
+			realm.browseGroups = realmDict["browseGroups"]
+			@defaultVHost.realms[key] = realm
+		end unless dict["realms"].nil?
+		@defaultVHost.errorDocuments = dict["errorDocuments"]
+		dict["webApps"].each do |webAppDict|
+			next if @defaultVHost.webAppNames.include?(webAppDict["name"])
+			webApp = $webAppController.webAppWithName(webAppDict["name"])
+			if webApp.nil?
+				$logger.warn("Ignoring undefined webapp #{webAppDict['name']} referenced by default vhost")
+				next
+			end
+			next if webApp.isGlobal || webApp.isMainOnly
+			webApp.requiredByWebAppNames.push(webApp.name).uniq!
+			@defaultVHost.webApps.push(webApp)
+			@defaultSecureVHost.webApps.push(webApp)
+			$webAppController.webApps.push(webApp).uniq!
+			$webAppController.allRequiredWebAppNames(webApp.name).each do |name|
+				requiredWebApp = $webAppController.webAppWithName(name)
+				@defaultVHost.webApps.push(requiredWebApp) unless @defaultVHost.webAppNames.include?(name)
+				if !@defaultSecureVHost.webAppNames.include?(name) && (requiredWebApp.displayName.nil? || requiredWebApp.displayName.empty?)
+					#For Apple's webapps, apply default site settings to default secure site
+					@defaultSecureVHost.webApps.push(requiredWebApp)
+				end
+				$webAppController.webApps.push(requiredWebApp).uniq!
+			end
+		end unless dict["webApps"].nil?
+		@defaultVHost.aliases = []	# clears old aliases
+		dict["aliases"].each do |aliasDict|
+			aliasInstance = Alias.new
+			aliasInstance.setSettings(aliasDict)
+			@defaultVHost.aliases.push(aliasInstance)
+		end unless dict["aliases"].nil?
+		@defaultVHost.redirects = []	# clears old redirects
+		dict["redirects"].each do |redirectDict|
+			redirect = Redirect.new
+			redirect.setSettings(redirectDict)
+			@defaultVHost.redirects.push(redirect)
+		end unless dict["redirects"].nil?
+
+		dict = settingsDict["defaultSecureSite"]
+		$logger.info("updating default secure vhost")
+		@defaultSecureVHost.parse
+		@defaultSecureVHost.documentRoot = dict["documentRoot"]
+		@defaultSecureVHost.serverAliases = dict["serverAliases"]
+		@defaultSecureVHost.directoryIndexes = dict["directoryIndexes"]
+		@defaultSecureVHost.override = (dict["allowAllOverrides"].nil? || !dict["allowAllOverrides"]) ? "None" : "All"
+		@defaultSecureVHost.optionsConfig.allowFolderListing = dict["allowFolderListing"]
+		@defaultSecureVHost.optionsConfig.allowCGIExecution = dict["allowCGIExecution"]
+		@defaultSecureVHost.optionsConfig.enableServerSideIncludes = dict["enableServerSideIncludes"]
+		@defaultSecureVHost.customLogPath = dict["customLogPath"]
+		@defaultSecureVHost.errorLogPath = dict["errorLogPath"]
+		@defaultSecureVHost.fullSiteRedirectToOtherSite = dict["fullSiteRedirectToOtherSite"]
+		@defaultSecureVHost.proxies = {}	# clears old proxies
+		raise "Attempt to update default secure vhost with no SSL Config" if @defaultSecureVHost.sslConfig.nil?
+		@defaultSecureVHost.sslConfig.requiresSSL = dict["requiresSSL"]
+		if dict["sslCertificateIdentifier"] == "default"
+			$logger.debug("Setting default cert")
+			@defaultSecureVHost.sslConfig.setDefaultCert
+		else
+			@defaultSecureVHost.sslConfig.certID = dict["sslCertificateIdentifier"]
+		end
+		@requiresFullRestart = true
+		$metaData.oldSites.each do |oldSite|
+			if oldSite["_id_"] == @defaultSecureVHost.metaDataKey
+				# look for reasons not to require full restart
+				break if oldSite["SSLPassPhrase"].nil?
+				break if oldSite["SSLPassPhrase"]["sslCertificateIdentifier"] != @defaultSecureVHost.sslConfig.certID
+				@requiresFullRestart = false
+			end
+		end
+		@defaultSecureVHost.proxies = {}	# clears old proxies
+		dict["proxies"].each do |key, proxyDict| 
+			proxy = Proxy.new
+			proxy.path = proxyDict["path"]
+			proxy.urls = proxyDict["urls"] unless proxyDict["urls"].nil?
+			proxy.keysAndValues = ""
+			@defaultSecureVHost.proxies[key] = proxy
+		end unless dict["proxies"].nil?
+		dict["realms"].each do |key, realmDict| 
+			realm = Realm.new
+			realm.folder = realmDict["folder"]
+			realm.browseGroups = realmDict["browseGroups"]
+			@defaultSecureVHost.realms[key] = realm
+		end unless dict["realms"].nil?
+		@defaultSecureVHost.errorDocuments = dict["errorDocuments"]
+		dict["webApps"].each do |webAppDict|
+			next if @defaultSecureVHost.webAppNames.include?(webAppDict["name"])
+			webApp = $webAppController.webAppWithName(webAppDict["name"])
+			if webApp.nil?
+				$logger.warn("Ignoring undefined webapp #{webAppDict['name']} referenced by default secure vhost")
+				next
+			end
+			next if webApp.isGlobal || webApp.isMainOnly
+			webApp.requiredByWebAppNames.push(webApp.name).uniq!
+			@defaultSecureVHost.webApps.push(webApp)
+			$webAppController.webApps.push(webApp).uniq!
+			$webAppController.allRequiredWebAppNames(webApp.name).each do |name|
+				requiredWebApp = $webAppController.webAppWithName(name)
+				@defaultSecureVHost.webApps.push(requiredWebApp) unless @defaultSecureVHost.webAppNames.include?(name)
+				$webAppController.webApps.push(requiredWebApp).uniq!
+			end
+		end unless dict["webApps"].nil?
+		@defaultSecureVHost.aliases = []	# clears old aliases
+		dict["aliases"].each do |aliasDict|
+			aliasInstance = Alias.new
+			aliasInstance.setSettings(aliasDict)
+			@defaultSecureVHost.aliases.push(aliasInstance)
+		end unless dict["aliases"].nil?
+		@defaultSecureVHost.redirects = []	# clears old redirects
+		dict["redirects"].each do |redirectDict|
+			redirect = Redirect.new
+			redirect.setSettings(redirectDict)
+			@defaultSecureVHost.redirects.push(redirect)
+		end unless dict["redirects"].nil?
+		$webAppController.markRequiredBy
+		checkAndUpdateDataLocation(settingsDict["dataLocation"], @defaultVHost)
+		checkAndUpdateDataLocation(settingsDict["dataLocation"], @defaultSecureVHost)
+		$metaData.dataLocation = settingsDict["dataLocation"]
+		@defaultSecureVHost.write
+		@defaultVHost.write
+		@allVHosts = @vHosts
+		@allVHosts.push(@defaultVHost, @defaultSecureVHost)
+		@vHostGlobal.update(@allVHosts)
+		@vHostGlobal.write
+		@mainHost.write
+	end
+	def checkAndUpdateDataLocation(newDataLocation, vHost)
+		if !newDataLocation.nil? && !newDataLocation.empty? && newDataLocation != $metaData.dataLocation
+			oldDataLocation = $metaData.dataLocation.nil? ? "#{$SERVER_LIBRARY_PATH}/Web/Data" : $metaData.dataLocation
+			vHost.realms.dup.each_key do |oldFolder|
+				next if oldFolder.nil? || oldFolder.index("#{oldDataLocation}/Sites/").nil?
+				newFolder = oldFolder.sub(/#{oldDataLocation}\/Sites\//, "#{newDataLocation}/Sites/").sub(/^\/\//, "/")
+				vHost.realms[newFolder] = vHost.realms[oldFolder]
+				vHost.realms[newFolder].folder = newFolder
+				vHost.realms.delete(oldFolder)
+				$logger.debug("Updating realm with oldFolder = #{oldFolder} newFolder = #{newFolder} for vHost #{vHost.serverName}")
+			end
+			return if vHost.documentRoot.index("#{oldDataLocation}/Sites/").nil?
+			vHost.documentRoot.sub!(/#{oldDataLocation}\/Sites\//, "#{newDataLocation}/Sites/").sub!(/^\/\//, "/")
+			$logger.debug("Updating dataLocation from #{oldDataLocation} to #{newDataLocation}; new documentRoot=#{vHost.documentRoot} for vHost #{vHost.serverName}")
+		end
+	end
+	def defaultSiteSettingsAreAllowed(settingsDict)
+		dict = settingsDict["defaultSite"]
+		return true if dict.nil?
+		return false if !dict["serverName"].nil? && dict["serverName"] != "*" && dict["serverName"] != ''
+		return false if !dict["serverAddress"].nil? && dict["serverAddress"] != "*" && dict["serverAddress"] != ''
+		return false if !dict["port"].nil? && dict["port"] != 80
+		return false if !dict["requiresSSL"].nil? && dict["requiresSSL"] == true
+		dict = settingsDict["defaultSecureSite"]
+		return true if dict.nil?
+		return false if !dict["serverName"].nil? && dict["serverName"] != "*" && dict["serverName"] != ''
+		return false if !dict["serverAddress"].nil? && dict["serverAddress"] != "*" && dict["serverAddress"] != ''
+		return false if !dict["port"].nil? && dict["port"] != 443
+		return false if !dict["requiresSSL"].nil? && dict["requiresSSL"] == false
+		return true
+	end
+	def enablewebapp
+		# Shortcut for webapps with no config file settings
+		$metaData.read
+		$metaData.newSites = $metaData.oldSites
+		webAppToEnable = $webAppController.webAppWithName($webAppNameArg)
+		if webAppToEnable.nil?
+			$logger.warn("Ignoring undefined webapp #{$webAppNameArg} referenced by enableWebApp")
+			return 1
+		end
+		webAppToEnable.requiredByWebAppNames.push(webAppToEnable.name).uniq!
+		$metaData.oldWebAppNames.each do |webAppName| 
+			webApp = $webAppController.webAppWithName(webAppName)
+			webApp.requiredByWebAppNames.push(webApp.name).uniq!
+			$webAppController.webApps.push(webApp) 
+		end
+		$webAppController.webApps.push(webAppToEnable)
+		$webAppController.markRequiredBy
+		$metaData.newGlobalWebAppNames << $webAppNameArg
+		$metaData.newGlobalWebAppNames.uniq!
+		$webAppController.reload
+		$metaData.write
+		if webAppToEnable.isMainOnly
+			syncObjectsFromFiles
+			@mainHost.write
+			if @webServer.isRunning
+				@webServer.restart
+			end
+		end
+		return 0
+	end
+	def disablewebapp
+		# Shortcut for webapps with no config file settings
+		$metaData.read
+		$metaData.newSites = $metaData.oldSites
+		webAppToDisable = $webAppController.webAppWithName($webAppNameArg)
+		if webAppToDisable.nil?
+			$logger.warn("Ignoring undefined webapp #{$webAppNameArg} referenced by disableWebApp")
+			return 1
+		end
+		$metaData.oldWebAppNames.each do |webAppName| 
+			webApp = $webAppController.webAppWithName(webAppName)
+			webApp.requiredByWebAppNames.push(webApp.name).uniq!
+			$webAppController.webApps.push(webApp) 
+		end
+		$webAppController.webApps.delete(webAppToDisable)
+		$webAppController.markRequiredBy
+		$metaData.newGlobalWebAppNames.delete($webAppNameArg)	
+		$webAppController.reload
+		$metaData.write
+		if webAppToDisable.isMainOnly
+			syncObjectsFromFiles
+			@mainHost.write
+			if @webServer.isRunning
+				@webServer.restart
+			end
+		end
+		return 0
+	end
+	def restorefactorysettings
+		$logger.debug("Restoring factory settings. Moving aside previous sites config: \n#{`/bin/ls -lai #{$MainConfigDir}sites`}")
+		$metaData = ConfigMetaData.new
+		$metaData.read
+		$webAppController = WebAppController.new
+		$webAppController.unloadAll
+		FileUtils.rm("#{$MainConfigDir}servermgr_web_apache2_config.plist")
+		FileUtils.mv("#{$MainConfigDir}sites", "#{$MainConfigDir}sites-previous-unusable-#{$$}")
+        `#{$SERVER_INSTALL_PATH_PREFIX}/System/Library/ServerSetup/PromotionExtras/webPromotionSetup no-restart`
+		$logger.warn("Restored factory settings")
+		$logger.debug("Restored sites config: \n#{`/bin/ls -lai #{$MainConfigDir}sites`}")
+	end	
+	def self.deQuote(string)
+		if string.size > 2 && string.slice(0,1) == "\"" && string.slice(-1,1) == "\""
+			return string.slice(1..-2)
+		else
+			return string
+		end
+	end
+	def self.quoteIfSpacey(string)
+		if !string.index(" ").nil? && !string.match(/".*"/) 
+			return "\"#{string}\""
+		else
+			return string
+		end
+	end
+	def self.deEmbrace(string)
+		if string.size > 2 && string.slice(0,1) == "[" && string.slice(-1,1) == "]"
+			return string.slice(1..-2)
+		else
+			return string
+		end
+	end
+	def self.embraceIfIPv6(string)
+		if string.slice(0,1) != "[" && !string.index(":").nil?
+			return "[#{string}]"
+		else
+			return string
+		end
+	end
+	def self.runCmd(cmd)
+		# rnnning external command occasionaly throws an exception; retry always seems to succeed
+		begin
+			$logger.debug("Running command #{cmd}")
+			return `#{cmd}`
+		rescue
+			$logger.warn("Exception in command; retrying: #{cmd}")
+			retry 
+		end
+	end
+end
+
+class WebServer
+	attr_reader :configCheckMessage
+	attr_reader :configErrorFile
+	def initialize
+		@launchKey = $ApacheIsInServerBundle ? "com.apple.server.httpd" : "org.apache.httpd" 
+		@configCheckMessage = ""
+		@configErrorFile = ""
+	end
+	def isRunning
+		return isLoaded
+	end
+	def isLoaded
+		msg = launch_data_alloc(LAUNCH_DATA_DICTIONARY)
+		jobLabel = launch_data_new_string(@launchKey)
+		launch_data_dict_insert(msg, jobLabel, LAUNCH_KEY_GETJOB)
+		response = launch_msg(msg)
+		launch_data_free(msg)
+		return false if response.nil?
+		if launch_data_get_type(response) == LAUNCH_DATA_DICTIONARY
+			launch_data_free(response)
+			return true
+		else
+			launch_data_free(response)
+			return false
+		end
+	end
+	def isConfiguredForWebService
+		launchd_file = "/System/Library/LaunchDaemons/org.apache.httpd.plist"
+		if File.exists?(launchd_file)
+			dict = NSDictionary.dictionaryWithContentsOfFile(launchd_file)
+			if !dict.nil? && !dict["ProgramArguments"].nil?
+				return dict["ProgramArguments"].include?("WEBSERVICE_ON")
+			end
+		end
+		return false
+	end
+	def restart
+		# Our apachectl unloads and reloads the launchd plist; not generally
+		# necessary for most config changes. Exception is SSL.
+		WebConfig.runCmd("#{$ApacheCtlPath} restart")
+		$logger.info("Full restart of Apache")
+	end
+	def start
+		WebConfig.runCmd("#{$ApacheCtlPath} start")
+		$logger.info("Started Apache")
+	end
+	def stop
+		WebConfig.runCmd("#{$ApacheCtlPath} stop")
+		$logger.info("Stopped Apache")
+		# Special handing for per-user Apache instances that mey be left by WebDAV Sharing
+		Dir.glob("/System/Library/LaunchDaemons/org.apache.httpd.webdavsharing.*").each do |path|
+			$logger.warn("Unloading and deleting plist at path #{path}")
+			`/bin/launchctl unload -w "#{path}" 2>&1` 
+			FileUtils.rm_f(path)
+		end
+		jobsStrings = `/bin/launchctl list | grep org.apache.httpd.webdavsharing`
+		if !jobsStrings.empty?
+			jobsStrings.split("\n").each do |jobString|
+				matches = jobString.match(/\S+\s+\S+\s+(.+)/)
+				job = matches[1]
+				$logger.warn("Removing job with label #{job}")
+				`/bin/launchctl remove #{job}`
+			end
+		end
+	end
+	def graceful
+		#WebConfig.runCmd("#{$HttpdPath} -k graceful")	# 5194930
+		WebConfig.runCmd("#{$ApacheCtlPath} restart")
+		$logger.info("Full restart of Apache instead of graceful")	
+	end
+	def configIsValid
+		ENV["SERVER_INSTALL_PATH_PREFIX"] = $SERVER_INSTALL_PATH_PREFIX
+		@configCheckMessage = WebConfig.runCmd("#{$HttpdPath} -f #{$MainConfigFile} -DWEBSERVICE_ON -t 2>&1")
+		m = @configCheckMessage.match(/Syntax error.*of (\/.*):.*/)
+		@configErrorFile = m[1] if !m.nil?
+		return $?.exitstatus == 0
+	end
+end
+class Configger
+	attr_accessor :properties
+	def initialize(configFilePath)
+		configFileSettings = NSDictionary.dictionaryWithContentsOfFile(configFilePath)
+		if configFileSettings.nil? || configFileSettings["WebConfig"].nil?
+			configSettings = {}
+		else
+			configSettings = configFileSettings["WebConfig"].to_ruby
+		end
+		@properties = defaultConfig.merge(configSettings)
+	end
+	def defaultConfig
+		return { "InsureDocumentRootIsPopulated" => true,
+			"CreateRedirectToSSLVirtualHost" => false,
+			"RealmAuthType" => "Digest",
+			"SavePreviousConfigFileWhenUpdating" => true,
+			"LogFilePath" => "/Library/Logs/WebConfig.log",
+			"LogLevel" => "debug",
+			"WebAppPreflightFailureBlocksDirectives" => true,
+			"WebAppPreflightFailureBlocksExecutables" => true
+		}
+	end
+end
+
+#### main
+$verbose = false
+usage = <<EOU
+usage: #{File.basename($0)} [-v] [ read | write ] [ <objname> ] 
+
+Read or write web settings
+
+For read, the web configuration is read, and serialized set of objects is written to standard out
+For write, a serialized set of objects is read from stdin, and the web configuration is written
+If -v is specified, the output is verbose rather than serialized object
+EOU
+if ARGV.empty? || ARGV.include?('-h') || ARGV.include?('--help')
+  $stderr.puts usage
+	exit(1)
+end
+if ARGV[0] == '-v'
+  $verbose = true
+  ARGV.shift
+end
+begin
+	raise "Insufficient privileges" if Process.euid != 0
+	$timeZero = Time.now
+	$config = Configger.new("#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/WebConfigProperties.plist").properties
+	
+	$logger = Logger.new($config["LogFilePath"])
+	case $config["LogLevel"].downcase
+		when "debug"
+		$logger.level = Logger::DEBUG
+		when "info"
+		$logger.level = Logger::INFO
+		when "warn", "warning"
+		$logger.level = Logger::WARN
+		when "error"
+		$logger.level = Logger::ERROR
+		else
+		logger.level = Logger::INFO
+	end
+
+	if ARGV.count == 0
+		raise ArgumentError, "Invalid arg count"
+	end
+	action = ARGV[0].downcase
+	if ARGV.count == 1 
+	elsif ARGV.count == 2
+		$webAppNameArg = ARGV[1]
+	else
+		raise ArgumentError, "Invalid arg count"
+	end
+	$webConfig = WebConfig.new
+	if $webConfig.respond_to?(action)
+		exitCode = $webConfig.send(action)
+		duration = Time.now - $timeZero
+		$logger.debug("Completed #{action} in #{duration} seconds.\n\n")
+		exit(exitCode)
+	else
+		raise ArgumentError, "#{action}: unknown action"
+	end
+rescue ArgumentError => e
+	$stderr.puts e.message
+	$stderr.puts usage
+	exit(1)
+rescue ConfigException => e
+	$stderr.puts e.message
+	$stderr.puts("Gathering general config information:\n")
+	$stderr.puts("From httpd.conf:\n" + `grep ^Include #{$MainConfigFile}` + "\n")
+	$stderr.puts("From #{$MainConfigDir}sites:\n" + `ls -latr #{$MainConfigDir}sites` + "\n")
+	$stderr.puts("From httpd:\n" + `httpd -S` + "\n")
+	exit(2)
+rescue => e
+	$stderr.puts "Exception:\n"
+	$stderr.puts e.message
+	$logger.error("Exception: " + e.message + " backtrace:\n" + e.backtrace.join("\n")) unless $logger.nil?
+	exit(3)
+end

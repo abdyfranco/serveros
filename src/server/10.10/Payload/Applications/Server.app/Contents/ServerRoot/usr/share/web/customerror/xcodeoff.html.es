@@ -1,0 +1,1 @@
+../locales/es.lproj/xcodeoff.html

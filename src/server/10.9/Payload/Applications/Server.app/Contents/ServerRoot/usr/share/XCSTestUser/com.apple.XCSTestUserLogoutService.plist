@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.XCSTestUserLogoutService</string>
+	<key>LimitLoadToSessionType</key>
+	<string>Aqua</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/osascript</string>
+		<string>-e</string>
+		<string>tell application &quot;loginwindow&quot;</string>
+		<string>-e</string>
+		<string>«event aevtrlgo»</string>
+		<string>-e</string>
+		<string>end tell</string>
+	</array>
+	<key>Sockets</key>
+	<dict>
+		<key>Control</key>
+		<dict>
+			<key>SockPathName</key>
+			<string>${SERVICE_CONTROL_PATH}/com.apple.XCSTestUserLogoutService</string>
+			<key>SockPathMode</key>
+			<integer>504</integer>
+		</dict>
+	</dict>
+</dict>
+</plist>

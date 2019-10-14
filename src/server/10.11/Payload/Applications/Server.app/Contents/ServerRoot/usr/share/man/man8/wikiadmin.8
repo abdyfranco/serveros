@@ -1,0 +1,117 @@
+.\"" Copyright (c) 2015 Apple Inc. All Rights Reserved.
+.\""
+.\"" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\"" computers and is subject to the terms and conditions of the Apple Software
+.\"" License Agreement accompanying the package this file is a part of.
+.\"" You may not port this file to another platform without Apple's written consent.
+.\""
+.\"
+.Dd October 29, 2015
+.Dt WIKIADMIN
+.Os "Server app"
+.Sh NAME
+.Nm wikiadmin
+- command-line tool for managing wiki export/import and other administrative Wiki Service functions
+.Sh SYNOPSIS
+.Nm
+export [[-l| -name \fIwiki-id\fR,[,\fIwiki-id\fR...] | -all] [-format legacy|decoded|json] -path \fIexport-path\fR]
+
+.Nm
+import [[-l| -name \fIwiki-id\fR,[,\fIwiki-id\fR...] | -all] -path \fIexport-path\fR
+.Sh DESCRIPTION
+The
+.Nm
+command line tool provides a way for administrators to export wikis into an archive, import wikis from an archive, and perform a few other administrative tasks for Wiki Service that are not available in Server app.
+.Sh SUBCOMMANDS
+The following subcommands are available:
+.Bl -tag -width flag
+.It Ar export
+The
+.Ar export
+subcommand allows one or more wikis to be exported from the active Wiki Service into an archive bundle named Exported.wikis. The command must be run with privileges (such as root) that allow setuid to _teamsserver. Export of content not associated with a wiki, such as user pages or documents, is not supported.
+.Pp
+The optional -l argument causes the export subcommand to just list the names of the wikis in Wiki Service available for export, without exporting any.
+.Pp
+The -name argument is a comma-separated list of wiki identifiers, each of which can be a short name, long name, tiny ID, or guid.
+.Pp
+The -all argument is an alternative to the -name argument that means export all wikis.
+.Pp
+The optional -format argument specifies one of three export formats:
+.Bl -tag -width flag
+.It Ar legacy
+A binary PostgreSQL format used specifically for later
+.Nm
+import of one or more of the specified wikis. This is the default format.
+.It Ar decoded
+A human-readable NSDictionary representation of the database tables for the specified wikis, without the binary encoding of the legacy format. For reference; not currently importable.
+.It Ar json
+A human-readable, JSON representation of the specified wikis, including the content and
+format of wiki pages, wiki blog posts, attached and embedded files, ACLs, themes, comments, and tags. It includes the revision history for each page. For each exported wiki, this format creates a wiki.json file and, for each page, it creates a <tinyid>-wikiPage.html file. For reference; not currently importable.
+.El
+.Pp
+The -path argument specifies a file system path to a folder where the Exported.wikis archive bundle will be created. It needs to be readable and writeable by user _teamsserver. Intermediate folders will be created if necessary. If an Exported.wikis bundle already exists at the specified path, it will be overwritten, not replaced.
+.It Ar import
+The
+.Ar import
+subcommand allows one or more wikis to be imported from an archive bundle into the active Wiki Service. The command must be run with privileges that allow setuid to _teamsserver. Existing wikis are not overwritten in the import process, so it might result in mutiple wikis with the same short name or long name. Import of users and non-wiki content is not supported.
+.Pp
+The optional -l argument causes the import subcommand to just list the names of the wikis available for import from the specified Exported.wikis archive bundle, without importing any. It also lists the creation date and version of the archive.
+.Pp
+The -name argument is a comma-separated list of wiki identifiers, each of which can be a short name, long name, tiny ID, or guid. (These alternate means of identifying a wiki are supported because a wiki might not have a short name, or multiple wikis might have the same short name.)
+.Pp
+The -all argument is an alternative to the -name argument that means import all wikis.
+.Pp
+The -path argument specifies a file system path to the export archive. If this does not specify a path to an Exported.wikis bundle, it can specify a path to a folder containing an Exported.wikis bundle. It can also specify a path to an older Server app 3.2 format export folder. It needs to be readable and writeable by user _teamsserver.
+.It Ar migrate
+The
+.Ar migrate
+subcommand allows one or more wikis to be migrated from a Snow Leopard Server wiki repository to the current active Wiki Service. The command must be run with privileges that allow setuid to _teamsserver. Existing wikis are not overwritten in the migrate process, so it might result in mutiple wikis with the same short name or long name.
+.Pp
+The -r argument specifies a file system path to the Snow Leopard Server wiki repository (typically the Collaboration folder).
+.Pp
+The optional -g argument specifies the name of a single wiki (group) to be migrated from the repository. If omitted, all wikis are migrated.
+.It Ar resetQuicklooks
+The
+.Ar resetQuicklooks
+subcommand can be used if the wiki contains documents that were uploaded with an older version of Server app where Quicklooks might not have been created. It will cause new Quicklooks to be created for all documents.
+
+.Pp
+.Sh EXAMPLE USAGE
+.Bd -literal
+wikiadmin export -l
+wikiadmin export -all -path /Library/Server/Wiki/Save
+wikiadmin import -l -path /Library/Server/Wiki/Save
+wikiadmin import -name somewiki,anotherwiki -path /Library/Server/Wiki/Save
+
+wikiadmin export -name somewiki,anotherwiki -path /var/tmp/two-exported-wikis
+wikiadmin import -all -path /var/tmp/two-exported-wikis
+wikiadmin import -all -path /var/tmp/two-exported-wikis/Exported.wikis
+
+wikiadmin export -all -format json -path /var/tmp/readable-wikis
+
+wikiadmin migrate -r /Volumes/SnowLeopard/Library/Collaboration
+
+.Ed
+.Sh RETURN VALUES
+.Nm
+returns a status code of 0 for success. In the event of failure it returns a non-zero status,
+and writes error messages to stderr.
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /Library/Server/Wiki/Logs/wikiadmin.log
+Log file for
+.Nm
+activity
+.It Pa /Library/Server/Wiki/Logs/collabd.log
+Log file for Wiki http server activity
+.It Pa /Library/Server/Wiki/, /tmp/, /var/tmp, /Users/Shared
+Folders readable and writable by user _teamsserver where exports can typically be placed
+.It Pa Exported.wikis
+The name of the bundle created when exporting wikis
+.El
+.Sh HISTORY
+The
+.Nm
+command first allowed export in Server app 3.2. The packaging format for exported wikis was revised with Server app 4.1, but the new
+.Nm
+still supports importing from the older export formats.

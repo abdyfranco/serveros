@@ -1,0 +1,64 @@
+.\"" Copyright (c) 2010-2016 Apple Inc. All Rights Reserved.
+.\""
+.\"" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\"" computers and is subject to the terms and conditions of the Apple Software
+.\"" License Agreement accompanying the package this file is a part of.
+.\"" You may not port this file to another platform without Apple's written consent.
+.\""
+.Dd July 25, 2013
+.Dt webappctl 8
+.Os "macOS Server"
+.Sh NAME
+.Nm webappctl
+.Nd web application control tool
+.Sh SYNOPSIS
+.Nm 
+[-s] start|stop \fIwebapp-namee\fR|- [\fIvhost-name\fR|*]
+.Nm 
+[-s] stop -
+.Nm 
+[-s] restart \fIwebapp-namee\fR|-
+.Nm 
+[-s] status \fIwebapp-namee\fR|-
+.Nm 
+[-s] tree[s] \fIwebapp-name\fR|- [\fIvhost-name\fR|*]
+.Sh DESCRIPTION
+The
+.Nm 
+utility allows administrators to start, stop, and check the status of web applications, or webapps, 
+connected to the web service on the local host. 
+In this context, a webapp is a set of Apache configuration directives and related behaviors, usually managing a set of processes listening on specific TCP ports responding to HTTP requests, routed through
+macOS Server's Websites service via reverse proxy mechanism. This mechanism may also be used for web-related services that are not
+strictly web apps. It can be used for Apple-supplied webapps, such as Wiki, and it may be used for locally installed third-party
+webapps. (A GUI alternative to the
+.Nm
+command, for locally-installed webapps with suitable keys in the webapp.plist, is macOS Server's Websites panel.)
+.Pp
+.Sh OPTIONS
+.Nm
+recognizes the start
+or stop argument to activate or de-activate the webapp specified by \fIwebapp-name\fR.
+If the \fIwebapp-name\fR is specified as "-", 
+the start/stop/status action applies to all webapps represented with a plist present in /etc/apache2/webapps/.
+In the case of a restart "-" action, the set of running webapps are stopped, then started. (In the case of a restart for 
+a specific webapp, the webapp will be stopped, then started, even if it was not running before.)
+If the status argument is specified, a list of enabled webapps is displayed. The tree[s] argument displays
+the hierarchy of webapps declared by the requiredWebApps property.
+The optional \fIvhost-name\fR argument specifies the name of the virtual host though which the webapp is to be proxied.
+If omitted the default wild-card virtual host is used.
+.Sh RETURN VALUES
+.Nm
+returns a status code of 0 for success. In the event of failure it returns a non-zero status,
+and may also dump additional diagnostic information.
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /Library/Server/Web/Config/apache2/webapps/ 
+The directory where webapp.plists are stored.
+.It Pa /Library/Server/Web/Config/apache2/webapp_scripts/ 
+The directory where scripts to manage third-party webapps are placed
+.It Pa /Library/Logs/WebConfig.log 
+This is the log file for actions taken by the XSWebConfig class library. Inspect it to diagnose general web
+service configuration problems. 
+.El
+.Sh SEE ALSO
+.Xr webapp.plist 8

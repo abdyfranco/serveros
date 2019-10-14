@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "Spanish.lproj",
+		"isoCodes": ["es"],
+		"isoName": "Spanish",
+		"name": "Español"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>Debe activar JavaScript para ver la ayuda.</p>Para más información, consulte <a href=\"http://help.apple.com/resources/javascript/\">este artículo de soporte de Apple</a>.</div>",
+		"loadfailed": "<div>La ayuda no está disponible en este momento.</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@ resultados",
+		"Apple applications": "Aplicaciones de Apple",
+		"Cancel": "Cancelar",
+		"Change Language": "Cambiar idioma",
+		"Close": "Cerrar",
+		"Featured application help": "Ayuda de la aplicación destacada",
+		"Go to the homepage": "Ir a la página de inicio",
+		"Help for:": "Ayuda de:",
+		"Hide": "Ocultar",
+		"Home": "Inicio",
+		"Loading latest help...": "Cargando la ayuda más reciente…",
+		"Other applications": "Otras aplicaciones",
+		"Print Book": "Imprimir libro",
+		"Print Options": "Opciones de impresión",
+		"Print Page": "Imprimir página",
+		"Print Section": "Imprimir sección",
+		"Recent applications": "Aplicaciones recientes",
+		"Search": "Buscar",
+		"Send feedback.": "Enviar opinión.",
+		"Show all": "Mostrar todo",
+		"Show less": "Mostrar menos",
+		"Show the previous page": "Mostrar la página anterior",
+		"Show the next page": "Mostrar la página siguiente",
+		"Show": "Mostrar",
+		"Was this page helpful?": "¿Le ha resultado útil esta página?"
+	}
+}

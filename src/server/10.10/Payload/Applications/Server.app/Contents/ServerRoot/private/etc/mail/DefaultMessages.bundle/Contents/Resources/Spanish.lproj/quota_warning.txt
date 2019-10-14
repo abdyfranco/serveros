@@ -1,0 +1,17 @@
+De: Administrador correo <Postmaster@ejemplo.com>
+Asunto: [Aviso] Le comunicamos que la capacidad del servidor de correo 
+se acerca a su límite
+
+Tenga en cuenta que el servidor de correo se está
+acercando a su límite. Si lo excede, las futuros entregas 
+de correo electrónico podrían ser rechazadas.
+
+Mueva los mensajes que ya no necesite guardar en el servidor a sus 
+carpetas de correo electrónico locales. También puede buscar en las 
+carpetas "Enviados", "Papelera" e "Ítems eliminados" correos que ya 
+no necesite conservar en el servidor.
+
+¡Gracias por resolver rápidamente esta situación!
+
+Atentamente,
+Administrador de correo

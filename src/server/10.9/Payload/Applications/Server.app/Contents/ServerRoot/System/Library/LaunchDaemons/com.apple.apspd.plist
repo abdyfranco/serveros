@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.apspd</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ApplePushServiceProvider.framework/apspd</string>
+	</array>
+	<key>MachServices</key>
+	<dict>
+		<key>com.apple.apspd</key>
+		<true/>
+	</dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>APSPD_SANDBOX</key>
+		<string>/Applications/Server.app/Contents/ServerRoot/System/Library/Sandbox/com.apple.apspd.sb</string>
+		<key>APSP_FRAMEWORK_DIR</key>
+		<string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ApplePushServiceProvider.framework</string>
+	</dict>
+</dict>
+</plist>

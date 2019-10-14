@@ -1,0 +1,21 @@
+#!/usr/bin/ruby
+
+# Copyright (c) 2014 Apple Inc. All Rights Reserved.
+
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+
+# This is just a wrapper for killall -TERM that returns a non-error status when 
+# there are no processes found to kill.
+
+if ARGV.count != 1
+	exit(1)
+end
+`/usr/bin/killall -TERM -u #{ARGV[0]} -m .`
+if $?.exitstatus == 0 || $?.exitstatus == 1
+	exit(0)
+else
+	exit($?.exitstatus)
+end

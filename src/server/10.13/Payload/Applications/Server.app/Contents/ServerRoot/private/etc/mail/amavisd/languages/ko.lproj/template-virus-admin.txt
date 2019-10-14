@@ -1,0 +1,53 @@
+# =============================================================================
+# This is a template for non-spam (e.g. VIRUS,...) ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+보낸 사람: %f
+날짜: %d
+제목: [? [:ccat|major] |클린 메일|클린 메일|MTA 차단 메일|\
+대용량 메일|메일의 유효하지 않은 헤더|스팸|스팸|메일의 확인되지 않은 콘텐츠|\
+메일의 금지된 콘텐츠(%F)|메일의 바이러스(%V)]\
+ 보낸 사람 [?%l||LOCAL ][?%a||\[%a\] ]%s
+받는 사람: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <VA%i@%h>
+
+[? %#V |바이러스가 발견되지 않았습니다.
+|1개의 바이러스가 발견되었습니다: %V
+|2개의 바이러스가 발견되었습니다:\n  %V
+|%#V개의 바이러스가 발견되었습니다:\n  %V
+]
+[? %#F |#|[:wrap|78||  |금지된 [?%#F|이름|이름|이름]: %F]]
+[? %#X |#|잘못된 헤더:[\n[:wrap|78|  |  |%X]]]
+[? %#W |#\
+|스캐너가 바이러스 탐지 중: %W
+|스캐너가 바이러스 탐지 중: %W
+]
+콘텐츠 유형: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, 다음에 대해 차단됨:[:ccat|name]]
+메시지에 대한 내부 참조 코드는 %n/%i입니다
+
+[? %a |#|[:wrap|78||  |첫 번째 업스트리밍 SMTP 클라이언트 IP 주소: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |'수신:' 결과에 따라,\
+ 해당 메시지가 \[%e\], %t]에서 생성되었습니다]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |차단되지 않음.|메시지가 다음으로 차단됨: %q]
+
+[? %#S |전송자에게 알림이 보내지지 않았습니다.
+
+]#
+[? %#D |#|메시지가 다음으로 릴레이될 예정: [\n%D]
+]
+[? %#N |#|메시지가 다음으로 릴레이되지 않음: [\n%N]
+]
+[? %#V |#|[? %#v |#|바이러스 스캐너 출력:[\n  %v]
+]]

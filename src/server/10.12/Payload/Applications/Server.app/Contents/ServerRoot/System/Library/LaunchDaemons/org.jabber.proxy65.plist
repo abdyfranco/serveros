@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>org.jabber.proxy65</string>
+	<key>OnDemand</key>
+	<false/>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/twistd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>twistd</string>
+		<string>-n</string>
+		<string>-l</string>
+		<string>/private/var/jabberd/log/proxy65.log</string>
+		<string>-y</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/share/proxy65/proxy65.py</string>
+		<string>--pidfile</string>
+		<string>/private/var/run/proxy65.pid</string>
+	</array>
+	<key>UserName</key>
+	<string>_jabber</string>
+	<key>GroupName</key>
+	<string>daemon</string>
+	<key>PreventsSleep</key>
+	<true/>
+</dict>
+</plist>

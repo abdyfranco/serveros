@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>File Sharing</string>
+	<key>postSetup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Fix up share point records if needed</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/share/servermgrd/bundles/servermgr_sharing.bundle/Contents/fixup_sharepoint_records</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

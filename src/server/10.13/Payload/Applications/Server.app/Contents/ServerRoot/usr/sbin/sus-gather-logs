@@ -1,0 +1,134 @@
+#!/bin/sh
+
+# create path for resulting archive file
+log_date=`date "+%y%m%d_%H%M%S"`
+log_host=`hostname -s`
+SD_CALLED="0"
+if [[ ${1} = "" ]]; then
+	gather_archive_file="/tmp/${log_date}_${log_host}_swupd_gather.tgz"
+else
+	SD_CALLED="1"
+	gather_archive_file=${1}
+fi
+
+# define paths for other intermediate files
+gather_archive_sources="/tmp/sus_gather_logs_archive_sources.txt"
+daemon_vers_file="/tmp/sus_gather_logs_daemon_version.txt"
+downloads_ls_file="/tmp/sus_gather_logs_downloads_ls.txt"
+serveradmin_fullstatus_file="/tmp/sus_gather_logs_serveradmin_fullstatus.txt"
+serveradmin_settings_file="/tmp/sus_gather_logs_serveradmin_settings.txt"
+system_profile_out="/tmp/sus_gather_logs_system_profile.txt"
+system_vers_file="/tmp/sus_gather_logs_system_version.txt"
+serveradmin_tool="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin"
+swupd_syncd_tool="/Applications/Server.app/Contents/ServerRoot/usr/sbin/swupd_syncd"
+smd_archive_sources="/tmp/sus_gather_logs_smd_archive_sources.txt"
+smd_archive_file="/tmp/sus_gather_logs_smd_archive.tgz"
+
+echo "(Enter sudo password if prompted.)"
+sudo -v
+
+# start the gather
+echo "* gathering software versions"
+echo "${system_vers_file}" > ${gather_archive_sources}
+sudo /usr/bin/sw_vers > ${system_vers_file}
+echo "${daemon_vers_file}" >> ${gather_archive_sources}
+sudo "${swupd_syncd_tool}" -ver &> ${daemon_vers_file}
+echo "${serveradmin_fullstatus_file}" >> ${gather_archive_sources}
+sudo "${serveradmin_tool}" fullstatus swupdate > ${serveradmin_fullstatus_file}
+
+echo "* gathering service status"
+echo "${serveradmin_settings_file}" >> ${gather_archive_sources}
+sudo "${serveradmin_tool}" settings swupdate > ${serveradmin_settings_file}
+
+echo "* gathering service logs"
+__service_logs_found=0
+if [ -d "/Library/Server/Software Update/Log" ]; then
+	__logs_dir="/Library/Server/Software Update/Log"
+	if [[ ${SD_CALLED} -eq "0" ]]; then
+		__sync_log="${__logs_dir}/swupd_syncd.log"
+		__error_log="${__logs_dir}/swupd_error.log"
+		__access_log="${__logs_dir}/swupd_access.log"
+	else
+		__sync_log="/tmp/swupd_syncd.log"
+		__error_log="/tmp/swupd_error.log"
+		__access_log="/tmp/swupd_access.log"
+		# To capture about 10,000 bytes per log file, grab the most recent 10,100
+		# then skip the first -- probably incomplete -- line using awk:
+		tail -c 10100 "${__logs_dir}/swupd_syncd.log" | awk 'NR==1 {next} {print}' >> "${__sync_log}"
+		tail -c 10100 "${__logs_dir}/swupd_error.log" | awk 'NR==1 {next} {print}' >> "${__error_log}"
+		tail -c 10100 "${__logs_dir}/swupd_access.log" | awk 'NR==1 {next} {print}' >> "${__access_log}"
+	fi
+fi
+
+if [ -e "${__sync_log}" ]; then
+	echo "${__sync_log}" >> ${gather_archive_sources}
+	__service_logs_found=1
+fi
+if [ -e "${__error_log}" ]; then
+	echo "${__error_log}" >> ${gather_archive_sources}
+	__service_logs_found=1
+fi
+if [ -e "${__access_log}" ]; then
+	echo "${__access_log}" >> ${gather_archive_sources}
+	__service_logs_found=1
+fi
+if [ ${__service_logs_found} -ne 1 ]; then
+	echo "* ..skipped - no service logs found"
+fi
+
+if [ -e "/Library/Server/Software Update" ]; then
+	__config_path="/Library/Server/Software Update/Config"
+	__status_path="/Library/Server/Software Update/Status"
+	__swupd_domain="/Library/Server/Software Update/Config/swupd"
+	__service_version="10.11"
+fi
+
+echo "* gathering service settings & admin cache (service version: ${__service_version})"
+echo "${__config_path}/swupd.plist" >> ${gather_archive_sources}
+echo "${__config_path}/swupd.conf" >> ${gather_archive_sources}
+echo "${__status_path}/com.apple.server.swupdate.plist" >> ${gather_archive_sources}
+
+echo "* gathering product catalogs"
+docRoot=`defaults read "${__swupd_domain}" updatesDocRoot`
+echo "${docRoot}html/content/catalogs" >> ${gather_archive_sources}
+
+echo "* gathering listing of downloaded files"
+echo "${downloads_ls_file}" >> ${gather_archive_sources}
+echo "==========" > ${downloads_ls_file}
+ls -ld "${docRoot}" >> ${downloads_ls_file}
+echo "==========" >> ${downloads_ls_file}
+ls -lR "${docRoot}/html" >> ${downloads_ls_file}
+
+# smd files are gathered into a separate archive embedded within the main archive
+echo "* gathering product .smd files"
+find "${docRoot}html/content/downloads" -name "*smd" >> ${smd_archive_sources}
+
+if [[ ${SD_CALLED} -eq "0" ]]; then
+	tar cvzf ${smd_archive_file} -T ${smd_archive_sources} > /dev/null 2>&1
+	echo "${smd_archive_file}" >> ${gather_archive_sources}
+	echo "* archiving gathered files to: ${gather_archive_file}"
+	tar cvzf ${gather_archive_file} -T ${gather_archive_sources} > /dev/null 2>&1
+
+	echo "* cleaning up"
+	rm -v /tmp/sus_gather_logs*.txt
+	rm -v ${smd_archive_file}
+
+	echo "**************************"
+	echo "* Archive complete."
+	echo "* Please attach the archive file to the Radar bug."
+	echo "* Archive file: ${gather_archive_file}"
+	echo "**************************"
+	echo " "
+else
+	tar czf ${smd_archive_file} -T ${smd_archive_sources} > /dev/null 2>&1
+	echo "${smd_archive_file}" >> ${gather_archive_sources}
+	tar czf ${gather_archive_file} -T ${gather_archive_sources} > /dev/null 2>&1
+
+	rm /tmp/sus_gather_logs*.txt
+	rm ${smd_archive_file}
+	rm ${__sync_log}
+	rm ${__error_log}
+	rm ${__access_log}
+
+	echo "Software Update Server archive file: ${gather_archive_file}"
+fi

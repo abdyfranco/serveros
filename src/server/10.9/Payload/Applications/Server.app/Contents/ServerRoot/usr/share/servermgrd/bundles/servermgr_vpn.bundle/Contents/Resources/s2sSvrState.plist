@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>readSettings</string>
+	<key>optionalArguments</key>
+	<dict>
+		<key>parameters</key>
+		<array>
+			<string>Servers:com.apple.site2site:enabled</string>
+			<string>Servers:com.apple.site2site:IPSec:LocalAddress</string>
+			<string>Servers:com.apple.site2site:IPSec:RemoteAddress</string>
+			<string>Servers:com.apple.site2site:IPSec:LocalCertificate</string>
+			<string>Servers:com.apple.site2site:IPSec:SharedSecretValue</string>
+			<string>Servers:com.apple.site2site:IPSec:Policies</string>
+			<string>Servers:com.apple.site2site:IPSec:Proposals</string>			
+		</array>
+	</dict>
+</dict>
+</plist>

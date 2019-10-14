@@ -1,0 +1,31 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="description" content="Specify whether users access your server by using its host name only on your intranet or on your intranet and the Internet."><meta name="DC.Relation" scheme="URI" content="t_RegisterInternetName.html"><meta name="offlineflag" content="true"><meta name="APD.BuildID" content="01390204-A30F-11E3-B9F5-1AAD1870E736"><meta name="DC.Identifier" content="apdC57F6CFB-4B8B-4A63-B59A-8D4BF4EB3BEC"><title>Accessing your Server</title><meta name="robots" content="anchors"></head><body id="apdC57F6CFB-4B8B-4A63-B59A-8D4BF4EB3BEC"><div class="subjectids"><a name="apdC57F6CFB-4B8B-4A63-B59A-8D4BF4EB3BEC"></a></div><img class="topicIcon" src="../spfic.png" height="64" width="64"><h1 class="title topictitle1">Accessing your Server</h1><div class="body refbody"><div class="abstract">The Accessing your Server pane appears so you can specify whether your server’s host name works
+        for the entire Internet or just on your intranet (local network).  <span class="shortdesc">Specify whether users access
+            your server by using its host name only on your intranet or on your intranet and the
+            Internet. </span>
+You can enter the server’s host name in the next pane.</div><div class="section"><a name="apdC57F6CFB-4B8B-4A63-B59A-8D4BF4EB3BEC__apd4ca99836-c413-4f6c-b742-49798c35db7a"><!-- --></a><table cellpadding="4" cellspacing="0" summary="" id="apdC57F6CFB-4B8B-4A63-B59A-8D4BF4EB3BEC__apd4ca99836-c413-4f6c-b742-49798c35db7a" border="0" class="simpletable"><tr class="sthead"><th valign="bottom" align="left" id="d840e31" class="stentry">Option</th><th valign="bottom" align="left" id="d840e34" class="stentry">Description</th></tr><tr class="strow"><td valign="top" headers="d840e31" class="stentry"><p class="p">Local Network</p></td><td valign="top" headers="d840e34" class="stentry"><p class="p">Select this option to let users access your server only from your
+                            intranet, select this option. Users can access your server by using its
+                            local network name, also known as the "local hostname." It's usually the
+                            server’s computer name appended with .local.</p><p class="p">Only computers on your local IP subnet can access your server by using
+                            its local network name. Usually, computers on the same subnet have IP
+                            addresses that begin with the same three numbers, for example,
+                            192.168.1. Windows computers must have Bonjour Print Services for
+                            Windows installed. It’s available at support.apple.com/kb/DL999.</p><p class="p">If the server’s host name is its local network name, the server doesn’t
+                            support Kerberos or single sign-on authentication.</p></td></tr><tr class="strow"><td valign="top" headers="d840e31" class="stentry">Local Network and VPN</td><td valign="top" headers="d840e34" class="stentry"><p class="p">Select this option to let users access this server by using its host name
+                            on your intranet and by using a VPN connection from the Internet. To let
+                            Internet users access your server securely through a VPN connection,
+                            turn on VPN service in the Server app after finishing server setup.</p><p class="p">If your intranet has a DNS server, it must be configured to use the
+                            server’s host name to look up its IP address, and vice versa. This means
+                            the DNS server must have records for forward lookup (an A record) and
+                            reverse lookup (a PTR record). Ask your DNS server administrator to
+                            configure these DNS records for your server.</p><p class="p">If your intranet doesn’t have a DNS server, the server setup assistant
+                            configures your server to provide minimal DNS service so users can use
+                            your server’s host name on your intranet.</p></td></tr><tr class="strow"><td valign="top" headers="d840e31" class="stentry"><p class="p">Domain Name</p></td><td valign="top" headers="d840e34" class="stentry"><p class="p">Select this option to let users access your server by using the same host
+                            name on the Internet and your intranet.</p><p class="p">The DNS servers you use for the Internet must be configured to use the
+                            server’s host name to look up its IP address, and vice versa. This means
+                            the DNS server must have records for forward lookup (an A record) and
+                            reverse lookup (a PTR record). Ask your ISP or DNS hosting service to
+                            configure these DNS records for you.</p><p class="p">If your intranet has a DNS server, it also must be configured with
+                            records for forward lookup and reverse lookup. Ask your intranet DNS
+                            server administrator to configure these DNS records for you.</p><p class="p">If your intranet doesn’t have a DNS server, the server setup assistant
+                            configures your server to provide minimal DNS service so users can use
+                            your server’s host name on your intranet.</p></td></tr></table></div></div><div class="related-links"><div class="relinfo"><strong>Related information</strong><br><div><a class="link" href="t_RegisterInternetName.html" title="To allow users to access the server by using its host name on the Internet, you must register the server’s host name.">Register the server’s Internet host name</a></div><div><a class="link" href="#r_DNSrecords">Set DNS for your server</a></div></div></div></body></html>

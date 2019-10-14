@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>includeFiles</key>
+	<array>
+		<string>/Library/Server/Web/Config/apache2/httpd_webdavsharing.conf</string>
+	</array>
+	<key>launchKeys</key>
+	<array/>
+	<key>name</key>
+	<string>com.apple.webapp.webdavsharing</string>
+	<key>proxies</key>
+	<dict/>
+	<key>requiredModuleNames</key>
+	<array>
+		<string>rewrite_module</string>
+		<string>bonjour_module</string>
+	</array>
+	<key>requiredWebAppNames</key>
+	<array/>
+	<key>startCommand</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/wfsstart</string>
+	<key>stopCommand</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/wfsstop</string>
+	<key>sslPolicy</key>
+	<integer>0</integer>
+</dict>
+</plist>

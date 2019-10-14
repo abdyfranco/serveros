@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SupportedServices</key>
+	<array>
+		<dict>
+			<key>ProfileName</key>
+			<string>com.apple.jabber.account</string>
+			<key>SACL</key>
+			<string>chat</string>
+			<key>ReturnedName</key>
+			<string>com.apple.macosxserver.chat</string>
+		</dict>
+		<dict>
+			<key>ProfileName</key>
+			<string>com.apple.mail.managed</string>
+			<key>SACL</key>
+			<string>mail</string>
+			<key>ReturnedName</key>
+			<string>com.apple.macosxserver.mail</string>
+			<key>OwningPlugin</key>
+			<string>servermgr_mail</string>
+		</dict>
+		<dict>
+			<key>ProfileName</key>
+			<string>com.apple.carddav.account</string>
+			<key>SACL</key>
+			<string>addressbook</string>
+			<key>ReturnedName</key>
+			<string>com.apple.macosxserver.carddav</string>
+		</dict>
+		<dict>
+			<key>ProfileName</key>
+			<string>com.apple.caldav.account</string>
+			<key>SACL</key>
+			<string>calendar</string>
+			<key>ReturnedName</key>
+			<string>com.apple.macosxserver.caldav</string>
+		</dict>
+		<dict>
+			<key>ProfileName</key>
+			<string>com.apple.vpn.managed</string>
+			<key>SACL</key>
+			<string>vpn</string>
+			<key>ReturnedName</key>
+			<string>com.apple.macosxserver.vpn2</string>
+		</dict>
+	</array>
+	<key>ACSEnabled</key>
+	<true/>
+	<key>CustomizationTimeout</key>
+	<integer>2</integer>
+</dict>
+</plist>

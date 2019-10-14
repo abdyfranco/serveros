@@ -1,0 +1,107 @@
+(version 1)
+(import "system.sb")
+(deny default)
+
+(allow authorization-right-obtain
+       (right-name "system.privilege.admin"))
+
+(allow file-read*
+       (literal "/")
+       (literal "/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/CSService.framework/Versions/A/CSService")
+       (literal "/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/CSServiceCore.framework/Versions/A/CSServiceCore")
+       (literal "/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/PostgreSQLClient.framework/Versions/A/PostgreSQLClient")
+       (literal "/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ServerFoundation.framework/Versions/A/ServerFoundation")
+       (literal "/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/HTTPServer.framework/Versions/A/HTTPServer")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/lib/libpq.5.5.dylib")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabpp")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabpp.strip/..namedfork/rsrc")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabpp/..namedfork")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabpp/..namedfork/rsrc")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/share/collabd/coreclient/locales/en.lproj/default.strings")
+       (subpath "/Library/Server/Wiki")
+       (subpath (param "FileDataPath"))
+       (subpath "/Library/Fonts")
+       (subpath "/System/Library/Fonts")
+       (literal "/private/var/db/mds/messages/se_SecurityMessages")
+       (literal "/Library/Server/Wiki/Logs/preview_generator.log")
+       (literal "/private/var/run/kick-collabpp/kick")
+       (literal "/Library/Preferences/.GlobalPreferences.plist")
+       (literal "/Library/Preferences/com.apple.HIToolbox.plist")
+       (subpath "/private/var/db")
+       (subpath "/private/var/empty")
+       (subpath "/Library/Internet Plug-Ins")
+       (subpath "/private/var/folders"))
+
+(allow file-read-metadata
+       (literal "/Applications")
+       (literal "/Applications/Server.app")
+       (literal "/Applications/Server.app/Contents")
+       (subpath "/Applications/Server.app/Contents/ServerRoot")
+       (subpath "/Volumes")
+       (literal "/Library")
+       (literal "/Library/Server")
+       (literal "/private/var"))
+
+(allow file-write*
+       (subpath (param "FileDataPath"))
+       (literal "/private/var/teamsserver")
+       (literal "/private/var/run/kick-collabpp/kick")
+       (literal "/Library/Server/Wiki/Logs/preview_generator.log")
+       (subpath "/private/var/empty/Library")
+       (subpath "/private/var/folders"))
+
+(allow iokit-open
+       (iokit-user-client-class "IOHIDParamUserClient")
+       (iokit-user-client-class "RootDomainUserClient"))
+
+(allow ipc-posix-shm)
+
+(allow mach-lookup
+       (global-name "com.apple.CoreServices.coreservicesd")
+       (global-name "com.apple.FontObjectsServer")
+       (global-name "com.apple.FontServer")
+       (global-name "com.apple.SecurityServer")
+       (global-name "com.apple.SystemConfiguration.SCNetworkReachability")
+       (global-name "com.apple.SystemConfiguration.configd")
+       (global-name "com.apple.cookied")
+       (global-name "com.apple.decalog4.incoming")
+       (global-name "com.apple.distributed_notifications@1v3")
+       (global-name "com.apple.dock.server")
+       (global-name "com.apple.ls.boxd")
+       (global-name "com.apple.networkd")
+       (global-name "com.apple.pasteboard.1")
+       (global-name "com.apple.system.opendirectoryd.api")
+       (global-name "com.apple.window_proxies")
+       (global-name "com.apple.coreservices.appleevents")
+       (global-name "com.apple.coreservices.launchservicesd")
+       (global-name "com.apple.WebKit.PluginAgent")
+       (global-name "com.apple.windowserver.active"))
+
+(allow process-exec
+       (literal "/System/Library/Frameworks/WebKit.framework/WebKitPluginHost.app/Contents/MacOS/WebKitPluginHost")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabpp")
+       (literal "/bin/chmod"))
+
+(allow process-fork)
+
+(allow mach-per-user-lookup)
+
+(allow network-outbound)
+;(allow network-outbound
+;       (literal "/private/var/pgsql_socket/.s.PGSQL.5432")
+;       (literal "/private/var/run/mDNSResponder")
+;       (remote tcp "*:80"))
+
+(allow system-socket)
+
+;(allow ipc-posix-shm
+;        (regex #"^/tmp/com.apple.csseed.[0-9]+$"))
+
+; deny file-read-metadata /private/var/db/mds/system/mdsObject.db
+; deny file-read-metadata /Library/Preferences/com.apple.security.plist
+; deny file-read-data /Library/Preferences/com.apple.security.plist
+; deny file-read-metadata /Library/Keychains
+; deny file-read-metadata /Library/Keychains/System.keychain
+; deny file-read-metadata /private/var/db/mds/system/mdsObject.db
+

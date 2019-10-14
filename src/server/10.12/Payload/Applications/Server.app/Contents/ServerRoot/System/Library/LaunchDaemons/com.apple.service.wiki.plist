@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.service.wiki</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>SERVICE_NAME</key>
+		<string>wiki</string>
+		<key>SERVER_INSTALL_PATH_PREFIX</key>
+		<string>/Applications/Server.app/Contents/ServerRoot</string>
+		<key>MODULE_INSTALL_PATH_PREFIX</key>
+		<string/>
+		<key>XPC_SERVICES_UNAVAILABLE</key>
+		<string>1</string>
+	</dict>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/sbin/httpd</string>
+		<string>-D</string>
+		<string>FOREGROUND</string>
+		<string>-f</string>
+		<string>/Library/Server/Web/Config/apache2/services/wiki.conf</string>
+                <string>-E</string>
+                <string>/var/log/apache2/services/wiki_error_log</string>
+	</array>
+	<key>OnDemand</key>
+	<false/>
+</dict>
+</plist>

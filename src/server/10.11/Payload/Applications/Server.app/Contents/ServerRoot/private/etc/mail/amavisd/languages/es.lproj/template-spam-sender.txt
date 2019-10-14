@@ -1,0 +1,47 @@
+# =============================================================================
+# This is a template for SPAM SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Asunto: Mensaje considerado CORREO MASIVO NO SOLICITADO aparentemente enviado por usted
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <SS%i@%h>
+
+Un mensaje de %s[
+para: %R]
+
+ha sido considerado correo masivo no solicitado.
+
+El código de referencia interno asignado a su mensaje es %n/%i.
+
+El mensaje contenía su dirección de remitente, así que o se trataba de un correo auténtico
+enviado por usted, o bien se ha falsificado la dirección del remitente y un tercero ha utilizado
+su dirección de forma fraudulenta, en cuyo caso lamentamos enviarle esta notificación.
+
+Procuramos minimizar en la medida de lo posible el correo de tipo “backscatter” en los casos
+más claros de correo masivo no solicitado y mensajes con virus, pero en los casos menos
+evidentes, se busca el equilibrio entre la pérdida de mensajes auténticos y el envío de spam
+no deseado, por lo que pueden llegar a producirse daños colaterales en ambos sentidos.
+
+[? %a |#|[:wrap|78||  |Primera dirección IP de cliente SMTP ascendente: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Según el rastro de “Received:” (Recibido),\
+ este mensaje se originó aparentemente en: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+# [? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+[? %#X |#|\n[[:wrap|78||  |%X]\n]]
+
+[? %#D |Se ha detenido la entrega del mensaje de correo.
+]#
+#
+# Informe SpamAssassin:
+# [%A
+# ]\

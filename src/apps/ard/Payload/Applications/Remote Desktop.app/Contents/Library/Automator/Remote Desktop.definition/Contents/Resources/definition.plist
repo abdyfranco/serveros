@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMDeprecated</key>
+	<true/>
+	<key>AMProvides</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Types</key>
+		<array>
+			<string>com.apple.RemoteDesktop.computer-object</string>
+			<string>com.apple.RemoteDesktop.computer.ID-object</string>
+			<string>com.apple.RemoteDesktop.computer.list-object</string>
+		</array>
+	</dict>
+	<key>Specific Keywords</key>
+	<array>
+		<string>Search</string>
+		<string>Control</string>
+		<string>Remote</string>
+		<string>Share</string>
+		<string>Sharing</string>
+		<string>Observe</string>
+	</array>
+	<key>application</key>
+	<string>Remote Desktop</string>
+	<key>defined_types</key>
+	<dict>
+		<key>com.apple.RemoteDesktop.computer-object</key>
+		<dict>
+			<key>name</key>
+			<string>RemoteComputer</string>
+		</dict>
+		<key>com.apple.RemoteDesktop.computer.ID-object</key>
+		<dict>
+			<key>name</key>
+			<string>RemoteComputerID</string>
+		</dict>
+		<key>com.apple.RemoteDesktop.computer.list-object</key>
+		<dict>
+			<key>name</key>
+			<string>RemoteComputerList</string>
+		</dict>
+	</dict>
+	<key>elements</key>
+	<array>
+		<dict>
+			<key>AMAccepts</key>
+			<dict>
+				<key>Container</key>
+				<string>List</string>
+				<key>Optional</key>
+				<true/>
+				<key>Types</key>
+				<array>
+					<string>com.apple.RemoteDesktop.computer-object</string>
+				</array>
+			</dict>
+			<key>AMProvides</key>
+			<dict>
+				<key>Container</key>
+				<string>List</string>
+				<key>Types</key>
+				<array>
+					<string>com.apple.RemoteDesktop.computer-object</string>
+				</array>
+			</dict>
+			<key>container</key>
+			<string>application</string>
+			<key>name</key>
+			<string>computer</string>
+			<key>plural name</key>
+			<string>computers</string>
+			<key>properties</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>boot volume</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>CPU</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>current application</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>current user</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>DNS name</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Internet address</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>last activity</string>
+					<key>type</key>
+					<string>date</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>last contacted</string>
+					<key>type</key>
+					<string>date</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>machine model</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>name</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>physical memory</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>primary Ethernet address</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>remote desktop version</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>status message</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>system version</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>AMAccepts</key>
+			<dict>
+				<key>Container</key>
+				<string>List</string>
+				<key>Optional</key>
+				<true/>
+				<key>Types</key>
+				<array>
+					<string>com.apple.RemoteDesktop.computer.list-object</string>
+				</array>
+			</dict>
+			<key>AMProvides</key>
+			<dict>
+				<key>Container</key>
+				<string>List</string>
+				<key>Types</key>
+				<array>
+					<string>com.apple.RemoteDesktop.computer.list-object</string>
+				</array>
+			</dict>
+			<key>container</key>
+			<string>application</string>
+			<key>name</key>
+			<string>computer list</string>
+			<key>plural name</key>
+			<string>computer lists</string>
+			<key>properties</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>name</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>ID</string>
+					<key>type</key>
+					<string>string</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>iconName</key>
+	<string>ARD</string>
+	<key>library path</key>
+	<string>~/Library/Automator/Remote Desktop</string>
+	<key>scripts</key>
+	<dict>
+		<key>filter items</key>
+		<string>on run {input, parameters}
+	
+	set foundItems to {}
+	set currentDate to date (date string of (current date))
+	
+	tell application "%@"
+		%@
+	end tell
+
+	return foundItems
+
+end run
+</string>
+		<key>find every item</key>
+		<string>on run {input, parameters}
+	
+	set foundItems to input
+	set currentDate to date (date string of (current date))
+	
+	tell application "%@"
+		repeat with i in every %@
+			set foundItems to foundItems &amp; (%@)
+		end repeat
+	end tell
+	
+	return foundItems
+end run</string>
+		<key>find items</key>
+		<string>on run {input, parameters}
+	
+	set foundItems to input
+	set currentDate to date (date string of (current date))
+	
+	tell application "%@"
+		set foundItems to foundItems &amp; (%@)
+	end tell
+
+	return foundItems
+
+end run
+</string>
+		<key>get selected items</key>
+		<string>on run {input, parameters}
+	
+	set currentSelection to {}
+	
+	tell application "Remote Desktop"
+		set currentSelection to selection 
+	end tell
+	
+	return currentSelection
+end run</string>
+	</dict>
+	<key>supported generic actions</key>
+	<array>
+		<dict>
+			<key>AMDReplacementActions</key>
+			<array>
+				<string>com.apple.RemoteDesktop.automator.FindRemoteDesktopItems</string>
+			</array>
+			<key>Class</key>
+			<string>FindItemsAction</string>
+			<key>Version</key>
+			<string>1.0</string>
+		</dict>
+		<dict>
+			<key>AMDReplacementActions</key>
+			<array>
+				<string>com.apple.RemoteDesktop.automator.FilterRemoteDesktopItems</string>
+			</array>
+			<key>Class</key>
+			<string>FilterItemsAction</string>
+			<key>Version</key>
+			<string>1.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,81 @@
+#! /usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+
+##
+# Copyright (c) 2013 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+# of the Apple Software and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is part of.
+##
+
+SERVER_LIBRARY_PATH = "/Library/Server"
+SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+XCS_DEVICESNIFFER_BINARY_NAME = "xcsdevicesnifferd"
+
+# Launches the xcsdevicesnifferd binary inside the server-preferred Xcode.app.
+
+ENV['BUNDLE_GEMFILE'] = "#{SERVER_INSTALL_PATH_PREFIX}/usr/share/collabd/gems/Gemfile"
+
+require 'rubygems'
+require 'bundler/setup'
+
+$LOAD_PATH << "#{SERVER_INSTALL_PATH_PREFIX}/usr/share/collabd/server/ruby/lib"
+
+require 'collaboration'
+
+require 'logger'
+require 'fileutils'
+
+# Configure logging.
+
+$logFile = "#{SERVER_LIBRARY_PATH}/Xcode/Logs/#{XCS_DEVICESNIFFER_BINARY_NAME}_trampoline.log"
+unless File.exists?("#{SERVER_LIBRARY_PATH}/Xcode/Logs")
+	`/bin/mkdir -p "#{SERVER_LIBRARY_PATH}/Xcode/Logs"`
+	`/usr/sbin/chown -R 94:94 "#{SERVER_LIBRARY_PATH}/Xcode/Logs"`
+end
+$logger = Logger.new($logFile)
+$logger.level = Logger::DEBUG
+
+# Figure out what the currently selected XcodePath is.
+
+$logger.info("Reading xcsbuildd.plist to determine the currently selected Xcode.app path")
+xcsbuilddPlistPath = "#{SERVER_LIBRARY_PATH}/Xcode/Config/xcsbuildd.plist"
+
+preferredXcodePath = nil
+xcsdevicesnifferdPath = nil
+
+loop do
+    config = Collaboration::dictionaryWithContentsOfFile(xcsbuilddPlistPath)
+    preferredXcodePath = (config || {})['XcodePath']
+    if preferredXcodePath.nil?
+      $logger.warning("Got a nil XcodePath config option in the xcsbuildd plist")
+    elsif File.exists?(preferredXcodePath) == false
+      $logger.warning("The selected Xcode.app path in the xcsbuildd plist is missing (#{preferredXcodePath})")
+    else
+      $logger.info("The XcodePath key in xcsbuildd plist looks OK, proceeding to launching xcsdevicesnifferd")
+      xcsdevicesnifferdPath = "#{preferredXcodePath}/Contents/Developer/usr/bin/#{XCS_DEVICESNIFFER_BINARY_NAME}"
+      break
+    end
+    $logger.info("Did not find a valid XcodePath, sleeping for 30 seconds before we retry")
+    sleep(30.seconds)
+end
+
+# Launch the device sniffer and wait for it to exit.
+
+pid = fork do
+    $logger.info("Running DEVELOPER_DIR=#{preferredXcodePath}/Contents/Developer xcrun #{XCS_DEVICESNIFFER_BINARY_NAME}")
+    ENV['DEVELOPER_DIR'] = "#{preferredXcodePath}/Contents/Developer"
+    exec "/usr/bin/xcrun #{XCS_DEVICESNIFFER_BINARY_NAME}"
+end
+
+Process.wait
+
+# If it exited, we should return an error code so launchd respawns us.
+
+$logger.info("The job above appears to have exited (PID = #{pid}), exiting with an error code")
+Process.exit!(false)

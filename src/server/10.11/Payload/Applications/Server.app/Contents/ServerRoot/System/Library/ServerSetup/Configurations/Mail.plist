@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>defaults</key>
+	<dict>
+		<key>group</key>
+		<string>wheel</string>
+		<key>owner</key>
+		<string>root</string>
+	</dict>
+	<key>description</key>
+	<string>Mail Service</string>
+	<key>environment</key>
+	<dict>
+		<key>_sa_rules_version</key>
+		<string>3.004000</string>
+		<key>_mail_conf_dir</key>
+		<string>/Library/Server/Mail/Config</string>
+		<key>_mail_data_dir</key>
+		<string>/Library/Server/Mail/Data</string>
+		<key>_mail_logs_dir</key>
+		<string>/Library/Logs/Mail</string>
+		<key>_new_syslog_conf</key>
+		<string>/etc/newsyslog.d/com.apple.mailservices.conf</string>
+		<key>_src_resource_dir</key>
+		<string>${serverRoot}/usr/share/servermgrd/bundles/servermgr_mail.bundle/Contents/Resources</string>
+	</dict>
+	<key>migration</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>com.apple.mailservices.conf</key>
+			<dict>
+				<key>description</key>
+				<string>install: com.apple.mailservices.conf</string>
+				<key>path</key>
+				<string>/private${_new_syslog_conf}</string>
+				<key>source</key>
+				<string>${serverRoot}/${_new_syslog_conf}</string>
+			</dict>
+			<key>servermgr_mail_imap.strings</key>
+			<dict>
+				<key>description</key>
+				<string>install: servermgr_mail_imap.strings</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/resources/servermgr_mail_imap.strings</string>
+				<key>source</key>
+				<string>${_src_resource_dir}/servermgr_mail_imap.strings</string>
+			</dict>
+			<key>servermgr_mail_imap_defaults.plist</key>
+			<dict>
+				<key>description</key>
+				<string>install: servermgr_mail_imap_defaults.plist</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/resources/servermgr_mail_imap_defaults.plist</string>
+				<key>source</key>
+				<string>${_src_resource_dir}/servermgr_mail_imap_defaults.plist</string>
+			</dict>
+			<key>servermgr_mail_postfix.strings</key>
+			<dict>
+				<key>description</key>
+				<string>install: servermgr_mail_postfix.strings</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/resources/servermgr_mail_postfix.strings</string>
+				<key>source</key>
+				<string>${_src_resource_dir}/servermgr_mail_postfix.strings</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>arguments</key>
+				<array>
+					<string>--sourceRoot</string>
+					<string>/Library/Server/Previous</string>
+					<string>--targetRoot</string>
+					<string>/</string>
+					<string>--purge</string>
+					<string>0</string>
+					<string>--language</string>
+					<string>en</string>
+					<string>--sourceType</string>
+					<string>System</string>
+					<string>--sourceVersion</string>
+					<string>${previousSystemVersion}</string>
+				</array>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/mail-migration.pl</string>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Dovecot Public Keys</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Mail Filters</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/keys</string>
+			</dict>
+			<key>Dovecot Sieve</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Mail Filters</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/sieve</string>
+			</dict>
+			<key>Dovecot Sieve Before</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Sieve Before</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/sieve/before</string>
+			</dict>
+			<key>Dovecot Sieve After</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Sieve After</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/sieve/after</string>
+			</dict>
+			<key>Dovecot Sieve Filters</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Mail Filters</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/sieve/sieve-filter</string>
+			</dict>
+			<key>Dovecot FTS Update directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot FTS Update directory</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>/var/db/dovecot.fts.update</string>
+			</dict>
+			<key>Dovecot Var directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Var directory</string>
+				<key>mode</key>
+				<string>0750</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>/var/dovecot</string>
+			</dict>
+			<key>Dovecot Var Lib directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Var Lib directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>/var/dovecot/lib</string>
+			</dict>
+			<key>Amavis Scanner DB directory</key>
+			<dict>
+				<key>description</key>
+				<string>Amavis Scanner DB directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis/db</string>
+			</dict>
+			<key>Amavis Scanner directory</key>
+			<dict>
+				<key>description</key>
+				<string>Virus Scanner directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis</string>
+			</dict>
+			<key>Amavis Scanner Tmp directory</key>
+			<dict>
+				<key>description</key>
+				<string>Amavis Scanner Tmp directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis/tmp</string>
+			</dict>
+			<key>Amavis Scanner Viruses directory</key>
+			<dict>
+				<key>description</key>
+				<string>Amavis Scanner Viruses directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0750</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis/virusmails</string>
+			</dict>
+			<key>Spam Assassin Config directory</key>
+			<dict>
+				<key>description</key>
+				<string>Verify: Spam Assassin Config directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/spamassassin</string>
+			</dict>
+			<key>Spam Assassin data</key>
+			<dict>
+				<key>description</key>
+				<string>Verify: Spam Assassin data directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis/.spamassassin</string>
+			</dict>
+			<key>Virus Scanner directory</key>
+			<dict>
+				<key>description</key>
+				<string>Virus Scanner directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner</string>
+			</dict>
+		</dict>
+		<key>files</key>
+		<dict>
+			<key>/var/log/mail.log</key>
+			<dict>
+				<key>path</key>
+				<string>/var/log/mail.log</string>
+				<key>group</key>
+				<string>admin</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0640</string>
+				<key>content</key>
+				<string></string>
+			</dict>
+			<key>com.apple.mail.push_notify</key>
+			<dict>
+				<key>description</key>
+				<string>Install push notify asl config</string>
+				<key>path</key>
+				<string>/private/etc/asl/com.apple.mail.push_notify</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/asl/com.apple.mail.push_notify</string>
+			</dict>
+			<key>mail-err.log</key>
+			<dict>
+				<key>content</key>
+				<string></string>
+				<key>description</key>
+				<string>verify: mail-err.log</string>
+				<key>group</key>
+				<string>admin</string>
+				<key>mode</key>
+				<string>0640</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>path</key>
+				<string>${_mail_logs_dir}/mail-err.log</string>
+			</dict>
+			<key>mail-info.log</key>
+			<dict>
+				<key>content</key>
+				<string></string>
+				<key>description</key>
+				<string>verify: mail-info.log</string>
+				<key>group</key>
+				<string>admin</string>
+				<key>mode</key>
+				<string>0640</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>path</key>
+				<string>${_mail_logs_dir}/mail-info.log</string>
+			</dict>
+			<key>mail-encryption.log</key>
+			<dict>
+				<key>content</key>
+				<string></string>
+				<key>description</key>
+				<string>verify: mail-encryption.log</string>
+				<key>group</key>
+				<string>admin</string>
+				<key>mode</key>
+				<string>0640</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>path</key>
+				<string>${_mail_logs_dir}/mail-encryption.log</string>
+			</dict>
+			<key>amavis.log</key>
+			<dict>
+				<key>content</key>
+				<string></string>
+				<key>description</key>
+				<string>verify: amavis.log</string>
+				<key>group</key>
+				<string>admin</string>
+				<key>mode</key>
+				<string>0640</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_logs_dir}/amavis.log</string>
+			</dict>
+			<key>clamav.log</key>
+			<dict>
+				<key>description</key>
+				<string>verify: clamav.log</string>
+				<key>content</key>
+				<string></string>
+				<key>group</key>
+				<string>admin</string>
+				<key>mode</key>
+				<string>0640</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_logs_dir}/clamav.log</string>
+			</dict>
+			<key>freshclam.log</key>
+			<dict>
+				<key>description</key>
+				<string>verify: freshclam.log</string>
+				<key>content</key>
+				<string></string>
+				<key>group</key>
+				<string>admin</string>
+				<key>mode</key>
+				<string>0640</string>
+				<key>owner</key>
+				<string>_clamav</string>
+				<key>path</key>
+				<string>${_mail_logs_dir}/freshclam.log</string>
+			</dict>
+			<key>amavisd.conf</key>
+			<dict>
+				<key>description</key>
+				<string>verify: amavisd.conf</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/amavisd/amavisd.conf</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/amavisd.conf.default</string>
+			</dict>
+		</dict>
+		<key>services</key>
+		<dict>
+			<key>org.postfix.master.active</key>
+			<dict>
+				<key>description</key>
+				<string>Disable postfix active mode</string>
+				<key>state</key>
+				<string>disabled</string>
+			</dict>
+			<key>org.postfix.master.passive</key>
+			<dict>
+				<key>description</key>
+				<string>Enables postfix passive mode</string>
+				<key>state</key>
+				<string>enabled</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Postfix post setup</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/postfix-postsetup.pl</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Postfix set-permissions</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/mail-scripts.pl</string>
+				<key>arguments</key>
+				<array>
+					<string>postfix-set-permissions</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>newaliases</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/mail-scripts.pl</string>
+				<key>arguments</key>
+				<array>
+					<string>newaliases</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Enable virtual domains</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/mail-scripts.pl</string>
+				<key>arguments</key>
+				<array>
+					<string>serveradmin-enable_virtual_domains</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Mail Service Post Setup</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/mail-postsetup.sh</string>
+			</dict>
+		</array>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Postfix Config directory</key>
+			<dict>
+				<key>description</key>
+				<string>Postfix Config directory</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/postfix</string>
+				<key>source</key>
+				<string>${serverRoot}/Library/Server/Mail/Config/postfix</string>
+			</dict>
+			<key>Amavisd Languages directory copy </key>
+			<dict>
+				<key>description</key>
+				<string>Copy amavisd languages</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/amavisd/languages</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/mail/amavisd/languages</string>
+			</dict>
+			<key>Spam Assassin Config directory copy</key>
+			<dict>
+				<key>description</key>
+				<string>Copy Spam Assassin defaults</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/spamassassin</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/mail/spamassassin</string>
+			</dict>
+			<key>Spam Assassin Rules directory copy</key>
+			<dict>
+				<key>description</key>
+				<string>Copy Spam Assassin rules directories</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/spamassassin/${_sa_rules_version}</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/mail/spamassassin/${_sa_rules_version}</string>
+			</dict>
+		</dict>
+		<key>files</key>
+		<dict>
+			<key>shared-mailboxes</key>
+			<dict>
+				<key>content</key>
+				<string></string>
+				<key>description</key>
+				<string>verify: shared-mailboxes</string>
+				<key>mode</key>
+				<string>0660</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/shared/shared-mailboxes</string>
+			</dict>
+			<key>clamav.conf</key>
+			<dict>
+				<key>description</key>
+				<string>install: clamav.conf</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/clamav/clamd.conf</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/clamd.conf.default</string>
+			</dict>
+			<key>freshclam.conf</key>
+			<dict>
+				<key>description</key>
+				<string>install: freshclam.conf</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/clamav/freshclam.conf</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/freshclam.conf.default</string>
+			</dict>
+			<key>amavisd.conf</key>
+			<dict>
+				<key>description</key>
+				<string>install: amavisd.conf</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/amavisd/amavisd.conf</string>
+				<key>source</key>
+				<string>${serverRoot}/private/etc/amavisd.conf.default</string>
+			</dict>
+			<key>com.apple.mailservices.conf</key>
+			<dict>
+				<key>description</key>
+				<string>install: com.apple.mailservices.conf</string>
+				<key>path</key>
+				<string>/private${_new_syslog_conf}</string>
+				<key>source</key>
+				<string>${serverRoot}/${_new_syslog_conf}</string>
+			</dict>
+			<key>local.cf</key>
+			<dict>
+				<key>description</key>
+				<string>install: local.cf</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/spamassassin/local.cf</string>
+				<key>source</key>
+				<string>${_mail_conf_dir}/spamassassin/local.cf.default</string>
+			</dict>
+			<key>servermgr_mail_imap.strings</key>
+			<dict>
+				<key>description</key>
+				<string>install: servermgr_mail_imap.strings</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/resources/servermgr_mail_imap.strings</string>
+				<key>source</key>
+				<string>${_src_resource_dir}/servermgr_mail_imap.strings</string>
+			</dict>
+			<key>servermgr_mail_imap_defaults.plist</key>
+			<dict>
+				<key>description</key>
+				<string>install: servermgr_mail_imap_defaults.plist</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/resources/servermgr_mail_imap_defaults.plist</string>
+				<key>source</key>
+				<string>${_src_resource_dir}/servermgr_mail_imap_defaults.plist</string>
+			</dict>
+			<key>servermgr_mail_postfix.strings</key>
+			<dict>
+				<key>description</key>
+				<string>install: servermgr_mail_postfix.strings</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/resources/servermgr_mail_postfix.strings</string>
+				<key>source</key>
+				<string>${_src_resource_dir}/servermgr_mail_postfix.strings</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Amavisd Promotion</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/amavisd-promotion.pl</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Postfix Promotion</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/postfix-promotion.pl</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Promotion</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/dovecot-promotion.pl</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Mapping user/domain settings</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/mail-scripts.pl</string>
+				<key>arguments</key>
+				<array>
+					<string>serveradmin-migrate-members</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>restore</key>
+	<dict/>
+	<key>setup</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Postfix Greylist directory</key>
+			<dict>
+				<key>description</key>
+				<string>Postfix Greylist directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>nobody</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/db</string>
+			</dict>
+			<key>Postfix DB directory</key>
+			<dict>
+				<key>description</key>
+				<string>Postfix DB directory</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_postfix</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/db</string>
+			</dict>
+			<key>Postfix MTA directory</key>
+			<dict>
+				<key>description</key>
+				<string>Postfix MTA directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_postfix</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/mta</string>
+			</dict>
+			<key>Postfix Spool directory</key>
+			<dict>
+				<key>description</key>
+				<string>Postfix Spool directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/spool</string>
+			</dict>
+			<key>Dovecot Mail directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Mail directory</string>
+				<key>mode</key>
+				<string>0775</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/mail</string>
+			</dict>
+			<key>Dovecot Rules directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Rules directory</string>
+				<key>mode</key>
+				<string>0775</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/rules</string>
+			</dict>
+			<key>Dovecot ACL directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot ACL directory</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/mail/shared</string>
+			</dict>
+			<key>Dovecot Global ACL directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Global ACL directory</string>
+				<key>mode</key>
+				<string>0770</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/shared</string>
+			</dict>
+			<key>Dovecot Attrubutes directory</key>
+			<dict>
+				<key>description</key>
+				<string>Dovecot Attrubutes directory</string>
+				<key>mode</key>
+				<string>0775</string>
+				<key>owner</key>
+				<string>_dovecot</string>
+				<key>group</key>
+				<string>mail</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/attributes</string>
+			</dict>
+			<key>Clam AV DB directory</key>
+			<dict>
+				<key>description</key>
+				<string>Clam AV Data directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_clamav</string>
+				<key>group</key>
+				<string>_clamav</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/clamav</string>
+			</dict>
+			<key>Clam AV Data directory</key>
+			<dict>
+				<key>description</key>
+				<string>Clam AV Data directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_clamav</string>
+				<key>group</key>
+				<string>_clamav</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/clamav/db</string>
+			</dict>
+			<key>Clam AV Config directory</key>
+			<dict>
+				<key>description</key>
+				<string>Clam AV Config directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/clamav</string>
+			</dict>
+			<key>Amavis Scanner DB directory</key>
+			<dict>
+				<key>description</key>
+				<string>Amavis Scanner DB directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis/db</string>
+			</dict>
+			<key>Amavis Scanner directory</key>
+			<dict>
+				<key>description</key>
+				<string>Amavis Scanner directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis</string>
+			</dict>
+			<key>Amavis Scanner Tmp directory</key>
+			<dict>
+				<key>description</key>
+				<string>Amavis Scanner Tmp directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis/tmp</string>
+			</dict>
+			<key>Amavis Scanner Viruses directory</key>
+			<dict>
+				<key>description</key>
+				<string>Amavis Scanner Viruses directory</string>
+				<key>group</key>
+				<string>_amavisd</string>
+				<key>mode</key>
+				<string>0750</string>
+				<key>owner</key>
+				<string>_amavisd</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/amavis/virusmails</string>
+			</dict>
+			<key>Amavisd Config directory</key>
+			<dict>
+				<key>description</key>
+				<string>Mail Service Data directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/amavisd</string>
+			</dict>
+			<key>Amavisd Data directory</key>
+			<dict>
+				<key>description</key>
+				<string>Mail Service Data directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/amavisd</string>
+			</dict>
+			<key>Mail Config directory</key>
+			<dict>
+				<key>description</key>
+				<string>Mail Service Config directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}</string>
+			</dict>
+			<key>Mail Config Resources directory</key>
+			<dict>
+				<key>description</key>
+				<string>Mail Service Data directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_conf_dir}/resources</string>
+			</dict>
+			<key>Mail Data directory</key>
+			<dict>
+				<key>description</key>
+				<string>Mail Service Data directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_data_dir}</string>
+			</dict>
+			<key>Mail Logs directory</key>
+			<dict>
+				<key>description</key>
+				<string>Mail Logs directory</string>
+				<key>group</key>
+				<string>admin</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_logs_dir}</string>
+			</dict>
+			<key>Mail Service directory</key>
+			<dict>
+				<key>description</key>
+				<string>Mail Service directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>/Library/Server/Mail</string>
+			</dict>
+			<key>Server directory</key>
+			<dict>
+				<key>description</key>
+				<string>Library Server directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>/Library/Server</string>
+			</dict>
+			<key>Spam Assassin Scanner directory</key>
+			<dict>
+				<key>description</key>
+				<string>Virus Scanner directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner/spamassassin</string>
+			</dict>
+			<key>Virus Scanner directory</key>
+			<dict>
+				<key>description</key>
+				<string>Virus Scanner directory</string>
+				<key>mode</key>
+				<string>0755</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>path</key>
+				<string>${_mail_data_dir}/scanner</string>
+			</dict>
+		</dict>
+		<key>files</key>
+		<dict/>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>launchctl unload postfix desktop</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/MailService/ServiceSetup/mail-scripts.pl</string>
+				<key>arguments</key>
+				<array>
+					<string>launchctl-unload</string>
+				</array>
+			</dict>
+		</array>
+		<key>services</key>
+		<dict/>
+	</dict>
+</dict>
+</plist>

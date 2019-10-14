@@ -1,4 +1,0 @@
-tell application "Gateway Setup Assistant"
-	activate
-	goto "<SESSIONID>#<HOST>"
-end tell

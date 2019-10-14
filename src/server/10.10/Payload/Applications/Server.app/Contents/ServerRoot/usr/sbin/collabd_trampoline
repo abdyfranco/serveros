@@ -1,0 +1,98 @@
+#!/usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+
+##
+# Copyright (c) 2012-2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+# of the Apple Software and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is part of.
+##
+
+$ServerInstallPathPrefix = "/Applications/Server.app/Contents/ServerRoot"
+$ServerLibraryPath = '/Library/Server'
+
+ENV['BUNDLE_GEMFILE'] = "#{$ServerInstallPathPrefix}/usr/share/collabd/gems/Gemfile"
+
+require 'rubygems'
+require 'bundler/setup'
+
+$LOAD_PATH << "#{$ServerInstallPathPrefix}/usr/share/collabd/server/ruby/lib"
+
+require 'logger'
+
+$LogDirectoryPath = $ServerLibraryPath + '/Wiki/Logs'
+$LogPath = $LogDirectoryPath + '/collabd_trampoline.log'
+unless File.exists?($LogDirectoryPath)
+  `/bin/mkdir -p #{$LogDirectoryPath}`
+  `/usr/sbin/chown -R 94:94 #{$LogDirectoryPath}`
+end
+$logger = Logger.new($LogPath)
+FileUtils.chmod 0640, $LogPath
+FileUtils.chown '94', '94', $LogPath
+
+$termed = false
+$pid = nil
+
+def handle_signal(signal)
+  $logger.debug("Handling signal #{signal}")
+  if $pid.nil?
+    $logger.debug("We don't have a pid for collabd, can't forward signal")
+  else
+    $logger.debug("Forwarding signal to pid #{$pid}")
+    Process.kill(signal, $pid)
+  end
+end
+
+Dir.chdir('/') do
+  
+  $logger.debug("Running trampoline script")
+  
+  $logger.debug("Calling the collabd preflight script")
+  system($ServerInstallPathPrefix + "/usr/sbin/collabd_preflight")
+  
+  $logger.debug("Starting the database via the collabd_database_loader")
+  system($ServerInstallPathPrefix + "/usr/sbin/collabd_database_loader", "--mode", "start")
+  
+  Signal.trap("TERM") do
+    handle_signal("TERM")
+  end
+  
+  Signal.trap("INT") do
+    handle_signal("INT")
+  end
+    
+  $logger.debug("Starting collabd")
+  $pid = fork do
+    
+    # Remove signal handlers in the forked subprocess.
+    for s in ["TERM", "INT"] do
+      Signal.trap(s, "SYSTEM_DEFAULT")
+    end
+    
+    # We need to change the GID first, initgroups second and change the UID last.
+    $logger.debug("Changing group privledges to 94")
+    Process::GID.change_privilege(94)
+    $logger.debug("Calling initgroups")
+    Process.initgroups("_teamsserver", 94)
+    $logger.debug("Changing user privledges to 94")
+    Process::UID.change_privilege(94)
+    
+    $logger.debug("Running collabd binary")
+    exec($ServerInstallPathPrefix + "/usr/sbin/collabd")
+    
+  end
+  
+  $logger.debug("Waiting for collabd to exit")
+  Process.waitpid2($pid)
+  $pid = nil
+  $logger.debug("Collabd exited, reset pid to nil")
+  
+  $logger.debug("Stopping the database via the collabd_database_loader")
+  system($ServerInstallPathPrefix + "/usr/sbin/collabd_database_loader", "--mode", "stop")
+  
+end

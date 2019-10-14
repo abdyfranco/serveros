@@ -1,0 +1,116 @@
+'\" t
+.\"     Title: SPI_modifytuple
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014-03-17
+.\"    Manual: PostgreSQL 9.2.8 Documentation
+.\"    Source: PostgreSQL 9.2.8
+.\"  Language: English
+.\"
+.TH "SPI_MODIFYTUPLE" "3" "2014-03-17" "PostgreSQL 9.2.8" "PostgreSQL 9.2.8 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+SPI_modifytuple \- create a row by replacing selected fields of a given row
+.\" SPI_modifytuple
+.SH "SYNOPSIS"
+.sp
+.nf
+HeapTuple SPI_modifytuple(Relation \fIrel\fR, HeapTuple \fIrow\fR, int \fIncols\fR,
+                          int * \fIcolnum\fR, Datum * \fIvalues\fR, const char * \fInulls\fR)
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBSPI_modifytuple\fR
+creates a new row by substituting new values for selected columns, copying the original row\*(Aqs columns at other positions\&. The input row is not modified\&.
+.SH "ARGUMENTS"
+.PP
+Relation \fIrel\fR
+.RS 4
+Used only as the source of the row descriptor for the row\&. (Passing a relation rather than a row descriptor is a misfeature\&.)
+.RE
+.PP
+HeapTuple \fIrow\fR
+.RS 4
+row to be modified
+.RE
+.PP
+int \fIncols\fR
+.RS 4
+number of column numbers in the array
+\fIcolnum\fR
+.RE
+.PP
+int * \fIcolnum\fR
+.RS 4
+array of the numbers of the columns that are to be changed (column numbers start at 1)
+.RE
+.PP
+Datum * \fIvalues\fR
+.RS 4
+new values for the specified columns
+.RE
+.PP
+const char * \fINulls\fR
+.RS 4
+which new values are null, if any (see
+\fBSPI_execute_plan\fR
+for the format)
+.RE
+.SH "RETURN VALUE"
+.PP
+new row with modifications, allocated in the upper executor context;
+NULL
+only if
+\fIrow\fR
+is
+NULL
+.PP
+On error,
+\fISPI_result\fR
+is set as follows:
+.PP
+SPI_ERROR_ARGUMENT
+.RS 4
+if
+\fIrel\fR
+is
+NULL, or if
+\fIrow\fR
+is
+NULL, or if
+\fIncols\fR
+is less than or equal to 0, or if
+\fIcolnum\fR
+is
+NULL, or if
+\fIvalues\fR
+is
+NULL\&.
+.RE
+.PP
+SPI_ERROR_NOATTRIBUTE
+.RS 4
+if
+\fIcolnum\fR
+contains an invalid column number (less than or equal to 0 or greater than the number of column in
+\fIrow\fR)
+.RE

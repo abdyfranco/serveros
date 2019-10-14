@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<!-- See man pages for webapp.plist(5) and webappctl(8) for information about this example webapp.plist -->
+
+<plist version="1.0">
+<dict> 
+	<key>includeFiles</key>
+	<array>		<!-- Include files are activated in virtual host when webapp is started -->
+		<string>/Library/Server/Web/Config/apache2/httpd_myinclude.conf</string>
+	</array>
+	<key>launchKeys</key>
+	<array>		<!-- Launchd plists in /Applications/Server.app/Contents/ServerRoot/System/Library/LaunchDaemons are loaded when webapp is started -->
+		<string>com.example.mywebapp</string>
+	</array>
+	<key>name</key>
+	<string>com.example.mywebapp</string>
+	<key>displayName</key>		<!-- Name shown in Server app -->
+	<string>MyWebApp</string>
+	<key>proxies</key>		<!-- ProxyPass/ProxyPassReverse directives are activated when webapp is started -->
+	<dict>
+		<key>/mywebapp</key>		<!-- Sets up a reverse proxy -->
+		<dict>
+			<key>keysAndValues</key>
+			<string></string>
+			<key>path</key>
+			<string>/mywebapp</string>
+			<key>urls</key>		<!-- URLs comprise a proxy_balancer group -->
+			<array>
+				<string>http://localhost:3000</string>
+				<string>http://localhost:3001</string>
+			</array>
+		</dict>
+	</dict>
+	<key>requiredModuleNames</key>
+	<array>		<!-- Apache plugin modules are enabled when webapp is started -->
+		<string>mystuff_module</string>
+	</array>
+        <key>requiredWebAppNames</key>
+        <array>         <!-- Required web apps are started when this webapp is started -->
+                <string>com.example.webapp.myotherwebapp</string>
+        </array>
+	<key>preflightCommand</key>		<!-- return non-0 fails, return 0 means ok to start -->
+	<string>/usr/local/bin/preflightmywebapp</string>
+	<key>startCommand</key>
+	<string>/usr/local/bin/startmywebapp</string>
+	<key>stopCommand</key>
+	<string>/usr/local/bin/stopmywebapp</string>
+	<key>installationIndicatorFilePath</key>	<!-- The presence of this file indicates web app is installed -->
+	<string>/usr/local/bin/mywebapp</string>
+	<key>sslPolicy</key>	<!-- Determines webapp SSL behavior -->
+	<integer>0</integer>	<!-- 0: default, UseSSLWhenEnabled -->
+			<!-- 1:	UseSSLAlways -->
+			<!-- 2:	UseSSLOnlyWhenCertificateIsTrustable -->
+			<!-- 3:	UseSSLNever -->
+			<!-- 4:	UseSSLAndNonSSL -->
+</dict>
+</plist>

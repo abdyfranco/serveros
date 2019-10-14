@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="Server Terminology" xmlns:xi="http://www.w3.org/2003/XInclude">
+    <documentation>
+        <html>
+            <![CDATA[
+                <style type="text/css">
+                div.example-code p.p1 {margin: 0.0px 0.0px 0.0px 41.6px; text-indent: -41.6px; font: 12.0px Verdana; color: #000000; -webkit-text-stroke: #000000}
+                div.example-code p.p2 {margin: 0.0px 0.0px 0.0px 83.2px; text-indent: -83.2px; font: 12.0px Verdana; color: #0433ff; -webkit-text-stroke: #0433ff}
+                div.example-code p.caption {margin-bottom: 1em}
+                div.example-code p.footer {margin-top: 1em}
+                div.example-code span.s1 {font-kerning: none}
+                div.example-code span.s2 {font-kerning: none; color: #0433ff; -webkit-text-stroke: 0px #0433ff}
+                div.example-code span.s3 {font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+                div.example-code span.s4 {font-kerning: none; color: #4f8f00; -webkit-text-stroke: 0px #4f8f00}
+                div.example-code span.s5 {font-kerning: none; color: #812fdc; -webkit-text-stroke: 0px #812fdc}
+                div.example-code span.caption {text-transform: lowercase; font-variant: small-caps; font-size: 120%}
+                div.example-code span.Apple-tab-span {white-space:pre}
+                </style>
+            ]]>
+        </html>
+    </documentation>
+    <xi:include href="file:///System/Library/ScriptingDefinitions/CocoaStandard.sdef" xpointer="xpointer(/dictionary/suite)"/>
+    <suite name="Server Suite" code="svrc" description="Classes just for the Server app.">
+		<class-extension extends="application" description="The Server app">
+			<cocoa class="SVApplication"/>
+            <element type="document">
+                <cocoa key="orderedDocuments"/>
+            </element>
+            <element type="server" description="The currently connected servers">
+                <cocoa key="orderedServers"/>
+            </element>
+			<property name="name" code="pnam" description="The name of the application." type="text" access="r"/>
+			<property name="frontmost" code="pisf" description="Is this the active application?" type="boolean" access="r">
+				<cocoa key="isActive"/>
+			</property>
+			<property name="version" code="vers" description="The version number of the application." type="text" access="r"/>
+			<responds-to command="quit">
+				<cocoa method="handleQuitScriptCommand:"/>
+			</responds-to>
+			<responds-to command="connect">
+				<cocoa method="handleConnectScriptCommand:"/>
+			</responds-to>
+		</class-extension>
+        <command name="connect" code="svprconn" description="Connect to a server (opens a Server window)">
+            <direct-parameter description="The host name or IP address of the server to connect to." type="text"/>
+            <parameter name="user" code="user" description="Server administrator user name" type="text"/>
+            <parameter name="password" code="pass" description="Server administrator password (optional if the password is in the keychain)" type="text" optional="yes"/>
+            <result type="server" description="a reference to the contacted server" />
+            <documentation>
+                <html>
+                    <![CDATA[
+                        <div class="example-code" style="margin-top:8px;background-color:#eee;padding:8px;">
+                        <p class="caption">Connect to Server with timeout, and store the reference to the server in a variable:</p>
+                        <p class="p1"><span class="s1"><b>with</b> <b>timeout</b> <b>of</b> 120 </span><span class="s2"><i>seconds</i></span></p>
+                        <p class="p2"><span class="s3"><span class="Apple-tab-span">	</span></span><span class="s3"><b>set </b></span><span class="s4">example </span><span class="s3"><b>to </b></span><span class="s1"><b>connect </b></span><span class="s3">"server.example.com" </span>user<b> </b></span><span class="s3">"admin"</span><span class="s1"><b> </b>password<b> </b></span><span class="s3">"apple"</span></p>
+                        <p class="p1"><span class="s1"><b>end</b> <b>timeout</b></span></p>
+                        
+                        <p class="footer"><a href="applescript://com.apple.scripteditor/?action=new&script=tell%20application%20%22Server%22%0a%09with%20timeout%20of%20120%20seconds%0a%09%09set%20example%20to%20connect%20%22server.example.com%22%20user%20%22admin%22%20password%20%22apple%22%0a%09end%0aend%20tell%0a">Open in Script Editor</a></p>
+                        </div>
+                    ]]>
+                </html>
+            </documentation>
+        </command>
+		<class-extension extends="document"  description="A Server app document.">
+			<cocoa class="SVDocument"/>
+			<element type="pane" access="r">
+				<cocoa key="scriptablePanes"/>
+			</element>
+            <property name="current pane" code="cupa" description="The currently selected pane in the document" type="pane" access="r"/>
+            <property name="server" code="serv" description="The server instance corresponding to this document" type="server" access="r"/>
+			<responds-to command="close">
+				<cocoa method="handleCloseScriptCommand:"/>
+			</responds-to>
+		</class-extension>
+		<class name="server" code="serv" description="An OS X Server.">
+			<cocoa class="SVServer"/>
+            <property name="id" code="ID  " description="The identifier for the server" type="text" access="r">
+                <cocoa key="identifier"/>
+            </property>
+			<property name="host name" code="htnm" description="The host name of the server" type="text" access="r">
+				<cocoa key="hostName"/>
+			</property>
+			<property name="local" code="locl" description="If the server is the local host or not" type="boolean" access="r">
+				<cocoa key="isLocalhost"/>
+			</property>
+            <property name="os version" code="sysv" description="The Operating System version of the server" type="text" access="r">
+                <cocoa key="osVersionNumber"/>
+            </property>
+            <property name="server version" code="srvv" description="The version of Mac OS X Server of the server" type="text" access="r">
+                <cocoa key="serverVersionNumber"/>
+            </property>
+            <property name="hardware serial number" code="hwsn" description="The Hardware Serial Number of the server" type="text" access="r">
+                <cocoa key="hardwareSerialNumber"/>
+            </property>
+            <property name="hardware identifier" code="hwid" description="The Hardware Identifier of the server" type="text" access="r">
+                <cocoa key="hardwareIdentifier"/>
+            </property>
+            <property name="remote login enabled" code="sshs" description="If remote login via ssh is enabled on the server" type="boolean" access="r">
+                <cocoa key="sshEnabled"/>
+            </property>
+            <property name="remote management enabled" code="ards" description="If remote management via Apple Remote Desktop is enabled on the server" type="boolean" access="r">
+                <cocoa key="remoteManagementEnabled"/>
+            </property>
+            <property name="screen sharing enabled" code="vncs" description="If screen sharing is enabled on the server" type="boolean" access="r">
+                <cocoa key="screenSharingEnabled"/>
+            </property>
+            <property name="remote administration enabled" code="admn" description="If remote administration via Server is enabled on the server" type="boolean" access="r">
+                <cocoa key="remoteAdministrationEnabled"/>
+            </property>
+            <property name="boot volume" code="boot" description="The volume used to boot the server" type="text" access="r">
+                <cocoa key="bootVolume"/>
+            </property>
+		</class>
+		<class name="pane" code="pane" description="A Server app pane.">
+			<cocoa class="SVPane"/>
+			<element type="element" access="r">
+				<cocoa key="scriptableElements"/>
+			</element>
+			<property name="id" code="ID  " description="The identifier for the pane" type="text" access="r">
+				<cocoa key="identifier"/>
+			</property>
+			<property name="name" code="pnam" description="The English display name of the pane" type="text" access="r">
+				<cocoa key="shortName"/>
+			</property>
+			<responds-to command="reveal">
+				<cocoa method="handleRevealScriptCommand:"/>
+			</responds-to>
+		</class>
+		<class name="element" code="elmt" description="A Server app pane element.">
+			<cocoa class="SVPaneScriptableElement"/>
+			<property name="id" code="ID  " description="The identifier for the element" type="text" access="r">
+				<cocoa key="identifier"/>
+			</property>
+			<property name="name" code="pnam" description="The English display name of the element" type="text" access="r">
+				<cocoa key="name"/>
+			</property>
+			<responds-to command="reveal">
+				<cocoa method="handleRevealScriptCommand:"/>
+			</responds-to>
+		</class>
+		<command name="reveal" code="svprrevl" description="Reveal a certain UI object">
+			<direct-parameter description="The UI object to reveal" type="specifier"/>
+		</command>
+	</suite>
+</dictionary>

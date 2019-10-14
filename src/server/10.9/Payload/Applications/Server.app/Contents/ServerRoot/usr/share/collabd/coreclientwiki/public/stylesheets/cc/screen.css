@@ -1,0 +1,33 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* IE has a 32-stylesheet import limit */
+
+@import "./core.css";
+@import "./header.css";
+@import "./banner.css";
+@import "./infopanel.css";
+@import "./sharing_sidebar.css";
+@import "./sidebars.css";
+@import "./settings.css";
+@import "./blogs.css";
+@import "./calendar.css";
+@import "./comments.css";
+@import "./tagger.css";
+@import "./popover.css";
+@import "./nav_popover.css";
+@import "./menu_autocomplete.css";
+@import "./related.css";
+@import "./wiki_setup_assistant.css";
+@import "./polite_login.css";
+@import "./serverhome.css";

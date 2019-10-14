@@ -1,0 +1,136 @@
+# =============================================================================
+# This is a template for (neutral: non-virus, non-spam, non-banned)
+# DELIVERY STATUS NOTIFICATIONS to sender.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Subject: [?%#D|E-Mail nicht zustellbar|Zustellstatusbenachrichtigung]\
+[? [:ccat|major] |||, VON MTA BLOCKIERT\
+|, Nachricht zu GROSS\
+|, Headerbereich fehlerhaft[=explain_badh|1]\
+[?[:ccat|minor]||: MIME fehlerhaft|: unkodierte 8-Bit-Zeichen\
+|: falsche Verwendung von Steuerzeichen|: nur Leerzeichen in Header-Zeile\
+|: Header-Zeile hat mehr als 998 Zeichen|: Syntaxfehler im Header-Feld\
+|: erforderliches Header-Feld fehlt|: doppeltes Header-Feld|]\
+|, UNAUFGEFORDERTE MASSEN-E-MAIL, anscheinend von Ihnen\
+|, UNAUFGEFORDERTE MASSEN-E-MAIL, anscheinend von Ihnen\
+|, Inhalt UNGEPRÜFT\
+|, VERBOTENER Inhaltstyp (%F)\
+|, VIRUS in E-Mail, anscheinend von Ihnen (%V)\
+]
+Message-ID: <DSN%i@%h>
+
+[? %#D |#|Ihre E-Mail WURDE ERFOLGREICH WEITERGELEITET an:[\n  %D]
+[~[:dsn_notify]|["\\bERFOLG\\b"]|\
+und Sie haben ausdrücklich eine Zustellstatusbenachrichtigung angefordert.\n]\
+]
+[? %#N |#|Die E-Mail WURDE NICHT weitergeleitet an:[\n  %N]
+]
+[:wrap|78|||Dieser [?%#D|Nichtzustellungs|Zustellungs]bericht wurde \
+vom Programm "amavisd-new" auf Host %h erstellt. \
+Unser interner Referenzcode für Ihre E-Mail ist %n/%i]
+
+# ccat_min 0: other,  1: bad MIME,  2: 8-bit char,  3: NUL/CR,
+#          4: empty,  5: long,  6: syntax,  7: missing,  8: multiple
+[? [:explain_badh] ||[? [:ccat|minor]
+|HEADERFEHLER
+|HEADERFEHLER: MIME-HEADER-BEREICH ODER MIME-STRUKTUR FEHLERHAFT
+|HEADERFEHLER: UNERLAUBTE 8-BIT-ZEICHEN IM HEADER-BEREICH
+|HEADERFEHLER: UNERLAUBTE STEUERZEICHEN IM HEADER-BEREICH
+|HEADERFEHLER: AUSGEBLENDETE ZEILE IM HEADER BESTEHT NUR AUS LEERZEICHEN
+|HEADERFEHLER: HEADER-ZEILE HAT MEHR ALS 998 ZEICHEN (RFC2822-LIMIT)
+|HEADERFEHLER: SYNTAXFEHLER IM HEADER-FELD
+|HEADERFEHLER: ERFORDERLICHES HEADER-FELD FEHLT
+|HEADERFEHLER: DOPPELTES HEADER-FELD
+|HEADERFEHLER
+]
+[[:wrap|78|  |  |%X]\n]
+]\
+#
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %#X|#|[? [:useragent] |#|[:wrap|78||  |[:useragent]]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+# ccat_min 0: other,  1: bad MIME,  2: 8-bit char,  3: NUL/CR,
+#          4: empty,  5: long,  6: syntax,  7: missing,  8: multiple
+[? [:explain_badh] ||[? [:ccat|minor]
+|# 0: other
+|# 1: bad MIME
+|# 2: 8-bit char
+WELCHE ZEICHEN SIND IN EINEM E-MAIL-HEADER-BEREICH NICHT ERLAUBT?
+
+  Das RFC 5322-Dokument beschreibt Regeln für die Formatierung von
+  Internetnachrichten. Zeichen mit Codes größer als 127 können im
+  Header-Bereich nicht direkt verwendet werden. Sie müssen kodiert werden.
+
+  Wenn solche Zeichen (z. B. diakritische Zeichen) aus ISO Latin oder
+  anderen Alphabeten in einem Header-Bereich stehen sollen, müssen sie
+  entsprechend RFC 2047 korrekt kodiert sein. Diese Kodierung wird meist
+  unsichtbar vom E-Mail-Programm (MUA) vorgenommen. Falls jedoch keine
+  automatische Kodierung verfügbar ist (z. B. bei älteren MUA) muss der
+  Benutzer solche Zeichen im Header-Bereich vermeiden oder manuell kodieren.
+  Normalerweise sind davon die Felder "Subject", "Organization" und
+  Kommentarfelder oder angezeigte Namen bei E-Mail-Adressen in den
+  Feldern "From", "To" und "Cc" betroffen.
+
+  Manchmal werden ungültige Einträge auch automatisch von MUA, MTA,
+  Inhaltsfiltern oder anderen E-Mail-Diensten vorgenommen. In diesem Fall
+  muss solch ein Dienst repariert oder korrekt konfiguriert werden.
+  Normalerweise sind davon die Header-Bereiche "Date", "Received",
+  "X-Mailer", "X-Priority", "X-Scanned" usw. betroffen.
+
+  Wenn Sie nicht wissen, wie Sie das Problem beheben oder umgehen können,
+  wenden Sie sich an _Ihren_ Systemadministrator.
+#
+[~[:useragent]|^X-Mailer:\\s*Microsoft Outlook Express 6\\.00|["
+  Wenn Sie Microsoft Outlook Express als MUA verwenden, vergewissern Sie
+  sich, dass folgende Einstellungen ausgewählt sind:
+     Extras -> Optionen -> Senden -> Mailsendeformat -> Text & HTML
+  Auswahl: "MIME-Format" MUSS ausgewählt sein,
+  und "8-Bit-Zeichen in Headern zulassen" DARF NICHT ausgewählt sein!
+"]]#
+|# 3: NUL/CR
+UNZULÄSSIGE VERWENDUNG VON STEUERZEICHEN IM HEADER-BEREICH VON E-MAILS
+
+  Das RFC 5322-Dokument beschreibt Regeln für die Formatierung von
+  Internetnachrichten.
+  Die Steuerzeichen NUL und ein einfaches CR können im E-Mail-Header-Bereich
+  nicht direkt verwendet werden.
+|# 4: Leer
+INKORREKT AUSGEBLENDETE ZEILE IM HEADER-FELD BESTEHT NUR AUS LEERZEICHEN
+
+  Das RFC 5322-Dokument beschreibt Regeln für die Formatierung von
+  Internetnachrichten.
+  Im Abschnitt "3.2.2. Folding white space and comments" wird das Ausblenden
+  von Header-Feldern durch ausschließliches Eintragen von Leerzeichen
+  (Steuerzeichen, SP und HTAB) ausdrücklich untersagt.
+|# 5: Länge
+HEADER-ZEILE LÄNGER ALS 998 ZEICHEN (RFC5322 -LIMIT)
+
+  Das RFC 5322-Dokument beschreibt Regeln für die Formatierung von
+  Internetnachrichten. Nach Abschnitt "2.1.1. Line Length Limits" darf keine
+  Zeile eines Header-Bereichs länger als 998 Zeichen sein (ohne das CRLF).
+|# 6: Syntax
+|# 7: Fehlend
+ERFORDERLICHES HEADER-FELD FEHLT
+
+  Das RFC 5322-Dokument beschreibt Regeln für die Formatierung von
+  Internetnachrichten. Abschnitt "3.6. Field Definitions" definiert
+  bestimmte Header-Felder als erforderlich (die Originalfelder "Date"
+  und "From:").
+|# 8: Mehrere
+DOPPELTES HEADER-FELD
+
+  Das RFC 5322-Dokument beschreibt Regeln für die Formatierung von
+  Internetnachrichten. Der Abschnitt "3.6. Field Definitions" legt fest,
+  dass bestimmte Header-Felder nicht öfter als einmal in einem Header-Bereich
+  vorkommen dürfen.
+|# Anderes
+]]#

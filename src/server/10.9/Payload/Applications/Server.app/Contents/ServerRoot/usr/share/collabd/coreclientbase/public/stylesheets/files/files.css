@@ -1,0 +1,229 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Files container */
+
+.files.info .detail
+{
+	min-height: 350px;
+	margin: 18px 38px 38px 38px;
+}
+
+.files.info iframe
+{
+	display: none;
+}
+
+/* @end */
+
+
+/* @group Rollover HUD */
+
+.files.info .hud
+{
+	background-color: rgba(0,0,0,0.6);
+	border: 1px solid #666666;
+	bottom: 65px;
+	cursor: default;
+	display: none;
+	height: 35px;
+	left: 50%;
+	margin: 0px auto;
+	margin-left: -100px;
+	opacity: 0;
+	position: absolute;
+	width: 200px;
+	-webkit-transition: opacity 0.2s ease-in-out;
+	border-radius: 6px;
+}
+
+.files.info:hover .hud
+{
+	opacity: 1;
+}
+
+.files.info.nopreview .hud
+{
+	display: block;
+}
+
+.files.info .hud a
+{
+	background-repeat: no-repeat;
+	color: #FFFFFF;
+	cursor: pointer;
+	float: left;
+	height: 100%;
+	line-height: 33px;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.files.info .hud a
+{
+	width: 100px;
+}
+
+/* @end */
+
+/* @group No preview available */
+
+.files.info .missing
+{
+	background: #F0F0F0;
+	border: 1px solid #C0C0C0;
+	display: none;
+	height: 300px;
+	padding-top: 50px;
+	border-radius: 6px;
+}
+
+.files.info .missing h2
+{
+	color: #666666;
+	font-size: 14px;
+	line-height: 40px;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.files.info .missing .icon
+{
+	background: transparent url(./img/generic_icon.png) center center no-repeat;
+	background-image: -webkit-image-set(url(./img/generic_icon.png) 1x, url(./img/generic_icon@2x.png) 2x);
+	display: block;
+	height: 175px;
+	position: relative;
+	text-align: center;
+}
+
+.files.info.hasicon .missing .icon
+{
+	background: none;
+}
+
+.files.info .missing .icon img
+{
+	display: none;
+}
+
+.files.info.hasicon .missing .icon img
+{
+	display: block;
+	height: 175px;
+	left: 50%;
+	margin-left: -86px;
+	width: 175px;
+	position: absolute;
+	top: 0px;
+}
+
+.files.info.nopreview .missing
+{
+	display: block;
+}
+
+/* @end */
+
+/* @group Loading */
+
+.files.info.loading
+{
+	background: transparent url(../cc/img/spinner_transparent.gif) center center no-repeat;
+	height: 300px;
+}
+
+.files.info.loading *
+{
+	display: none;
+}
+
+/* @end */
+
+/* @group Preview listing */
+
+.files.info .previews
+{
+	display: none;
+}
+
+.files.info .previews
+{
+	display: block;
+}
+
+.files.info .previews .preview img
+{
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	cursor: pointer;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+	opacity: 1;
+	box-shadow: 0px 2px 6px rgba(0,0,0,0.4);
+	-webkit-transition: opacity 0.5s linear;
+}
+
+.files.info .previews .preview .description
+{
+	display: none;
+}
+
+.files.info .previews .preview + .preview
+{
+	margin-top: 20px;
+}
+
+.files.info .preview.loading
+{
+	background: transparent url(../cc/img/spinner_transparent.gif) center center no-repeat;
+	height: 80px;
+	overflow: hidden;
+}
+
+.files.info .preview.loading img
+{
+	opacity: 0;
+}
+
+/* @end */
+
+/* @group Pagination */
+
+.files.info .pagination
+{
+	color: #4B8ABA;
+	display: none;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 28px 0px 0px 0px;
+	text-align: center;
+}
+
+.files.info .pagination
+{
+	display: block;
+}
+
+.files.info .pagination .more
+{
+	cursor: pointer;
+}
+
+/* @end */

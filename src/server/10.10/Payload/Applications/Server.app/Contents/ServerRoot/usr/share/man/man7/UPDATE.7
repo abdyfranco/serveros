@@ -1,0 +1,392 @@
+'\" t
+.\"     Title: UPDATE
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "UPDATE" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+UPDATE \- update rows of a table
+.\" UPDATE
+.SH "SYNOPSIS"
+.sp
+.nf
+[ WITH [ RECURSIVE ] \fIwith_query\fR [, \&.\&.\&.] ]
+UPDATE [ ONLY ] \fItable_name\fR [ * ] [ [ AS ] \fIalias\fR ]
+    SET { \fIcolumn_name\fR = { \fIexpression\fR | DEFAULT } |
+          ( \fIcolumn_name\fR [, \&.\&.\&.] ) = ( { \fIexpression\fR | DEFAULT } [, \&.\&.\&.] ) } [, \&.\&.\&.]
+    [ FROM \fIfrom_list\fR ]
+    [ WHERE \fIcondition\fR | WHERE CURRENT OF \fIcursor_name\fR ]
+    [ RETURNING * | \fIoutput_expression\fR [ [ AS ] \fIoutput_name\fR ] [, \&.\&.\&.] ]
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBUPDATE\fR
+changes the values of the specified columns in all rows that satisfy the condition\&. Only the columns to be modified need be mentioned in the
+SET
+clause; columns not explicitly modified retain their previous values\&.
+.PP
+There are two ways to modify a table using information contained in other tables in the database: using sub\-selects, or specifying additional tables in the
+FROM
+clause\&. Which technique is more appropriate depends on the specific circumstances\&.
+.PP
+The optional
+RETURNING
+clause causes
+\fBUPDATE\fR
+to compute and return value(s) based on each row actually updated\&. Any expression using the table\*(Aqs columns, and/or columns of other tables mentioned in
+FROM, can be computed\&. The new (post\-update) values of the table\*(Aqs columns are used\&. The syntax of the
+RETURNING
+list is identical to that of the output list of
+\fBSELECT\fR\&.
+.PP
+You must have the
+UPDATE
+privilege on the table, or at least on the column(s) that are listed to be updated\&. You must also have the
+SELECT
+privilege on any column whose values are read in the
+\fIexpressions\fR
+or
+\fIcondition\fR\&.
+.SH "PARAMETERS"
+.PP
+\fIwith_query\fR
+.RS 4
+The
+WITH
+clause allows you to specify one or more subqueries that can be referenced by name in the
+\fBUPDATE\fR
+query\&. See
+Section 7.8, \(lqWITH Queries (Common Table Expressions)\(rq, in the documentation
+and
+\fBSELECT\fR(7)
+for details\&.
+.RE
+.PP
+\fItable_name\fR
+.RS 4
+The name (optionally schema\-qualified) of the table to update\&. If
+ONLY
+is specified before the table name, matching rows are updated in the named table only\&. If
+ONLY
+is not specified, matching rows are also updated in any tables inheriting from the named table\&. Optionally,
+*
+can be specified after the table name to explicitly indicate that descendant tables are included\&.
+.RE
+.PP
+\fIalias\fR
+.RS 4
+A substitute name for the target table\&. When an alias is provided, it completely hides the actual name of the table\&. For example, given
+UPDATE foo AS f, the remainder of the
+\fBUPDATE\fR
+statement must refer to this table as
+f
+not
+foo\&.
+.RE
+.PP
+\fIcolumn_name\fR
+.RS 4
+The name of a column in the table named by
+\fItable_name\fR\&. The column name can be qualified with a subfield name or array subscript, if needed\&. Do not include the table\*(Aqs name in the specification of a target column \(em for example,
+UPDATE tab SET tab\&.col = 1
+is invalid\&.
+.RE
+.PP
+\fIexpression\fR
+.RS 4
+An expression to assign to the column\&. The expression can use the old values of this and other columns in the table\&.
+.RE
+.PP
+DEFAULT
+.RS 4
+Set the column to its default value (which will be NULL if no specific default expression has been assigned to it)\&.
+.RE
+.PP
+\fIfrom_list\fR
+.RS 4
+A list of table expressions, allowing columns from other tables to appear in the
+WHERE
+condition and the update expressions\&. This is similar to the list of tables that can be specified in the
+FROM Clause
+of a
+\fBSELECT\fR
+statement\&. Note that the target table must not appear in the
+\fIfrom_list\fR, unless you intend a self\-join (in which case it must appear with an alias in the
+\fIfrom_list\fR)\&.
+.RE
+.PP
+\fIcondition\fR
+.RS 4
+An expression that returns a value of type
+boolean\&. Only rows for which this expression returns
+true
+will be updated\&.
+.RE
+.PP
+\fIcursor_name\fR
+.RS 4
+The name of the cursor to use in a
+WHERE CURRENT OF
+condition\&. The row to be updated is the one most recently fetched from this cursor\&. The cursor must be a non\-grouping query on the
+\fBUPDATE\fR\*(Aqs target table\&. Note that
+WHERE CURRENT OF
+cannot be specified together with a Boolean condition\&. See
+\fBDECLARE\fR(7)
+for more information about using cursors with
+WHERE CURRENT OF\&.
+.RE
+.PP
+\fIoutput_expression\fR
+.RS 4
+An expression to be computed and returned by the
+\fBUPDATE\fR
+command after each row is updated\&. The expression can use any column names of the table named by
+\fItable_name\fR
+or table(s) listed in
+FROM\&. Write
+*
+to return all columns\&.
+.RE
+.PP
+\fIoutput_name\fR
+.RS 4
+A name to use for a returned column\&.
+.RE
+.SH "OUTPUTS"
+.PP
+On successful completion, an
+\fBUPDATE\fR
+command returns a command tag of the form
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE \fIcount\fR
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The
+\fIcount\fR
+is the number of rows updated, including matched rows whose values did not change\&. Note that the number may be less than the number of rows that matched the
+\fIcondition\fR
+when updates were suppressed by a
+BEFORE UPDATE
+trigger\&. If
+\fIcount\fR
+is 0, no rows were updated by the query (this is not considered an error)\&.
+.PP
+If the
+\fBUPDATE\fR
+command contains a
+RETURNING
+clause, the result will be similar to that of a
+\fBSELECT\fR
+statement containing the columns and values defined in the
+RETURNING
+list, computed over the row(s) updated by the command\&.
+.SH "NOTES"
+.PP
+When a
+FROM
+clause is present, what essentially happens is that the target table is joined to the tables mentioned in the
+\fIfrom_list\fR, and each output row of the join represents an update operation for the target table\&. When using
+FROM
+you should ensure that the join produces at most one output row for each row to be modified\&. In other words, a target row shouldn\*(Aqt join to more than one row from the other table(s)\&. If it does, then only one of the join rows will be used to update the target row, but which one will be used is not readily predictable\&.
+.PP
+Because of this indeterminacy, referencing other tables only within sub\-selects is safer, though often harder to read and slower than using a join\&.
+.SH "EXAMPLES"
+.PP
+Change the word
+Drama
+to
+Dramatic
+in the column
+kind
+of the table
+films:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE films SET kind = \*(AqDramatic\*(Aq WHERE kind = \*(AqDrama\*(Aq;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Adjust temperature entries and reset precipitation to its default value in one row of the table
+weather:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE weather SET temp_lo = temp_lo+1, temp_hi = temp_lo+15, prcp = DEFAULT
+  WHERE city = \*(AqSan Francisco\*(Aq AND date = \*(Aq2003\-07\-03\*(Aq;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Perform the same operation and return the updated entries:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE weather SET temp_lo = temp_lo+1, temp_hi = temp_lo+15, prcp = DEFAULT
+  WHERE city = \*(AqSan Francisco\*(Aq AND date = \*(Aq2003\-07\-03\*(Aq
+  RETURNING temp_lo, temp_hi, prcp;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Use the alternative column\-list syntax to do the same update:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE weather SET (temp_lo, temp_hi, prcp) = (temp_lo+1, temp_lo+15, DEFAULT)
+  WHERE city = \*(AqSan Francisco\*(Aq AND date = \*(Aq2003\-07\-03\*(Aq;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Increment the sales count of the salesperson who manages the account for Acme Corporation, using the
+FROM
+clause syntax:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE employees SET sales_count = sales_count + 1 FROM accounts
+  WHERE accounts\&.name = \*(AqAcme Corporation\*(Aq
+  AND employees\&.id = accounts\&.sales_person;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Perform the same operation, using a sub\-select in the
+WHERE
+clause:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE employees SET sales_count = sales_count + 1 WHERE id =
+  (SELECT sales_person FROM accounts WHERE name = \*(AqAcme Corporation\*(Aq);
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Attempt to insert a new stock item along with the quantity of stock\&. If the item already exists, instead update the stock count of the existing item\&. To do this without failing the entire transaction, use savepoints:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+BEGIN;
+\-\- other operations
+SAVEPOINT sp1;
+INSERT INTO wines VALUES(\*(AqChateau Lafite 2003\*(Aq, \*(Aq24\*(Aq);
+\-\- Assume the above fails because of a unique key violation,
+\-\- so now we issue these commands:
+ROLLBACK TO sp1;
+UPDATE wines SET stock = stock + 24 WHERE winename = \*(AqChateau Lafite 2003\*(Aq;
+\-\- continue with other operations, and eventually
+COMMIT;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Change the
+kind
+column of the table
+films
+in the row on which the cursor
+c_films
+is currently positioned:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE films SET kind = \*(AqDramatic\*(Aq WHERE CURRENT OF c_films;
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COMPATIBILITY"
+.PP
+This command conforms to the
+SQL
+standard, except that the
+FROM
+and
+RETURNING
+clauses are
+PostgreSQL
+extensions, as is the ability to use
+WITH
+with
+\fBUPDATE\fR\&.
+.PP
+According to the standard, the column\-list syntax should allow a list of columns to be assigned from a single row\-valued expression, such as a sub\-select:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+UPDATE accounts SET (contact_last_name, contact_first_name) =
+    (SELECT last_name, first_name FROM salesmen
+     WHERE salesmen\&.id = accounts\&.sales_id);
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+This is not currently implemented \(em the source must be a list of independent expressions\&.
+.PP
+Some other database systems offer a
+FROM
+option in which the target table is supposed to be listed again within
+FROM\&. That is not how
+PostgreSQL
+interprets
+FROM\&. Be careful when porting applications that use this extension\&.

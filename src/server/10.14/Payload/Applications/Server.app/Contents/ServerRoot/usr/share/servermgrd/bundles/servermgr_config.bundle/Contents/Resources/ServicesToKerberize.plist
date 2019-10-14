@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>cifs</string>
+	<string>fcsvr</string>
+	<string>ftp</string>
+	<string>HTTP</string>
+	<string>http</string>
+	<string>imap</string>
+	<string>ipp</string>
+	<string>ldap</string>
+	<string>nfs</string>
+	<string>pop</string>
+	<string>smtp</string>
+	<string>ssh</string>
+	<string>xmpp</string>
+	<string>vnc</string>
+</array>
+</plist>

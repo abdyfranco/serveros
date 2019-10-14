@@ -1,0 +1,16 @@
+(version 1)
+
+(deny default)
+
+(import "system.sb")
+;;(trace "/tmp/sdd-sandbox-trace.sb")
+
+(system-network)
+
+(allow network-inbound
+    (local tcp "*:10548"))
+
+(allow network-outbound
+    (literal "/private/var/run/mDNSResponder")
+    (regex #"/Library/Server/ServerDocs/Database.xpg/sockets/\.s\.PGSQL\.5432$"))
+

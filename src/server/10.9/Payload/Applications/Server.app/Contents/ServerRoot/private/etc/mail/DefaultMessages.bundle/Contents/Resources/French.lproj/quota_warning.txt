@@ -1,0 +1,11 @@
+De : Administrateur de courrier <Postmaster@exemple.com>
+Sujet : [Avertissement] L’utilisation du serveur de courrier est proche du quota.
+
+Vous approchez votre quota de stockage de courriers électroniques sur le serveur. Les prochains courriers pourraient être refusés si vous dépassez votre quota.
+
+Veuillez déplacer les messages dont vous n’avez plus besoin sur le serveur vers vos boîtes aux lettres locales. Vous pouvez également vérifier les Messages envoyés, la Corbeille ou les Éléments supprimés à la recherche de courriers dont vous n’avez plus besoin sur le serveur.
+
+Merci de rapidement prendre les dispositions nécessaires à ce sujet.
+
+Cordialement,
+L’administrateur de courrier

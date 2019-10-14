@@ -1,0 +1,840 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Release 9.4.11</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.4.15 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Release Notes"
+HREF="release.html"><LINK
+REL="PREVIOUS"
+TITLE="Release 9.4.12"
+HREF="release-9-4-12.html"><LINK
+REL="NEXT"
+TITLE="Release 9.4.10"
+HREF="release-9-4-10.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2017-11-06T22:35:27"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="4"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.4.15 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="Release 9.4.12"
+HREF="release-9-4-12.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="release.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Appendix E. Release Notes</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="Release 9.4.10"
+HREF="release-9-4-10.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="RELEASE-9-4-11"
+>E.5. Release 9.4.11</A
+></H1
+><DIV
+CLASS="FORMALPARA"
+><P
+><B
+>Release date: </B
+>2017-02-09</P
+></DIV
+><P
+>   This release contains a variety of fixes from 9.4.10.
+   For information about new features in the 9.4 major release, see
+   <A
+HREF="release-9-4.html"
+>Section E.16</A
+>.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN119937"
+>E.5.1. Migration to Version 9.4.11</A
+></H2
+><P
+>    A dump/restore is not required for those running 9.4.X.
+   </P
+><P
+>    However, if your installation has been affected by the bug described in
+    the first changelog entry below, then after updating you may need
+    to take action to repair corrupted indexes.
+   </P
+><P
+>    Also, if you are upgrading from a version earlier than 9.4.10,
+    see <A
+HREF="release-9-4-10.html"
+>Section E.6</A
+>.
+   </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN119943"
+>E.5.2. Changes</A
+></H2
+><P
+></P
+><UL
+><LI
+><P
+>      Fix a race condition that could cause indexes built
+      with <TT
+CLASS="COMMAND"
+>CREATE INDEX CONCURRENTLY</TT
+> to be corrupt
+      (Pavan Deolasee, Tom Lane)
+     </P
+><P
+>      If <TT
+CLASS="COMMAND"
+>CREATE INDEX CONCURRENTLY</TT
+> was used to build an index
+      that depends on a column not previously indexed, then rows
+      updated by transactions that ran concurrently with
+      the <TT
+CLASS="COMMAND"
+>CREATE INDEX</TT
+> command could have received incorrect
+      index entries.  If you suspect this may have happened, the most
+      reliable solution is to rebuild affected indexes after installing
+      this update.
+     </P
+></LI
+><LI
+><P
+>      Ensure that the special snapshot used for catalog scans is not
+      invalidated by premature data pruning (Tom Lane)
+     </P
+><P
+>      Backends failed to account for this snapshot when advertising their
+      oldest xmin, potentially allowing concurrent vacuuming operations to
+      remove data that was still needed.  This led to transient failures
+      along the lines of <SPAN
+CLASS="QUOTE"
+>"cache lookup failed for relation 1255"</SPAN
+>.
+     </P
+></LI
+><LI
+><P
+>      Unconditionally WAL-log creation of the <SPAN
+CLASS="QUOTE"
+>"init fork"</SPAN
+> for an
+      unlogged table (Michael Paquier)
+     </P
+><P
+>      Previously, this was skipped when <A
+HREF="runtime-config-wal.html#GUC-WAL-LEVEL"
+>wal_level</A
+>
+      = <TT
+CLASS="LITERAL"
+>minimal</TT
+>, but actually it's necessary even in that case
+      to ensure that the unlogged table is properly reset to empty after a
+      crash.
+     </P
+></LI
+><LI
+><P
+>      Reduce interlocking on standby servers during the replay of btree
+      index vacuuming operations (Simon Riggs)
+     </P
+><P
+>      This change avoids substantial replication delays that sometimes
+      occurred while replaying such operations.
+     </P
+></LI
+><LI
+><P
+>      If the stats collector dies during hot standby, restart it (Takayuki
+      Tsunakawa)
+     </P
+></LI
+><LI
+><P
+>      Ensure that hot standby feedback works correctly when it's enabled at
+      standby server start (Ants Aasma, Craig Ringer)
+     </P
+></LI
+><LI
+><P
+>      Check for interrupts while hot standby is waiting for a conflicting
+      query (Simon Riggs)
+     </P
+></LI
+><LI
+><P
+>      Avoid constantly respawning the autovacuum launcher in a corner case
+      (Amit Khandekar)
+     </P
+><P
+>      This fix avoids problems when autovacuum is nominally off and there
+      are some tables that require freezing, but all such tables are
+      already being processed by autovacuum workers.
+     </P
+></LI
+><LI
+><P
+>      Fix check for when an extension member object can be dropped (Tom Lane)
+     </P
+><P
+>      Extension upgrade scripts should be able to drop member objects,
+      but this was disallowed for serial-column sequences, and possibly
+      other cases.
+     </P
+></LI
+><LI
+><P
+>      Make sure <TT
+CLASS="COMMAND"
+>ALTER TABLE</TT
+> preserves index tablespace
+      assignments when rebuilding indexes (Tom Lane, Michael Paquier)
+     </P
+><P
+>      Previously, non-default settings
+      of <A
+HREF="runtime-config-client.html#GUC-DEFAULT-TABLESPACE"
+>default_tablespace</A
+> could result in broken
+      indexes.
+     </P
+></LI
+><LI
+><P
+>      Fix incorrect updating of trigger function properties when changing a
+      foreign-key constraint's deferrability properties with <TT
+CLASS="COMMAND"
+>ALTER
+      TABLE ... ALTER CONSTRAINT</TT
+> (Tom Lane)
+     </P
+><P
+>      This led to odd failures during subsequent exercise of the foreign
+      key, as the triggers were fired at the wrong times.
+     </P
+></LI
+><LI
+><P
+>      Prevent dropping a foreign-key constraint if there are pending
+      trigger events for the referenced relation (Tom Lane)
+     </P
+><P
+>      This avoids <SPAN
+CLASS="QUOTE"
+>"could not find trigger <TT
+CLASS="REPLACEABLE"
+><I
+>NNN</I
+></TT
+>"</SPAN
+>
+      or <SPAN
+CLASS="QUOTE"
+>"relation <TT
+CLASS="REPLACEABLE"
+><I
+>NNN</I
+></TT
+> has no triggers"</SPAN
+> errors.
+     </P
+></LI
+><LI
+><P
+>      Fix processing of OID column when a table with OIDs is associated to
+      a parent with OIDs via <TT
+CLASS="COMMAND"
+>ALTER TABLE ... INHERIT</TT
+> (Amit
+      Langote)
+     </P
+><P
+>      The OID column should be treated the same as regular user columns in
+      this case, but it wasn't, leading to odd behavior in later
+      inheritance changes.
+     </P
+></LI
+><LI
+><P
+>      Fix <TT
+CLASS="COMMAND"
+>CREATE OR REPLACE VIEW</TT
+> to update the view query
+      before attempting to apply the new view options (Dean Rasheed)
+     </P
+><P
+>      Previously the command would fail if the new options were
+      inconsistent with the old view definition.
+     </P
+></LI
+><LI
+><P
+>      Report correct object identity during <TT
+CLASS="COMMAND"
+>ALTER TEXT SEARCH
+      CONFIGURATION</TT
+> (Artur Zakirov)
+     </P
+><P
+>      The wrong catalog OID was reported to extensions such as logical
+      decoding.
+     </P
+></LI
+><LI
+><P
+>      Check for serializability conflicts before reporting
+      constraint-violation failures (Thomas Munro)
+     </P
+><P
+>      When using serializable transaction isolation, it is desirable
+      that any error due to concurrent transactions should manifest
+      as a serialization failure, thereby cueing the application that
+      a retry might succeed.  Unfortunately, this does not reliably
+      happen for duplicate-key failures caused by concurrent insertions.
+      This change ensures that such an error will be reported as a
+      serialization error if the application explicitly checked for
+      the presence of a conflicting key (and did not find it) earlier
+      in the transaction.
+     </P
+></LI
+><LI
+><P
+>      Prevent multicolumn expansion of <TT
+CLASS="REPLACEABLE"
+><I
+>foo</I
+></TT
+><TT
+CLASS="LITERAL"
+>.*</TT
+> in
+      an <TT
+CLASS="COMMAND"
+>UPDATE</TT
+> source expression (Tom Lane)
+     </P
+><P
+>      This led to <SPAN
+CLASS="QUOTE"
+>"UPDATE target count mismatch --- internal
+      error"</SPAN
+>.  Now the syntax is understood as a whole-row variable,
+      as it would be in other contexts.
+     </P
+></LI
+><LI
+><P
+>      Ensure that column typmods are determined accurately for
+      multi-row <TT
+CLASS="LITERAL"
+>VALUES</TT
+> constructs (Tom Lane)
+     </P
+><P
+>      This fixes problems occurring when the first value in a column has a
+      determinable typmod (e.g., length for a <TT
+CLASS="TYPE"
+>varchar</TT
+> value) but
+      later values don't share the same limit.
+     </P
+></LI
+><LI
+><P
+>      Throw error for an unfinished Unicode surrogate pair at the end of a
+      Unicode string (Tom Lane)
+     </P
+><P
+>      Normally, a Unicode surrogate leading character must be followed by a
+      Unicode surrogate trailing character, but the check for this was
+      missed if the leading character was the last character in a Unicode
+      string literal (<TT
+CLASS="LITERAL"
+>U&amp;'...'</TT
+>) or Unicode identifier
+      (<TT
+CLASS="LITERAL"
+>U&amp;"..."</TT
+>).
+     </P
+></LI
+><LI
+><P
+>      Ensure that a purely negative text search query, such
+      as <TT
+CLASS="LITERAL"
+>!foo</TT
+>, matches empty <TT
+CLASS="TYPE"
+>tsvector</TT
+>s (Tom Dunstan)
+     </P
+><P
+>      Such matches were found by GIN index searches, but not by sequential
+      scans or GiST index searches.
+     </P
+></LI
+><LI
+><P
+>      Prevent crash when <CODE
+CLASS="FUNCTION"
+>ts_rewrite()</CODE
+> replaces a non-top-level
+      subtree with an empty query (Artur Zakirov)
+     </P
+></LI
+><LI
+><P
+>      Fix performance problems in <CODE
+CLASS="FUNCTION"
+>ts_rewrite()</CODE
+> (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Fix <CODE
+CLASS="FUNCTION"
+>ts_rewrite()</CODE
+>'s handling of nested NOT operators
+      (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Fix <CODE
+CLASS="FUNCTION"
+>array_fill()</CODE
+> to handle empty arrays properly (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Fix one-byte buffer overrun in <CODE
+CLASS="FUNCTION"
+>quote_literal_cstr()</CODE
+>
+      (Heikki Linnakangas)
+     </P
+><P
+>      The overrun occurred only if the input consisted entirely of single
+      quotes and/or backslashes.
+     </P
+></LI
+><LI
+><P
+>      Prevent multiple calls of <CODE
+CLASS="FUNCTION"
+>pg_start_backup()</CODE
+>
+      and <CODE
+CLASS="FUNCTION"
+>pg_stop_backup()</CODE
+> from running concurrently (Michael
+      Paquier)
+     </P
+><P
+>      This avoids an assertion failure, and possibly worse things, if
+      someone tries to run these functions in parallel.
+     </P
+></LI
+><LI
+><P
+>      Avoid discarding <TT
+CLASS="TYPE"
+>interval</TT
+>-to-<TT
+CLASS="TYPE"
+>interval</TT
+> casts
+      that aren't really no-ops (Tom Lane)
+     </P
+><P
+>      In some cases, a cast that should result in zeroing out
+      low-order <TT
+CLASS="TYPE"
+>interval</TT
+> fields was mistakenly deemed to be a
+      no-op and discarded.  An example is that casting from <TT
+CLASS="TYPE"
+>INTERVAL
+      MONTH</TT
+> to <TT
+CLASS="TYPE"
+>INTERVAL YEAR</TT
+> failed to clear the months field.
+     </P
+></LI
+><LI
+><P
+>      Ensure that cached plans are invalidated by changes in foreign-table
+      options (Amit Langote, Etsuro Fujita, Ashutosh Bapat)
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_dump</SPAN
+> to dump user-defined casts and transforms
+      that use built-in functions (Stephen Frost)
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_restore</SPAN
+> with <TT
+CLASS="OPTION"
+>--create --if-exists</TT
+>
+      to behave more sanely if an archive contains
+      unrecognized <TT
+CLASS="COMMAND"
+>DROP</TT
+> commands (Tom Lane)
+     </P
+><P
+>      This doesn't fix any live bug, but it may improve the behavior in
+      future if <SPAN
+CLASS="APPLICATION"
+>pg_restore</SPAN
+> is used with an archive
+      generated by a later <SPAN
+CLASS="APPLICATION"
+>pg_dump</SPAN
+> version.
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_basebackup</SPAN
+>'s rate limiting in the presence of
+      slow I/O (Antonin Houska)
+     </P
+><P
+>      If disk I/O was transiently much slower than the specified rate
+      limit, the calculation overflowed, effectively disabling the rate
+      limit for the rest of the run.
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_basebackup</SPAN
+>'s handling of
+      symlinked <TT
+CLASS="FILENAME"
+>pg_stat_tmp</TT
+> and <TT
+CLASS="FILENAME"
+>pg_replslot</TT
+>
+      subdirectories (Magnus Hagander, Michael Paquier)
+     </P
+></LI
+><LI
+><P
+>      Fix possible <SPAN
+CLASS="APPLICATION"
+>pg_basebackup</SPAN
+> failure on standby
+      server when including WAL files (Amit Kapila, Robert Haas)
+     </P
+></LI
+><LI
+><P
+>      Ensure that the Python exception objects we create for PL/Python are
+      properly reference-counted (Rafa de la Torre, Tom Lane)
+     </P
+><P
+>      This avoids failures if the objects are used after a Python garbage
+      collection cycle has occurred.
+     </P
+></LI
+><LI
+><P
+>      Fix PL/Tcl to support triggers on tables that have <TT
+CLASS="LITERAL"
+>.tupno</TT
+>
+      as a column name (Tom Lane)
+     </P
+><P
+>      This matches the (previously undocumented) behavior of
+      PL/Tcl's <TT
+CLASS="COMMAND"
+>spi_exec</TT
+> and <TT
+CLASS="COMMAND"
+>spi_execp</TT
+> commands,
+      namely that a magic <TT
+CLASS="LITERAL"
+>.tupno</TT
+> column is inserted only if
+      there isn't a real column named that.
+     </P
+></LI
+><LI
+><P
+>      Allow DOS-style line endings in <TT
+CLASS="FILENAME"
+>~/.pgpass</TT
+> files,
+      even on Unix (Vik Fearing)
+     </P
+><P
+>      This change simplifies use of the same password file across Unix and
+      Windows machines.
+     </P
+></LI
+><LI
+><P
+>      Fix one-byte buffer overrun if <SPAN
+CLASS="APPLICATION"
+>ecpg</SPAN
+> is given a file
+      name that ends with a dot (Takayuki Tsunakawa)
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>psql</SPAN
+>'s tab completion for <TT
+CLASS="COMMAND"
+>ALTER DEFAULT
+      PRIVILEGES</TT
+> (Gilles Darold, Stephen Frost)
+     </P
+></LI
+><LI
+><P
+>      In <SPAN
+CLASS="APPLICATION"
+>psql</SPAN
+>, treat an empty or all-blank setting of
+      the <TT
+CLASS="ENVAR"
+>PAGER</TT
+> environment variable as meaning <SPAN
+CLASS="QUOTE"
+>"no
+      pager"</SPAN
+> (Tom Lane)
+     </P
+><P
+>      Previously, such a setting caused output intended for the pager to
+      vanish entirely.
+     </P
+></LI
+><LI
+><P
+>      Improve <TT
+CLASS="FILENAME"
+>contrib/dblink</TT
+>'s reporting of
+      low-level <SPAN
+CLASS="APPLICATION"
+>libpq</SPAN
+> errors, such as out-of-memory
+      (Joe Conway)
+     </P
+></LI
+><LI
+><P
+>      Teach <TT
+CLASS="FILENAME"
+>contrib/dblink</TT
+> to ignore irrelevant server options
+      when it uses a <TT
+CLASS="FILENAME"
+>contrib/postgres_fdw</TT
+> foreign server as
+      the source of connection options (Corey Huinker)
+     </P
+><P
+>      Previously, if the foreign server object had options that were not
+      also <SPAN
+CLASS="APPLICATION"
+>libpq</SPAN
+> connection options, an error occurred.
+     </P
+></LI
+><LI
+><P
+>      On Windows, ensure that environment variable changes are propagated
+      to DLLs built with debug options (Christian Ullrich)
+     </P
+></LI
+><LI
+><P
+>      Sync our copy of the timezone library with IANA release tzcode2016j
+      (Tom Lane)
+     </P
+><P
+>      This fixes various issues, most notably that timezone data
+      installation failed if the target directory didn't support hard
+      links.
+     </P
+></LI
+><LI
+><P
+>      Update time zone data files to <SPAN
+CLASS="APPLICATION"
+>tzdata</SPAN
+> release 2016j
+      for DST law changes in northern Cyprus (adding a new zone
+      Asia/Famagusta), Russia (adding a new zone Europe/Saratov), Tonga,
+      and Antarctica/Casey.
+      Historical corrections for Italy, Kazakhstan, Malta, and Palestine.
+      Switch to preferring numeric zone abbreviations for Tonga.
+     </P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="release-9-4-12.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="release-9-4-10.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Release 9.4.12</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="release.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Release 9.4.10</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

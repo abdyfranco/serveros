@@ -1,0 +1,28 @@
+Last Login Plugin
+=================
+
+Requires v2.2.14+. This plugin can be used to easily update user's last-login
+timestamp in the configured <dictionary> [Dictionary.txt]. Configuration:
+
+---%<-------------------------------------------------------------------------
+protocol imap {
+  mail_plugins = $mail_plugins last_login
+}
+protocol pop3 {
+  mail_plugins = $mail_plugins last_login
+}
+
+plugin {
+  last_login_dict = redis:host=127.0.0.1:port=6379
+  #last_login_key = last-login/%u # default
+}
+---%<-------------------------------------------------------------------------
+
+Note that we enable last_login plugin explicitly only for imap & pop3
+protocols. If enabled globally, it'll also update the timestamp whenever new
+mails are delivered via lda/lmtp or when doveadm is run for the user. This can
+also be thought of as a feature, so if you want to update a different timestamp
+for user when new mails are delivered, you can do that by enabling the
+last_login plugin also for lda/lmtp and changing the last_login_key setting.
+
+(This file was created from the wiki on 2016-04-26 04:43)

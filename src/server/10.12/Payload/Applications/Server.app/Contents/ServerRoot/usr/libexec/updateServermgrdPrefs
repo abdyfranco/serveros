@@ -1,0 +1,93 @@
+#!/usr/bin/perl -w
+
+#  updateServermgrdPrefs
+#
+#  Copyright (c) 2015 Apple Inc. All rights reserved.
+
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+
+# updateServermgrdPrefs new_location legacy_location default_location
+#
+#
+
+use strict;
+use Foundation;
+
+if (@ARGV != 3)
+{
+    print "USAGE: updateServermgrdPrefs new_location legacy_location default_location\n";
+    exit 1;
+}
+
+my $new_location = $ARGV[0];
+my $legacy_location = $ARGV[1];
+my $default_location = $ARGV[2];
+
+#
+# if the new file exists, we are done
+#
+
+if (-e $new_location)
+{
+    print "No work to do";
+    exit 0;
+}
+
+#
+# get the default prefs
+#
+my $new_prefs = NSMutableDictionary->dictionaryWithContentsOfFile_("$default_location");
+
+if (!$new_prefs || !$$new_prefs)    # if unable to read the plist file
+{
+    print "Cannot find the default preferences at " . $default_location . "\n";
+    exit 2;
+}
+
+#
+#  If we have existing preferences, merge them with the default prefs
+#
+
+if (-e $legacy_location)
+{
+    # read in the legacy prefs file and process it
+    my $legacyPrefs = NSDictionary->dictionaryWithContentsOfFile_("$legacy_location");
+
+    if (!$legacyPrefs || !$$legacyPrefs)    # if unable to read the plist file
+    {
+        # just copy default_location => new_location
+        # should delete unreadable file at legacy_location
+
+    } else {
+        #
+        # copy the items we want migrated
+        #
+        
+        my $certInfo = $legacyPrefs->objectForKey_("serverCertInfo");
+        if (!(!$certInfo || !$$certInfo))
+        {
+            $new_prefs->setObject_forKey_($certInfo, "serverCertInfo");
+        }
+        
+        my $localOnly = $legacyPrefs->objectForKey_("onlyAcceptLocalConnections");
+        if (!(!$localOnly || !$$localOnly))
+        {
+            $new_prefs->setObject_forKey_($localOnly, "onlyAcceptLocalConnections");
+        }
+        
+        print "migrated preferences";
+        print $new_prefs->description()->UTF8String() . "\n";
+    }
+    
+    $new_prefs->writeToFile_atomically_($new_location, 1);
+    
+} else {
+    # just copy default_location => new_location
+    $new_prefs->writeToFile_atomically_($new_location, 1);
+}
+
+exit 0;

@@ -1,0 +1,11 @@
+De: Administrador de correo <Postmaster@example.com>
+Asunto: [Error] Se ha excedido la capacidad del servidor de correo
+
+Te comunicamos que has excedido la capacidad de almacenamiento en el servidor de correo. Puede que el servidor rechace las próximas entregas de correo hasta que haya suficiente espacio libre.
+
+Traslada los mensajes que ya no necesites guardar en el servidor a tus carpetas de correo locales. También puedes buscar en las carpetas “Enviado”, “Papelera” e “Ítems eliminados” los mensajes que ya no necesites conservar en el servidor.
+
+Gracias de antemano por tu colaboración.
+
+Atentamente,
+El administrador de correo

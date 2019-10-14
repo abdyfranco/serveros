@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# Copyright (c) 2014-2015 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# server-specific boot initializations
+#
+
+# Add Server Firewall Configuration
+if [ -f /Library/Server/Firewall/Anchors/combined_anchor.txt ]; then
+    pfctl -ef /Library/Server/Firewall/Anchors/combined_anchor.txt
+fi
+
+#
+# Set TCP to ack every other packet. (RFC-compliant "compatibility" mode.)
+# This should increase server performance, especially when connected
+# to Windows clients.
+#
+sysctl -w net.inet.tcp.delayed_ack=2
+
+# If we are booted in hi perf mode then just exit, perform no Kernel will handle tuning
+SERVER_INFO="/System/Library/PrivateFrameworks/ServerInformation.framework/Versions/A/Resources/serverinfo";
+if [ -e $SERVER_INFO ]; then
+	if $SERVER_INFO -q --perfmode; then
+		exit
+	fi
+fi
+
+(( memsize=$(sysctl -n hw.memsize) ))
+(( memsize/=1073741824 ))
+
+if (( ${memsize} >= 16 )); then
+	sysctl -w kern.maxfiles=300000
+elif  ((${memsize} >= 8)); then
+	sysctl -w kern.maxfiles=150000
+elif  (( ${memsize} >= 4 )); then
+	sysctl -w kern.maxfiles=120000
+else
+	sysctl -w kern.maxfiles=90000
+fi

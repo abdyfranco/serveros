@@ -1,0 +1,176 @@
+Replication with dsync
+======================
+
+Dovecot supports master/master replication using dsync. It's recommended that
+the same user always gets redirected to the same replica, but no changes get
+lost even if the same user modifies mails simultaneously on both replicas, some
+mails just might have to be redownloaded. The replication is done
+asynchronously, so high latency between the replicas isn't a problem. The
+replication is done by looking at Dovecot index files (not what exists in
+filesystem), so no mails get lost due to filesystem corruption or an accidental
+rm -rf, they will simply be replicated back.
+
+NOTE: v2.2 is highly recommended for this. Earlier versions can't do
+incremental metadata syncing. This means that the more mails a mailbox has, the
+slower it is to sync it.
+
+Make sure that user listing is configured for your userdb, this is required by
+replication:
+
+---%<-------------------------------------------------------------------------
+doveadm user '*'
+---%<-------------------------------------------------------------------------
+
+Enable the replication plugin:
+
+---%<-------------------------------------------------------------------------
+mail_plugins = $mail_plugins notify replication
+---%<-------------------------------------------------------------------------
+
+Replicator process should be started at startup, so it can start replicating
+users immediately:
+
+---%<-------------------------------------------------------------------------
+service replicator {
+  process_min_avail = 1
+}
+---%<-------------------------------------------------------------------------
+
+You need to configure how and where to replicate. Using SSH for example:
+
+---%<-------------------------------------------------------------------------
+dsync_remote_cmd = ssh -l%{login} %{host} doveadm dsync-server -u%u
+plugin {
+  mail_replica = remote:vmail@anotherhost.example.com
+}
+---%<-------------------------------------------------------------------------
+
+The mail processes need to have access to the replication-notify fifo and
+socket. If you have a single vmail UID, you can do:
+
+---%<-------------------------------------------------------------------------
+service aggregator {
+  fifo_listener replication-notify-fifo {
+    user = vmail
+  }
+  unix_listener replication-notify {
+    user = vmail
+  }
+}
+---%<-------------------------------------------------------------------------
+
+The replication-notify only notifies the replicator processes that there is
+work to be done, so it's not terribly insecure either to just set 'mode=0666'.
+
+Enable doveadm replicator commands by setting:
+
+---%<-------------------------------------------------------------------------
+service replicator {
+  unix_listener replicator-doveadm {
+    mode = 0600
+  }
+}
+---%<-------------------------------------------------------------------------
+
+dsync over TCP connections (v2.2+)
+----------------------------------
+
+Create a listener for doveadm-server:
+
+---%<-------------------------------------------------------------------------
+service doveadm {
+  inet_listener {
+    port = 12345
+  }
+}
+---%<-------------------------------------------------------------------------
+
+And tell doveadm client to use this port by default:
+
+---%<-------------------------------------------------------------------------
+doveadm_port = 12345
+---%<-------------------------------------------------------------------------
+
+Both the client and the server also need to have a shared secret:
+
+---%<-------------------------------------------------------------------------
+doveadm_password = secret
+---%<-------------------------------------------------------------------------
+
+Now you can use 'tcp:hostname' as the dsync target. You can also override the
+port with 'tcp:hostname:port'.
+
+SSL
+---
+
+You can also use SSL for the connection:
+
+---%<-------------------------------------------------------------------------
+service doveadm {
+  inet_listener {
+    port = 12345
+    ssl = yes
+  }
+}
+---%<-------------------------------------------------------------------------
+
+The client must be able to verify that the SSL certificate is valid, so you
+need to specify the directory containing valid SSL CA roots:
+
+---%<-------------------------------------------------------------------------
+ssl_client_ca_dir = /etc/ssl/certs # Debian/Ubuntu
+ssl_client_ca_file = /etc/pki/tls/cert.pem # RedHat
+---%<-------------------------------------------------------------------------
+
+Now you can use 'tcps:hostname' or 'tcps:hostname:port' as the dsync target.
+
+Note that the SSL certificate must be signed by one of the CAs in the
+'ssl_client_ca_dir' or 'ssl_client_ca_file'. You can't use a self-signed
+certificate or a private CA, unless you correctly set them up into the CA
+file/directory (see openssl documentation for details).
+
+dsync wrapper script for root SSH login (v2.2+)
+-----------------------------------------------
+
+If you're using multiple UIDs, dsync needs to be started as root, which means
+you need to log in as root with ssh (or use sudo). Another possibility is to
+allow root to run only a wrapper script. There is some built-in support for
+this in v2.2+ to make it easier:
+
+dovecot.conf:
+
+---%<-------------------------------------------------------------------------
+dsync_remote_cmd = /usr/bin/ssh -i /root/.ssh/id_dsa.dsync %{host}
+/usr/local/bin/dsync-in-wrapper.sh
+plugin {
+  mail_replica = remoteprefix:vmail@anotherhost.example.com
+}
+---%<-------------------------------------------------------------------------
+
+/root/.ssh/authorized_keys:
+
+---%<-------------------------------------------------------------------------
+command="/usr/local/bin/dsync-in-wrapper.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty
+<ssh key>
+---%<-------------------------------------------------------------------------
+
+/usr/local/bin/dsync-in-wrapper.sh:
+
+---%<-------------------------------------------------------------------------
+read username
+ulimit -c unlimited # for debugging any crashes
+/usr/local/bin/doveadm dsync-server -u $username
+---%<-------------------------------------------------------------------------
+
+Notes
+-----
+
+Random things to remember:
+
+ * The replicas can't share the same quota database, since both will always
+   update it
+ * With mdbox format "doveadm purge" won't be replicated
+ * "doveadm force-resync", "doveadm quota recalc" and other similar fixing
+   commands don't get replicated
+
+(This file was created from the wiki on 2013-08-05 04:42)

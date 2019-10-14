@@ -1,0 +1,80 @@
+Mail filter plugin
+==================
+
+Mail filter plugin can be used to filter written and/or read mails via a
+script, for example to encrypt/decrypt mails. Currently the filtering must not
+modify the message in any way: mail -> write filter -> read filter -> must
+produce exactly the original mail back. (TODO: Modifying the mail during
+writing would be possible with some code changes.)
+
+Note that IMAP protocol requires that emails never change, so the read filter
+must always produce the same output for the message. If the output changes
+you'll probably see some errors about Dovecot's cache file being corrupted and
+the IMAP client may also become confused if it has already cached some of the
+mail data.
+
+Configuration
+-------------
+
+Add to 'dovecot.conf':
+
+---%<-------------------------------------------------------------------------
+mail_plugins = $mail_plugins mail_filter
+
+plugin {
+  # Read filter:
+  mail_filter = mail-filter %u # %u = username given to the script as first
+parameter
+  # Write filter:
+  mail_filter_out = mail-filter-out %u
+}
+
+service mail-filter {
+ executable = script /usr/local/bin/mail-filter.sh
+ user = dovecot # run unprivileged
+ unix_listener mail-filter {
+   # enough permissions to give imap/pop3/etc processes access to this socket
+   mode = 0600
+   user = vmail
+ }
+}
+service mail-filter-out {
+ executable = script /usr/local/bin/mail-filter-out.sh
+ user = dovecot # run unprivileged
+ unix_listener mail-filter {
+   # enough permissions to give imap/pop3/etc processes access to this socket
+   mode = 0600
+   user = vmail
+ }
+}
+---%<-------------------------------------------------------------------------
+
+Example scripts
+---------------
+
+Here's a minimal example of how gpg could be used to encrypt and decrypt mails.
+All the key handling details are left out.
+
+The mail is read from stdin and written to stdout. Note that the plugin
+currently can't handle asynchronously reading+writing data, so the script
+cannot write any data to stdout before it has read everything from stdin. This
+is most easily done by first saving the stdin to a temporary file.
+
+'mail-filter.sh':
+
+---%<-------------------------------------------------------------------------
+cat > tempfile
+gpg -d tempfile
+rm -f tempfile
+---%<-------------------------------------------------------------------------
+
+'mail-filter-out.sh':
+
+---%<-------------------------------------------------------------------------
+USER=$1
+cat > tempfile
+gpg -e -r $USER tempfile
+rm -f tempfile
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

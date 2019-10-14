@@ -1,0 +1,155 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+/* @group Page banner styles */
+
+#banner
+{
+	background-repeat: repeat-x;
+	color: #FFFFFF;
+	cursor: default;
+	display: block;
+	height: 62px;
+	left: 0px;
+	letter-spacing: 1px;
+	line-height: 63px; /* Include 1px bottom border from theme */
+	right: 0px;
+	text-shadow: rgba(0,0,0,0.6) 0px -1px 1px;
+	top: 0px;
+	z-index: 100;
+	box-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+	white-space: nowrap;
+}
+
+.toplevel #banner .title
+{
+	text-shadow: 0 1px 0 #fff;
+	color: #6e6e6e;
+}
+
+#banner .left,
+#banner .right
+{
+	height: 61px;
+}
+
+#banner .left h1
+{
+	font-size: 18px;
+	padding-left: 62px;
+	padding-right: 380px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.toplevel #banner .left h1
+{
+    padding-right: 0;
+}
+
+#banner .left .icon
+{
+	height: 44px;
+	left: 7px;
+	position: absolute;
+	top: 10px;
+	width: 44px;
+	border-radius: 7px;
+}
+
+#banner .left .icon .image
+{
+	width: 40px;
+	height: 40px;
+	border: 2px solid #F3F9FF;
+	border-radius: 7px;
+	box-shadow: 0px 0px 2px rgba(0,0,0,0.3);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+#banner .left .icon .image.default
+{
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/wiki_44x44.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/wiki_44x44.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/wiki_44x44@2x.png) 2x);
+}
+
+#banner .left .icon .image.default.user
+{
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44.png);
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44@2x.png) 2x);
+	
+	width: 44px;
+	height: 44px;
+	border: 0px;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+#banner .right
+{
+	padding-right: 10px;
+	position: absolute;
+	right: 0px;
+	top: 1px;
+}
+
+#banner .right .links ul
+{
+	list-style-type: none;
+}
+
+#banner .right .links li
+{
+	cursor: pointer;
+	float: left;
+	font-size: 13px;
+	font-weight: 400;
+	height: 19px;
+	line-height: 19px;
+	margin-top: 20px;
+	padding: 0px 13px 0px 13px;
+	position: relative;
+	border: 1px solid transparent;
+	border-radius: 22px;
+}
+
+/* @end */
+
+/* @group Top-level banner styles */
+
+.toplevel #banner
+{
+	background: none;
+	box-shadow: none;
+}
+
+.toplevel #banner h1
+{
+	color: #7E7E7E;
+	padding-left: 0px;
+	text-align: center;
+	height: 66px;
+	line-height: 68px;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.toplevel #banner .icon,
+.toplevel #banner .right
+{
+	display: none;
+}
+
+/* @end */

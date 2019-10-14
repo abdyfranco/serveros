@@ -1,0 +1,495 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>adminpack</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.4.15 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Additional Supplied Modules"
+HREF="contrib.html"><LINK
+REL="PREVIOUS"
+TITLE="Additional Supplied Modules"
+HREF="contrib.html"><LINK
+REL="NEXT"
+TITLE="auth_delay"
+HREF="auth-delay.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2017-11-06T22:35:27"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="4"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.4.15 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="Additional Supplied Modules"
+HREF="contrib.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="contrib.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Appendix F. Additional Supplied Modules</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="auth_delay"
+HREF="auth-delay.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="ADMINPACK"
+>F.1. adminpack</A
+></H1
+><P
+>  <TT
+CLASS="FILENAME"
+>adminpack</TT
+> provides a number of support functions which
+  <SPAN
+CLASS="APPLICATION"
+>pgAdmin</SPAN
+> and other administration and management tools can
+  use to provide additional functionality, such as remote management
+  of server log files.
+  Use of all these functions is restricted to superusers.
+ </P
+><P
+>  The functions shown in <A
+HREF="adminpack.html#FUNCTIONS-ADMINPACK-TABLE"
+>Table F-1</A
+> provide
+  write access to files on the machine hosting the server.  (See also the
+  functions in <A
+HREF="functions-admin.html#FUNCTIONS-ADMIN-GENFILE-TABLE"
+>Table 9-72</A
+>, which
+  provide read-only access.)
+  Only files within the database cluster directory can be accessed, but
+  either a relative or absolute path is allowable.
+ </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="FUNCTIONS-ADMINPACK-TABLE"
+></A
+><P
+><B
+>Table F-1. <TT
+CLASS="FILENAME"
+>adminpack</TT
+> Functions</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><THEAD
+><TR
+><TH
+>Name</TH
+><TH
+>Return Type</TH
+><TH
+>Description</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><CODE
+CLASS="FUNCTION"
+>pg_catalog.pg_file_write(filename text, data text, append boolean)</CODE
+></TD
+><TD
+><TT
+CLASS="TYPE"
+>bigint</TT
+></TD
+><TD
+>      Write, or append to, a text file
+     </TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="FUNCTION"
+>pg_catalog.pg_file_rename(oldname text, newname text [<SPAN
+CLASS="OPTIONAL"
+>, archivename text</SPAN
+>])</CODE
+></TD
+><TD
+><TT
+CLASS="TYPE"
+>boolean</TT
+></TD
+><TD
+>      Rename a file
+     </TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="FUNCTION"
+>pg_catalog.pg_file_unlink(filename text)</CODE
+></TD
+><TD
+><TT
+CLASS="TYPE"
+>boolean</TT
+></TD
+><TD
+>      Remove a file
+     </TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="FUNCTION"
+>pg_catalog.pg_logdir_ls()</CODE
+></TD
+><TD
+><TT
+CLASS="TYPE"
+>setof record</TT
+></TD
+><TD
+>      List the log files in the <TT
+CLASS="VARNAME"
+>log_directory</TT
+> directory
+     </TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>  <CODE
+CLASS="FUNCTION"
+>pg_file_write</CODE
+> writes the specified <TT
+CLASS="PARAMETER"
+>data</TT
+> into
+  the file named by <TT
+CLASS="PARAMETER"
+>filename</TT
+>.  If <TT
+CLASS="PARAMETER"
+>append</TT
+> is
+  false, the file must not already exist.  If <TT
+CLASS="PARAMETER"
+>append</TT
+> is true,
+  the file can already exist, and will be appended to if so.
+  Returns the number of bytes written.
+ </P
+><P
+>  <CODE
+CLASS="FUNCTION"
+>pg_file_rename</CODE
+> renames a file.  If <TT
+CLASS="PARAMETER"
+>archivename</TT
+>
+  is omitted or NULL, it simply renames <TT
+CLASS="PARAMETER"
+>oldname</TT
+>
+  to <TT
+CLASS="PARAMETER"
+>newname</TT
+> (which must not already exist).
+  If <TT
+CLASS="PARAMETER"
+>archivename</TT
+> is provided, it first
+  renames <TT
+CLASS="PARAMETER"
+>newname</TT
+> to <TT
+CLASS="PARAMETER"
+>archivename</TT
+> (which must
+  not already exist), and then renames <TT
+CLASS="PARAMETER"
+>oldname</TT
+>
+  to <TT
+CLASS="PARAMETER"
+>newname</TT
+>.  In event of failure of the second rename step,
+  it will try to rename <TT
+CLASS="PARAMETER"
+>archivename</TT
+> back
+  to <TT
+CLASS="PARAMETER"
+>newname</TT
+> before reporting the error.
+  Returns true on success, false if the source file(s) are not present or
+  not writable; other cases throw errors.
+ </P
+><P
+>  <CODE
+CLASS="FUNCTION"
+>pg_file_unlink</CODE
+> removes the specified file.
+  Returns true on success, false if the specified file is not present
+  or the <CODE
+CLASS="FUNCTION"
+>unlink()</CODE
+> call fails; other cases throw errors.
+ </P
+><P
+>  <CODE
+CLASS="FUNCTION"
+>pg_logdir_ls</CODE
+> returns the start timestamps and path
+  names of all the log files in the <A
+HREF="runtime-config-logging.html#GUC-LOG-DIRECTORY"
+>log_directory</A
+>
+  directory.  The <A
+HREF="runtime-config-logging.html#GUC-LOG-FILENAME"
+>log_filename</A
+> parameter must have its
+  default setting (<TT
+CLASS="LITERAL"
+>postgresql-%Y-%m-%d_%H%M%S.log</TT
+>) to use this
+  function.
+ </P
+><P
+>  The functions shown
+  in <A
+HREF="adminpack.html#FUNCTIONS-ADMINPACK-DEPRECATED-TABLE"
+>Table F-2</A
+> are deprecated
+  and should not be used in new applications; instead use those shown
+  in <A
+HREF="functions-admin.html#FUNCTIONS-ADMIN-SIGNAL-TABLE"
+>Table 9-64</A
+>
+  and <A
+HREF="functions-admin.html#FUNCTIONS-ADMIN-GENFILE-TABLE"
+>Table 9-72</A
+>.  These functions are
+  provided in <TT
+CLASS="FILENAME"
+>adminpack</TT
+> only for compatibility with old
+  versions of <SPAN
+CLASS="APPLICATION"
+>pgAdmin</SPAN
+>.
+ </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="FUNCTIONS-ADMINPACK-DEPRECATED-TABLE"
+></A
+><P
+><B
+>Table F-2. Deprecated <TT
+CLASS="FILENAME"
+>adminpack</TT
+> Functions</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><THEAD
+><TR
+><TH
+>Name</TH
+><TH
+>Return Type</TH
+><TH
+>Description</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><CODE
+CLASS="FUNCTION"
+>pg_catalog.pg_file_read(filename text, offset bigint, nbytes bigint)</CODE
+></TD
+><TD
+><TT
+CLASS="TYPE"
+>text</TT
+></TD
+><TD
+>      Alternate name for <CODE
+CLASS="FUNCTION"
+>pg_read_file()</CODE
+>
+     </TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="FUNCTION"
+>pg_catalog.pg_file_length(filename text)</CODE
+></TD
+><TD
+><TT
+CLASS="TYPE"
+>bigint</TT
+></TD
+><TD
+>      Same as <TT
+CLASS="STRUCTFIELD"
+>size</TT
+> column returned
+      by <CODE
+CLASS="FUNCTION"
+>pg_stat_file()</CODE
+>
+     </TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="FUNCTION"
+>pg_catalog.pg_logfile_rotate()</CODE
+></TD
+><TD
+><TT
+CLASS="TYPE"
+>integer</TT
+></TD
+><TD
+>      Alternate name for <CODE
+CLASS="FUNCTION"
+>pg_rotate_logfile()</CODE
+>, but note that it
+      returns integer 0 or 1 rather than boolean
+     </TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="contrib.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="auth-delay.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Additional Supplied Modules</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="contrib.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>auth_delay</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

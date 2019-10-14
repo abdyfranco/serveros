@@ -1,0 +1,2 @@
+<% if context[:summary] %><p style="font-size:13px; margin:0; margin-bottom:0.5em; padding:0; color:#7F7F7F;"><font color="#7F7F7F"><%= context[:summary] %></font></p><% end %>
+<% if context[:body] %><p style="font-size:13px; font-weight:bold; margin:0; margin-bottom:1.5em; padding:0; color:#393939;"><font color="#393939"><b><%= CGI::escapeHTML(context[:body]) %></b></font></p><% end %>

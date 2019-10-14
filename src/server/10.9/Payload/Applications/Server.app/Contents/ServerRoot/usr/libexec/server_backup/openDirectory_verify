@@ -1,0 +1,186 @@
+#!/usr/bin/perl
+
+#################################   Constants  #################################
+$CP = "/bin/cp";
+$DIFF = "/usr/bin/diff";
+$DSCL = "/usr/bin/dscl";
+$GREP = "/usr/bin/grep";
+$LS = "/bin/ls";  # use -1 and grep for .serverBackupConf
+$PBUDDY = "/usr/libexec/PlistBuddy";
+$ServiceName = "openDirectory";
+$ServiceConf = "40-openDirectory.plist";
+$SERVER_BACKUP_CONF = "/Applications/Server.app/Contents/ServerRoot/private/etc/server_backup";
+
+%BigList = "";
+$CONF_EXT = "serverBackupConf";
+$FAILURE_COUNT = 0;
+$SUCCESS_COUNT = 0;
+$ret = 0;
+
+if($ENV{VERBOSE} eq 1) {$VERBOSE = '1';}
+if($ENV{DEBUG} eq 1) {$DEBUG = '1';}
+if($ENV{FUNCLOG} eq 1) {$FUNCLOG = '1';}
+
+if ($VERBOSE) 
+	{ print("openDirectory_verify.pl was called.\n"); }
+
+ParseOptions();
+if ($DEBUG) 
+	{ dumpAssociativeArray(@ARGV); }
+
+$ret = validateOptionsAndDispatch(@ARGV);
+exit($ret);
+
+################################################################################
+sub validateOptionsAndDispatch()
+{
+	$ret = 0;
+	%BigList = @_;
+    SWITCH: {
+		if (uc($BigList{"-cmd"}) eq uc("actions"))  { if($DEBUG) {print("actions\n");} Actions(); last SWITCH; }
+		if ((uc($BigList{"-cmd"}) eq uc("verify")) && (-e ($BigList{"-path"})) ) { if ($DEBUG) {print("verify\n");} $ret = Verify(); last SWITCH; } 
+		if (uc($BigList{"-cmd"}) eq uc("help"))	{ if ($DEBUG) {print("help\n");} Usage(); last SWITCH; }
+		if (uc($BigList{"-cmd"}) eq uc("version")) { if($DEBUG) {print("version\n");} Version(); last SWITCH; }
+ 		$nothing = 1;
+	}
+    if($nothing eq 1)
+  		{print("Legal options were not supplied!\n");Usage();}
+
+	return($ret);
+}
+
+################################################################################
+sub Actions() 
+{
+	if ($FUNCLOG) 
+        { print("Start Actions-------------------------------------------------------+\n"); }
+
+	if($VERBOSE) {
+		print (qq(${PBUDDY} -c \"Print :VerifyActions\" $SERVER_BACKUP_CONF/$ServiceConf) . "\n");
+	}
+	$Version = qx(${PBUDDY} -c \"Print :VerifyActions\" $SERVER_BACKUP_CONF/$ServiceConf);
+	print($Version);
+
+	if ($FUNCLOG) 
+        { print("End   Actions-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+sub Verify()
+{
+	if ($FUNCLOG) 
+        { print("Start Verify-------------------------------------------------------+\n"); }
+	my $ret = 0;
+	my $imagePath = ($BigList{"-path"});
+	my $log = ($BigList{"-path"});
+	if ($DEBUG) {
+		#/usr/libexec/server_backup/openDirectory_verify -cmd verify -path /Volumes/BackupTest/Backups.backupdb/HOSTNAME/Latest/VOLUMETOBACKUP/var/backups/ServerBackup_OpenDirectoryMaster.sparseimage
+		print("IMAGE_PATH := $imagePath\n");
+		print("LOG := $log\n");
+	}
+
+	#Verification would happen here.
+		if ($DEBUG) {
+			print("Success := $SUCCESS_COUNT\n");
+			print("Failures := $FAILURE_COUNT\n");
+		}
+
+	if($DEBUG) {
+		print("numOf := $#confFiles\n");
+		print("SUCCESS_COUNT := $SUCCESS_COUNT\n");
+	}
+	if( ($SUCCESS_COUNT eq 0 ) && (eval { $#confFiles + 1; } eq $SUCCESS_COUNT) ) {
+		$ret = 0;
+	}
+	else {
+		$ret = 1;
+	}
+	if($FAILURE_COUNT ne 0)
+		{$ret = 1;}
+	else
+		{$ret = 0;}
+	print("\nVerify service := openDirectory resulted in:\nSuccessful matches := $SUCCESS_COUNT\nNumber of failures to match := $FAILURE_COUNT\n"); $ret = 1;
+	if ($FUNCLOG) 
+        { print("End   Verify-------------------------------------------------------+\n"); }
+	return($ret);
+}
+
+################################################################################
+sub Version() 
+{
+	if ($FUNCLOG) 
+        { print("Start Version-------------------------------------------------------+\n"); }
+
+	if($VERBOSE) {
+		print (qq(${PBUDDY} -c \"Print :Version\" $SERVER_BACKUP_CONF/$ServiceConf) . "\n");
+	}
+	$Version = qx(${PBUDDY} -c \"Print :Version\" $SERVER_BACKUP_CONF/$ServiceConf);
+	print($Version);
+
+	if ($FUNCLOG) 
+        { print("End   Version-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+#
+# ParseOptions takes a list of possible options and a boolean indicating
+# whether the option has a value following, and sets up an associative array
+# %opt of the values of the options given on the command line. It removes all
+# the arguments it uses from @ARGV and returns them in @optArgs.
+#
+sub ParseOptions {
+    local (@optval) = @_;
+    local ($opt, @opts, %valFollows, @newargs);
+
+    while (@optval) {
+		$opt = shift(@optval);
+		push(@opts,$opt);
+		$valFollows{$opt} = shift(@optval);
+    }
+
+    @optArgs = ();
+    %opt = ();
+
+    arg: while (defined($arg = shift(@ARGV))) {
+	foreach $opt (@opts) {
+	    if ($arg eq $opt) {
+		push(@optArgs, $arg);
+		if ($valFollows{$opt}) {
+		    if (@ARGV == 0) {
+			Usage();
+		    }
+		    $opt{$opt} = shift(@ARGV);
+		    push(@optArgs, $opt{$opt});
+		} else {
+		    $opt{$opt} = 1;
+		}
+		next arg;
+	    }
+	}
+	push(@newargs,$arg);
+    }
+    @ARGV = @newargs;
+}
+
+################################################################################
+sub Usage()
+{
+	print("Usage:\n");
+	print("openDirectory_verify supports the following options:\n");
+	print(" -cmd actions :                                  Prints out the dictionary of VerifyActions from the conf file := $SERVER_BACKUP_CONF/$ServiceConf\n");
+	print(" -cmd help :                                     Displays this usage.\n");
+	print(" -cmd verify -path path                       Verify the service data, it is verifing what's in the image with what is on the boot drive.\n");
+	print("    where path is the path to the image.\n");
+	print(" -cmd version :                                  Prints out the version value from the property list := $SERVER_BACKUP_CONF/$ServiceConf\n");
+	exit(0);
+}
+
+################################################################################
+sub dumpAssociativeArray()
+{
+	%BigList = @_;
+	while(($theKey, $theVal) = each (%BigList))
+		{ print "$theKey is the key for value $theVal\n"; }
+	if($BigList{"-cmd"} eq "backup")
+		{ print "cmd := ", $BigList{"-cmd"}, "\n"; }
+}

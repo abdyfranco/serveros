@@ -1,0 +1,262 @@
+Director
+========
+
+Director can be used by <Dovecot's IMAP/POP3/LMTP proxy>
+[PasswordDatabase.ExtraFields.Proxy.txt] to keep a temporary user -> mail
+server mapping. As long as user has simultaneous connections, the user is
+always redirected to the same server. Each proxy server is running its own
+director process, and the directors are communicating the state to each others.
+Directors are mainly useful for setups where all of the mail storage is seen by
+all servers, such as with NFS or a cluster filesystem.
+
+First test non-director proxying
+--------------------------------
+
+The director is simply a small add-on for Dovecot proxy. Before configuring
+director, you should test that a simple proxying setup with static destination
+server works. See the <Proxy> [PasswordDatabase.ExtraFields.Proxy.txt] page for
+more information about how to configure it. If you have a simple setup, you can
+test this easily using a static passdb:
+
+---%<-------------------------------------------------------------------------
+passdb {
+  driver = static
+  args = proxy=y host=10.2.0.20 nopassword=y
+}
+---%<-------------------------------------------------------------------------
+
+Once finished testing, remember to remove the "host" field.
+
+Servers
+-------
+
+You need one or more servers assigned for Dovecot proxies. The same servers
+could also act as backends handling the mails, but you need to run <two
+separate Dovecot configurations> [RunningDovecot.txt] in different ports. This
+may get a bit confusing, so it's not recommended (although v2.1 makes it easier
+with 'instance_name' setting).
+
+The directors are going to connect to each others in a ring. For example if you
+have servers called A, B and C, director will create connections A->B, B->C and
+C->A.
+
+Director configuration
+----------------------
+
+In example configuration you can configure director from
+'conf.d/10-director.conf'.
+
+Listeners
+---------
+
+Configure the listeners that director requires:
+
+---%<-------------------------------------------------------------------------
+service director {
+  unix_listener login/director {
+    mode = 0666
+  }
+  fifo_listener login/proxy-notify {
+    mode = 0600
+    user = $default_login_user
+  }
+  unix_listener director-userdb {
+    mode = 0600
+  }
+  inet_listener {
+    port = 9090
+  }
+}
+---%<-------------------------------------------------------------------------
+
+The port 9090 will be used for listening and connecting to other directors.
+You're free to use any port number you want.
+
+Configuring list of director servers
+------------------------------------
+
+List all of your directors in 'director_servers' setting separated by spaces.
+You can use:
+
+ * IP addresses
+ * hostnames
+ * hostnames that expand to multiple IPs (e.g. you could have a "directors-all"
+   DNS entry that expands to all directors' IPs)
+
+You can also add :port after the IP/host. The default port is the same as what
+director service's inet_listener is using (the port 9090 above).
+
+For example if you have 3 directors, you could set:
+
+---%<-------------------------------------------------------------------------
+director_servers = 10.1.0.2 10.1.0.3 10.1.0.4
+---%<-------------------------------------------------------------------------
+
+Configuring list of mail servers
+--------------------------------
+
+List all of your backend mail servers in 'director_mail_servers' setting
+separated by spaces. You can use:
+
+ * IP addresses
+ * IP ranges (e.g. 10.2.0.10-10.2.0.30)
+ * hostnames
+ * hostnames that expand to multiple IPs
+
+For example if you had 20 mail servers with consecutive IPs:
+
+---%<-------------------------------------------------------------------------
+director_mail_servers = 10.2.0.11-10.2.0.30
+---%<-------------------------------------------------------------------------
+
+Enabling director
+-----------------
+
+Enable director for the wanted login services by telling them to connect to
+director socket instead of the default login socket:
+
+---%<-------------------------------------------------------------------------
+service imap-login {
+  executable = imap-login director
+}
+service pop3-login {
+  executable = pop3-login director
+}
+---%<-------------------------------------------------------------------------
+
+If you want to enable director for LMTP, also set:
+
+---%<-------------------------------------------------------------------------
+# LMTP first does a passdb lookup to to see if there's a proxy field returned.
+# If not, it fallbacks to doing userdb lookup.
+lmtp_proxy = yes
+
+protocol lmtp {
+  auth_socket_path = director-userdb
+}
+
+# If you want lmtp-proxy listening on the network, uncomment the following:
+#service lmtp {
+#  inet_listener lmtp {
+#    port = 24
+#  }
+#}
+---%<-------------------------------------------------------------------------
+
+By default LMTP proxy connects to the same port in backend as what was used for
+the incoming connection.
+
+Other settings
+--------------
+
+Directors redirect a user to the same server always the user has active
+connections. The redirection is also done for a while after the last connection
+already disconnected. This is mainly to avoid trouble with NFS caches that
+haven't yet expired. You can configure this setting from:
+
+---%<-------------------------------------------------------------------------
+director_user_expire = 15 min
+---%<-------------------------------------------------------------------------
+
+'doveadm director move' needs to be able to connect to the 'ipc' socket. Make
+sure the director process can do it:
+
+---%<-------------------------------------------------------------------------
+service ipc {
+  unix_listener ipc {
+    user = dovecot
+  }
+}
+---%<-------------------------------------------------------------------------
+
+Passdb configuration
+--------------------
+
+Your passdb must return "proxy" <extra field>
+[PasswordDatabase.ExtraFields.txt], otherwise director doesn't do anything.
+
+Director works by adding a "host" extra field to the auth reply, which contains
+the temporary destination mail server. This "host" field isn't added if the
+passdb lookup already returns "host". This allows configuring some users to be
+always proxied to a specific server.
+
+If the backend servers verify password, you can use static passdb for director:
+
+---%<-------------------------------------------------------------------------
+passdb {
+  driver = static
+  args = proxy=y nopassword=y
+}
+---%<-------------------------------------------------------------------------
+
+Note that while this is the simplest director configuration, users will be
+assigned to a backend before they have been authenticated.  A director
+configured this way can be attacked by sending it a large number of unknown
+users.  To prevent this, the director should be configured to authenticate the
+user and might make use of a master password to log into the backend servers.
+
+Doveadm server
+--------------
+
+Use these settings for both director and backends:
+
+---%<-------------------------------------------------------------------------
+service doveadm {
+  inet_listener {
+    # any port you want to use for this:
+    port = 24245
+  }
+}
+
+local 10.10.10.0/24 {
+  # password to use for client authentication
+  doveadm_password = secret
+  # allow client to only use specified list of commands (default is all):
+  #doveadm_allowed_commands =
+}
+---%<-------------------------------------------------------------------------
+
+The director also needs the following configuration:
+
+---%<-------------------------------------------------------------------------
+# same port as doveadm's inet_listener
+doveadm_proxy_port = 24245
+
+protocol doveadm {
+  auth_socket_path = director-userdb
+}
+---%<-------------------------------------------------------------------------
+
+Now you can run doveadm commands on the director, and it'll run them
+automatically on the correct backend server.
+
+Health monitoring of backend servers
+------------------------------------
+
+Brad Davidson has written a small daemon for monitoring backend servers, and
+disable/enable them on demand.
+Ref:http://www.dovecot.org/list/dovecot/2010-August/051946.html
+
+Forcefully moving users to a different backend
+----------------------------------------------
+
+This is useful if you need to do maintenance on one of the backend servers and
+want (active) clients to move to a different backend:
+
+ 1. Disable any system that will undo changes you make to backend server
+    weights, such as poolmon.
+ 2. Set the weight of the backend server to be worked on to 0: 'doveadm
+    director add <backend server ip> 0'
+ 3. Flush current assignments to disable new connections to this server:
+    'doveadm director flush <backend server ip>'
+ 4. *From the backend server* close all open sessions: 'doveadm kick 0.0.0.0/0'
+
+Most IMAP clients will silently just reconnect to the (new backend) server
+after being kicked (at least Apple Mail 6.0 and Thunderbird 14.0).
+
+For moving specific users to other servers (e.g. because there are too many
+"heavy users" assigned to the same backend), you can use 'doveadm director
+move' command in v2.0.14+. This requires the ipc permissions to be configured
+correctly (see above).
+
+(This file was created from the wiki on 2013-08-05 04:42)

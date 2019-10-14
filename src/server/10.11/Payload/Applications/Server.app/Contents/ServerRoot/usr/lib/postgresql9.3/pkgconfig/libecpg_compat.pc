@@ -1,0 +1,9 @@
+Name: libecpg_compat
+Description: PostgreSQL libecpg_compat library
+Url: http://www.postgresql.org/
+Version: 9.3.9
+Requires: 
+Requires.private: libecpg libpgtypes
+Cflags: -I/Applications/Server.app/Contents/ServerRoot/pgbuild_tmp
+Libs: -L/Applications/Server.app/Contents/ServerRoot/usr/lib/postgresql9.3 -lecpg_compat
+Libs.private: -L/var/tmp/SDKOverrides.5798/MacOSX10.11.Internal.sdk/usr/lib -lpq -lm -lpthread

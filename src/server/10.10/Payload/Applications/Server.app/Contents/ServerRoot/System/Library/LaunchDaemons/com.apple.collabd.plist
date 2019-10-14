@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.collabd</string>
+	<key>Disabled</key>
+	<true/>
+	<key>UserName</key>
+	<string>_teamsserver</string>
+	<key>Sockets</key>
+	<dict>
+		<key>HTTP</key>
+		<dict>
+			<key>SockNodeName</key>
+			<string>127.0.0.1</string>
+			<key>SockFamily</key>
+			<string>IPv4</string>
+			<key>SockServiceName</key>
+			<string>4444</string>
+			<key>SockType</key>
+			<string>stream</string>
+		</dict>
+		<key>IPv6HTTP</key>
+		<dict>
+			<key>SockNodeName</key>
+			<string>::1</string>
+			<key>SockFamily</key>
+			<string>IPv6</string>
+			<key>SockServiceName</key>
+			<string>4444</string>
+			<key>SockType</key>
+			<string>stream</string>
+		</dict>
+		<key>HTTPS</key>
+		<dict>
+			<key>SockNodeName</key>
+			<string>127.0.0.1</string>
+			<key>SockFamily</key>
+			<string>IPv4</string>
+			<key>SockServiceName</key>
+			<string>4443</string>
+			<key>SockType</key>
+			<string>stream</string>
+		</dict>
+		<key>IPv6HTTPS</key>
+		<dict>
+			<key>SockNodeName</key>
+			<string>::1</string>
+			<key>SockFamily</key>
+			<string>IPv6</string>
+			<key>SockServiceName</key>
+			<string>4443</string>
+			<key>SockType</key>
+			<string>stream</string>
+		</dict>
+	</dict>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabd</string>
+	</array>
+</dict>
+</plist>

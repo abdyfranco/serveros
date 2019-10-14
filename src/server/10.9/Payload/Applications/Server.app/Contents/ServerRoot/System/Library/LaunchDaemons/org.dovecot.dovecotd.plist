@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>HardResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>8192</integer>
+	</dict>
+	<key>Label</key>
+	<string>org.dovecot.dovecotd</string>
+	<key>OnDemand</key>
+	<false/>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/dovecot/mail_preflight</string>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/dovecotd</string>
+		<string>-F</string>
+	</array>
+	<key>ServiceIPC</key>
+	<false/>
+	<key>SoftResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>8192</integer>
+	</dict>
+	<key>StandardErrorPath</key>
+	<string>/Library/Logs/Mail/mail-err.log</string>
+	<key>StandardOutPath</key>
+	<string>/Library/Logs/Mail/mail-info.log</string>
+</dict>
+</plist>

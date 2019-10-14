@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MachServices</key>
+	<dict>
+		<key>com.apple.serverdocs.sdd</key>
+		<true/>
+		<key>com.apple.serverdocs.sdd.c</key>
+		<true/>
+	</dict>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>UnloadOnSleep</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.serverdocs.sdd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/sdd</string>
+	</array>
+	<key>KeepAlive</key>
+	<true/>
+	<key>UserName</key>
+	<string>_xserverdocs</string>
+	<key>GroupName</key>
+	<string>_xserverdocs</string>
+	<key>SoftResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>10240</integer>
+	</dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>SDD_SANDBOX</key>
+		<string>/Applications/Server.app/Contents/ServerRoot/System/Library/Sandbox/com.apple.serverdocs.sdd.sb</string>
+	</dict>
+</dict>
+</plist>

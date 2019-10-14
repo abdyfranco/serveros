@@ -1,0 +1,66 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-menu
+{
+	background: #FFFFFF;
+	border: 1px solid #F0F0F0;
+	font-size: 12px;
+	min-width: 100px;
+	max-width: 300px;
+	padding: 5px 0px;
+	position: absolute;
+	z-index: 600;
+	border-radius: 5px;
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
+}
+
+.cc-menu a
+{
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	cursor: pointer;
+	display: block;
+	height: 100%;
+	margin: 0px -1px;
+	padding: 4px 23px 4px 23px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cc-menu ul li.selected,
+.cc-menu a:hover
+{
+	border-top: 1px solid #727B83;
+	border-bottom: 1px solid #55616B;
+	background: #6A737D;
+	background: -webkit-gradient(linear, left top, left bottom, from(#7E858D), to(#6A737D));
+	background: -moz-linear-gradient(top, #7E858D, #6A737D);
+	color: #fff;
+}
+
+.cc-menu ul li a.selected:before
+{
+	content: "✓ ";
+	padding-left: 0px;
+}
+
+.cc-menu-header
+{
+	border-top: 1px solid #E0E0E0;
+	color: #A6A6A6;
+	cursor: default;
+	margin-top: 4px;
+	padding: 10px 10px 4px 10px;
+}

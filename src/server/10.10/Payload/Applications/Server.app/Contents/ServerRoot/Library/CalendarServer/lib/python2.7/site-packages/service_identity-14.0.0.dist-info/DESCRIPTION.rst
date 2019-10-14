@@ -1,0 +1,58 @@
+===========================================
+Service Identity Verification for pyOpenSSL
+===========================================
+
+.. image:: https://pypip.in/version/service_identity/badge.svg
+    :target: https://pypi.python.org/pypi/service_identity/
+    :alt: Latest Version
+
+.. image:: https://travis-ci.org/pyca/service_identity.png?branch=master
+  :target: https://travis-ci.org/pyca/service_identity
+
+.. image:: https://coveralls.io/repos/pyca/service_identity/badge.png
+  :target: https://coveralls.io/r/pyca/service_identity
+
+.. begin
+
+**TL;DR**: Use this package if you use pyOpenSSL_ and don’t want to be MITM_\ ed.
+
+``service_identity`` aspires to give you all the tools you need for verifying whether a certificate is valid for the intended purposes.
+
+In the simplest case, this means *host name verification*.
+However, ``service_identity`` implements `RFC 6125`_ fully and plans to add other relevant RFCs too.
+
+``service_identity``\ ’s documentation lives at `Read the Docs <https://service-identity.readthedocs.org/>`_, the code on `GitHub <https://github.com/pyca/service_identity>`_.
+
+
+.. _Twisted: https://twistedmatrix.com/
+.. _pyOpenSSL: https://pypi.python.org/pypi/pyOpenSSL/
+.. _MITM: http://en.wikipedia.org/wiki/Man-in-the-middle_attack
+.. _`RFC 6125`: http://www.rfc-editor.org/info/rfc6125
+
+
+Authors
+-------
+
+``service_identity`` is currently maintained by `Hynek Schlawack`_.
+
+The development is kindly supported by `Variomedia AG`_.
+
+If you think you've found a security-relevant bug, please contact me privately and ideally encrypt your message using PGP_.
+I will then work with you on a responsible resolution.
+You can find my contact information and PGP data on my homepage_.
+
+The following wonderful people contributed directly or indirectly to this project:
+
+- `Alex Stapleton <https://github.com/public>`_
+- `Glyph <https://twitter.com/glyph>`_
+- `Paul Kehrer <https://github.com/reaperhulk>`_
+
+Please add yourself here alphabetically when you submit your first pull request.
+
+
+.. _`Hynek Schlawack`: https://twitter.com/hynek
+.. _PGP: https://www.gnupg.org/
+.. _homepage: https://hynek.me/about/
+.. _`Variomedia AG`: https://www.variomedia.de/
+
+

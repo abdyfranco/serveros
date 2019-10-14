@@ -1,0 +1,284 @@
+{
+  "content" : {
+    "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD" : {
+      "name" : "REVIEW DRAFT ONLY",
+      "navigation" : "false"
+    },
+    "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17" : {
+      "name" : "SAN を管理する"
+    },
+    "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4" : {
+      "name" : "クライアントとユーザを管理する"
+    },
+    "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21" : {
+      "navigation" : "false",
+      "content" : "<div id='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21' class='apd-topic'><div class='subjectids'><a name='apdADEDD4B7-0F8B-4336-8900-57E0647B2D21'><\/a><\/div><h1 class='title topictitle1'>選択したトピックは現在利用できません<\/h1><div class='body conbody'><p class='p'>インターネットに接続していることを確認してください。接続について調べたいときは、アップルメニュー＞「システム環境設定」と選択し、「ネットワーク」をクリックしてから「アシスタント」をクリックします。<\/p><p class='p'>インターネットに接続しているのにコンテンツが表示されない場合は、後でやり直してください。<\/p><\/div><\/div>",
+      "alternativeName" : "選択したトピックは現在利用できません",
+      "name" : "選択したトピックは現在利用できません",
+      "class" : "content-not-available-message",
+      "excludefromsearch" : "1"
+    },
+    "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><div class='subjectids'><a name='apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267'><\/a><\/div><h1 class='title topictitle1'>著作権<\/h1><div class='body conbody'><p class='p copyrightTagline'>© 2012 Apple Inc. All rights reserved.<\/p><p class='p'>© 2012 Apple Inc. All rights reserved.<\/p><\/div><\/div>",
+      "alternativeName" : "著作権",
+      "name" : "著作権",
+      "class" : "copyright",
+      "excludefromsearch" : "1"
+    },
+    "button-0" : {
+      "type" : "navigation",
+      "howdyPageID" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+      "alternativeNameStyle" : "replace"
+    },
+    "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7" : {
+      "name" : "SAN ストレージを管理する"
+    },
+    "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F" : {
+      "name" : "メタデータコントローラを管理する"
+    },
+    "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F" : {
+      "navigation" : "false",
+      "content" : "<div class='apd-topic' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><div class='subjectids'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F'><\/a><\/div><h1 class='title topictitle1'>Xsan Admin ヘルプ<\/h1><div class='body conbody'><div class='section'><p class='p'><a name='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A'><!-- --><\/a><img class='image' id='apd9F44FABE-DF54-4F94-B4B4-6BC70087250F__apd180450BA-F632-4002-8DD7-FFA8E8F76B2A' src='..\/media\/Xsan_welcome.png' alt='Xsan Admin アプリケーションアイコン' height='205' width='184'><\/p><\/div><div class='section'><h2 class='title sectiontitle'>Xsan Admin ヘルプ<\/h2><p class='p'>SAN（ストレージ・エリア・ネットワーク）を設定および管理します。<\/p><\/div><\/div><\/div>",
+      "alternativeName" : "Xsan Admin ヘルプ",
+      "name" : "Xsan Admin ヘルプ",
+      "class" : "default",
+      "excludefromsearch" : "1"
+    },
+    "apdB665BFF6-498C-47E6-A30D-BA873A992FE7" : {
+      "name" : "SAN の状況を監視する"
+    }
+  },
+  "hierarchy" : [
+    {
+      "id" : "button-0",
+      "children" : [
+        {
+          "id" : "apd9F44FABE-DF54-4F94-B4B4-6BC70087250F",
+          "class" : "default"
+        },
+        {
+          "id" : "apdADEDD4B7-0F8B-4336-8900-57E0647B2D21",
+          "class" : "content-not-available-message"
+        },
+        {
+          "id" : "apdC2D892CF-DC2A-45D4-81A3-15DA46EE0267",
+          "class" : "copyright"
+        },
+        {
+          "id" : "apdFD9CFDCE-550A-4B6A-8592-B5294DAD95C7",
+          "children" : [
+            {
+              "name" : "ストレージを追加する",
+              "href" : "#t_AddStorage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "フォルダのアフィニティを設定する",
+              "href" : "#t_FolderAffinity",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "ボリュームの詳細設定を変更する",
+              "href" : "#t_AdvancedVolumeSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "ストレージプールの設定を変更する",
+              "href" : "#t_StoragePoolSettings",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "SAN ボリュームを保守する",
+              "href" : "#t_MaintainVolumes",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd95EBEC8E-B6D7-438F-B993-C7A2A06853A4",
+          "children" : [
+            {
+              "name" : "クライアントを追加する",
+              "href" : "#t_AddClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Xsan シリアル番号を追加する",
+              "href" : "#t_AddSerialNo",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "クライアントをほかの SAN に移動する",
+              "href" : "#t_MoveClient",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "ボリュームをクライアントにマウントする",
+              "href" : "#t_MountVolume",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "マウントオプションを変更する",
+              "href" : "#t_ChangeMountOpts",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "ユーザとグループを管理する",
+              "href" : "#t_ManageUsersGroups",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "クライアントとユーザのアクセスを制御する",
+              "href" : "#t_ClientUserAccess",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "SAN ユーザとグループのクオータを修復する",
+              "href" : "#t_SetQuotas",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "クライアントコンピュータをリモートで管理する",
+              "href" : "#t_RemoteManage",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3A2A0A78-AB28-4811-8E72-E588EBE4B80F",
+          "children" : [
+            {
+              "name" : "メタデータコントローラを追加する",
+              "href" : "#t_AddMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "コントローラのフェイルオーバー優先順位を設定する",
+              "href" : "#t_FailoverPriority",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "スタンバイ・メタデータ・コントローラに切り替える",
+              "href" : "#t_StandbyMDC",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "ボリュームを管理しているコントローラを確認する",
+              "href" : "#t_WhichController",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "コントローラが管理するボリュームをリストする",
+              "href" : "#t_WhichVolumes",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "コントローラの IP アドレスを変更する",
+              "href" : "#t_ChangeIP",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "スタンバイコントローラをプライマリにする",
+              "href" : "#t_PromoteStandby",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "コントローラをクライアントに変換する",
+              "href" : "#t_DowngradeController",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3299942C-53A9-4B4E-A5C0-A0BD2502DF17",
+          "children" : [
+            {
+              "name" : "Xsan 管理用コンピュータを使用する",
+              "href" : "#t_UseAdminComputer",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "SAN の名前を変更する",
+              "href" : "#t_Rename",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "別の SAN を設定する",
+              "href" : "#t_SetupAnotherSAN",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "複数の SAN を管理する",
+              "href" : "#t_ManageMultiple",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "SAN を破棄する",
+              "href" : "#t_DestroySAN",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apdB665BFF6-498C-47E6-A30D-BA873A992FE7",
+          "children" : [
+            {
+              "name" : "SAN の状況を確認する",
+              "href" : "#t_SANStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "ボリュームの状況を確認する",
+              "href" : "#t_VolumeStatus",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "空き領域を確認する",
+              "href" : "#t_FreeSpace",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "SAN リソースの使用状況をグラフ表示する",
+              "href" : "#t_GraphUsage",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "状況通知を設定する",
+              "href" : "#t_StatusNotifications",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "Xsan のログを表示する",
+              "href" : "#t_ViewLogs",
+              "class" : "unresolved-reference"
+            },
+            {
+              "name" : "ボリュームのクライアントを確認する",
+              "href" : "#t_CheckClients",
+              "class" : "unresolved-reference"
+            }
+          ]
+        },
+        {
+          "id" : "apd3DA07109-7E15-4C00-84E0-957B24A2EEAD",
+          "children" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "settings" : {
+    "ShowVersionNumber" : false,
+    "BuildVersion" : "3.9",
+    "Design" : "Default",
+    "CategoryArt" : "xsanic.png",
+    "AppVersion" : "3.9",
+    "FolderName" : "XsanAdmin.help",
+    "LocalizationISOCode" : "ja",
+    "buildID" : "E960C360-1D5E-11E2-9AE4-B275339F86BF",
+    "Title" : "Xsan ヘルプ",
+    "RemoteURL" : "https:\/\/help.apple.com\/xsanadmin\/mac\/3.0\/help\/"
+  }
+}

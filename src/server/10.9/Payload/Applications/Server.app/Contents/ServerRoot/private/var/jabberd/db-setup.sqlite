@@ -1,0 +1,256 @@
+--
+-- This is the required schema for sqlite.
+--
+--     sqlite3 db/sqlite.db < tools/db-setup.sqlite
+--
+
+--
+-- c2s authentication/registration table
+--
+CREATE TABLE "authreg" (
+    "username" TEXT NOT NULL,
+    "realm" TEXT NOT NULL,
+    "password" TEXT );
+
+CREATE INDEX i_authreg_username ON "authreg"("username");
+CREATE INDEX i_authreg_realm ON "authreg"("realm");
+
+--
+-- Session manager tables 
+--
+
+--
+-- Active (seen) users
+-- Used by: core
+--
+CREATE TABLE "active" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "time" INTEGER NOT NULL DEFAULT 0 );
+
+--
+-- Logout times
+-- Used by: mod_iq_last
+--
+CREATE TABLE "logout" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "time" INTEGER NOT NULL DEFAULT 0 );
+
+--
+-- Roster items
+-- Used by: mod_roster
+--
+CREATE TABLE "roster-items" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "jid" TEXT NOT NULL,
+    "name" TEXT,
+    "to" BOOLEAN NOT NULL,
+    "from" BOOLEAN NOT NULL,
+    "ask" INTEGER NOT NULL );
+
+CREATE INDEX i_rosteri_owner ON "roster-items"("collection-owner");
+
+---
+--- Apple index to speed up jabber_autobuddy operations (still necessary in jabberd 2.2, with i_rosteri_owner added?)
+---
+CREATE INDEX "roster-items-owner-jid-index" on "roster-items" ("collection-owner", "jid");
+
+--
+-- Roster groups
+-- Used by: mod_roster
+--
+CREATE TABLE "roster-groups" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "jid" TEXT NOT NULL,
+    "group" TEXT NOT NULL );
+
+CREATE INDEX i_rosterg_owner ON "roster-groups"("collection-owner");
+CREATE INDEX i_rosterg_owner_jid ON "roster-groups"("collection-owner", "jid");
+
+--
+-- Published roster items
+-- Used by: mod_roster_publish
+--
+CREATE TABLE "published-roster" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "jid" TEXT NOT NULL,
+	"group" TEXT,
+    "name" TEXT,
+    "to" BOOLEAN NOT NULL,
+    "from" BOOLEAN NOT NULL,
+    "ask" INTEGER NOT NULL );
+
+CREATE INDEX i_pubrosteri_owner ON "published-roster"("collection-owner");
+
+--
+-- Published roster groups
+-- Used by: mod_roster_publish
+--
+CREATE TABLE "published-roster-groups" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "groupname" TEXT NOT NULL );
+
+CREATE INDEX i_pubrosterg_owner ON "published-roster-groups"("collection-owner");
+
+--
+-- vCard (user profile information)
+-- Used by: mod_iq_vcard
+--
+CREATE TABLE "vcard" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "fn" TEXT,
+    "nickname" TEXT,
+    "url" TEXT,
+    "tel" TEXT,
+    "email" TEXT,
+    "jabberid" TEXT,
+    "mailer" TEXT,
+    "title" TEXT,
+    "role" TEXT,
+    "bday" TEXT,
+    "tz" TEXT,
+    "n-family" TEXT,
+    "n-given" TEXT,
+    "n-middle" TEXT,
+    "n-prefix" TEXT,
+    "n-suffix" TEXT,
+    "adr-street" TEXT,
+    "adr-extadd" TEXT,
+    "adr-pobox" TEXT,
+    "adr-locality" TEXT,
+    "adr-region" TEXT,
+    "adr-pcode" TEXT,
+    "adr-country" TEXT,
+    "geo-lat" TEXT,
+    "geo-lon" TEXT,
+    "org-orgname" TEXT,
+    "org-orgunit" TEXT,
+    "agent-extval" TEXT,
+    "sort-string" TEXT,
+    "desc" TEXT,
+    "note" TEXT,
+    "uid" TEXT,
+    
+    "photo-type" TEXT,
+    "photo-binval" TEXT,
+    "photo-extval" TEXT,
+    
+    "logo-type" TEXT,
+    "logo-binval" TEXT,
+    "logo-extval" TEXT,
+    
+    "sound-phonetic" TEXT,
+    "sound-binval" TEXT,
+    "sound-extval" TEXT,
+    
+    "key-type" TEXT,
+    "key-cred" TEXT,
+    
+    "rev" TEXT );
+
+CREATE INDEX i_vcard_owner ON "vcard"("collection-owner");
+
+--
+-- Offline message queue
+-- Used by: mod_offline
+--
+CREATE TABLE "queue" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "xml" TEXT NOT NULL );
+
+CREATE INDEX i_queue_owner ON "queue"("collection-owner");
+
+--
+-- Private XML storage
+-- Used by: mod_iq_private
+--
+CREATE TABLE "private" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "ns" TEXT,
+    "xml" TEXT );
+
+CREATE INDEX i_private_owner ON "private"("collection-owner");
+
+--
+-- Message Of The Day (MOTD) messages (announcements)
+-- Used by: mod_announce
+--
+CREATE TABLE "motd-message" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "xml" TEXT NOT NULL );
+
+--
+-- Times of last MOTD message for each user
+-- Used by: mod_announce
+--
+CREATE TABLE "motd-times" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "time" INTEGER NOT NULL );
+
+--
+-- Default privacy list
+-- Used by: mod_privacy
+--
+CREATE TABLE "privacy-default" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "default" TEXT );
+
+--
+-- Privacy lists
+-- Used by: mod_privacy
+--
+CREATE TABLE "privacy-items" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "list" TEXT NOT NULL,
+    "type" TEXT,
+    "value" TEXT,
+    "deny" BOOL,
+    "order" INTEGER,
+    "block" INTEGER );
+
+CREATE INDEX i_privacyi_owner ON "privacy-items"("collection-owner");
+
+--
+-- Vacation settings
+-- Used by: mod_vacation
+--
+CREATE TABLE "vacation-settings" (
+    "collection-owner" TEXT NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "start" INTEGER,
+    "end" INTEGER,
+    "message" TEXT );
+
+--
+-- User status information
+-- Used by: mod_status
+--
+CREATE TABLE "status" (
+    "collection-owner" text NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+    "status" TEXT NOT NULL,
+    "show" TEXT,
+    "last-login" INTEGER DEFAULT '0',
+    "last-logout" INTEGER DEFAULT '0',
+    "xml" TEXT );
+
+--
+-- Apple: OD group GUIDs to enable autobuddy feature for
+-- Used by: mod_autobuddy
+--
+CREATE TABLE "autobuddy-guids" (
+    "guid" text NOT NULL,
+    "object-sequence" INTEGER PRIMARY KEY,
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>services</key>
+	<dict>
+		<key>MessageServer</key>
+		<true/>
+		<key>openDirectory</key>
+		<true/>
+		<key>postgresql</key>
+		<true/>
+		<key>serverSettings</key>
+		<true/>
+		<key>sharePoints</key>
+		<true/>
+		<key>webServer</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

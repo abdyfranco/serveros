@@ -1,0 +1,200 @@
+#!/bin/bash
+
+HOSTNAME=`/bin/hostname -s`
+TIME_STAMP=`date "+%y%m%d-%H%M%S"`
+ARCHIVE=/tmp/ServerLogs-${HOSTNAME}-${TIME_STAMP}.tgz
+ARCHIVE_WEBCONFIG=/tmp/ServerLogs_WebConfig-${HOSTNAME}-${TIME_STAMP}.tgz
+ARCHIVE_ALL=/tmp/ServerLogs_All-${HOSTNAME}-${TIME_STAMP}.tgz
+ARCHIVE_WEBCONFIG_ALL=/tmp/ServerLogs_WebConfig_All-${HOSTNAME}-${TIME_STAMP}.tgz
+ARCHIVE_NAME=""
+ERROR_OUTPUT=/tmp/OutputForSetupLogGather.txt
+CUR_DATE=${TIME_STAMP}
+CUR_USER_LOGS=`echo ~/Library/Logs`
+DS_Diagnose="/System/Library/PrivateFrameworks/DirectoryServer.framework/Versions/A/Resources/dsdiagnose"
+CALENDARSERVER_GATHER_LOGS="/Applications/Server.app/Contents/ServerRoot/usr/sbin/calendarserver_gather_logs"
+FIREWALL_RULES_LOCATION="/tmp/${TIME_STAMP}-server-firewall-rules.txt"
+APPLE_SYSTEM_PROFILE_REPORT="/tmp/${TIME_STAMP}_APPLE_SYSTEM_PROFILE_REPORT_Report.spx"
+SERVER_INFO_PLIST_LOCATION="/tmp/${TIME_STAMP}_ServerInfoPList.txt"
+SERVER_SETUP_STACK_SHOT="/tmp/ServerSetup_StackShot${TIME_STAMP}.txt"
+DIRECTORY_SERVICE_DIAGNOSE="/Library/Logs/dsdiagnose_${TIME_STAMP}.tar.bz2"
+CALENDAR_SERVER_LOGS="/tmp/CalendarServerLogs.tar.gz"
+USER_SERVER_LOGS="${CUR_USER_LOGS}/DiagnosticReports/Server*.*"
+FIREWALL_DEFAULT_ANCHOR="/Library/Server/Firewall/Anchors/default_anchor.txt"
+FIREWALL_CUSTOM_ANCHOR="/Library/Server/Firewall/Anchors/custom_anchor.txt"
+
+all_flag=no
+no_prompt_flag=no
+web_config_flag=no
+alternate_archive_path=no
+args=`getopt anwt:p $*`
+ARCHIVE_PATH=""
+set -- $args
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+    (-a) all_flag=yes;;
+    (-n) no_prompt_flag=yes;;
+    (-w) web_config_flag=yes;;
+    (-t) alternate_archive_path=yes; ARCHIVE_PATH="$ARCHIVE_PATH $2"; shift;;
+    (*)  break;;
+    esac
+    shift
+done
+
+cat << EOF
+
+This tool generates files that allow Apple to investigate issues with your
+computer and help improve Apple products. The files might contain personal
+information found on your device or associated with your iCloud accounts,
+including but not limited to serial numbers of your device, your device name,
+your user name, file paths, file names, your computer’s IP addresses, and
+network connection information. This information is used by Apple in
+accordance with its privacy policy and is not shared with any other company.
+By using this tool and sending the results to Apple, you consent to Apple
+using the contents of these files to improve Apple products.
+
+An administrator password may be required.
+
+EOF
+
+
+
+ # Need to warn the user about the impact of this option if selected and let them opt-out if that's not what they intended.
+if [ "${web_config_flag}" == yes ]; then
+    if [ "${no_prompt_flag}" == no ]; then #For skipping prompts when -w is used as an option.
+        read -p "The [-w] option will add the contents of /Library/Server/Web/Config to the serverloggather archive. Continue? [y/n] " answer
+        if [ "${answer:0:1}" != "y" ] && [ "${answer:0:1}" != "Y" ]; then
+            exit 1
+        fi
+    fi
+fi
+
+echo "(Enter sudo password if prompted)"
+sudo -v
+
+#Call calendarserver_gather_logs
+if [[ -x ${CALENDARSERVER_GATHER_LOGS} ]]; then
+    sudo ${CALENDARSERVER_GATHER_LOGS} > ${ERROR_OUTPUT} 2>&1
+fi
+
+#Call dsdiagnose
+if [[ -x ${DS_Diagnose} ]]; then
+    sudo ${DS_Diagnose} 2> ${ERROR_OUTPUT}
+    DSArchives="/tmp/dsdiagnose.*.tar.bz2"
+    mostRecentArchive=`ls -1t ${DSArchives} | grep dsdiagnose | head -n1`
+    if [ ! -d "${mostRecentArchive-0}" -a "${#mostRecentArchive}" -gt 5 ]; then
+        sudo mv "${mostRecentArchive}" "${DIRECTORY_SERVICE_DIAGNOSE}"
+    else
+        echo "dsdiagnose was aborted or failed to create its archive."
+    fi
+fi
+
+#Collect PF rules
+sudo /sbin/pfctl -sr > "${FIREWALL_RULES_LOCATION}" 2>&1
+sudo /sbin/pfctl -a "com.apple.server-firewall/*" -sr >> "${FIREWALL_RULES_LOCATION}" 2>&1
+
+sudo /usr/libexec/stackshot -i -f "${SERVER_SETUP_STACK_SHOT}"
+sudo /usr/sbin/system_profiler -timeout 300 -xml > ${APPLE_SYSTEM_PROFILE_REPORT} 2> ${ERROR_OUTPUT}
+sudo /usr/sbin/serverinfo --plist > ${SERVER_INFO_PLIST_LOCATION}
+
+pushd / > /dev/null
+
+WIKI_LOGS="Library/Server/Wiki/Logs"
+RADIUS_VAR_LOGS="/var/log/radius/radius.log"
+RADIUS_LIBRARY_LOGS="/Library/Logs/radiusconfig.log"
+CACHING_DEBUG_LOGS="/Library/Server/Caching/Logs/Debug*"
+XCODE_CERTD_LOG="/var/log/xscertd.log"
+LIBRARY_SERVER_LOGS="/Library/Server/Logs"
+WEBDAV_SHARING_VAR_RUN="/var/run/webdav_sharing"
+WEBDAV_SHARING_TMP="/tmp/webdav_sharing"
+LIBRARY_SERVER_WEB_CONFIG="/Library/Server/Web/Config"
+
+# Set the path to the archive based on the sections.
+if [ "${all_flag}" == yes ] && [ "${web_config_flag}" == yes ]; then
+    ARCHIVE_NAME=${ARCHIVE_WEBCONFIG_ALL}
+elif [ "${all_flag}" == no ] && [ "${web_config_flag}" == yes ]; then
+    ARCHIVE_NAME=${ARCHIVE_WEBCONFIG}
+elif [ "${all_flag}" == yes ] && [ "${web_config_flag}" == no ]; then
+    ARCHIVE_NAME=${ARCHIVE_ALL}
+else
+    ARCHIVE_NAME=${ARCHIVE}
+fi
+
+#Get webdav logs if they are present
+if [[ -d "${WDS}" ]]; then
+       cp -rp "${WDS}" "${tWDS}"
+       for path in `find "${tWDS}" -type f`; do
+               file=`basename ${path}`
+               if [[ ${file} =~ "log" ]]; then
+                       echo $file
+               else
+                       rm -f "${path}"
+               fi
+       done
+fi
+
+if [ "${all_flag}" == yes ] && [ "${web_config_flag}" == yes ]; then
+    sudo rm ${ERROR_OUTPUT} ${ARCHIVE_NAME} > ${ERROR_OUTPUT} 2>&1
+    Logs=`sudo find /Library/Server -name Logs`
+    sudo tar -cvzPf ${ARCHIVE_NAME} Library/Logs "${FIREWALL_RULES_LOCATION}" "${APPLE_SYSTEM_PROFILE_REPORT}" "${SERVER_INFO_PLIST_LOCATION}" "${CUR_USER_LOGS}" "${WEBDAV_SHARING_TMP}" "${WIKI_LOGS}" "${LIBRARY_SERVER_LOGS}" "${RADIUS_VAR_LOGS}" "${RADIUS_LIBRARY_LOGS}" "${CACHING_DEBUG_LOGS}" "${XCODE_CERTD_LOG}" "${LIBRARY_SERVER_WEB_CONFIG}" "${FIREWALL_DEFAULT_ANCHOR:1}" "${FIREWALL_CUSTOM_ANCHOR:1}" tmp/CustomLogs var/log var/root/Desktop/Server*.png System/Library/ServerSetup/.MigrationStatus.plist tmp/CalendarServerLogs.tar.gz $Logs > $ERROR_OUTPUT 2>&1
+elif [ "${all_flag}" == no ] && [ "${web_config_flag}" == yes ]; then
+    sudo rm ${ERROR_OUTPUT} ${ARCHIVE_NAME} > ${ERROR_OUTPUT} 2>&1
+    sudo tar -cvzPf ${ARCHIVE_NAME} Library/Logs "${FIREWALL_RULES_LOCATION}" "${APPLE_SYSTEM_PROFILE_REPORT}" "${SERVER_INFO_PLIST_LOCATION}" ${CUR_USER_LOGS:1}/Server.* ${USER_SERVER_LOGS:1} "${WEBDAV_SHARING_TMP}" "${WIKI_LOGS}" "${LIBRARY_SERVER_LOGS}" "${RADIUS_VAR_LOGS}" "${RADIUS_LIBRARY_LOGS}" "${CACHING_DEBUG_LOGS}" "${XCODE_CERTD_LOG}" "${LIBRARY_SERVER_WEB_CONFIG}" "${FIREWALL_DEFAULT_ANCHOR:1}" "${FIREWALL_CUSTOM_ANCHOR:1}" var/log var/run/webdav_sharing var/root/Desktop/Server*.png System/Library/ServerSetup/.MigrationStatus.plist Library/Server/Caching/Logs tmp/CalendarServerLogs.tar.gz > $ERROR_OUTPUT 2>&1
+elif [ "${all_flag}" == yes ] && [ "${web_config_flag}" == no ]; then
+    sudo rm ${ERROR_OUTPUT} ${ARCHIVE_NAME} > ${ERROR_OUTPUT} 2>&1
+    Logs=`sudo find /Library/Server -name Logs`
+    sudo tar -cvzPf ${ARCHIVE_NAME} Library/Logs "${FIREWALL_RULES_LOCATION}" "${APPLE_SYSTEM_PROFILE_REPORT}" "${SERVER_INFO_PLIST_LOCATION}" "${CUR_USER_LOGS}" "${WEBDAV_SHARING_TMP}" "${WIKI_LOGS}" "${LIBRARY_SERVER_LOGS}" "${RADIUS_VAR_LOGS}" "${RADIUS_LIBRARY_LOGS}" "${CACHING_DEBUG_LOGS}" "${XCODE_CERTD_LOG}" "${FIREWALL_DEFAULT_ANCHOR:1}" "${FIREWALL_CUSTOM_ANCHOR:1}" tmp/CustomLogs var/log var/root/Desktop/Server*.png System/Library/ServerSetup/.MigrationStatus.plist tmp/CalendarServerLogs.tar.gz $Logs > $ERROR_OUTPUT 2>&1
+else
+    sudo rm ${ERROR_OUTPUT} ${ARCHIVE_NAME} > ${ERROR_OUTPUT} 2>&1
+    sudo tar -cvzPf ${ARCHIVE_NAME} Library/Logs "${FIREWALL_RULES_LOCATION}" "${APPLE_SYSTEM_PROFILE_REPORT}" "${SERVER_INFO_PLIST_LOCATION}" ${CUR_USER_LOGS:1}/Server.* ${USER_SERVER_LOGS:1} "${WEBDAV_SHARING_TMP}" "${WIKI_LOGS}" "${LIBRARY_SERVER_LOGS}" "${RADIUS_VAR_LOGS}" "${RADIUS_LIBRARY_LOGS}" "${CACHING_DEBUG_LOGS}" "${XCODE_CERTD_LOG}" "${FIREWALL_DEFAULT_ANCHOR:1}" "${FIREWALL_CUSTOM_ANCHOR:1}" var/log var/run/webdav_sharing var/root/Desktop/Server*.png System/Library/ServerSetup/.MigrationStatus.plist Library/Server/Caching/Logs tmp/CalendarServerLogs.tar.gz > $ERROR_OUTPUT 2>&1
+fi
+
+popd > /dev/null
+
+if [[ "${alternate_archive_path}" == yes ]]; then
+    sudo mv ${ARCHIVE_NAME} ${ARCHIVE_PATH}
+    ARCHIVE_NAME=${ARCHIVE_PATH}
+fi
+
+#Cleanup files we generated
+if [ -e "${FIREWALL_RULES_LOCATION}" ]; then
+    sudo /bin/rm "${FIREWALL_RULES_LOCATION}"
+fi
+if [ -e "${APPLE_SYSTEM_PROFILE_REPORT}" ]; then
+    sudo /bin/rm "${APPLE_SYSTEM_PROFILE_REPORT}"
+fi
+if [ -e "${SERVER_INFO_PLIST_LOCATION}" ]; then
+    sudo /bin/rm "${SERVER_INFO_PLIST_LOCATION}"
+fi
+if [ -e "${SERVER_SETUP_STACK_SHOT}" ]; then
+    sudo /bin/rm "${SERVER_SETUP_STACK_SHOT}"
+fi
+if [[ -d "${WEBDAV_SHARING_TMP}" ]]; then
+    sudo /bin/rm -rf "${WEBDAV_SHARING_TMP}"
+fi
+if [ -e "${DIRECTORY_SERVICE_DIAGNOSE}" ]; then
+    sudo /bin/rm "${DIRECTORY_SERVICE_DIAGNOSE}"
+fi
+if [ -e "${CALENDAR_SERVER_LOGS}" ]; then
+    sudo /bin/rm "${CALENDAR_SERVER_LOGS}"
+fi
+
+echo ""
+if [ $? == 0 ]; then
+    echo "Log files have successfully been saved to ${ARCHIVE_NAME}. Please attach this file to your bug."
+    PP=`ps -ocommand= -p $PPID | awk -F/ '{print $NF}' | awk '{print $1}'`
+    # Only open the parent folder and select the archive if we aren't running in an ssh session
+    if [[ ! $(who am i) =~ \([-a-zA-Z0-9\.]+\)$ && "${alternate_archive_path}" == no ]]; then
+        /usr/bin/open -R ${ARCHIVE_NAME}
+    fi
+else
+    echo "There was a problem creating the log archive. Please find and attach the following files to the bug if they exist:"
+    echo "$ERROR_OUTPUT"
+    echo "/Library/Logs/"
+    echo "~/Library/Logs/"
+    echo "/var/log/"
+    echo "Any crash reports from /Library/Logs/DiagnosticReports from around the time when you ran setup"
+fi
+
+echo ""

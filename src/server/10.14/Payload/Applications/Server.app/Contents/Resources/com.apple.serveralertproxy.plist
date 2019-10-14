@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MachServices</key>
+	<dict>
+		<key>com.apple.server.alerts.xpc</key>
+		<true/>
+		<key>com.apple.server.aps</key>
+		<true/>
+	</dict>
+	<key>LaunchEvents</key>
+	<dict>
+		<key>com.apple.usernotificationcenter.matching</key>
+		<dict>
+			<key>alertproxy</key>
+			<dict>
+				<key>bundleid</key>
+				<string>com.apple.Server.v4</string>
+				<key>events</key>
+				<array>
+					<string>didDeliverNotification</string>
+					<string>didActivateNotification</string>
+				</array>
+			</dict>
+		</dict>
+	</dict>
+	<key>KeepAlive</key>
+	<false/>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/Library/LaunchServices/com.apple.serveralertproxy</string>
+	</array>
+	<key>Label</key>
+	<string>com.apple.serveralertproxy</string>
+</dict>
+</plist>

@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "French.lproj",
+		"isoCodes": ["fr"],
+		"isoName": "French",
+		"name": "Français"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>Pour afficher l’aide, JavaScript doit être activé.</p>Pour plus d’informations, consultez <a href=\"http://help.apple.com/resources/javascript/?lang=fr\">cet article d’assistance Apple</a>.</div>",
+		"loadfailed": "<div>L’Aide est indisponible pour le moment.</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@ résultats",
+		"Apple applications": "Applications Apple",
+		"Cancel": "Annuler",
+		"Change Language": "Changer de langue",
+		"Close": "Fermer",
+		"Featured application help": "Aide de l’application actuelle",
+		"Go to the homepage": "Aller à la page d'accueil",
+		"Help for:": "Aide pour :",
+		"Hide": "Masquer",
+		"Home": "Accueil",
+		"Loading latest help...": "Chargement de l’Aide la plus récente… ",
+		"Other applications": "Autres applications",
+		"Print Book": "Imprimer un livre",
+		"Print Options": "Options d'impression",
+		"Print Page": "Imprimer une page",
+		"Print Section": "Imprimer une section",
+		"Recent applications": "Applications récentes",
+		"Search": "Rechercher",
+		"Send feedback.": "Envoyer des commentaires.",
+		"Show all": "Affichage total",
+		"Show less": "Affichage partiel",
+		"Show the previous page": "Afficher la page précédente",
+		"Show the next page": "Afficher la page suivante",
+		"Show": "Afficher",
+		"Was this page helpful?": "Avez-vous trouvé cette page utile ?"
+	}
+}

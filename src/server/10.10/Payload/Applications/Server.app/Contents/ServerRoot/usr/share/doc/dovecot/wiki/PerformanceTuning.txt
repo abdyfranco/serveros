@@ -1,0 +1,49 @@
+Dovecot performance tuning
+==========================
+
+Disk I/O optimization
+---------------------
+
+Usually heavily loaded IMAP and POP3 servers don't use much CPU, but they use
+all the disk I/O they can get. So reducing disk I/O is probably the most useful
+optimization you can do.
+
+ * See <MailLocation.LocalDisk.txt> for generic disk I/O optimizations.
+ * See <MailLocation.Mbox.txt> for mbox-specific optimizations.
+ * See <MailLocation.Maildir.txt> for Maildir-specific optimizations.
+ * See <dbox> [MailboxFormat.dbox.txt] for Dovecot's own high-performance
+   mailbox format. It usually gives much better performance than mbox/Maildir.
+ * See <full text search indexes> [Plugins.FTS.txt] for optimizing IMAP SEARCH
+   command.
+ * See <POP3Server.txt> for POP3 optimizations, especially
+   'pop3_no_flag_updates=yes'
+
+CPU usage optimization
+----------------------
+
+ * See <LoginProcess.txt> for optimizing CPU usage caused by logins
+ * See 'auth_cache_size' setting for caching passdb and userdb lookups
+ * Services having client_limit>1 and process_limit>1, set process_min_avail to
+   the number of CPU cores
+ * To reduce forks by reusing existing processes for new requests increase
+   'service { service_count }' from 1 to higher (e.g. 100) for imap and pop3
+   services. It's better not to set it too high or unlimited (0), because
+   different users use different amounts of memory, and it's wasteful when a
+   lot of processes end up having a lot of "free" memory.
+
+Memory usage optimization
+-------------------------
+
+There aren't many settings which affect Dovecot's memory usage. About the only
+such settings are 'auth_cache_size' and <LoginProcess.txt> settings. In general
+Dovecot uses as much memory as it needs, which is usually quite little.
+
+Note that these settings do not directly affect the memory usage:
+
+ * 'service { vsz_limit } ': These are simply safe guards against potential
+   memory leaks. If the process's virtual size reaches the limit, the process
+   is killed by the kernel.
+ * 'service { process_limit, client_limit } ': These are mostly to avoid DoS
+   attacks using up all your memory.
+
+(This file was created from the wiki on 2013-08-05 04:42)

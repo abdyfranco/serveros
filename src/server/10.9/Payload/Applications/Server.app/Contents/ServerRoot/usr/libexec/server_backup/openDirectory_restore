@@ -1,0 +1,195 @@
+#!/usr/bin/perl
+
+#################################   Constants  #################################
+$PBUDDY = "/usr/libexec/PlistBuddy";
+$SERVER_ADMIN="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin";
+$SERVER_BACKUP_CONF = "/Applications/Server.app/Contents/ServerRoot/private/etc/server_backup";
+$ODRestoreProgressLogFile = "/private/var/log/server_backup/openDirectory_restore.log";
+$SLAPCONFIG = "/usr/sbin/slapconfig";
+$ECHO = "/bin/echo";
+
+$CONF_EXT = "conf";
+$STATUS_EXT = "status";
+$ServiceConf = "40-openDirectory.plist";
+$DSImageName = "ServerBackup_OpenDirectoryMaster";
+$SparseImageExtension = ".sparseimage";
+$DSImagePath = "/var/backups/ServerBackup_OpenDirectoryMaster.sparseimage";
+%$BigList="";
+@arrayServerAdminPrefs="";
+
+if($ENV{VERBOSE} eq 1) {$VERBOSE = '1';}
+if($ENV{DEBUG} eq 1) {$DEBUG = '1';}
+if($ENV{FUNCLOG} eq 1) {$FUNCLOG = '1';}
+
+if ($VERBOSE) 
+{ print("openDirectory_restore was called.\n"); }
+
+ParseOptions();
+if ($DEBUG) 
+{ dumpAssociativeArray(@ARGV); }
+
+validateOptionsAndDispatch(@ARGV);
+exit();
+
+################################################################################
+sub validateOptionsAndDispatch()
+{
+	%BigList=@_;
+SWITCH: {
+    if (uc($BigList{"-cmd"}) eq uc("actions")) { if($DEBUG) {print("actions\n");} Actions(); last SWITCH; }
+    if ((uc($BigList{"-cmd"}) eq uc("browse")) && (-e ($BigList{"-path"}))) { if ($DEBUG) {print("browse\n");} Browse(); last SWITCH; }
+    if (uc($BigList{"-cmd"}) eq uc("help"))    { if($DEBUG) {print("help\n");} Usage(); last SWITCH; }
+    if ((uc($BigList{"-cmd"}) eq uc("restore")) && (-e ($BigList{"-path"}))) { print("restore\n"); Restore(); last SWITCH; }
+    if (uc($BigList{"-cmd"}) eq uc("version")) { if($DEBUG) {print("version\n");} Version(); last SWITCH; }
+    $nothing = 1;
+}
+    if($nothing eq 1)
+    {print("Legal options were not supplied!\n");Usage();}
+}
+
+################################################################################
+sub Actions() 
+{
+	if ($FUNCLOG) 
+    { print("Start Actions-------------------------------------------------------+\n"); }
+    
+	if($VERBOSE) {
+		print (qq(${PBUDDY} -c \"Print :RestoreActions\" $SERVER_BACKUP_CONF/$ServiceConf) . "\n");
+	}
+	$Version = qx(${PBUDDY} -c \"Print :RestoreActions\" $SERVER_BACKUP_CONF/$ServiceConf);
+	print($Version);
+    
+	if ($FUNCLOG) 
+    { print("End   Actions-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+sub Browse()
+{
+	if ($FUNCLOG) 
+    { print("Start Browse-------------------------------------------------------+\n"); }
+	my $daPath = $BigList{"-path"};
+	my $daImage = $DSImageName .  $SparseImageExtension;
+	opendir(HERE, "$daPath");
+	@AllFiles = readdir(HERE);
+	Header();
+	foreach $Item (@AllFiles) {
+		if($Item eq $daImage){
+			print '        <string>' . "$daPath/$Item" . '</string>'. "\n";
+		}
+	}
+	Footer();
+	if ($FUNCLOG) 
+    { print("End   Browse-------------------------------------------------------+\n"); }
+}
+
+sub Header() {
+	print ('<?xml version="1.0" encoding="UTF-8"?>' . "\n");
+	print ('<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' . "\n");
+	print ('<plist version="1.0">' . "\n");
+	print ('    <array>' . "\n");
+}
+
+sub Footer() {
+	print ('    </array>' . "\n");
+    print ("</plist>" . "\n");
+}
+
+################################################################################
+# /Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/openDirectory_restore -cmd restore -path /Volumes/BackupTest/Backups.backupdb/HOSTNAME/Latest/VOLUMETORESTOREFROM/var/backups/ServerBackup_OpenDirectoryMaster.sparseimage -log /private/var/log/server_backup/openDirectory_restore.log
+sub Restore() 
+{
+	if ($FUNCLOG) 
+    { print("Start Restore-------------------------------------------------------+\n"); }
+	my $SERVICE_NAME = "openDirectory";
+    
+    # OD restore is part of the OS restoration. As a result there is no work to be done by this script, the OD Master should have been restored to the state represented in the Time Machine snapshot that was restored.
+
+    $pString = sprintf("\"## PROGRESS :: :: $SERVICE_NAME :: OD restore is part of the OS restoration. As a result there is no work to be done by this script, the OD Master should have been restored to the state represented in the Time Machine snapshot that was restored.\"");
+    qx($ECHO $pString >> $ODRestoreProgressLogFile);
+    
+	if ($FUNCLOG) 
+    { print("End   Restore-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+sub Version() 
+{
+	if ($FUNCLOG) 
+    { print("Start Version-------------------------------------------------------+\n");	}
+    
+	if($VERBOSE) {
+		print (qq(${PBUDDY} -c \"Print :Version\" $SERVER_BACKUP_CONF/$ServiceConf) . "\n");
+	}
+	$Version = qx(${PBUDDY} -c \"Print :Version\" $SERVER_BACKUP_CONF/$ServiceConf);
+	print($Version);
+    
+	if ($FUNCLOG) 
+    { print("End   Version-------------------------------------------------------+\n"); }
+}
+
+################################################################################
+# ParseOptions takes a list of possible options and a boolean indicating
+# whether the option has a value following, and sets up an associative array
+# %opt of the values of the options given on the command line. It removes all
+# the arguments it uses from @ARGV and returns them in @optArgs.
+#
+sub ParseOptions {
+    local (@optval) = @_;
+    local ($opt, @opts, %valFollows, @newargs);
+    
+    while (@optval) {
+		$opt = shift(@optval);
+		push(@opts,$opt);
+		$valFollows{$opt} = shift(@optval);
+    }
+    
+    @optArgs = ();
+    %opt = ();
+    
+arg: while (defined($arg = shift(@ARGV))) {
+	foreach $opt (@opts) {
+	    if ($arg eq $opt) {
+            push(@optArgs, $arg);
+            if ($valFollows{$opt}) {
+                if (@ARGV == 0) {
+                    Usage();
+                }
+                $opt{$opt} = shift(@ARGV);
+                push(@optArgs, $opt{$opt});
+            } else {
+                $opt{$opt} = 1;
+            }
+            next arg;
+	    }
+	}
+	push(@newargs,$arg);
+}
+    @ARGV = @newargs;
+}
+
+################################################################################
+sub dumpAssociativeArray()
+{
+	%BigList=@_;
+	while(($theKey, $theVal) = each (%BigList))
+    { print "$theKey is the key for value $theVal\n"; }
+	if($BigList{"-cmd"} eq "backup")
+    { print "cmd := ", $BigList{"-cmd"}, "\n"; }
+}
+
+################################################################################
+sub Usage()
+{
+	print("Usage:\n");
+	print("openDirectory_restore supports the following options:\n");
+	print(" -cmd actions :                Prints out the dictionary of BackupActions from the conf file := $SERVER_BACKUP_CONF/$ServiceConf\n");
+	print(" -cmd browse -path path : \n");
+	print("    where path is the path to the mounted image for browsing.\n");
+	print(" -cmd restore -path path -log logPath \n");
+	print("    where path is the path to the mounted image where the data was backed-up.\n");
+	print("    where logPath is the path to the backup log file for this service, it can be found in property list file := $SERVER_BACKUP_CONF/$ServiceConf\n");
+	print(" -cmd help :                   Displays this usage.\n");
+	print(" -cmd version :                Prints out the version value from the property list := $SERVER_BACKUP_CONF/$ServiceConf\n");
+	exit(0);
+}

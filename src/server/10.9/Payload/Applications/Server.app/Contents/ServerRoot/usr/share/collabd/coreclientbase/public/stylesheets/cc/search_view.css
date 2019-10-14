@@ -1,0 +1,91 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-search-item
+{
+	clear: both;
+	position: relative;
+	padding: 0px 5px;
+}
+
+.cc-search-item-entity
+{
+	padding: 15px 12px;
+}
+
+.cc-search-item-entity .cc-entity-favorite-toggle
+{
+	height: 28px;
+	width: 20px;
+}
+
+.cc-search-item-entity .cc-entity-icon
+{
+	margin-left: 12px;
+}
+
+.cc-search-item + .cc-search-item .cc-search-item-entity
+{
+	border-top: 1px solid #E9E9E9;
+}
+
+.cc-search-item .cc-search-item-snippet-content,
+.cc-search-item .cc-search-item-snippet-tags
+{
+	margin-left: 35px;
+	font-size: 12px;
+}
+
+.cc-search-item .cc-search-item-snippet-content:empty,
+.cc-search-item .cc-search-item-snippet-tags:empty
+{
+	display: none;
+}
+
+.cc-search-item .cc-search-item-snippet-content
+{
+	color: #676767;
+	line-height: 18px;
+	margin-top: 11px;
+}
+
+.cc-search-item .highlight
+{
+	background: rgb(252,242,193);
+	border-bottom: 1px solid rgb(245,221,105);
+	border-radius: 1px;
+	color: #000000 !important;
+	font-weight: bold;
+	padding: 0px 2px;
+}
+
+.cc-search-item .cc-search-item-snippet-tags
+{
+	color: #676767;
+	font-size: 12px;
+	margin-top: 15px;
+}
+
+.cc-search-item .cc-search-item-snippet-tags > span
+{
+	color: #9a9a9a;
+}
+
+/* @group Save search filter bar UI */
+
+.cc-save-search-button
+{
+	margin-left: 12px;
+}
+
+/* @end */

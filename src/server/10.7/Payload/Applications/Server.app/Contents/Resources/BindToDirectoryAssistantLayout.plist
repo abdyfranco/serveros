@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>identifiers</key>
+		<string>OpenDirectoryMasterCreation</string>
+		<key>grouping</key>
+		<true/>
+		<key>children</key>
+		<array>
+			<dict>
+				<key>identifier</key>
+				<string>SEOpenDirectoryMasterAssistantIntroPage.SEOpenDirectoryMasterAssistantIntroPage</string>
+				<key>isNibOwner</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>identifier</key>
+				<string>SEOpenDirectoryMasterAssistantAdminPage.SEOpenDirectoryMasterAssistantAdminPage</string>
+				<key>isNibOwner</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>identifier</key>
+				<string>SEOpenDirectoryMasterAssistantOrganizationPage.SEOpenDirectoryMasterAssistantOrganizationPage</string>
+				<key>isNibOwner</key>
+				<true/>
+				<key>enabled</key>
+				<dict>
+					<key>showOrganizationInfoPage</key>
+					<true/>
+				</dict>
+			</dict>
+		</array>
+		<key>enabled</key>
+		<dict>
+			<key>document.accountsServer.managedODNode.nodeName</key>
+			<string>/Local/Default</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SEBindToDirectoryAssistantIntroPage.SEBindToDirectoryAssistantIntroPage</string>
+		<key>isNibOwner</key>
+		<true/>
+		<key>enabled</key>
+		<dict>
+			<key>document.accountsServer.managedODNode.nodeName</key>
+			<string>/LDAPv3/127.0.0.1</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SEBindToDirectoryAssistantCredentialsPage.SEBindToDirectoryAssistantCredentialsPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SEOpenDirectoryMasterAssistantConfirmPage.SEBindToDirectoryAssistantConfirmPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+</array>
+</plist>

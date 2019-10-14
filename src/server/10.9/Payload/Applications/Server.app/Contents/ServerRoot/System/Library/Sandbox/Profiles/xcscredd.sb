@@ -1,0 +1,125 @@
+;;
+;; Copyright (c) 2013 Apple Inc.  All Rights reserved.
+;;
+;; IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+;; computers and is subject to the terms and conditions of the Apple Software
+;; License Agreement accompanying the package this file is a part of.
+;; You may not port this file to another platform without Apple's written consent.
+;;
+;; WARNING: The sandbox rules in this file currently constitute
+;; Apple System Private Interface and are subject to change at any time and
+;; without notice. 
+;;
+
+;; This profile protects the xcscredd service during normal operation
+
+(version 1)
+
+(import "system.sb")
+
+(deny default)
+
+(allow file-read*
+       (subpath "/Applications/Server.app/Contents/ServerRoot/System/Library/CoreServices/XCSCredentialServer.bundle")
+       (subpath "/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin")
+       (literal "/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabd")
+       (literal "/Applications/Server.app/Contents/ServerRoot/Library/Server/Xcode/Credentials/Config/credserver.plist")
+       (literal "/Library/Keychains/System.keychain")
+       (literal "/Library/Preferences/com.apple.security.plist")
+       (literal "/Library/Preferences/.GlobalPreferences.plist")
+       (literal "/Library/Preferences/com.apple.security.systemidentities.plist")
+       (literal "/Library/Server/Wiki/Config/collabd.plist")
+       (literal "/Library/Server/Xcode/Credentials/Config/credserver.plist")
+       (literal "/private/var/db/.XCS_AllowUnsigned")
+       (subpath "/private/var/db/DetachedSignatures")
+       (subpath "/private/var/db/mds")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mdsDirectory\.db$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mdsObject\.db$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mds\.lock$")
+	)
+
+(allow file-read-metadata
+       (literal "/Applications")
+       (subpath "/Applications/Server.app")
+       (literal "/")
+       (literal "/private")
+       (literal "/private/var")
+       (literal "/private/var/db")
+       (subpath "/private/var/db/mds")
+       (subpath "/private/var/folders")   ;; as long as we don't run as root this is ok
+       (literal "/private/var/empty")
+       (literal "/Library")
+       (subpath "/Library/Keychains")
+       (literal "/Library/Preferences/.GlobalPreferences.plist")
+       (literal "/Library/Server")
+       (literal "/Library/Server/Xcode")
+       (literal "/Library/Server/Xcode/Credentials")
+       (literal "/Library/Server/Xcode/Credentials/Config")
+       (literal "/private/var/run/systemkeychaincheck.done")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/*")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds$")
+        )
+        
+;; suppress spurious failures due to keychain notifications from securityd
+(deny file-read*  
+       (subpath "/Library/Server/Xcode/Credentials/Data")   ;; we have no buisness looking in here
+        (subpath "/Users")
+        (subpath "/var/_xcstest")
+        (subpath "/Volumes")
+        (with no-log)
+        )
+
+(deny file-write*
+        (literal "/private/var/empty/Library")
+        (with no-log)
+         )
+
+(allow file-write*
+       (literal "/Library/Server/Xcode/Credentials/Config/credserver.plist")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mdsDirectory\.db$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mdsDirectory\.db_$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mdsObject\.db$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mdsObject\.db_$")
+       )
+
+(allow file-write-data
+       (literal "/Library/Server/Xcode/Logs/credserver.log")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/[^/]+/mds/mds\.lock$")
+    )
+
+(allow ipc-posix-shm-read-data
+       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+(allow ipc-posix-shm-write-data
+       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+(allow mach-lookup
+        (global-name "com.apple.CoreServices.coreservicesd")
+        (global-name "com.apple.SecurityServer")
+        (global-name "com.apple.SystemConfiguration.SCNetworkReachability")
+        (global-name "com.apple.bsd.launchdadd")
+        (global-name "com.apple.distributed_notifications@1v3")
+        (global-name "com.apple.networkd")
+        (global-name "com.apple.xcscredhandler")
+        )
+
+;; we don't want to have anything to do with the cookied
+(deny mach-lookup 
+        (global-name "com.apple.cookied")
+        (global-name "com.apple.SystemConfiguration.configd")
+        (with no-log)
+        )
+        
+(system-network)
+
+(allow network-inbound          ;; from clients (xcsbuildd & others)
+       (local tcp "*:2012"))
+
+(allow network-outbound         ;; to collabd
+       (literal "/private/var/run/mDNSResponder")
+       (remote tcp "localhost:4444")    
+    )
+
+(allow system-socket)
+

@@ -1,0 +1,199 @@
+.\" Copyright (c) 2010-2016 Dovecot authors, see the included COPYING file
+.TH DOVEADM\-ALTMOVE 1 "2015-05-09" "Dovecot v2.2" "Dovecot"
+.SH NAME
+doveadm\-altmove \- Move matching mails to the alternative storage (dbox\-only)
+.\"------------------------------------------------------------------------
+.SH SYNOPSIS
+.BR doveadm " [" \-Dv "] " altmove " [" \-r "] ["\-S
+.IR socket_path "] " search_query
+.br
+.\"-------------------------------------
+.BR doveadm " [" \-Dv "] " altmove " [" \-r "] ["\-S
+.IR socket_path "] "
+.BI \-A " search_query"
+.br
+.\"-------------------------------------
+.BR doveadm " [" \-Dv "] " altmove " [" \-r "] ["\-S
+.IR socket_path "] "
+.BI \-F " file search_query"
+.br
+.\"-------------------------------------
+.BR doveadm " [" \-Dv "] " altmove " [" \-r "] ["\-S
+.IR socket_path "] "
+.BI \-u " user search_query"
+.\"------------------------------------------------------------------------
+.SH DESCRIPTION
+This command can be used with sdbox or mdbox storage to move mails to
+alternative storage path when :ALT=<path> is specified for the mail
+location.
+.PP
+In the first form,
+.BR doveadm (1)
+will executed the
+.B altmove
+action with the environment of the logged in system user.
+.PP
+In the second form, the command will be performed for all users.
+.PP
+In the third form, the command will be performed for all users listed in
+the given
+.IR file .
+.PP
+In the fourth form, only matching mails of the given
+.IR user (s)
+will be moved to the alternative storage.
+.\"------------------------------------------------------------------------
+.SH OPTIONS
+Global
+.BR doveadm (1)
+.IR options :
+.TP
+.B \-D
+Enables verbosity and debug messages.
+.TP
+.BI \-o\  setting = value
+Overrides the configuration
+.I setting
+from
+.I /Library/Server/Mail/Config/dovecot/dovecot.conf
+and from the userdb with the given
+.IR value .
+In order to override multiple settings, the
+.B \-o
+option may be specified multiple times.
+.TP
+.B \-v
+Enables verbosity, including progress counter.
+.\" --- command specific options --- "/.
+.PP
+Command specific
+.IR options :
+.\"-------------------------------------
+.TP
+.B \-A
+If the
+.B \-A
+option is present, the
+.I command
+will be performed for all users.
+Using this option in combination with system users from
+.B userdb { driver = passwd }
+is not recommended, because it contains also users with a lower UID than
+the one configured with the
+.I first_valid_uid
+setting.
+.sp
+When the SQL userdb module is used make sure that the
+.I iterate_query
+setting in
+.I /Library/Server/Mail/Config/dovecot/dovecot\-sql.conf.ext
+matches your database layout.
+When using the LDAP userdb module, make sure that the
+.IR iterate_attrs " and " iterate_filter
+settings in
+.I /Library/Server/Mail/Config/dovecot/dovecot-ldap.conf.ext
+match your LDAP schema.
+Otherwise
+.BR doveadm (1)
+will be unable to iterate over all users.
+.\"-------------------------------------
+.TP
+.BI \-F\  file
+Execute the
+.I command
+for all the users in the
+.IR file .
+This is similar to the
+.B \-A
+option,
+but instead of getting the list of users from the userdb,
+they are read from the given
+.IR file .
+The
+.I file
+contains one username per line.
+.\"-------------------------------------
+.TP
+.B \-r
+When the
+.B \-r
+option is given this
+.I command
+works the other way round.
+Mails will be moved from the alternative storage back to the default mail
+location.
+.\"-------------------------------------
+.TP
+.BI \-S\  socket_path
+The option\(aqs argument is either an absolute path to a local UNIX domain
+socket, or a hostname and port
+.RI ( hostname : port ),
+in order to connect a remote host via a TCP socket.
+.sp
+This allows an administrator to execute
+.BR doveadm (1)
+mail commands through the given socket.
+.\"-------------------------------------
+.TP
+.BI \-u\  user/mask
+Run the
+.I command
+only for the given
+.IR user .
+It\(aqs also possible to use
+.RB \(aq * \(aq
+and
+.RB \(aq ? \(aq
+wildcards (e.g. \-u *@example.org).
+.br
+When neither the
+.B \-A
+option, nor the
+.BI \-F\  file
+option, nor the
+.BI \-u\  user
+was specified, the
+.I command
+will be executed with the environment of the
+currently logged in user.
+.\"------------------------------------------------------------------------
+.SH ARGUMENTS
+.TP
+.I search_query
+Messages matching this search query will be moved to alt storage.
+See
+.BR doveadm\-search\-query (7)
+for details.
+.\"------------------------------------------------------------------------
+.SH FILES
+.TP
+.I /Library/Server/Mail/Config/dovecot/conf.d/10\-mail.conf
+Mailbox locations and namespaces.
+.TP
+.I /Library/Server/Mail/Config/dovecot/conf.d/auth\-*.conf.ext
+Authentication processes, including userdb settings.
+.\"------------------------------------------------------------------------
+.SH EXAMPLE
+This example moves seen mails older than one week to alternative storage
+under /nfsmount:
+.br
+.nf
+mail_location = mdbox:~/mdbox:ALT=/nfsmount/%h/mdbox
+.fi
+.PP
+.nf
+.ft B
+doveadm altmove \-u johnd@example.com seen savedbefore 1w
+.ft P
+.fi
+.\"------------------------------------------------------------------------
+.SH REPORTING BUGS
+Report bugs, including
+.I doveconf \-n
+output, to the Dovecot Mailing List <dovecot@dovecot.org>.
+Information about reporting bugs is available at:
+http://dovecot.org/bugreport.html
+.\"------------------------------------------------------------------------
+.SH SEE ALSO
+.BR doveadm (1),
+.BR doveadm\-search\-query (7)

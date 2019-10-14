@@ -1,0 +1,25 @@
+Migration from Gmail to Dovecot
+===============================
+
+You can use <dsync migration via IMAP> [Migration.Dsync.txt] protocol, but
+there are a few things different with Gmail compared to other IMAP servers:
+
+ * With Gmail when you delete a mail from POP3, the mail is only hidden from
+   future POP3 sessions, but it's still available via IMAP. If you wish to
+   preserve this functionality, there's a 'pop3_deleted_flag' setting in
+   Dovecot v2.2.2+.
+ * Gmail has labels. If a message has multiple labels, it shows up in multiple
+   IMAP folders, but it's still the same message and uses quota only once for
+   that message. Dovecot currently doesn't have such support, so the migration
+   will copy the message to multiple folders and each instance will use up
+   quota. There's currently no easy fix for this, although there are some
+   future plans to optionally not count message copies towards quota.
+ * Gmail has virtual folders: "All Mail", "Starred" and "Important". From
+   migration point of view this means that the migration should skip these
+   folders, since their mails are in other folders anyway. With v2.2.3+ you can
+   tell dsync to skip these folders:'doveadm sync -x '\All' -x '\Flagged' -x
+   '\Important'' - by using the \flag parameters dsync finds the folders by
+   their SPECIAL-USE flag rather than their name (which may be different for
+   different user depending on their language).
+
+(This file was created from the wiki on 2013-08-05 04:42)

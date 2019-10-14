@@ -1,0 +1,2 @@
+? [A= Facility com.apple.serverdocs] [> Level error] claim
+? [A= Facility com.apple.serverdocs] file /Library/Server/Logs/serverdocs.log mode=0640 format=std rotate=seq compress ttl=7 all_max=100M

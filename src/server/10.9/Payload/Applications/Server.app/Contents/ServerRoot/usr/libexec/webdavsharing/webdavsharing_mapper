@@ -1,0 +1,424 @@
+#!/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+#
+# Copyright (c) 2011-2014 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# 
+# webdavsharing_mapper.rb
+#
+# Username-to-url mapper tool for WebDAV Sharing
+# Runs under shared Apache instance, as root
+# Operates as a RewriteMap program:
+# - Launched when webapp com.apple.webapp.webdavsharing is enabled
+# - Continues running until Apache is stopped or restarted
+# - reads a previously authenticated username from stdin
+# - checks if per-user Apache instance is loaded; if not:
+# - - creates and loads launchd plist for per-user Apache instance
+# - writes URL to stdout; URL is the destination of the proxy in the rewrite
+# Killer thread unloads and deletes launchd plists of idle Apache instances
+#
+$SERVER_LIBRARY_PATH = "/Library/Server"
+$SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+ENV['RUBYCOCOA_THREAD_HOOK_DISABLE']='1'	# To do: Still necessary?
+
+ENV['GEM_PATH'] = "#{$SERVER_INSTALL_PATH_PREFIX}/usr/lib/ruby/gems/1.9.1"
+ENV["BUNDLE_GEMFILE"] = File.expand_path("#{$SERVER_INSTALL_PATH_PREFIX}/usr/share/collabd/gems/Gemfile", __FILE__)
+require 'rubygems'
+Gem.clear_paths
+require 'bundler'
+Bundler.setup
+$LOAD_PATH << "#{$SERVER_INSTALL_PATH_PREFIX}/usr/share/collabd/server/ruby/lib"
+$sharedSecretFilePath = "/Library/Server/Wiki/Config/shared/shared_secret"
+
+require 'fileutils'
+require 'cfpropertylist'
+require 'logger'
+require 'socket'
+require 'base64'
+require 'cgi'
+require 'tempfile'
+require 'securerandom'
+#require 'digest/sha1'
+require 'openssl'
+require 'ServerControl'
+include ServerControl
+include Socket::Constants
+class SharePointNode
+	attr_accessor :name
+	attr_accessor :path
+	def initialize(name, path)
+		@name = name
+		@path = path
+		@name = name.gsub(/ /,"%20").gsub(/''/,"%27")
+	end
+end
+class ConfiguredSharePoints
+	attr_accessor :sharePoints
+	def initialize(filePath)
+		@sharePoints = []
+		return nil if !FileTest.exists?(filePath)
+		plist = CFPropertyList::List.new(:file => filePath)
+		sharePointDict = CFPropertyList.native_types(plist.value)
+		sharePointDict.each do |name, path|
+			@sharePoints << SharePointNode.new(name, path) 
+		end unless sharePointDict.nil?
+	end
+end
+class UserInstance 
+	attr_accessor :userPort
+	attr_accessor :userUUID
+	attr_accessor :userName
+	attr_accessor :lastAccess
+	attr_accessor :isLoaded
+	def initialize(userName)
+		@userName = userName
+		$logger.info("Processing user #{@userName}")
+		@userPort = nil
+		@userUUID = nil
+		@lastAccess = 0
+		@isLoaded = false
+		@userHomeDir = homeDirPath
+		@userLogDir = logDirPath
+		createHomeDir if $config["CreateHomeDirsForLocalUsers"] && !@userHomeDir.nil? && !FileTest.exists?(@userHomeDir) && File.dirname(@userHomeDir) == "/Users"
+	end
+	def homeDirPath
+		begin
+		dir = Etc.getpwnam(@userName)["dir"]	# path ends in "99" if user exists with no NFSHomeDirectory property
+		rescue
+			$logger.error("Invalid user #{@userName}")
+			dir = nil
+		end
+	if dir.nil? || File.basename(dir) == "99"
+			return "/dev/null"
+		else
+			localPath = dir.sub(/^\/Network\/Servers\/[^\/]+\//,'/')
+			return dir if localPath == dir
+			if FileTest.symlink?(dir.sub(localPath,'')) && FileTest.directory?(localPath)
+				return localPath
+			else
+				return dir
+			end
+		end
+	end
+	def logDirPath
+		path = "#{$config['PathForUserLogDirs']}/#{@userName}-#{$$}/Logs"
+		if !FileTest.exists?(path)
+			begin
+				FileUtils.mkdir_p(path)
+				FileUtils.chown_R(@userName, "staff", path)
+				FileUtils.chmod_R(0700, path)
+			rescue
+				$logger.error("Exception creating log dir for user #{@userName}")
+				FileUtils.rm_rf(path)
+			end
+		end
+		return path
+	end
+	def createHomeDir
+		msg = `/usr/sbin/createhomedir -b -u "#{@userName}"`
+		if FileTest.exists?(@userHomeDir)
+			$logger.warn("Created home dir for user #{@userName} at #{@userHomeDir}")
+		else
+			$logger.error("Failed to create home dir for user #{@userName} at #{@userHomeDir}: #{msg}")
+		end
+	end
+	def waitForResponse(url)
+		# To do: check for response
+		sleep(1)
+	end
+	def createSandboxFileWriteFile
+		sbFileWriteFilePath = "/usr/share/sandbox/userwebdav_file-write.sb"
+		#if !FileTest.exists?(sbFileWriteFilePath)  # always write because this file may be left over from a previous boot - could delete when mapper starts instead
+		$logger.info("Creating #{sbFileWriteFilePath}")
+		sandboxWriteFileString = '(allow file-write* (subpath (param "userHomeDir")) (subpath (param "userLogDir"))'
+		configuredSharePoints = ConfiguredSharePoints.new("#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/webdav_sharepoints.plist")
+		configuredSharePoints.sharePoints.each do |sharePoint|
+			#sandboxWriteFileString = sandboxWriteFileString + ' (subpath "' + sharePoint.path + '")' if sharePoint.userHasAccess
+			sandboxWriteFileString = sandboxWriteFileString + ' (subpath "' + sharePoint.path + '")'
+		end
+
+		sandboxWriteFileString = sandboxWriteFileString + ")"; # ruby appends newline, apparently
+		
+		sandboxWriteFile = File.new(sbFileWriteFilePath, "w+", 0644)
+		sandboxWriteFile.puts(sandboxWriteFileString)
+		sandboxWriteFile.flush
+		#else
+		#	$logger.info("#{sbFileWriteFilePath} already exists")
+		#end
+	end
+	def createAndLoadLaunchdPlist
+		userName = @userName	# for binding
+		userPort = @userPort
+		userUUID = @userUUID
+		userHomeDir = @userHomeDir
+		#secret = Base64.encode64(CC_SHA1($wikiSecret + userName, nil))
+		#	To do: Replace openssl
+		if $config["ShareWikiFiles"]
+			secret = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), $wikiSecret, userName)).strip
+			$logger.debug("Configured to share Wiki files")
+		else
+			secret = ""
+		end
+		userDocRoot = "/"
+		userLogDir = @userLogDir
+		shareWikiFiles = $config["ShareWikiFiles"] ? "true" : "false"
+		wikisVirtualSharePointName = $config["WikisVirtualSharePointName"]
+		shareUserHomeDir = $config["SynthesizeSharePointForUserHomeDir"] && $config["ShareSharePoints"] ? "true" : "false"
+		indexOption = "-Indexes"
+		@plistLabel = "org.apache.httpd.webdavsharing.#{@userName}-#{$$}.#{@userPort}"
+		if !get_service_enabled(@plistLabel)
+			$logger.info("Creating plist for #{@plistLabel}")
+			if $config["ApplyUserInstanceSandbox"]
+				args = ["/usr/bin/sandbox-exec", "-f", "#{$SERVER_INSTALL_PATH_PREFIX}/usr/share/sandbox/userwebdav.sb", 
+					"-D", "userHomeDir=" + userHomeDir, 
+					"-D", "userLogDir=" + userLogDir, 
+					"-D", "userHostPort=" + "localhost:#{userPort}", 
+					"/usr/sbin/httpd", "-f", "#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/httpd_webdavsharing_template.conf", "-D", "FOREGROUND", "-k", "start"]
+			else
+				args = ["/usr/sbin/httpd", "-f", "#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/httpd_webdavsharing_template.conf", "-D", "FOREGROUND", "-k", "start"]
+			end
+			plist = {
+				"Disabled" => true, 
+				"KeepAlive" => false, 
+				"RunAtLoad" => true, 
+				"Label" => @plistLabel,
+				"EnvironmentVariables"=>{
+					"UserUUID" => userUUID, 
+					"UserPort" => userPort.to_s, 
+					"IndexOption" => indexOption, 
+					"UserName" => userName,
+					"UserHomeDir" => userHomeDir, 
+					"UserDocRoot" => userDocRoot, 
+					"Secret" => secret, 
+					"ShareWikiFiles" => shareWikiFiles, 
+					"WikisVirtualSharePointName" => wikisVirtualSharePointName, 
+					"ShareUserHomeDir" => shareUserHomeDir,
+					"UserLogDir" => userLogDir}, 
+				"GroupName" => "staff", 
+				"UserName" => userName,
+				"ProgramArguments" => args}
+			status = create_service(plist)
+			$logger.debug("creating #{@plistLabel} status=#{status}")
+			set_service_enabled(@plistLabel, true);
+		else
+			$logger.debug("job already loaded for #{@plistLabel}")
+		end
+		@isLoaded = true
+		waitForResponse("x")
+	end
+	def unloadAndDelete
+		$logger.info("disabling and destroying #{@plistLabel}")
+		set_service_enabled(@plistLabel, false);
+		destroy_service(@plistLabel)
+		@isLoaded = false
+	end
+end
+class Mapper
+	attr_accessor :userDict
+	def initialize
+		$wikiSecret = ""
+		$logger.info("Starting mapper")
+		cleanUp
+		@userDict = {}
+	end
+	def cleanUp
+		tempPlistFile = Tempfile.new("webdavsharing", "/var/root")
+		`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl list > #{tempPlistFile.path}`
+		`/usr/bin/plutil -convert xml1 #{tempPlistFile.path}`
+		plist = CFPropertyList::List.new(:file => tempPlistFile.path)
+		tempPlistFile.delete
+		jobList = CFPropertyList.native_types(plist.value)
+		jobList["enabledServices"].each do |jobLabel|
+			if jobLabel.match(/org.apache.httpd.webdavsharing.*/)
+				set_service_enabled(jobLabel, false);
+			end
+		end
+		jobList["disabledServices"].each do |jobLabel|
+			if jobLabel.match(/org.apache.httpd.webdavsharing.*/)
+				destroy_service(jobLabel);
+			end
+		end
+
+		if $config["RemoveUserLogDirsAtStartup"] && $config["PathForUserLogDirs"].match(/^\/private\/var\/run\/.+/)
+			$logger.info("Cleaning up previous UserLogDirs at #{$config['PathForUserLogDirs']}")
+			FileUtils.rm_rf($config["PathForUserLogDirs"])
+		end
+	end
+	def label(userName)
+		return "org.apache.httpd.webdavsharing.#{userName}-#{$$}.#{portForUserName(userName)}"
+	end
+	def apacheInstanceIsRunningForUserName?(userName)
+		return get_service_enabled(label(userName))
+	end
+	def portForUserName(userName)
+		if @userDict[userName].nil?
+			@userDict[userName] = UserInstance.new(userName)
+		end
+		port = @userDict[userName].userPort
+		@userDict[userName].lastAccess = Time.now
+		if port.nil?
+			socket = Socket.new( AF_INET, SOCK_STREAM, 0 )
+			sockaddr = Socket.pack_sockaddr_in( 0, '127.0.0.1' )
+			socket.bind( sockaddr )
+			port = Socket.unpack_sockaddr_in(socket.getsockname)[0]
+			socket.close
+			@userDict[userName].userPort = port
+			$logger.debug("System assigned port #{port} to user: #{userName}")
+		end
+		return port
+	end
+	def uuidForUserName(userName)
+		# Keeping the dictionary here means it will be destroyed when Apache is restarted,
+		# which means all the per-user Apache instances become invalid, so they need to be killed
+		# or just allowed to time out and die
+		if @userDict[userName].nil?
+			@userDict[userName] = UserInstance.new(userName)
+		end
+		uuid = @userDict[userName].userUUID
+		if uuid.nil?
+			uuid = SecureRandom.uuid
+			@userDict[userName].userUUID = uuid
+		end
+		return uuid
+	end
+	def urlForUserName(userName)
+		port = portForUserName(userName)
+		uuid = uuidForUserName(userName)
+		if port.nil? || uuid.nil?
+			return "NULL"
+		else
+			insureApacheInstanceIsRunningForUserName(userName)
+			return "http://localhost:#{port}/#{uuid}"
+		end
+	end
+	def insureApacheInstanceIsRunningForUserName(userName)
+		if $wikiSecret.empty? && $config["ShareWikiFiles"]
+			timeToStopWaiting = Time.now + 10	# seconds
+			while !FileTest.exists?($sharedSecretFilePath) && Time.now < timeToStopWaiting do
+				$logger.warn("Waiting for #{$sharedSecretFilePath}")
+				sleep 2
+			end
+			if !FileTest.exists?($sharedSecretFilePath)
+				$logger.error("Wiki file sharing not available for user #{userName} because #{$sharedSecretFilePath} does not exist")
+				$wikiSecret = ""
+			else
+				sf = File.open($sharedSecretFilePath, 'r')
+				$wikiSecret = sf.read
+				sf.close
+			end
+		end
+		return if apacheInstanceIsRunningForUserName?(userName)
+		@userDict[userName].createSandboxFileWriteFile unless !$config["ApplyUserInstanceSandbox"]
+		@userDict[userName].createAndLoadLaunchdPlist
+	end
+	def killExpired
+		@userDict.each do |userName, instance|
+			if instance.isLoaded && Time.now.to_i - instance.lastAccess.to_i > $config["InactivityTimeoutSeconds"]
+				$logger.info("Process for user #{instance.userName} has exceeded idle threshold")
+				# To do: update lastAccess for long-duration GET/PUT operations
+				instance.unloadAndDelete
+				@userDict[userName].userPort = nil
+			end
+		end
+	end
+end
+class Configger
+	attr_accessor :properties
+	def initialize(configFilePath)
+		plist = CFPropertyList::List.new(:file => configFilePath)
+		configFileSettings = CFPropertyList.native_types(plist.value)
+		if configFileSettings.nil? || configFileSettings["WebDAVSharing"].nil?
+			configSettings = {}
+		else
+			configSettings = configFileSettings["WebDAVSharing"]
+		end
+		@properties = defaultConfig.merge(configSettings)
+	end
+	def defaultConfig
+		return { "InactivityTimeoutSeconds" => 3600,
+			"CreateHomeDirsForLocalUsers" => true,
+			"PathForUserLogDirs" => "/private/var/run/webdav_sharing",  # To do: Move to /var/folders; need to make confstr() work
+			"RemoveUserLogDirsAtStartup" => true,
+			"AllowLongUserName" => false,
+			"ShareWikiFiles" => false,
+			"ShareSharePoints" => false,
+			"SynthesizeSharePointForUserHomeDir" => true,
+			"WikisVirtualSharePointName" => "Wikis",
+			"ApplyUserInstanceSandbox" => true,
+			"LogFilePath" => "/Library/Logs/WebDAVSharing.log",
+			"LogLevel" => "debug"
+		}
+	end
+end
+
+raise "Insufficient privileges" if Process.euid != 0
+$config = Configger.new("#{$SERVER_LIBRARY_PATH}/Web/Config/apache2/WebConfigProperties.plist").properties
+
+$killerIntervalSeconds = 120
+
+$logger = Logger.new($config["LogFilePath"])
+case $config["LogLevel"].downcase
+	when "debug"
+	$logger.level = Logger::DEBUG
+	when "info"
+	$logger.level = Logger::INFO
+	when "warn", "warning"
+	$logger.level = Logger::WARN
+	when "error"
+	$logger.level = Logger::ERROR
+	else
+	logger.level = Logger::INFO
+end
+
+$stdin.sync = true
+$stdout.sync = true
+mapper = Mapper.new
+Signal.trap("TERM") do
+	$logger.info("Caught SIGTERM")
+	#mapper.cleanUp
+	#Can't clean up while handling SIGTERM
+end
+
+killer = Thread.new {
+while true do
+	sleep($killerIntervalSeconds)
+	mapper.killExpired
+	Thread.pass
+end
+}
+
+listener = Thread.new {
+while true do
+	maxUserNameLength = 255
+	authName = $stdin.gets
+	next if authName.nil? || authName.length == 0
+	authName = authName.slice(0..maxUserNameLength-1).chomp
+	begin
+		userName = Etc.getpwnam(authName)["name"]
+	rescue
+		$logger.error("Unable to obtain real username for authenticated user #{authName}")
+		$stdout.puts("NULL")
+		next
+	end
+
+	$logger.debug("read: authName=#{authName}, userName=#{userName}")
+	if authName != userName
+		if $config["AllowLongUserName"]
+			$logger.info("Authenticated as #{authName}, proceeding with short name #{userName}")
+			$stdout.puts(mapper.urlForUserName(userName))
+			else
+			$logger.error("Authenticated as #{authName}, but denying access because short name #{userName} is required")
+			$stdout.puts("NULL")
+		end
+	else
+		$stdout.puts(mapper.urlForUserName(userName))
+	end
+end
+}
+
+#killer.join
+listener.join

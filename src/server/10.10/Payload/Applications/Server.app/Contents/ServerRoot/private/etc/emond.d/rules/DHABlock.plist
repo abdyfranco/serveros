@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Initialize</string>
+		<key>comment</key>
+		<string>Set the badrecipien threshold and block time at startup.
+		The badRecipientRate is the number of seconds for 12 bad recipient events from one sender
+		The senderMinBlockTime is the amount of time to block the sender in minutes</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>startup</string>
+		</array>
+		<key>variables</key>
+		<dict>
+			<key>badRecipientRate</key>
+			<integer>1800</integer>
+			<key>senderMinBlockTime</key>
+			<integer>60</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Mark Senders</string>
+		<key>comment</key>
+		<string>Keep a rolling buffer of 12 variables, keeping track of the last time a bad event 
+		was received from this sender. To increase the size of the rolling buffer add
+		more variables, making sure the last one in the chain gets its value from the eventTimestamp</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>smtp.receive.badrecipient</string>
+		</array>
+		<key>criterion</key>
+		<array>
+			<dict>
+				<key>operator</key>
+				<string>Defined</string>
+				<key>operands</key>
+				<array>
+					<string>event:host_address</string>
+				</array>
+			</dict>
+		</array>
+		<key>variables</key>
+		<dict>
+			<key>A-${event:host_address}-LastInterval</key>
+			<string>${event:eventTimestamp} - ${B-${event:host_address}-EvtTime}</string>
+			<key>B-${event:host_address}-EvtTime</key>
+			<string>${C-${event:host_address}-EvtTime}</string>
+			<key>C-${event:host_address}-EvtTime</key>
+			<string>${D-${event:host_address}-EvtTime}</string>
+			<key>D-${event:host_address}-EvtTime</key>
+			<string>${E-${event:host_address}-EvtTime}</string>
+			<key>E-${event:host_address}-EvtTime</key>
+			<string>${F-${event:host_address}-EvtTime}</string>
+			<key>F-${event:host_address}-EvtTime</key>
+			<string>${G-${event:host_address}-EvtTime}</string>
+			<key>G-${event:host_address}-EvtTime</key>
+			<string>${H-${event:host_address}-EvtTime}</string>
+			<key>H-${event:host_address}-EvtTime</key>
+			<string>${I-${event:host_address}-EvtTime}</string>
+			<key>I-${event:host_address}-EvtTime</key>
+			<string>${J-${event:host_address}-EvtTime}</string>
+			<key>J-${event:host_address}-EvtTime</key>
+			<string>${K-${event:host_address}-EvtTime}</string>
+			<key>K-${event:host_address}-EvtTime</key>
+			<string>${L-${event:host_address}-EvtTime}</string>
+			<key>L-${event:host_address}-EvtTime</key>
+			<string>${M-${event:host_address}-EvtTime}</string>
+			<key>M-${event:host_address}-EvtTime</key>
+			<string>${event:eventTimestamp}</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Block Sender</string>
+		<key>comment</key>
+		<string>If we receive  more than 12 badrecipient events in badRecipientRate seconds,
+		Block the sender</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>smtp.receive.badrecipient</string>
+		</array>
+		<key>criterion</key>
+		<array>
+			<dict>
+				<key>operator</key>
+				<string>LessThan</string>
+				<key>operands</key>
+				<array>
+					<string>${A-${event:host_address}-LastInterval}</string>
+					<string>${badRecipientRate}</string>
+				</array>
+			</dict>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>Log</string>
+				<key>message</key>
+				<string>Host at ${event:host_address} will be blocked for at least ${senderMinBlockTime} minutes</string>
+				<key>facility</key>
+				<string>AdaptiveFirewall</string>
+				<key>logLevel</key>
+				<string>Notice</string>
+				<key>logType</key>
+				<string>Syslog</string>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>RunCommand</string>
+				<key>command</key>
+				<string>/Applications/Server.app/Contents/ServerRoot/System/Library/CoreServices/AdaptiveFirewall.bundle/Contents/MacOS/afctl</string>
+				<key>arguments</key>
+				<array>
+					<string>-a</string>
+					<string>${event:host_address}</string>
+					<string>-t</string>
+					<string>${senderMinBlockTime}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendNotification</string>
+				<key>name</key>
+				<string>EventMonitorNotification</string>
+				<key>message</key>
+				<string>EventMonitorNotification</string>
+				<key>details</key>
+				<dict>
+					<key>hostBlockedTime</key>
+					<string>${senderMinBlockTime}</string>
+					<key>message</key>
+					<string>HostBlocked</string>
+				</dict>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

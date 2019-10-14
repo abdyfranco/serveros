@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Disabled</key>
+    <false/>
+    <key>Label</key>
+    <string>com.apple.serverdocs.stats</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Applications/Server.app/Contents/ServerRoot/usr/bin/serverdocsadmin</string>
+        <string>gatherStatsFromDB</string>
+    </array>
+    <key>UserName</key>
+    <string>_xserverdocs</string>
+    <key>GroupName</key>
+    <string>_xserverdocs</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>2</integer>
+        <key>Minute</key>
+        <integer>18</integer>
+    </dict>
+</dict>
+</plist>

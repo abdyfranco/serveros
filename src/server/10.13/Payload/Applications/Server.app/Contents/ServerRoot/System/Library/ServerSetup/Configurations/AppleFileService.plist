@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>defaults</key>
+	<dict>
+		<key>group</key>
+		<string>wheel</string>
+		<key>owner</key>
+		<string>root</string>
+	</dict>
+	<key>description</key>
+	<string>AppleFileService Service Log Rolling</string>
+	<key>environment</key>
+	<dict>
+		<key>_new_syslog_conf</key>
+		<string>/private/etc/newsyslog.d/com.apple.AppleFileService.conf</string>
+		<key>_src_resource_dir</key>
+		<string>${serverRoot}/private/etc/com.apple.AppleFileService.conf</string>
+	</dict>
+	<key>migration</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>com.apple.AppleFileService.conf</key>
+			<dict>
+				<key>description</key>
+				<string>install: com.apple.AppleFileService.conf</string>
+				<key>path</key>
+				<string>${_new_syslog_conf}</string>
+				<key>source</key>
+				<string>${_src_resource_dir}</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>com.apple.AppleFileService.conf</key>
+			<dict>
+				<key>description</key>
+				<string>install: com.apple.AppleFileService.conf</string>
+				<key>path</key>
+				<string>${_new_syslog_conf}</string>
+				<key>source</key>
+				<string>${_src_resource_dir}</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

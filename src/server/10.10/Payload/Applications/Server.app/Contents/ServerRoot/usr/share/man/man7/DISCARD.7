@@ -1,0 +1,95 @@
+'\" t
+.\"     Title: DISCARD
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "DISCARD" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+DISCARD \- discard session state
+.\" DISCARD
+.SH "SYNOPSIS"
+.sp
+.nf
+DISCARD { ALL | PLANS | TEMPORARY | TEMP }
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBDISCARD\fR
+releases internal resources associated with a database session\&. These resources are normally released at the end of the session\&.
+.PP
+
+\fBDISCARD TEMP\fR
+drops all temporary tables created in the current session\&.
+\fBDISCARD PLANS\fR
+releases all internally cached query plans\&.
+\fBDISCARD ALL\fR
+resets a session to its original state, discarding temporary resources and resetting session\-local configuration changes\&.
+.SH "PARAMETERS"
+.PP
+TEMPORARY or TEMP
+.RS 4
+Drops all temporary tables created in the current session\&.
+.RE
+.PP
+PLANS
+.RS 4
+Releases all cached query plans\&.
+.RE
+.PP
+ALL
+.RS 4
+Releases all temporary resources associated with the current session and resets the session to its initial state\&. Currently, this has the same effect as executing the following sequence of statements:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+SET SESSION AUTHORIZATION DEFAULT;
+RESET ALL;
+DEALLOCATE ALL;
+CLOSE ALL;
+UNLISTEN *;
+SELECT pg_advisory_unlock_all();
+DISCARD PLANS;
+DISCARD TEMP;
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.SH "NOTES"
+.PP
+
+\fBDISCARD ALL\fR
+cannot be executed inside a transaction block\&.
+.SH "COMPATIBILITY"
+.PP
+
+\fBDISCARD\fR
+is a
+PostgreSQL
+extension\&.

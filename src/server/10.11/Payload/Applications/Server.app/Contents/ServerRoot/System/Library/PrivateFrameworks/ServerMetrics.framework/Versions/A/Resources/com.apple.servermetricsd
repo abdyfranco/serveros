@@ -1,0 +1,5 @@
+# Redirect all messages sent by servermetricsd to facilities starting with "com.apple.servermetricsd"
+# to ASL-formatted log files in /var/log/servermetricsd.
+
+? [= Sender servermetricsd] [A= Facility com.apple.servermetricsd] claim only
+* directory /var/log/servermetricsd

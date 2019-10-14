@@ -1,0 +1,402 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Release 9.4.14</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.4.15 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Release Notes"
+HREF="release.html"><LINK
+REL="PREVIOUS"
+TITLE="Release 9.4.15"
+HREF="release-9-4-15.html"><LINK
+REL="NEXT"
+TITLE="Release 9.4.13"
+HREF="release-9-4-13.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2017-11-06T22:35:27"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="4"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.4.15 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="Release 9.4.15"
+HREF="release-9-4-15.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="release.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Appendix E. Release Notes</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="Release 9.4.13"
+HREF="release-9-4-13.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="RELEASE-9-4-14"
+>E.2. Release 9.4.14</A
+></H1
+><DIV
+CLASS="FORMALPARA"
+><P
+><B
+>Release date: </B
+>2017-08-31</P
+></DIV
+><P
+>   This release contains a small number of fixes from 9.4.13.
+   For information about new features in the 9.4 major release, see
+   <A
+HREF="release-9-4.html"
+>Section E.16</A
+>.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN119457"
+>E.2.1. Migration to Version 9.4.14</A
+></H2
+><P
+>    A dump/restore is not required for those running 9.4.X.
+   </P
+><P
+>    However, if you are upgrading from a version earlier than 9.4.13,
+    see <A
+HREF="release-9-4-13.html"
+>Section E.3</A
+>.
+   </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN119462"
+>E.2.2. Changes</A
+></H2
+><P
+></P
+><UL
+><LI
+><P
+>      Fix failure of walsender processes to respond to shutdown signals
+      (Marco Nenciarini)
+     </P
+><P
+>      A missed flag update resulted in walsenders continuing to run as long
+      as they had a standby server connected, preventing primary-server
+      shutdown unless immediate shutdown mode is used.
+     </P
+></LI
+><LI
+><P
+>      Show foreign tables
+      in <TT
+CLASS="STRUCTNAME"
+>information_schema</TT
+>.<TT
+CLASS="STRUCTNAME"
+>table_privileges</TT
+>
+      view (Peter Eisentraut)
+     </P
+><P
+>      All other relevant <TT
+CLASS="STRUCTNAME"
+>information_schema</TT
+> views include
+      foreign tables, but this one ignored them.
+     </P
+><P
+>      Since this view definition is installed by <SPAN
+CLASS="APPLICATION"
+>initdb</SPAN
+>,
+      merely upgrading will not fix the problem.  If you need to fix this
+      in an existing installation, you can, as a superuser, do this
+      in <SPAN
+CLASS="APPLICATION"
+>psql</SPAN
+>:
+</P><PRE
+CLASS="PROGRAMLISTING"
+>SET search_path TO information_schema;
+CREATE OR REPLACE VIEW table_privileges AS
+    SELECT CAST(u_grantor.rolname AS sql_identifier) AS grantor,
+           CAST(grantee.rolname AS sql_identifier) AS grantee,
+           CAST(current_database() AS sql_identifier) AS table_catalog,
+           CAST(nc.nspname AS sql_identifier) AS table_schema,
+           CAST(c.relname AS sql_identifier) AS table_name,
+           CAST(c.prtype AS character_data) AS privilege_type,
+           CAST(
+             CASE WHEN
+                  -- object owner always has grant options
+                  pg_has_role(grantee.oid, c.relowner, 'USAGE')
+                  OR c.grantable
+                  THEN 'YES' ELSE 'NO' END AS yes_or_no) AS is_grantable,
+           CAST(CASE WHEN c.prtype = 'SELECT' THEN 'YES' ELSE 'NO' END AS yes_or_no) AS with_hierarchy
+
+    FROM (
+            SELECT oid, relname, relnamespace, relkind, relowner, (aclexplode(coalesce(relacl, acldefault('r', relowner)))).* FROM pg_class
+         ) AS c (oid, relname, relnamespace, relkind, relowner, grantor, grantee, prtype, grantable),
+         pg_namespace nc,
+         pg_authid u_grantor,
+         (
+           SELECT oid, rolname FROM pg_authid
+           UNION ALL
+           SELECT 0::oid, 'PUBLIC'
+         ) AS grantee (oid, rolname)
+
+    WHERE c.relnamespace = nc.oid
+          AND c.relkind IN ('r', 'v', 'f')
+          AND c.grantee = grantee.oid
+          AND c.grantor = u_grantor.oid
+          AND c.prtype IN ('INSERT', 'SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'REFERENCES', 'TRIGGER')
+          AND (pg_has_role(u_grantor.oid, 'USAGE')
+               OR pg_has_role(grantee.oid, 'USAGE')
+               OR grantee.rolname = 'PUBLIC');</PRE
+><P>
+      This must be repeated in each database to be fixed,
+      including <TT
+CLASS="LITERAL"
+>template0</TT
+>.
+     </P
+></LI
+><LI
+><P
+>      Clean up handling of a fatal exit (e.g., due to receipt
+      of <SPAN
+CLASS="SYSTEMITEM"
+>SIGTERM</SPAN
+>) that occurs while trying to execute
+      a <TT
+CLASS="COMMAND"
+>ROLLBACK</TT
+> of a failed transaction (Tom Lane)
+     </P
+><P
+>      This situation could result in an assertion failure.  In production
+      builds, the exit would still occur, but it would log an unexpected
+      message about <SPAN
+CLASS="QUOTE"
+>"cannot drop active portal"</SPAN
+>.
+     </P
+></LI
+><LI
+><P
+>      Remove assertion that could trigger during a fatal exit (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Correctly identify columns that are of a range type or domain type over
+      a composite type or domain type being searched for (Tom Lane)
+     </P
+><P
+>      Certain <TT
+CLASS="COMMAND"
+>ALTER</TT
+> commands that change the definition of a
+      composite type or domain type are supposed to fail if there are any
+      stored values of that type in the database, because they lack the
+      infrastructure needed to update or check such values.  Previously,
+      these checks could miss relevant values that are wrapped inside range
+      types or sub-domains, possibly allowing the database to become
+      inconsistent.
+     </P
+></LI
+><LI
+><P
+>      Fix crash in <SPAN
+CLASS="APPLICATION"
+>pg_restore</SPAN
+> when using parallel mode and
+      using a list file to select a subset of items to restore
+      (Fabr&iacute;zio de Royes Mello)
+     </P
+></LI
+><LI
+><P
+>      Change <SPAN
+CLASS="APPLICATION"
+>ecpg</SPAN
+>'s parser to allow <TT
+CLASS="LITERAL"
+>RETURNING</TT
+>
+      clauses without attached C variables (Michael Meskes)
+     </P
+><P
+>      This allows <SPAN
+CLASS="APPLICATION"
+>ecpg</SPAN
+> programs to contain SQL constructs
+      that use <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> internally (for example, inside a CTE)
+      rather than using it to define values to be returned to the client.
+     </P
+></LI
+><LI
+><P
+>      Improve selection of compiler flags for PL/Perl on Windows (Tom Lane)
+     </P
+><P
+>      This fix avoids possible crashes of PL/Perl due to inconsistent
+      assumptions about the width of <TT
+CLASS="TYPE"
+>time_t</TT
+> values.
+      A side-effect that may be visible to extension developers is
+      that <TT
+CLASS="LITERAL"
+>_USE_32BIT_TIME_T</TT
+> is no longer defined globally
+      in <SPAN
+CLASS="PRODUCTNAME"
+>PostgreSQL</SPAN
+> Windows builds.  This is not expected
+      to cause problems, because type <TT
+CLASS="TYPE"
+>time_t</TT
+> is not used
+      in any <SPAN
+CLASS="PRODUCTNAME"
+>PostgreSQL</SPAN
+> API definitions.
+     </P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="release-9-4-15.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="release-9-4-13.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Release 9.4.15</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="release.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Release 9.4.13</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,108 @@
+'\" t
+.\"     Title: ALTER COLLATION
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "ALTER COLLATION" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ALTER_COLLATION \- change the definition of a collation
+.\" ALTER COLLATION
+.SH "SYNOPSIS"
+.sp
+.nf
+ALTER COLLATION \fIname\fR RENAME TO \fInew_name\fR
+ALTER COLLATION \fIname\fR OWNER TO \fInew_owner\fR
+ALTER COLLATION \fIname\fR SET SCHEMA \fInew_schema\fR
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBALTER COLLATION\fR
+changes the definition of a collation\&.
+.PP
+You must own the collation to use
+\fBALTER COLLATION\fR\&. To alter the owner, you must also be a direct or indirect member of the new owning role, and that role must have
+CREATE
+privilege on the collation\*(Aqs schema\&. (These restrictions enforce that altering the owner doesn\*(Aqt do anything you couldn\*(Aqt do by dropping and recreating the collation\&. However, a superuser can alter ownership of any collation anyway\&.)
+.SH "PARAMETERS"
+.PP
+\fIname\fR
+.RS 4
+The name (optionally schema\-qualified) of an existing collation\&.
+.RE
+.PP
+\fInew_name\fR
+.RS 4
+The new name of the collation\&.
+.RE
+.PP
+\fInew_owner\fR
+.RS 4
+The new owner of the collation\&.
+.RE
+.PP
+\fInew_schema\fR
+.RS 4
+The new schema for the collation\&.
+.RE
+.SH "EXAMPLES"
+.PP
+To rename the collation
+de_DE
+to
+german:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+ALTER COLLATION "de_DE" RENAME TO german;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+To change the owner of the collation
+en_US
+to
+joe:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+ALTER COLLATION "en_US" OWNER TO joe;
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COMPATIBILITY"
+.PP
+There is no
+\fBALTER COLLATION\fR
+statement in the SQL standard\&.
+.SH "SEE ALSO"
+CREATE COLLATION (\fBCREATE_COLLATION\fR(7)), DROP COLLATION (\fBDROP_COLLATION\fR(7))

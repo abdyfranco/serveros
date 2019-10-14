@@ -1,0 +1,90 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Objet : [? [:ccat|major]
+|Courrier non infecté envoyé par vous\
+|Courrier non infecté envoyé par vous\
+|Courrier non infecté envoyé par vous (Courrier bloqué par MTA)\
+|Taille de votre courrier DÉPASSÉE\
+|EN-TÊTE INCORRECT dans votre message\
+|COURRIER INDÉSIRABLE envoyé apparemment par vous\
+|COURRIER INDÉSIRABLE envoyé apparemment par vous\
+|Un message de vous don't le contenu n’est pas vérifié\
+|contenu BANNI envoyé par vous (%F)\
+|VIRUS dans un message envoyé apparemment par vous (%V)\
+]
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <VS%i@%h>
+
+[? [:ccat|major] |Non infecté|Non infecté|BLOQUÉ PAR MTA|TAILLE AUTORISÉE DÉPASSÉE|EN-TÊTE NON VALIDE|\
+Courrier indésirable|COURRIER INDÉSIRABLE|Contenu du courrier NON VÉRIFIÉ|AVERTISSEMENT DE CONTENU BANNI|AVERTISSEMENT DE VIRUS]
+
+Notre analyze antivirus a détecté
+[? %#V |#|[:wrap|78|    |  |[? %#V |virus|virus|virus] : %V]]
+[? %#F |#|[:wrap|78|    |  |[? %#F |Noms|nom|noms] banni(s) : %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+dans un courrier électronique présumé provenir de vous %s
+et adressé [? %#R |aux destinataires|destinataire|aux destinataires] suivants :[
+-> %R]
+
+Le code de référencement interne du message correspond à %n/%i
+
+[? %a |#|[:wrap|78||  | Première adresse IP du client SMTP pour l’envoi : \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Le traçage du champ « Received » révèle que\
+ le message semble provenir de : \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+[? %#D |La distribution du courrier électronique a été interrompue !
+
+]#
+[? %#V ||VEffectuez vous-même ou demandez à votre administrateur système
+de réaliser une analyse antivirus de votre système.
+
+]#
+[? %#V |[? %#F ||#
+Le message [?%#D|a été bloqué|a déclenché cet avertissement] car il contient un composant
+(sous forme de composante MIME ou imbriquée) avec un nom déclaré,
+ou encore un type MIME ou un type de contenu violant nos règles d’accès.
+
+Pour transférer du contenu pouvant être considéré à risque ou indésirable
+par le règlement de sites, ou s’avérant simplement trop volumineux pour un envoi par courrier, songez à
+publier votre contenu sur le web et à n’envoyer qu’une URL du
+document au destinataire.
+
+En fonction du règlement des sites des destinataires et expéditeurs et en appliquant une
+certaine discipline, il reste cependant possible de transmettre du contenu (notamment
+des virus) par le biais de l’une des méthodes suivantes :
+
+- des données chiffrées par pgp, gpg ou autre moyen de chiffrement ;
+
+- encapsulé dans une archive ou un conteneur protégé par mot de passe ou codé
+  (par exemple, zip -e, arj -g, arc g, rar -p ou autres moyens).
+
+Il est important de noter que si le contenu n’a pas pour ambition d’être tenu secret,
+la clé ou le mot de passe de chiffrement peut être inclus dans le même message
+pour faciliter la gestion des destinataires.
+
+Nous sommes désolés pour tout inconvénient si le contenu n’était pas malveillant.
+
+L’objectif de ces restrictions est de réduire les moyens de propagation les plus courants
+employés par des virus et autres programmes malveillants. Ceux-ci exploitent souvent des mécanismes
+automatisés et des failles de sécurité des clients de messagerie les plus courants
+(les clients et les navigateurs de Microsoft constituent une cible habituelle). En obligeant à une action explicite
+et décisive de la part du destinataire par le déchiffrage d’un courrier électronique, le danger
+de propagation automatique d’un programme malveillant est ainsi réduit en grande partie.
+#
+# Les détails de nos règles de restrictions en matière de courrier électronique sont disponibles à l’adresse…
+
+]]#

@@ -1,0 +1,330 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+#settings_panel_mask
+{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.6);
+	z-index: 500;
+}
+
+#settings_panel
+{
+	font-size: 0.9em;
+	z-index: 501;
+}
+
+#content-settings
+{
+	background: #FFFFFF;
+	float: left;
+	min-height: 40px;
+	position: relative;
+	width: 768px;
+}
+
+#settings_panel #content-settings
+{
+	left: 0px;
+	box-shadow: none;
+	border-radius: 0.5em;
+	border: none;
+}
+
+.people.settings #content-settings
+{
+  min-height: 250px;
+}
+
+.settings #content-secondary
+{
+  margin: 13px 24px 0px 21px;
+}
+
+#settings-header
+{
+  background: #d7d7d7 url(./img/settings_header.png) repeat-x top left;
+  background-image: -webkit-image-set(url(./img/settings_header.png) 1x,
+									  url(./img/settings_header@2x.png) 2x);
+  display: block;
+  height: 41px;
+  border-bottom: 1px solid #c7c7c7;
+  width: 100%;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+#settings-header > h2
+{
+  color: #666666;
+  display: block;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  height: 21px;
+  line-height: 41px;
+  padding: 0px 15px;
+  text-shadow: #ffffff 0px 1px 1px;
+}
+
+.dialog #settings-header {
+	height: 29px;
+    line-height: 29px;
+    background: #E7E7E7;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(0.25, #eeeeee), color-stop(1, #dddddd));
+    background: -moz-linear-gradient(top, #ffffff, #eeeeee 25%, #dddddd);
+    border-bottom: 1px solid #c3c3c3;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.dialog #settings-header > h2 {
+	color: #474747;
+    text-shadow:0 1px 1px #ffffff;
+	font-weight: bold;
+	font-size: 1.2em;
+	text-align: center;
+	margin: 0;
+	height: 29px;
+    line-height: 29px;
+}
+
+#settings-menu
+{
+  background: #EDEDED;
+  display: block;
+  float: left;
+  font-size: 13px;
+  min-height: 484px;
+  line-height: 20px;
+  width: 158px;
+  border-right: 1px solid #C0C0C0;
+  border-bottom-left-radius: 7px;
+}
+
+.dialog #settings-menu {
+	border-bottom-left-radius: 0.5em;
+}
+
+#settings-menu ul > li a
+{
+  display: block;
+  height: 31px;
+  line-height: 31px;
+  color: #666666;
+  font-size: 12px;
+  text-indent: 15px;
+}
+
+#settings-menu ul > li.active
+{
+  border-top: 1px solid #5B8AC4;
+  background: url(./img/settings_list_sel.png) repeat-x;
+  background-image: -webkit-image-set(url(./img/settings_list_sel.png) 1x,
+									  url(./img/settings_list_sel@2x.png) 2x);
+}
+
+#settings-menu ul > li.active a
+{
+  color: #ffffff;
+  font-weight: bold;
+  text-shadow: #000000 0px 1px 0px;
+}
+
+#settings
+{
+  margin: 9px;
+}
+
+#settings legend
+{
+  width: 100%;
+  font-size: 26px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ebebeb;
+	margin-left: 9px;
+}
+
+.settings-section
+{
+  display: none;
+}
+
+.settings-section.showing
+{
+  display: block;
+  margin: 10px;
+  min-height: 350px;
+}
+
+#actions
+{
+  border-top: 1px solid #ebebeb;
+  height: 22px;
+  padding: 14px 0px;
+}
+
+#actions fieldset > *, .people #settings .actions > *
+{
+  float: right;
+  width: 75px;
+  text-align: center;
+  display: block;
+  padding: 2px 8px;
+  margin: 2px 10px 2px 0px;
+}
+
+#settings #actions
+{
+  bottom: 0px;
+  left: 159px;
+  position: absolute;
+  right: 0px;
+}
+
+.cc-custom-search-button
+{
+  width: 105px;
+  margin-right: 0px;
+  margin-top: 16px;
+}
+
+.setting .label
+{
+  clear: both;
+  margin-top: 16px;
+  float: left;
+}
+
+.setting #content-secondary .label
+{
+  margin-top: 0px;
+}
+
+.setting .label > *
+{
+  display: block;
+  width: 200px;
+  max-width: 200px;
+  text-align: right;
+  font-size: 12px;
+  color: #494949;
+  font-weight: bold;
+  padding: 4px 0px;
+  border: 1px solid #ffffff;
+}
+
+.setting .input
+{
+  float: left;
+  margin: 16px 0px 0px 16px;
+}
+
+.setting .input > input[type="text"],
+.setting .input > textarea
+{
+  border: 1px solid #DBDBDB;
+  color: #5f5f5f;
+  outline: none;
+  padding: 4px;
+  width: 235px !important;
+}
+
+.dialog .setting .input > input[type="text"]
+{
+  margin-top: -3px;
+  font-size: 0.9em;
+}
+
+.setting .input > textarea
+{
+  height: 50px;
+  resize: none;
+}
+
+.settings .info
+{
+  display: block;
+  font-size: 11px;
+  color: #a4a4a4;
+  line-height: 14px;
+  width: 235px;
+}
+
+.settings .acls .section
+{
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 4px;
+  margin-bottom: 16px;
+}
+
+.settings .acls .public .public, .settings .acls .private .private
+{
+  border-color: #e6e6e6;
+}
+
+.settings_access_editor
+{
+	width: 487px;
+	padding: 20px;
+	background: #E8E8E8;
+	border: 1px solid #C6C6C6;
+	border-radius: 5px;
+	margin-top: 20px;
+	margin-left: 40px;
+	margin-bottom: 20px;
+}
+
+.settings_access_editor .cc-access-editor-view .field input
+{
+  width: 479px !important;
+}
+
+.settings_access_editor_label
+{
+	margin-bottom: 8px;
+	font-size: 12px;
+}
+
+.settings .service
+{
+	line-height: 26px;
+}
+
+/* @end */
+
+.settings-section#appearance .banner_image_editor .cc-avatar-preview.default,
+.settings-section#appearance .background_image_editor .cc-avatar-preview.default
+{
+	background-image: none;
+	box-shadow: inset 0px 0px 2px rgba(0,0,0,0.3);
+}
+
+.setting.avatar_editor .label,
+.setting.banner_image_editor .label,
+.setting.background_image_editor .label
+{
+	margin-top: 25px;
+}
+
+.setting.banner_image_editor .info
+{
+	display: block;
+	font-size: 11px;
+	padding-top: 6px;
+}

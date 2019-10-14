@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "Dutch.lproj",
+		"isoCodes": ["nl"],
+		"isoName": "Dutch",
+		"name": "Nederlands"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>Schakel JavaScript in om de Help te zien.</p>Raadpleeg voor meer informatie <a href=\"http://help.apple.com/resources/javascript/\">dit Apple-ondersteuningsartikel</a>.</div>",
+		"loadfailed": "<div>De Help is momenteel niet beschikbaar.</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@ zoekresultaten",
+		"Apple applications": "Apple programma's",
+		"Cancel": "Annuleer",
+		"Change Language": "Wijzig taal",
+		"Close": "Sluit",
+		"Featured application help": "Help bij uitgelicht programma",
+		"Go to the homepage": "Ga naar de beginpagina",
+		"Help for:": "Help voor:",
+		"Hide": "Verberg",
+		"Home": "Begin",
+		"Loading latest help...": "Meest recente Help wordt geladen…",
+		"Other applications": "Andere programma's",
+		"Print Book": "Druk boek af",
+		"Print Options": "Afdrukopties",
+		"Print Page": "Druk pagina af",
+		"Print Section": "Druk sectie af",
+		"Recent applications": "Recente programma's",
+		"Search": "Zoek",
+		"Send feedback.": "Stuur commentaar.",
+		"Show all": "Toon alles",
+		"Show less": "Toon minder",
+		"Show the previous page": "Toon de vorige pagina",
+		"Show the next page": "Toon de volgende pagina",
+		"Show": "Toon",
+		"Was this page helpful?": "Bent u geholpen met de informatie op deze pagina?"
+	}
+}

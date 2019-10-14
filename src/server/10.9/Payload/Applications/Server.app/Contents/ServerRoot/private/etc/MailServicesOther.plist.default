@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>imap</key>
+	<dict/>
+	<key>postfix</key>
+	<dict>
+		<key>service_initialized</key>
+		<false/>
+		<key>enable_smtp</key>
+		<true/>
+		<key>black_hole_domains</key>
+		<array>
+			<string>zen.spamhaus.org</string>
+		</array>
+	</dict>
+	<key>service_initialized</key>
+	<false/>
+</dict>
+</plist>

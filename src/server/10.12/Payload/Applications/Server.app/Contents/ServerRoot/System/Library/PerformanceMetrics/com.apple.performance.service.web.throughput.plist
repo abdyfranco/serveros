@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Web Performance: Througput</string>
+	<key>description</key>
+	<string>Web service througput</string>
+	<key>localizationBundlePath</key>
+	<string>/usr/share/servermgrd/bundles/servermgr_web.bundle</string>
+	<key>unitLabel</key>
+	<string>bytes/sec</string>
+	<key>maximumPossibleValue</key>
+	<integer>1000000000</integer>
+	<key>aslSender</key>
+	<string>httpd</string>
+	<key>aslMessageKey</key>
+	<string>apacheBytesPerSec</string>
+</dict>
+</plist>

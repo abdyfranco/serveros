@@ -1,0 +1,56 @@
+Doveadm protocol
+================
+
+doveadm-server can be accessed via UNIX sockets or TCP protocol (by adding
+inet_listener to doveadm service). The protocol looks like:
+
+Initial handshake from client to server:
+
+---%<-------------------------------------------------------------------------
+C: VERSION      doveadm-server  1       0
+---%<-------------------------------------------------------------------------
+
+Note that the spaces you see are TABs. All the fields are TAB-separated. The
+server will send you back either:
+
+ * "+" means you are preauthenticated and can start sending commands. This
+   happens when connecting to the UNIX socket.
+ * "-" means you need to authenticate first.
+
+The authentication is done with a regular SASL PLAIN authentication, i.e.
+"PLAIN<tab>base64(\0user\0password)". For example for user=tss, password=secret
+use:
+
+---%<-------------------------------------------------------------------------
+C: PLAIN        AHRzcwBzZWNyZXQ=
+S: +
+---%<-------------------------------------------------------------------------
+
+The actual commands are in format: flags<tab>username<tab>command
+name[<tab>parameter[<tab>parameter2...]], where the flags can be either empty,
+"v" (verbose) or "D" (debug). Note that if the command name has spaces, they
+are sent as spaces instead of as tabs (e.g. "quota get", not "quota<tab>get").
+So for example to get a quota for user tss:
+
+---%<-------------------------------------------------------------------------
+C:      tss     quota get
+S: user STORAGE 1814    -       0       user    MESSAGE 6       -       0      
+
+S: +
+---%<-------------------------------------------------------------------------
+
+The storage values are all given in kilobytes.
+
+The server replies using the same fields TAB-separated as what a regular
+doveadm command sends. The reply itself ends with LF. So if the reply is large,
+it may return a very long line as a reply. After the reply follows a status
+line:
+
+ * "+" = success.
+    * In future the "+" may be followed by more text, for now you should just
+      ignore those.
+ * "-" = failed (the error was probably logged to Dovecot's error log)
+    * "-NOUSER" = the user doesn't exist
+    * Other "-SOMETHING" errors may be added in future.
+
+(This file was created from the wiki on 2013-08-05 04:42)

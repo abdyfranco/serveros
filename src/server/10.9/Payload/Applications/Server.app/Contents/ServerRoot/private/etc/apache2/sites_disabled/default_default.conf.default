@@ -1,0 +1,29 @@
+<VirtualHost default>
+	ServerName default
+	ServerAdmin admin@example.com
+	DocumentRoot "/Library/Server/Web/Data/Sites/Default"
+	DirectoryIndex index.html index.php /xcode/ /wiki/ default.html
+	CustomLog "/var/log/apache2/access_log" combinedvhost
+	ErrorLog "/var/log/apache2/error_log"
+	
+	<IfModule mod_ssl.c>
+		SSLEngine Off
+		SSLCipherSuite "ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM"
+		SSLProtocol -ALL +SSLv3 +TLSv1
+		SSLProxyEngine On
+		SSLProxyProtocol -ALL +SSLv3 +TLSv1
+	</IfModule>
+	
+	<Directory "/Library/Server/Web/Data/Sites/Default">
+		Options All +MultiViews -ExecCGI -Indexes -Includes
+		AllowOverride None
+		<IfModule mod_dav.c>
+			DAV Off
+		</IfModule>
+		<IfDefine !WEBSERVICE_ON>
+			Deny from all
+			ErrorDocument 403 /customerror/websitesoff403.html
+		</IfDefine>
+	</Directory>
+
+</VirtualHost> 

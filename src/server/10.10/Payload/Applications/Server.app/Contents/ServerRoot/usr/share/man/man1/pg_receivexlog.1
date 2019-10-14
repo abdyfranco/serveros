@@ -1,0 +1,216 @@
+'\" t
+.\"     Title: pg_receivexlog
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "PG_RECEIVEXLOG" "1" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pg_receivexlog \- streams transaction logs from a PostgreSQL cluster
+.\" pg_receivexlog
+.SH "SYNOPSIS"
+.HP \w'\fBpg_receivexlog\fR\ 'u
+\fBpg_receivexlog\fR [\fIoption\fR...]
+.SH "DESCRIPTION"
+.PP
+
+pg_receivexlog
+is used to stream transaction log from a running
+PostgreSQL
+cluster\&. The transaction log is streamed using the streaming replication protocol, and is written to a local directory of files\&. This directory can be used as the archive location for doing a restore using point\-in\-time recovery (see
+Section 24.3, \(lqContinuous Archiving and Point-in-Time Recovery (PITR)\(rq, in the documentation)\&.
+.PP
+
+pg_receivexlog
+streams the transaction log in real time as it\*(Aqs being generated on the server, and does not wait for segments to complete like
+archive_command
+does\&. For this reason, it is not necessary to set
+archive_timeout
+when using
+pg_receivexlog\&.
+.PP
+The transaction log is streamed over a regular
+PostgreSQL
+connection, and uses the replication protocol\&. The connection must be made with a superuser or a user having
+REPLICATION
+permissions (see
+Section 20.2, \(lqRole Attributes\(rq, in the documentation), and
+pg_hba\&.conf
+must explicitly permit the replication connection\&. The server must also be configured with
+max_wal_senders
+set high enough to leave at least one session available for the stream\&.
+.PP
+If the connection is lost, or if it cannot be initially established, with a non\-fatal error,
+pg_receivexlog
+will retry the connection indefinitely, and reestablish streaming as soon as possible\&. To avoid this behavior, use the
+\-n
+parameter\&.
+.SH "OPTIONS"
+.PP
+The following command\-line options control the location and format of the output\&.
+.PP
+\fB\-D \fR\fB\fIdirectory\fR\fR, \fB\-\-directory=\fR\fB\fIdirectory\fR\fR
+.RS 4
+Directory to write the output to\&.
+.sp
+This parameter is required\&.
+.RE
+.PP
+The following command\-line options control the running of the program\&.
+.PP
+\fB\-n\fR, \fB\-\-no\-loop\fR
+.RS 4
+Don\*(Aqt loop on connection errors\&. Instead, exit right away with an error\&.
+.RE
+.PP
+\fB\-v\fR, \fB\-\-verbose\fR
+.RS 4
+Enables verbose mode\&.
+.RE
+.PP
+The following command\-line options control the database connection parameters\&.
+.PP
+\fB\-d \fR\fB\fIconnstr\fR\fR, \fB\-\-dbname=\fR\fB\fIconnstr\fR\fR
+.RS 4
+Specifies parameters used to connect to the server, as a connection string\&. See
+Section 31.1.1, \(lqConnection Strings\(rq, in the documentation
+for more information\&.
+.sp
+The option is called
+\-\-dbname
+for consistency with other client applications, but because
+pg_receivexlog
+doesn\*(Aqt connect to any particular database in the cluster, database name in the connection string will be ignored\&.
+.RE
+.PP
+\fB\-h \fR\fB\fIhost\fR\fR, \fB\-\-host=\fR\fB\fIhost\fR\fR
+.RS 4
+Specifies the host name of the machine on which the server is running\&. If the value begins with a slash, it is used as the directory for the Unix domain socket\&. The default is taken from the
+\fBPGHOST\fR
+environment variable, if set, else a Unix domain socket connection is attempted\&.
+.RE
+.PP
+\fB\-p \fR\fB\fIport\fR\fR, \fB\-\-port=\fR\fB\fIport\fR\fR
+.RS 4
+Specifies the TCP port or local Unix domain socket file extension on which the server is listening for connections\&. Defaults to the
+\fBPGPORT\fR
+environment variable, if set, or a compiled\-in default\&.
+.RE
+.PP
+\fB\-s \fR\fB\fIinterval\fR\fR, \fB\-\-status\-interval=\fR\fB\fIinterval\fR\fR
+.RS 4
+Specifies the number of seconds between status packets sent back to the server\&. This allows for easier monitoring of the progress from server\&. A value of zero disables the periodic status updates completely, although an update will still be sent when requested by the server, to avoid timeout disconnect\&. The default value is 10 seconds\&.
+.RE
+.PP
+\fB\-U \fR\fB\fIusername\fR\fR, \fB\-\-username=\fR\fB\fIusername\fR\fR
+.RS 4
+User name to connect as\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-no\-password\fR
+.RS 4
+Never issue a password prompt\&. If the server requires password authentication and a password is not available by other means such as a
+\&.pgpass
+file, the connection attempt will fail\&. This option can be useful in batch jobs and scripts where no user is present to enter a password\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-password\fR
+.RS 4
+Force
+pg_receivexlog
+to prompt for a password before connecting to a database\&.
+.sp
+This option is never essential, since
+pg_receivexlog
+will automatically prompt for a password if the server demands password authentication\&. However,
+pg_receivexlog
+will waste a connection attempt finding out that the server wants a password\&. In some cases it is worth typing
+\fB\-W\fR
+to avoid the extra connection attempt\&.
+.RE
+.PP
+Other options are also available:
+.PP
+\fB\-V\fR, \fB\-\-version\fR
+.RS 4
+Print the
+pg_receivexlog
+version and exit\&.
+.RE
+.PP
+\fB\-?\fR, \fB\-\-help\fR
+.RS 4
+Show help about
+pg_receivexlog
+command line arguments, and exit\&.
+.RE
+.SH "ENVIRONMENT"
+.PP
+This utility, like most other
+PostgreSQL
+utilities, uses the environment variables supported by
+libpq
+(see
+Section 31.14, \(lqEnvironment Variables\(rq, in the documentation)\&.
+.SH "NOTES"
+.PP
+When using
+pg_receivexlog
+instead of
+archive_command, the server will continue to recycle transaction log files even if the backups are not properly archived, since there is no command that fails\&. This can be worked around by having an
+archive_command
+that fails when the file has not been properly archived yet, for example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+archive_command = \*(Aqsleep 5 && test \-f /mnt/server/archivedir/%f\*(Aq
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The initial timeout is necessary because
+pg_receivexlog
+works using asynchronous replication and can therefore be slightly behind the master\&.
+.SH "EXAMPLES"
+.PP
+To stream the transaction log from the server at
+mydbserver
+and store it in the local directory
+/usr/local/pgsql/archive:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBpg_receivexlog \-h mydbserver \-D /usr/local/pgsql/archive\fR
+.fi
+.if n \{\
+.RE
+.\}
+.SH "SEE ALSO"
+\fBpg_basebackup\fR(1)

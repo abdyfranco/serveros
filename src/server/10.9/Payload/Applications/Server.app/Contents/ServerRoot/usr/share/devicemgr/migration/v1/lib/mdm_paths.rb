@@ -1,0 +1,1 @@
+../../../backend/lib/mdm_paths.rb

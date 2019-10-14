@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.XCSTestUserPreflightService</string>
+	<key>LimitLoadToSessionType</key>
+	<string>Aqua</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/XCSTestUserPreflightService</string>
+		<string>--launchd</string>
+	</array>
+	<key>Sockets</key>
+	<dict>
+		<key>Control</key>
+		<dict>
+			<key>SockPathName</key>
+			<string>${SERVICE_CONTROL_PATH}/com.apple.XCSTestUserPreflightService</string>
+			<key>SockPathMode</key>
+			<integer>504</integer>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,111 @@
+.\"" Copyright (c) 2010-2013 Apple Inc. All Rights Reserved.
+.\""
+.\"" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\"" computers and is subject to the terms and conditions of the Apple Software
+.\"" License Agreement accompanying the package this file is a part of.
+.\"" You may not port this file to another platform without Apple's written consent.
+.\""
+
+.Dd July 25, 2013
+.Dt webapp.plist 8
+.Os "Server app"
+.Sh NAME
+.Nm webapp.plist
+.Nd plist file defining a managed webapp
+.Sh DESCRIPTION
+Web applications managed with servermgr_web(8) are defined by plists placed in /Library/Server/Web/Config/apache2/webapps/.
+.Pp
+In this context, a webapp is a set of Apache configuration directives and related behaviors, usually managing a set of processes listening on specific TCP ports responding to HTTP requests, routed through
+the web service via reverse proxy mechanism. This mechanism is used for webapps bundled with Server app but can also be used for third-party or locally-developed web apps.
+When certain special keys are present the webapp.plist, those webapps can be enabled/disabled via Server app's Web panel in as well as with the standard webappctl(8) command.
+.Sh EXAMPLE XML PROPERTY LIST
+.Pp
+The following is an example of an XML Property List defining a webapp named com.example.mywebapp, which will proxy URI path
+/mywebapp to a balancer group of two URLs on the localhost, and activate one Apache include file and one Apache module in
+a designated virtual host config file, using the default SSL policy:
+.Pp
+.Bd -literal
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>com.example.mywebapp</string>
+	<key>displayName</key>		<!-- Name shown in Server app, alongside a checkbox to enable/disable this webapp  -->
+	<string>MyWebApp</string>
+	<key>includeFiles</key>
+	<array>		<!-- Include files are activated in virtual host when webapp is started -->
+		<string>/Library/Server/Web/Config/apache2/httpd_myinclude.conf</string>
+	</array>
+	<key>launchKeys</key>		
+	<array>		<!-- Launchd plists in /Applications/Server.app/Contents/ServerRoot/System/Library/LaunchDaemons are loaded when webapp is started -->
+		<string>com.example.mywebapp</string>
+	</array>
+	<key>proxies</key>		<!-- ProxyPass/ProxyPassReverse directives are activated when webapp is started -->
+	<dict>
+		<key>/mywebapp</key>		<!-- Sets up a reverse proxy -->
+		<dict>
+			<key>keysAndValues</key>
+			<string></string>
+			<key>path</key>
+			<string>/mywebapp</string>
+			<key>urls</key>		<!-- URLs comprise a proxy_balancer group -->
+			<array>
+				<string>http://localhost:3000</string>
+				<string>http://localhost:3001</string>
+			</array>
+		</dict>
+	</dict>
+	<key>requiredModuleNames</key>
+	<array>		<!-- Apache plugin modules are enabled when webapp is started -->
+		<string>mystuff_module</string>
+	</array>
+	<key>requiredWebAppNames</key>
+	<array>		<!-- Required Web apps are started when this webapp is started -->
+		<string>com.example.myotherwebapp</string>
+	</array>
+	<key>preflightCommand</key>		<!-- return non-0 fails, return 0 means ok to start -->
+	<string>/usr/local/bin/preflightmywebapp</string>
+	<key>startCommand</key>
+	<string>/usr/local/bin/startmywebapp</string>
+	<key>stopCommand</key>
+	<string>/usr/local/bin/stopmywebapp</string>
+	<key>installationIndicatorFilePath</key>	<!-- The presence of this file indicates web app is installed -->
+	<string>/usr/local/bin/mywebapp</string>
+	<key>sslPolicy</key>	<!-- Determines webapp SSL behavior -->
+	<integer>0</integer>	<!-- 0: default, UseSSLWhenEnabled -->
+			<!-- 1:	UseSSLAlways -->
+			<!-- 2:	UseSSLOnlyWhenCertificateIsTrustable -->
+			<!-- 3:	UseSSLNever -->
+			<!-- 4:	UseSSLAndNonSSL -->
+	</dict>
+ </plist>
+.Ed
+.Sh KEYS FOR LOCALLY-INSTALLED WEBAPPS
+.Bl -tag -width flag
+.It Ar displayName
+A string to be presented in Server app's WebApp table view. 
+.It Ar preflightCommand
+A path to a command to run when the webapp is about to be started for the first time; it performs any required one-time initialization (like setting up postgres relations) and returns true if and only if the webapp is fit for starting. 
+.It Ar startCommand
+A path to a command to run when the webapp is started, to replace or augment the loading of a launchd.plis
+.It Ar stopCommand
+A path to a command to run when the webapp is stopped, to replace or augment the unloading of a launchd.plist
+.It Ar installationIndicatorFilePath
+ A path to a file that is present if and only if the webapp is installed
+.El
+.Sh ACTIVATION
+A webapp plist can be associated with a specific virtual host and activated/deactivated either via the webappctl(8) command or via the get/setWebAppState commands of servermgr_web(8). Webapp plists for locally-installed applications, with suitable keys noted above, can also be associated with a specific virtual host and activated/deactivated via Server app's WebApp panel.
+.Pp
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /Library/Server/Web/Config/apache2/webapps/ 
+The directory where webapp plists must be placed
+.It Pa /Library/Server/Web/Config/apache2/webapp_scripts/ 
+The directory where scripts to manage third-party webapps can be placed
+.It Pa /Library/Server/Web/Config/apache2/webapps/com.example.mywebapp.plist
+An example webapp plist
+.El
+.Sh SEE ALSO
+servermgr_web(8)
+webappctl(8)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>QueueDirectories</key>
+	<array>
+		<string>/var/spool/swupd</string>
+	</array>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.swupdate.sync</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/swupd_syncd</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/Library/Server/Software Update/Log/swupd_syncd.log</string>
+	<key>UserName</key>
+	<string>_softwareupdate</string>
+	<key>GroupName</key>
+	<string>daemon</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>3</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+</dict>
+</plist>

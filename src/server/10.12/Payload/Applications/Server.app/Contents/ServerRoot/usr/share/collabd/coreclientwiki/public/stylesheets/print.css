@@ -1,0 +1,321 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Print styles */
+@media print {
+	html,
+	body
+	{
+		color: #000000;
+		background-color: #FFFFFF;
+		font-family: Helvetica, Arial, Geneva, sans-serif;
+		font-size: 10pt;
+		line-height: 1.2;
+	}
+
+	a,
+	a:link,
+	a:visited,
+	a:active,
+	a:hover
+	{
+		color: inherit !important;
+		text-decoration: none !important;
+	}
+
+	/* @end */
+
+	/* @group Disabled */
+
+	#notifier,
+	#header,
+	#hidden_extras,
+	.cc-menu,
+	.cc-menu-mask,
+	.dialog,
+	#dialog_mask,
+	#quicksearch,
+	#banner .icon,
+	#banner .right,
+	#entity_header,
+	#cc-navpopover
+	{
+		display: none !important;
+	}
+
+	/* @end */
+
+	/* @group Updates/listing/search page */
+
+	#main {
+		overflow:visible;
+	}
+	
+	.cc-entitylist .header,
+	.cc-entitylist .footer,
+	.cc-entitylist-item .user-actions,
+	.cc-entitylist-item .change-summary,
+	.cc-entitylist-item .modtime,
+	.cc-entitylist-item .portrait_modtime,
+	.cc-entitylist-item .owner_icon,
+	.cc-entitylist-item .updater_icon,
+	.cc-entitylist-item .icon,
+	.cc-entitylist-item .watch-controls
+	{
+		display: none !important;
+	}
+
+	.cc-entitylist-item .entity_description
+	{
+		display: block !important;
+		margin: auto 1em;
+	}
+
+	/* @end */
+
+	/* @group Sidebars */
+
+	.people.show #content-secondary,
+	.projects.show #content-secondary,
+	.sidebar-close,
+	.cc-sidebar-section[data-guid="sidebars/updates"],
+	.cc-sidebar-section[data-guid="sidebars/notifications"],
+	.cc-sidebar-section .cc-sidebar-actions,
+	.cc-sidebar-section .disclosure,
+	.cc-sidebar-section .unread,
+	.cc-sidebar-section .placeholder
+	{
+		display: none !important;
+	}
+
+	.cc-tag .delete,
+	.cc-tag-editor .cc-tag-entryfield,
+	.cc-comment-editor,
+	.cc-comment .actions,
+	.cc-comment .author .icon
+	{
+		display: none !important;
+	}
+
+	.cc-sidebar-section
+	{
+		margin-bottom: 3em;
+	}
+
+	.cc-comment pre
+	{
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+		white-space: pre-wrap;
+	}
+
+	.cc-comment .author
+	{
+		color: #999999 !important;
+		font-size: 0.9em;
+	}
+
+	.cc-comment
+	{
+		margin-bottom: 2em;
+	}
+
+	/* @end */
+
+	/* @group Tags page */
+
+	.cc-grouped-tags-view .loading,
+	.cc-grouped-tags-view .empty,
+	.cc-grouped-tags-view .cc-grouped-tags-view-actions,
+	.cc-grouped-tags-view .cc-tag-group .show
+	{
+		display: none !important;
+	}
+
+	/* @end */
+
+	/* @group Editor */
+
+	#wikieditor .chrome,
+	.editor.toolbar,
+	.editor.inline.popup,
+	.wikieditor-offscreen,
+	#text_block_debug_dialog,
+	#text_block_copy_paste_debug,
+	#content-primary > div.revisions
+	{
+		display: none !important;
+	}
+
+	#wikieditor .page.title.chrome,
+	#wikieditor h1.title-readonly
+	{
+		display: block !important;
+	}
+
+	#wikieditor .page.title.chrome .title-edit
+	{
+		display: none !important;
+	}
+
+	#wikieditor
+	{
+		margin-bottom: 3em;
+	}
+
+	#wikieditor .blocks > .block
+	{
+		margin-bottom: 1.5em;
+	}
+
+	.block.text .content .editable.blockquote
+	{
+		font-style: italic;
+		margin-left: 2em;
+		margin-right: 2em;
+	}
+
+	.block.text .content .editable.pre,
+	.block.text .content .editable pre
+	{
+		font-family: "Courier New", Courier, mono;
+		font-size: 0.9em;
+	}
+
+	.block.text .content .editable.h1,
+	.block.text .content .editable h1
+	{
+		font-size: 2em;
+	}
+
+	.block.text .content .editable.h2,
+	.block.text .content .editable h2
+	{
+		font-size: 1.5em;
+	}
+
+	.block.text .content .editable.h3,
+	.block.text .content .editable h3
+	{
+		font-size: 1.2em;
+	}
+
+	.block.text .content .editable.left
+	{
+		text-align: left;
+	}
+
+	.block.text .content .editable.right
+	{
+		text-align: right;
+	}
+
+	.block.text .content .editable.center
+	{
+		text-align: center;
+	}
+
+	.block.text .content .editable.justify
+	{
+		text-align: justify;
+	}
+
+	.block.text .content .editable .bold
+	{
+		font-weight: bold;
+	}
+
+	.block.text .content .editable .italic
+	{
+		font-style: italic;
+	}
+
+	.block.text .content .editable .underline
+	{
+		text-decoration: underline;
+	}
+
+	.block.text .content .editable .important
+	{
+		color: red;
+		font-weight: bold;
+	}
+
+	.block.text .content .editable .emphasis
+	{
+		color: navy;
+		font-weight: bold;
+	}
+
+	.block.text .content .editable .highlight
+	{
+		color: #CCCC00;
+		font-weight: bold;
+	}
+
+	.block.table table
+	{
+		border-spacing: 0;
+		border: 1pt solid #999999;
+		font-size: 1em;
+		margin: 1pt;
+		padding: 0;
+		width: 95%;
+	}
+
+	.block.table table th,
+	.block.table table td
+	{
+		background-color: transparent;
+		border: 1pt solid #999999;
+		color: #000000;
+		font-size: 1em;
+		font-weight: normal;
+		margin: 0px;
+		padding: 2pt 4pt 3pt 2pt;
+		text-align: left;
+		vertical-align: top;
+	}
+
+	.block.table table th,
+	.block.table table tr:first-child td,
+	.block.table table tr td:first-child
+	{
+		display: none;
+	}
+
+	.block.table table.headingrow tr:first-child + tr td,
+	.block.table table.headingcolumn tr td:first-child + td
+	{
+		font-weight: bold;
+	}
+
+	/* @end */
+
+	/* @group Files */
+
+	.files.info .hud,
+	.files.info .detail .missing,
+	.files.info .detail .pagination
+	{
+		display: none !important;
+	}
+
+	.files.info .previews .preview img
+	{
+		max-width: 100%;
+	}
+
+}
+/* @end */

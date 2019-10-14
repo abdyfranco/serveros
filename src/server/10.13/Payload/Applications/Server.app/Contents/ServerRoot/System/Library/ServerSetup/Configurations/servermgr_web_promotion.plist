@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Web Service Promotion</string>
+	<key>dependencies</key>
+	<array>
+		<string>servermgr_web_setup</string>
+	</array>
+	<key>promotion</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>WebPromotion</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/webservice/WebPromotion</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>WebPostSetup</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/webservice/WebPostSetup</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

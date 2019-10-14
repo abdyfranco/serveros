@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+    <HEAD>
+        <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+        <META NAME="PRAGMA" CONTENT="NO-CACHE">
+        <TITLE>DHCP</TITLE>
+    </HEAD>
+    <SCRIPT LANGUAGE="JavaScript">
+    <!--
+    function SelectCommand(popup) {
+        selection = popup.options[popup.selectedIndex].value;
+        commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+        commandValue += '<plist version="0.9">\n';
+        commandValue += '<dict>\n';
+        if (selection == "initialSetup") {
+            commandValue += '    <key>command</key>\n';
+            commandValue += '    <string>initialSetup</string>\n';
+            commandValue += '    <key>plugin</key>\n';
+            commandValue += '    <string>servermgr_firewall</string>\n';
+        } else if (selection == "readSettings") {
+            commandValue += '    <key>command</key>\n';
+            commandValue += '    <string>readSettings</string>\n';
+            commandValue += '    <key>plugin</key>\n';
+            commandValue += '    <string>servermgr_firewall</string>\n';
+        } else if (selection == "writeSettings") {
+            commandValue += '    <key>command</key>\n';
+            commandValue += '    <string>writeSettings</string>\n';
+            commandValue += '    <key>plugin</key>\n';
+            commandValue += '    <string>servermgr_firewall</string>\n';
+            commandValue += '    <key>rules</key>\n';
+            commandValue += '    <array>\n';
+            commandValue += '        <dict>\n';
+            commandValue += '           <key>service</key>\n';
+            commandValue += '           <string>FileSharing</string>\n';
+            commandValue += '           <key>networks</key>\n';
+            commandValue += '           <array>\n';
+            commandValue += '               <string>DevNet1</string>\n';
+            commandValue += '               <string>DevNet2</string>\n';
+            commandValue += '           </array>\n';
+            commandValue += '           <key>ports</key>\n';
+            commandValue += '           <array>\n';
+            commandValue += '               <integer>12</integer>\n';
+            commandValue += '               <integer>22</integer>\n';
+            commandValue += '               <integer>32</integer>\n';
+            commandValue += '           </array>\n';
+            commandValue += '           <key>protocols</key>\n';
+            commandValue += '           <array>\n';
+            commandValue += '               <string>tcp</string>\n';
+            commandValue += '               <string>udp</string>\n';
+            commandValue += '           </array>\n';
+            commandValue += '       </dict>\n';
+            commandValue += '        <dict>\n';
+            commandValue += '           <key>service</key>\n';
+            commandValue += '           <string>Minecraft</string>\n';
+            commandValue += '           <key>networks</key>\n';
+            commandValue += '           <array>\n';
+            commandValue += '               <string>DevNet1</string>\n';
+            commandValue += '           </array>\n';
+            commandValue += '           <key>ports</key>\n';
+            commandValue += '           <array>\n';
+            commandValue += '               <integer>17</integer>\n';
+            commandValue += '           </array>\n';
+            commandValue += '           <key>protocols</key>\n';
+            commandValue += '           <array>\n';
+            commandValue += '               <string>udp</string>\n';
+            commandValue += '           </array>\n';
+            commandValue += '       </dict>\n';
+            commandValue += '    </array>\n';
+            commandValue += '    <key>networkConfigs</key>\n';
+            commandValue += '    <array>\n';
+            commandValue += '        <dict>\n';
+            commandValue += '           <key>name</key>\n';
+            commandValue += '           <string>DevNet1</string>\n';
+            commandValue += '           <key>startAddress</key>\n';
+            commandValue += '           <string>192.168.2.72</string>\n';
+            commandValue += '           <key>endAddress</key>\n';
+            commandValue += '           <string>192.168.3.73</string>\n';
+            commandValue += '       </dict>\n';
+            commandValue += '        <dict>\n';
+            commandValue += '           <key>name</key>\n';
+            commandValue += '           <string>DevNet2</string>\n';
+            commandValue += '           <key>startAddress</key>\n';
+            commandValue += '           <string>192.169.2.72</string>\n';
+            commandValue += '           <key>endAddress</key>\n';
+            commandValue += '           <string>192.169.3.73</string>\n';
+            commandValue += '       </dict>\n';
+            commandValue += '    </array>\n';
+        } else if (selection == "logSettings") {
+            commandValue += '    <key>command</key>\n';
+            commandValue += '    <string>logSettings</string>\n';
+            commandValue += '    <key>plugin</key>\n';
+            commandValue += '    <string>servermgr_firewall</string>\n';
+            commandValue += '    <key>logPath</key>\n';
+            commandValue += '    <string>/Volumes/Working/nastrein/Desktop/log.txt</string>\n';
+        } else {
+            document.forms['commandForm'].elements['input'].value = '';
+            return;
+        }
+        commandValue += '</dict>\n';
+        commandValue += '</plist>\n';
+        document.forms['commandForm'].elements['input'].value = commandValue;
+    }
+    //-->
+    </SCRIPT>
+    <BODY>
+        <TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+            <TR>
+                <TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+                    <H3>This http form can be used to test 'servermgr_firewall'</H3>
+                </TD>
+            </TR>
+            <TR>
+                <TD ALIGN="CENTER">
+                    Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+                        <OPTION SELECTED VALUE="N/A">- Select a command -
+                        <OPTION VALUE="initialSetup">initialSetup
+                        <OPTION VALUE="readSettings">readSettings
+                        <OPTION VALUE="writeSettings">writeSettings
+                        <OPTION VALUE="logSettings">logSettings
+                    </SELECT>
+                </TD>
+            </TR>
+        </TABLE>
+        <TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+            <FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_firewall">
+                <TR>
+                    <TD ALIGN="CENTER">
+                        <TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+                    </TD>
+                </TR>
+                <TR>
+                    <TD ALIGN="CENTER">
+                        <INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+                    </TD>
+                </TR>
+                <TR>
+                    <TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+                        <SMALL>
+                            Click on your browser back button after the result is displayed
+                        </SMALL>
+                    </TD>
+                </TR>
+                <NOSCRIPT>
+                <TR>
+                    <TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+                            <B>You need a JavaScript-enabled web browser!</B>
+                    </TD>
+                </TR>
+                </NOSCRIPT>
+            </FORM>
+        </TABLE>
+    </BODY>
+</HTML>

@@ -1,0 +1,48 @@
+# =============================================================================
+# This is a template for SPAM SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Subject: Eingestuft als UNERWÜNSCHTE MASSEN-E-MAIL, anscheinend von Ihnen
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <SS%i@%h>
+
+Eine E-Mail von %s[
+to: %R]
+
+wurde als unerwünschte Massen-E-Mail eingestuft (UBE)
+
+Unser interner Referenzcode für Ihre E-Mail ist %n/%i
+
+Die E-Mail hatte Ihre Adresse als Absenderadresse. Sie war daher entweder
+eine Original-E-Mail von Ihnen oder die Absenderadresse wurde gefälscht und
+Ihre E-Mail-Adresse wurde von Dritten missbraucht. In diesem Fall bitten wir
+um Entschuldigung für die Störung durch diesen Hinweis.
+
+Wir versuchen die Hinweise für klare Fälle von UBE und infizierte E-Mails
+knapp zu halten. Bei weniger klaren Fällen ist die Balance zwischen Verlust
+der Original-E-Mail und lästigen Meldungen jedoch schwierig und es kann auf
+beiden Seiten zu Kollateralschäden kommen.
+
+[? %a |#|[:wrap|78||  |IP-Adresse des ersten Upstream-SMTP-Client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Gemäß "Empfangen:"-Trace\
+ stammt die E-Mail anscheinend von: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+# [? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+[? %#X |#|\n[[:wrap|78||  |%X]\n]]
+
+[? %#D |Zustellung der E-Mail wurde gestoppt!
+]#
+#
+# SpamAssassin-Bericht:
+# [%A
+# ]\

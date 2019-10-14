@@ -1,0 +1,46 @@
+#!/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+#
+# Copyright (c) 2012 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# Web Service backup and restore plugin for ServerBackup
+# Consolidates the _backup, _restore, and _verify functions in a single tool
+#
+
+require 'logger'
+require 'fileutils'
+
+def run(cmd)
+	# Execute a command, check its exit status, and log output if error.
+	# Cannot use fork/exec here because exec doesn't inherit fd's; need to use a temp file
+	tempfile = `/usr/bin/mktemp /var/run/web-XXXXXX`.chomp
+	$logger.info("Running command \"" + cmd + "\"")
+	full_cmd = cmd + " 1> " + tempfile + " 2>&1"
+	if !system(full_cmd)
+		$logger.error("Failed command: " + cmd)
+		$logger.error("Error code:" + $?.exitstatus.to_s)
+		err = File.new(tempfile, "r")
+		while err.gets do
+			$logger.error(" stderr+stdout:" + $_)
+		end
+	end
+	File.delete(tempfile)
+	return $?.exitstatus
+end
+
+def restore(image_path, target)
+	["#{image_path}/WebServer-1.conf.tgz", "#{image_path}/WebServer-2.conf.tgz"].each do |archive|
+		next if !FileTest.exists?(archive)
+		run("#{$tar} -C #{target} -xz -f #{archive}")
+	end
+end
+
+$tar = "/usr/bin/tar"
+$logger = Logger.new("/Library/Logs/WebBackup.log")
+$logger.info("args=" + ARGV.inspect)
+restore("/Library/Server/Previous/.ServerBackups/", "/Library/Server/Previous")
+

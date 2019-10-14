@@ -1,0 +1,2051 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1238\cocoasubrtf110
+{\fonttbl\f0\fnil\fcharset0 Monaco;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green13\blue255;\red7\green18\blue255;\red137\green19\blue21;
+}
+\vieww15380\viewh16240\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs28 \cf2 ---- GraphKit-30 (1.0.5-30) ----\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 1/24/2009 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 * Added ERROR_STRING_INLINE to expand to a format string plus args, as opposed to ERROR_STRING which expands to a single NSString, so that +[NSException raise:format:] can be used safely.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/6525005"}}{\fldrslt rdar://problem/6525005}}\
+* Cannot assume that the '_dataPoints' ivar will be non-NULL just because '_numElements' is greater than zero.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/6522100"}}{\fldrslt rdar://problem/6522100}}\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 \
+---- GraphKit-29 (1.0.5-29) ----\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 12/19/2008 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 * Changed optimisation setting from -O3 to -Os for release builds.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/6407821"}}{\fldrslt rdar://problem/6407821}}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 ---- GraphKit-28 (1.0.5-28) ----\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 12/1/2008 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 * Charts now inform their datasets when they're about to be removed, which lets XSGRXYDataSet remove any and all tooltips first.  Hopefully resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5933906"}}{\fldrslt rdar://problem/5933906}}\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 \
+---- GraphKit-27 (1.0.5-27) ----\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \
+10/29/2008 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 * Removed use and concern of 'fillDirection' from -[XSGRAreaDataSet drawDataSetRect:].  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/6330251"}}{\fldrslt rdar://problem/6330251}}\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 \
+---- GraphKit-26 (1.0.5-26) ----\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 9/18/2008 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs20 \cf0 * Switch to isfinite(), rather than finite().  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/6229879"}}{\fldrslt rdar://problem/6229879}}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 ---- GraphKit-25 (1.0.5-25) ----\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 8/14/2008 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs20 \cf0 * Changed certain key log messages from errors to debugs, so they won't show up in releases where they're being noticed and are bothering end users (arguablly unnecessarily).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5684333"}}{\fldrslt rdar://problem/5684333}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 10/1/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Fixed [single] selection in categorical mode with independent overlay, such that it now selects only the exact column clicked on, not any in the clicked group that intersect in the Y dimension.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5515714"}}{\fldrslt rdar://problem/5515714}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 9/4/2007 wtregaskis
+\fs20 \
+* Fixed up XSGRChartView's class defaults stuff so that you can actually subclass XSGRChartView and not horribly break everything.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5449085"}}{\fldrslt rdar://problem/5449085}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 8/15/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Added check in XSGRChartView's setAxes: for whether the "new" axes are the same as the existing ones, and if so don't do the release/retain business.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5410529"}}{\fldrslt rdar://problem/5410529}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 ---- GraphKit-24 (1.0.4-24) ----\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 8/1/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Added automatic visual compression disabling to XSGRLineDataSet & XSGRAreaDataSet, and added the private XSGRChartView property XSGRChartAutoDisableVisualCompressionIfPossible (defaulting to YES) just so this case be turned off if need be.  Finishes resolving {\field{\*\fldinst{HYPERLINK "rdar://problem/5375816"}}{\fldrslt rdar://problem/5375816}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 7/31/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Now automatically disable visual compression for XSGRColumnDataSet if we determine no compression will actually occur (on a per-drawing-pass basis).  Partially resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5375816"}}{\fldrslt rdar://problem/5375816}}; still need to apply this to other datasets too.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 7/30/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Now free _dataPoints to NULL if the XSGRXYDataSet or XSGRPieDataSet has no elements.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5371200"}}{\fldrslt rdar://problem/5371200}}.\
+* Turned down the verbosity of debug logging regarding zooming.\
+* Added support to XSGRColumnDataSet for visual compression setting XSGRVisualCompressionEnvelope.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5351865"}}{\fldrslt rdar://problem/5351865}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 ---- GraphKit-23 (1.0.4-23) ----\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 7/19/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Now check for a return value of NSNotFound in a few critical places, and handle those situations relatively gracefully.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5342668"}}{\fldrslt rdar://problem/5342668}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 7/16/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * XSGRAxes now marks itself as needing it's layout redone whenever it's delegate changes.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5344615"}}{\fldrslt rdar://problem/5344615}}.\
+* No longer mark the chartview as needing display when it's datasource is changed; affected datasets will do so as necessary.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5346036"}}{\fldrslt rdar://problem/5346036}}.\
+* Removed unnecessary _delayedReloadData method and now just queue up delayed calls to reloadData.  Also now ensure only one such invocation is queued at any time, and clear that queue whenever we do a reload.  Should prevent us calling reloadData redundantly (and indeed does demonstrate a significant performance improvement in Shark).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5344626"}}{\fldrslt rdar://problem/5344626}}.\
+* Now properly clear stale data from XSGRPieDataSet is the datasource is set to nil.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5346048"}}{\fldrslt rdar://problem/5346048}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 7/16/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Expanded the Control-Option-P debug dump to include the active axes and datasets.\
+* Replaced unsafe string handling functions (e.g. sprintf, strcmp, etc) with safer versions.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5339089"}}{\fldrslt rdar://problem/5339089}}.\
+* Added public XSGRXYAxes properties XSGRAxesXLabelPrefix, XSGRAxesXLabelSuffix, XSGRAxesYLabelPrefix & XSGRAxesYLabelSuffix.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5318368"}}{\fldrslt rdar://problem/5318368}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf2 ---- GraphKit-22 (1.0.4-22) ----\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+7/9/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Columns to the right of the selected column(s) no longer get drawn as selected when scrolling right.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5318644"}}{\fldrslt rdar://problem/5318644}}.\
+* Fixed issue with visual compression and column charts that would result in selection being improperly calculated, typically resulting in the leftmost element being drawn in any given drawRect: being shown as selected, if any elements to the left of it are selected.\
+* No longer allocate an unnecessary fillPath in XSGRColumnDataSet's drawDataSetRect: if we're drawing columns individually.\
+* Selection is now represented correctly using all compression modes (none, average, IIR & skip).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5323650"}}{\fldrslt rdar://problem/5323650}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 7/5/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Rejigged tooltips so that, in a nutshell, they'll be properly managed.  Key to this was removing them when the dataset is hidden, and optimising that removal to avoid having to do a full data reload.\
+* Made sure to reload dataset data if the datasource or delegate changes.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5298541"}}{\fldrslt rdar://problem/5298541}}.\
+* Now load data immediately in addDataSet:loadData: if the loadData parameter is YES, rather than deferring the load 'till later.  Hopefully resolves the recurring issues with ServerKit.\
+* Now reload data immediately when removing/rearranging datasets if necessary (i.e. if in stacked fraction or stacked value mode).\
+* Added value label support to XSGRAreaDataSet.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5315499"}}{\fldrslt rdar://problem/5315499}}.\
+* Fixed improper optimisation for XSGRLineDataSet and XSGRAreaDataSet where out-of-order data wouldn't be drawn correctly.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5299206"}}{\fldrslt rdar://problem/5299206}}.\
+* Added public XSGRColumnDataSet property \CocoaLigature0 XSGRColumnDataSetFillUnionOfElements, which has the default value of XSGRColumnDataSetFillColumnsIndividually.  This changes the behaviour from earlier versions of GraphKit, but results in a significant performance boost and it is unlikely anyone is depending on the old behaviour.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5316043"}}{\fldrslt rdar://problem/5316043}}.\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 6/21/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * No longer add the top margin twice if axis titles are used.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5284845"}}{\fldrslt rdar://problem/5284845}}.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf2 ---- GraphKit-21 (1.0.4-21) ----\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs20 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 6/6/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Turned some LOG_WARNINGs into LOG_DEBUGs where they weren't strictly necessary.  In particular, the warning about custom X values and stacked datasets in now just a debug, and the documentation updated to mention this limitation instead.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5249403"}}{\fldrslt rdar://problem/5249403}}.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 5/30/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Add private GraphKitSourceVersion global, which is set via a new shell script build phase to the Subversion version number of the project.  Primarily intended for use by GraphKitBench and future testing tools; intended only for internal use.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf2 ---- GraphKit-20 (1.0.4-20) ----\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 5/25/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Add public XSGRDataSet property XSGRDataSetLegendSampleMode.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5227207"}}{\fldrslt rdar://problem/5227207}}.\
+* XSGRAxes now determines the integral rect (in device space) of the legend sample rect, to help ensure proper alignment of legend sample swatches.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 \
+5/24/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Removed unused variables left over from previous changes.\
+* XSGRChartView now sets the chart of all it's datasets to nil in dealloc, before releasing the array of datasets - prevents a bad-access crash from the dataset later referencing the chart in it's own dealloc method.\
+* Reworked the way extra margin space is determined with regards to axis titles, labels and whatnot.  No longer assigns extra space when it's not necessary.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5227285"}}{\fldrslt rdar://problem/5227285}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 5/23/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Fixed the implementation of the XSGRAxesXTitleSpacing & XSGRAxesYTitleSpacing properties to match the intention and the documentation.  Also gave them default values of 5.0 (previously no defaults defined).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5210698"}}{\fldrslt rdar://problem/5210698}}.\
+* Fixed bug with custom axis label format strings where the layout wasn't actually using them, so the spacing was wrong.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5224620"}}{\fldrslt rdar://problem/5224620}}.\
+* Changes axis title layout such that they're now relative to the axis itself, rather than the edge of the canvas.  This means they'll follow the axis as it moves about (e.g. if the other axis has large labels which increase the margins).  This prevents the axis title from appearing far away from the axis, which is visually unappealing.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5223683"}}{\fldrslt rdar://problem/5223683}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 5/22/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Now use the glyph bounds, rather than the typographic bounds, when determining the automatic major unit (based on the axis label spacing).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5210829"}}{\fldrslt rdar://problem/5210829}}.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf2 ---- GraphKit-19 (1.0.4-19) ----\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 5/15/2007 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 * Added import of XSGRChartView.h to XSGRSliderScroller.h, so as to see the CGFloat definitions needed on Tiger.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 5/14/2007 wtregaskis
+\fs20 \
+* Now reset _scrollView ivar to nil whenever our parent view changes, including when we're removed from it.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5201864"}}{\fldrslt rdar://problem/5201864}}.\
+* Added private XSGRChartView property XSGRChartPassMouseEventsThrough, which if enabled passes mouse events to super in the same way as was done in older versions of GraphKit.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5194598"}}{\fldrslt rdar://problem/5194598}}.\
+\
+
+\fs28 5/10/2007 wtregaskis
+\fs20 \
+* Fixed the zoom history to work better in scenarios involving resizing the chart view.  This does change the general behaviour slightly, although it's now [arguably] better anyway.  Also added NSBeeps if you try to move beyond the available history.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5188955"}}{\fldrslt rdar://problem/5188955}}.\
+\
+
+\fs28 5/9/2007 wtregaskis
+\fs20 \
+* Axes titles now render centred horizontally in the canvas rect, not the plot rect, respect axes margins, and no longer draw over the plot rect.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5189556"}}{\fldrslt rdar://problem/5189556}}.\
+\
+
+\fs28 5/8/2007 wtregaskis
+\fs20 \
+* Fixed label clipping so that it won't cut them off at the edges of the chart, and while scrolling - particularly on the Y axis.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5189162"}}{\fldrslt rdar://problem/5189162}}.\
+\
+
+\fs28 5/3/2007 wtregaskis
+\fs20 \
+* Upgraded to CGFloats & doubles throughout.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5171150"}}{\fldrslt rdar://problem/5171150}}.\
+\
+
+\fs28 5/2/2007 wtregaskis
+\fs20 \
+* Added definitions for CGFloat and AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER if they're not already defined, so that we can build on Tiger again.\
+* Removed unnecessary AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER from typedef - wasn't doing anything, of course, and was causing an annoying warning.\
+\
+
+\fs28 5/1/2007 wtregaskis
+\fs20 \
+* Merged from radar4441753 branch:\
+	* Now take the precision of the major unit and major unit phase (whichever is greater) as the minimum precision for automatic labels (for non-categorical axes). Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4441753"}}{\fldrslt rdar://problem/4441753}}.\
+* Linear axis labels are no longer displayed beyond the plot rect.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5174861"}}{\fldrslt rdar://problem/5174861}}.\
+* Category labels are no longer displayed if the centre of the category is outside the plot rect.\
+\
+
+\fs28 4/30/2007 wtregaskis
+\fs20 \
+* Merged from zoomOptimisations branch:\
+	* Added autorelease pools in inner layout loops of XSGRXYAxes' computeUnitsForAxis: - helps reduce memory high-water mark.  Also started moving away from autoreleased objects to further reduce overhead and memory pressure.\
+	* Now reset (empty) string size cache in XSGRXYAxes' computeLayout method - helps reduce memory usage, with no measurable performance cost (typically a computeLayout occurs with a zoom, in which case the cached string sizes are often useless).\
+	* Added early-clipping for axis labels, which significantly improves performance at high zooms.  Aids {\field{\*\fldinst{HYPERLINK "rdar://problem/3839791"}}{\fldrslt rdar://problem/3839791}}.\
+	* Added to and fixed up the clipping of axis tick marks & labels, which massively improves performance at high zooms.  Largely resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/3839791"}}{\fldrslt rdar://problem/3839791}}.\
+* Added availability macros for 10.5.\
+* Checked for private symbols that were being leaked accidentally, and made them private.\
+\
+
+\fs28 4/27/2007 wtregaskis
+\fs20 \
+* In the case where the XSGRXYAxes plot min & max are the same, it now obeys the fixed min/max properties.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5150203"}}{\fldrslt rdar://problem/5150203}}.\
+* Now setNeedsLayout:NO at the end of XSGRXYAxes' computeLayout - some of the property setting in that method sets needsLayout as a side-effect, which we don't want.  Prevents redundant layouts.\
+* Improved flexibility of XSGRXYAxes auto-units - can now have a fixed min or max that is beyond the data range; the other unit will be adjusted to suit, even if it means displaying a range on the axis that contains no data; still better than a layout error.\
+* Now include any unloaded elements in those we request data for, in XSGRXYDataSet's reloadDataInRange:.  For example, if you add a new dataset and ask it to reload data in the range \{3, 1\}, it'll realise it doesn't have any data yet for the range \{0, 3\}, so it'll also ask for that.  Otherwise, you get whatever random junk was in that memory when you were given it, which has nasty consequences.\
+* Merged from the labelSpacingImprovements branch:\
+	* Major unit calculation now takes into account the size of labels and other factors that affect plot size, meaning more reliable calculation of major units such that labels don't overlap.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/3372847"}}{\fldrslt rdar://problem/3372847}}.\
+	* Categorical labels now account for the presence (or absence) of tick marks appropriately.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4923674"}}{\fldrslt rdar://problem/4923674}}.\
+	* Categorical axes now properly calculate the necessary space for labels when the major unit is fixed.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4923673"}}{\fldrslt rdar://problem/4923673}}.\
+	* Improved algorithm for very dense categorical axes - now occasionally increase major unit guesstimate by twofold, rather than a single unit, to help ensure we find at least something halfway suitable.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4923672"}}{\fldrslt rdar://problem/4923672}}.\
+\
+
+\fs28 4/26/2007 wtregaskis
+\fs20 \
+* Added autorelease pools in inner layout loops of XSGRXYAxes' computeUnitsForAxis: - helps reduce memory high-water mark.  Also started moving away from autoreleased objects to further reduce overhead and memory pressure.\
+* Now reset (empty) string size cache in XSGRXYAxes' computeLayout method - helps reduce memory usage, with no measurable performance cost (typically a computeLayout occurs with a zoom, in which case the cached string sizes are often useless).\
+* Added early-clipping for axis labels (just for non-log value axes, for the moment), which significantly improves performance at high zooms.  Aids {\field{\*\fldinst{HYPERLINK "rdar://problem/3839791"}}{\fldrslt rdar://problem/3839791}}.\
+\
+
+\fs28 4/24/2007 wtregaskis
+\fs20 \
+* Now obtain the user<->device space transforms as affine transforms which we apply inline in XSGRXYAxes, rather than calling out to NSView's convertPoint:toView: and convertPoint:fromView: methods; they were showing up as a significant portion (~30%) of the CPU time used for high zooms.  Aids {\field{\*\fldinst{HYPERLINK "rdar://problem/3839791"}}{\fldrslt rdar://problem/3839791}}.\
+\
+
+\fs28 4/23/2007 wtregaskis
+\fs20 \
+* Fixed bug in XSGRChartSamePlotRegion zoom mode which was resulting in the chart scrolling to completely to the wrong place when zooming.\
+* Non-overlay charts with only a single dataset now act like they are in overlay mode with regards to zooming - in particularly they support the use of XSGRChartSamePlotRegion mode.  Slightly improves zooming accuracy (given that \CocoaLigature0 XSGRChartSamePlotRegion is superior to XSGRChartExactRegion).  Aids {\field{\*\fldinst{HYPERLINK "rdar://problem/4559903"}}{\fldrslt rdar://problem/4559903}} and {\field{\*\fldinst{HYPERLINK "rdar://problem/4492774"}}{\fldrslt rdar://problem/4492774}}.\CocoaLigature1 \
+\
+
+\fs28 4/18/2007 wtregaskis
+\fs20 \
+* Added public XSGRPieAxes method angleOfPoint:radius:.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4659233"}}{\fldrslt rdar://problem/4659233}}.\
+\
+
+\fs28 4/16/2007 wtregaskis
+\fs20 \
+* Made XSGRLineDataSet more resilient to missing marker font and colour properties (re. the "AppleGothic" font being disabled).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/3712599"}}{\fldrslt rdar://problem/3712599}}.\
+* Fixed distancing algorithm with regards to inexact point -> element index conversion, for XSGRColumnDataSet.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4226484"}}{\fldrslt rdar://problem/4226484}}.\
+\
+
+\fs28 4/12/2007 wtregaskis
+\fs20 \
+* Merged changes from version B that are to go into Leopard:\
+	* Added public XSGRXYAxes properties XSGRAxesXMajorTicksPosition, XSGRAxesYMajorTicksPosition, XSGRAxesXMinorTicksPosition & XSGRAxesYMinorTicksPosition, and associated defaults (XSGRAxesTickPositionOutside).  These properties allow the position of tick marks to be adjusted, so for example you can have them centred on the axis line, or inside the chart rather than outside.\
+	* Fixed margin calculations relating to tick marks - better visual results.\
+	* Added private XSGRDataSet & XSGRAxes method _supportsCopyOnScroll.\
+	* Added private XSGRChartView method _updateCopyOnScrollSetting.\
+	* Added value label support to all datasets (XSGRLineDataSet, XSGRAreaDataSet, XSGRColumnDataSet & XSGRPieDataSet) - new public properties \CocoaLigature0 XSGRChartDrawValueLabels & XSGRChartDefaultValueLabelAttributes.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \CocoaLigature1 	* Added public XSGRXYDataSet properties XSGRDataSetXYValueLabelXClipping & XSGRDataSetXYValueLabelYClipping.  The options currently supported are XSGRDataSetXYValueLabelClippingNone, XSGRDataSetXYValueLabelClippingVisibleRegion, XSGRDataSetXYValueLabelClippingVisibleRegionAllPoints & XSGRDataSetXYValueLabelClippingPlotRegion.\
+	* Added public XSGRXYDataSet properties XSGRDataSetXYValueLabelHorizontalAlignment & XSGRDataSetXYValueLabelVerticalAlignment properties, with associated value constants XSGRDataSetXYValueLabelAlignLeft, XSGRDataSetXYValueLabelAlignRight, XSGRDataSetXYValueLabelAlignTop, XSGRDataSetXYValueLabelAlignBottom & XSGRDataSetXYValueLabelAlignCenter.\
+	* Added public XSGRXYDataSet properties XSGRDataSetXYValueLabelPositionFactor & XSGRDataSetXYValueLabelOffset, for adjusting the position of value labels on XY charts.\
+	* Added public XSGRPieDataSet property \CocoaLigature0 XSGRDataSetPieLabelPositionFactor, for adjusting the position of value labels on pie charts.\
+\CocoaLigature1 	* Added private XSGRDataSet method _defaultLabelAttributes.\
+	* Added public XSGRDataSetDataSource method chart:labelForDataSet:element: and associated typedef XSGRLabelAtIndexIMP.\
+	* Added some KVC support (implemented valueForUndefinedKey: mapping to propertyForKey:, and setValue:forUndefinedKey: --> setProperty:forKey:).\
+	* Marked much of the new stuff as Leopard only using Availability Macros.  Still need to check the entire codebase for other changes since 10.4.3.\
+	* Added NSCopying support to most classes.\
+	* Selection-zooming now works when the XSGRChartView is not within an NSScrollView.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 4/10/2007 wtregaskis
+\fs20 \
+* Replaced float with CGFloat where necessary to avoid compiler warnings.\
+\
+
+\fs28 3/14/2007 wtregaskis
+\fs20 \
+* Added public XSGRXYAxes properties XSGRAxesXMajorUnitPhase and XSGRAxesYMajorUnitPhase.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/5059386"}}{\fldrslt rdar://problem/5059386}}.\
+\
+
+\fs28 2/17/2007 wtregaskis
+\fs20 \
+* No longer clip the transparency layer when drawing in flat mode.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4981491"}}{\fldrslt rdar://problem/4981491}}.\
+\
+
+\fs28 2/6/2007 wtregaskis
+\fs20 \
+* Added private XSGRXYAxes property \CocoaLigature0 XSGRAxesSkipOverlappingLabels.  [Hopefully temporary] workaround for {\field{\*\fldinst{HYPERLINK "rdar://problem/4958320"}}{\fldrslt rdar://problem/4958320}}\CocoaLigature1 \
+\
+
+\fs28 1/23/2007 wtregaskis
+\fs20 \
+* Removed version B code.\
+\
+
+\fs28 1/22/2007 wtregaskis
+\fs20 \
+Merged from KVC branch:\
+	* Chart & axes titles are now drawn in the correct locations and wrap appropriately.\
+	* Added public XSGRGradientColor method isOpaque.  Updated XSGRChartView to use this appropriately in it's own isOpaque method, to ensure drawing works properly if the gradient contains non-opaque colours.\
+	* Added support for radial gradients to XSGRGradientColor (XSGRGradientFillRadial gradient type).\
+	* Added NSCopying support to XSGRGradientColor.\
+\
+	Version B specific:\
+\
+	* No longer encode our datasets when in IB (NSApp responds to isTestingInterface), as the dataset(s) we have in IB are for demo/testing purposes only and shouldn't be saved in the nib.  For similar reasons, no longer encode the next auto plot colour or zoom history information when in IB.\
+	* Renamed the class methods defaultProperties -> defaultValues, defaultPropertyForKey: -> defaultValueForKey:, setDefaultProperties: -> setDefaultValues: & setDefaultProperty:forKey: -> setDefaultValue:forKey:.  This better matches the standard KVC instance methods.\
+	* Removed public XSGRChartView properties XSGRChartTitleColor & XSGRChartMainTitleFont.\
+	* Renamed public XSGRChartView property XSGRChartMainTitle to XSGRChartTitle.\
+	* Added public XSGRChartView property XSGRChartAttributedTitle, with bindings exposure.\
+	* Default value for XSGRChartDefaultValueLabelAttributes is now actually set on XSGRChartView.\
+	* Added notification hook for IB support (to XSGRChartView).\
+	* Removed XSGRChartView's _mainTitleTextAttributes ivar.\
+	* Now correctly set the chart's size in XSGRChartView's awakeFromNib if the enclosing scrollview has autohiding scrollers.  There are still issued, unrelated to this particular element, with autohiding scrollbars.\
+	* Added setTitle: and setAttributedTitle: methods to back the XSGRChartView XSGRChartTitle and XSGRChartAttributedTitle properties.\
+	* Fixed the ordering of method calls and bits and pieces in XSGRChartView's computeLayout, so that autoresizing of the chart title should now work.\
+	* Removed public XSGRAxes property XSGRAxesSubTitleFont.\
+	* Renamed public XSGRAxes property XSGRAxesSubTitle to XSGRAxesTitle.\
+	* Added public XSGRAxes property XSGRAxesAttributedTitle.\
+\
+
+\fs28 1/19/2007 wtregaskis
+\fs20 \
+* Log axes now draw their labels in the correct positions (as consistent with non-log and categorical axes).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4806352"}}{\fldrslt rdar://problem/4806352}}\
+* Hidden datasets no longer muck up the legend.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4654615"}}{\fldrslt rdar://problem/4654615}}\
+* Changed compositing mode for XSGRXYAxes' plot frame (so that transparency now works as expected) and added public XSGRXYAxes property \CocoaLigature0 XSGRAxesDrawPlotFrame.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4596111"}}{\fldrslt rdar://problem/4596111}}\
+* Zoom sliders are now updated whenever the chart performs it's layout (plus a few other special cases), which seems to make them more reliable.  Seems to resolve {\field{\*\fldinst{HYPERLINK "rdar://problem/4665870"}}{\fldrslt rdar://problem/4665870}}\
+* Now set the max value of the zoom slider(s) before their current value, which resolves some update issues (i.e. if the existing max is less than the new current value, the new current value is treated as invalid by the NSSlider and set to 0).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4491239"}}{\fldrslt rdar://problem/4491239}}\
+* No longer get incorrect warnings in the console about being unable to reallocate the legend element position cache.\
+* If the XSGRAxes delegate returns nil from chart:categoryLabelForAxes:index:, now use the default label rather than potentially throwing an exception or crashing.\CocoaLigature1 \
+* Added defaults to XSGRLineDataSet for the public properties XSGRLineDataSetLineStyle and XSGRLineDataSetFillStyle, as documented.\
+\
+Version B specific:\
+\
+* Changed the \CocoaLigature0 chart:dataSetSelectionDidChange:range: XSGRDataSet delegate method to chart:dataSetSelectionDidChange:from:to:.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4656839"}}{\fldrslt rdar://problem/4656839}}\CocoaLigature1 \
+\
+
+\fs28 1/13/2007 wtregaskis
+\fs20 \
+* XSGRLineDataSet now draws correctly if only markers are shown.\
+\
+
+\fs28 1/12/2007 wtregaskis
+\fs20 \
+* Updated copyright statements for the new year, and also for the name change, i.e. "Apple Computer" -> "Apple Inc".\
+\
+
+\fs28 1/4/2007 wtregaskis
+\fs20 \
+* Fixed most (if not all) of the problem areas for HiDPI.  There may be a non-trivial performance overhead, however, of having to call convertPoint:toView: and convertPoint:fromView: frequently as part of the fix; needs to be measured.  It also remains to be seen fully how these changes affect printing and exporting (output appears fine in cursory tests).\
+* XSGRXYAxes' selectPoint:byExtendingSelection: now properly handles a return value of -1 (i.e. NSUINTEGER_MAX) from the dataset's indexOfXvalue:yValue:exactMatch: method, as would be returned if no element is found for the given point.  If extending the selection it NSBeeps and doesn't change it; otherwise it clears the selection.  This is ultimately consistent with previous behaviour, with the notable exception of not leading to exceptions and other nastiness as a result of NSUINTEGER_MAX being propagated.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4693964"}}{\fldrslt rdar://problem/4693964}}\
+* Added public XSGRAxes method drawBackgroundInRect:, which should be used by axes' to draw their background.  Previously this was done in drawGridRect:, but this had the problem of wiping out the datasets if the XSGRAxesGridOrder were set to XSGRAxesGridFront and an axes background was set.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4652306"}}{\fldrslt rdar://problem/4652306}}\
+\
+Version B specific:\
+\
+* Added public XSGRXYAxes properties XSGRAxesXMajorTicksPosition, XSGRAxesYMajorTicksPosition, XSGRAxesXMinorTicksPosition & XSGRAxesYMinorTicksPosition, and associated defaults (XSGRAxesTickPositionOutside).  These properties allow the position of tick marks to be adjusted, so for example you can have them centred on the axis line, or inside the chart rather than outside.\
+\
+
+\fs28 1/2/2007 wtregaskis
+\fs20 \
+* Changing any of the XSGRXYAxes properties XSGRAxesYMinorUnit, XSGRAxesYMajorUnit, XSGRAxesXMinorUnit or XSGRAxesXMajorUnit now causes layout to be recomputed regardless of whether the units are supposed to fixed or not.  This fixes a potential infinite loop for categorical axes, as these properties are validated during layout, set, then used for drawing.  Prior to this change they could be modified, then a redraw performed, leading to the bad behaviour described.\
+* Changing any of the XSGRXYAxes properties XSGRAxesYPlotMin, XSGRAxesYPlotMax, XSGRAxesXPlotMin or XSGRAxesXPlotMax now causes layout to be recomputed regardless of whether the values are supposed to fixed or not.  This is quite similar to the problem in the previous point, except that the result of this bug was that the axes were potentially being drawn with the wrong min/max values.  This was particularly visible in GraphKitExplorer, because it sets all properties every time anything changes, which means setting a lot of things (e.g. XSGRAxesYPlotMin) which *should* be irrelevant (i.e. XSGRAxesFixedYPlotMin == NO).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4629861"}}{\fldrslt rdar://problem/4629861}}\
+* Updated some code that was rounding based on point values, rather than pixel values - with the assumption that they are equivalent - which would lead to undesirable appearance under HiDPI.  Partially resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4412330"}}{\fldrslt rdar://problem/4412330}}\
+* Marked suspicious code in relation to HiDPI.  This will need actual testing under HiDPI to determine if it's a problem.  See {\field{\*\fldinst{HYPERLINK "rdar://problem/4412330"}}{\fldrslt rdar://problem/4412330}}\
+* Changed the rounding behaviour of the canvas & plot rect calculations to round the rect size down, rather than up - errs on the side of caution as far as margins & other space requirements go.\
+* Enabled additional compiler warnings, such as shadowing, unused variables, etc.  Also disabled warnings about uninitialised variables, since the warnings are spurious.  Removed or renamed shadowing variables revealed by this new settings.\
+\
+Version B specific:\
+\
+* Changed the way label spacing is calculated.  The method used previously (and retained for backward compatibility in version A) was not optimal, and could result in excess spacing.  The new method takes better into account the size requirements of the labels with respect to their positioning.\
+* A label rotation of 0 is no longer interpreted as 45 for categorical XY axes.  This made it impossible to actually have no rotation.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4659188"}}{\fldrslt rdar://problem/4659188}}\
+* Removed the XSGRMakeIntegralPoint & XSGRMakeIntegralRect macros, which are unused anyway but more importantly are likely to be abused re. HiDPI.\
+\
+
+\fs28 12/22/2006 wtregaskis
+\fs20 \
+* Added early-exit to drawDataSetRect: if there are no elements in the dataset; saves time and prevents possible memory leak via an NSBezierPath exception (in XSGRLineDataSet, at least).  May resolve {\field{\*\fldinst{HYPERLINK "rdar://problem/4812137"}}{\fldrslt rdar://problem/4812137}}\
+\
+
+\fs28 12/18/2006 raltherr
+\fs20 \CocoaLigature0 \
+* Remove G3 specific settings (fixes <rdar://problem/4886437> GraphKit-14 fails to build with gcc-5429)\
+
+\fs28 \CocoaLigature1 \
+12/16/2006 wtregaskis
+\fs20 \CocoaLigature0 \
+* Merged from lineAreaMerge branch:\
+	* Added public XSGRDataSet property XSGRDataSetDrawFlat, which is set to YES in XSGRChartView's default properties.\
+	* XSGRAxes' drawLegendRect: now clips drawing of legend sample swatches to the appropriate rect, and saves the graphics state before hand, restoring it after each sample is drawn.\
+	* Removed default XSGRLineDataSet setting for XSGRDataSetMarkerColor.\
+	* Changed XSGRLineDataSet's default value of XSGRDataSetMarkerGlyph to be defined as the symbolic constant XSGRBlackUpPointingTriangle, rather than an inline NSString, for consistency.  Rearranged the order of initialisation in +initialize to account for this (i.e. XSGRBlackUpPointingTriangle is now initialised before XSGRLineDataSet's properties).\
+\
+Version B specific:\
+\
+* Merged from lineAreaMerge branch:\
+	* Added public XSGRLineDataSet properties XSGRLineDataSetLineStyle (supported values: XSGRLineDataSetPlainLineStyle, XSGRLineDataSetCapLineStyle & XSGRLineDataSetOutlineLineStyle), XSGRLineDataSetFillStyle (supported values: XSGRLineDataSetAreaFillStyle & XSGRLineDataSetPolygonFillStyle).  These replace the XSGRLineDataSetPlotStyle property, which has been removed.\
+	* Added default values to XSGRChartView's default properties for XSGRLineDataSetLineStyle (default value: XSGRLineDataSetPlainLineStyle) and XSGRLineDataSetFillStyle (default value: XSGRLineDataSetAreaFillStyle).\
+	* XSGRLineDataSet no longer maps the "plot" colour to anything else; it is instead now used by default if no explicit value is provided for the line, marker and fill colours.\
+	* Updated documentation to note that XSGRAreaDataSet has been removed, it's functionality subsumed by XSGRLineDataSet.\
+	* Removed XSGRAreaDataSet.\
+\
+
+\fs28 \CocoaLigature1 12/14/2006 wtregaskis
+\fs20 \
+* Updated and added documentation.\
+* Fixed bug in XSGRPieDataSet where the aColor variable was not being initialised before being used (bug introduced during valueLabels merge).\
+* Changed spelling of "Centre" (in XSGRDataSetXYValueLabelAlignCentre) to the U.S. "Center".\
+\
+Version A specific:\
+\
+* _extraData structs for XSGRAxes, XSGRXYDataSet and XSGRPieDataSet are now allocated using NSAllocateCollectable(<size>, NSScannedOption), and pointers to them are declared as __strong.  This should resolve {\field{\*\fldinst{HYPERLINK "rdar://problem/4539352"}}{\fldrslt rdar://problem/4539352}} and {\field{\*\fldinst{HYPERLINK "rdar://problem/4832560"}}{\fldrslt rdar://problem/4832560}}.\
+\
+Version B specific:\
+\
+* Changed declaration of chart:labelForDataSet:element: to return id instead of NSString*, since it is permitted currently to return either NSString* or NSAttributedString*.\
+\
+
+\fs28 12/12/2006 wtregaskis
+\fs20 \
+* Added private XSGRDataSet method _activeAxes.\
+* Now use source-over compositing explicitly when drawing XSGRColumnDataSet columns and the chart background; the default for NSRectFill() appears to be a basic copy which - for the background at least - was taking the background as opaque black, rather than whatever was really there.\
+* Now include necessary headers (stdio & stdlib) in XSGRError.h.\
+\
+Version B specific:\
+\
+* Added private XSGRDataSet method _supportsCopyOnScroll.\
+* Added private XSGRAxes method _supportsCopyOnScroll.\
+* Added private XSGRChartView method _updateCopyOnScrollSetting.\
+* Merged from valueLabels branch.  Value labels are now supported and working, although further testing is required.  At this point the only known pitfall is that compression/filtering has not been tested with value labels, and is expected to behave incorrectly.\
+	* Added value label support to all datasets (XSGRLineDataSet, XSGRAreaDataSet, XSGRColumnDataSet & XSGRPieDataSet).\
+	* Added public XSGRChartView properties \CocoaLigature0 XSGRChartDrawValueLabels & XSGRChartDefaultValueLabelAttributes, for controlling the new value labels feature.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \CocoaLigature1 	* Added public XSGRXYDataSet properties XSGRDataSetXYValueLabelXClipping & XSGRDataSetXYValueLabelYClipping.  The options currently supported are XSGRDataSetXYValueLabelClippingNone, XSGRDataSetXYValueLabelClippingVisibleRegion, XSGRDataSetXYValueLabelClippingVisibleRegionAllPoints & XSGRDataSetXYValueLabelClippingPlotRegion.\
+	* Added public XSGRXYDataSet properties XSGRDataSetXYValueLabelHorizontalAlignment & XSGRDataSetXYValueLabelVerticalAlignment properties, with associated value constants XSGRDataSetXYValueLabelAlignLeft, XSGRDataSetXYValueLabelAlignRight, XSGRDataSetXYValueLabelAlignTop, XSGRDataSetXYValueLabelAlignBottom & XSGRDataSetXYValueLabelAlignCenter.\
+	* Added public XSGRXYDataSet properties XSGRDataSetXYValueLabelPositionFactor & XSGRDataSetXYValueLabelOffset, for adjusting the position of value labels on XY charts.\
+	* Added public XSGRPieDataSet property \CocoaLigature0 XSGRDataSetPieLabelPositionFactor, for adjusting the position of value labels on pie charts.\
+\CocoaLigature1 	* Added public XSGRDataSet data source protocol method -chart:labelForDataSet:element:, so that data sources can provide custom labels, just as they can presently provide custom callouts.\
+	* Added POINT_VALUE macro (in XSGRUtility.h) in the same vein as DOUBLE_VALUE and FLOAT_VALUE.\
+	* DOUBLE_VALUE & FLOAT_VALUE now check whether the returned property object responds to the relevant selector - if not, they return the default value.\
+	* The XSGRColumnDataSet implementation of the XSGRXYDataSet instance method \CocoaLigature0 indexOfXvalue:yValue:exactMatch: now works properly for exactMatch:NO; previously it was calculating horizontal distance from the start of each column, rather than the nearest edge of the column (as it does now).  Thus, clicking in the right half of a column would erroneously select the next column.  Now behaves as expected; clicking within a column will select exactly that column (or, if the click lies within multiple columns, whichever has the lowest index).\CocoaLigature1 \
+	* Moved SELs and IMPs instance variables relating to value callouts & labels into XSGRDataSet, from XSGRXYDataSet/XSGRPieDataSet.\
+	* Added private XSGRDataSet method _defaultLabelAttributes.\
+	* Added public XSGRDataSetDataSource method chart:labelForDataSet:element: and associated typedef XSGRLabelAtIndexIMP.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 \
+12/5/2006 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \CocoaLigature0 * Added additional documentation to private headers.\
+* Removed redundant code in XSGRGradientColor; fillBezierPath: now simply calls fillBezierPath:withBounds:, rather than duplicating it's implementation.  Similarly, fillRect: now invokes fillBezierPath:withBounds: directly rather than via fillBezierPath:.\
+* XSGRLineDataSet no longer calculates the marker size when it's unnecessary (i.e. when value callouts are off and markers are not shown); doing so takes a non-trivial amount of time.\
+* Noted in the documentation that XSGRChartBezelBorder and XSGRChartGrooveBorder border types are relatively expensive, so their use is lightly discouraged.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 \CocoaLigature1 10/31/2006 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \CocoaLigature0 * Now support shift-arrows to extend the current selection (if multiple select\CocoaLigature1 ion is enabled, otherwise just act as without the shift modifier).  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4605263"}}{\fldrslt rdar://problem/4605263}}\
+* The arrow keys now work for s\CocoaLigature0 election even if there is no existing selection (left/up start from the last element, right/down start from the first).\
+* XSGRChartView now checks if selection (and multiple selection, where applicable) is allowed before invoking the appropriate methods on it's datasets, such that you can now have a programmatic selection with (user-based) selection disabled, and not have to worry about the user modifying the selection.\
+\
+Version B specific:\
+* The behaviour of XSGRDataSet's selectNext and selectPrevious methods has been changed for the case where there is more than one element selected - it now reduces the selection to just the first or last (respectively) selected element.  This is consistent with selection in text fields, and follows the guidelines in the NSResponder documentation.  The existing behaviour (of just shifting the whole selection) is being preserved in version A for compatibility.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 \CocoaLigature1 10/27/2006 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \CocoaLigature0 * Removed declarations for the private XSGRChartView methods _zoomInScroller: & _zoomOutScroller.  The actual implementations were removed back in February.\
+* Removed declarations for the private XSGRChartView properties XSGRZoomClipContentWidthRatio, XSGRZoomClipContentHeightRatio, XSGRZoomClipOriginXValue & XSGRZoomClipOriginYValue.  The actual definitions were removed ages ago when the zooming was redone.\
+* Axis titles on XSGRXYA\CocoaLigature1 xes' are now drawn even if tick marks & labels are not.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4455308"}}{\fldrslt rdar://problem/4455308}}\
+* Minor tick marks may now be l\CocoaLigature0 onger than major tick mark\CocoaLigature1 s.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4806356"}}{\fldrslt rdar://problem/4806356}}\
+\CocoaLigature0 \
+Version B specific:\
+* Removed the private XSGRXYAxes property XSGRAxesYHeadroomFraction.  This is already deprecated in version A.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 \CocoaLigature1 10/26/2006 wtregaskis
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \CocoaLigature0 Version B specific:\
+* Removed the _numOwnedDataSets ivar, the methods which relate to it (_addOwnedDataSet:, _remo\CocoaLigature1 veOwnedDataSet: & _numberOfOwnedDataSets) and uses of those methods.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4804068"}}{\fldrslt rdar://problem/4804068}}\
+\CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 \CocoaLigature1 10/15/2006 wtregaskis
+\fs20 \
+*Fixed a copy-paste typo in XSGRXYAxes' computeUnitsForAxis: where it was performing validation of the minor unit, it was accidentally referring to the majorUnit variable instead of minorUnit (which was allowing invalid parameters through in some cases, leading to hangs and other nastiness).  Resolves the first half of {\field{\*\fldinst{HYPERLINK "rdar://problem/4556337"}}{\fldrslt rdar://problem/4556337}}\
+*XSGRXYAxes in categorical mode (on the X axis) now round major & minor units to the nearest integer, and also perform validation of the minor unit (to ensure it's at least 1) the same as they already did for the major unit.  Resolves the other half of {\field{\*\fldinst{HYPERLINK "rdar://problem/4556337"}}{\fldrslt rdar://problem/4556337}}\
+*Reordered min/max value checking in XSGRXYAxes' computeUnitsForAxis: for logarithmic axes; the previous ordering made the particular check in question redundant, and the new ordering fixes that as well as providing more useful logging for min/max values that are less than or equal to 0.\
+*XSGRXYAxes' computeLayout now ensures that it's needsLayout flag is *not* cleared if the layout fails (the call to [super computeLayout] clears this flag, so it has to be reset if XSGRXYAxes' computeLayout fails after the call to super).\
+\
+
+\fs28 10/12/2006 wtregaskis
+\fs20 \
+*Added newlines to end of GraphKit.h and XSGRSelectionView.m\CocoaLigature0 .  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4778448"}}{\fldrslt \CocoaLigature1 rdar://problem/4778448}}\CocoaLigature1 \
+*Substantially improved \CocoaLigature0 XSGRChartExactRegion (the default in non-overlay mode) \CocoaLigature1 zooming.  Rect-zooming on an already-zoomed chart now works about as well as on a non-zoomed chart, which is to say, poorly but functionally.  Improves, but doesn't entirely resolve, {\field{\*\fldinst{HYPERLINK "rdar://problem/4559903"}}{\fldrslt rdar://problem/4559903}}\CocoaLigature0 \
+*Merged from setPropertyOptimisation branch.  This is a pretty big change, and as such may take a little bit of tinkering to get all the kinks out.  The trunk is tagged as "setPropertyOptimisationPreMerge" just prior to the merge, should a rollback be necessary.  The changes are summarised below.  More details are available in the changelog on the setPropertyOptimisation branch.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problems/4654548&4436329&4455301&4441642&4455369"}}{\fldrslt \CocoaLigature1 rdar://problems/4654548&4436329&4455301&4441642&4455369}}\
+	*XSGRChartView, XSGRDataSet & XSGRAxes now implement the method didSetProperty:forKey:replacingOldValue:andShouldReload:andRelayout:andRedisplay: (as do their subclasses as necessary).  This crucial method determines, based on what property is changing and how, whether a reload, relayout and/or redisplay is required.  It then automatically marks the appropriate objects as needing these things.  The idea is that you shouldn't ever have to explicitly call reloadData, setNeedsLayout: or setNeedsDisplay: after changing a property; the affected class(es) will work it out.  This allows the classes involved to be optimised by minimising the work that needs to be done for any change.\
+	*XSGRChartView, XSGRDataSet & XSGRAxes now inform each other of changes to their properties.  This is useful in several existing cases, where the XSGRChartView, for example, depends on a property of it's datasets independent of any behaviour the datasets themselves may have regarding that property.  It also means that changes to inherited values are seen just like local changes, which ties into the previous point.\
+	*XSGRXYDataSet now marks it's axes as needing layout after reloading data, rather than the chart (which would trigger a layout on all axes, which is unnecessary).\
+	*Changing the selection on a XSGRDataSet now triggers a redisplay automatically.\
+	*XSGRColumnDataSet now takes it's selection line width property from self, rather than it's axes.\
+	*_updateTextProperties (on various classes) no longer triggers a relayout itself; changes to the contained properties will trigger a layout, as necessary, as part of the new machinery detailed previously.\
+	*Added setNeedsToReloadData:, needsToReloadData, setNeedsToReloadData:inRange: and needsToReloadDataInRange: methods to XSGRChartView.  These should be used in preference to reloadData and reloadDataInRange:, as they defer the reload until the time it's needed, preventing redundant reloads.\
+	*computeLayout now does the relayout regardless of whether it's needed (it now is to setNeedsLayout: what display is to setNeedsDisplay:).\
+	*Line borders on XSGRChartView are now drawn above the background, which allows the border colour to be non-opaque.\
+	*Typing Control-Option-p in a XSGRChartView now NSLogs it's properties dictionary, in debug builds (NDEBUG is not defined or defined as 0).\
+	*XSGRXYAxes no longer erroneously includes the size of the axis titles in it's plot rect calculations if the axis is not drawn.\
+	*Tooltips ("Value Callouts") are now more reliably updated, and can now be removed (if XSGRChartDrawValueCallouts is set to NO) with only a redisplay.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 9/18/2006 wtregaskis
+\fs20 \
+*Added missing imports in XSGRAxes.h (\CocoaLigature0 XSGRChartView.h), XSGRPieAxes.h (XSGRAxes.h) and XSGRColumnDataSetPrivate.h (Foundation/Foundation.h).  Resolves\CocoaLigature1  {\field{\*\fldinst{HYPERLINK "rdar://problem/4554776"}}{\fldrslt rdar://problem/4554776}}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf2 ---- GraphKit-14 (1.0.3-3 / 2.0.0-3) ----\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \
+8/3/2006 wtregaskis
+\fs20 \
+*Added private XSGRDataSet properties XSGRDataSetPlotLineCapStyle, XSGRDataSetPlotLineJoinStyle, XSGRDataSetPlotLineMiterLimit & XSGRDataSetPlotLineFlatness.\
+\
+
+\fs28 7/30/2006 wtregaskis
+\fs20 \
+*Added private XSGRXYAxes properties XSGRAxesXSpaceBefore, XSGRAxesXSpaceAfter, XSGRAxesYSpaceBefore & XSGRAxesYSpaceAfter.\
+\
+Version B specific:\
+*Removed deprecated private XSGRColumnDataSet property XSGRDataSetDeltaLineWidth.\
+*Removed deprecated XSGRXYAxes property \CocoaLigature0 XSGRAxesYHeadroomFraction.\
+*Removed XSGRAxesDelegatePrivate category (methods which used it were already removed long ago).\CocoaLigature1 \
+\
+
+\fs28 7/28/2006 wtregaskis
+\fs20 \
+Version B specific:\
+*Removed XSGRDataSet's defaultColors and setDefaultColors: methods (also deprecated in version A, but remain there for backwards compatibility).\
+\
+
+\fs28 7/18/2006 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 *Header lipo no longer pays attention to comments, which allows the use of "# if"'s inside HeaderDoc comments.\
+\
+Version B specific:\
+*XSGRChartView's removeDataSet: and removeDataSetAtIndex: now update the chart's axes if necessary (i.e. if there is now only one data set left, and it's axes' class doesn't suit the current axes class).  This is similar to the behaviour when adding the first data set.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 7/17/2006 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 *Added private XSGRAxes method "properties".\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 6/30/2006 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 Version B specific:\
+*Removed \CocoaLigature0 XSGRAxesWindowSize and XSGRAxesLegendSpacing XSGRAxes properties (these are deprecated in version A, but still present to maintain compatibility).\CocoaLigature1 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 6/30/2006 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 *+setDefaultProperty:forKey: (on XSGRChartView, XSGRAxes and XSGRDataSet) no longer raises an exception when the value is nil.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 6/28/2006 wtregaskis\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs20 \cf0 *Completed NSCoding support on all classes - they now all declare NSCoding conformance, even the subclasses, and implement the necessary methods (which in many cases just call super, nothing more).\
+*When encoding non-retained objects (e.g. delegates, datasources, etc) the relevant classes now encode them conditionally.  Should prevent crashes (due to dangling pointers) when decoding.\
+*When decoding delegates & so forth the appropriate setter method is invoked, rather than assigning the instance variables directly, to ensure related instance variables (e.g. IMP caches) are properly rebuilt.  When using keyed coding this methods are invoked after more generic properties have been decoded; when using non-keyed coding they are unfortunately invoked before any other instance variables are assigned (legacy implementation).\
+*XSGRLineDataSet no longer invokes reloadData in it's own implementation of initWithCoder:, which was redundant since XSGRDataSet already invokes it.\
+*Keyed-coding key names are now prefixed with "XSGR" as recommended by the NSCoding guidelines.  Instances encoded using the previous names won't be decoded properly, but shouldn't fail catastrophically.  Since I'm not aware of anyone utilising the coding support (aside from myself in private projects) - according to Clownfish, anyway - I'm hoping no one will care.\
+*Keyed-coding coding now supports NSInteger/NSUInteger types on Leopard and later, via the new encodeInteger:forKey: and decodeIntegerForKey: methods on NSCoder.  When targetting Tiger or earlier the usual int versions are used, although encodeWithCoder: will now throw an exception if clipping would occur on 64-bit machines.  When decoding an instance on a 32-bit machine that was encoded on a 64-bit machine, NSCoder itself will throw an exception if there is an issue, inside decodeIntForKey:.\
+*[When using keyed coding] No longer encode instance variables that can be inferred automatically at decode time.\
+*(Partial merge from GC-compatibility branch) Moved #defines for old instance variable names from the headers to the implementations.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4562467"}}{\fldrslt rdar://problem/4562467}}\
+*(Partial merge from GC-compatibility branch) Added imports of XSGRChartView.h in headers which use NSInteger/NSUInteger.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4554776"}}{\fldrslt rdar://problem/4554776}}\
+*(Partial merge from GC-compatibility branch) Added finalize methods where necessary, for GC (Garbage Collection) compatibility.  Partially resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4539352"}}{\fldrslt rdar://problem/4539352}}\cf3 \ul \ulc3 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \ulnone \CocoaLigature1 *XSGRPieDataSet's _smallestAngle instance variable is now set to the actual angle (in degrees), rather than just the Y value as previously.\
+\
+Version A specific:\
+*Obsoleted private XSGRChartView instance variable _allowLiveResize.  _reserved4 takes it's place as a compatibility placeholder.\
+\
+Version B specific:\
+*No longer support non-keyed archiving.  This really shouldn't have gone in at all back when I implemented coding support in January, since non-keyed coding's been obsolete since 10.2.  But it will remain in version A for compatibility.\
+*Removed private XSGRChartView instance variable _allowLiveResize.\
+*(Partial merge from GC-compatibility branch) Deprecated incorrect spelling of XSGRGradientFillDiagonalRight & XSGRGradientFillDiagonalLeft.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 6/10/2006 wtregaskis
+\f1\fs24 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs20 \cf0 *Added documentation to GraphKit.h, GraphKitPrivate.h and XSGRChartView.h.\
+*Added GraphKit.hdoc.\
+*Modified framework targets to generate documentation from headers as part of build process.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 6/10/2006 wtregaskis
+\f1\fs24 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs20 \cf0 *Retrieving "automatic" properties (XSGRDataSetPlotLineColor, XSGRDataSetPlotFillColor, XSGRDataSetSelectionColor, XSGRDataSetMarkerColor and XSGRDataSetMarkerGlyph) now works at any time.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4579764"}}{\fldrslt rdar://problem/4579764}}\
+*The selection colour for line charts is now based on the marker colour if XSGRDataSetDrawPlotLine is NO (and regardless of the setting of XSGRDataSetDrawMarkers).  Previously it would revert to the previously used value, whatever that might have been.\
+*Setting XSGRDataSetSelectionColor on any XSGRDataSet now sets XSGRDataSetAutoSelectionColor automatically.\
+*Setting XSGRDataSetMarkerGlyph on XSGRLineDataSet now sets XSGRDataSetAutoMarkerGlyph automatically.\
+*Setting any of the properties listed above to nil now sets their associated auto property to YES (previously it would only set it to NO, if the value was non-nil).  This makes more sense, since an explicit setting of these properties of nil just doesn't do anything useful, and may not even work in a reliable fashion.\
+*Automatic marker will now be updated when the default markers are modified (XSGRLineDataSet).\
+\
+Version A specific:\
+*Added private XSGRDataSet method _setLiteralProperty:forKey:.\
+\
+Version B specific:\
+*The use of automatic properties (like those listed above) no longer overrides their explicit settings.  While the property is set to automatic the explicit value is shadowed by the automatic one (by propertyForKey:; _literalPropertyForKey: still returns the explicit value of course).  This has two significant implications:\
+	a) You can set the property to something, turn that property onto automatic, then turn it off automatic again, and the original 'something' will return.\
+	b) The explicit values are no longer "inherited" from the automatic ones; if you do not set them, they will remain as their defaults (e.g. black for XSGRDataSetPlotLineColor).  To adopt the automatic values as explicit ones, try [dataSet setProperty:[dataSet propertyForKey:<whatever>] forKey:<whatever>] prior to turning <whatever> off automatic.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 6/7/2006 wtregaskis
+\f1\fs24 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs20 \cf0 *Added setter versions of various macros - notably AXIS_PROPERTY, PRIMARY_OFFSET, SECONDARY_OFFSET, PRIMARY_SIZE, SECONDARY_SIZE - in response to the changes in gcc which will, sometime in the future, break the previous use of the getters as lvalues.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\fs28 \cf0 5/17/2006 wtregaskis
+\f1\fs24 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs20 \cf0 *XSGRChartView's keyDown: method now properly traps events it handles, and forwards to it's super those it does not.  It no longer erroneously breaks down the event into individual characters.\
+*XSGRColumnDataSet now inverts any X elements that have a begin > end.  This isn't a supported use anyway, but improves the robustness when it does occur.\
+*XSGRXYDataSet now ignores the 'end' X element value if [self \CocoaLigature0 supportsRangesOnAxis:] returns NO.  Prevents unnecessary extra space after elements in line & area charts.\CocoaLigature1 \
+*Added zoom history back in.  In version A, -/+ keys move back and forth through the history, respectively, and option-clicking moves back through the history.  In version B, -/+ keys zoom out and in by multiples of 2, respectively, and option-clicking zooms out in multiples of 2.  In both version Command-Left-Arrow and Command-Right-Arrow step back and forth through the history, respectively.\
+*Added debugging message when changing X and/or Y zoom values.\
+*Added public XSGRXYDataSet (and subclasses) method supportsRangesOnAxis:.\
+*XSGRXYDataSet now consults self's supportsRangesOnAxis: when calculating _smallestXInterval, to determine if the width of each element should be considered.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4477750"}}{\fldrslt rdar://problem/4477750}}\ul \ulc0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f1\fs24 \cf0 \ulnone \CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs28 \cf0 05/16/2006 rdub
+\fs20 \
+* Removed annoying "draw time" debug message.\
+\
+
+\fs28 3/27/2006 wtregaskis
+\fs20 \
+*Added debugging message when changing X and/or Y zoom values.\
+*Added public XSGRXYDataSet (and subclasses) method supportsRangesOnAxis:.\
+*XSGRXYDataSet now consults self's supportsRangesOnAxis: when calculating _smallestXInterval, to determine if the width of each element should be considered.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4477750"}}{\fldrslt rdar://problem/4477750}}\
+\
+
+\fs28 3/11/2006 wtregaskis
+\fs20 \
+*Added public XSGRXYAxes properties XSGRAxesXTitleSpacing & XSGRAxesYTitleSpacing.\
+*Fixed XSGRVisualCompressionAverage in XSGRLineDataSet.  It now actually does the average, rather than behaving like XSGRVisualCompressionSkip.\
+*Added support for XSGRVisualCompressionSkip to XSGRLineDataSet.\
+*Renamed numElements to _numElements, and friends, in two spots I'd missed previously.\
+\
+
+\fs28 3/7/2006 wtregaskis
+\fs20 \
+*Added gpp source, and 'gpp' target to build from said source for use in building GraphKit itself.\
+\
+
+\fs28 3/3/2006 raltherr
+\fs20 \
+*added Everything target that builds the frameworks and installs the examples\
+\
+
+\fs28 2/24/2006 raltherr
+\fs20 \
+*Changed "delegate" and "dataSource" local variable names to "ourDelegate" and "ourDataSource" to work around gcc bug\
+\
+
+\fs28 2/23/2006 wtregaskis
+\fs20 \CocoaLigature0 \
+*Changed "delegate" local variable name to "ourDelegate" in XSGRPieAxes and XSGRAreaDataSet, in an attempt to appease Rick's broken Xcode.\
+\
+
+\fs28 \CocoaLigature1 2/22/2006 wtregaskis
+\fs20 \CocoaLigature0 \
+*Changed define of major version from XSGRAPHKIT_VERSION='<letter>' to XSGRAPHKIT_MAJOR_VERSION=<number>, where A == 1, B == 2.  This is to get around Xcode being retarded.  The file system major versions are still A and B.\
+*Unified instance variable access across versions A and B.  B no longer has the numerous _extraData kludges that A has, but all instance variables map correctly either way.  "extraData->" should not be necessary in any case when accessing instance variables.\
+\CocoaLigature1 *Added public XSGRChartView properties XSGRChartRegionZoomMode, XSGRChartMaximumXZoom and XSGRChartMaximumYZoom.\
+*Added private XSGRChartView property \CocoaLigature0 XSGRChartZoomMode.\
+*Added public XSGRChartView methods currentXZoom and currentYZoom.\CocoaLigature1 \
+*Fixed issue in XSGRXYDataSet where it was wasting time calculating min/max values (and such) empirically for categorical axes, and not calculating them at all for some non-categorical axes.\
+*reloadDataInRange: on XSGRXYDataSet now accounts for the case where \CocoaLigature0 XSGRDataSetSumValue is YES, and reloads all the data following the updated range.\
+*XSGRChartView's setProperty:forKey: method now automatically reloads all data sets if either of the XSGRDataSetSumValue or XSGRChartDrawValueCallouts properties are changed.\
+*Changed coding stuff, in line with the new zooming and whatnot.  The old coding was only in CHUD 4.4.0-4 & -5, not any public release, so these changes shouldn't matter.  Plus, no-one's using the coding support as yet, that I'm aware of.\
+*Can now pass nil as the object parameter to the setProperty:forKey: methods on every relevant class.  Previously this raised an exception.  This allows you to clear specific values, for example, on a XSGRDataSet, allowing it to once again inherit "defaults" from it's parent chart.  Some values also rely on the absence of an explicit setting to return on-the-fly results, which thus requires a way to get back to this state of affairs after you've explicitly set those properties for whatever reason.\
+*Re-setting properties (on any class providing a setProperty:forKey: method) to their current values no longer has the effect of redrawing the chart, reloading data, or similar expensive operations.\
+*XSGRLineDataSet no longer draws markers just because value callouts are enabled; XSGRDataSetDrawPlotLine must be set to YES.\
+*Callouts now work again on data sets with more than one point.\
+*Added private XSGRAxes & XSGRDataSet method -(id)_literalPropertyForKey:(NSString*)key.\
+*setDelegate: methods now refresh any method caching performed by the receivers, in particular relating to what methods the delegate implements, even if the given delegate is the same as the existing one.  This provides a way out for people wanting to implement polymorphic delegates.\
+*Now remove tooltips correctly in all cases from XSGRXYDataSets and XSGRPieDataSets.  Previously, if you turned them off any existing tooltips may have hung around erroneously.\
+*Added private XSGRDataSet property XSGRDataSetMaximumNumberOfPointsWithCallouts.  By default it is not defined, therefore there is no limit.\
+*reloadDataInRange: on XSGRDataSet now marks the owner chart as needing new layout.\
+*awakeFromNib now sets the frame based on the parent clipview's bounds (if self is in a scroll view), which fixes the bug where the frame was one pixel too short in both dimensions.  No idea why that is.\
+*Changing XSGRChartBorderType now marks the chart as needing new layout, which prevents the border hanging around if we in fact turned it off.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4455176"}}{\fldrslt \CocoaLigature1 rdar://problem/4455176}}\
+*Added public XSGRChartView method -(void)zoomToRect:(NSRect)zoomRect.  This effectively replaces -(BOOL)zoomInRect:(NSRect)zoomRect, which remains only in version A as a stub for zoomToRect:.\
+*XSGRPieDataSets now record the smallest slice angle in their data set, which is useful for determining the maximum useful zoom for the pie chart.\
+*Added private XSGRDataSet method -(double)_maximumUsefulZoomForRealAxis:(char)axisName, which is used for automagically determining the maximum chart zoom.\
+\
+Version A specific:\
+*XSGRXYDataSet and XSGRAxes now initialise their _extraData instance variables when decoded.\
+\
+Version B specific:\
+*Removed XSGRChartView's -(BOOL)zoomOut and -(BOOL)zoomInRect:(NSRect)zoomRect.\
+*Replaced XSGRChartView's -(BOOL)autoscale with -(void)autoscale.\
+*Added _reserved* instance variables to all classes, to allow for future expansion.\
+*Removed deprecated XSGRDataSet properties XSGRDataSetDrawPlotOutline & XSGRDataSetPlotOutlineColor.\
+*Removed XSGRAxes' -(BOOL)_zoomInRect:(NSRect)zoomRect, -(BOOL)_zoomOut & -(BOOL)_autoscale methods.  They may reappear in future.\
+\
+
+\fs28 \CocoaLigature1 2/21/2006 wtregaskis
+\fs20 \
+*Renamed NSInt-/NSUInt- and similar types to NSInteger-/NSUInteger-.\
+*Now define NSINTEGER_MAX/MIN/BIT, NSUINTEGER_MAX, NSIntegerDecimalFormat & NSUIntegerDecimalFormat regardless of what OS we're on, since Leopard doesn't define these itself yet.  Filed {\field{\*\fldinst{HYPERLINK "rdar://problem/4453198"}}{\fldrslt rdar://problem/4453198}} about it.\
+\CocoaLigature0 \
+
+\fs28 \CocoaLigature1 2/17/2006 wtregaskis
+\fs20 \
+*Split framework into major versions A and B.\
+\
+
+\fs28 2/13/2006 wtregaskis
+\fs20 \
+*In XSGRColumnDataSet, now prefetch fill colour even if we have a colorAtIndex: delegate method, as the generic fill colour is the fallback for when colorAtIndex: returns nil.\
+*In XSGRAreaDataSet, now check that fill colour is an NSColor before trying to invert it for use as the selection colour.\
+*Moved from NSInt/NSUInt to NSInteger/NSUInteger.  Just a name change, mandated by the Leopard Foundation guys.\
+*Added appropriate ifdefs around NSInteger/NSUInteger definitions to resolve duplicate definition errors on Leopard.\
+\
+
+\fs28 2/10/2006 wtregaskis
+\fs20 \
+*Now respect fixed major & minor units in XY axes layout.  Previously we were using them for rendering, but ignoring them in layout and using our own auto-generated values.  This was resulting in incorrect layout information, such as incorrect label formats and so forth.  Resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4436350"}}{\fldrslt rdar://problem/4436350}}\CocoaLigature0 \
+*XSGRXYAxes no longer bother with minor tick marks on category axes if they're not actually meant to be drawn... looks like there's some rounding error that was resulting in minor tick marks being drawn over major ones.  This fix partially deals with that - much harder to reproduce now.\
+*Now treat major units as integer values in category axis layout, which resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4441769"}}{\fldrslt \CocoaLigature1 rdar://problem/4441769}}\
+*Restored data set shadows, which were broken when the improvement to customise their colour was made.\
+\
+
+\fs28 \CocoaLigature1 2/9/2006 wtregaskis
+\fs20 \
+*Added constants for compression settings (in XSGRChartView.h); no more magic numbers.\
+*Added private methods to XSGRChartView and XSGRDataSet to return the properties dictionary (primarily for debugging and exploratory use, e.g. GraphKitExplorer).  Returned dictionary is not mutable.\
+*Changed the default compression setting to none.  My current sentiment is accuracy before performance.\
+*Now issue once-off warnings if the visual compression setting is not available for a given data set, and fall back to an appropriate default (typically average, or none).\
+*Added \CocoaLigature0 private XSGRDataSet properties XSGRDataSetMinimumNumberOfElementsForCompression & XSGRDataSetMinimumNumberOfElementsPerPixelForCompression.  These may be used to obtain the older functionality of automatically disabling visual compression for fewer than N points or N points/pixel.\
+*Added public XSGRXYDataSet properties XSGRDataSetElementMergeThreshold & XSGRDataSetCalloutMergeThreshold, and the public XSGRLineDataSet property XSGRDataSetMarkerMergeThreshold.  Previously these values were hard-coded internally.  These properties default to the old values, so there is no direct behavioural change.  This is in response to {\field{\*\fldinst{HYPERLINK "rdar://problem/4385812"}}{\fldrslt \CocoaLigature1 rdar://problem/4385812}}\
+\CocoaLigature1 *Added public XSGRColumnDataSet properties XSGRDataSetDeltaLineHasBaseline & XSGRDataSetDisableFillIfObscuredByLine.  HeaderDoc documentation is available from them in XSGRColumnDataSet.h.\
+*Deprecated the XSGRDataSetDeltaLineWidth XSGRColumnDataSet private property - it has been superseeded by the public XSGRDataSetPlotLineWidth property.  Delta line mode is no longer considered such a special case.\
+*Added private XSGRColumnDataSet property XSGRDataSetDisableLineFactor.  This is hopefully temporary - consult with Wade Tregaskis before using it.\
+*Added "Skip" visual compression mode, presently just for column graphs, which simply drops points too close together.  Ironically, though, averaging visual compression is faster.\
+*Glorified this changelog a bit (larger timestamps, coloured the release milestones).\
+*Rewrote column data set rendering.  Couldn't resolve some of the issues in the old version.  New version's a little simpler, I think, and works better.\
+*Now [optionally, on by default] disable fill rendering if it's going to be largely (if not completely) obscured by the line drawing.  Improves performance by about 50% in such cases.  Previously we stopped drawing the outline in such cases, which was hard coded.  The new approach is visually more consistent.  The old behaviour can be reacquired by setting this property to NO, and setting the private XSGRDataSetDisableLineFactor to an appropriate value (e.g. 1.0).  But, as noted, see Wade Tregaskis first before you go doing this.\
+*More error checking when rendering in XSGRXYAxes.\
+*Now handle missing datasets, or those without any points, more gracefully.  A chart with no data sets will still render as blank.  A chart with only empty datasets will now render just the axes frame (not necessarily in the position they would be with real data points, but at least somewhat symbolic).  Error and warning messages have been cut back drastically - both these cases should not generate errors or warnings about layout.  If CHART_DEBUG is >= 1 they will log a message noting the layout problem.  If there are data sets with no valid points (e.g. only the point 0, on a log axis), a warning will be issued from the XY axes, which will then escalate to a full error as it heads back up the layout hierarchy, resulting in "Layout Error" being displayed.  I'm happy with this behaviour.  This resolves {\field{\*\fldinst{HYPERLINK "rdar://problem/4436187&4436024"}}{\fldrslt rdar://problem/4436187&4436024}}\
+*Added inverseGradient method to XSGRGradientColor.\
+\CocoaLigature0 \
+
+\fs28 \CocoaLigature1 2/2/2006 wtregaskis
+\fs20 \
+*Moved NSInt/NSUInt definition stuff back here from XSGRUtility.h... shouldn't have moved it there to start with; XSGRUtility.h is a private header and shouldn't be included from XSGRChartView.h, a public header.\
+*Added DOUBLE_VALUE and FLOAT_VALUE macros for dealing with objects that may be nil, avoiding uncertainty in return value.  Defaults are for now 0.0, but can be tuned in future as necessary.  In an ideal world they wouldn't be necessary, but since the necessary changes to the ObjC runtime only seem guaranteed for Leopard or later ({\field{\*\fldinst{HYPERLINK "rdar://problem/4325076"}}{\fldrslt rdar://problem/4325076}}), and we're still supporting at least Tiger, they're still necessary.  When targetting Leopard they can be ifdef'd out.\
+*No longer waste time recalculating delegate stuff if the "new" delegate is the same as the existing one, in XSGRAxes and XSGRDataSet.\
+*Removed confusion resulting from silly American misspellings of colour, :P, in XSGRColumnDataSet, which was occasionally causing a crash.  D'oh.\
+*Setting XSGRDataSetMarkerColor (on XSGRLineDataSet) to a non-nil value now automagically sets XSGRDataSetAutoMarkerColor to NO, for compatibility purposes.\
+\
+
+\fs28 2/1/2006 wtregaskis
+\fs20 \
+*Default plot colour-sets are now stored in the XSGRChartView instances, rather than the XSGRDataSet class.  This is more logical and is a step towards sharing datasets among multiple charts.  The existing methods on +XSGRDataSet are deprecated.  \CocoaLigature0 defaultColors still works, in a fashion, but setDefaultColors: no longer has any effect.\CocoaLigature1 \
+*"Plot colour" is now the generic term for the dominant visual element for a given dataset type.  i.e. for line charts it refers to the line colour, for area & column charts the fill colour.  There are new properties in this vein, and the older ones are deprecated, but map appropriately to the new ones.\
+*All datasets now have distinct fill & line properties.  This makes things a bit more consistent.  The older generic plot colour properties still exist, mapping to the exact properties depending on the dataset type.\
+*Auto plot colours are now assigned at dataset instantiation as an index into the default colours array.  Thus, if the default colours are changed, the changes will be applied next time the chart is redrawn.\
+*You can now reset auto-colour assignments using -[XSGRChartView \CocoaLigature0 resetAutoPlotColors].\CocoaLigature1 \
+*Top level dataset properties are now set on the XSGRChartView instead of in XSGRDataSet.  They are still seen by the datasets the same way, but now act more like generic fallbacks than specific properties, making it easier to manipulate large numbers of datasets, and allow for the same dataset under multiple charts to be inherit different settings.\
+*"Smaller" and "Larger" symbols in XSGRSliderScroller are no longer bitmaps.  Now they're rendered as lines at draw time.  In this way they are resolution independent, hopefully.  And we save a little bit of space, for a neglible performance penalty.\
+*Now respect the beveled border setting in XSGRSliderScroller.\
+*Added additional debug logging to the setProperty:forKey: methods for XSGRChartView, XSGRAxes and XSGRDataSet.  Enabled only at verbosity 3 (the highest), they're very useful for figuring out what the heck people are trying to make us do.\
+*Added \CocoaLigature0 setProperty:forKey:andRefresh: method to XSGRDataSet, which allows the caller to indicate whether the change should prompt a redisplay of the chart.  Since we modify some properties during rendering, or in ways which do not change the rendering result, this method reduces unnecessary redraws.\
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19200\tx20160\tx21120\tx22080\tx23040\tx24000\tx24960\tx25920\tx26880\tx27840\tx28800\tx29760\tx30720\tx31680\tx32640\tx33600\tx34560\tx35520\tx36480\tx37440\tx38400\tx39360\tx40320\tx41280\tx42240\tx43200\tx44160\tx45120\tx46080\tx47040\tx48000\tx48960\tx49920\tx50880\tx51840\tx52800\tx53760\tx54720\tx55680\tx56640\tx57600\tx58560\tx59520\tx60480\tx61440\tx62400\tx63360\tx64320\tx65280\tx66240\tx67200\tx68160\tx69120\tx70080\tx71040\tx72000\tx72960\tx73920\tx74880\tx75840\tx76800\tx77760\tx78720\tx79680\tx80640\tx81600\tx82560\tx83520\tx84480\tx85440\tx86400\tx87360\tx88320\tx89280\tx90240\tx91200\tx92160\tx93120\tx94080\tx95040\tx96000\pardirnatural
+\cf0 *XY Data sets now observe two properties of their data when loading it - elementsOrderedOnXAxis (BOOL) and smallestXInterval (double).  The first is already used to fix {\field{\*\fldinst{HYPERLINK "rdar://problem/4392600"}}{\fldrslt \CocoaLigature1 rdar://problem/4392600}}, noted below.  The second property is used when determining whether to turn off column outlines and so forth, rather than assuming uniform intervals - prevents one big interval amongst many smaller ones causing havoc.\
+*No longer exhibit graphical artefacts when redrawing XY charts with points that overlap - in the case that the elements are not ordered on the X axis, we now redraw the entire data set whenever the selection changes.  Slow, but accurate.  Further optimisations may be possible in future.\
+*No longer waste time calculating X-axis stuff in -[XSGRXYDataSet reloadDataInRange:].  If we have a categorical X axis, or no xIntervalAtIndex: or xValueAtIndex: datasource methods, then we know what the min/max X values will be, as well as the interval of every element (1.0) and so forth.  Still have to loop for min/max Y values, but that reduces our work substantially.\
+*Now automagically turn off XSGRDataSetAutoPlotColor when XSGRDataSetPlotLineColor or XSGRDataSetPlotFillColor (depending on dataset type) is set... this didn't have any impact previously other than permitting inconsistant behaviour according to XSGRDataSetAutoPlotColor.  Under the new system it is necessary as many existing GraphKit users rely on the old behaviour - otherwise the set colour would have no effect, given XSGRDataSetAutoPlotColor is on by default.\
+*Fixed IIR filter on line charts... due to the changes made a while ago in upgrading things to NSUInt's, it was actually not rendering anything.  D'oh.  Now works as expected.\
+*No longer turn off visual compression automatically.  Existing users who expect it to turn off at a particular threshold or under some other condition will have to implement such conditioning manually.\
+*IIR filter now handles infinite Y values (by ignoring them).  Previously no points from the infinite value on would be drawn, as a consequence of the inf value propagating indefinitely.\
+*Can now turning off the drawing of fills and/or lines on all data sets.  Pretty useless to turn both off (and a pie chart without fills ain't much good), but it's there, it's consistent.\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \
+
+\fs28 1/27/2006 wtregaskis
+\fs20 \
+*New reloadDataInRange: method in XSGRDataSet and XSGRChartView, to be more specific about what data needs to be reloaded.  Much more efficient for large data sets which make small modifications (e.g. appending new data).  Older reloadData method is _not_ deprecated, and simply calls through to the new method by default.\
+*Data loading for XY data sets is now done in XSGRXYDataSet, rather than the three subclasses.  Reduces redundancy and variation between the three classes.  Minor behavioural changes introduced with this change include:\
+	1) New respect for X intervals - line & area charts no longer ignore the end value.  This can add extra space - over the previous version of GraphKit - to the end of a chart for those who do actually provide a non-zero width for the last element.  This change is clearly visible in GraphKitExplorer, who's default width of 1 adds an extra point's space to the end of the chart.  This does not appear to be a problem for any current GraphKit users, as they return the true interval they desire.\
+	2) xIntervalAtIndex is now preferred for all chart types over xValueAtIndex, contrary to the initial implementation for line & area charts.  This is unlikely to be a problem - it's now redundant to implement both, which is fine, since if you're implementing xIntervalAtIndex you're either:\
+		a) Actually wanting to specify an interval.\
+		b) Using it only because you haven't migrated yet to xValueAtIndex.\
+		c) Able in any case to add an extra couple of code words to set the end value anyway.\
+Stacked charts:\
+	*Fixed stacked value for each of the XY data sets, whereby previously if the first data set had fewer than the maximum number of elements, the initial totals for the additional points would be uninitialised.\
+	*Stacked fraction charts now work properly with negative values - i.e. the whole columns height is 1.0, which slides between \{-1.0, 0.0\} and \{0.0, 1.0\} as appropriate.  This is the behaviour you'll find in Excel, among other programs, and is probably the most intuitive of several possible behaviours.\
+*Moved NSInt/NSUInt declarations into XSGRUtility.h, which makes a little more sense but more importantly allows a logical place for NSIntMin/Max and friends to be declared.\
+*Removed \\n's from LOG_* messages, which were spoiling the output.\
+*XSGRDataSet now raises an exception if anyone calls init on it... the only valid initialiser for it is initWithOwnerChart:.\
+*XSGRDataSet's initWithOwnerChart: now calls [super init] instead of [self init]... you can bet that was a fun little escapade when I first added the previous point.\
+*XSGRDataSet now updates it's delegate and data source when the relevant properties (\CocoaLigature0 XSGRDataSetInheritChartDelegate and XSGRDataSetInheritChartDataSource, respectively) are set to YES.\
+*Added TimeGraph example, primarily as a testing tool for the new reloadDataInRange: method.\
+\CocoaLigature1 \
+
+\fs28 1/26/2006 wtregaskis
+\fs20 \
+XSGRXYAxes:\
+	*Categorical axes now pay attention to whether or not they should be drawing labels.\
+	*Categorical axes now draw all labels (previously they would frequently miss the last few, especially if they were space limited).\
+	*Removed _rotatedStringSize:angle: method (no longer used).\
+	*Now take into account presence of axis labels when calculating spacing (i.e. no more empty whitespace when labels are off).\
+	*Clipping rect now calculated at start of drawAxisRect:forAxis: and used universally, instead of using clipRect, drawRect, plotRect and canvasRect independently.\
+	*No longer fudge the plotRect in drawAxesRect - plot outline now drawn in correct place.\
+	*Clipping no longer needlessly performed on labels, which was wrong anyway - wasn't accounting for label rotation.\
+\
+
+\fs28 1/25/2005 wtregaskis
+\fs20 \
+*Rendering now more tolerant of bad values, particularly with logarithmic axes.  Unplaceable points are for the moment simply ignored.\
+*Y axis no longer pulls min/max down/up to 0, which immediately changes default behaviour.  Old behaviour can be regained by setting min/max values explicitly.\
+*Updated copyright dates to 2006.\
+*Added support for axis label rotation.\
+*Used realloc/reallocf where possible (complete with workaround for it's inability to shrink allocations).\
+*Added spacing properties for padding out graph axes - superset of the older \CocoaLigature0 XSGRAxesYHeadroomFraction property.\
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19200\tx20160\tx21120\tx22080\tx23040\tx24000\tx24960\tx25920\tx26880\tx27840\tx28800\tx29760\tx30720\tx31680\tx32640\tx33600\tx34560\tx35520\tx36480\tx37440\tx38400\tx39360\tx40320\tx41280\tx42240\tx43200\tx44160\tx45120\tx46080\tx47040\tx48000\tx48960\tx49920\tx50880\tx51840\tx52800\tx53760\tx54720\tx55680\tx56640\tx57600\tx58560\tx59520\tx60480\tx61440\tx62400\tx63360\tx64320\tx65280\tx66240\tx67200\tx68160\tx69120\tx70080\tx71040\tx72000\tx72960\tx73920\tx74880\tx75840\tx76800\tx77760\tx78720\tx79680\tx80640\tx81600\tx82560\tx83520\tx84480\tx85440\tx86400\tx87360\tx88320\tx89280\tx90240\tx91200\tx92160\tx93120\tx94080\tx95040\tx96000\pardirnatural
+\cf0 *Added axis-specific window properties.\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 *Added support for data sets of different types on the same chart.  These product a layout error in overlay mode, but work fine together with a tiled layout.\
+*Fixed spacing on axis labels to adjust appropriately given the presence (or absence) of tick labels.\
+*Add fudged margin to Y axis labels so they no longer bump up against the markers or axis.\
+*Minor lines & tickmarks no longer draw over major ones.\
+*All lines and tickmarks are clipped to their relevant area, preventing bleed over the ends of the axes.  There is presently a problem with the plotRect of XY axes (of by one in both directions) which is manifesting itself visibily with this clipping.  Still working on a solution.\
+*Zoom selection now snaps to those edges that can't be zoomed - partially resolves <{\field{\*\fldinst{HYPERLINK "rdar://problem/3225149/"}}{\fldrslt rdar://problem/3225149/}}>.  Still needs some work to constrain selection within charts.\
+*Added NSCoding support to all classes.\
+*Moved some loops to NSEnumerator.  For Tiger it's a moot change, but going forward NSEnumerator should offer notably better performance than objectAtIndex loops, particularly for mutable collections.\
+*Unified alignment methods to reduce redundancy.  Probably should replace the public API with a single alignment method too.\
+*Changed the key down handling to have a single defined outcome in the case of conflicting keys, e.g. '+' and '-' being held down together.\
+*Zoom rectangle now appears if you move the mouse more than 10 pixels vertically as well.\
+*Zoom rectangle "fuzz" only applies in the direction(s) that zoom is enabled on.\
+*Renamed undesired shadow variables.  Anal, yes, but it clears up the trees when building the deployment version, which has more pedantic warnings enabled.\
+*Minor optimisations related to method invocation - e.g. repeatedly calling [self window] line after line, instead of using a local variable to cache the result.\
+*Removed redundant view- & window-based points from zoom tracking.  Now store only screen co-ordinates, and convert to others as necessary.\
+*Optimised XSGRGradientColor to only free and allocate buffer memory as actually needed.\
+*Moved some duplicate code out of subclasses and into their super, e.g. \cf4 \CocoaLigature0 deselectAllPoints now implemented in XSGRAxes.\cf0 \CocoaLigature1 \
+*Some extra caching of method invocations, mainly when dealing with individual points with delegates or data sources.\
+*Removed calls to _autoscale on the axes when reloadData is called on the data sets... all that was doing was clearing the zoom history, which surely can't be desired behaviour.\
+*Numerous small fixes.\
+*Probably lots of other stuff I've forgotten.\
+*Changed some formatting.  Sorry. :P\
+\
+
+\fs28 1/6/2006 wtregaskis
+\fs20 \
+*Made tooltips display regardless of whether markers are visible on line charts - <{\field{\*\fldinst{HYPERLINK "rdar://problem/4296276"}}{\fldrslt rdar://problem/4296276}}>.\
+\
+
+\fs28 12/22/2005 slingn
+\fs20 \
+*fixed endianness bug with XSGRLineDataSet marker glyphs - <{\field{\*\fldinst{HYPERLINK "rdar://problem/4391265"}}{\fldrslt rdar://problem/4391265}}>\
+\
+
+\fs28 12/13/2005 wtregaskis
+\fs20 \
+*Modified XSGRPieDataSet to base the selection colour (as a pseudo-inverse) on \CocoaLigature0 XSGRDataSetPlotOutlineColor instead of XSGRChartFrameColor, since it is the former that is the border colour, not the latter.\
+\CocoaLigature1 \
+
+\fs28 12/12/2005 wtregaskis
+\fs20 \
+*Scrollers now preserve the nextKeyView, which should resolve {\field{\*\fldinst{HYPERLINK "rdar://problem/4334586"}}{\fldrslt rdar://problem/4334586}}\
+*Added XSGRChartBorderColor for the actual chart border - previously was fixed as black.\
+*Axes will now inherit owner's delegate immediately upon the XSGRAxesInheritOwnerDelegate property being set to YES - {\field{\*\fldinst{HYPERLINK "rdar://problem/4313429"}}{\fldrslt rdar://problem/4313429}}\
+*Fixed memory leak in XSGRPieAxes which lost 44 bytes for every instance created.  {\field{\*\fldinst{HYPERLINK "rdar://problem/3982606"}}{\fldrslt rdar://problem/3982606}}\
+\
+
+\fs28 12/09/2005 slingn
+\fs20 \
+*fixed exception in XSGRChartView -isOpaque when background color is a XSGRGradientColor (-alphaComponent selector not recognized)\
+*fixed XSGRGradientColor drawing\
+\
+
+\fs28 12/08/2005 wtregaskis
+\fs20 \
+*Reordered drawing in drawLegendSampleInRect: for XSGRLineDataSet so that the marker is drawn above the line - <{\field{\*\fldinst{HYPERLINK "rdar://problem/4104854"}}{\fldrslt rdar://problem/4104854}}>.\
+*Fixed typo resulting in the wrong properties being used for certain line widths - <{\field{\*\fldinst{HYPERLINK "rdar://problem/4104843"}}{\fldrslt rdar://problem/4104843}}>.\
+*"Fixed" some tabs vs spaces formatting.\
+*Modified \CocoaLigature0 drawAxesRect: in \CocoaLigature1 XSGRXYAxes to call it's super regardless of whether it intends to draw the X & Y axes or not, in order to ensure other elements are drawn - e.g. the legend, subtitle, etc - <{\field{\*\fldinst{HYPERLINK "rdar://problem/4104846"}}{\fldrslt rdar://problem/4104846}}>.\
+\
+
+\fs28 12/08/2005 slingn
+\fs20 \
+*fixed to not hang when fed bad log-x or log-y data - <{\field{\*\fldinst{HYPERLINK "rdar://problems/4337117"}}{\fldrslt rdar://problems/4337117}}>\
+\
+
+\fs28 12/08/2005 wjtregaskis
+\fs20 \
+*Added transparency support, in the form of fixing the bug whereby a swatch was drawn instead of a normal filled rectangle.\
+*Partially fixed responder issues, whereby the chart erroneously receives first responder status even when it is immutable (no zooming or selection permitted).  Problem remains with the enclosing NSScrollView, however - <{\field{\*\fldinst{HYPERLINK "rdar://problem/4334586"}}{\fldrslt rdar://problem/4334586}}>.\
+\
+
+\fs28 12/07/2005 wtregaskis
+\fs20 \
+*Replaced tiffs with visually identical but smaller file size versions - <{\field{\*\fldinst{HYPERLINK "rdar://problems/4342464"}}{\fldrslt rdar://problems/4342464}}>.\
+\
+
+\fs28 11/18/2005 epmiller
+\fs20 \
+*XSGRLineDataSet.m: -drawdataSetRect: \CocoaLigature0 turn off compression if the view is big enough for at least 1 pixel per data point\
+\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 09/12/2005 slingn
+\fs20 \
+*switched to NSInt/NSUInt for 64-bit Leopard effort\
+*updated copyrights\
+\
+
+\fs28 09/01/2005 slingn
+\fs20 \
+*fixed axes/dataset inheritance of delegate from owner/chart\
+\
+
+\fs28 \cf2 ---- GraphKit-10 ----
+\fs20 \cf0 \
+\
+
+\fs28 08/11/2005 slingn
+\fs20 \
+*added didDoubleClickElement: delegate methods\
+\
+
+\fs28 08/03/2005 slingn
+\fs20 \
+*merged in Patrick Beard's changes to support garbage collection - <{\field{\*\fldinst{HYPERLINK "rdar://problem/4108473"}}{\fldrslt rdar://problem/4108473}}>\
+\
+
+\fs28 07/20/2005 slingn
+\fs20 \
+*fixed typo XSGRGradientFillDiaganol -> XSGRGradientFillDiagonal\
+\
+
+\fs28 05/26/2005 slingn
+\fs20 \
+*fixed several clipping/drawing issues (caused axis titles and labels to be incorrectly clipped)\
+\
+
+\fs28 \cf2 ---- GraphKit-9.1.80 ----
+\fs20 \cf0 \
+\
+
+\fs28 05/03/2005 slingn
+\fs20 \
+*fixed to use XSGRChartTitleColor for XSGRXYAxes x- and y-axis titles\
+\
+
+\fs28 04/24/2005 slingn
+\fs20 \
+*fixed drawing of bezel / groove chart borders to not overwrite chart backgrounds\
+*added private _addCursorRects method to XSGRDataSet (allow datasets to add cursor rects)\
+\
+
+\fs28 04/13/2005 slingn
+\fs20 \
+*fixed stacked values use with custom X intervals to be warning (warn once) rather than error\
+\
+
+\fs28 04/06/2005 slingn
+\fs20 \
+*fixed problem with over-zooming out when using scroll bar sliders\
+\
+
+\fs28 03/30/2005 slingn
+\fs20 \
+*fixed to not change scroll position when zoom not affected (e.g. x-zoom should only affect x-scroller position)\
+*added canonical set of private scroller functions:\
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19200\tx20160\tx21120\tx22080\tx23040\tx24000\tx24960\tx25920\tx26880\tx27840\tx28800\tx29760\tx30720\tx31680\tx32640\tx33600\tx34560\tx35520\tx36480\tx37440\tx38400\tx39360\tx40320\tx41280\tx42240\tx43200\tx44160\tx45120\tx46080\tx47040\tx48000\tx48960\tx49920\tx50880\tx51840\tx52800\tx53760\tx54720\tx55680\tx56640\tx57600\tx58560\tx59520\tx60480\tx61440\tx62400\tx63360\tx64320\tx65280\tx66240\tx67200\tx68160\tx69120\tx70080\tx71040\tx72000\tx72960\tx73920\tx74880\tx75840\tx76800\tx77760\tx78720\tx79680\tx80640\tx81600\tx82560\tx83520\tx84480\tx85440\tx86400\tx87360\tx88320\tx89280\tx90240\tx91200\tx92160\tx93120\tx94080\tx95040\tx96000\pardirnatural
+\cf0 \CocoaLigature0 -_scrollToCenterXValue:\
+-_scrollToLeftXValue:\
+-_scrollToRightXValue:\
+-_scrollToCenterYValue:\
+-_scrollToBottomYValue:\
+-_scrollToTopYValue:\
+*removed non-ASCII characters from #pragma marks\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+
+\fs28 \cf2 ---- GraphKit-9.0.80 ----
+\fs20 \cf0 \
+\
+
+\fs28 03/03/2005 slingn
+\fs20 \
+*merged in PTColorGradient class as replacement for NSImage based XSGRGradientColor (now uses CoreGraphics)\
+\
+
+\fs28 02/22/2005 slingn
+\fs20 \
+*fixed to check that min and max values are finite before attempting to compute major/minor units\
+\
+
+\fs28 \cf2 ---- GraphKit-8 ----
+\fs20 \cf0 \
+\
+
+\fs28 02/16/2005 slingn
+\fs20 \
+*fixed XSGRLineDataSet to not draw value callouts if markers are not displayed\
+*fixed bogus check of void return value in XSGRXYAxes - {\field{\*\fldinst{HYPERLINK "rdar://problem/4008859"}}{\fldrslt rdar://problem/4008859}}\
+\
+
+\fs28 02/03/2005 slingn
+\fs20 \
+*fixed zoom bug where zoom would fail if drag amount was < 10 pixels (fuzz threshold)\
+\
+
+\fs28 01/17/2005 slingn
+\fs20 \
+*fixed off-by-one pixel layout error of horizontal zoom slider\
+\
+
+\fs28 \cf2 ---- GraphKit-7 ----
+\fs20 \cf0 \
+\
+
+\fs28 01/05/2005 slingn
+\fs20 \
+*fixed missing CFBundleExecutable Info.plist entry ({\field{\*\fldinst{HYPERLINK "rdar://problem/3932438"}}{\fldrslt rdar://problem/3932438}})\
+*fixed memory leak in XSGRXYAxes ({\field{\*\fldinst{HYPERLINK "rdar://problem/3912892"}}{\fldrslt rdar://problem/3912892}})\
+\
+
+\fs28 01/04/2005 slingn
+\fs20 \
+*optimized -setFrameSize to only recompute layout if frame has changed\
+\
+
+\fs28 12/13/2004 slingn
+\fs20 \
+*added separate XSGRDataSetSelectionLineWidth property\
+*added -clickPoint: support to XSGRPieAxes class\
+\
+
+\fs28 12/08/2004 slingn
+\fs20 \
+*fixed y log axis bug\
+\
+
+\fs28 12/01/2004 slingn
+\fs20 \
+*added XSGRChartAllowClick property - allows for click callback independent of selection\
+\
+
+\fs28 \cf2 ---- GraphKit-6 ----
+\fs20 \cf0 \
+\
+
+\fs28 11/28/2004 slingn
+\fs20 \
+*fixed bug which resulted in very thick area data set outlines\
+\
+
+\fs28 11/24/2004 slingn
+\fs20 \
+*fixed labels occasionally being drawn beyond axis bounds\
+\
+
+\fs28 11/23/2004 slingn
+\fs20 \
+*added -centerSelection, -leftJustifySelection, -rightJustifySelection\
+\
+
+\fs28 \cf2 ---- GraphKit-5 ----
+\fs20 \cf0 \
+\
+
+\fs28 11/11/2004 slingn
+\fs20 \
+*fixed centering of axes titles\
+\
+
+\fs28 11/10/2004 slingn
+\fs20 \
+*added XSGRDataSetSumValue property\
+\
+
+\fs28 11/09/2004 slingn
+\fs20 \
+*added accessors for cursor images\
+*split error logging macros into new XSGRError.h header\
+*fixed mouse event handling and cursor management to not interfere with superviews\
+\
+
+\fs28 10/28/2004 slingn
+\fs20 \
+*fixed tiled charts to have aligned axes\
+*fixed incomplete axis label redraw bugs\
+\
+
+\fs28 10/27/2004 slingn
+\fs20 \
+*fixed XSGRDataSet -\CocoaLigature0 setSelectedRange: to only send selection changed notification when range has changed\
+*fixed chart moveLeft, moveRight to ignore datasets with empty selection (affected Shark PMC chart navigation)\CocoaLigature1 \
+\
+
+\fs28 10/25/2004 slingn
+\fs20 \
+*fixes to disable zoom when not embedded in a scroll view\
+*fixed frame adjustment when both x and y axes disabled\
+\
+
+\fs28 10/23/2004 slingn
+\fs20 \
+*fixed to not include tick length in calculation of required margin if axis drawing disabled\
+\
+
+\fs28 09/30/2004 slingn
+\fs20 \
+*added label string to size cache\
+\
+
+\fs28 \cf2 ---- GraphKit-4 ----
+\fs20 \cf0 \
+\
+
+\fs28 09/14/2004 slingn
+\fs20 \
+*fixed zooming issue which resulted in drawing artifacts - root cause was non-integral scroll points and sizes\
+\
+
+\fs28 09/08/2004 slingn
+\fs20 \
+*fixed a few missed visual compression bool->int changes\
+*shortened default major, minor tick lengths from 10.0->8.0, 5.0->4.0 pixels respectively\
+*moved tick marks outside plot area\
+*work in-progress ruler code (currently disabled)\
+\
+
+\fs28 \cf2 ---- GraphKit-3 ----
+\fs20 \cf0 \
+\
+
+\fs28 07/12/2004 slingn
+\fs20 \
+*fixed vertically tiled datasets to not zoom vertically if not enabled\
+*merged in Bryan Raines' visual compression code for XSGRLineDataSet (level = 2)\
+*added check in XSGRDataSet -reloadData to gracefully fail if dataSource==nil\
+\
+
+\fs28 06/17/2004 slingn
+\fs20 \
+*fixed middle of visible x-axis to be default zoom point when no selection (not simply the middle of the entire x-axis)\
+\
+
+\fs28 06/10/2004 slingn
+\fs20 \
+*fixed exception when setting selected range and zero elements\
+\
+
+\fs28 \cf2 ---- GraphKit-2 ----
+\fs20 \cf0 \
+\
+
+\fs28 06/03/2004 slingn
+\fs20 \
+*moved not-ready-for-prime-time properties to private headers\
+*added top level GraphKitPrivate.h header\
+*added XSGRDataSetDrawPlotOutline property - deprecated XSGRColumnDataSet "\CocoaLigature0 XSGRDataSetDrawColumnOutlines" and XSGRPieDataSet "XSGRDataSetDrawWedgeOutlines" properties\
+*added XSGRDataSetPlotOutlineColor property\CocoaLigature1 \
+*made XSGRAxesBackgroundColor a XSGRGradientColor by default\
+\
+
+\fs28 \cf2 ---- GraphKit-1 ----
+\fs20 \cf0 \
+\
+
+\fs28 05/27/2004 slingn
+\fs20 \
+*cleaned up key values to be identical to key names\
+*made \CocoaLigature0 XSGRAxesAxisLog10Scale, XSGRAxesAxisLinearScale to be XSGRAxesLog10Scale, XSGRAxesLinearScale (more readable)\CocoaLigature1 \
+*removed compatibility headers\
+*removed checks for incompatible keys by key prefix in setProperty: methods\
+\
+
+\fs28 05/26/2004 slingn
+\fs20 \
+*renamed to GraphKit\
+*changed pie chart legend samples to be round (a la Keynote)\
+*fixed pie chart selection - pie chart selection index off by one (reported by Daniel Stark)\
+*removed a bunch of warnings\
+*separated out internal compatibility stuff into XSGRCompatibilityPrivate.h\
+\
+
+\fs28 05/25/2004 slingn
+\fs20 \
+*moved shadow code into chart to manage (rather than each dataset) - still a per dataset property\
+*fixed selectNext/selectPrevious to automatically scroll new selection to visible\
+\
+
+\fs28 05/24/2004 slingn
+\fs20 \
+*removed button bar\
+*changed user interaction to be closer to old method: click = select, drag = zoom in, option-click = zoom out. The main difference is that now we have zoom % slider (labeled) and cursor rects change appropriately for zooming. Selection cursor is arrow again.\
+*improved drawing of XSGRColumnDataSet outlines\
+*added separate slider for vertical zoom\
+*added labels (+, -) to scrollbar sliders\
+*added tooltips to scrollbar sliders\
+*removed support for non-scrollview zooming - users can still set fixed x/y min, max\
+*fixed scrollbar sliders to update when zoom is done through other methods\
+*fixed scrollbar sliders to correctly remove sliders from superview when they are removed\
+*fixed bug with scaling of major/minor axis label counts in scroll views\
+*added shadows to datasets (ala Keynote)\
+\
+
+\fs28 05/23/2004 slingn
+\fs20 \
+*fixed zoomToPercent: to correctly increase the number of x-axis labels with zoom-in\
+*made zoomToPercent: private for now\
+\
+
+\fs28 05/22/2004 slingn
+\fs20 \
+*fixed zooming bug (was not recomputing layout)\
+\
+
+\fs28 05/21/2004 slingn
+\fs20 \
+*improved appearance of embedded zoom slider\
+*added title to zoom slider\
+*added support for slider resizing (not currently used)\
+\
+
+\fs28 05/20/2004 slingn
+\fs20 \
+*created XSGRSliderScroller class for embedding zoomToPercent slider inside chart's scrollview\
+\
+
+\fs28 05/19/2004 slingn
+\fs20 \
+*fixed setting of chart axes delegate when it is set to inherit the chart delegate at -awakeFromNib time\
+*optimized XSGRGradientColor to not use pattern drawing for pure (start, end) color cases\
+*added drawing speed self-monitoring code so that graphs that can be drawn quickly are drawn during live resize\
+*fixed -\CocoaLigature0 zoomToPercent: to clear zoom history and reset axis scaling when fully zoomed out (0%)\CocoaLigature1 \
+\
+
+\fs28 05/18/2004 slingn
+\fs20 \
+*completed transition to new public API (Graphite 2.0.0) - maintained binary compatibility for existing users of Graphite.framework who do not have custom subclases of Graphite classes - tested to work with Activity Monitor, Sampler.\
+*created XSGRCompatibility.h for internal users to migrate to new API.\
+*fixed XSGRXYAxes tick and line drawing to always be drawn at integral pixel locations - much sharper ouput\
+\
+
+\fs28 05/17/2004 slingn
+\fs20 \
+*fixed need to have +defaultProperties return a mutable dictionary\
+\
+
+\fs28 05/12/2004 slingn
+\fs20 \
+*made all ivars private\
+*added extra ivars for future expansion\
+*converted all property #defines to extern NSStrings\
+\
+
+\fs28 05/10/2004 slingn
+\fs20 \
+*moved all default properties definitions from header to implementation file (hidden to more easily allow changes)\
+*moved all deprecated methods to XSGRCompatibility\
+*renamed -getPropertyForKey: to -propertyForKey:\
+*renamed +getDefaultPropertyForKey: to +defaultPropertyForKey:\
+*renamed +getDefaultProperties to +defaultProperties\
+*set property methods no longer return BOOL - changed to throw exception on failure\
+\
+
+\fs28 04/30/2004 slingn
+\fs20 \
+*cleaned up default properties management - less duplicated code between classes\
+*gave XSGRAxes its own delegate (was using owner chart/dataset delegate!?)\
+\
+
+\fs28 04/29/2004 slingn
+\fs20 \
+*made more efficient about memory allocation when reloading data\
+\
+
+\fs28 04/15/2004 slingn
+\fs20 \
+*now gives better visual feedback by changing mouse cursor according to current tool mode (select, zoom in/out, inspect)\
+*added button tool bar when a graphite chart is displayed in a scrollview\
+*improved XSGRGradientColor to not generate error when drawing very large (e.g. zoomed in) charts\
+\
+
+\fs28 03/30/2004 slingn
+\fs20 \
+*in preparation for becoming a public framework, switch "@public" instance variables to "@protected" - otherwise clients of Graphite.framework will have static address offsets for those variables accessed by ->\
+\
+
+\fs28 03/28/2004 slingn
+\fs20 \
+*changed zoom-out modifier key to be more standard option key rather than command\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs24 \cf2 ------ 1.0.4 GM ------
+\fs20 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 03/21/2004 slingn
+\fs20 \
+*took out one delta line mode optimization - left screen artifacts\
+\
+
+\fs28 03/20/2004 slingn
+\fs20 \
+*fixed optimization bug in XSGRColumnDataSet for delta line mode\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs24 \cf2 ------ 1.0.3 GM ------
+\fs20 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 02/27/2004 slingn
+\fs20 \
+*fixed drawing optimization bug with XSGRColumnDataSet (affected datasets with 1000's of datapoints)\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs24 \cf2 ------ 1.0.2 GM ------
+\fs20 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 02/26/2004 slingn
+\fs20 \
+*added aggregate "Everything" target to make sure framework, docs and examples are installed\
+\
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19203\tx20163\tx21123\tx22083\tx23043\tx24003\tx24963\tx25923\tx26883\tx27843\tx28803\tx29763\tx30725\tx31685\tx32645\tx33605\tx34565\tx35525\tx36485\tx37446\tx38406\tx39366\tx40326\tx41286\tx42246\tx43207\tx44167\tx45127\tx46087\tx47047\tx48007\tx48967\tx49927\tx50887\tx51847\tx52807\tx53767\tx54727\tx55687\tx56647\tx57607\tx58567\tx59527\tx60487\tx61450\tx62410\tx63370\tx64330\tx65290\tx66250\tx67210\tx68171\tx69131\tx70091\tx71051\tx72011\tx72971\tx73932\tx74892\tx75852\tx76812\tx77772\tx78732\tx79692\tx80652\tx81612\tx82572\tx83532\tx84492\tx85452\tx86414\tx87374\tx88334\tx89294\tx90254\tx91214\tx92175\tx93135\tx94095\tx95055\tx96015
+
+\fs24 \cf2 ------ 1.0.1 GM ------
+\fs20 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+
+\fs28 02/21/2004 slingn
+\fs20 \
+*fixed bug in XSGRAxes \CocoaLigature0 drawLegendRect which always drew the same dataset sample for evey legend entry\CocoaLigature1 \
+\
+
+\fs28 02/19/2004 slingn
+\fs20 \
+*fixed XSGRChartView -\CocoaLigature0 dataSetsOfKindOfClass: to not beep and print message to console about being deprecated (Activity Monitor uses this call!)\CocoaLigature1 \
+\
+
+\fs28 02/18/2004 slingn
+\fs20 \
+*removed all NSEnumerators as these pollute the autorelease pool and mess with auto color assignment\
+*removed autoreleased objects (where possible)\
+\
+LESSON: NSEnumerators wreak havoc with the current auto color assignment scheme because XSGRChartView owned dataset count is decremented only when a XSGRDataSet is deallocated. NSEnumerators on the array of datasets keep a retain on the array and the enumerators themselves are autoreleased.\
+\
+
+\fs28 12/11/2003 slingn
+\fs20 \
+*added keyboard (cursor) selection navigation\
+*moved -chart:dataSet:selectionDidChange: delegate method from XSGRAxes to XSGRDataSet class\
+*added -selectNext, -selectPrevious methods to XSGRDataSet\
+\
+
+\fs28 11/19/2003 slingn
+\fs20 \
+*fixed bug with chart losing track of size when resized in a scrollview (i.e. scrollview is collapsed in a split view)\
+*reimplemented NSScrollView zooming - no longer relies on frame size remaining fixed between zoom in and zoom out\
+\
+
+\fs28 11/17/2003 slingn
+\fs20 \
+*fixed drawing optimizations to work inside NSScrollView\
+\
+
+\fs28 11/16/2003 slingn
+\fs20 \
+*fixed bug which prevented drawing of x-axis when zoomed in\
+*optimized drawing of zoomed axis labels - now only draws and caculates the size of labels that are actually on screen\
+*replaced NSRange.h and NSGeometery.h function calls with inline macros (gcc does not inline correctly)\
+*optimized computation of major and minor units for non-custom labels\
+\
+
+\fs28 11/15/2003 slingn
+\fs20 \
+*added code to deselect datasets on click outside the plot rect of their axes\
+*replaced all datasource protocol objC [] calls with IMP calls\
+*colorAtIndex and calloutAtIndex are now _datasource_ methods (were delegate)\
+\
+
+\fs28 11/14/2003 slingn
+\fs20 \
+*fixed bug with selection - would not select last element\
+*customized XSGRColumnDataSet exact selection\
+*added click notification delegate callback method\
+\
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19203\tx20163\tx21123\tx22083\tx23043\tx24003\tx24963\tx25923\tx26883\tx27843\tx28803\tx29763\tx30725\tx31685\tx32645\tx33605\tx34565\tx35525\tx36485\tx37446\tx38406\tx39366\tx40326\tx41286\tx42246\tx43207\tx44167\tx45127\tx46087\tx47047\tx48007\tx48967\tx49927\tx50887\tx51847\tx52807\tx53767\tx54727\tx55687\tx56647\tx57607\tx58567\tx59527\tx60487\tx61450\tx62410\tx63370\tx64330\tx65290\tx66250\tx67210\tx68171\tx69131\tx70091\tx71051\tx72011\tx72971\tx73932\tx74892\tx75852\tx76812\tx77772\tx78732\tx79692\tx80652\tx81612\tx82572\tx83532\tx84492\tx85452\tx86414\tx87374\tx88334\tx89294\tx90254\tx91214\tx92175\tx93135\tx94095\tx95055\tx96015
+
+\fs24 \cf2 ------ 1.0.0 GM ------
+\fs20 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+
+\fs28 07/14/2003 slingn
+\fs20 \
+*improved behavior with very large x- and y- axis labels (labels are hidden if drawing them would leave insufficient room for the rest of the chart)\
+*added \CocoaLigature0 XSGRAxesMinPlotRectWidthFraction \CocoaLigature1 and \CocoaLigature0 XSGRAxesMinPlotRectHeightFraction\CocoaLigature1  properties for defining max amount of space to use for labels before hiding them.\
+\
+
+\fs28 07/12/2003 slingn
+\fs20 \
+*fixed crash when data set is reloaded with fewer elements than index of existing selection\
+\
+
+\fs28 06/19/2003 slingn
+\fs20 \
+*fixed bug in category x-label drawing (labels weren't centered)\
+*changed default x- and y-axis label rotation to be 360 degrees rather than zero degrees. Automatic rotation of x-axis category labels to 45 degrees only occurs if the default rotation of 360 degrees is still in place. A setting of 0 degrees means no rotation (auto or otherwise).\
+\
+
+\fs28 05/20/2003 slingn
+\fs20 \
+*fixed XSGRChartView -autoscale to work for charts inside an NSScrollView\
+*fixed autocolor assignment to work as expected for multiple charts\
+\
+
+\fs28 05/18/2003 slingn
+\fs20 \
+*fixed bug with legend and rotated x-axis labels colliding\
+*fixed a problem with auto-colors not being assigned correctly when multiple datasets are created but not added to the chart\
+\
+
+\fs28 05/15/2003 slingn
+\fs20 \
+*improved margin adjustment for rotated labels\
+*more fixes to the XSGRColumnDataSet delta mode\
+\
+
+\fs28 05/05/2003 slingn
+\fs20 \
+*fixed category label collapsing to work again if insufficient horizontal space for labels (even after rotating 45 degrees)\
+\
+
+\fs28 05/01/2003 slingn
+\fs20 \
+*fixed bug in XSGRXYDataSet where return val of superclass -setSelectedRange was being ignored (could cause crash if selection range bogus)\
+*changed XSGRColumnDataSet delta mode visual compression to use min/max vertical, not avg\
+\
+
+\fs28 04/25/2003 slingn
+\fs20 \
+*fixed bug with XSGRColumnDataSet drawing when x-axis in log mode\
+*added -clearSelectedRange convenience method to XSGRDataSet class\
+*fixed bug where disabling selection didn't clear selection\
+\
+
+\fs28 04/24/2003 slingn
+\fs20 \
+*reworked legend rect and axis title layout\
+*fixed setProperty: so that setting axis title fonts properly rescales to new font size\
+\
+
+\fs28 04/23/2003 slingn
+\fs20 \
+*fixed category XSGRXYAxes zooming problem (would stop drawing chart/x-axis after zooming in a few times) - reported by Adrian Baerlocher.\
+*added ability to arbitrarily rotate x-axis labels with new XSGRXYAxes property XSGRAxesXLabelRotation (degrees)\
+*added ability to arbitrarily rotate y-axis labels with new XSGRXYAxes property XSGRAxesYLabelRotation (degrees)\
+*category labels are automatically rotated 45 degrees if they will not fit horizontally\
+*reworked how plotRect is computed - now much more faithful to properties values\
+\
+
+\fs28 04/20/2003 slingn
+\fs20 \
+*changed XSGRXYAxes isMemberOfClass: to isKindOfClass when checking if owner is a XSGRChartView (reported by Adrian Baerlocher)\
+*moved examples and documentation to /AppleInternal/...\
+\
+
+\fs28 04/12/2003 slingn
+\fs20 \
+*set minimum selection bar width for XSGRColumnDataSet\
+\
+
+\fs28 04/10/2003 slingn
+\fs20 \
+*removed warning about colorAtIndex: protocol unsupported for line and area datasets\
+\
+
+\fs28 04/09/2003 slingn
+\fs20 \
+*fixed bug with XSGRChartAutoscaleFonts property - would cause hang if set before chart had been drawn\CocoaLigature0 \
+*improved XSGRPieDataSet error handling - if num elements>0 and sum<=0.0 an empty pie chart will be drawn (rather than no chart at all and a logged error)\CocoaLigature1 \
+\
+
+\fs28 04/08/2003 slingn
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \CocoaLigature0 *removed status text field and associated methods:\
+	-(void) setStatusTextField:(NSTextField *)aTextField;\
+	-(NSTextField *)statusTextField;\
+*added XSGRAxes property for setting drawing behind (XSGRAXES_ORDER_BACK) or above (XSGRAXES_ORDER_FRONT) datasets\
+*improved efficiency of value callouts - now each dataset keeps track of its own callouts (tooltips)\
+*fixed bug where invalid selection range would not be clear if dataset reloaded with new number of elements\
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19200\tx20160\tx21120\tx22080\tx23040\tx24000\tx24960\tx25920\tx26880\tx27840\tx28800\tx29760\tx30720\tx31680\tx32640\tx33600\tx34560\tx35520\tx36480\tx37440\tx38400\tx39360\tx40320\tx41280\tx42240\tx43200\tx44160\tx45120\tx46080\tx47040\tx48000\tx48960\tx49920\tx50880\tx51840\tx52800\tx53760\tx54720\tx55680\tx56640\tx57600\tx58560\tx59520\tx60480\tx61440\tx62400\tx63360\tx64320\tx65280\tx66240\tx67200\tx68160\tx69120\tx70080\tx71040\tx72000\tx72960\tx73920\tx74880\tx75840\tx76800\tx77760\tx78720\tx79680\tx80640\tx81600\tx82560\tx83520\tx84480\tx85440\tx86400\tx87360\tx88320\tx89280\tx90240\tx91200\tx92160\tx93120\tx94080\tx95040\tx96000
+\cf0 	\CocoaLigature1 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 04/07/2003 slingn
+\fs20 \
+*fixed bug with XSGRXYAxes plotrect calculation - computation of majorminor units was adjusting plotRect even when axis drawing was disabled. This caused a margin to be drawn even when XSGRAxesLeftMargin/XSGRAxesRightMargin were zero. Reported by Eric Peyton.\
+*fixed bug which caused chart border to be overwritten by dataset drawing\
+*separated XSGRColumnDataSet drawing code into common macro\
+*made XSGRDeltaDataSet a property of the XSGRColumnDataSet rather than a separate class\
+*fixed XSGRDeltaDataSet drawing bug (caused portions of delta line to not be drawn)\
+*added XSGRDataSetDeltaLineWidth property to XSGRColumnDataSet\
+\
+
+\fs28 04/02/2003 slingn
+\fs20 \
+*fixed XSGRCHART_DRAWS_VALUE_CALLOUTS to be XSGRChartDrawValueCallouts in the documentation\
+\
+
+\fs28 03/07/03 epmiller
+\fs20 \
+*made XSGRDataSet identifier instance variable public for speed\
+ \
+
+\fs28 03/05/2003 slingn
+\fs20 \
+*Fixed x-axis label drawing bug when legend is displayed at bottom of chart\
+*Fixed bug with callouts and XSGRLineDataSet\
+*hacked around problem with callouts not being disabled when property is set no (after being enabled previously)\
+\
+
+\fs28 03/03/2003 slingn
+\fs20 \
+*Fixed documentation bug for XSGRDataSetLegendLabel.\
+\
+
+\fs28 02/14/2003 slingn
+\fs20 \
+*Merged in Christy Warren's XSGRDeltaDataset class.\
+\
+
+\fs28 02/13/2003 apinski
+\fs20 \
+*Zooming in a NSScrollView now changes the number of ticks.\
+\
+
+\fs28 02/11/2003 slingn
+\fs20 \
+*Fixed misspelling of "diagonal" as "diaganol" in the reference guide\
+*Sped up glyph drawing in XSGRLineDataSet\
+\
+
+\fs28 02/06/2003 slingn
+\fs20 \
+*Added offScreen sample code.\
+*Added -\CocoaLigature0 updateTextProperties methods to keep text properties up to date with chart wide parameters.\
+*Fixed bug in selection drawing, and performance bug for Saturn.\CocoaLigature1 \
+*Fixed header information (removed "Nathan Slingerland" and "Architecture and Performance Group")\
+*Fixed bug in background drawing with selection.\
+*Added required plist fields for bundle (CFBundleName, CFBundleShortVersionString).\
+\
+
+\fs28 02/06/2003 apinski
+\fs20 \
+*In -[XSGRXYDataSet \CocoaLigature0 setSelectedRange:] fix a copy and paste error.\CocoaLigature1  \
+\
+
+\fs28 02/05/2003 slingn
+\fs20 \
+*fixed bug with selection of last element\
+*improved efficiency of selection redraw\
+*moved common XSGRAreaDataSet/XSGRColumnDataSet/XSGRLineDataSet selection code to XSGRXYDataSet\
+\
+
+\fs28 02/04/2003 slingn
+\fs20 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \CocoaLigature0 *removed min!<max warning messages (this occurs whenever we wake up in a nib and datasource isn't ready)\
+*value callouts (tool tips) now disabled by default\
+*status text field is now an outlet on XSGRChartView\CocoaLigature1 \
+*optimized drawing when selecting (or deselecting) so that we don't redraw the entire chart (just the vertical band where selection occurred)\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 02/04/2003 apinski
+\fs20 \
+* fix zoom in with a NSScrollView, after this change:\
+	*fixed bug with XSGRChartView not resizing correctly when contained in an NSSplitView\
+\
+
+\fs28 02/04/2003 slingn
+\fs20 \
+*fixed bug with XSGRChartView not resizing correctly when contained in an NSSplitView\
+*changed all properties using [NSNull null]/nil to [NSNumber numberWithBool:YES/NO]\
+*no properties are OPTIONAL now\
+*added XSGRDataSet properties XSGRDataSetAutoPlotColor, XSGRDataSetAutoSelectionColor\
+*added XSGRLineDataSet properties XSGRDataSetAutoMarkerColor, XSGRDataSetAutoMarkerGlyph\
+*removed XSGRDataSet -(BOOL) assignDefaultColor; as it is no longer needed\
+*renamed XSGRAXES_FIXED_X_MIN to XSGRAxesFixedXPlotMin\
+*renamed XSGRAXES_FIXED_X_MAX to XSGRAxesFi\CocoaLigature0 xedXPlotMax\
+*renamed XSGRAXES_FIXED_Y_MIN to XSGRAxesFixedYPlotMin\
+*renamed XSGRAXES_FIXED_Y_MAX to XSGRAxesFixedYPlotMax\
+\
+New properties in Graphite 0.9.5\
+\
+XSGRDataSet\
+---------\
+XSGRDataSetAutoPlotColor\
+XSGRDataSetAutoSelectionColor\
+\
+XSGRLineDataSet\
+-------------\
+XSGRDataSetAutoMarkerColor\
+XSGRDataSetAutoMarkerGlyph\
+\
+\
+Previously OPTIONAL properties in Graphite 0.9.2\
+\
+XSGRChartView\
+-----------\
+XSGRChartMainTitle\
+XSGRChartDrawBackground\
+XSGRChartAutoscaleFonts\
+XSGRChartVisualCompression\
+XSGRChartAllowSelection\
+XSGRChartAllowMultipleSelection\
+XSGRChartAllowHorizontalZoom\
+XSGRChartAllowVerticalZoom\
+XSGRChartDrawValueCallouts\
+XSGRChartIndependentlyZoomTiledDataSets\
+XSGRChartIndependentlySelectTiledDataSets\
+\
+XSGRAxes\
+------\
+XSGRAxesDrawBackground\
+XSGRAxesSubTitle\
+XSGRAxesMajorLineDashPattern\
+XSGRAxesMinorLineDashPattern\
+XSGRAxesWindowSize\
+XSGRAxesDrawLegend\
+XSGRAxesDrawLegendBackground\
+XSGRAxesMajorMinorError\
+\
+XSGRXYAxes\
+--------\
+XSGRAxesXTitle\
+XSGRAxesYTitle\
+XSGRAxesFixedXPlotMin\
+XSGRAxesFixedXPlotMax\
+XSGRAxesFixedXMinorUnit\
+XSGRAxesFixedXMinorUnit\
+XSGRAxesFixedXPlotMin\
+XSGRAxesFixedYPlotMax\
+XSGRAxesFixedYMajorUnit\
+XSGRAxesFixedYMinorUnit\
+XSGRAxesDrawXAxis\
+XSGRAxesDrawXLabels\
+XSGRAxesDrawXMajorTicks\
+XSGRAxesDrawXMinorTicks\
+XSGRAxesDrawXMajorLines\
+XSGRAxesDrawXMinorLines\
+XSGRAxesDrawYAxis\
+XSGRAxesDrawYLabels\
+XSGRAxesDrawYMajorTicks\
+XSGRAxesDrawYMinorTicks\
+XSGRAxesDrawYMajorTicks\
+XSGRAxesDrawYMinorTicks\
+XSGRAXES_DRAW_X_SELECTION\
+XSGRAxesFixedXLabelFormat\
+XSGRAxesFixedYLabelFormat\
+\
+XSGRDataSet\
+---------\
+XSGRDataSetSelectionColor\
+XSGRDataSetLegendLabel\
+XSGRDataSetHidden\
+XSGRDataSetInheritChartDataSource\
+XSGRDataSetInheritChartDelegate\
+\
+XSGRColumnDataSet\
+---------------\
+XSGRDataSetDrawColumnOutlines\
+XSGRDataSetCategoryGapFraction\
+\
+XSGRLineDataSet\
+-------------\
+XSGRDataSetMarkerColor\
+XSGRDataSetDrawMarkers\
+XSGRDataSetDrawPlotLine\
+XSGRDataSetPlotLineDashPattern\
+\
+XSGRPieDataSet\
+------------\
+XSGRDataSetDrawWedgeOutlines\
+\CocoaLigature1 \
+\
+
+\fs28 01/24/2003 apinski
+\fs20 \
+*speed up -[XSGRXYAxes drawXGrid] if no grid is wanted.\
+\
+
+\fs28 01/21/2003 apinski
+\fs20 \
+*when \CocoaLigature0 the chart view is resized and is not zooming fix up the oldZoomSizes to so they look right when zooming out.\CocoaLigature1 \
+\
+
+\fs28 01/20/2003 apinski
+\fs20 \
+*when zooming if the double superview is a NSScrollView zoom by using \CocoaLigature0 _zoomInScroller:, and _zoomOutScroller.\
+*add internal functions for zooming in a NSScrollView, _zoomScroller:, _zoomInScroller:, and _zoomOutScroller.\
+*fix scrolling to the right place when zooming and in a NSScrollView\CocoaLigature1 \
+\
+
+\fs28 01/15/2003 apinski
+\fs20 \
+*fix the draw\{X,Y\}AxesRect in XSGRXYAxes so that they draw the label of the tick if the tick is offscreen.\
+\
+
+\fs28 01/13/2003 apinski
+\fs20 \
+*change -[XSGR*Axes draw*] to -[XSGR*Axes draw*Rect:] to able to optimize darwing.\
+*In XSGRXYAxes, optimize drawXAxisRect, drawXGridRect, drawYAxisRect, and drawYGridRect by not drawing if outside of the drawRect, just like PlotRect.\
+\
+
+\fs28 01/09/2003 slingn
+\fs20 \
+*changed XSGRXYDataSet -(int) indexOfXvalue:(double)x to be -(int) indexOfXvalue:(double)x exactMatch:(BOOL)exact\
+\
+
+\fs28 01/07/2003 apinski
+\fs20 \
+*fix \CocoaLigature0 statusText by locking the focus on it.\CocoaLigature1 \
+*performance `bug' in set*Property: forKey:, change to only delete if p is nil from always.\
+\
+
+\fs28 01/03/2003
+\fs20 \
+*cleaned up get/set default properties (entire dictionary) and colors and markers methods for all classes to prevent crash during sick behavior.\
+*sped up dataset creation (were initiazing default properties twice).\
+\
+
+\fs28 01/02/2003
+\fs20 \
+*added -canvasRect method to XSGRAxes class to support customized zooming and scrolling\
+\
+
+\fs28 12/26/2002
+\fs20 \
+*fixed memory leak in XSGRSelectionView ([super dealloc] was not being called)\
+\
+
+\fs28 12/20/2002
+\fs20 \
+*default XSGRChartView background color is now an NSColor (was XSGRGradientColor) because of problems with caching of very large charts - NSImage can not be so large\
+*fixed problem with minimum right/left margin checking - now we don't mess with margin differences < 1 pixel\
+\
+
+\fs28 12/19/2002
+\fs20 \
+*fixed a bunch of memory leaks\
+\
+
+\fs28 12/18/2002
+\fs20 \
+*added willZoomIn, willZoomOut callbacks \
+*revamped multiple selection to only deal with a single range at a time (no arbitrary selection due to performance issues with large datasets)\
+*removed XSGRDataSet XSGRDATASET_SELECTED_INDICES key\
+*added -setSelectedRange and -selectedRange to XSGRDataSet\
+\
+
+\fs28 12/17/2002
+\fs20 \
+*added extend argument to selectPoint: (XSGRAxes)\
+*added deselectAllPoints to XSGRAxes\
+*removed XSGRAxes XSGRAXES_SELECTION_VALUE key and replaced with XSGRDATASET_SELECTED_INDICES\
+*added XSGRChartAllowMultipleSelection - can now select >1 point\
+*changed XSGRAxes didSelectElementAtIndex:(int)index callback to selectionDidChange:(NSArray *)selectedIndices\
+*removed XSGRDataSet -drawSelection method as it was unused (all selection drawing takes place in -drawDataSetRect:)\
+*default dataset plot colors are now assigned when added to a XSGRChartView only if the user has not already assigned a color. -assignDefaultColor must be called after dataset is added to a XSGRChartView.\
+*fixed performance bug with instance count arrays\
+*removed extra allocation and release of XSGRAxes class by subclasses\
+*Fixed bug with contiguous multiple selection in tiled mode.\
+*Fixed ordering bug in contiguous multiple selection mode (now correctly retains position of first selected datapoint).\
+\
+
+\fs28 12/16/2002
+\fs20 \
+*dataset identifier is now retained/released by dataset\
+*informal protocols for x/y values now only specify XSGRDataSet (not a particular subclass)\
+*fixed XSGRXYAxes scaling to better handle very small chart sizes\
+*added XSGRDataSetInheritChartDataSource and XSGRDataSetInheritChartDelegate properties to XSGRDataSet\
+*added XSGRAxesYHeadroomFraction property to XSGRXYAxes\
+*added \CocoaLigature0 tileFractionForDataSet: XSGRChartView delegate method for custom tiled layout\
+*added XSGRChartIndependentlyZoomTiledDataSets, XSGRChartIndependentlySelectTiledDataSets to XSGRChartView\
+*added -autoscale method to XSGRChartView (since it controls zooming-in/-out of datasets)\CocoaLigature1 \
+\
+
+\fs28 12/09/2002
+\fs20 \
+*Added -addDataSets:(NSArray *)arrayOfDataSets method to XSGRChartView. This prevents multiple data reloads when adding several datasets.\
+*Fixed bug in XSGRColumnDataSet visual compression (a narrow column followed by a wider column was being compressed into a narrow column rather than the total width)\
+*Optimized drawing of XSGRColumnDataSet - now we check if the column to be drawn is inside the rectangle supplied by drawRect\
+*Replaced XSGRDataSet's drawDataSet with drawDataSetRect in order to better optimize drawing\
+\
+
+\fs28 12/05/2002
+\fs20 \
+*Fixed bug with single element in dataset\
+*Fixed bug in XSGRColumnDataSet when first or last element is zero height\
+*Fixed bug with element index supplied by callout callback\
+*Split XSGRChartView's ALLOW_ZOOM property to be ALLOW_HORIZONTAL_ZOOM and ALLOW_VERTICAL_ZOOM\
+*Fixed bug where zoom/fixed x,y values were not cleared after -reloadData is called\
+\
+
+\fs28 11/19/2002
+\fs20 \
+*Fixed resizing bug in BigTop.app nib. (reported by David den Boer)\
+\
+
+\fs28 11/17/2002
+\fs20 \
+*Graphite 0.9 released.\
+\
+
+\fs28 11/04/2002
+\fs20 \
+*moved category/value X-axis specification to XSGRXYAxes class (was in XSGRChartView)\
+\
+
+\fs28 11/01/2002
+\fs20 \
+*dataset window mode was broken\
+*line dataset markers changed to be just like default colors interface\
+\
+
+\fs28 10/31/2002
+\fs20 \
+*fixed XSGRLineDataSet so that markers are drawn after the line is drawn\
+*min/max code moved to XSGRDataSet classes from axes.\
+*window code updated for new min/max method\
+\
+
+\fs28 10/26/2002
+\fs20 \
+*fixed: instances array will break with >1 chart - now XSGRChartView manages this instead\
+\
+
+\fs28 10/25/2002
+\fs20 \
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19200\tx20160\tx21120\tx22080\tx23040\tx24000\tx24960\tx25920\tx26880\tx27840\tx28800\tx29760\tx30720\tx31680\tx32640\tx33600\tx34560\tx35520\tx36480\tx37440\tx38400\tx39360\tx40320\tx41280\tx42240\tx43200\tx44160\tx45120\tx46080\tx47040\tx48000\tx48960\tx49920\tx50880\tx51840\tx52800\tx53760\tx54720\tx55680\tx56640\tx57600\tx58560\tx59520\tx60480\tx61440\tx62400\tx63360\tx64320\tx65280\tx66240\tx67200\tx68160\tx69120\tx70080\tx71040\tx72000\tx72960\tx73920\tx74880\tx75840\tx76800\tx77760\tx78720\tx79680\tx80640\tx81600\tx82560\tx83520\tx84480\tx85440\tx86400\tx87360\tx88320\tx89280\tx90240\tx91200\tx92160\tx93120\tx94080\tx95040\tx96000
+\cf0 *fixed: autoscale broken for x/y labels\
+*distinguish between datasource and delegate\
+*selection callback for custom selection behavior (didSelectAtIndex, didUnselect) - Shikari needs this\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+
+\fs28 \cf0 10/16/2002
+\fs20 \
+*y axis labels/title spacing not quite right - large y labels are too big\
+\
+
+\fs28 10/15/2002
+\fs20 \
+*need a different, better name than "NSCharts" - Graphite\
+\
+
+\fs28 10/14/2002
+\fs20 \
+\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19200\tx20160\tx21120\tx22080\tx23040\tx24000\tx24960\tx25920\tx26880\tx27840\tx28800\tx29760\tx30720\tx31680\tx32640\tx33600\tx34560\tx35520\tx36480\tx37440\tx38400\tx39360\tx40320\tx41280\tx42240\tx43200\tx44160\tx45120\tx46080\tx47040\tx48000\tx48960\tx49920\tx50880\tx51840\tx52800\tx53760\tx54720\tx55680\tx56640\tx57600\tx58560\tx59520\tx60480\tx61440\tx62400\tx63360\tx64320\tx65280\tx66240\tx67200\tx68160\tx69120\tx70080\tx71040\tx72000\tx72960\tx73920\tx74880\tx75840\tx76800\tx77760\tx78720\tx79680\tx80640\tx81600\tx82560\tx83520\tx84480\tx85440\tx86400\tx87360\tx88320\tx89280\tx90240\tx91200\tx92160\tx93120\tx94080\tx95040\tx96000
+\cf0 *more and better error reporting\
+*verify properties are appropriate (check prefix of property key)\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
+\cf0 \
+
+\fs28 10/09/2002
+\fs20 \
+*added pie charts\
+*created NSPieAxes with specialized legend (label per chart wedge rather than per dataset)\
+*default color list now a property in the defaults dictionary (rather than a private dictionary)\
+*"key" renamed "legend"\
+*all legend code moved to NSAxes and subclasses\
+*pie charts aren't resizing correctly unless legend is displayed\
+\
+
+\fs28 09/21/2002
+\fs20 \
+*mouse over tool tips (callouts) for reading off chart values\
+*customized callout text \
+*callout tooltip rects always optimized (even when visual compression disabled) since these rects have no visible result\
+\
+
+\fs28 09/12/2002
+\fs20 \
+*disable selection lines\
+*disable zooming\
+*optimized dataset drawing (visual compression) - cull redundant points\
+*class defaults dictionaries\
+*vertical zoom\
+*gradient backgrounds\
+*converted to framework\
+*NSAxes gets datapoints from NSDataSets (not datasource) in order to support stacked charts\
+*key position (top, bottom, left, right)\
+*zoom in/out, selection\
+*stacked fraction charts\
+*stacked value charts\
+*chart sub titles\
+*chart borders (none, black, beveled, groove)\
+*key borders (none, black, beveled, groove)\
+*transparent canvas and/or background\
+*programatically turn on/off custom labels, glyphs\
+*programatically switch between overlayed data sets\
+*per dataset specialized editor\
+*line style (pattern) for chart lines\
+*fixed font panels\
+*windowed dataset drawing (e.g. only last N elements)\
+*datasets drawn in reverse chart index order\
+}

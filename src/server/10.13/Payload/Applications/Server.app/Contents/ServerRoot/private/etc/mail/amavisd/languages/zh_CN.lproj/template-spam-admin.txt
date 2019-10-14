@@ -1,0 +1,39 @@
+# =============================================================================
+# This is a template for SPAM ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+发件人: %f
+日期: %d
+主题: 垃圾邮件来自 [?%l||LOCAL ][?%a||\[%a\] ]%s
+To: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <SA%i@%h>
+
+内容类型: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, 阻止原因是 [:ccat|name]]
+该邮件的内部参考码是 %n/%i
+
+[? %a |#|[:wrap|78||  |第一个上游 SMTP 客户端 IP 地址: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |根据“接收时间:”追踪结果，\
+邮件似乎出自： \[%e\], %t]]
+
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |未隔离。|邮件已被隔离为: %q]
+
+[? %#D |#|邮件将中转到:[\n%D]
+]
+[? %#N |#|邮件未中转到:[\n%N]
+]
+SpamAssassin 报告:
+[%A
+]\

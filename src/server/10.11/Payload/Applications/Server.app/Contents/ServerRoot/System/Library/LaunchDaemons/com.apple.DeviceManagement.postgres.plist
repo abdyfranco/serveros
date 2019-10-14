@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.DeviceManagement.postgres</string>
+	<key>UserName</key>
+	<string>_devicemgr</string>
+	<key>GroupName</key>
+	<string>_devicemgr</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/bin/xpostgres</string>
+		<string>-a</string>
+		<string>/Library/Server/ProfileManager/Config/PostgreSQL_config.plist</string>
+	</array>
+	<key>OnDemand</key>
+	<false/>
+	<key>ExitTimeOut</key>
+	<integer>60</integer>
+    <key>StandardOutPath</key>
+    <string>/Library/Logs/ProfileManager/xpostgres.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Library/Logs/ProfileManager/xpostgres.log</string>
+</dict>
+</plist>

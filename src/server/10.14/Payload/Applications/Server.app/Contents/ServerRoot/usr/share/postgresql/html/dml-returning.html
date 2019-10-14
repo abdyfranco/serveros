@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Returning Data From Modified Rows</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.4.15 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Data Manipulation"
+HREF="dml.html"><LINK
+REL="PREVIOUS"
+TITLE="Deleting Data"
+HREF="dml-delete.html"><LINK
+REL="NEXT"
+TITLE="Queries"
+HREF="queries.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2017-11-06T22:35:27"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="4"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.4.15 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="Deleting Data"
+HREF="dml-delete.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dml.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 6. Data Manipulation</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="Queries"
+HREF="queries.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="DML-RETURNING"
+>6.4. Returning Data From Modified Rows</A
+></H1
+><P
+>   Sometimes it is useful to obtain data from modified rows while they are
+   being manipulated.  The <TT
+CLASS="COMMAND"
+>INSERT</TT
+>, <TT
+CLASS="COMMAND"
+>UPDATE</TT
+>,
+   and <TT
+CLASS="COMMAND"
+>DELETE</TT
+> commands all have an
+   optional <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> clause that supports this.  Use
+   of <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> avoids performing an extra database query to
+   collect the data, and is especially valuable when it would otherwise be
+   difficult to identify the modified rows reliably.
+  </P
+><P
+>   The allowed contents of a <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> clause are the same as
+   a <TT
+CLASS="COMMAND"
+>SELECT</TT
+> command's output list
+   (see <A
+HREF="queries-select-lists.html"
+>Section 7.3</A
+>).  It can contain column
+   names of the command's target table, or value expressions using those
+   columns.  A common shorthand is <TT
+CLASS="LITERAL"
+>RETURNING *</TT
+>, which selects
+   all columns of the target table in order.
+  </P
+><P
+>   In an <TT
+CLASS="COMMAND"
+>INSERT</TT
+>, the data available to <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> is
+   the row as it was inserted.  This is not so useful in trivial inserts,
+   since it would just repeat the data provided by the client.  But it can
+   be very handy when relying on computed default values.  For example,
+   when using a <A
+HREF="datatype-numeric.html#DATATYPE-SERIAL"
+><TT
+CLASS="TYPE"
+>serial</TT
+></A
+>
+   column to provide unique identifiers, <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> can return
+   the ID assigned to a new row:
+</P><PRE
+CLASS="PROGRAMLISTING"
+>CREATE TABLE users (firstname text, lastname text, id serial primary key);
+
+INSERT INTO users (firstname, lastname) VALUES ('Joe', 'Cool') RETURNING id;</PRE
+><P>
+   The <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> clause is also very useful
+   with <TT
+CLASS="LITERAL"
+>INSERT ... SELECT</TT
+>.
+  </P
+><P
+>   In an <TT
+CLASS="COMMAND"
+>UPDATE</TT
+>, the data available to <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> is
+   the new content of the modified row.  For example:
+</P><PRE
+CLASS="PROGRAMLISTING"
+>UPDATE products SET price = price * 1.10
+  WHERE price &lt;= 99.99
+  RETURNING name, price AS new_price;</PRE
+><P>
+  </P
+><P
+>   In a <TT
+CLASS="COMMAND"
+>DELETE</TT
+>, the data available to <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> is
+   the content of the deleted row.  For example:
+</P><PRE
+CLASS="PROGRAMLISTING"
+>DELETE FROM products
+  WHERE obsoletion_date = 'today'
+  RETURNING *;</PRE
+><P>
+  </P
+><P
+>   If there are triggers (<A
+HREF="triggers.html"
+>Chapter 36</A
+>) on the target table,
+   the data available to <TT
+CLASS="LITERAL"
+>RETURNING</TT
+> is the row as modified by
+   the triggers.  Thus, inspecting columns computed by triggers is another
+   common use-case for <TT
+CLASS="LITERAL"
+>RETURNING</TT
+>.
+  </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dml-delete.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="queries.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Deleting Data</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dml.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Queries</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>claimedFacilities</key>
+	<array>
+		<string>servermgrd</string>
+		<string>servermgr-listener</string>
+		<string>servermgr-notify</string>
+	</array>
+	<key>claimedSenders</key>
+	<array>
+		<string>servermgrd</string>
+		<string>servermgr-listener</string>
+		<string>servermgr-notify</string>
+	</array>
+	<key>logMaximumLevel</key>
+	<string>debug</string>
+	<key>logPath</key>
+	<string>/Library/Server/Logs/servermgrd.log</string>
+</dict>
+</plist>

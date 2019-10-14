@@ -1,0 +1,1043 @@
+#!/Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+#
+# Copyright (c) 2009-2016 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# Runs as PromotionExtra
+#
+# Copy installed files, under the bundle, to their run-time place,
+# under /Library/Server.
+#
+# Set up SSL config of default secure site.
+#
+
+require 'fileutils'
+require 'cfpropertylist'
+require 'logger'
+require 'set'
+require 'socket'
+require 'tempfile'
+
+def deQuote(string)
+    if string.size > 2 && string.slice(0,1) == "\"" && string.slice(-1,1) == "\""
+        return string.slice(1..-2)
+    else
+        return string
+    end
+end
+
+$logFile = "/Library/Logs/Setup.log"
+$logger = Logger.new($logFile)
+$logger.level = Logger::DEBUG
+
+if ARGV[0] == "no-restart"
+	$logger.info("*** Web Service no-restart promotion start ***")
+elsif ARGV[0] == "proxy-reset"
+	$logger.info("*** Web Service proxy-reset all ssl certificates ***")
+else
+	$logger.info("*** Web Service promotion start ***")
+end
+
+$SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+$SERVER_LIBRARY_DIR = "/Library/Server"
+$SERVER_WEB_CONFIG_APACHE_DIR = "#{$SERVER_LIBRARY_DIR}/Web/Config/apache2"
+$SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR = "#{$SERVER_LIBRARY_DIR}/Web/Config/apache2.previous"
+$WEBAPP_DIR = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/webapps"
+$PROXY_CONFIG_PATH = "#{$SERVER_LIBRARY_DIR}/Web/Config/Proxy/apache_serviceproxy.conf"
+
+if FileTest.exists?($SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR)
+	if FileTest.exists?($SERVER_WEB_CONFIG_APACHE_DIR)
+		`rm -rf #{$SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR}`
+	end
+end
+	
+if FileTest.exists?($SERVER_WEB_CONFIG_APACHE_DIR)
+	#create a previous copy
+	`ditto #{$SERVER_WEB_CONFIG_APACHE_DIR} #{$SERVER_WEB_CONFIG_APACHE_PREVIOUS_DIR}`
+end
+
+$SERVER_2_0_CONF = "/private/etc/apache2/httpd.conf"
+$SERVER_2_2_CONF = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd_server_app.conf"
+$SERVER_3seed_CONF = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd.conf"
+$SERVER_3final_CONF = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd_server_app.conf"
+$SERVER_3_CONF = $SERVER_3seed_CONF
+$SERVER_3_DEFAULT_CONF = $SERVER_3_CONF + ".default"
+$defaultSiteWebApps = Set.new
+$newWebConfigDir = "/Library/Server/Web/Config/apache2/"
+$newWebDataDir = "/Library/Server/Web/Data/"
+$webInternalHTTPport = "34580"
+$webInternalHTTPSport = "34543"
+$defaultVHostFile = "0000_127.0.0.1_#{$webInternalHTTPport}_.conf"
+$defaultSecureVHostFile = "0000_127.0.0.1_#{$webInternalHTTPSport}_.conf"
+$defaultVhostConfig = "#{$newWebConfigDir}/sites/#{$defaultVHostFile}.default"
+$defaultSecureVhostConfig = "#{$newWebConfigDir}/sites/#{$defaultSecureVHostFile}.default"
+$defaultSecureSiteFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_127.0.0.1_#{$webInternalHTTPSport}_.conf"
+$defaultSiteFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_127.0.0.1_#{$webInternalHTTPport}_.conf"
+$oldDefaultSecureSiteFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_any_443_.conf"
+$oldDefaultSiteFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_any_80_.conf"
+$oldDefaultSecureSiteFileDefault = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_any_443_.conf.default"
+$oldDefaultSiteFileDefault = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_any_80_.conf.default"
+
+$oldWebConfigDir = "/Library/Server/Web/Config/apache2/"
+$old_httpd_conf = "#{$oldWebConfigDir}httpd_server_app.conf"
+$old_httpd_conf_dir = $oldWebConfigDir
+$old_httpd_sites_dir = "#{$oldWebConfigDir}sites/"
+$old_httpd_sites_disabled_dir = "#{$oldWebConfigDir}sites_disabled/"
+$httpd_proxy_sites_dir = "#{$oldWebConfigDir}/proxy_sites"
+$httpd_proxy_sites_disabled_dir = "#{$oldWebConfigDir}/httpd_proxy_sites_disabled"
+$metaDataFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/servermgr_web_apache2_config.plist"
+
+$HAS_PREVIOUS_INSTALL = false
+if FileTest.exists?($SERVER_WEB_CONFIG_APACHE_DIR)
+	$HAS_PREVIOUS_INSTALL = true
+end
+
+# To do: get this info from /Library/Server/Setup/com.apple.serverd.plist
+$SERVER_VERSION = 3
+if FileTest.exists?($SERVER_3_CONF)
+	$SERVER_VERSION = 3
+elsif FileTest.exists?($SERVER_2_2_CONF)
+	FileUtils.cp($SERVER_2_2_CONF, $SERVER_3_CONF)
+	$SERVER_VERSION = 2.2
+elsif FileTest.exists?($SERVER_2_0_CONF) and $HAS_PREVIOUS_INSTALL
+		FileUtils.cp($SERVER_2_0_CONF, $SERVER_3_CONF)
+		$SERVER_VERSION = 2
+elsif !$HAS_PREVIOUS_INSTALL
+		$logger.info("First time install")
+end
+$logger.info("Promotion from v.#{$SERVER_VERSION} or newer")
+
+# Populate default config files
+FileUtils.mkdir_p($SERVER_WEB_CONFIG_APACHE_DIR)
+FileUtils.chmod(0755, $SERVER_WEB_CONFIG_APACHE_DIR)
+
+def getDefaultCertID(path, defaultSecureSiteSSLCertID)
+	
+	$logger.info("getDefaultCertID path=#{path}  defaultSecureSiteSSLCertID=#{defaultSecureSiteSSLCertID} ")
+	certID = ""
+	if !FileTest.exists?("/etc/certificates/#{$defaultSecureSiteSSLCertID}.key.pem")
+		defaultSecureSiteSSLCertID = nil
+	end
+	
+	if path.nil? || path.empty? || !FileTest.exists?(path)
+		path = defaultSecureSiteSSLCertID
+	end
+	if path.nil? || path.empty?
+		# Make sure a cert is available for web.
+		$logger.info("Exporting certificates. ")
+		`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin command certs:command=exportAllIdentities`
+		path = `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/certadmin --default-certificate-path`.chomp
+		if path.nil? || path.empty? || !FileTest.exists?(path)
+			$logger.info("Creating a new self signed cert.")
+			`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin command certs:command=createDefaultSelfSignedIdentity`
+			`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin command certs:command=exportAllIdentities`
+			path = `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/certadmin --default-certificate-path`.chomp
+		end
+	end
+	
+	if defaultSecureSiteSSLCertID && defaultSecureSiteSSLCertID.length > 0
+		$logger.info("Default secure site is using the previously configured certificate: #{$defaultSecureSiteSSLCertID}.")
+		certID = defaultSecureSiteSSLCertID
+	else
+		certID = path.sub(/^\/etc\/certificates\//,'').sub(/\.\w+\.pem$/,'').sub(/\.ce*rt$/,'')
+	end
+	
+	return certID
+end
+
+def reset_to_default_site_cert
+	@certID = getDefaultCertID(@path,$defaultSecureSiteSSLCertID)
+    @mstID = default_cert_identifier
+    @mstID = "MST identity unavailable" if @mstID.nil?
+
+	# Update pass phrase dictionary in metaData config file
+	plist = CFPropertyList::List.new(:file => $metaDataFile)
+	metaDataDict = CFPropertyList.native_types(plist.value)
+	metaDataDict["Sites"].each do |site|
+		found = false 
+		haveExtenalID = false
+		serverName = ""
+		port = "443"
+		siteID = site["_id_"]
+		if @certID != ""
+			parts = siteID.split('_')
+			serverName = parts[1] if parts.count > 1
+			nameAndPort = parts[0].split(':')
+			port = nameAndPort.last if nameAndPort.count > 1
+		end
+
+		internalSSLPassPhraseDict = { 
+			"Port" => port, 
+			"SSLCertificateKeyFile" =>  "/etc/certificates/#{@certID}.key.pem",
+            "sslCertificateIdentifier" => @certID,
+            "mstCertificateIdentifier" => @mstID,
+			"ServerName" =>  serverName,
+			"enabled" => true
+		}
+		if site["SSLPassPhrase"]["sslCertificateIdentifier"] != ""
+			site["SSLPassPhrase"] = internalSSLPassPhraseDict
+		end
+
+
+	end
+	$logger.info("Updated SSL certificate files in #{$metaDataFile}")
+	$logger.info("Updated SSL certificate files in #{metaDataDict}")
+
+	plist = CFPropertyList::List.new
+	plist.value = CFPropertyList.guess(metaDataDict)
+	plist.save($metaDataFile, CFPropertyList::List::FORMAT_XML)
+end
+
+def config_is_valid(configPath)
+	$logger.info("test if config_is_valid:#{configPath}")
+	$logger.info("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/httpd-server-wrapper -f #{configPath} -DWEBSERVICE_ON -t 2>&1")
+
+	valid = false
+	ENV["SERVER_INSTALL_PATH_PREFIX"] = $SERVER_INSTALL_PATH_PREFIX
+	ENV["MODULE_INSTALL_PATH_PREFIX"] = ""
+	output = IO.popen("#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/httpd-server-wrapper -f #{configPath} -DWEBSERVICE_ON -t 2>&1")
+	output.each do |line|
+		$logger.info(line.chomp)
+		if line =~ /Syntax OK/
+			valid = true
+			break
+		end
+	end
+	if !valid
+		$logger.error("Error in Apache configuration: #{configPath}")
+	end
+	
+	output.close
+	return valid
+end
+
+def apache_config_is_valid
+	return config_is_valid("#{$newWebConfigDir}/httpd_server_app.conf")
+end
+
+def proxy_config_is_valid
+	return config_is_valid($PROXY_CONFIG_PATH)	
+end
+
+def CheckAndResetProxyOnErr()
+	if !proxy_config_is_valid
+		$logger.error("Proxy configuration Error!")
+		$logger.error("Resetting all sites and the proxy to the default cert")
+		reset_to_default_site_cert
+        # To do: alert
+	end
+end
+
+
+if ARGV[0] == "proxy-reset"
+	CheckAndResetProxyOnErr()
+	exit 0
+end
+
+`ditto #{$SERVER_INSTALL_PATH_PREFIX}/private/etc/apache2 #{$SERVER_WEB_CONFIG_APACHE_DIR}`
+
+`cp -Rf #{$SERVER_INSTALL_PATH_PREFIX}/#{$SERVER_LIBRARY_DIR}/Web/ #{$SERVER_LIBRARY_DIR}/Web/`
+
+serviceConfigFiles = Dir.glob("#{$SERVER_WEB_CONFIG_APACHE_DIR}/services/**/*").select{ |e| File.file? e }
+FileUtils.chmod_R(0644, serviceConfigFiles)
+
+def removeWebAppConfigFiles
+	webAppConfigFilesToRemove = [
+		"#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd_corecollaboration_required.conf",
+		"#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd_passwordreset_required.conf",
+	]
+
+	$logger.info("webAppConfigFilesToRemove")
+	webAppConfigFilesToRemove.each do |file|
+		$logger.info("webAppConfigFilesToRemove: #{file}")
+		if FileTest.exists?(file)
+			$logger.info("webAppConfigFilesToRemove: found file to remove #{file}")
+			`rm -f #{file}`
+		end
+	end
+end
+
+def edit_virtualhost_listen
+	# Remove port 443 and port 80 directives from virtual_host_global.conf
+	vHostGlobalFilePath = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/virtual_host_global.conf"
+	if !FileTest.exists?(vHostGlobalFilePath)
+		vHostGlobalDefaultFilePath = vHostGlobalFilePath + '.default'
+		if FileTest.exists?(vHostGlobalDefaultFilePath)
+			FileUtils.cp(vHostGlobalDefaultFilePath, vHostGlobalFilePath)
+		else
+			$logger.error("edit_virtualhost_listen: failed - no #{vHostGlobalFilePath} nor #{vHostGlobalDefaultFilePath}")
+		end
+	end
+	tempFile = Tempfile.new("vHostGlobalTemp")
+	begin
+		File.open(vHostGlobalFilePath, :encoding => "UTF-8").each { |line|
+			next if line =~ /\s*Listen\s+\S+:80/i || line =~ /\s*Listen\s+\S+:443/i
+			tempFile.puts(line)
+		}
+		tempFile.close
+		FileUtils.mv(tempFile.path, vHostGlobalFilePath)
+        FileUtils.chmod(0644, vHostGlobalFilePath)
+	rescue Exception => msg
+		$logger.error("edit_virtualhost_listen: failed:#{msg}  file:#{vHostGlobalFilePath}")
+	end
+end
+
+# Convert 80 and 443 to 34543 and 34580
+def edit_virtualhost(oldAddress,newAddress, oldPort, newPort, srcFile)
+ 	copy_lines = []
+ 	readFileOK = TRUE
+ 	begin
+ 		openFile = File.open(srcFile, :encoding => "UTF-8").each { |line|
+			parts = line.strip.split(/\s+/)
+			numParts = parts.count
+			if (numParts > 1)
+				setting = parts[0].downcase
+				setting = setting.sub(/^\</,'').sub(/^\//,'').sub(/>$/,'')
+				if (parts.last == ">")
+					thePortParts = parts[numParts -2]
+				else
+					thePortParts = parts.last
+				end
+				thePortParts = thePortParts.sub(/^\>/,'')
+				thePort = thePortParts.strip.split(/\W+/).last
+				if ("virtualhost" == setting)					
+					if (thePort == oldPort)
+						$logger.info("edit_virtualhost found port match  thePort:#{thePort} oldPort: #{oldPort}  srcFile:#{srcFile}")
+						oldPortStr = ":" + oldPort
+						newPortStr = ":" + newPort
+						#replace the last occurence of string oldport with newport
+						*a, b = line.split(oldPortStr, -1)
+						line = a.join(oldPortStr)+newPortStr+b
+					end
+
+					if (thePortParts.include?(oldAddress) && (thePort == oldPort))
+						$logger.info("edit_virtualhost found address match  oldAddress:#{oldAddress} thePortParts: #{thePortParts}  srcFile:#{srcFile}")
+						 line=line.sub(oldAddress,newAddress)
+					end
+				end
+			end
+			copy_lines << line
+		}
+		openFile.close
+		rescue Exception => msg  
+			$logger.error("edit_virtualhost:exception #{msg}")
+			readFileOK = FALSE	
+ 	end
+
+ 	if !readFileOK
+		$logger.error("edit_virtualhost failed to read file:#{srcFile}")
+		return
+	end
+		
+	begin
+		openFile = File.open(srcFile, 'w')
+		openFile.puts(copy_lines)
+		openFile.close
+		rescue Exception => msg  
+		$logger.error("edit_virtualhost:edit_virtualhost: failed:#{msg}  file:#{srcFile}")
+	end
+end
+
+
+def rename_old_default_site_file(old, new)
+	if !FileTest.exists?(new)
+		if FileTest.exists?(old)
+			FileUtils.cp(old, old +".orig" )
+			FileUtils.mv old, new, :force => true 
+		end
+		if !FileTest.exists?(new)
+			$logger.error("rename_old_default_site_file failed from  #{old} to #{new} ")
+			return
+		end
+		FileUtils.chmod(0644, new)
+	end
+end
+
+
+def update_metadata_file
+	# Update metaData config file to remove old default sites
+	savefile = false
+	plist = CFPropertyList::List.new(:file => $metaDataFile)
+	metaDataDict = CFPropertyList.native_types(plist.value)
+	metaDataDict["Sites"].each do |site|
+		#turn off ssl on default secure site
+		if site["_id_"] == "*:#{$webInternalHTTPSport}_"
+			site.delete(site["SSLPassPhrase"])
+		end
+		
+		#remove default secure site
+		if site["_id_"] == "*:443_"
+			$logger.info("update_metadata_file: removing old meta data default #{site["_id_"]}")
+			metaDataDict["Sites"].delete(site)
+			savefile = true
+			break
+		end	
+	end
+	
+	metaDataDict["Sites"].each do |site|
+		#remove default  site
+		if site["_id_"] == "*:80_"
+			$logger.info("update_metadata_file: removing old meta data default #{site["_id_"]}")
+			metaDataDict["Sites"].delete(site)
+			savefile = true
+			break
+		end
+	end	
+	
+	if savefile
+		plist = CFPropertyList::List.new
+		plist.value = CFPropertyList.guess(metaDataDict)
+		plist.save($metaDataFile, CFPropertyList::List::FORMAT_XML)
+	end
+end
+
+rename_old_default_site_file($oldDefaultSecureSiteFile, $defaultSecureSiteFile)
+rename_old_default_site_file($oldDefaultSiteFile, $defaultSiteFile)
+edit_virtualhost_listen
+edit_virtualhost("*","127.0.0.1","443", "#{$webInternalHTTPSport}",$defaultSecureSiteFile)
+edit_virtualhost("*","127.0.0.1", "80", "#{$webInternalHTTPport}",$defaultSiteFile)
+
+
+#-------------------------------------------------------
+
+configFilesToRemove = [
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd.conf",
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd_server_app.conf",
+	"#{$WEBAPP_DIR}/com.apple.webapp.collab.plist",
+	"#{$WEBAPP_DIR}/com.apple.webapp.collabd.settings.plist",
+	"#{$oldDefaultSecureSiteFile}",
+	"#{$oldDefaultSiteFile}"
+]
+
+$logger.info("configFilesToRemove")
+
+configFilesToRemove.each do |file|
+$logger.info("configFilesToRemove: #{file}")
+	if FileTest.exists?(file)
+		$logger.info("configFilesToRemove: found file to remove #{file}")
+	end
+	
+	if FileTest.exists?(file)
+		`rm -f #{file}`
+	end
+end
+
+configFiles = ["#{$SERVER_WEB_CONFIG_APACHE_DIR}/httpd_server_app.conf",
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/servermgr_web_apache2_config.plist",
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/WebConfigProperties.plist",
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/virtual_host_global.conf",
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_127.0.0.1_#{$webInternalHTTPport}_.conf",
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites/0000_127.0.0.1_#{$webInternalHTTPSport}_.conf",
+	"#{$SERVER_WEB_CONFIG_APACHE_DIR}/sites_disabled/default_default.conf"
+]
+configFiles.each do |file|
+	if !FileTest.exists?(file)
+		FileUtils.cp("#{file}.default", file)
+		FileUtils.chmod(0644, file)
+	end
+end
+
+def set_server_loglevel
+	webConfigPropertiesFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/WebConfigProperties.plist"
+	plist = CFPropertyList::List.new(:file => webConfigPropertiesFile)
+	webConfigDict = CFPropertyList.native_types(plist.value)
+	
+	if !webConfigDict.nil? and !webConfigDict["WebConfig"].nil? and webConfigDict["Debug"].nil?
+		webConfigDict["WebConfig"] ["LogLevel"] = "error"
+	end
+	
+	plist = CFPropertyList::List.new
+	plist.value = CFPropertyList.guess(webConfigDict)
+	plist.save(webConfigPropertiesFile, CFPropertyList::List::FORMAT_XML)
+end
+
+def initialize_webapps
+	# Start certain webapps that were enabled prior to upgrade/migration
+	# Do this by adding entries to $defaultSiteWebApps for later use by disable/enable_webapps"
+	$logger.info("#### webPromotionSetup initialize_webapps\n")
+	web_config_plist = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/servermgr_web_apache2_config.plist"
+	plist = CFPropertyList::List.new(:file => web_config_plist)
+	new_web_config_plist = CFPropertyList.native_types(plist.value)
+
+	sitesArray = new_web_config_plist["Sites"]
+	sitesArray.each do |siteDict| 
+		# To do: keep an array per site
+		if siteDict["_id_"] == "*:80_" || siteDict["_id_"] == "*:443_" || siteDict["_id_"] == "127.0.0.1:#{$webInternalHTTPport}_" || siteDict["_id_"] == "127.0.0.1:#{$webInternalHTTPSport}_"
+			webAppArray = siteDict["webApps"]
+			webAppArray.each do |webAppDict|
+				$logger.info("Old webApp was enabled: #{webAppDict["name"]}")
+				$defaultSiteWebApps.add(webAppDict["name"])
+			end unless webAppArray.nil?
+		end
+	end unless sitesArray.nil?
+	
+	serviceWebAppArray = new_web_config_plist["ServiceWebAppNames"]
+	serviceWebAppArray.each do |webAppName| 
+		$logger.info("Old service webApp was enabled: #{webAppName}")
+		$defaultSiteWebApps.add(webAppName)
+	end unless serviceWebAppArray.nil?
+	
+	globalWebAppArray = new_web_config_plist["GlobalWebAppNames"]
+	globalWebAppArray.each do |webAppName| 
+		$logger.info("Old global webApp was enabled: #{webAppName}")
+		$defaultSiteWebApps.add(webAppName)
+	end unless globalWebAppArray.nil?
+	
+end
+
+def updateInstalledDictWithNew(newConfigTopDict, installedConfigTopDict, dictName)
+	installedConfig = installedConfigTopDict[dictName]
+	newConfig = newConfigTopDict[dictName]
+	return if installedConfig.nil? || newConfig.nil?
+	
+	newConfig.each do | key, value | 
+		if dictName == "WebDAVSharing" && key == "WikiEnabled"
+			wikiEnabled = $defaultSiteWebApps.include?("com.apple.webapp.wiki") || $defaultSiteWebApps.include?("com.apple.webapp.collab")
+			installedConfig[key] = wikiEnabled
+			$logger.info("Set Web Config:#{dictName} Property:#{key} = #{installedConfig[key]}")
+		end
+		next if installedConfig[key] != nil
+
+		installedConfig[key] = newConfig[key]
+		$logger.info("Update installed Web Config:#{dictName} with Property:#{key} = #{value}")
+	end
+end
+
+def assignToConfig (toConfig, fromConfig, key )
+	toConfig[key] = fromConfig[key] if fromConfig[key]
+end
+
+def merge_WebConfigProperties
+	#The default config adds new properties.
+	#If the properties already exist, the then the installed values are accepted over the default
+	#In the future this routine needs to be considered or modified, if the default config changes an existing property
+	
+	installedWebConfigPropertiesFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/WebConfigProperties.plist"
+	installedPlist = CFPropertyList::List.new(:file => installedWebConfigPropertiesFile)
+	installedConfigDict = CFPropertyList.native_types(installedPlist.value)
+	
+	defaultWebConfigPropertiesFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/WebConfigProperties.plist.default"
+	defaultPlist = CFPropertyList::List.new(:file => defaultWebConfigPropertiesFile)
+	newConfigDict = CFPropertyList.native_types(defaultPlist.value)
+	
+	updateInstalledDictWithNew(newConfigDict, installedConfigDict, "WebDAVSharing")
+	assignToConfig(newConfigDict, installedConfigDict, "WebDAVSharing")
+	assignToConfig(newConfigDict, installedConfigDict, "WebConfig")
+	assignToConfig(newConfigDict, installedConfigDict, "ServiceConfig")
+	assignToConfig(newConfigDict, installedConfigDict, "NotAService")
+	assignToConfig(newConfigDict, installedConfigDict, "NotAGlobalService")
+	$logger.info("Updated Apache configuration. Now updating webapp configurations")
+
+	installedPlist.value = CFPropertyList.guess(newConfigDict)
+	installedPlist.save(installedWebConfigPropertiesFile, CFPropertyList::List::FORMAT_XML)
+end
+
+def disable_webapps
+	$defaultSiteWebApps.each do |webapp|
+		result = `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/webappctl stop #{webapp}`
+		if result =~ /error/
+			$logger.error("Failed to stop webapp #{webapp}: #{result}")
+		else
+			$logger.info("Stopped webapp #{webapp}")
+		end
+	end
+end
+
+
+def disable_servicewebapps
+	`rm -f #{$SERVER_WEB_CONFIG_APACHE_DIR}/other/COM.APPLE.WEBAPP.*.conf`
+	
+	$defaultSiteWebApps.each do |webapp|
+		result = `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/webappctl stop #{webapp}`
+		if result =~ /error/
+			$logger.error("Failed to stop webapp #{webapp}: #{result}")
+		else
+			$logger.info("Stopped webapp #{webapp}")
+		end
+	end
+end
+
+def create_previous_webapp_plist()
+	plistfile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/previous_enabled_webapps.plist"
+	outfile = File.new(plistfile, "w")
+
+	#Header for plist
+	outfile.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + "<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">" + "\n" + "<plist version=\"1.0\">" + "\n" + "<array>" + "\n")
+
+	$defaultSiteWebApps.each do |webapp| 
+		outfile.write("    <string>" + webapp + "</string>" + "\n") 
+	end
+
+	#Footer for plist
+	outfile.write("</array>" + "\n" + "</plist>" + "\n")
+	outfile.close
+	$logger.info("Created #{plistfile}")
+end
+
+def enable_webDAV
+	result = `echo "web:command=setWebDAVSharingState\nweb:state=START" | #{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin command` 
+	if $?.exitstatus == 0
+		$logger.info("Started WebDAV Sharing")
+	else
+		$logger.error("Failed to start WebDAV Sharing: #{result}")
+	end
+end
+
+
+def enable_webs_webapps
+	$defaultSiteWebApps.each do |webapp|
+		if ("com.apple.webapp.webdavsharing"==webapp)
+			enable_webDAV()
+		elsif ["com.apple.webapp.wsgi", "com.apple.webapp.php", "com.apple.webapp.changepassword"].include?(webapp)
+			result = `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/webappctl start #{webapp}`
+			if result =~ /error/
+				$logger.error("Failed to start webapp #{webapp}: #{result}")
+			else
+				$logger.info("Started webapp #{webapp}")
+			end
+		end
+	end	
+end
+
+def stop_apache_if_running
+		$logger.info("shutdown apache service if it is running")
+		`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin stop web` # unsets WEBSERVICE_ON in Apache launchd plist
+		oldJobsStrings = `/bin/launchctl list | grep org.apache.http`
+		if !oldJobsStrings.empty?
+			$logger.warn("Apache desktop is running. Unloading apache jobs: #{oldJobsStrings}")
+			`/usr/sbin/apachectl stop`
+		end
+		oldJobsStrings = `/bin/launchctl list | grep com.apple.server.httpd`
+		if !oldJobsStrings.empty?
+			$logger.warn("Server Apache is running. Unloading server-apache jobs: #{oldJobsStrings}")
+			`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/server-apachectl stop`
+		end
+		#Clear the serverctl cache. When set_web_service_state enables Apache, serverctl will re-read com.apple.server.httpd"
+		`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serverctl reset service=com.apple.server.httpd`
+		$logger.info("Finished shutdown of apache service")
+		
+end
+
+def set_web_service_state
+	if $enableWebService
+		$logger.info("Turning on Web Service based on pre-upgrade status")
+		`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin start web` # sets WEBSERVICE_ON in Apache launchd plist
+	else
+		$logger.info("Turning off Web Service based on pre-upgrade status")
+		`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin stop web` # unsets WEBSERVICE_ON in Apache launchd plist
+	end
+end
+
+def update_site_file(src, dst)
+#
+# Standardize certain commented-out directives; remove certain directives; revise others.
+# Process original pre-promotion file (src) creating new active config file (dst).
+# To do: Stop removing all Include directives.
+
+    customlog_lines = []
+    File.open(src, :encoding => "UTF-8").each { |line|
+        parts = line.strip.split(/\s+/)
+        next if (0 == parts.count)
+        setting = parts[0].downcase
+        setting = setting.sub(/^\</,'').sub(/^\//,'').sub(/>$/,'')
+        if setting == "customlog"
+            customlog_lines << line
+        end
+    }
+
+	dst_file = File.new(dst, "w")
+	$logger.info(" Evaluating sites config file " + src)
+	mst_done = false
+	customlog_done = false
+	File.open(src,:encoding => "UTF-8").each { |line|
+		
+		parts = line.strip.split(/\s+/)
+		if parts.size > 1 && parts[0] == "#" && parts[1].downcase == "include"
+			parts.shift
+			parts[0] = "#Include"
+		elsif parts.size > 1 && parts[0] == "#" && parts[1].downcase == "proxypass"
+			parts.shift
+			parts[0] = "#ProxyPass"
+		elsif parts.size > 1 && parts[0] == "#" && parts[1].downcase == "proxypassreverse"
+			parts.shift
+			parts[0] = "#ProxyPassReverse"
+		end
+		if !parts[0] || parts[0] =~ /^#+$/
+			dst_file.puts(line)
+			next
+		end
+		cmd = parts[0]
+		if parts[1]
+			arg1 = parts[1]
+		else
+			arg1 = ""
+		end
+		if parts[2]
+			arg2 = parts[2]
+		else
+			arg2 = ""
+		end
+		lastarg = parts[-1]
+        
+		case cmd.downcase
+			when "include", "proxypass", "proxypassreverse", "balancermember"
+				$logger.info(" Deleting line: #{line}")
+				next
+			when "sslciphersuite"
+				if parts[1] !~ /HIGH:MEDIUM:!MD5:!RC4:!3DES/
+					$logger.info(" Rewriting line: #{line}")
+					line = "\t\tSSLCipherSuite \"HIGH:MEDIUM:!MD5:!RC4:!3DES\""
+				end
+            when "sslprotocol"
+                line = "\t\tSSLProtocol -all +TLSv1.2"
+            when "sslproxyprotocol"
+                line = "\t\tSSLProxyProtocol -all +TLSv1.2"
+            when "sslproxyengine"
+                line = "\t\tSSLProxyEngine Off"
+            when "customlog"
+                # When the first customlog directive is encountered in src file,
+                # write all the revised customlog directives to dst file.
+                next if customlog_done
+                line = ""
+                customlog_lines.each do |customlog_line|
+                    parts = customlog_line.strip.split(/\s+/)
+                    if parts.count >= 3
+                        if ["combinedvhost", "commonvhost", "combined", "common"].include?(parts[2].downcase)
+                            $logger.info("writing modified line: #{customlog_line.sub(/\s+env.*forwarded/, '')}")
+                            line += customlog_line.sub(/\s+env.*forwarded/, '')
+                            break
+                        elsif ["combinedvhostproxy", "commonvhostproxy", "combinedproxy", "commonproxy"].include?(parts[2].downcase)
+                            $logger.info("omitting line #{customlog_line}")
+                        else
+                            $logger.info("writing unmodified line #{customlog_line}")
+                            line += customlog_line
+                        end
+                    end
+                end
+                line = "\tCustomLog \"/var/log/apache2/access_log\" combinedvhost" if line == ""
+                customlog_done = true
+            when "<ifmodule"
+                if arg1.start_with?("mod_secure_transport.c")
+                    mst_done = true
+                end
+            when "sslcertificatefile"
+                @certfile = deQuote(arg1)
+            when "<directory"
+                if !mst_done
+                    mstSection = "\t<IfModule mod_secure_transport.c>\n"
+                    mstSection += "\t\tMSTEngine Off\n"
+                    mstSection += "\t\tMSTIdentity #{cert_identifier_for_certfile(@certfile)}\n"
+                    mstSection += "\t\tMSTCipherSuite HIGH, MEDIUM\n"
+                    mstSection += "\t\tMSTProtocolRange TLSv1.2 TLSv1.2\n"
+                    mstSection += "\t\tMSTProxyEngine On\n"
+                    mstSection += "\t\tMSTProxyProtocolRange TLSv1.2 TLSv1.2\n"
+                    mstSection += "\t</IfModule>\n"
+                    dst_file.puts(mstSection)
+                    mst_done = true
+                end
+			end
+		dst_file.puts(line)
+	}
+	dst_file.close
+end
+
+def convert_sites_to_proxy_sites(site_dir)
+	Dir.foreach(site_dir) { |file|
+		next if (file == '.' || file == '..' || file !~ /.conf$/ )
+		next if (file == $defaultSecureVHostFile || file == $defaultVHostFile)
+		theFile = site_dir +  file
+		
+		#change the file names to new address and ports
+		if (file.include?("_any_") && (file.include?("_443_") || file.include?("_80_")) )		
+			file = file.sub("_any_", "_127.0.0.1_") 
+		end
+		file = file.sub("_443_", "_#{$webInternalHTTPSport}_") 
+		file = file.sub("_80_", "_#{$webInternalHTTPport}_") 
+		newName = site_dir + file
+		if (theFile.chomp != newName.chomp)
+			FileUtils.mv theFile, newName, :force => true
+		end
+		
+		#change the contents to match the new file names
+		if (newName.include?("_#{$webInternalHTTPSport}_"))
+			edit_virtualhost("*","127.0.0.1","443", "#{$webInternalHTTPSport}", newName)
+		end
+		if (newName.include?("_#{$webInternalHTTPport}_"))
+			edit_virtualhost("*","127.0.0.1","80", "#{$webInternalHTTPport}", newName)
+		end
+	}
+end
+
+def update_sites(site_dir)
+	Dir.foreach(site_dir) { |file|
+		next if (file == '.' || file == '..' || file !~ /.conf$/)
+		theFile = site_dir +  file
+		tempSaved = site_dir + file + ".orig"
+		FileUtils.cp(theFile, tempSaved)
+		update_site_file(tempSaved, theFile)
+	}
+end
+
+def default_cert_identifier
+    tmpFile = `/usr/bin/mktemp /tmp/certs-XXXXXX`.chomp
+    `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin -x command certs:command=readDefaultIdentity > #{tmpFile}`
+    plist = CFPropertyList::List.new(:file => tmpFile)
+    certsSettings = CFPropertyList.native_types(plist.value)
+    `rm -f #{tmpFile}`
+    if certsSettings.nil? || certsSettings["defaultIdentityCertificate"].nil? || certsSettings["defaultIdentityCertificate"]["identifier"].nil?
+        $logger.error("Unable to 'readDefaultIdentity' from servermgr_certs")
+        return nil
+    end
+    return certsSettings["defaultIdentityCertificate"]["identifier"]
+end
+
+def cert_identifier_for_certfile(certfile)
+    tmpFile = `/usr/bin/mktemp /tmp/certs-XXXXXX`.chomp
+    `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin -x settings certs > #{tmpFile}`
+    plist = CFPropertyList::List.new(:file => tmpFile)
+    certsSettings = CFPropertyList.native_types(plist.value)
+    `rm -f #{tmpFile}`
+    if certsSettings.nil? || certsSettings["identityCertificates"].nil?
+        $logger.error("Unable to get settings from servermgr_certs")
+        return "not-available"
+    end
+    idCertDicts = certsSettings["identityCertificates"]
+    idCertDicts.each { |idCertDict|
+        if idCertDict["exportPathForCertificate"] == certfile
+            return idCertDict["identifier"]
+        end
+    }
+    $logger.error("Unable to find identifer for cert file #{certfile}")
+    return "not-available"
+end
+
+update_sites("#{$newWebConfigDir}sites/")
+update_sites("#{$newWebConfigDir}sites_disabled/")
+convert_sites_to_proxy_sites("#{$newWebConfigDir}sites/")
+# Look for the default secure site cert from the metaDataFile
+$defaultSecureSiteSSLCertID = ""
+plist = CFPropertyList::List.new(:file => $metaDataFile)
+metaDataDict = CFPropertyList.native_types(plist.value)
+metaDataDict["Sites"].each do |site|
+	siteID = site["_id_"].strip.split("_")
+	next if siteID.nil? || (0 == siteID.count)
+	next if ($defaultSecureSiteSSLCertID.length > 0) && (siteID.count > 1)  #once set, only reset if it is a no-name (default) host
+	if siteID[0] == "*:443"
+		$logger.info("Processing metadData siteID: #{siteID}") 
+		sslPassPhraseDict = site["SSLPassPhrase"]
+		if (!sslPassPhraseDict.nil?)
+			keyFile = sslPassPhraseDict["SSLCertificateKeyFile"]
+			keyFile = (keyFile.nil?) ? "" : keyFile
+			if (keyFile.length > 0)
+				if FileTest.exists?(keyFile)
+					if sslPassPhraseDict["sslCertificateIdentifier"]
+						$defaultSecureSiteSSLCertID = sslPassPhraseDict["sslCertificateIdentifier"]
+						$logger.info("Processing metaDataFile found site: *:443 has #{$defaultSecureSiteSSLCertID}") 
+					else
+						$defaultSecureSiteSSLCertID = keyFile.sub(/^\/etc\/certificates\//,'').sub(/\.key$/,'').sub(/\.\w+\.pem$/,'').sub(/\.ce*rt$/,'')
+						$logger.info("No default secure site sslCertificateIdentifier found in metaDataFile. ID derived from key file #{keyFile} --> #{$defaultSecureSiteSSLCertID}") 
+					end
+				else
+					$logger.info("Changing certificates for the default secure site. The previous default secure site ssl certificate key file was not found: #{keyFile}. ") 
+				end
+			end
+		end
+	end
+end
+
+# Update certificate in default secure site config file
+
+File.open($defaultSecureSiteFile, 'r+',:encoding => "UTF-8") do |file|
+	$logger.info("Update certificate in default secure site config #{$defaultSecureSiteFile}") 
+	@updateCert = false
+	@setPlaceHolder = true
+	lines = file.readlines
+	
+	lines.each_with_index do |line, index|	
+		if line =~ /SSLCertificate/	||  line =~ /#SSL-CERTIFICATE-DIRECTIVES-PLACEHOLDER#/
+			@setPlaceHolder = false
+			$logger.info("File ready to process. #{$defaultSecureSiteFile} has SSLCertificate lines or place holder")
+			break
+		end
+	end
+	
+	if @setPlaceHolder 
+		lines.each_with_index do |line, index|	
+			if line =~ /SSLEngine/
+				lines.insert(index+1,"#SSL-CERTIFICATE-DIRECTIVES-PLACEHOLDER#\n")
+				$logger.info("File needs SSL certificate. Inserting SSL-CERTIFICATE place holder")
+				break
+			end
+		end
+	end
+	
+	lines.each_with_index do |line, index|				
+		if line =~ /#SSL-CERTIFICATE-DIRECTIVES-PLACEHOLDER#/
+			$logger.info("File has SSL-CERTIFICATE place holder processing:#{$defaultSecureSiteFile} ")
+			@updateCert = true
+			@path = `#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/certadmin --default-certificate-path`.chomp
+			if !FileTest.exists?(@path)
+				$logger.info("Default certificate path not found: #{@path}. ")
+				@path = nil
+			end
+			@certID = getDefaultCertID(@path,$defaultSecureSiteSSLCertID) 
+			
+			line = "\t\tSSLCertificateFile \"/etc/certificates/#{@certID}.cert.pem\"\n"
+			line += "\t\tSSLCertificateKeyFile \"/etc/certificates/#{@certID}.key.pem\"\n"
+			line += "\t\tSSLCertificateChainFile \"/etc/certificates/#{@certID}.chain.pem\"\n"
+			lines[index] = line
+			$logger.info("Updated certificate files for #{@certID}")
+		end
+        if line =~ /#MST-IDENTITY-PLACEHOLDER#/
+            $logger.info("File has MST-IDENTITY-PLACEHOLDER processing:#{$defaultSecureSiteFile} ")
+            @updateCert = true
+            id = default_cert_identifier
+            if id.nil?
+                 line = "\t\t#MSTIdentity unavailable\n"
+            else
+                 line = "\t\tMSTIdentity #{id}\n"
+            end
+            lines[index] = line
+            $logger.info("Updated mst id for #{id}")
+        end
+
+    end
+	if @updateCert
+		file.pos = 0
+		file.puts(lines)
+		file.truncate(file.pos)
+	end
+end
+
+def update_default_site_cert
+
+	@certID = getDefaultCertID(@path,$defaultSecureSiteSSLCertID)
+    @mstID = default_cert_identifier
+    @mstID = "MST identity unavailable" if @mstID.nil?
+	
+# Update pass phrase dictionary in metaData config file
+	found = false 
+	plist = CFPropertyList::List.new(:file => $metaDataFile)
+	metaDataDict = CFPropertyList.native_types(plist.value)
+
+	internalSSLPassPhraseDict = { 
+		"Port" => "443", 
+		"SSLCertificateKeyFile" =>  "/etc/certificates/#{@certID}.key.pem",
+		"sslCertificateIdentifier" => @certID,
+        "mstCertificateIdentifier" => @mstID,
+		"ServerName" =>  "",
+		"enabled" => true
+	}
+
+	metaDataDict["Sites"].each do |site|
+		if site["_id_"] == "*:443_"
+			site["SSLPassPhrase"] = internalSSLPassPhraseDict
+			found = true
+		end
+	end	
+	if !found
+		externalSite = {}
+		externalSite["_id_"] = "*:443_"
+		externalSite["SSLPassPhrase"] = internalSSLPassPhraseDict
+		metaDataDict["Sites"].push(externalSite)
+		sites = metaDataDict["Sites"]	
+	end
+	
+	$logger.info("Updated SSL certificate files in #{$metaDataFile}")
+	$logger.info("Updated SSL certificate files in #{metaDataDict}")
+
+	plist = CFPropertyList::List.new
+	plist.value = CFPropertyList.guess(metaDataDict)
+	plist.save($metaDataFile, CFPropertyList::List::FORMAT_XML)
+
+end
+
+def check_port_conflicts
+    # To do: Get the list of ports from config file
+    conflict = false
+    [80, 443, 8008, 8800, 8443, 8843].each do |port|
+        begin
+            dummyServer = TCPServer.new("0.0.0.0", port)
+            $logger.info("Port #{port} available")
+            dummyServer.close
+        rescue Exception => msg
+            $logger.error("Port conflict detected, port=#{port} message=#{msg}")
+            conflict = true
+        end
+    end
+    # To do: Alert
+end
+
+# Update pass phrase dictionary in metaData config file
+if @updateCert
+	update_default_site_cert
+end
+
+if ARGV[0] == "no-restart"
+	CheckAndResetProxyOnErr()
+	$logger.info("*** no-restart promotion end ***\n");
+	exit 0
+end
+
+
+webConfigPropertiesFile = "#{$SERVER_WEB_CONFIG_APACHE_DIR}/WebConfigProperties.plist"
+plist = CFPropertyList::List.new(:file => webConfigPropertiesFile)
+webConfigDict = CFPropertyList.native_types(plist.value)
+
+set_server_loglevel
+
+demotionFile = "#{$SERVER_LIBRARY_DIR}/Web/.demoted"
+wasDemoted = FileTest.exists?(demotionFile)
+if wasDemoted
+	`rm #{demotionFile}`
+	# Finish the demotion
+	
+	$logger.info("Demoted. Make certain wiki and xcode services are off.");
+	`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin stop wiki`
+	`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin stop xcode`
+	initialize_webapps()
+	
+	$logger.info("Demoted. Stopping webapps to be be restarted later.");
+	`#{$SERVER_INSTALL_PATH_PREFIX}/usr/sbin/webappctl stop -`
+else
+	initialize_webapps()
+end
+
+create_previous_webapp_plist()
+#update_metadata_file()
+
+$enableWebService = false
+if !webConfigDict.nil? && !webConfigDict["WebConfig"].nil? && webConfigDict["WebConfig"]["WebServiceOn"]
+	    $enableWebService = true
+end
+
+$logger.info("Updated Apache configuration. Now updating webapp configurations")
+$logger.info("stop webapps: stop_apache_if_running, disable_webapps")
+stop_apache_if_running()
+disable_webapps()
+merge_WebConfigProperties() #Do this after resetting the old webconfig's webapps
+disable_servicewebapps()
+check_port_conflicts()  # No http services should be running
+removeWebAppConfigFiles()
+enable_webs_webapps() #Don't re-enable other services' webapps. Each service is responsbile for calling enable as needed after a web upgrade. 
+
+CheckAndResetProxyOnErr()
+
+set_web_service_state()
+
+#**********************
+apacheConfigFile = File.open("/Library/Server/Web/Config/apache2/servermgr_web_apache2_config.plist", :encoding => "UTF-8").each { |line|
+	if line.include?("etc/certificates")
+	  $logger.info("servermgr_web_apache2_config: #{line}");
+	end
+}
+apacheConfigFile.close
+#**********************
+
+$logger.info("*** Web Service promotion end ***\n");
+$logger.close
+exit 0

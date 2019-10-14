@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>Device Manager</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+                } else if (selection == "getLogPaths") {
+                        commandValue += '       <key>command</key>\n';
+                        commandValue += '       <string>getLogPaths</string>\n';
+                } else if (selection == "tailFile") {
+                        commandValue += '       <key>command</key>\n';
+                        commandValue += '       <string>tailFile</string>\n';
+                        commandValue += '       <key>path</key>\n';
+                        commandValue += '       <string>/var/log/system.log</string>\n';
+                        commandValue += '       <key>offset</key>\n';
+                        commandValue += '       <integer>0</integer>\n';
+                        commandValue += '       <key>amount</key>\n';
+                        commandValue += '       <integer>10000</integer>\n';
+		} else if (selection == "setState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setState</string>\n';
+			commandValue += '	<key>state</key>\n';
+			commandValue += '	<string>START</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n\n';
+			commandValue += '	<key>settings</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<dict>\n';
+			commandValue += '			<key>PayloadType</key>\n';
+			commandValue += '			<string>com.apple.mail.managed</string>\n';
+			commandValue += '			<key>payload</key>\n';
+			commandValue += '			<dict>\n';
+			commandValue += '				<key>EmailAccountDescription</key>\n';
+			commandValue += '				<string>Example Email Account</string>\n';
+			commandValue += '				<key>EmailAccountType</key>\n';
+			commandValue += '				<string>EmailTypeIMAP</string>\n';
+			commandValue += '				<key>IncomingMailServerAuthentication</key>\n';
+			commandValue += '				<string>EmailAuthPassword</string>\n';
+			commandValue += '				<key>IncomingMailServerHostName</key>\n';
+			commandValue += '				<string>mail.example.com</string>\n';
+			commandValue += '				<key>IncomingMailServerPortNumber</key>\n';
+			commandValue += '				<integer>993</integer>\n';
+			commandValue += '				<key>IncomingMailServerUseSSL</key>\n';
+			commandValue += '				<true/>\n';
+			commandValue += '				<key>OutgoingMailServerAuthentication</key>\n';
+			commandValue += '				<string>EmailAuthPassword</string>\n';
+			commandValue += '				<key>OutgoingMailServerHostName</key>\n';
+			commandValue += '				<string>smtp.example.com</string>\n';
+			commandValue += '				<key>OutgoingMailServerPortNumber</key>\n';
+			commandValue += '				<integer>465</integer>\n';
+			commandValue += '				<key>OutgoingMailServerUseSSL</key>\n';
+			commandValue += '				<true/>\n';
+			commandValue += '			</dict>\n';
+			commandValue += '		</dict>\n';
+			commandValue += '		<dict>\n';
+			commandValue += '			<key>PayloadType</key>\n';
+			commandValue += '			<string>com.apple.caldav.account</string>\n';
+			commandValue += '			<key>payload</key>\n';
+			commandValue += '			<dict>\n';
+			commandValue += '				<key>CalDAVHostName</key>\n';
+			commandValue += '				<string>ical.example.com</string>\n';
+			commandValue += '				<key>CalDAVPort</key>\n';
+			commandValue += '				<integer>8008</integer>\n';
+			commandValue += '				<key>CalDAVUseSSL</key>\n';
+			commandValue += '				<false/>\n';
+			commandValue += '			</dict>\n';
+			commandValue += '		</dict>\n';
+			commandValue += '	</array>\n\n';
+		} else if (selection == "devicesForUser") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>devices</string>\n';
+			commandValue += '	<key>forUser</key>\n';
+			commandValue += '	<string>userGUID_1</string>\n';
+		} else if (selection == "emailProfile") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>emailProfile</string>\n';
+			commandValue += '	<key>toUsers</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>userGUID_1</string>\n';
+			commandValue += '		<string>userGUID_2</string>\n';
+			commandValue += '   </array>\n';
+		} else if (selection == "lockDevice") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>lockDevice</string>\n';
+			commandValue += '	<key>deviceID</key>\n';
+			commandValue += '	<string>deviceID</string>\n';
+		} else if (selection == "wipeDevice") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>wipeDevice</string>\n';
+			commandValue += '	<key>deviceID</key>\n';
+			commandValue += '	<string>deviceID</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_devicemgr'</H3>
+					<P>
+						For information on available settings, see Appendix B (Configuration File Format) of the
+						<A HREF="http://manuals.info.apple.com/en_US/Enterprise_Deployment_Guide.pdf">iPhone Enterprise Deployment Guide</A>.
+					</P>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -</OPTION>
+						<OPTION VALUE="getState">getState</OPTION>
+						<OPTION VALUE="getLogPaths">getLogPaths</OPTION>
+						<OPTION VALUE="tailFile">tailFile</OPTION>
+						<OPTION VALUE="setState">setState</OPTION>
+						<OPTION VALUE="readSettings">readSettings</OPTION>
+						<OPTION VALUE="writeSettings">writeSettings</OPTION>
+						<OPTION VALUE="devicesForUser">devicesForUser</OPTION>
+						<OPTION VALUE="emailProfile">emailProfile</OPTION>
+						<OPTION VALUE="wipeDevice">wipeDevice</OPTION>
+						<OPTION VALUE="lockDevice">lockDevice</OPTION>
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_devicemgr">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>RADIUS</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "getLogPaths") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getLogPaths</string>\n';
+		} else if (selection == "tailFile") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>tailFile</string>\n';
+			commandValue += '	<key>identifier</key>\n';
+			commandValue += '	<string>radiusdLog</string>\n';
+			commandValue += '	<key>offset</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>amount</key>\n';
+			commandValue += '	<integer>10000</integer>\n';
+			commandValue += '	<key>withFilters</key>\n';
+			commandValue += '	<array><string></string></array>\n';
+		} else if (selection == "setState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setState</string>\n';
+			commandValue += '	<key>state</key>\n';
+			commandValue += '	<string>START</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>demoFlag</key>\n';
+			commandValue += '		<string>YES</string>\n';
+			commandValue += '		<key>certificateRecordsArray</key>\n';
+			commandValue += '		<array>\n';
+			commandValue += '			<dict>\n';
+			commandValue += '				<key>_id_</key>\n';
+			commandValue += '				<string>imac.snow</string>\n';
+			commandValue += '				<key>_newid_</key>\n';
+			commandValue += '				<string>YES</string>\n';
+			commandValue += '				<key>name</key>\n';
+			commandValue += '				<string>imac</string>\n';
+			commandValue += '				<key>number</key>\n';
+			commandValue += '				<real>1199</real>\n';
+			commandValue += '				<key>type</key>\n';
+			commandValue += '				<string>snow</string>\n';
+			commandValue += '			</dict>\n';
+			commandValue += '		</array>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "addClients") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>addClients</string>\n';
+			commandValue += '	<key>clientList</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<dict>\n';
+			commandValue += '			<key>description</key>\n';
+			commandValue += '			<string>(plist with bonjour info)</string>\n';
+			commandValue += '			<key>id</key>\n';
+			commandValue += '			<integer>1</integer>\n';
+			commandValue += '			<key>nasname</key>\n';
+			commandValue += '			<string>17.221.40.76</string>\n';
+			commandValue += '			<key>secret</key>\n';
+			commandValue += '			<string>self</string>\n';
+			commandValue += '			<key>shortname</key>\n';
+			commandValue += '			<string>self</string>\n';
+			commandValue += '			<key>type</key>\n';
+			commandValue += '			<string>Airport Base Station</string>\n';
+			commandValue += '		</dict>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "removeClients") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>removeClients</string>\n';
+			commandValue += '	<key>clientList</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>17.221.40.76</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getAirportList") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getAirportList</string>\n';
+		} else if (selection == "captureBaseStation") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>captureBaseStation</string>\n';
+			commandValue += '	<key>absIP</key>\n';
+			commandValue += '	<string>17.221.40.72</string>\n';
+			commandValue += '	<key>radiusIP</key>\n';
+			commandValue += '	<string>17.221.40.76</string>\n';
+			commandValue += '	<key>absPassword</key>\n';
+			commandValue += '	<string>password</string>\n';
+			commandValue += '	<key>sharedSecret</key>\n';
+			commandValue += '	<string>secret</string>\n';
+			commandValue += '	<key>waitForRestart</key>\n';
+			commandValue += '	<integer>1</integer>\n';
+		} else if (selection == "getSSID") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getSSID</string>\n';
+			commandValue += '	<key>absIP</key>\n';
+			commandValue += '	<string>17.221.40.75</string>\n';
+			commandValue += '	<key>absPassword</key>\n';
+			commandValue += '	<string>password</string>\n';
+		} else if (selection == "nasAvailableList") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>nasAvailableList</string>\n';
+		} else if (selection == "readProgress") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readProgress</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_radius'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="getLogPaths">getLogPaths
+						<OPTION VALUE="tailFile">tailFile
+						<OPTION VALUE="setState">setState
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+						<OPTION VALUE="addClients">addClients
+						<OPTION VALUE="removeClients">removeClients
+						<OPTION VALUE="getAirportList">getAirportList
+						<OPTION VALUE="captureBaseStation">captureBaseStation
+						<OPTION VALUE="getSSID">getSSID
+						<OPTION VALUE="nasAvailableList">nasAvailableList
+						<OPTION VALUE="readProgress">readProgress
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_radius">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

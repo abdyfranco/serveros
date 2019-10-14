@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.server.mail.alerts</string>
+	<key>Program</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/MailService/virus_alert</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/MailService/virus_alert</string>
+	</array>
+	<key>QueueDirectories</key>
+	<array>
+		<string>/Library/Server/Mail/Data/scanner/virusmails</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,77 @@
+w# =============================================================================
+# This is a template for VIRUS/BANNED SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Oggetto: [? [:ccat|major]
+|Messaggio pulito inviato da te\
+|Messaggio pulito inviato da te\
+|Messaggio pulito inviato da te (bloccato MTA)\
+|Messaggio TROPPO GRANDE inviato da te\
+|Messaggio con INTESTAZIONE NON VALIDA inviato da te\
+|SPAM apparentemente inviato da te\
+|SPAM apparentemente inviato da te\
+|Un messaggio con contenuti NON VERIFICATI inviato da te\
+|Contenuti VIETATI inviati da te (%F)\
+|VIRUS in un messaggio apperentemente inviato da te (%V)\
+]
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <VS%i@%h>
+
+[? [:ccat|major] |Pulita|Pulita|BLOCCATA DA MTA|TROPPO GRANDE|INTESTAZIONE NON VALIDA|\
+spam|SPAM|Contenuti NON VERIFICATI|AVVISO CONTENUTI VIETATI|AVVISO VIRUS]
+
+Le nostre verifiche sui contenuti hanno rilevato
+[? %#V |#|[:wrap|78|    |  |[? %#V|virus|virus|virus]: %V]]
+[? %#F |#|[:wrap|78|    |  |vietato [? %#F|nomi|nome|nomi]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+in una email presumibilmente inviata da te %s
+al seguente/ai seguenti [? %#R |destinatari|destinatario|destinatari]:[
+-> %R]
+
+Il nostro codice interno di riferimento per il messaggio è %n/%i
+
+[? %a |#|[:wrap|78||  |Primo upstream indirizzo IP client SMTP: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Secondo una traccia di 'Ricevuti:',\
+ il messaggio apparentemente  stato originato da: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+[? %#D |Consegna dell'email interrotta!
+
+]#
+[? %#V ||Verifica nel sistema la presenza di virus,
+o chiedi all'amministratore di sistema di farlo .
+
+]#
+[? %#V |[? %#F ||#
+Il messaggio [?%#D|è stato bloccato|ha generato questo avviso] perché contiene un componente(come una parte MIME o un parte inclusa in esso) con un nome o un tipo MIME o un tipo di contenuto che viola le nostre politiche di accesso.
+
+Per trasferire contenuti che possono essere considerati rischiosi o indesiderati dalle politiche del sito, o semplicemente troppo grandi per essere inviati via mail, considera la pubblicazione di questi contenuti su web, e invia soltanto l'URL del documento ai destinatari.
+
+A seconda delle politiche del sito del mittente o del destinatario, con un piccolo sforzo è ancora possibile inviare qualsiasi tipo di contenuti (inclusi i virus) usando uno dei seguenti metodi:
+
+- criptarli usando pgp, gpg o altri metodi di crittografia;
+
+- comprimerli in un contenitore o archivio protetto da password 
+  (ad esempio: zip -e, arj -g, arc g, rar -p, o altri metodi)
+
+Tieni presente che, se i contenuti non necessariamente devono essere segreti, la chiave crittografica o la password potrebbero essere incluse nello stesso messaggio per comodità del destinatario.
+
+Siamo spiacenti per l'inconveniente nel caso in cui i contenuti non fossero dolosi.
+
+Lo scopo di queste restrizioni è quello di ridurre i metodi di propagazione più comuni utilizzati da virus e altri malware. Questi spesso sfruttano meccanismi automatici e buchi di sicurezza nei reader di posta più diffusi (i reader e i browser Microsoft sono un obiettivo comune). Richiedendo un'esplicita e decisiva azione da parte del destinatario per decodificare mail, il pericolo di
+propagazione automatica di malware viene in gran parte ridotto.
+#
+# Dettagli sulle nostre politiche di restrizione mail sono dispobili su ...
+
+]]#

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>Mail</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "setState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setState</string>\n';
+			commandValue += '	<key>state</key>\n';
+			commandValue += '	<string>STOP</string>\n';
+			commandValue += '	<key>shutdownDelay</key>\n';
+			commandValue += '	<integer>5</integer>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "getConnectedUsers") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getConnectedUsers</string>\n';
+		} else if (selection == "getUserAccounts") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getUserAccounts</string>\n';
+		} else if (selection == "getMailQueue") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getMailQueue</string>\n';
+		} else if (selection == "getMaintenance") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getMaintenance</string>\n';
+		} else if (selection == "deleteMessage") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>deleteMessage</string>\n';
+			commandValue += '	<key>messageID</key>\n';
+			commandValue += '	<string>AFF9410062E</string>\n';
+		} else if (selection == "retryMessage") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>retryMessage</string>\n';
+		} else if (selection == "getLogPaths") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getLogPaths</string>\n';
+		} else if (selection == "tailFile") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>tailFile</string>\n';
+			commandValue += '	<key>identifier</key>\n';
+			commandValue += '	<string>Server Log</string>\n';
+			commandValue += '	<key>offset</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>amount</key>\n';
+			commandValue += '	<integer>10000</integer>\n';
+		} else if (selection == "deleteAccount") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>deleteAccount</string>\n';
+			commandValue += '	<key>accountIDs</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>od-account-id_1<.string>\n';
+			commandValue += '		<string>od-account-id_2<.string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>GUIDs</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>od-guid_1<.string>\n';
+			commandValue += '		<string>od-guid_2<.string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getEmailHost") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getEmailHost</string>\n';
+		} else if (selection == "updateGroupMailingLists") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>updateGroupMailingLists</string>\n';
+		} else if (selection == "enableSystemUser") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>enableSystemUser</string>\n';
+			commandValue += '	<key>systemUserID</key>\n';
+			commandValue += '	<string>_system_user_ID</string>\n';
+		} else if (selection == "disableSystemUser") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>disableSystemUser</string>\n';
+			commandValue += '	<key>systemUserID</key>\n';
+			commandValue += '	<string>_system_user_ID</string>\n';
+		} else if (selection == "getAutoForward") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getAutoForward</string>\n';
+		} else if (selection == "setAutoForward") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setAutoForward</string>\n';
+			commandValue += '	<key>userID</key>\n';
+			commandValue += '	<string>a_user_ID</string>\n';
+			commandValue += '	<key>fwdAddress</key>\n';
+			commandValue += '	<string>user@example.com</string>\n';
+		} else if (selection == "getAltDataStore") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getAltDataStore</string>\n';
+			commandValue += '	<key>userID</key>\n';
+			commandValue += '	<string>a_user_ID</string>\n';
+		} else if (selection == "setAltDataStore") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setAltDataStore</string>\n';
+			commandValue += '	<key>userID</key>\n';
+			commandValue += '	<string>a_user_ID</string>\n';
+			commandValue += '	<key>altStoreTag</key>\n';
+			commandValue += '	<string>tag</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>anyKey</key>\n';
+			commandValue += '		<string>anyValue</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "initialSetup") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>initialSetup</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_mail'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="initialSetup">initialSetup
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="setState">setState
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="getConnectedUsers">getConnectedUsers
+						<OPTION VALUE="getUserAccounts">getUserAccounts
+						<OPTION VALUE="getMailQueue">getMailQueue
+						<OPTION VALUE="getMaintenance">getMaintenance
+						<OPTION VALUE="deleteMessage">deleteMessage
+						<OPTION VALUE="retryMessage">retryMessage
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="getLogPaths">getLogPaths
+						<OPTION VALUE="tailFile">tailFile
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="deleteAccount">deleteAccount
+						<OPTION VALUE="getEmailHost">getEmailHost
+						<OPTION VALUE="updateGroupMailingLists">updateGroupMailingLists
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="enableSystemUser">enableSystemUser
+						<OPTION VALUE="disableSystemUser">disableSystemUser
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="getAutoForward">getAutoForward
+						<OPTION VALUE="setAutoForward">setAutoForward
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="getAltDataStore">getAltDataStore
+						<OPTION VALUE="setAltDataStore">setAltDataStore
+						<OPTION VALUE="noop">-----------------
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_mail">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

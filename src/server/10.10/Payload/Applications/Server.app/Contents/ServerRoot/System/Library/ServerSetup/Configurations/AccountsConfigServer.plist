@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Accounts Config Service migration and setup</string>
+	<key>dependencies</key>
+	<array>
+		<string>ServerEventAgent</string>
+	</array>
+	<key>environment</key>
+	<dict>
+		<key>prefsLocation</key>
+		<string>/Library/Preferences</string>
+		<key>defaultPrefs</key>
+		<string>${serverRoot}${prefsLocation}</string>
+		<key>monitorLocation</key>
+		<string>${serverRoot}/System/Library/UserEventPlugins/AccountsConfigServiceMonitor.bundle</string>
+	</dict>
+	<key>defaults</key>
+	<dict/>
+	<key>setup</key>
+	<dict/>
+	<key>promotion</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>config file</key>
+			<dict>
+				<key>description</key>
+				<string>The default Accounts Config Service config file</string>
+				<key>path</key>
+				<string>${prefsLocation}/com.apple.AccountsConfigServer.plist</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>${defaultPrefs}/com.apple.AccountsConfigServer.plist</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>restore</key>
+	<dict/>
+	<key>migration</key>
+	<dict/>
+	<key>postSetup</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>config file</key>
+			<dict>
+				<key>description</key>
+				<string>Make sure we have a default Accounts Config Service config file</string>
+				<key>path</key>
+				<string>${prefsLocation}/com.apple.AccountsConfigServer.plist</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>${defaultPrefs}/com.apple.AccountsConfigServer.plist</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

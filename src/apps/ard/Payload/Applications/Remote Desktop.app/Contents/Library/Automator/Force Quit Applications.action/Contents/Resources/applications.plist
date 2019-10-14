@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>applist</key>
+	<array>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.ActivityMonitor</string>
+			<key>application creator type</key>
+			<string>????</string>
+			<key>application name</key>
+			<string>Activity Monitor</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.AddressBook</string>
+			<key>application creator type</key>
+			<string>adrb</string>
+			<key>application name</key>
+			<string>Address Book</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.ScriptEditor2</string>
+			<key>application creator type</key>
+			<string>ToyS</string>
+			<key>application name</key>
+			<string>AppleScript Editor</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.AppleScriptUtility</string>
+			<key>application creator type</key>
+			<string>scut</string>
+			<key>application name</key>
+			<string>AppleScript Utility</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Automator</string>
+			<key>application creator type</key>
+			<string>ATM </string>
+			<key>application name</key>
+			<string>Automator</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.calculator</string>
+			<key>application creator type</key>
+			<string>????</string>
+			<key>application name</key>
+			<string>Calculator</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Chess</string>
+			<key>application creator type</key>
+			<string>mbch</string>
+			<key>application name</key>
+			<string>Chess</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Console</string>
+			<key>application creator type</key>
+			<string>????</string>
+			<key>application name</key>
+			<string>Console</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Dictionary</string>
+			<key>application creator type</key>
+			<string>dics</string>
+			<key>application name</key>
+			<string>Dictionary</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.DiskUtility</string>
+			<key>application creator type</key>
+			<string>dsku</string>
+			<key>application name</key>
+			<string>Disk Utility</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.DVDPlayer</string>
+			<key>application creator type</key>
+			<string>cfbs</string>
+			<key>application name</key>
+			<string>DVD Player</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.FolderActionsSetup</string>
+			<key>application creator type</key>
+			<string>fasu</string>
+			<key>application name</key>
+			<string>Folder Actions Setup</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.FontBook</string>
+			<key>application creator type</key>
+			<string>ftbk</string>
+			<key>application name</key>
+			<string>Font Book</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.garageband</string>
+			<key>application creator type</key>
+			<string>band</string>
+			<key>application name</key>
+			<string>GarageBand</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.grapher</string>
+			<key>application creator type</key>
+			<string>CRVS</string>
+			<key>application name</key>
+			<string>Grapher</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iCal</string>
+			<key>application creator type</key>
+			<string>wrbt</string>
+			<key>application name</key>
+			<string>iCal</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iChat</string>
+			<key>application creator type</key>
+			<string>fez!</string>
+			<key>application name</key>
+			<string>iChat</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iDVD</string>
+			<key>application creator type</key>
+			<string>iDVD</string>
+			<key>application name</key>
+			<string>iDVD</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Image_Capture</string>
+			<key>application creator type</key>
+			<string>????</string>
+			<key>application name</key>
+			<string>Image Capture</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iMovie</string>
+			<key>application creator type</key>
+			<string>Hway</string>
+			<key>application name</key>
+			<string>iMovie HD</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iPhoto</string>
+			<key>application creator type</key>
+			<string>iPho</string>
+			<key>application name</key>
+			<string>iPhoto</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.isync</string>
+			<key>application creator type</key>
+			<string>iSnc</string>
+			<key>application name</key>
+			<string>iSync</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iTunes</string>
+			<key>application creator type</key>
+			<string>hook</string>
+			<key>application name</key>
+			<string>iTunes</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iWeb</string>
+			<key>application creator type</key>
+			<string>iweb</string>
+			<key>application name</key>
+			<string>iWeb</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iWork.Keynote</string>
+			<key>application creator type</key>
+			<string>keyn</string>
+			<key>application name</key>
+			<string>Keynote</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.mail</string>
+			<key>application creator type</key>
+			<string>emal</string>
+			<key>application name</key>
+			<string>Mail</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iWork.Numbers</string>
+			<key>application creator type</key>
+			<string>NMBR</string>
+			<key>application name</key>
+			<string>Numbers</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.iWork.Pages</string>
+			<key>application creator type</key>
+			<string>page</string>
+			<key>application name</key>
+			<string>Pages</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.PhotoBooth</string>
+			<key>application creator type</key>
+			<string>????</string>
+			<key>application name</key>
+			<string>Photo Booth</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Preview</string>
+			<key>application creator type</key>
+			<string>prvw</string>
+			<key>application name</key>
+			<string>Preview</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.quicktimeplayer</string>
+			<key>application creator type</key>
+			<string>TVOD</string>
+			<key>application name</key>
+			<string>QuickTime Player</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.QuickTimePlayerX</string>
+			<key>application creator type</key>
+			<string>TVOD</string>
+			<key>application name</key>
+			<string>QuickTime Player X</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Safari</string>
+			<key>application creator type</key>
+			<string>sfri</string>
+			<key>application name</key>
+			<string>Safari</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.ScriptEditor2</string>
+			<key>application creator type</key>
+			<string>ToyS</string>
+			<key>application name</key>
+			<string>Script Editor</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Stickies</string>
+			<key>application creator type</key>
+			<string>notz</string>
+			<key>application name</key>
+			<string>Stickies</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.systempreferences</string>
+			<key>application creator type</key>
+			<string>sprf</string>
+			<key>application name</key>
+			<string>System Preferences</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.Terminal</string>
+			<key>application creator type</key>
+			<string>trmx</string>
+			<key>application name</key>
+			<string>Terminal</string>
+		</dict>
+		<dict>
+			<key>application bundle ID</key>
+			<string>com.apple.TextEdit</string>
+			<key>application creator type</key>
+			<string>ttxt</string>
+			<key>application name</key>
+			<string>TextEdit</string>
+		</dict>
+	</array>
+</dict>
+</plist>

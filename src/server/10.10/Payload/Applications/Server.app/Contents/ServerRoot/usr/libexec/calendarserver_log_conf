@@ -1,0 +1,65 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+#
+# Newsyslog conf script for calendar server.
+#
+# Copyright (c) 2014-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+import os
+from plistlib import readPlist
+
+
+def serverRootLocation():
+    """
+    Return the ServerRoot value from the servermgr_calendar.plist.  If not
+    present, return the default.
+
+    @rtype: C{unicode}
+    """
+    plist = "/Library/Preferences/com.apple.servermgr_calendar.plist"
+    serverRoot = u"/Library/Server/Calendar and Contacts"
+    if os.path.exists(plist):
+        serverRoot = readPlist(plist).get("ServerRoot", serverRoot)
+    if isinstance(serverRoot, str):
+        serverRoot = serverRoot.decode("utf-8")
+    return serverRoot
+
+
+CALENDAR_SERVER_ROOT = serverRootLocation()
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+NEWSYSLOGCONF = "/private/etc/newsyslog.d/servermgr_calendar_log.conf"
+
+template = """# logfilename owner mode count size when flags
+{base}/Logs/servermgr_calendar.log 640 5 10000 * NJG
+{base}/Logs/xpg_ctl.log _calendar:_calendar 640 5 10000 * NJG
+"""
+
+
+def configureLogRotation(confFilePath, basePath):
+    """
+    Write a newsyslog.d conf file to rotate calendar server related logs.
+
+    @param confFilePath: the path to the conf file to write
+    @type confFilePath: C{str}
+    @param basePath: the path to the Logs directory containing the files
+        to be rotated
+    @type baseBath: C{str}
+    """
+    with open(confFilePath, 'w') as output:
+        content = template.format(base=basePath)
+        output.write(content)
+
+
+def main():
+    basePath = CALENDAR_SERVER_ROOT.encode("utf-8").replace(" ", "*")
+    configureLogRotation(NEWSYSLOGCONF, basePath)
+
+
+if __name__ == "__main__":
+    main()

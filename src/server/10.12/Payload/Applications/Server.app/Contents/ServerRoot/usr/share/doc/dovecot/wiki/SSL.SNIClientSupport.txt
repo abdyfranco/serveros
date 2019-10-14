@@ -1,0 +1,13 @@
+TLS SNI Client Support
+======================
+
+Works:
+
+ * Thunderbird (Linux)
+
+Doesn't work:
+
+ * K-9 on Droid X2 (any Android?)
+ * Apple Mail (Mac OS X 10.10 and lower AND iOS 9.3 and lower)
+
+(This file was created from the wiki on 2016-04-26 04:43)

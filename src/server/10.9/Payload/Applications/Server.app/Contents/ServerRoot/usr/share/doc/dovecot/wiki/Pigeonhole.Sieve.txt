@@ -1,0 +1,264 @@
+Pigeonhole Sieve Interpreter
+============================
+
+The <Pigeonhole project> [Pigeonhole.txt] provides Sieve support as a plugin
+for Dovecot's <Local Delivery Agent (LDA)> [LDA.txt] and also for its
+<LMTP.txt> service. The plugin implements a Sieve [http://www.sieve.info]
+interpreter, which filters incoming messages using a script specified in the
+Sieve language (RFC 5228 [http://tools.ietf.org/html/rfc5228/]). The Sieve
+script is provided by the user and, using that Sieve script, the user can
+customize how incoming messages are handled. Messages can be delivered to
+specific folders, forwarded, rejected, discarded, etc.
+
+Configuration and Use
+---------------------
+
+ * <Download and Installation> [Pigeonhole.Installation.txt]
+ * <Sieve Interpreter Configuration> [Pigeonhole.Sieve.Configuration.txt]
+ * <Sieve Usage Information> [Pigeonhole.Sieve.Usage.txt]
+ * <Sieve Script Examples> [Pigeonhole.Sieve.Examples.txt]
+ * <Sieve Interpreter Plugins> [Pigeonhole.Sieve.Plugins.txt]
+ * <Sieve Troubleshooting> [Pigeonhole.Sieve.Troubleshooting.txt]
+
+Supported Features
+------------------
+
+Sieve language has various <extensions> [Pigeonhole.Sieve.Extensions.txt]. You
+can find more information about the extensions from the Sieve Mail Filtering
+Language Charter [http://www.ietf.org/html.charters/sieve-charter.html] or the
+Sieve.info wiki page [http://www.sieve.info/].
+
+Note that Sieve doesn't support running external programs.
+
+The Pigeonhole Sieve interpreter recognizes the following Sieve extensions:
+
+ *
++-----------------------------------------------------------------+------------+----------+----------------+
+| *Extension*                                                     | *Support   | *Default | *Purpose*      |
+|                                                                 | Status*    | Enabled* |                |
++-----------------------------------------------------------------+------------+----------+----------------+
+| fileinto [http://tools.ietf.org/html/rfc5228#section-4.1]       | supported  | yes      | Allows storing |
+|                                                                 |            |          | messages in    |
+|                                                                 |            |          | folders other  |
+|                                                                 |            |          | than INBOX     |
++-----------------------------------------------------------------+------------+----------+----------------+
+| envelope [http://tools.ietf.org/html/rfc5228#section-5.4]       | supported  | yes      | Allows         |
+|                                                                 |            |          | evaluating     |
+|                                                                 |            |          | envelope parts,|
+|                                                                 |            |          | i.e. sender and|
+|                                                                 |            |          | recipient      |
++-----------------------------------------------------------------+------------+----------+----------------+
+| encoded-character                                               | supported  | yes      | Allows encoding|
+| [http://tools.ietf.org/html/rfc5228#section-2.4.2.4]            |            |          | special        |
+|                                                                 |            |          | characters     |
+|                                                                 |            |          | numerically    |
++-----------------------------------------------------------------+------------+----------+----------------+
+| copy [http://tools.ietf.org/html/rfc3894/]                      | supported  | yes      | Allows storing |
+|                                                                 |            |          | and forwarding |
+|                                                                 |            |          | messages       |
+|                                                                 |            |          | without        |
+|                                                                 |            |          | canceling the  |
+|                                                                 |            |          | implicit keep  |
++-----------------------------------------------------------------+------------+----------+----------------+
+| body [http://tools.ietf.org/html/rfc5173/]                      | supported  | yes      | Allows         |
+|                                                                 |            |          | evaluating the |
+|                                                                 |            |          | body of a      |
+|                                                                 |            |          | message        |
++-----------------------------------------------------------------+------------+----------+----------------+
+| variables [http://tools.ietf.org/html/rfc5229/]                 | supported  | yes      | Adds variables |
+|                                                                 |            |          | support to the |
+|                                                                 |            |          | language       |
++-----------------------------------------------------------------+------------+----------+----------------+
+| vacation [http://tools.ietf.org/html/rfc5230/]                  | supported  | yes      | Provides       |
+|                                                                 |            |          | auto-responder |
+|                                                                 |            |          | functionality, |
+|                                                                 |            |          | e.g. for when  |
+|                                                                 |            |          | the user is on |
+|                                                                 |            |          | vacation       |
++-----------------------------------------------------------------+------------+----------+----------------+
+| vacation-seconds [http://tools.ietf.org/html/rfc6131/]          | supported  | no       | Extends        |
+|                                                                 | (0.2.3+)   |          | vacation       |
+|                                                                 |            |          | extension with |
+|                                                                 |            |          | the ability to |
+|                                                                 |            |          | send vacation  |
+|                                                                 |            |          | responses with |
+|                                                                 |            |          | intervals of   |
+|                                                                 |            |          | seconds rather |
+|                                                                 |            |          | than days      |
++-----------------------------------------------------------------+------------+----------+----------------+
+| relational [http://tools.ietf.org/html/rfc5231/]                | supported  | yes      | Provides       |
+|                                                                 |            |          | relational     |
+|                                                                 |            |          | match support  |
++-----------------------------------------------------------------+------------+----------+----------------+
+| imap4flags [http://tools.ietf.org/html/rfc5232/]                | supported  | yes      | Allows adding  |
+|                                                                 |            |          | IMAP flags to  |
+|                                                                 |            |          | stored messages|
++-----------------------------------------------------------------+------------+----------+----------------+
+| subaddress [http://tools.ietf.org/html/rfc5233/]                | supported  | yes      | Allows testing |
+|                                                                 |            |          | against        |
+|                                                                 |            |          | delimited      |
+|                                                                 |            |          | elements of the|
+|                                                                 |            |          | local part of  |
+|                                                                 |            |          | addresses      |
++-----------------------------------------------------------------+------------+----------+----------------+
+| reject [http://tools.ietf.org/html/rfc5429#section-2.2]         | supported  | yes      | Allows         |
+|                                                                 |            |          | rejecting      |
+|                                                                 |            |          | messages with a|
+|                                                                 |            |          | rejection      |
+|                                                                 |            |          | bounce message |
++-----------------------------------------------------------------+------------+----------+----------------+
+| enotify [http://tools.ietf.org/html/rfc5435/]                   | supported  | yes      | Provides the   |
+|                                                                 |            |          | ability to send|
+|                                                                 |            |          | notifications  |
+|                                                                 |            |          | by various     |
+|                                                                 |            |          | means          |
+|                                                                 |            |          | (currently only|
+|                                                                 |            |          | mailto)        |
++-----------------------------------------------------------------+------------+----------+----------------+
+| mailbox [http://tools.ietf.org/html/rfc5490#section-3]          | supported  | yes      | Provides a     |
+|                                                                 |            |          | mailbox        |
+|                                                                 |            |          | existence check|
+|                                                                 |            |          | and allows     |
+|                                                                 |            |          | creating       |
+|                                                                 |            |          | mailboxes upon |
+|                                                                 |            |          | fileinto       |
++-----------------------------------------------------------------+------------+----------+----------------+
+| environment [http://tools.ietf.org/html/rfc5183/]               | supported  | yes      | Allows testing |
+|                                                                 | (v0.4.0+)  |          | against various|
+|                                                                 |            |          | labeled values |
+|                                                                 |            |          | from the       |
+|                                                                 |            |          | execution      |
+|                                                                 |            |          | environment    |
++-----------------------------------------------------------------+------------+----------+----------------+
+| date [http://tools.ietf.org/html/rfc5260#section-4]             | supported  | yes      | Adds the       |
+|                                                                 |            |          | ability to test|
+|                                                                 |            |          | date and time  |
+|                                                                 |            |          | values in      |
+|                                                                 |            |          | various ways   |
++-----------------------------------------------------------------+------------+----------+----------------+
+| regex                                                           | supported  | yes      | Provides       |
+| [http://tools.ietf.org/html/draft-murchison-sieve-regex-08/]    |            |          | regular        |
+|                                                                 |            |          | expression     |
+|                                                                 |            |          | match support  |
++-----------------------------------------------------------------+------------+----------+----------------+
+| editheader [http://tools.ietf.org/html/rfc5293/]                | supported  | no       | Adds the       |
+|                                                                 | (v0.3.0+)  |          | ability to add |
+|                                                                 |            |          | and remove     |
+|                                                                 |            |          | message header |
+|                                                                 |            |          | fields         |
++-----------------------------------------------------------------+------------+----------+----------------+
+| ihave [http://tools.ietf.org/html/rfc5463/]                     | supported  | yes      | Adds the       |
+|                                                                 | (v0.2.4+)  |          | ability to test|
+|                                                                 |            |          | for support of |
+|                                                                 |            |          | Sieve          |
+|                                                                 |            |          | extensions and |
+|                                                                 |            |          | dynamically    |
+|                                                                 |            |          | invoke their use|
++-----------------------------------------------------------------+------------+----------+----------------+
+| spamtest and virustest [http://tools.ietf.org/html/rfc5235/]    | supported  | no       | Implements a   |
+|                                                                 | (v0.1.16+) |          | uniform way to |
+|                                                                 |            |          | test against   |
+|                                                                 |            |          | headers added  |
+|                                                                 |            |          | by spam and    |
+|                                                                 |            |          | virus scanners |
++-----------------------------------------------------------------+------------+----------+----------------+
+| include [http://tools.ietf.org/html/rfc6609/]                   | supported  | yes      | Allows         |
+|                                                                 |            |          | including other|
+|                                                                 |            |          | Sieve scripts  |
++-----------------------------------------------------------------+------------+----------+----------------+
+| imapflags(obsolete draft                                        | deprecated | no       | Old version of |
+| [http://tools.ietf.org/html/draft-melnikov-sieve-imapflags-03]) |            |          | imap4flags (for|
+|                                                                 |            |          | backwards      |
+|                                                                 |            |          | compatibility  |
+|                                                                 |            |          | with CMU Sieve)|
++-----------------------------------------------------------------+------------+----------+----------------+
+| notify (obsolete draft                                          | deprecated | no       | Old version of |
+| [http://tools.ietf.org/html/draft-martin-sieve-notify-01])      |            |          | enotify (for   |
+|                                                                 |            |          | backwards      |
+|                                                                 |            |          | compatibility  |
+|                                                                 |            |          | with CMU Sieve)|
++-----------------------------------------------------------------+------------+----------+----------------+
+
+The following Dovecot-specific Sieve extensions are available for the
+Pigeonhole Sieve interpreter:
+
+ *
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+| *Extension*                                                                                                     | *Support Status*                           | *Default | *Purpose*   |
+|                                                                                                                 |                                            | Enabled* |             |
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+| vnd.dovecot.debug [http://hg.rename-it.nl/dovecot-2.1-pigeonhole/raw-file/tip/doc/rfc/spec-bosch-sieve-debug.txt]| supported (v0.3.0+)                        | no       | Allows      |
+|                                                                                                                 |                                            |          | logging     |
+|                                                                                                                 |                                            |          | debug       |
+|                                                                                                                 |                                            |          | messages    |
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+| vnd.dovecot.duplicate                                                                                           | experimental (v0.3.1+)                     | no       | Allows      |
+| [http://hg.rename-it.nl/dovecot-2.1-pigeonhole/raw-file/tip/doc/rfc/spec-bosch-sieve-duplicate.txt]             |                                            |          | detecting   |
+|                                                                                                                 |                                            |          | duplicate   |
+|                                                                                                                 |                                            |          | message     |
+|                                                                                                                 |                                            |          | deliveries  |
+|                                                                                                                 |                                            |          | based on    |
+|                                                                                                                 |                                            |          | message ID  |
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+| vnd.dovecot.extdata                                                                                             | <plugin>                                   | no       | Allows a    |
+| [http://hg.rename-it.nl/pigeonhole-0.2-sieve-extdata/raw-file/tip/doc/rfc/spec-bosch-sieve-external-data.txt]   | [Pigeonhole.Sieve.Plugins.Extdata.txt]     |          | Sieve script|
+|                                                                                                                 |                                            |          | to lookup   |
+|                                                                                                                 |                                            |          | information |
+|                                                                                                                 |                                            |          | from a      |
+|                                                                                                                 |                                            |          | datasource  |
+|                                                                                                                 |                                            |          | external to |
+|                                                                                                                 |                                            |          | the script  |
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+| vnd.dovecot.pipe                                                                                                | <plugin>                                   | no       | Implements  |
+| [http://hg.rename-it.nl/pigeonhole-0.3-sieve-extprograms/raw-file/tip/doc/rfc/spec-bosch-sieve-extprograms.txt] | [Pigeonhole.Sieve.Plugins.Pipe.txt] (v0.2),|          | piping      |
+|                                                                                                                 | <plugin>                                   |          | messages to |
+|                                                                                                                 | [Pigeonhole.Sieve.Plugins.Extprograms.txt] |          | a           |
+|                                                                                                                 | (v0.3+)                                    |          | pre-defined |
+|                                                                                                                 |                                            |          | set of      |
+|                                                                                                                 |                                            |          | external    |
+|                                                                                                                 |                                            |          | programs    |
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+| vnd.dovecot.filter                                                                                              | <plugin>                                   | no       | Implements  |
+| [http://hg.rename-it.nl/pigeonhole-0.3-sieve-extprograms/raw-file/tip/doc/rfc/spec-bosch-sieve-extprograms.txt] | [Pigeonhole.Sieve.Plugins.Extprograms.txt] |          | filtering   |
+|                                                                                                                 | (v0.3+)                                    |          | messages    |
+|                                                                                                                 |                                            |          | through a   |
+|                                                                                                                 |                                            |          | pre-defined |
+|                                                                                                                 |                                            |          | set of      |
+|                                                                                                                 |                                            |          | external    |
+|                                                                                                                 |                                            |          | programs    |
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+| vnd.dovecot.execute                                                                                             | <plugin>                                   | no       | Implements  |
+| [http://hg.rename-it.nl/pigeonhole-0.3-sieve-extprograms/raw-file/tip/doc/rfc/spec-bosch-sieve-extprograms.txt] | [Pigeonhole.Sieve.Plugins.Extprograms.txt] |          | executing a |
+|                                                                                                                 | (v0.3+)                                    |          | pre-defined |
+|                                                                                                                 |                                            |          | set of      |
+|                                                                                                                 |                                            |          | external    |
+|                                                                                                                 |                                            |          | programs    |
+|                                                                                                                 |                                            |          | with the    |
+|                                                                                                                 |                                            |          | option to   |
+|                                                                                                                 |                                            |          | process     |
+|                                                                                                                 |                                            |          | string data |
+|                                                                                                                 |                                            |          | through the |
+|                                                                                                                 |                                            |          | external    |
+|                                                                                                                 |                                            |          | program     |
++-----------------------------------------------------------------------------------------------------------------+--------------------------------------------+----------+-------------+
+
+Please note that not all extensions are enabled by default, as shown in the
+table above. Deprecated extensions, extensions that add the ability to change
+messages, extensions that require explicit configuration and extensions that
+are still under development are not enabled without explicit <configuration>
+[Pigeonhole.Sieve.Configuration.txt]. This means that the 'sieve_extensions' or
+'sieve_global_extensions' settings need to be adjusted accordingly. Also, for
+<plugins> [Pigeonhole.Sieve.Plugins.txt] it is not enough to add the plugin
+name to the 'sieve_plugins' setting; the extensions introduced by the plugin
+also need to be enabled explicitly.
+
+ManageSieve server
+------------------
+
+To give users the ability to upload their own Sieve scripts to your server,
+i.e. without the need for shell or FTP access, you can use the Manage ''Sieve
+protocol. This is also provided by the <Pigeonhole.txt> project. It is
+available as a separate Dovecot service. Its configuration and use is explained
+on the <Pigeonhole ManageSieve page> [Pigeonhole.ManageSieve.txt].
+
+(This file was created from the wiki on 2013-08-05 04:42)

@@ -1,0 +1,18 @@
+Implementation notes for SMDClient
+
+
+The subscription handler will get called with the following parameters for the following reasons:
+
+    data = nil, error = nil     - the subscription succeeded, but there is no data available (should only get this once)
+
+    data = nil, error = errDuplicateName  - subscription failed, this client has already subscribed to this name (should only get this once)
+
+    data = nil, error = errNameMissing  - subscription failed, the name parameter is missing (should only get this once)
+
+    data = nil, error = errInternalError - subscription failed, SMDNotifyDaemon got an internal error (should only get this once)
+
+    data = dictionary, error = nil  - the subscription succeeded, data is the current published data
+
+after the first initial callback for a successful subscription, the handler may get called with:
+
+    data = dictionary, error = nil - data is the current published data, the publisher updated the data

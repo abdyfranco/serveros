@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>NFS</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "signalProcess") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>signalProcess</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>mountd</string>\n';
+			commandValue += '	<key>signal</key>\n';
+			commandValue += '	<string>SIGHUP</string>\n';
+		} else if (selection == "updateNFS") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>updateNFS</string>\n';
+			commandValue += '	<key>count</key>\n';
+			commandValue += '	<integer>1</integer>\n';
+		} else if (selection == "getConnectedUsers") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getConnectedUsers</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>anyKey</key>\n';
+			commandValue += '		<string>anyValue</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "getDSConfiguration") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getDSConfiguration</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_nfs'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="signalProcess">signalProcess
+						<OPTION VALUE="updateNFS">updateNFS
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+						<OPTION VALUE="getDSConfiguration">getDSConfiguration
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_nfs">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

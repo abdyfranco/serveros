@@ -1,0 +1,143 @@
+.\" Copyright (c) 2016-2017 Dovecot authors, see the included COPYING file
+.TH DOVEADM\-PROXY 1 "2016-04-26" "Dovecot v2.2" "Dovecot"
+.SH NAME
+doveadm\-fs \- Interact with the abstract mail storage filesystem
+.\"------------------------------------------------------------------------
+.SH SYNOPSIS
+.BR doveadm " [" \-Dv ]
+[\fB\-f\fP \fIformatter\fP]
+.BI fs \ command
+.RI [ ARGUMENTS ]
+.\"------------------------------------------------------------------------
+.SH DESCRIPTION
+The
+.B doveadm fs
+.I commands
+are used to abstractly interact with the storage backend defined in the
+Dovecot configuration. It allows access to the mailbox structure without
+needing to know details of how the storage backend is architected.
+.\"------------------------------------------------------------------------
+.SH OPTIONS
+Global
+.BR doveadm (1)
+.IR options :
+.TP
+.B \-D
+Enables verbosity and debug messages.
+.TP
+.BI \-f\  formatter
+Specifies the
+.I formatter
+for formatting the output.
+Supported formatters are:
+.RS
+.TP
+.B flow
+prints each line with
+.IB key = value
+pairs.
+.TP
+.B pager
+prints each
+.IR key :\  value
+pair on its own line and separates records with form feed character
+.RB ( ^L ).
+.TP
+.B tab
+prints a table header followed by tab separated value lines.
+.TP
+.B table
+prints a table header followed by adjusted value lines.
+.RE
+.TP
+.BI \-o\  setting = value
+Overrides the configuration
+.I setting
+from
+.I /Library/Server/Mail/Config/dovecot/dovecot.conf
+and from the userdb with the given
+.IR value .
+In order to override multiple settings, the
+.B \-o
+option may be specified multiple times.
+.TP
+.B \-v
+Enables verbosity, including progress counter.
+.\" --- command specific options --- "/.
+.PP
+This command uses by default the
+.B table
+output formatter.
+.\"------------------------------------------------------------------------
+.SH COMMANDS
+.SS fs copy
+.B doveadm fs copy
+.I fs-driver
+.I fs-args
+.I source-path
+.I dest-path
+.PP
+Copy source path to the destination path.
+.\"-------------------------------------
+.SS fs delete
+.B doveadm fs delete
+[\fB\-R\fP] [\fB\-n\fP \fIcount\fP]
+.I fs-driver
+.I fs-args
+.I path
+[\fIpath\fP ...]
+.PP
+Delete all data associated with the path provided.
+.\"-------------------------------------
+.SS fs get
+.B doveadm fs get
+.I fs-driver
+.I fs-args
+.I path
+.PP
+Retrieve data associated with the path provided.
+.\"-------------------------------------
+.SS fs iter
+.B doveadm fs iter
+.I fs-driver
+.I fs-args
+.I path
+.PP
+Iterate through all data files in the path provided.
+.\"-------------------------------------
+.SS fs iter-dirs
+.B doveadm fs iter-dirs
+.I fs-driver
+.I fs-args
+.I path
+.PP
+Iterate through all directories in the path provided.
+.\"-------------------------------------
+.SS fs put
+.B doveadm fs put
+[\fB\-h\fP \fIhash\fP]
+.I fs-driver
+.I fs-args
+.I input_path
+.I path
+.PP
+Store data at the path provided.
+.\"-------------------------------------
+.SS fs stat
+.B doveadm fs stat
+.I fs-driver
+.I fs-args
+.I path
+.PP
+Retrieve files status for the path provided. Currently, only the total size
+(in bytes) of the item is returned.
+.\"------------------------------------------------------------------------
+.SH REPORTING BUGS
+Report bugs, including
+.I doveconf \-n
+output, to the Dovecot Mailing List <dovecot@dovecot.org>.
+Information about reporting bugs is available at:
+http://dovecot.org/bugreport.html
+.\"------------------------------------------------------------------------
+.SH SEE ALSO
+.BR doveadm (1)

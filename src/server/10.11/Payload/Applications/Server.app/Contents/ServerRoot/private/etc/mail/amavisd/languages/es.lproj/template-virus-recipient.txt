@@ -1,0 +1,45 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED/BAD-HEADER RECIPIENTS NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+De: %f
+Fecha: %d
+Asunto: [? [:ccat|major] |Correo limpio|Correo limpio|Correo bloqueado por el servidor de correo|\
+Correo DEMASIADO GRANDE|CABECERA NO VÁLIDA en correo|SPAM|SPAM|Contenido NO VERIFICADO en correo|\
+Contenido PROHIBIDO (%F) en correo|VIRUS (%V) en correo] PARA USTED de %s
+[? [:header_field|Para] |Para: destinatarios ocultos:;|Para: [:header_field|Para]]
+[? [:header_field|Cc] |#|Cc: [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||ALERTA DE CONTENIDO PROHIBIDO]|ALERTA DE VIRUS]
+
+La herramienta de verificación de contenido ha detectado
+[? %#V |#|[:wrap|78|    |  |[?%#V|virus|virus|virus]: %V]]
+[? %#F |#|[:wrap|78|    |  |[?%#F|nombres prohibidos|nombre prohibido|nombres prohibidos]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+en un mensaje de correo electrónico que ha recibido [? %S |procedente probablemente de un remitente falso:|de:]
+  %o
+[? %S |que dice ser: %s|#]
+
+Tipo de contenido: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, bloqueado para [:ccat|name]]
+El código de referencia interno asignado a su mensaje es %n/%i
+
+[? %a |#|[:wrap|78||  |Primera dirección IP de cliente SMTP ascendente: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Según el rastro de “Received:” (Recibido),\
+ este mensaje se originó aparentemente en: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |No puesto en cuarentena.|El mensaje se ha puesto en cuarentena como: %q]
+
+Póngase en contacto con el administrador de su sistema para obtener más información.

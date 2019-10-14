@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>macOS Server</title>
+		<!-- !!! X-META-TAGS !!! -->		
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="viewport" content="shrink-to-fit=no, width=device-width, minimum-scale=1.0, maximum-scale=1.0 user-scalable=no">		
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/__collabd/coreclientmobile/images/favicon72.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/__collabd/coreclientmobile/images/favicon144.png" />
+		<link href="/__collabd/coreclientbase/stylesheets/compressed.css?version=09122018095249" media="screen" rel="stylesheet" type="text/css" />
+		<link href="/__collabd/coreclientmobile/stylesheets/packager.css?version=09122018095250" media="screen" rel="stylesheet" type="text/css" />
+		<link href="/__collabd/coreclientmobile/stylesheets/compressed.css?version=09122018095250" media="screen" rel="stylesheet" type="text/css" />		
+		<link href="/__collabd/coreclientmobile/stylesheets/themes_all_in_one.css?version=09122018095250" media="screen" rel="stylesheet" type="text/css">
+		<script type="text/javascript" defer charset="utf-8">
+			// Map of navigator languages to installed lproj names.
+			var LANGUAGE_TO_LPROJ_MAP = {
+			  'de': 'de',
+			  'en': 'en',
+			  'es': 'es',
+			  'fr': 'fr',
+			  'it': 'it',
+			  'ja': 'ja',
+			  'ko': 'ko',
+			  'nl': 'nl',
+			  'zh-cn': 'zh_CN',
+			  'zh-tw': 'zh_TW'
+			};
+			// Have we included en.lproj yet?
+			var ENGLISH_INCLUDED = false;
+			// Writes a script tag including a specific locale (if it is supported).
+			function write_language_tag (inOptLocale) {
+			  var navigatorLanguage = (inOptLocale || (navigator.language ? navigator.language : navigator.browserLanguage || 'en')).toLowerCase();
+			  var lproj;
+			  // Use the language-region locale if it is supported, otherwise fall back on the language locale if it is supported.
+			  if (LANGUAGE_TO_LPROJ_MAP[navigatorLanguage]) {
+				  lproj = LANGUAGE_TO_LPROJ_MAP[navigatorLanguage];
+			  } else {
+				  var splitNavigatorLanguage = navigatorLanguage.split('-')[0];
+				  if (LANGUAGE_TO_LPROJ_MAP[splitNavigatorLanguage]) {
+					  lproj = LANGUAGE_TO_LPROJ_MAP[splitNavigatorLanguage];
+				  }
+			  }
+			  if (!lproj || (lproj == 'en' && ENGLISH_INCLUDED)) return;
+			  document.write("<scr"+"ipt src=\"/__collabd/coreclientbase/locales/"+lproj+".lproj/strings.js\" type=\"text/javascript\" charset=\"utf-8\"></scr"+"ipt>\n");
+			  document.write("<scr"+"ipt src=\"/__collabd/coreclientmobile/locales/"+lproj+".lproj/strings.js\" type=\"text/javascript\" charset=\"utf-8\"></scr"+"ipt>\n");
+			  if (lproj == 'en') ENGLISH_INCLUDED = true;
+			}
+			write_language_tag('en');
+			write_language_tag();
+		</script>
+		<script type="text/javascript" defer src="/__collabd/coreclientbase/javascripts/sprockets.js?version=09122018095249" charset="utf-8"></script>
+		<script type="text/javascript" defer src="/__collabd/coreclientmobile/javascripts/packager.js?version=09122018095250" charset="utf-8"></script>
+	</head>
+	<!-- !!! X-WEB-LOCSTRINGS-TAG <body lang="%@"></body> !!! -->
+</html>

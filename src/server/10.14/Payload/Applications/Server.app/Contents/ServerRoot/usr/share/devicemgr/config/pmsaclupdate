@@ -1,0 +1,65 @@
+#!/bin/sh
+#-------------------------------------------------------------------------
+# Copyright (c) 2018 Apple Inc. All rights reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#-------------------------------------------------------------------------
+
+DSCL="/usr/bin/dscl /Local/Default"
+LOCALE=/usr/bin/locale
+SED=/usr/bin/sed
+SORT=/usr/bin/sort
+GREP=/usr/bin/grep
+
+SACL="com.apple.access_devicemanagement"
+
+NEW_SACL_RECORD_NAME="deprecated_pm_access_61e93cd7"
+NEW_SACL_REAL_NAME="Deprecated Profile Manager Access Group"
+NEW_SACL_NOTE="This group was created to replace access privileges to the My Devices portal. Workgroup may also have these privileges."
+
+# Repurpose the ProfileManager SACL group so that it becomes visible in both
+# Server.app and ProfileManager UI.
+$DSCL -read /Groups/$SACL
+if [ $? -ne 0 ]; then
+    # No SACL, or it has already been converted. Either way, we're done.
+    echo "PM SACL group has already been migrated"
+    exit 0
+fi
+
+$DSCL -read /Groups/$NEW_SACL_RECORD_NAME > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    # Destination "SACL" already exists
+    echo "PM access group has already been created"
+    exit 0
+fi
+
+# Find a GID we can use.
+echo "Searching for replacement GID for PM SACL group"
+gidsInUse=`$DSCL -readall Groups PrimaryGroupID | $SED -nE 's/PrimaryGroupID:[^0-9]+([0-9]+)/\1/p' | $SORT -n`
+candidate=1000
+last=0
+for gid in $gidsInUse; do
+    if [ $candidate -gt $last -a $candidate -lt $gid ]; then
+        break;
+    elif [ $candidate -eq $gid ]; then
+        candidate=$((candidate + 1))
+    fi
+    last=$gid
+done
+
+lang=`$LOCALE | $GREP -m 1 "LANG=" | $SED -nE 's/.*LANG="?(..).*/\1/p'`
+
+# Either we bailed out, or candidate is one greater than the largest value we saw. Either way, $candidate is
+# the GID we want to use. Update the group to have the new GID, RecordName, and RealName values.
+echo "Updating PM SACL group with new GID: $candidate"
+$DSCL -create /Groups/$SACL PrimaryGroupID $candidate
+$DSCL -create /Groups/$SACL RealName "$NEW_SACL_REAL_NAME"
+if [ "$lang" = "en" ]; then
+    $DSCL -create /Groups/$SACL Comment "$NEW_SACL_NOTE"
+fi
+$DSCL -create /Groups/$SACL RecordName $NEW_SACL_RECORD_NAME
+
+exit 0

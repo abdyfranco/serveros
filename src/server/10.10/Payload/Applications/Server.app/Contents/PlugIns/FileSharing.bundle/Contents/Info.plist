@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>14A389</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>FileSharing</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.Server.Services.FileSharing</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>FileSharing</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>10.8.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>521</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>6A280n</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>14A389</string>
+	<key>DTSDKName</key>
+	<string>macosx10.10internal</string>
+	<key>DTXcode</key>
+	<string>0600</string>
+	<key>DTXcodeBuild</key>
+	<string>6A280n</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.10</string>
+	<key>NSMainNibFile</key>
+	<string>SVFileSharingServicePane</string>
+	<key>NSPrincipalClass</key>
+	<string>SVFileSharingServicePane</string>
+</dict>
+</plist>

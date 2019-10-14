@@ -1,0 +1,4 @@
+# mail push notify facility has its own log file
+? [= Facility com.apple.mail.push_notify] [<= Level info] claim only
+> /Library/Logs/Mail/push_notify.log mode=0644 format=bsd rotate=seq compress file_max=5M all_max=50M
+* file /Library/Logs/Mail/push_notify.log

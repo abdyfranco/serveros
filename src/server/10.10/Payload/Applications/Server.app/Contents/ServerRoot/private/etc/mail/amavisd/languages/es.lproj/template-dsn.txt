@@ -1,0 +1,133 @@
+# =============================================================================
+# This is a template for (neutral: non-virus, non-spam, non-banned)
+# DELIVERY STATUS NOTIFICATIONS to sender.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Asunto: [?%#D|Correo no entregado|Notificación de estado de la entrega]\
+[? [:ccat|major] |||, BLOQUEADO POR EL SERVIDOR DE CORREO\
+|, mensaje DEMASIADO GRANDE\
+|, sección de cabecera no válida[=explain_badh|1]\
+[?[:ccat|minor]||: MIME erróneo|: carácter de 8 bits no codificado\
+|: uso inadecuado de caracteres de control|: línea de cabecera compuesta íntegramente por espacios en blanco\
+|: línea de cabecera de más de 998 caracteres|: error de sintaxis del campo de cabecera\
+|: campo de cabecera necesario no encontrado|: campo de cabecera duplicado|]\
+|, CORREO MASIVO NO SOLICITADO aparentemente enviado por usted\
+|, CORREO MASIVO NO SOLICITADO aparentemente enviado por usted\
+|, contenido NO VERIFICADO\
+|, tipo de contenido PROHIBIDO (%F)\
+|, VIRUS en un mensaje aparentemente enviado por usted (%V)\
+]
+Message-ID: <DSN%i@%h>
+
+[? %#D |#|Su mensaje SE HA TRANSMITIDO CORRECTAMENTE a:[\n  %D]
+[~[:dsn_notify]|["\\bTRANSMISIÓN CORRECTA\\b"]|\
+y ha solicitado recibir una notificación del estado de la entrega en caso de transmisión correcta.\n]\
+]
+[? %#N |#|El mensaje NO se ha transmitido a:[\n  %N]
+]
+[:wrap|78|||Este informe de [?%#D|no entrega|entrega] lo \
+ha generado el programa amavisd-new en el host %h. \
+El código de referencia interno asignado a su mensaje es %n/%i]
+
+# ccat_min 0: otro,  1: MIME erróneo,  2: carácter de 8 bits,  3: NUL/CR,
+#          4: vacío,  5: largo,  6: sintaxis,  7: no encontrado,  8: múltiple
+[? [:explain_badh] ||[? [:ccat|minor]
+|CABECERA NO VÁLIDA
+|CABECERA NO VÁLIDA: SECCIÓN DE CABECERA MIME ERRÓNEA O ESTRUCTURA MIME INCORRECTA
+|CABECERA NO VÁLIDA: CARACTERES DE 8 BITS NO VÁLIDOS EN SECCIÓN DE CABECERA
+|CABECERA NO VÁLIDA: CARACTERES DE CONTROL NO VÁLIDOS EN SECCIÓN DE CABECERA
+|CABECERA NO VÁLIDA: LÍNEA DE CAMPO DE CABECERA PLEGADA COMPUESTA ÍNTEGRAMENTE POR ESPACIOS EN BLANCO
+|CABECERA NO VÁLIDA: LÍNEA DE CABECERA QUE EXCEDE EL LÍMITE DE LONGITUD RFC2822 DE 998 CARACTERES
+|CABECERA NO VÁLIDA: ERROR DE SINTAXIS EN CAMPO DE CABECERA
+|CABECERA NO VÁLIDA: CAMPO DE CABECERA NECESARIO NO ENCONTRADO
+|CABECERA NO VÁLIDA: CAMPO DE CABECERA DUPLICADO
+|CABECERA NO VÁLIDA
+]
+[[:wrap|78|  |  |%X]\n]
+]\
+#
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %#X|#|[? [:useragent] |#|[:wrap|78||  |[:useragent]]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+# ccat_min 0: otro,  1: MIME erróneo,  2: carácter de 8 bits,  3: NUL/CR,
+#          4: vacío,  5: largo,  6: sintaxis,  7: no encontrado,  8: múltiple
+[? [:explain_badh] ||[? [:ccat|minor]
+|# 0: otro
+|# 1: MIME erróneo
+|# 2: carácter de 8 bits
+¿QUÉ SE CONSIDERA UN CARÁCTER NO VÁLIDO EN UNA SECCIÓN DE CABECERA DE UN MENSAJE DE CORREO?
+
+  El documento RFC 5322 establece las normas para formar mensajes de Internet.
+  No permite el uso de caracteres con códigos a partir del 127 directamente
+  (sin codificar) en una sección de cabecera de un correo electrónico.
+
+  Si debe incluirse este tipo de caracteres (p. ej. caracteres con diacríticos) del alfabeto
+  ISO latino o de otro alfabeto en una sección de cabecera, dichos caracteres deberán
+  codificarse adecuadamente según la norma RFC 2047. Esta codificación la suele realizar
+  de forma transparente el cliente de correo (MUA), pero si la codificación automática
+  no está disponible (p. ej. en algunos MUA más antiguos), es responsibilidad del usuario
+  evitar el uso de estos caracteres en una sección de cabecera o codificarlos manualmente.
+  Normalmente, los campos de cabecera problemáticos en esta categoría son “Subject” (Asunto),
+  “Organization” (Empresa) y los campos de comentarios, o los nombres que se muestran
+  en las direcciones de correo electrónico (“From” (Desde), “To” (Para) o “Cc”).
+
+  En ocasiones, estos campos de cabecera no válidos los insertan automáticamente algunos clientes
+  de correo, servidores de correo, filtros de contenido u otros servicios de gestión de correo. Si este
+  es el caso, dicho servicio deberá corregirse o configurarse adecuadamente. Normalmente, los
+  campos de cabecera problemáticos en esta categoría son “Date” (Fecha), “Received” (Recibido), 
+  “X-Mailer” (Gestor de correo-X), “X-Priority” (Prioridad-X), “X-Scanned” (Explorado-X), etc.
+
+  Si no sabe cómo corregir o evitar este problema, comuníqueselo a su administrador
+  de correo o del sistema.
+#
+[~[:useragent]|^X-Mailer:\\s*Microsoft Outlook Express 6\\.00|["
+  Si utiliza Microsoft Outlook Express como cliente de correo, asegúrese de que los
+  ajustes de:
+     Herramientas -> Opciones -> Enviar -> Formato de envío de correo -> Sin formato y HTML
+  sean los siguientes: "Formato MIME" DEBE estar seleccionado
+  y "Permitir caracteres de 8 bits en encabezados" NO DEBE estar activado.
+"]]#
+|# 3: NUL/CR
+USO INADECUADO DE UN CARÁCTER DE CONTROL EN UNA SECCIÓN DE CABECERA DE UN MENSAJE
+
+  El documento RFC 5322 establece las normas para formar mensajes de Internet.
+  No permite el uso de los caracteres de control NUL y CR (a secas) directamente
+  en una sección de cabecera de un correo electrónico.
+|# 4: vacío
+LÍNEA DE CAMPO DE CABECERA INCORRECTAMENTE PLEGADA COMPUESTA ÍNTEGRAMENTE POR ESPACIOS EN BLANCO
+
+  El documento RFC 5322 establece las normas para formar mensajes de Internet.
+  En la sección “3.2.2. Folding white space and comments” se prohíbe
+  expresamente el plegado de campos de cabecera de forma que cualquier
+  línea de un campo de cabecera plegado conste únicamente de espacios
+  en blanco (caracteres de control SP y HTAB) y nada más.
+|# 5: largo
+LÍNEA DE CABECERA QUE EXCEDE EL LÍMITE DE LONGITUD RFC5322 DE 998 CARACTERES
+
+  El documento RFC 5322 establece las normas para formar mensajes de Internet.
+  En la sección “2.1.1. Line Length Limits” se prohíbe que las líneas de una sección
+  de cabecera excedan los 998 caracteres de longitud (excluyendo los códigos CRLF).
+|# 6: sintaxis
+|# 7: no encontrado
+CAMPO DE CABECERA NECESARIO NO ENCONTRADO
+
+  El documento RFC 5322 establece las normas para formar mensajes de Internet.
+  En la sección “3.6. Field Definitions” se especifica que ciertos campos de cabecera
+  son obligatorios (el campo de fecha de creación y el campo del creador “From:” (De)).
+|# 8: múltiple
+CAMPO DE CABECERA DUPLICADO
+
+  El documento RFC 5322 establece las normas para formar mensajes de Internet.
+  En la sección “3.6. Field Definitions” se especifica que ciertos campos de cabecera
+  no deben repetirse en una sección de cabecera de un mensaje.
+|# otro
+]]#

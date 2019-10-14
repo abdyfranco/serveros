@@ -1,0 +1,123 @@
+#!/bin/bash
+
+HN=`/bin/hostname -s`
+TS=`date "+%y%m%d-%H%M%S"`
+ARCHIVE=/tmp/ServerLogs-${HN}-${TS}.tgz
+ARCHIVE_ALL=/tmp/ServerLogs_All-${HN}-${TS}.tgz
+ARCH_NAME=""
+ERROR_OUTPUT=/tmp/OutputForSetupLogGather.txt
+CUR_DATE=${TS}
+CUR_USER_LOGS=`echo ~/Library/Logs`
+XCS_Diagnose="/Applications/Server.app/Contents/ServerRoot/usr/sbin/xcsdiagnose"
+
+aflag=no
+tflag=no
+arch_path=""
+args=`getopt at:p $*`
+set -- $args
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+    (-a) aflag=yes;;
+    (-t) tflag=yes; arch_path="$arch_path $2"; shift;;
+    (*)  break;;
+    esac
+    shift
+done
+
+echo ""
+echo "This tool will gather the setup logs into a single archive for easy attachment to a bug report. An administrator password may be required."
+echo ""
+
+echo "(Enter sudo password if prompted)"
+sudo -v
+
+xCodePath=`sudo /usr/bin/xcode-select -p`
+sudo /usr/bin/xcode-select -p > ${ERROR_OUTPUT} 2>&1
+pathToXcodeResult=$?
+
+#Synthesize and verify that the path returned includes the path to the Xcode executable
+#Note: even though the path may be set, it could have been deleted or moved, so still need to stat the path returned to make sure it exists
+contentsPath=`/usr/bin/dirname "${xCodePath}"`
+xCodeAppPath="${contentsPath}/MacOS/Xcode"
+xCodeAppPresent=`/usr/bin/stat "${xCodeAppPath}"`
+xCodeAppPresentRet=$?
+
+#If Xcode is installed then we will attempt to gather logs accordingly.
+if [ ${pathToXcodeResult} == 0 -a $xCodeAppPresentRet == 0 ]; then
+	sudo ${XCS_Diagnose}
+	mostRecentArchive=`ls -1t /private/tmp | grep xcsdiagnose | head -n1`
+	if [ ! -d ${mostRecentArchive} -a ${#mostRecentArchive} -gt 5 ]; then
+        sudo mv /tmp/${mostRecentArchive} /Library/Logs/${mostRecentArchive}
+    else
+        echo "xcsdiagnose was aborted or failed to create it's archive."
+    fi
+else
+	echo "Path to Xcode is set but the path does not exist any longer."
+	echo "Path is currently set to: ${xCodePath}"
+fi
+
+sudo /usr/libexec/stackshot -i -f /tmp/ServerSetup_StackShot${CUR_DATE}.txt
+sudo mv /tmp/ServerSetup_StackShot${CUR_DATE}.txt /Library/Logs/ServerSetup_StackShot${CUR_DATE}.txt
+sudo /usr/sbin/system_profiler -timeout 300 -xml > /tmp/${CUR_DATE}_ASP_Report.spx
+sudo mv /tmp/${CUR_DATE}_ASP_Report.spx /Library/Logs/${CUR_DATE}_ASP_Report.spx
+sudo /usr/sbin/serverinfo --plist > /tmp/${CUR_DATE}_ServerInfoPList.txt
+sudo mv /tmp/${CUR_DATE}_ServerInfoPList.txt /Library/Logs/${CUR_DATE}_ServerInfoPList.txt
+
+pushd / > /dev/null
+
+WL="Library/Server/Wiki/Logs"
+XC="Library/Server/Xcode/Logs"
+RD1="/var/log/radius/radius.log"
+RD2="/Library/Logs/radiusconfig.log"
+CS="/Library/Server/Caching/Logs/Debug*"
+CES="/var/log/xscertd.log"
+
+if [[ "${aflag}" == yes ]]; then
+	ARCH_NAME=${ARCHIVE_ALL}
+else
+	ARCH_NAME=${ARCHIVE}
+fi
+
+if [ "${aflag}" == no ]; then
+	sudo rm ${ERROR_OUTPUT} ${ARCH_NAME} > ${ERROR_OUTPUT} 2>&1
+	sudo tar -czf ${ARCH_NAME} Library/Logs "${CUR_USER_LOGS:1}/Setup.log" "${CUR_USER_LOGS:1}/Server.log" "${CUR_USER_LOGS:1}/Server.log.gz" "${WL}" "${XC}" "${RD1}" "${RD2}" "${CS}" "${CES}" var/log var/run/webdav_sharing var/root/Desktop/Server*.png System/Library/ServerSetup/.MigrationStatus.plist Library/Server/Caching/Logs > $ERROR_OUTPUT 2>&1
+else
+	sudo rm ${ERROR_OUTPUT} ${ARCH_NAME} > ${ERROR_OUTPUT} 2>&1
+	Logs=`sudo find /Library/Server -name Logs`
+	sudo tar -czf ${ARCH_NAME} Library/Logs "${CUR_USER_LOGS}" "${WL}" "${XC}" "${RD1}" "${RD2}" "${CS}" "${CES}" tmp/CustomLogs var/log var/root/Desktop/Server*.png System/Library/ServerSetup/.MigrationStatus.plist $Logs > $ERROR_OUTPUT 2>&1
+fi
+
+popd > /dev/null
+
+if [[ "${tflag}" == yes ]]; then
+	sudo mv ${ARCH_NAME} ${arch_path}
+	ARCH_NAME=${arch_path}
+fi
+
+#Cleanup files we generated
+sudo /bin/rm /Library/Logs/ServerSetup_StackShot${CUR_DATE}.txt
+sudo /bin/rm /Library/Logs/${CUR_DATE}_ASP_Report.spx
+sudo /bin/rm /Library/Logs/${CUR_DATE}_ServerInfoPList.txt
+if [ -e /Library/Logs/xcodeserver-diagnose-serverloggather${CUR_DATE}.tar.gz ]; then
+	sudo /bin/rm /Library/Logs/xcodeserver-diagnose-serverloggather${CUR_DATE}.tar.gz
+fi
+echo ""
+if [ $? == 0 ]; then
+  echo "Log files have successfully been saved to ${ARCH_NAME}. Please attach this file to your bug."
+  PP=`ps -ocommand= -p $PPID | awk -F/ '{print $NF}' | awk '{print $1}'`
+  # Only open the parent folder and select the archive if we aren't running in an ssh session
+  if [[ ! $(who am i) =~ \([-a-zA-Z0-9\.]+\)$ && "${tflag}" == no ]]; then
+    /usr/bin/open -R ${ARCH_NAME}
+  fi
+else
+  echo "There was a problem creating the log archive. Please find and attach the following files to the bug if they exist:"
+  echo "$ERROR_OUTPUT"
+  echo "/Library/Logs/"
+  echo "~/Library/Logs/"
+  echo "/var/log/"
+  echo "Any crash reports from /Library/Logs/DiagnosticReports from around the time when you ran setup"
+fi
+
+echo ""

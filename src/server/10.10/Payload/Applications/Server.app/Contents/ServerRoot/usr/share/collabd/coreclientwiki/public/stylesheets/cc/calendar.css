@@ -1,0 +1,32 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+body.wiki.calendar div#content-inner
+{
+	display: none;
+}
+
+body.wiki.calendar div#module_calendars
+{
+	margin: 0px auto 0px auto;
+	padding: 0px;
+	width: 1026px;
+	position: absolute;
+	left: 50%;
+	margin-left: -513px;
+	top: 83px; /* 63px for top banner */
+	bottom: 20px;
+	border: 1px solid #C0C1C2;
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+	border-radius: 6px;
+}

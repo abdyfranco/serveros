@@ -1,0 +1,78 @@
+Mailbox settings
+================
+
+Since Dovecot v2.1 one can assign SPECIAL-USE RFC 6154
+[http://www.faqs.org/rfcs/rfc6154.html] tags and specify, which mailboxes to
+create and/or subscribe to automatically.
+
+The autocreated mailboxes are created lazily to disk only when accessed for the
+first time. The autosubscribed mailboxes aren't written to subscriptions file,
+unless SUBSCRIBE command is explicitly used for them.
+
+The mailbox section name specifies the mailbox name. If it has spaces, you can
+put it in "quotes". The mailbox settings are:
+
+ * auto: Autocreate/subscribe mailbox?
+    * no: Neither
+    * create: Autocreate, but don't autosubscribe
+    * subscribe: Autocreate and autosubscribe
+ * special_use: Space-separated list of SPECIAL-USE flags to use for the
+   mailbox. There are no validity checks, so you could specify anything you
+   want in here, but it's not a good idea to use other than the standard ones
+   specified in the RFC.
+ * autoexpunge=<time>: (v2.2.20+) Automatically at user deinitialization
+   expunge all mails in this mailbox whose saved-timestamp is older than<time>
+   (e.g. autoexpunge=30d). This removes the need for <expire plugin>
+   [Plugins.Expire.txt] if you don't care that the expunging may not always
+   happen in time.
+    * For IMAP and POP3 this happens after the client is already disconnected.
+    * For LMTP this happens when the user's mail delivery is finished. Note
+      that if there are multiple recipients this may delay delivering the mails
+      to the other recipients.
+    * Also doveadm and other processes verify this, which may be unnecessary.
+      So it may be better to explicitly enable this only inside protocol imap,
+      pop3 and maybe lmtp. You can do this with e.g.:'protocol imap { namespace
+      inbox { mailbox Spam { autoexpunge = 10d } } }'
+    * mailbox_list_index=yes is highly recommended when using this setting, as
+      it avoids actually opening the mailbox to see if anything needs to be
+      expunged.
+ * autoexpunge_max_mails=<number>: (v2.2.25+) Mails are expunged until mail
+   count is at autoexpunge_max_mails or below.  After these messages are
+   removed, autoexpunge will then try to expunge mails based on the
+   'autoexpunge' setting.
+
+---%<-------------------------------------------------------------------------
+namespace inbox {
+  #prefix = INBOX. # the namespace prefix isn't added again to the mailbox
+names.
+  inbox = yes
+  # ...
+
+  mailbox Trash {
+    auto = no
+    special_use = \Trash
+  }
+  mailbox Drafts {
+    auto = no
+    special_use = \Drafts
+  }
+  mailbox Sent {
+    auto = subscribe # autocreate and autosubscribe the Sent mailbox
+    special_use = \Sent
+  }
+  mailbox "Sent Messages" {
+    auto = no
+    special_use = \Sent
+  }
+  mailbox Spam {
+    auto = create # autocreate Spam, but don't autosubscribe
+    special_use = \Junk
+  }
+  mailbox virtual/All { # if you have a virtual "All messages" mailbox
+    auto = no
+    special_use = \All
+  }
+}
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

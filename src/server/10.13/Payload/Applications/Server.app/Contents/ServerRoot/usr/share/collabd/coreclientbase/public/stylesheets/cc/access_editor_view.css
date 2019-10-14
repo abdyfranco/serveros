@@ -1,0 +1,175 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+ 
+#sharing_dialog .cc-access-editor-view
+{
+	width: 300px;
+}
+
+#wiki_setup .cc-access-editor-view
+{
+	margin-left: 45px;
+	width: 324px;
+}
+
+.cc-access-editor-view.loading
+{
+	background: transparent url(./img/spinner_transparent.gif) center center no-repeat;
+	min-height: 150px;
+}
+
+.cc-access-editor-view.loading *
+{
+	display: none;
+}
+
+.cc-access-editor-view .field
+{
+	position: relative;
+	height: 22px;
+	margin: 0 0 14px 0;
+}
+
+.cc-access-editor-view .field input
+{
+	border: 1px solid #C6C6C6;
+	height: 20px;
+	width: 293px !important;
+	padding: 2px;
+}
+
+#wiki_setup .cc-access-editor-view .field input
+{
+    font-family: Helvetica, arial, sans-serif;
+	width: 318px !important;
+}
+
+.cc-access-editor-view .items
+{
+	padding: 3px 2px;
+	height: 144px;
+	overflow: auto;
+	overflow-x: none;
+	overflow-y: auto;
+	border: 1px solid #C6C6C6;
+	background: #fff;
+}
+
+.cc-access-editor-view .item-template
+{
+	display: none;
+}
+
+.cc-access-editor-view .item
+{
+	position: relative;
+	height: 22px;
+}
+.cc-access-editor-view .item .permissions
+{
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 100px;
+}
+body:not(.en) .cc-access-editor-view .item .permissions {
+	width: 130px;
+}
+
+.cc-access-editor-view .item .permissions select
+{
+	width: 100px;
+	height: 18px;
+	margin: 0;
+}
+body:not(.en) .cc-access-editor-view .item .permissions select {
+	width: 130px;
+}
+
+.cc-access-editor-view .item .token
+{
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	right: 104px;
+	
+	height: 18px;
+	line-height: 18px;
+	margin: 0;
+	padding: 0;
+	
+	text-decoration: none;
+	font-size: 11px;
+	color: #242424;
+	background-color: #C4E3FF;
+	
+	border-radius:9px;
+	border: none;
+	
+	cursor: default;
+}
+body:not(.en) .cc-access-editor-view .item .token {
+	right: 134px;
+}
+
+.cc-access-editor-view .item .token .remove
+{
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 13px;
+	height: 12px;
+	text-indent: -9999px;
+	overflow: hidden;
+	background: url(./img/access_editor_delete.png) no-repeat;
+	opacity: 0;
+}
+
+body.hidpi .cc-access-editor-view .item .token .remove
+{
+	background-image: url(./img/access_editor_delete@2x.png);
+	background-size: 13px 24px;
+}
+
+.cc-access-editor-view .item .token .remove:hover
+{
+	background-position: 0 -12px;
+}
+.cc-access-editor-view .item .token:hover .remove
+{
+	opacity: 1;
+}
+.cc-access-editor-view .item .token .remove.disabled
+{
+	display: none;
+}
+
+.cc-access-editor-view .item .token .label
+{
+	position: absolute;
+	left: 18px;
+	right: 18px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.cc-access-editor-view-open-btn
+{
+	margin: 20px 0 10px;
+}
+
+.busy_field
+{
+	background:#fff url(./img/spinner_transparent_small.gif) 100% 50% no-repeat;
+}

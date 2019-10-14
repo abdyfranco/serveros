@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMAccepts</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Optional</key>
+		<true/>
+		<key>Types</key>
+		<array/>
+	</dict>
+	<key>AMApplication</key>
+	<string>Remote Desktop</string>
+	<key>AMCanShowSelectedItemsWhenRun</key>
+	<false/>
+	<key>AMCanShowWhenRun</key>
+	<true/>
+	<key>AMCategory</key>
+	<string>AMCategoryUtilities</string>
+	<key>AMDefaultParameters</key>
+	<dict>
+		<key>errorMessage</key>
+		<string></string>
+		<key>errorOccured</key>
+		<false/>
+		<key>errorTitle</key>
+		<string></string>
+		<key>selectedComputerListNames</key>
+		<array/>
+	</dict>
+	<key>AMDescription</key>
+	<dict>
+		<key>AMDAlert</key>
+		<string></string>
+		<key>AMDInput</key>
+		<string></string>
+		<key>AMDNote</key>
+		<string></string>
+		<key>AMDOptions</key>
+		<string></string>
+		<key>AMDRelatedActions</key>
+		<string></string>
+		<key>AMDRequires</key>
+		<string></string>
+		<key>AMDResult</key>
+		<string></string>
+		<key>AMDSummary</key>
+		<string>This action allows the user to select computer lists from those currently available in the Remote Desktop application</string>
+		<key>AMDWebsite</key>
+		<string></string>
+	</dict>
+	<key>AMIconName</key>
+	<string>Remote Desktop</string>
+	<key>AMKeywords</key>
+	<array/>
+	<key>AMName</key>
+	<string>Choose Computer List</string>
+	<key>AMProvides</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Types</key>
+		<array>
+			<string>com.apple.RemoteDesktop.computer.list-object</string>
+		</array>
+	</dict>
+	<key>AMRequiredResources</key>
+	<array>
+		<dict>
+			<key>Display Name</key>
+			<string>Remote Desktop</string>
+			<key>Resource</key>
+			<string>com.apple.RemoteDesktop</string>
+			<key>Type</key>
+			<string>application</string>
+			<key>Version</key>
+			<string>3.0</string>
+		</dict>
+	</array>
+	<key>AMWarning</key>
+	<dict>
+		<key>Action</key>
+		<string></string>
+		<key>ApplyButton</key>
+		<string></string>
+		<key>IgnoreButton</key>
+		<string></string>
+		<key>Level</key>
+		<integer>0</integer>
+		<key>Message</key>
+		<string></string>
+	</dict>
+	<key>BuildMachineOSBuild</key>
+	<string>14D116</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.RemoteDesktop.automator.ChooseComputerList</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Choose Computer List</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.6</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.6</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>6D543p</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>14D116</string>
+	<key>DTSDKName</key>
+	<string>macosx10.10</string>
+	<key>DTXcode</key>
+	<string>0630</string>
+	<key>DTXcodeBuild</key>
+	<string>6D543p</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2005-2009, 2011-2014 Apple Inc.  All rights reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>Choose_Computer_List</string>
+</dict>
+</plist>

@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<style type="text/css">
+			@media only screen and (device-width:320px){
+				/* adjust the container div to work within the 320px width of MobileMail */
+				.container{
+					width:296px !important;
+				}
+				th{
+					padding:11px 7px !important;
+					text-align:center !important;
+				}
+				h1, h1 font{
+					font-size:18px !important;
+				}
+				h2, h2 font{
+					font-size:14px !important;
+					font-weight:bold !important;
+				}
+				p, p font{
+					font-size:11px !important;
+					line-height:1.3 !important; /* [sic] unitless multiplier */
+				}
+				/* adjust the icon to work within the 320px width of MobileMail */
+				.icon_large{
+					display:none;
+				}
+				.icon_small{
+					text-align:center;
+					display:block !important;
+					margin:0 0 8px;
+				}
+				/* rework the table layout so the icon can be centered over the body text */
+				.mobile_hidden{
+					display:none !important;
+				}
+				/* adjust the spacing to work within the 320px width of MobileMail */
+				img[height="50"], img[height="18"], img[height="16"]{ 
+					height:15px;
+				}
+				img[width="50"]{
+					width:10px;
+				}
+				img[width="35"]{
+					width:10px;
+				}
+				img[width="300"]{
+					width:236px !important;
+					display:block;
+				}
+				td[width="5%"] img, td[width="15%"] img{
+					width:30px !important;
+				}
+				.body_text p:last-child{
+					margin-bottom:0 !important;
+				}
+				/* adjust the "view wiki" button to be clickable at native iPhone size */
+				a.button {
+					border-radius:18px 15px !important;
+					padding:8px 19px !important;
+					font-size:13px !important;
+				}
+                a.button.action {
+                    margin: 10px 0 0 0 !important;
+                }
+				.hr_top {
+					border-top-color:#f6f6f6 !important;
+				}
+			}
+		</style>
+	</head>
+	<body style="text-size-adjust:auto; -webkit-text-size-adjust:auto;">
+		<center>
+			<div class="container" style="text-size-adjust:auto; -webkit-text-size-adjust:auto; font-family: LucidaGrande, Lucida, helvetica, arial, sans-serif;">
+				<font face="LucidaGrande, Lucida, helvetica, arial, sans-serif;">
+					<table bgcolor="#e7e7e7" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-spacing:0; border-radius:5px;">
+						<tr>
+							<th color="#ffffff" bgcolor="#a5a5a5" style="text-align:left; margin:0; padding:15px 20px; text-shadow:0 1px 2px #666; color: #fff; background: #a5a5a5; background: -webkit-gradient(linear, left top, left bottom, from(#b4b4b4), to(#a5a5a5)); border-top-left-radius: 5px; border-top-right-radius: 5px; border:solid 1px #9c9c9c; border-bottom-color:#9c9c9c;">
+								<h1 style="margin:0; padding:0; font-size:18px;"><font size="5" style="font-size:18px"><%= raw @loc_strings[:title] %></font></h1>
+							</th>
+						</tr>
+						<tr>
+							<td bgcolor="#e7e7e7" style="border:solid 1px #dfdfdf; border-top-color:#efefef; border-bottom-color:#d9d9d9;">
+								<table bgcolor="#e7e7e7" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-spacing:0; border-collapse:collapse;">
+									<tr>
+										<td bgcolor="#e7e7e7" width="5%" rowspan="2" style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="50" height="50" style="width: 50px !important; height: 50px !important;"/></td>
+										<td bgcolor="#e7e7e7" width="25%" class="mobile_hidden" style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="1" height="50" style="width: 1px !important; height: 50px !important;" /></td>
+										<td bgcolor="#e7e7e7" width="5%" class="mobile_hidden" rowspan="2" style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="35" height="50" style="width: 35px !important; height: 50px !important;" /></td>
+										<td bgcolor="#e7e7e7" width="50%" style="font-size:1px; line-height:1px;" align="center"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="30" height="50" style="width: 30px !important; height: 50px !important;"/><!-- The following icon link only shows up on the iPhone --><a href="#" class="icon_small" style="display:none; text-decoration:none !important;"><img src="<%= attachments[@icon_filename].url %>" border="0" width="90" height="90" /></a></td>
+										<td bgcolor="#e7e7e7" width="15%" rowspan="2" style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="50" height="50" style="width: 50px !important; height: 50px !important;"/></td>
+									</tr>
+									<tr>
+										<td bgcolor="#e7e7e7" class="mobile_hidden" align="center" valign="top"><a href="#" class="icon_large" style="text-decoration:none !important;"><img src="<%= attachments[@icon_filename].url %>" border="0" width="225" height="225" /></a></td>
+										<td bgcolor="#e7e7e7" class="body_text">
+											<% if @loc_strings[:sub_title] %><h2 style="font-size:18px; margin:0; margin-bottom:1em; padding:0; font-weight:normal;"><font color="#5D5D5D"><%= raw @loc_strings[:sub_title] %></font></h2><% end %>
+											<% if @loc_strings[:first_paragraph] %><p style="font-size:13px; margin:0; margin-bottom:1em; padding:0; color:#393939;"><font color="#393939"><%= raw @loc_strings[:first_paragraph] %></font></p><% end %>
+											<% if @loc_strings[:second_paragraph] %><p style="font-size:13px; margin:0; margin-bottom:1em; padding:0; color:#393939;"><font color="#393939"><%= @loc_strings[:second_paragraph] %></font></p><% end %>
+											<% if @loc_strings[:freeform] %><%= raw @loc_strings[:freeform] %><% end %>
+											<% if @loc_strings[:footnote] %><p style="font-size:11px; margin:0; margin-bottom:1em; padding:0; color:#717171;"><font color="#717171"><%= @loc_strings[:footnote] %></font></p><% end %>
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#e7e7e7" style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="50" height="50" style="width: 50px !important; height: 50px !important;" /></td>
+										<td bgcolor="#e7e7e7" class="mobile_hidden" colspan="2" style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="50" height="50" style="width: 50px !important; height: 50px !important;" /></td>
+										<td bgcolor="#e7e7e7" colspan="2" style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="50" height="50" style="width: 50px !important; height: 50px !important;" /></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td bgcolor="#e7e7e7" class="hr_top" style="font-size:1px; line-height:1px; border:solid 1px #dfdfdf; border-width:0 1px; border-top:solid 1px #fbfbfb;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="1" height="18" style="width: 1px !important; height: 18px !important;" /></td>
+						</tr>
+						<tr>
+							<td bgcolor="#e7e7e7" align="center" style="border:solid 1px #dfdfdf; border-width:0 1px;">
+								<% if not @loc_strings[:notification_url].nil? %><a href="<%= @loc_strings[:notification_url] %>" class="button" style="display:inline-block; text-decoration: none; color: #4C85B8; border:solid 1px #cbcbcb; border-top-color:#d5d5d5; border-bottom-color:#bebebe; border-radius: 12px 11px; background-color: #fff; background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f6f6f6)); padding: 3px 18px 4px; font-size:12px; font-weight: bold; text-shadow: 0px 1px 1px #fff;"><font color="#4C85B8"><%= @loc_strings[:button_title] %></font></a><% end %><% if not @loc_strings[:action_url].nil? %><a href="<%= @loc_strings[:action_url] %>" class="button action" style="display:inline-block; text-decoration: none; color: #4C85B8; border:solid 1px #cbcbcb; border-top-color:#d5d5d5; border-bottom-color:#bebebe; border-radius: 12px 11px; background-color: #fff; background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f6f6f6)); padding: 3px 18px 4px; font-size:12px; font-weight: bold; text-shadow: 0px 1px 1px #fff; margin: 0 0 0 10px;"><font color="#4C85B8"><%= @loc_strings[:action_button_title] %></font></a><% end %>
+							</td>
+						</tr>
+						<tr>
+							<td bgcolor="#e7e7e7" style="font-size:1px; line-height:1px; border:solid 1px #dfdfdf; border-top:0; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="1" height="16" style="width: 1px !important; height: 16px !important;" /></td>
+						</tr>
+					</table>
+					<table cellspacing="0" cellpadding="0" border="0" width="100%">
+						<tr>
+							<td style="font-size:1px; line-height:1px;"><img src="<%= attachments['spacer.png'].url %>" alt="" border="0" width="1" height="9" style="width: 1px !important; height: 9px !important;" /></td>
+						</tr>
+					</table>
+				</font>
+			</div>
+		</center>
+	</body>
+</html>

@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Copyright (c) 2006-2016 Apple Inc. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+  -->
+
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+
+    <!--
+        Public network address information
+
+        This is the server's public network address, which is provided to
+        clients in URLs and the like.  It may or may not be the network
+        address that the server is listening to directly, though it is by
+        default.  For example, it may be the address of a load balancer or
+        proxy which forwards connections to the server.
+      -->
+
+    <!-- Network host name [empty = system host name] -->
+    <key>ServerHostName</key>
+    <string></string> <!-- The hostname clients use when connecting -->
+
+    <!-- Enable Calendars -->
+    <key>EnableCalDAV</key>
+    <false/>
+
+    <!-- Enable AddressBooks -->
+    <key>EnableCardDAV</key>
+    <false/>
+
+    <!-- Socket Files -->
+    <key>SocketFiles</key>
+    <dict>
+        <key>Enabled</key>
+        <true/>
+        <key>Owner</key>
+        <string>_calendar</string>
+        <key>Group</key>
+        <string>_www</string>
+    </dict>
+    <key>SocketRoot</key>
+    <string>/var/run/caldavd_requests</string>
+
+    <!-- HTTP port [0 = disable HTTP] -->
+    <key>HTTPPort</key>
+    <integer>80</integer>
+
+    <!-- SSL port -->
+    <!-- (Must also configure SSLCertificate and SSLPrivateKey below) -->
+    <key>SSLPort</key>
+    <integer>443</integer>
+
+    <!-- Enable listening on SSL port(s) -->
+    <key>EnableSSL</key>
+    <true/>
+
+    <!-- Redirect non-SSL ports to an SSL port (if configured for SSL) -->
+    <key>RedirectHTTPToHTTPS</key>
+    <true/>
+
+
+    <!--
+        Network address configuration information
+
+        This configures the actual network address that the server binds to.
+      -->
+
+    <!-- List of IP addresses to bind to [empty = all] -->
+    <key>BindAddresses</key>
+    <array>
+    </array>
+
+    <!-- List of port numbers to bind to for HTTP [empty = same as "Port"] -->
+    <key>BindHTTPPorts</key>
+    <array>
+    </array>
+
+    <!-- List of port numbers to bind to for SSL [empty = same as "SSLPort"] -->
+    <key>BindSSLPorts</key>
+    <array>
+    </array>
+
+
+    <!--
+        Data Store
+      -->
+
+    <!-- Server root -->
+    <key>ServerRoot</key>
+    <string>/Library/Server/Calendar and Contacts</string>
+
+    <!-- Database connection -->
+    <key>DBType</key>
+    <string></string>
+
+    <key>Postgres</key>
+    <dict>
+        <key>Ctl</key>
+        <string>xpg_ctl</string>
+        <key>Options</key>
+        <array>
+        <!-- <string>-c log_statement=all</string> -->
+            <string>-c log_lock_waits=TRUE</string>
+            <string>-c deadlock_timeout=10</string>
+            <string>-c log_line_prefix='%m [%p] '</string>
+        </array>
+        <key>ExtraConnections</key>
+        <integer>20</integer>
+        <key>ClusterName</key>
+        <string>cluster.pg</string>
+        <key>LogFile</key>
+        <string>xpg_ctl.log</string>
+        <key>SocketDirectory</key>
+        <string>/var/run/caldavd/PostgresSocket</string>
+        <key>SocketName</key>
+        <string></string>
+        <key>LogRotation</key>
+        <true/>
+    </dict>
+
+    <!-- Data root -->
+    <key>DataRoot</key>
+    <string>Data</string>
+
+    <!-- Database root -->
+    <key>DatabaseRoot</key>
+    <string>Database.xpg</string>
+
+    <!-- Document root -->
+    <key>DocumentRoot</key>
+    <string>Documents</string>
+
+    <!-- Configuration root -->
+    <key>ConfigRoot</key>
+    <string>Config</string>
+
+    <!-- Run root -->
+    <key>RunRoot</key>
+    <string>/var/run/caldavd</string>
+
+    <!-- Child aliases -->
+    <key>Aliases</key>
+    <array>
+      <!--
+      <dict>
+        <key>url</key>
+        <string>/foo</string>
+        <key>path</key>
+        <string>/path/to/foo</string>
+      </dict>
+       -->
+    </array>
+
+
+    <!--
+        Quotas and limits
+      -->
+
+    <!-- User quota (in bytes) [0 = no quota] applies to attachments only -->
+    <key>UserQuota</key>
+    <integer>104857600</integer> <!-- 100Mb -->
+
+    <!-- Maximum size for a single attachment (in bytes) [0 = no limit] -->
+    <key>MaximumAttachmentSize</key>
+    <integer>10485760</integer> <!-- 10Mb -->
+
+    <!-- Maximum number of calendars/address books allowed in a home -->
+    <!-- 0 for no limit -->
+    <key>MaxCollectionsPerHome</key>
+    <integer>50</integer>
+
+    <!-- Maximum number of resources in a calendar/address book -->
+    <!-- 0 for no limit -->
+    <key>MaxResourcesPerCollection</key>
+    <integer>10000</integer>
+
+    <!-- Maximum resource size (in bytes) -->
+    <key>MaxResourceSize</key>
+    <integer>1048576</integer> <!-- 1Mb -->
+
+    <!-- Maximum number of unique attendees per entire event -->
+    <!-- 0 for no limit -->
+    <key>MaxAttendeesPerInstance</key>
+    <integer>100</integer>
+
+    <!-- Maximum number of instances allowed during expansion -->
+    <!-- 0 for no limit -->
+    <key>MaxAllowedInstances</key>
+    <integer>3000</integer>
+
+
+    <!--
+        Directory service
+
+        A directory service provides information about principals (eg.
+        users, groups, locations and resources) to the server.
+
+        A variety of directory services are available for use.
+      -->
+
+    <!-- Open Directory Service (Mac OS X) -->
+    <key>DirectoryService</key>
+    <dict>
+      <key>type</key>
+      <string>opendirectory</string>
+
+      <key>params</key>
+      <dict>
+        <key>node</key>
+        <string>/Search</string>
+        <key>recordTypes</key>
+        <array>
+          <string>users</string>
+          <string>groups</string>
+        </array>
+      </dict>
+    </dict>
+
+    <key>DirectoryFilterStartsWith</key>
+    <true/>
+
+    <!--
+        Special principals
+
+        These principals are granted special access and/or perform
+        special roles on the server.
+      -->
+
+    <!-- Principals with "DAV:all" access (relative URLs) -->
+    <key>AdminPrincipals</key>
+    <array>
+      <!-- <string>/principals/__uids__/AEB68DD7-D2B8-4D4D-A574-2A4533DF36A4/</string> -->
+    </array>
+
+    <!-- Principals with "DAV:read" access (relative URLs) -->
+    <key>ReadPrincipals</key>
+    <array>
+      <!-- <string>/principals/__uids__/983C8238-FB6B-4D92-9242-89C0A39E5F81/</string> -->
+    </array>
+
+    <!-- Create "proxy access" principals -->
+    <key>EnableProxyPrincipals</key>
+    <true/>
+
+
+    <!--
+        Permissions
+      -->
+
+    <!-- Anonymous read access for root resource -->
+    <key>EnableAnonymousReadRoot</key>
+    <false/>
+
+    <!-- Anonymous read access for resource hierarchy -->
+    <key>EnableAnonymousReadNav</key>
+    <false/>
+
+    <!-- Enables directory listings for principals -->
+    <key>EnablePrincipalListings</key>
+    <false/>
+
+    <!-- Render calendar collections as a monolithic iCalendar object -->
+    <key>EnableMonolithicCalendars</key>
+    <true/>
+
+
+    <!--
+        Authentication
+      -->
+
+    <key>Authentication</key>
+    <dict>
+
+      <!-- Clear text; best avoided -->
+      <key>Basic</key>
+      <dict>
+        <key>Enabled</key>
+        <true/>
+      </dict>
+
+      <!-- Digest challenge/response -->
+      <key>Digest</key>
+      <dict>
+        <key>Enabled</key>
+        <true/>
+        <key>Algorithm</key>
+        <string>md5</string>
+        <key>Qop</key>
+        <string></string>
+      </dict>
+
+      <!-- Kerberos/SPNEGO -->
+      <key>Kerberos</key>
+      <dict>
+        <key>Enabled</key>
+        <true/>
+        <key>ServicePrincipal</key>
+        <string></string>
+      </dict>
+
+      <!-- Wikiserver authentication (Mac OS X) -->
+      <key>Wiki</key>
+      <dict>
+        <key>Enabled</key>
+        <true/>
+      </dict>
+
+    </dict>
+
+
+    <!--
+        Logging
+      -->
+
+    <!-- Log root -->
+    <key>LogRoot</key>
+    <string>Logs</string>
+
+    <!-- Apache-style access log -->
+    <key>AccessLogFile</key>
+    <string>access.log</string>
+    <key>RotateAccessLog</key>
+    <true/>
+
+    <!-- Server activity log -->
+    <key>ErrorLogFile</key>
+    <string>error.log</string>
+
+    <!-- Log levels -->
+    <key>DefaultLogLevel</key>
+    <string>warn</string> <!-- debug, info, warn, error -->
+
+    <!-- Server process ID file -->
+    <key>PIDFile</key>
+    <string>caldavd.pid</string>
+
+
+    <!--
+        SSL/TLS
+      -->
+
+    <!-- Keychain identity to use instead of cert files -->
+    <key>SSLKeychainIdentity</key>
+    <string></string>
+
+
+    <!--
+        Process management
+      -->
+
+    <key>UserName</key>
+    <string>_calendar</string>
+
+    <key>GroupName</key>
+    <string>_calendar</string>
+
+    <key>ProcessType</key>
+    <string>Combined</string>
+
+    <key>MultiProcess</key>
+    <dict>
+      <key>ProcessCount</key>
+      <integer>0</integer> <!-- 0 = automatic -->
+    </dict>
+
+
+    <!--
+        Notifications
+      -->
+
+    <key>Notifications</key>
+    <dict>
+      <!-- Time spent coalescing notifications before delivery -->
+      <key>CoalesceSeconds</key>
+      <integer>3</integer>
+
+      <key>Services</key>
+      <dict>
+      </dict>
+    </dict>
+
+
+    <!--
+        Server-to-server protocol
+      -->
+
+    <key>Scheduling</key>
+    <dict>
+
+      <!-- CalDAV protocol options -->
+      <key>CalDAV</key>
+      <dict>
+        <key>EmailDomain</key>
+        <string></string>
+        <key>HTTPDomain</key>
+        <string></string>
+        <key>AddressPatterns</key>
+        <array>
+        </array>
+      </dict>
+
+      <!-- iSchedule protocol options -->
+      <key>iSchedule</key>
+      <dict>
+        <key>Enabled</key>
+        <false/>
+        <key>AddressPatterns</key>
+        <array>
+        </array>
+        <key>RemoteServers</key>
+        <string>remoteservers.xml</string>
+      </dict>
+
+      <!-- iMIP protocol options -->
+      <key>iMIP</key>
+      <dict>
+        <key>Enabled</key>
+        <false/>
+        <key>MailGatewayServer</key>
+        <string>localhost</string>
+        <key>MailGatewayPort</key>
+        <integer>62310</integer>
+        <key>Sending</key>
+        <dict>
+          <key>Server</key>
+          <string></string>
+          <key>Port</key>
+          <integer>587</integer>
+          <key>UseSSL</key>
+          <true/>
+          <key>Username</key>
+          <string></string>
+          <key>Password</key>
+          <string></string>
+          <key>Address</key>
+          <string></string> <!-- Address email will be sent from -->
+        </dict>
+        <key>Receiving</key>
+        <dict>
+          <key>Server</key>
+          <string></string>
+          <key>Port</key>
+          <integer>995</integer>
+          <key>Type</key>
+          <string></string> <!-- Either "pop" or "imap" -->
+          <key>UseSSL</key>
+          <true/>
+          <key>Username</key>
+          <string></string>
+          <key>Password</key>
+          <string></string>
+          <key>PollingSeconds</key>
+          <integer>30</integer>
+        </dict>
+        <key>AddressPatterns</key>
+        <array>
+          <string>mailto:.*</string>
+        </array>
+      </dict>
+
+    </dict>
+
+
+    <!--
+        Free-busy URL protocol
+      -->
+
+    <key>FreeBusyURL</key>
+    <dict>
+      <key>Enabled</key>
+      <true/>
+      <key>TimePeriod</key>
+      <integer>14</integer>
+      <key>AnonymousAccess</key>
+      <false/>
+    </dict>
+
+
+    <!--
+        Non-standard CalDAV extensions
+      -->
+
+    <!-- Calendar Drop Box -->
+    <key>EnableDropBox</key>
+    <false/>
+
+    <!-- Calendar Managed Attachments -->
+    <key>EnableManagedAttachments</key>
+    <true/>
+
+    <!-- Private Events -->
+    <key>EnablePrivateEvents</key>
+    <true/>
+
+    <!-- Timezone Service -->
+    <key>EnableTimezoneService</key>
+    <true/>
+
+    <!-- Standard Timezone Service -->
+    <key>TimezoneService</key>
+    <dict>
+    	<key>Enabled</key>
+    	<false/>
+    </dict>
+
+    <!-- Shared Calendars & Address Books -->
+    <key>Sharing</key>
+    <dict>
+      <key>Enabled</key>
+      <true/>
+    </dict>
+
+    <!--
+        Miscellaneous items
+      -->
+
+    <!-- Service ACLs (Mac OS X) -->
+    <key>EnableSACLs</key>
+    <true/>
+
+    <!-- Web-based administration -->
+    <key>EnableWebAdmin</key>
+    <true/>
+
+    <!-- On OS X use wiki authentication dialogs for webcal -->
+    <key>WebCalendarAuthPath</key>
+    <string>/auth</string>
+
+    <!-- Directory searching -->
+    <key>DirectoryAddressBook</key>
+    <dict>
+	  <key>Enabled</key>
+	  <true/>
+	  <key>type</key>
+	  <string>opendirectory</string>
+      <key>params</key>
+      <dict>
+        <key>queryUserRecords</key>
+        <false/>
+        <key>queryPeopleRecords</key>
+        <false/>
+      </dict>
+    </dict>
+
+    <key>EnableSearchAddressBook</key>
+    <false/>
+
+
+    <!-- Automatic purging of data for principals no longer in the directory
+      -->
+    <key>AutomaticPurging</key>
+    <dict>
+      <key>Enabled</key>
+      <true/>
+    </dict>
+
+    <!-- Alert-posting program
+      -->
+    <key>AlertPostingProgram</key>
+    <string>/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/Setup/CalendarServerAlert</string>
+
+    <!-- Includes of other plists
+      -->
+    <key>Includes</key>
+    <array>
+        <string>/Library/Server/Preferences/Calendar.plist</string>
+        <string>caldavd-system.plist</string>
+        <string>caldavd-user.plist</string>
+    </array>
+
+    <key>WritableConfigFile</key>
+    <string>caldavd-system.plist</string>
+
+  </dict>
+</plist>

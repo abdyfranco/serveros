@@ -1,0 +1,383 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+body {
+	background: rgb(73, 80, 86);
+	-webkit-font-smoothing: antialiased;
+	font-family: "Helvetica Neue", sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* New Login UI Styles */
+
+div.login-container {
+	width: 545px;
+	min-width: 545px;
+	margin: auto;
+	margin-top: 126px;
+}
+
+div.login-box {
+	background-color: rgb(246, 246, 246);
+	border-radius: 30px;
+	padding-bottom: 40px;
+}
+
+div.login-unit {
+	display: inline-block;
+	width: 487px;
+	margin-left: 29px;
+	text-align: center;
+}
+
+div.login-header {
+	margin-top: 43px;
+	font-size: 58px;
+	font-weight: 500;
+	font-style: normal;
+	text-decoration: none;
+	text-transform: none;
+	color: rgb(0, 0, 0);
+	background-color: initial;
+	letter-spacing: -1.18px;
+	text-shadow: none;
+}
+
+div.login-description {
+	font-size: 20px;
+	font-weight: 400;
+	margin-top: 15px;
+	font-style: normal;
+	text-decoration: none;
+	text-transform: none;
+	color: rgb(64, 64, 64);
+	background-color: initial;
+	letter-spacing: normal;
+	text-shadow: none;
+}
+
+div.login-divider {
+	width: 329px;
+	min-width: 329px;
+	height: 1px;
+	min-height: 1px;
+	margin-left: 97px;
+	margin-top: 30px;
+	background-color: rgba(0, 0, 0, 0.101961);
+}
+
+div.login-hostname {
+	min-width: 329px;
+	width: 329px;
+	min-height: 32px;
+	height: 32px;
+	margin-left: 97px;
+	margin-top: 18px;
+	font-size: 15px;
+	font-weight: 400;
+	font-style: normal;
+	text-decoration: none;
+	text-transform: none;
+	color: rgb(64, 64, 64);
+	background-color: initial;
+	letter-spacing: normal;
+	text-shadow: none;
+	text-align: center;
+}
+
+div.login-username,
+div.login-password-cont {
+	width: 330px;
+	min-height: 45px;
+	margin-left: 96px;
+	margin-top: 4px;
+	background-color: rgb(255, 255, 255);
+}
+
+div.login-username {
+	border: 1px solid rgb(192, 192, 192);
+	-webkit-border-radius: 7px 7px 0 0;
+	-moz-border-radius: 7px 7px 0 0;
+	border-radius: 7px 7px 0 0;
+}
+
+div.login-password-cont {
+	margin-top: 0;
+	position: relative;
+	border-top: 0;
+	border-right: 1px solid rgb(192, 192, 192);
+	border-bottom: 1px solid rgb(192, 192, 192);
+	border-left: 1px solid rgb(192, 192, 192);
+	-webkit-border-radius: 0 0 7px 7px;
+	-moz-border-radius: 0 0 7px 7px;
+	border-radius: 0 0 7px 7px;
+}
+
+div.login-username input,
+div.login-password input {
+	background-color: rgb(255, 255, 255);
+	border-radius: 7px 7px 7px 7px;
+	border: 0;
+	padding: 10px;
+	height: 35px;
+	outline: 0;
+	font-size: 16px;
+	font-weight: 400;
+	font-style: normal;
+	text-decoration: none;
+	text-transform: none;
+	color: rgb(0, 0, 0);
+	letter-spacing: normal;
+	text-shadow: none;
+	text-indent: 0;
+	text-align: left;
+}
+
+div.login-username input {
+	width: 310px;
+}
+
+div.login-password input {
+	width: 280px;
+}
+
+div.login-username.error {
+	border: 1px solid rgb(255, 59, 48);
+}
+
+div.login-password-cont.error {
+	border-right: 1px solid rgb(255, 59, 48);
+	border-bottom: 1px solid rgb(255, 59, 48);
+	border-left: 1px solid rgb(255, 59, 48);
+}
+
+div.login-submit {
+	position: absolute;
+	right: 10px;
+	top: 16px;
+	width: 24px;
+	height: 24px;
+	background-image: url(./images/login_off.png);
+	background-size: 24px 24px;
+}
+
+input.submit-button {
+	position: absolute;
+	top: -9999px;
+}
+
+div.login-submit:hover {
+	background-image: url(./images/login_on.png);
+}
+
+div.login-rememberme-cont {
+	min-width: 329px;
+	width: 329px;
+	min-height: 32px;
+	height: 32px;
+	margin-left: 97px;
+	margin-top: 20px;
+}
+
+div.login-rememberme-cont label {
+	font-size: 15px;
+	font-weight: 400;
+	font-style: normal;
+	text-decoration: none;
+	text-transform: none;
+	color: rgb(64, 64, 64);
+	background-color: initial;
+	line-height: 22px;
+	letter-spacing: normal;
+	text-shadow: none;
+	text-align: center;
+	width: 329px;
+	min-height: 32px;
+	display: inline-block;
+}
+
+div.login-rememberme-cont input {
+	width: 14px;
+	height: 14px;
+	vertical-align: top;
+	margin-right: 7px;
+}
+
+div.login-bottom-divider {
+	min-width: 329px;
+	width: 329px;
+	min-height: 1px;
+	height: 1px;
+	margin-left: 97px;
+	margin-top: 18px;
+	background-color: rgba(0, 0, 0, 0.103652);
+}
+
+div.login-error {
+	display: none;
+	margin-left: 97px;
+	margin-top: 15px;
+	min-width: 329px;
+	width: 329px;
+	min-height: 15px;
+	font-size: 13px;
+	font-weight: 400;
+	font-style: normal;
+	text-decoration: none;
+	text-transform: none;
+	color: rgb(255, 59, 48);
+	line-height: initial;
+	letter-spacing: normal;
+	text-shadow: none;
+	text-indent: 0;
+	text-align: center;
+}
+
+div.login-other-link {
+	margin-top: 24px;
+}
+
+div.login-other-link a {
+	display: block;
+	text-align: center;
+}
+
+/* Global styles for all the anchors */
+
+a {
+	font-size: 18px;
+	font-weight: 400;
+	font-style: normal;
+	text-decoration: none;
+	text-transform: none;
+	color: rgba(255, 255, 255, 0.655469);
+	line-height: initial;
+	letter-spacing: normal;
+	text-shadow: none;
+	text-indent: 0;
+}
+
+a:hover {
+	background-color: transparent;
+	border-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}
+
+div.apple-logo {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	left: 10px;
+	top: 10px;
+}
+
+div.help-cont {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	display: flex;
+	align-items: center;
+}
+
+div.help-text,
+div.help-icon,
+div.help-divider {
+	display: inline-block;
+}
+
+div.help-divider {
+	min-width: 1px;
+	width: 1px;
+	min-height: 15px;
+	height: 15px;
+	background-color: rgba(255, 255, 255, 0.655469);
+	margin: 0 10px 0 10px;
+}
+
+div.help-icon {
+	width: 24px;
+	height: 24px;
+}
+
+a.help-icon {
+	background-image: url(./images/help_off.png);
+	background-size: 24px 24px;
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+}
+
+a.help-icon:hover {
+	background-image: url(./images/help_on.png);
+}
+
+div.help-icon:hover {
+	cursor: pointer;
+}
+
+@media only screen and (max-device-width:480px) {
+	body {
+		background-color: rgb(246, 246, 246);
+	}
+	div.login-container {
+		width: 100%;
+		height: 100%;
+		min-width: 0;
+		margin-top: 80px;
+	}
+	div.login-box {
+		height: 100%;
+		border-radius: 0px;
+		padding: 0 20px 0 20px;
+	}
+	div.login-unit {
+		display: block;
+	}
+	div.login-divider,
+	div.login-unit,
+	div.login-hostname,
+	div.login-username,
+	div.login-password-cont,
+	div.login-password,
+	div.login-rememberme-cont,
+	div.login-rememberme-cont label,
+	div.login-bottom-divider,
+	div.login-error {
+		width: 100%;
+		margin-left: 0;
+	}
+	div.login-other-link,
+	div.apple-logo,
+	div.help-cont {
+		display: none;
+	}
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),
+all and (-o-min-device-pixel-ratio: 3/2),
+all and (min--moz-device-pixel-ratio: 1.5),
+all and (min-device-pixel-ratio: 1.5) {
+	a.help-icon {
+		background-image: url(./images/help_off@2x.png);
+	}
+	a.help-icon:hover {
+		background-image: url(./images/help_on@2x.png);
+	}
+	div.login-submit {
+		background-image: url(./images/login_off@2x.png);
+	}
+	div.login-submit:hover {
+		background-image: url(./images/login_on@2x.png);
+	}
+}

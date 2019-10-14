@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>addressbook</string>
+	<string>afp</string>
+	<string>ftp</string>
+	<string>calendar</string>
+	<string>chat</string>
+	<string>devicemanagement</string>
+	<string>loginwindow</string>
+	<string>mail</string>
+	<string>qtss</string>
+	<string>pcast</string>
+	<string>pcastlibrary</string>
+	<string>radius</string>
+	<string>ssh</string>
+	<string>vpn</string>
+	<string>weblog</string>
+	<string>smb</string>
+	<string>xgrid</string>
+</array>
+</plist>

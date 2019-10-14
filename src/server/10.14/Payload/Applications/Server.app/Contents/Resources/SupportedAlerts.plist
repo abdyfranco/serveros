@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.disks.space.low</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSGenericVolume</string>
+	</dict>
+	<key>com.apple.disks.space.verylow</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSGenericVolume</string>
+	</dict>
+	<key>com.apple.network.configurationchange</key>
+	<dict>
+		<key>imageName</key>
+		<string>NSNetwork</string>
+	</dict>
+	<key>com.apple.network.configurationchange6</key>
+	<dict>
+		<key>imageName</key>
+		<string>NSNetwork</string>
+	</dict>
+	<key>com.apple.network.ipv4addresschange</key>
+	<dict>
+		<key>imageName</key>
+		<string>NSNetwork</string>
+	</dict>
+	<key>com.apple.network.ipv6addresschange</key>
+	<dict>
+		<key>imageName</key>
+		<string>NSNetwork</string>
+	</dict>
+	<key>com.apple.certificate.expired.self_signed</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSCertificate</string>
+	</dict>
+	<key>com.apple.certificate.expired.our_ca</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSCertificate</string>
+	</dict>
+	<key>com.apple.certificate.expired.third_party</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSCertificate</string>
+	</dict>
+	<key>com.apple.certificate.expiringSoon.self_signed</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSCertificate</string>
+	</dict>
+	<key>com.apple.certificate.expiringSoon.our_ca</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSCertificate</string>
+	</dict>
+	<key>com.apple.certificate.expiringSoon.third_party</key>
+	<dict>
+		<key>imageName</key>
+		<string>XSCertificate</string>
+	</dict>
+</dict>
+</plist>

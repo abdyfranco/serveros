@@ -1,0 +1,9 @@
+Name: libpq
+Description: PostgreSQL libpq library
+Url: http://www.postgresql.org/
+Version: 9.4.6
+Requires: 
+Requires.private: 
+Cflags: -I/Applications/Server.app/Contents/ServerRoot/usr/include
+Libs: -L/Applications/Server.app/Contents/ServerRoot/usr/lib -lpq
+Libs.private: -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.Internal.sdk/usr/lib -lgssapi_krb5 -lpthread

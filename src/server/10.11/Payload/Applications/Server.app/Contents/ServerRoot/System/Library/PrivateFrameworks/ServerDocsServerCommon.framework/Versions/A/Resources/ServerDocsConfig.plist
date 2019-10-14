@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConfigVersion</key>
+	<integer>1</integer>
+	<key>DatabaseConnectionCacheLongLifetime</key>
+	<integer>600</integer>
+	<key>DatabaseConnectionCacheShortLifetime</key>
+	<integer>15</integer>
+	<key>DatabaseClusterDirectory</key>
+	<string>Library/Server/ServerDocs/Database.xpg/cluster.pg</string>
+	<key>DatabaseConnectionInfo</key>
+	<dict>
+		<key>client_encoding</key>
+		<string>utf-8</string>
+		<key>dbname</key>
+		<string>serverdocs</string>
+		<key>host</key>
+		<string>/Library/Server/ServerDocs/Database.xpg/sockets</string>
+		<key>options</key>
+		<string>-c bytea_output=hex</string>
+		<key>user</key>
+		<string>_xserverdocs</string>
+	</dict>
+	<key>DatabaseOptions</key>
+	<dict>
+		<key>logging_collector</key>
+		<string>on</string>
+		<key>log_rotation_size</key>
+		<string>10MB</string>
+		<key>log_directory</key>
+		<string>/Library/Server/Logs/ServerDocsPostgreSQL</string>
+		<key>log_connections</key>
+		<string>on</string>
+		<key>log_lock_waits</key>
+		<string>on</string>
+		<key>log_statement</key>
+		<string>ddl</string>
+		<key>log_line_prefix</key>
+		<string>%m </string>
+		<key>log_min_messages</key>
+		<string>WARNING</string>
+		<key>log_min_error_statement</key>
+		<string>WARNING</string>
+		<key>unix_socket_group</key>
+		<string>_xserverdocs</string>
+		<key>unix_socket_permissions</key>
+		<string>0770</string>
+		<key>max_connections</key>
+		<string>200</string>
+	</dict>
+	<key>LogLevel</key>
+	<string>err</string>
+	<key>MaximumConcurrentClients</key>
+	<integer>100</integer>
+	<key>ExcludedTypeIdentifiers</key>
+	<array>
+		<string>com.apple.resolvable</string>
+		<string>com.apple.disk-image-sparse-bundle</string>
+	</array>
+	<key>FileSystemEventsMonitorLatency</key>
+	<real>0.5</real>
+	<key>MetadataRootDirectory</key>
+	<string>Library/Server/ServerDocs/Data</string>
+	<key>PersonalFolderRootDirectory</key>
+	<string>Library/Server/ServerDocs/Personal Folders</string>
+	<key>Port</key>
+	<integer>10548</integer>
+	<key>SchedulerDirectoryItemCountThreshold</key>
+	<integer>5</integer>
+	<key>SchedulerExpeditedPathsLifetime</key>
+	<integer>30</integer>
+	<key>SchedulerExpeditedUsersLifetime</key>
+	<integer>30</integer>
+	<key>SchedulerQuiescentTimeInterval</key>
+	<real>0.01</real>
+	<key>SchedulerExpeditedQuiescentTimeInterval</key>
+	<real>0.1</real>
+	<key>ServiceDataLocation</key>
+	<string>/</string>
+	<key>ServerHelperLifetime</key>
+	<integer>300</integer>
+	<key>ThumbnailCacheLifetime</key>
+	<integer>604800</integer>
+	<key>UserCacheLifetime</key>
+	<integer>60</integer>
+</dict>
+</plist>

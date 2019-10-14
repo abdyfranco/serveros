@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: CREATE GROUP
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "CREATE GROUP" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+CREATE_GROUP \- define a new database role
+.\" CREATE GROUP
+.SH "SYNOPSIS"
+.sp
+.nf
+CREATE GROUP \fIname\fR [ [ WITH ] \fIoption\fR [ \&.\&.\&. ] ]
+
+where \fIoption\fR can be:
+
+      SUPERUSER | NOSUPERUSER
+    | CREATEDB | NOCREATEDB
+    | CREATEROLE | NOCREATEROLE
+    | CREATEUSER | NOCREATEUSER
+    | INHERIT | NOINHERIT
+    | LOGIN | NOLOGIN
+    | [ ENCRYPTED | UNENCRYPTED ] PASSWORD \*(Aq\fIpassword\fR\*(Aq
+    | VALID UNTIL \*(Aq\fItimestamp\fR\*(Aq
+    | IN ROLE \fIrole_name\fR [, \&.\&.\&.]
+    | IN GROUP \fIrole_name\fR [, \&.\&.\&.]
+    | ROLE \fIrole_name\fR [, \&.\&.\&.]
+    | ADMIN \fIrole_name\fR [, \&.\&.\&.]
+    | USER \fIrole_name\fR [, \&.\&.\&.]
+    | SYSID \fIuid\fR
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBCREATE GROUP\fR
+is now an alias for
+CREATE ROLE (\fBCREATE_ROLE\fR(7))\&.
+.SH "COMPATIBILITY"
+.PP
+There is no
+\fBCREATE GROUP\fR
+statement in the SQL standard\&.
+.SH "SEE ALSO"
+CREATE ROLE (\fBCREATE_ROLE\fR(7))

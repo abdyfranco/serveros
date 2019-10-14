@@ -1,0 +1,149 @@
+imapc storage
+=============
+
+The imapc storage accesses a remote IMAP server as if it were a regular Dovecot
+mailbox format. Dovecot can treat it as a very dummy storage or optionally a
+more capable storage.
+
+---%<-------------------------------------------------------------------------
+# In-memory index files:
+mail_location = imapc:
+
+# Store index files locally:
+mail_location = imapc:~/imapc
+---%<-------------------------------------------------------------------------
+
+Connection settings
+-------------------
+
+Do a regular IMAP LOGIN to imap.example.com using 'a LOGIN user@example.com
+secret':
+
+---%<-------------------------------------------------------------------------
+imapc_host = imap.example.com
+imapc_password = secret
+imapc_port = 143
+imapc_user = user@example.com
+---%<-------------------------------------------------------------------------
+
+If you want to use a master user login, set:
+
+---%<-------------------------------------------------------------------------
+imapc_master_user = masteruser
+---%<-------------------------------------------------------------------------
+
+For SSL, use either:
+
+ * ---%<----------------------------------------------------------------------
+   imapc_ssl = imaps
+   imapc_port = 993
+   ---%<----------------------------------------------------------------------
+
+ * ---%<----------------------------------------------------------------------
+   imapc_ssl = starttls
+   imapc_port = 143
+   ---%<----------------------------------------------------------------------
+
+For testing you may want to disable all SSL certificate checks:
+
+---%<-------------------------------------------------------------------------
+imapc_ssl_verify = yes
+---%<-------------------------------------------------------------------------
+
+You can use other SASL mechanisms besides PLAIN by specifying (the first one
+advertised by IMAP server is used):
+
+---%<-------------------------------------------------------------------------
+imapc_sasl_mechanisms = external plain login
+---%<-------------------------------------------------------------------------
+
+The SASL client mechanisms are implemented in Dovecot's lib-sasl/ code. It's
+possible to add more with plugins.
+
+Other settings
+--------------
+
+imapc_cmd_timeout:
+  How long to wait for an IMAP command to reply before disconnecting and
+  retrying (default: 5 mins).
+
+imapc_list_prefix:
+  Access only mailboxes under this prefix. For example
+  'imapc_list_prefix=INBOX/'
+
+imapc_max_idle_time:
+  Send something (NOOP/DONE) to server after not sending anything for this
+  amount of time (default: 29 mins).
+
+imapc_rawlog_dir:
+  Log all IMAP traffic input/output to this directory.
+
+Features and workarounds
+------------------------
+
+'imapc_features' setting is a space-separated list of features and workarounds
+that can be enabled.
+
+Optimizations
+-------------
+
+rfc822.size:
+  Allow passing through message sizes using 'FETCH RFC822.SIZE'
+
+fetch-headers:
+  Allow fetching specific message headers using 'FETCH BODY.PEEK[HEADER.FIELDS
+  (..)]'
+
+search:
+  Allow using 'SEARCH' command.
+
+Features
+--------
+
+gmail-migration:
+  Enable GMail-specific migration: Use IMAP X-GM-MSGID as POP3 UIDL. Add
+  $GMailHaveLabels keyword to mails that have X-GM-LABELS except for \Muted (to
+  be used for migrating only archived emails in "All Mails"). Add
+  pop3_deleted_flag to mails that don't exist in POP3 server.
+
+proxyauth:
+  Use Sun/Oracle IMAP-server specific PROXYAUTH command to do master user
+  authentication. Normally this would be done using the SASL PLAIN
+  authentication.
+
+throttle:INIT:MAX:SHRINK:
+  When receiving [THROTTLED] response (from GMail), throttling is applied. INIT
+  = initial throttling msecs (default: 50 ms), afterwards each subsequent
+  [THROTTLED] doubles the throttling until MAX is reached (default: 16000 ms).
+  When [THROTTLED] is not received for a while, it's shrank again. The initial
+  shrinking is done after SHRINK (default: 500 ms). If [THROTTLED] is received
+  again within this timeout, it's doubled, otherwise both throttling and the
+  next shrinking timeout is shrank to 3/4.
+
+Workarounds
+-----------
+
+zimbra-workarounds:
+  Fetch full message using 'BODY.PEEK[HEADER] BODY.PEEK[TEXT]' instead of just
+  'BODY.PEEK[]' because the header differs between these two when there are
+  illegal control chars or 8bit chars. This mainly caused problems with dsync,
+  but as of v2.2.22+ this should no longer be a problem and there's probably no
+  need to enable this workaround.
+
+no-examine:
+  Use SELECT instead of EXAMINE even when we don't want to modify anything in
+  the mailbox. This is a Courier-workaround where it didn't permanently assign
+  UIDVALIDITY to an EXAMINEd mailbox, but assigned it for SELECTed mailbox.
+
+fetch-msn-workarounds:
+  Try to ignore wrong message sequence numbers in FETCH replies whenever
+  possible, preferring to use the returned UID number instead.
+
+fetch-fix-broken-mails:
+  If a FETCH returns 'NO' (but not 'NO [LIMIT]' or 'NO [SERVERBUG]'), assume
+  the mail is broken in server and just treat it as if it were an empty email.
+  NOTE: This is often a dangerous option! It's not safe to assume that NO means
+  a permanent error rather than a temporary error. This feature should be
+  enabled only for specific users who have been determined to be broken.
+
+(This file was created from the wiki on 2016-04-26 04:43)

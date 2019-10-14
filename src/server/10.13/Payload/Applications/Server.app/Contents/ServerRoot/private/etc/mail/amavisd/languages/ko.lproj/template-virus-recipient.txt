@@ -1,0 +1,45 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED/BAD-HEADER RECIPIENTS NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+보낸 사람: %f
+날짜: %d
+제목: [? [:ccat|major] |클린 메일|클린 메일|MTA 차단 메일|\
+대용량 메일|메일의 유효하지 않은 헤더|스팸|스팸|메일의 확인되지 않은 콘텐츠|\
+메일의 금지된 콘텐츠(%F)|메일의 바이러스(%V)] %s에서 사용자에게 전송
+[? [:header_field|받는 사람] |받는 사람: 알려지지 않은 수신자:;|받는 사람: [:헤더_필드|받는 사람]]
+[? [:header_field|Cc] |#|Cc: [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||금지된 콘텐츠 경고]|바이러스 경고]
+
+콘텐츠 확인 프로그램 결과
+[? %#V |#|[:wrap|78|    |  |[?%#V|바이러스|바이러스|바이러스]: %V]]
+[? %#F |#|[:wrap|78|    |  |금지된 [?%#F|이름|이름|이름]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+사용자에게 온 이메일에서 [? %S |거짓일 확률이 큰 전송자로부터:|보낸 사람:]
+  %o
+[? %S |다음 요구: %s|#]
+
+콘텐츠 유형: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, 다음에 대해 차단됨:[:ccat|name]]
+메시지에 대한 내부 참조 코드는 %n/%i입니다
+
+[? %a |#|[:wrap|78||  |첫 번째 업스트리밍 SMTP 클라이언트 IP 주소: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |'수신:' 결과에 따라,\
+ 해당 메시지가 \[%e\], %t]에서 생성되었습니다]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |차단되지 않음.|메시지가 다음으로 차단됨: %q]
+
+자세한 정보는 시스템 관리자에게 문의하십시오.

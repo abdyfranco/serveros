@@ -1,0 +1,8 @@
+#
+# anchor ruleset for the Adaptive Firewall
+# anchor name: 400.AdaptiveFirewall
+# see afctl(8), pfctl(8), pf.conf(5)
+#
+
+table <blockedHosts> persist file "/var/db/af/blockedHosts"
+block in quick from <blockedHosts> to any

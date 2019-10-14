@@ -513,7 +513,7 @@
 			<key>FOLLOW_SYMBOLIC_LINKS</key>
 			<true/>
 			<key>IDENTIFIER</key>
-			<string>com.apple.nvme</string>
+			<string>co.abdyfran.nvmedriver</string>
 			<key>LOCATION</key>
 			<integer>0</integer>
 			<key>NAME</key>

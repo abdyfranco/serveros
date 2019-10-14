@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConfigurationVersion</key>
+	<integer>3</integer>
+	<key>DataLocation</key>
+	<string>/Library/Server/Xcode/Data</string>
+	<key>LogFilePath</key>
+	<string>/Library/Server/Xcode/Logs/xcsbuildd.log</string>
+	<key>LogFileMaxSize</key>
+	<string>100M</string>
+	<key>LogFileMaxRolled</key>
+	<integer>7</integer>
+	<key>MaxNumberOfBotRuns</key>
+	<integer>20</integer>
+	<key>XcodePath</key>
+	<string></string>
+	<key>TrustSelfSignedSSLCertificates</key>
+	<false/>
+	<key>SSHKnownHostsFilePath</key>
+	<string>/Library/Server/Xcode/Config/ssh_known_hosts</string>
+	<key>SSHStrictHostKeyChecking</key>
+	<true/>
+	<key>DeveloperRootPath</key>
+	<string></string>
+	<key>ControllerURL</key>
+	<string>http://localhost:4444/xcs/</string>
+	<key>HeadlessBuildArguments</key>
+	<array/>
+	<key>HeadlessTestingEnabled</key>
+	<true/>
+	<key>LaunchCGSessionOnlyOnDemand</key>
+	<true/>
+	<key>IncludeExportOutputInBuildLog</key>
+	<false/>
+	<key>AdditionalBuildArguments</key>
+	<array>
+		<string>-DVTCodesigningAllTheThingsLogLevel=2</string>
+		<string>-DVTDeviceLogLevel=2</string>
+		<string>-DVTDeviceSearchLogLevel=2</string>
+	</array>
+</dict>
+</plist>

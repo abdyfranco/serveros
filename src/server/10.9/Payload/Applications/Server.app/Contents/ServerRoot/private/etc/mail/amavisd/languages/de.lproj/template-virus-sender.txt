@@ -1,0 +1,91 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Subject: [? [:ccat|major]
+|Clean message from you\
+|Clean message from you\
+|Clean message from you (MTA blocked)\
+|OVERSIZED message from you\
+|BAD-HEADER in message from you\
+|SPAM apparently from you\
+|SPAM apparently from you\
+|A message with UNCHECKED contents from you\
+|BANNED contents from you (%F)\
+|VIRUS in message apparently from you (%V)\
+]
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <VS%i@%h>
+
+[? [:ccat|major] |Clean|Clean|MTA-BLOCKED|OVERSIZED|INVALID HEADER|\
+spam|SPAM|UNCHECKED contents|BANNED CONTENTS ALERT|VIRUS ALERT]
+
+Unsere Inhaltsprüfung fand
+[? %#V |#|[:wrap|78|    |  |[? %#V |viruses|virus|viruses]: %V]]
+[? %#F |#|[:wrap|78|    |  |banned [? %#F |names|name|names]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+in einer E-Mail, anscheinend von Ihnen %s
+an folgende(n) [? %#R |recipients|recipient|recipients]:[
+-> %R]
+
+Unser interner Referenzcode für Ihre E-Mail ist %n/%i
+
+[? %a |#|[:wrap|78||  |IP-Adresse des ersten Upstream-SMTP-Client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Gemäß "Empfangen:"-Trace\
+ stammt die E-Mail anscheinend von: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+[? %#D |Zustellung der E-Mail wurde gestoppt!
+
+]#
+[? %#V ||Bitte überprüfen Sie Ihr System auf Viren
+oder bitten Sie Ihren Systemadministrator darum.
+
+]#
+[? %#V |[? %#F ||#
+Die E-Mail [?%#D|wurde blockiert|hat diese Warnung ausgelöst], da sie eine
+Komponente (als MIME-Bestandteil oder darin eingebettet) enthält, deren
+deklarierter Name, MIME-Typ oder Inhaltstyp gegen die Zugriffsrichtlinien
+verstößt.
+
+Übertragen Sie beispielsweise Inhalte, die als riskant eingestuft wurden oder
+gemäß der Site-Richtlinien unerwünscht sind oder einfach zu groß für E-Mails
+sind, indem Sie sie im Web veröffentlichen und dem Empfänger nur die
+Dokumenten-URL senden.
+
+Je nach den Site-Richtlinien des Senders und Empfängers können Sie dennoch
+mit geringem Aufwand mittels folgender Methoden beliebige Inhalte versenden
+(einschließlich Viren):
+
+- Durch Verwenden von Verschlüsselung (pgp, gpg oder andere Methoden).
+
+- Durch Verpacken in einen kennwortgeschützten Container
+  (z. B. Archive wie: zip -e, arj -g, arc g, rar -p oder andere Methoden)
+
+Beachten Sie, dass Sie bei Inhalten, die nicht geheim sind, den
+Verschlüsselungsschlüssel oder das Kennwort einfachheitshalber für den
+Empfänger zu der E-Mail hinzufügen können.
+
+Wir bedauern die Unannehmlichkeiten, falls der Inhalt nicht schädlich war.
+
+Diese Einschränkungen dienen dazu, die meistgenutzten Verbreitungswege von
+Viren und Malware zu blockieren. Diese nutzen oft Automatismen oder
+Sicherheitslöcher derverbreitetsten E-Mail-Programme aus. (E-Mail-Programme
+und Browser von Microsoft sind oft das Ziel.) Da sich der Empfänger bewusst
+entscheiden muss, E-Mails zu dekodieren,wird die Gefahr der automatischen
+Verbreitung von Malware deutlich verringert.
+#
+# Details zu unseren Einschränkungsrichtlinien für E-Mail finden Sie unter ...
+
+]]#

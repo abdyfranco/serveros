@@ -1,0 +1,10 @@
+prefix=/Applications/Server.app/Contents/ServerRoot/usr
+exec_prefix=${prefix}
+includedir=${prefix}/include
+libdir=${exec_prefix}/lib
+
+Name: LibYAML
+Description: Library to parse and emit YAML
+Version: 0.1.4
+Cflags:
+Libs: -L${libdir} -lyaml

@@ -1,0 +1,59 @@
+.\"     $Id: swupd_syncd.1,v 1.2 2004/11/08 18:55:52 bbeasley Exp $
+.\"
+.\" Copyright (c) 2007-2012 Apple Inc. All Rights Reserved.
+.\" 
+.\" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\" computers and is subject to the terms and conditions of the Apple Software
+.\" License Agreement accompanying the package this file is a part of.
+.\" You may not port this file to another platform without Apple's written consent.
+
+.Dd 8 November 2007
+.Dt swupd_syncd 8
+.Os "Mac OS X Server"
+.Sh NAME
+.Nm swupd_syncd
+.Nd Software Update Server sync daemon
+.Sh SYNOPSIS
+.Pp
+.Nm
+.Pp
+.Sh DESCRIPTION
+.Nm 
+is the syncronization and download daemon for Software Update Server.
+This daemon is typically executed via Server Admin.app or the serveradmin 
+command line tool.  When launched checks for available product updates from 
+Apple and, if requested by the administrator, copies Apple updates to the
+local server, providing a local source for Mac OS X software updates.
+By default downloaded product updates are saved in /Library/Server/Software Update/Data/html.
+Alternate download locations may be configured via Server Admin.app. 
+.Pp
+The sync daemon is invoked periodically under launchd control.  The launchd 
+settings for the daemon are defined in com.apple.swupdate.sync.plist, 
+installed in /System/Library/LaunchDaemons folder. The sync process exits
+automatically after all requested product updates are downloaded.
+.Pp
+Program settings controlling the behavior of the daemon are stored in
+/Library/Server/Software Update/Config/swupd.plist.
+.Pp
+Information about available and copied product updates is saved in 
+/Library/Server/Software Update/Config/com.apple.server.swupdate.plist.  
+This file is automatically updated by the daemon after each execution.
+.Pp
+In addition to
+.Nm
+, Software Update Server provides an httpd daemon process to serve downloaded
+product updates to Mac OS X client machines.  The httpd daemon settings are
+configured in /Library/Server/Software Update/Config/swupd.conf.
+.Pp
+The sync daemon is not intended for command line operation, but can be run
+in that form for special actions.  Run 'swupd_syncd -h' for more information on
+available program options.
+.Sh FILES & FOLDERS
+.nf
+/Applications/Server.app/Contents/ServerRoot/usr/sbin/swupd_syncd
+/Applications/Server.app/Contents/ServerRoot/System/Library/LaunchDaemons/com.apple.swupdate.sync.plist
+/Applications/Server.app/Contents/ServerRoot/System/Library/LaunchDaemons/com.apple.swupdate.host.plist
+/Library/Server/Software Update/Config/swupd.plist
+/Library/Server/Software Update/Config/swupd.conf
+/Library/Server/Software Update/Status/com.apple.server.swupdate.plist
+.fi

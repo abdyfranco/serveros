@@ -1,0 +1,130 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-container-list-item
+{
+	clear: both;
+	margin: 0px 5px;
+	position: relative;
+	padding: 0px 12px;
+}
+
+.cc-container-list-item .cc-entity-favorite-toggle
+{
+	height: 50px !important;
+}
+
+.cc-container-list-item + .cc-container-list-item
+{
+	border-top: 1px solid #E9E9E9;
+}
+
+.cc-container-list-item .title,
+.cc-container-list-item .modtime
+{
+	height: 50px;
+	line-height: 50px;
+	display: inline-block;
+}
+
+.cc-container-list-item .infoButton {
+	margin-left: 8px;
+	top: 16px;
+	position: absolute;
+	width: 18px;
+	height: 17px;
+	display: inline-block;
+	background: transparent url(./img/entitylist_info.png) no-repeat center center;
+	background-image: -webkit-image-set(url(./img/entitylist_info.png) 1x,
+										url(./img/entitylist_info@2x.png) 2x);
+	
+}
+
+.cc-container-list-item .descriptionPopup {
+	position: absolute;
+	left: 7px;
+	top: -31px;
+	width: 300px;
+	z-index:	3;
+	border-width: 51px 30px 28px 28px;
+	border-image-source: url(./img/popover.png);
+	border-image-slice: 51 30 28 28;
+	white-space: pre-wrap;
+}
+
+body.hidpi .cc-container-list-item .descriptionPopup {
+    border-image-source: url(./img/popover@2x.png);
+    border-image-slice: 102 60 56 56;
+}
+
+.cc-container-list-item .descriptionPopup h1 {
+	margin-top: -20px;
+	font-weight: bold;
+	padding: 0px 15px;
+	background: #FFF;
+}
+
+.cc-container-list-item .descriptionPopup h2 {
+	padding: 0 15px 15px;
+	background: #FFF;
+}
+
+.cc-container-list-item .cc-entity-icon
+{
+	margin-top: 9px;
+	margin-left: 8px;
+}
+
+.cc-container-list-item .title
+{
+	max-width: 700px;
+	color: #A2A2A2;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.cc-container-list-item .title a
+{
+	color: #656565;
+	font-size: 15px;
+}
+
+.cc-container-list-item .modtime
+{
+	color: #B5B5B7;
+	float: right;
+	font-size: 12px;
+}
+
+.cc-container-list-item a.user
+{
+	color: #7096BB;
+	font-weight: bold;
+}
+
+.cc-container-list-item .avatar
+{
+	margin: 11px 8px 11px 12px;
+	left: 0px;
+	width: 28px;
+	height: 28px;
+}
+
+.cc-container-list-item .avatar img
+{
+	border: none;
+	border-radius: 4px;
+	height: 28px;
+	width: 28px;
+}

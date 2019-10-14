@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "ko.lproj",
+		"isoCodes": ["ko"],
+		"isoName": "Korean",
+		"name": "한글"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>도움말을 보려면 JavaScript를 켜야 합니다.</p>자세한 정보를 보려면 <a href=\"http://help.apple.com/resources/javascript/\">이 Apple 지원 기사</a>를 참조하십시오.</div>",
+		"loadfailed": "<div>도움말은 현재 볼 수 없습니다.</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@개의 검색 결과",
+		"Apple applications": "Apple 응용 프로그램",
+		"Cancel": "취소",
+		"Change Language": "언어 변경",
+		"Close": "닫기",
+		"Featured application help": "추천 응용 프로그램 도움말",
+		"Go to the homepage": "홈페이지로 이동",
+		"Help for:": "도움말:",
+		"Hide": "가리기",
+		"Home": "홈",
+		"Loading latest help...": "최신 도움말 불러오는 중...",
+		"Other applications": "기타 응용 프로그램",
+		"Print Book": "책 프린트",
+		"Print Options": "프린트 옵션",
+		"Print Page": "페이지 프린트",
+		"Print Section": "섹션 프린트",
+		"Recent applications": "최근 사용 응용 프로그램",
+		"Search": "검색",
+		"Send feedback.": "피드백 보내기.",
+		"Show all": "모두 보기",
+		"Show less": "간단히 보기",
+		"Show": "보기",
+		"Show the previous page": "이전 페이지 보기",
+		"Show the next page": "다음 페이지 보기",
+		"Was this page helpful?": "이 페이지가 도움이 되셨습니까?"
+	}
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ServiceName</key>
+	<string>webServer</string>
+	<key>PostRestoreServiceCommands</key>
+	<array>
+		<string>if [ &quot;`serveradmin status web | grep RUNNING`x&quot; != &quot;x&quot; ] ; then apachectl graceful;  fi</string>
+	</array>
+	<key>BackupBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/webServer_backup.rb</string>
+	<key>BackupLog</key>
+	<string>/var/log/server_backup/webServer_backup.log</string>
+	<key>BackupActions</key>
+	<dict>
+		<key>Configuration</key>
+		<string>configuration</string>
+		<key>Default</key>
+		<string>all</string>
+		<key>Size</key>
+		<string>size</string>
+	</dict>
+	<key>RestoreBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/webServer_backup.rb</string>
+	<key>RestoreLog</key>
+	<string>/var/log/server_backup/webServer_restore.log</string>
+	<key>RestoreActions</key>
+	<dict>
+		<key>Configuration</key>
+		<string>configuration</string>
+		<key>Default</key>
+		<string>all</string>
+		<key>Browse</key>
+		<string>browse</string>
+	</dict>
+	<key>VerifyBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/webServer_backup.rb</string>
+	<key>VerifyLog</key>
+	<string>/var/log/server_backup/webServer_verify.log</string>
+	<key>VerifyActions</key>
+	<dict>
+		<key>Configuration</key>
+		<string>configuration</string>
+		<key>Default</key>
+		<string>all</string>
+	</dict>
+	<key>BrowseActions</key>
+	<dict/>
+	<key>ConfigurationFiles</key>
+	<array>
+		<string>/Library/Server/Web/Config/apache2/</string>
+		<string>/etc/certificates/</string>
+	</array>
+	<key>DataFiles</key>
+	<array/>
+	<key>ExclusionPaths</key>
+	<array/>
+	<key>Version</key>
+	<string>10.8</string>
+</dict>
+</plist>

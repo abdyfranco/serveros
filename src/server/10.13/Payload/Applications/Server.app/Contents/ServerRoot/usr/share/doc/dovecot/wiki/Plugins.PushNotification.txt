@@ -1,0 +1,94 @@
+Push notification framework
+===========================
+
+To use push notifications, both the "notify" and the "push_notification"
+plugins need to be activated. For LMTP delivery, this is required:
+
+---%<-------------------------------------------------------------------------
+protocol lmtp {
+  mail_plugins = $mail_plugins notify push_notification
+}
+---%<-------------------------------------------------------------------------
+
+If you also want push notifications to work for LDA-based delivery, you would
+need additional configuration:
+
+---%<-------------------------------------------------------------------------
+protocol lda {
+   mail_plugins = $mail_plugins notify push_notification
+}
+---%<-------------------------------------------------------------------------
+
+DLOG driver
+-----------
+
+---%<-------------------------------------------------------------------------
+plugin {
+  push_notification_driver = dlog
+}
+---%<-------------------------------------------------------------------------
+
+This will cause notifications to end up in your debug log.
+
+OX driver
+---------
+
+ The HTTP end-point (URL + authentication information) to use is configured in
+the Dovecot configuration file. The appropriate configuration options will
+contain the HTTP URL denoting the end-point to connect to as well as the
+authentication information for Basic Authentication as configured by properties
+"com.openexchange.rest.services.basic-auth.login" and
+"com.openexchange.rest.services.basic-auth.password". The URL to configure in
+Dovecot configuration follows this pattern.
+
+---%<-------------------------------------------------------------------------
+<http|https> + "://" + <login> + ":" + <password> + "@" + <host> + ":" + <port>
++ "/preliminary/http-notify/v1/notify"
+---%<-------------------------------------------------------------------------
+
+E.g.
+
+---%<-------------------------------------------------------------------------
+plugin {
+  push_notification_driver =
+ox:url=http://login:pass@node1.domain.tld:8009/preliminary/http-notify/v1/notify
+}
+---%<-------------------------------------------------------------------------
+
+Furthermore, it is also possible to specify more than one HTTP end-point to
+connect to if a new message delivery occurs. Thus the configuration section
+mentioned above may be extended by additional "push_notification_driver"
+entries; e.g. push_notification_driver2, push_notification_driver3, etc.
+
+Please note that the path "/preliminary/http-notify/v1/notify" denotes the
+internal REST API of the Open-Xchange Middleware, which is not publicly
+accessible. The administrator can decide whether to add that path to the Apache
+configuration (see alsoAppSuite:Apache_Configuration and AppSuite:Grizzly)
+through a Location/ProxyPass directive:
+
+---%<-------------------------------------------------------------------------
+<Location /preliminary>
+   Order Deny,Allow
+   Deny from all
+   # Only allow access from servers within the network. Do not expose this
+   # location outside of your network. In case you use a load balancing service
+in front
+   # of your Apache infrastructure you should make sure that access to
+/preliminary will
+   # be blocked from the internet / outside clients. Examples:
+   # Allow from 192.168.0.1
+   # Allow from 192.168.1.1 192.168.1.2
+   # Allow from 192.168.0.
+   ProxyPass /preliminary balancer://oxcluster/preliminary
+</Location>
+---%<-------------------------------------------------------------------------
+
+In case the "user=" sent by OX in the push_notification_driver url data does
+not match the IMAP login of a user, Dovecot ignores it. This can be overridden
+by defining "user_from_metadata" in the push_notification_driver url, e.g.
+
+---%<-------------------------------------------------------------------------
+push_notification_driver = ox:url=http://example.com/ user_from_metadata
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

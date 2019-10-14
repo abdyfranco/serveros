@@ -1,0 +1,11 @@
+From: Mail-Administrator <Postmaster@example.com>
+Subject: [Fehler] E-Mail-Nutzung überschreitet Kontingent
+
+Du hast dein Mail-Speicherkontingent auf dem Mail-Server überschritten. Die Zustellung weiterer Mail wird verweigert, bis du genügend freien Speicherplatz für neue Mail geschaffen hast.
+
+Bitte bewege alle Nachrichten, die du nicht weiter auf dem Server benötigst, in deine lokalen Mail-Ordner. Durchsuche dabei auch die Ordner „Gesendet“, „Papierkorb“ oder „Gelöschte Objekte“ nach Mails, die sich nicht mehr auf dem Server befinden müssen.
+
+Vielen Dank im Voraus für deine schnelle Reaktion!
+
+Mit freundlichen Grüßen
+Mail-Administrator

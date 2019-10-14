@@ -1,0 +1,283 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Header search field */
+
+#header input#search
+{
+	background-color: transparent;
+	background-image: url(./img/searchfield_bg.png);
+	background-repeat: no-repeat;
+	background-position: top left;
+	border: none;
+	color: #262626;
+	font-size: 11px;
+	height: 19px;
+	margin-left: 4px;
+	outline: none;
+	width: 98px;
+	border-radius: 1em;
+	padding: 0px 28px 0px 20px;
+}
+
+#header input#search.active
+{
+	background-image: url(./img/searchfield_x.png), url(./img/searchfield_spinner.gif);
+    background-image: -webkit-image-set(url(./img/searchfield_x.png) 1x, url(./img/searchfield_x@2x.png) 2x), 
+					  -webkit-image-set(url(./img/searchfield_spinner.gif) 1x, url(./img/searchfield_spinner@.gif) 2x); /* The spinner is the 1x version, but the background is the @2x one */
+	background-repeat: no-repeat, no-repeat;
+	background-position: 131px 3px, top left;
+}
+
+#header span.searchfield_close_overlay
+{
+	display: block;
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	right: 8px;
+	top: 5px;
+	z-index: 501;
+}
+
+#header input#search:focus
+{
+	background-image: url(./img/searchfield_x.png), url(./img/searchfield_bg.png);
+    background-image: -webkit-image-set(url(./img/searchfield_x.png) 1x, url(./img/searchfield_x@2x.png) 2x), 
+					  -webkit-image-set(url(./img/searchfield_bg.png) 1x, url(./img/searchfield_bg@2x.png) 2x);
+	background-repeat: no-repeat, no-repeat;
+	background-position: 131px 3px, top left;
+}
+
+/* @end */
+
+/* @group Main panel */
+
+div#quicksearch
+{
+	position: absolute;
+	top: 25px;
+	right: 4px;
+}
+
+div#quicksearch .content {
+	width: 324px;
+}
+
+div#quicksearch .norgie {
+	right: 55px;
+}
+
+div#quicksearch .section.top h1, div#quicksearch .section.top h2 {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+div#quicksearch .section.bottom li:last-child {
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+div#quicksearch .section.search li:last-child {
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+
+div#quicksearch .section
+{
+	display: none;
+}
+
+div#quicksearch .section.empty
+{
+	display: none !important;
+}
+
+div#quicksearch .section.showing
+{
+	display: block;
+}
+
+div#quicksearch .cc-entity-icon
+{
+	float: left;
+	height: 32px;
+	margin-right: 8px;
+	margin-top: 5px;
+	width: 32px;
+}
+
+/* @end */
+
+/* @group Listing */
+
+div#quicksearch .results li
+{
+	position: relative;
+	border-top: 1px solid transparent;
+	border-bottom: 1px dotted #5a5a5a;
+	cursor: pointer;
+	display: block;
+	height: 42px;
+	line-height: 42px;
+	color: white;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 34px 0 12px;
+}
+
+div#quicksearch .results li .delete
+{
+	text-indent: -9999px;
+	display: none;
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	margin-top: -7px;
+	width: 14px;
+	height: 14px;
+	background: transparent url(../cc/img/quicksearch_delete.png) 0 0 no-repeat;
+    background-image: -webkit-image-set(url(../cc/img/quicksearch_delete.png) 1x,
+										url(../cc/img/quicksearch_delete@2x.png) 2x);
+}
+
+div#quicksearch .results li:hover .delete
+{
+	display: block;
+}
+
+div#quicksearch .results li .quicksearch_favorite
+{
+	position: absolute;
+	top: 9px;
+	right: 12px;
+	width: 20px;
+	height: 21px;
+	background: transparent url(/__collabd/coreclientbase/stylesheets/cc/img/star_selected.png) 0 0 no-repeat;
+    background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/star_selected.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/star_selected@2x.png) 2x);
+}
+
+div#quicksearch .results li.hasowner .title
+{
+	display: block;
+	position: absolute;
+	right: 34px;
+	font-size: 12px;
+	line-height: 12px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	top: 8px;
+	left: 48px;
+}
+
+div#quicksearch .results li .owner
+{
+	display: none;
+}
+
+div#quicksearch .results li.hasowner .owner
+{
+	display: block;
+	position: absolute;
+	top: 24px;
+	left: 48px;
+	right: 12px;
+	font-size: 11px;
+	line-height: 11px;
+	color: #ACADAD;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-shadow: none;
+}
+
+div#quicksearch .results li:last-child
+{
+	border-bottom-color: transparent;
+}
+
+div#quicksearch .results li.selected
+{
+	color: #fff;
+	background-color: #909090;
+}
+
+div#quicksearch li,
+div#quicksearch .footer a
+{
+	cursor: pointer;
+}
+
+div#quicksearch .footer
+{
+	border-top: 1px solid #2e2e2e;
+	background-color: #565656;
+	color: #ACADAD;
+	margin: 0;
+	height: 30px;
+	line-height: 30px;
+	padding-top: 0;
+	text-align: right;
+	padding-right: 16px;
+	border-bottom-right-radius: 9px;
+	border-bottom-left-radius: 9px;
+	font-size: 11px;
+	font-weight: 600;
+}
+
+div#quicksearch .loading .footer
+{
+	display: none;
+}
+
+div#quicksearch .footer a
+{
+	display: block;
+}
+
+/* @end */
+
+/* @group Loading */
+
+div#quicksearch h2.placeholder
+{
+	display: none;
+	font-size: 13px;
+	font-weight: normal;
+	height: 54px;
+	line-height: 54px;
+	text-align: center;
+	text-transform: none;
+	border-bottom-right-radius: 9px;
+	border-bottom-left-radius: 9px;
+}
+
+div#quicksearch .loading .placeholder
+{
+	display: block;
+}
+
+div#quicksearch h2.empty
+{
+	border: none;
+	background: none;
+	font-weight: normal;
+	height: 40px;
+	line-height: 40px;
+	padding: 6px 0px;
+	text-align: center;
+	text-transform: none;
+}
+
+/* @end */

@@ -1,0 +1,69 @@
+#!/bin/bash
+source /Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/config/common.sh
+
+# debugDeviceMgr
+#
+# Sets the log verbosity level for all MDM processes to <level> and forces
+# them to re-read the settings to the changes take effect immediately.
+#
+# Parameters
+# $1 - the log verbosity level, from 0 (lowest) to 9 (highest).
+
+DEFAULTS="/usr/bin/sudo /usr/bin/defaults"
+CMP="/usr/bin/cmp"
+CP="/usr/bin/sudo /bin/cp"
+DITTO="/usr/bin/sudo /usr/bin/ditto"
+KILLALL="/usr/bin/sudo killall"
+PG_EXT=$SERVER_ROOT/usr/share/postgresql/extension
+PG_STAT=$PG_EXT/pg_stat_statements.control
+CONFIG=""
+
+if (( $# == 1 )) && (( $1 >= 0 && $1 <= 9 )); then
+  $DEFAULTS write $PM_PREFS_FILE debugOutput $1
+
+  if (( $1 >= 4 )); then
+    $DEFAULTS write $PM_PREFS_FILE DBDebug 1
+    if [ -z "$CONFIG" ]; then
+      CONFIG="-debug"
+    fi
+  else
+    $DEFAULTS delete $PM_PREFS_FILE DBDebug
+  fi
+
+  if (( $1 >= 1 )); then
+    $DEFAULTS write $PM_PREFS_FILE DBLogNotices 1
+    $DEFAULTS write $PM_PREFS_FILE DBMonitor 1
+  else
+    $DEFAULTS delete $PM_PREFS_FILE DBLogNotices
+    $DEFAULTS delete $PM_PREFS_FILE DBMonitor
+  fi
+elif [ -z "$CONFIG" ]; then
+  echo "Usage: debugDeviceMgr level"
+  echo "    level - the log verbosity level, from 0 (lowest) to 9 (highest)."
+  echo "    The default for most logs is 1, so setting this to 0 will make most logs less verbose."
+  echo "    In practice, levels higher than 3 are usually overkill."
+  echo ""
+  echo "NOTE: Using this tool requires the Profile Manager service be turned off briefly."
+  exit 1
+fi
+
+CONFIG=$DEVICEMGR_CONFIG_PATH/com.apple.DeviceManagement.postgres${CONFIG}.plist
+$CMP -s $CONFIG $PM_PG_CONFIG_FILE
+if (( $? != 0 )); then
+  $CP -f $CONFIG $PM_PG_CONFIG_FILE
+  STOPPED=`$SERVERADMIN status devicemgr | grep "STOPPED"`
+  if [ -z "$STOPPED" ]; then
+    $SERVERADMIN stop devicemgr
+  fi
+  $SERVERCTL disable service=com.apple.DeviceManagement.devicemgrd
+  $SERVERCTL disable service=com.apple.DeviceManagement.dmpgHelper
+  $SERVERCTL disable service=com.apple.DeviceManagement.postgres
+  $SERVERCTL enable  service=com.apple.DeviceManagement.postgres
+  $SERVERCTL enable  service=com.apple.DeviceManagement.dmpgHelper
+  $SERVERCTL enable  service=com.apple.DeviceManagement.devicemgrd
+  if [ -z "$STOPPED" ]; then
+    $SERVERADMIN start devicemgr
+  fi
+else
+  sudo killall -HUP -u _devicemgr dmrunnerd devicemgrd migration_tool sd_relocator dmpgHelper
+fi

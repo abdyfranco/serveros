@@ -1,0 +1,83 @@
+#!/bin/sh
+#
+# Post-install migration script for Software Update Service
+#
+
+##################   Input Parameters  #######################
+# --purge <0 | 1>   "1" means remove any files from the old system after you've migrated them, "0" means leave them alone.
+# --sourceRoot <path> The path to the root of the system to migrate
+# --sourceType <System | TimeMachine> Gives the type of the migration source, whether it's a runnable system or a
+#                  Time Machine backup.
+# --sourceVersion <ver> The version number of the old system (like 10.5 or 10.6). Since we support migration from 10.5, 10.6,
+#                   and other 10.7 installs.
+# --targetRoot <path> The path to the root of the new system.
+# --language <lang> A language identifier, such as \"en.\" Long running scripts should return a description of what they're doing
+#                   (\"Migrating Open Directory users\"), and possibly provide status update messages along the way. These messages
+#                   need to be localized for the logging machine (which is not necessarily the server running the migration script).
+#                   This argument will identify the Server Assistant language. As an alternative to doing localization yourselves
+#                   send them in English, but in case the script will do this it will need this identifier.
+#
+
+# Example:
+#   60_swupdateconfigmigrator --purge 1 --sourceRoot /Previous\ System --sourceType System --sourceVersion 10.7 --targetRoot / --language en
+
+
+# Run serveradmin for special one-shot upgrade of previous 
+# configuration and migration of service data.
+
+# parse input options
+
+UNDEFINEDVALUE="-UNDEF-"
+
+SRCROOT=${UNDEFINEDVALUE}
+TARGETROOT=${UNDEFINEDVALUE}
+PURGE=${UNDEFINEDVALUE}
+SRCVERSION=${UNDEFINEDVALUE}
+SRCTYPE=${UNDEFINEDVALUE}
+LANGUAGE=${UNDEFINEDVALUE}
+
+while [ $# -ge 1 ]; do
+	case $1 in
+		--sourceRoot)    shift; SRCROOT=$1 ;;
+		--targetRoot)    shift; TARGETROOT=$1 ;;
+		--purge)         shift; PURGE=$1 ;;
+		--sourceVersion) shift; SRCVERSION=$1 ;;
+		--sourceType)    shift; SRCTYPE=$1 ;;
+		--language)      shift; LANGUAGE=$1 ;;
+	esac
+	shift
+done
+
+# build the command file to send the migration options to the service plugin
+
+COMMANDFILE="/tmp/swupdateCommandFile"
+
+echo "swupdate:command = upgradeConfig" > "${COMMANDFILE}"
+if [ "${PURGE}" != "${UNDEFINEDVALUE}" ]; then
+	echo "swupdate:upgradePurge = \"${PURGE}\"" >> "${COMMANDFILE}";
+fi	
+
+if [ "${SRCROOT}" != "${UNDEFINEDVALUE}" ]; then
+	echo "swupdate:upgradeSourceRoot = \"${SRCROOT}\"" >> "${COMMANDFILE}";
+fi
+
+if [ "${SRCTYPE}" != "${UNDEFINEDVALUE}" ]; then
+	echo "swupdate:upgradeSourceType = \"${SRCTYPE}\"" >> "${COMMANDFILE}";
+fi	
+
+if [ "${SRCVERSION}" != "${UNDEFINEDVALUE}" ]; then
+	echo "swupdate:upgradeSourceVersion = \"${SRCVERSION}\"" >> "${COMMANDFILE}";
+fi	
+
+if [ "${TARGETROOT}" != "${UNDEFINEDVALUE}" ]; then
+	echo "swupdate:upgradeTargetRoot = \"${TARGETROOT}\"" >> "${COMMANDFILE}";
+fi	
+
+if [ "${LANGUAGE}" != "${UNDEFINEDVALUE}" ]; then
+	echo "swupdate:upgradeLanguage = \"${LANGUAGE}\"" >> "${COMMANDFILE}";
+fi	
+
+# invoke the service plugin to perform the migration & upgrade for this service
+
+${SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin command < ${COMMANDFILE}
+rm -rf ${COMMANDFILE}

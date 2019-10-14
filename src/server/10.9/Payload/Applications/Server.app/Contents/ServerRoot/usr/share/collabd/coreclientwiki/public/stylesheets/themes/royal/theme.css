@@ -1,0 +1,280 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* com.apple.collabd.theme.main_banner */
+
+#banner
+{
+	background-color: #0f3c7c;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0b4398), to(#0f3c7c));
+	background: -moz-linear-gradient(top, #0b4398, #0f3c7c);
+	ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#0b4398', EndColorStr='#0f3c7c')";
+	/* property=color value-ref=com.apple.collabd.theme.main_banner.color */
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.text-shadow */
+}
+
+body:not(.toplevel) #banner
+{
+	border-bottom: 1px solid #0f3c7c;
+}
+
+body:not(.toplevel) #banner .left
+{
+	/* property=border-bottom value-ref=com.apple.collabd.theme.main_banner.border-bottom-inner */
+}
+
+/* com.apple.collabd.theme.main_banner.selected_link */
+
+#banner .right .links li.selected
+{
+	/* property=border value-ref=com.apple.collabd.theme.main_banner.selected_link.border */
+	border-bottom-color: rgb(9,41,86) !important;
+	box-shadow: 0px 1px 0px rgba(255,255,255,0.15);
+	/* property=text-shadow value-ref=com.apple.collabd.theme.main_banner.selected_link.text-shadow */
+	background-color: #08367a;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0a2d5f), to(#08367a));
+	background: -moz-linear-gradient(top, #0a2d5f, #08367a);
+	ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#0a2d5f', EndColorStr='#08367a')";
+}
+
+/* com.apple.collabd.theme.body */
+
+#main
+{
+	background-color: #e7e7e7;
+}
+
+/* com.apple.collabd.theme.sidebar_and_filter_bar_headers */
+
+.cc-sidebar > h2,
+.cc-sidebar.toplevel .cc-sidebar-section > h3,
+.cc-filter-bar-view,
+.cc-filter-bar-right-button
+{
+	background-color: #6a93c8;
+	background: -webkit-gradient(linear, left top, left bottom, from(#95baeb), to(#6a93c8));
+	background: -moz-linear-gradient(top, #95baeb, #6a93c8);
+	ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#95baeb', EndColorStr='#6a93c8')";
+	border: 1px solid rgb(87,131,186);
+	/* property=border-top-color value-ref=com.apple.collabd.theme.sidebar_and_filter_bar_headers.border-top-color */
+	/* property=border-bottom-color value-ref=com.apple.collabd.theme.sidebar_and_filter_bar_headers.border-bottom-color */
+	color: #092e62;
+	/* property=text-shadow value-ref=com.apple.collabd.theme.sidebar_and_filter_bar_headers.text-shadow */
+}
+
+.cc-sidebar h2 .button.sidebar-close
+{
+	background-image: url(sidebar_close.png);
+	background-image: -webkit-image-set(url(sidebar_close.png) 1x, url(sidebar_close@2x.png) 2x);
+}
+
+/* com.apple.collabd.theme.sidebar_and_history_banner_backgrounds */
+
+.cc-sidebar > .content,
+.revisions.detail .controls
+{
+	background-color: #f0f6fe;
+}
+
+.cc-sidebar-section .button
+{
+	background-image: url(sidebar_buttons.png);
+	background-image: -webkit-image-set(url(sidebar_buttons.png) 1x, url(sidebar_buttons@2x.png) 2x);
+}
+
+/* com.apple.collabd.theme.show_more_link */
+
+.cc-sidebar .cc-sidebar-pagination,
+.cc-collapsible-list-toggle,
+.cc-sidebar > .content a.more,
+.cc-entitylist .footer a,
+.cc-error-message-view.deleted form input
+{
+	/* property=color value-ref=com.apple.collabd.theme.show_more_link */
+}
+
+.cc-sidebar .cc-sidebar-section.loading > .content,
+.cc-sidebar .cc-sidebar-pagination.loading
+{
+	background-image: url(sidebar_spinner_small.gif);
+}
+
+/* com.apple.collabd.theme.sidebar.rounded_button */
+
+.cc-sidebar .cc-sidebar-rounded-button,
+.cc-sidebar.watched_controls .content span
+{
+	color: #0955ab;
+}
+
+.cc-sidebar .cc-sidebar-rounded-button
+{
+	border: 1px solid #abc3df;
+	/* property=border-bottom-color value-ref=com.apple.collabd.theme.sidebar.rounded_button.border-bottom-color */
+	background-color: #dae6f5;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dae6f5));
+	background: -moz-linear-gradient(top, #ffffff, #dae6f5);
+	ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#dae6f5')";
+}
+
+/* com.apple.collabd.sidebar.selected_losenge */
+
+.cc-sidebar.show .searchlinks li a.selected,
+.cc-sidebar.sort_by .searchlinks li a.selected,
+.cc-sidebar.filter_by_tag .searchlinks li a.selected,
+.revisions.listing .revision.selected
+{
+	/* property=background-color value-ref=com.apple.collabd.sidebar.selected_losenge.background-color */
+	/* property=border value-ref=com.apple.collabd.sidebar.selected_losenge.border */
+	/* property=color value-ref=com.apple.collabd.sidebar.selected_losenge.color */
+	/* property=text-shadow value-ref=com.apple.collabd.sidebar.selected_losenge.text-shadow */
+}
+
+/* com.apple.collabd.theme.filter_bar_view */
+
+.cc-filter-bar-view
+{
+	/* property=text-shadow value-ref=com.apple.collabd.theme.filter_bar_view.text-shadow */
+}
+
+/* com.apple.collabd.theme.filter_bar_view.button_selected */
+
+.cc-filter-bar-view .button.selected
+{
+	/* property=text-shadow value-ref=com.apple.collabd.theme.filter_bar_view.button_selected.text-shadow */
+	background-color: #3874cb;
+	background: -webkit-gradient(linear, left top, left bottom, from(#315a95), to(#3874cb));
+	background: -moz-linear-gradient(top, #315a95, #3874cb);
+	box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 0px 2px rgba(0,0,0,0.5);
+}
+
+.cc-filter-bar-view .cc-filter-bar-view-popup
+{
+	background-image: url(entitylist_header_popup_arrows.png);
+	background-image: -webkit-image-set(url(entitylist_header_popup_arrows.png) 1x, url(entitylist_header_popup_arrows@2x.png) 2x);
+}
+
+/* com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button */
+
+.cc-filter-bar-right-button
+{
+	border: 1px solid rgba(9,46,98,0.6);
+	text-shadow: rgba(255,255,255,0.4) 0px 1px 0px;
+	box-shadow: inset rgba(255,255,255,0.3) 0px 1px 0px;
+}
+
+/* com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button-active */
+
+.cc-filter-bar-right-button:active
+{
+	text-shadow: rgba(255,255,255,0.3) 0px 1px 0px;
+	box-shadow: inset rgba(9,46,98,0.4) 0px 1px 3px;
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(9,46,98,0.3)), to(rgba(9,46,98,0)));
+	background: -moz-linear-gradient(top, from(rgba(9,46,98,0.3)), to(rgba(9,46,98,0)));
+}
+
+/* com.apple.collabd.theme.comment.moderation_banner */
+
+.cc-comment .moderation.banner
+{
+	/* property=background-color value-ref=com.apple.collabd.theme.comment.moderation_banner.background-color */
+}
+
+.cc-comment .norgie
+{
+	background-image: url(comment_sidebar_norgie.png);
+	background-image: -webkit-image-set(url(comment_sidebar_norgie.png) 1x, url(comment_sidebar_norgie@2x.png) 2x);
+}
+
+/* com.apple.collabd.theme.comment.body */
+/* com.apple.collabd.theme.tag */
+
+.cc-comment .body,
+.cc-tag
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#d1e3fc), to(#a5c3ec));
+	background: -moz-linear-gradient(top, #d1e3fc, #a5c3ec);
+	background-color: #a5c3ec;
+	border: 1px solid #789fd4;
+	border-bottom-color: #789fd4;
+	/* property=box-shadow value-ref=com.apple.collabd.theme.comment.body.box-shadow */
+}
+
+/* com.apple.collabd.theme.tagger.textfield */
+
+.cc-tag-editor .cc-tag-entryfield input
+{
+	/* property=border value-ref=com.apple.collabd.theme.tagger.textfield.border */
+	/* property=border-bottom-color value-ref=com.apple.collabd.theme.tagger.textfield.border-bottom-color */
+	/* property=box-shadow value-ref=com.apple.collabd.theme.tagger.textfield.box-shadow */
+}
+
+.cc-related-popup-menu .handle,
+.cc-related-popup-menu .top-cap,
+.cc-related-popup-menu .bottom-cap,
+.cc-related-popup-menu .top,
+.cc-related-popup-menu .bottom
+{
+	background-image: url(sidebar_popup_bg.png);
+	background-image: -webkit-image-set(url(sidebar_popup_bg.png) 1x, url(sidebar_popup_bg@2x.png) 2x);
+}
+
+.cc-related-popup-menu .handle .button.add
+{
+	background-image: url(sidebar_buttons.png);
+	background-image: -webkit-image-set(url(sidebar_buttons.png) 1x, url(sidebar_buttons@2x.png) 2x);
+}
+
+/* com.apple.collabd.theme.related.link */
+
+.cc-related-popup-menu .body a,
+.cc-related-popup-menu .body ul.recents a,
+.cc-related-popup-menu .body h2
+{
+	color: #243f6b;
+}
+
+/* com.apple.collabd.theme.related.popup.header */
+
+.cc-related-popup-menu .body h2
+{
+	background-color: #c2d9f9;
+	border: 1px solid #9eb6da;
+}
+
+/* com.apple.collabd.theme.revisions.details.banner */
+
+.revisions.detail .controls
+{
+	/* property=border-bottom value-ref=com.apple.collabd.theme.revisions.details.banner.border-bottom */
+}
+
+/* com.apple.collabd.theme.revisions.details.buttons */
+
+.revisions.detail .controls .button
+{
+	border: 1px solid #abc3df;
+	color: #0955ab;
+}
+
+.revisions.detail .controls .button.close
+{
+	background-image: url(close_revisions_button.png);
+	background-image: -webkit-image-set(url(close_revisions_button.png) 1x, url(close_revisions_button@2x.png) 2x);
+}
+
+.cc-grouped-tags-view .cc-grouped-tags-view-actions .button.edit
+{
+	background-image: url(button_edit.png);
+	background-image: -webkit-image-set(url(button_edit.png) 1x, url(button_edit@2x.png) 2x);
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>enabled</key>
+		<dict>
+			<key>showDeploymentProgramPage</key>
+			<true/>
+		</dict>
+		<key>identifier</key>
+		<string>SVDeviceManagementAssistantDeploymentProgramPage.SVDeviceManagementAssistantDeploymentProgramPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SVDeviceManagementAssistantIntroPage.SVDeviceManagementAssistantIntroPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SVDeviceManagementAssistantOrganizationPage.SVDeviceManagementAssistantOrganizationPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>enabled</key>
+		<dict>
+			<key>webServerUsingTrustedSSLCert</key>
+			<false/>
+		</dict>
+		<key>identifier</key>
+		<string>SVDeviceManagementAssistantConfigureSSLPage.SVDeviceManagementAssistantConfigureSSLPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>enabled</key>
+		<dict>
+			<key>showAPNSPage</key>
+			<true/>
+		</dict>
+		<key>identifier</key>
+		<string>SVDeviceManagementAssistantAPNSPage.SVDeviceManagementAssistantAPNSPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>identifier</key>
+		<string>SVDeviceManagementAssistantConfirmPage.SVDeviceManagementAssistantConfirmPage</string>
+		<key>isNibOwner</key>
+		<true/>
+	</dict>
+</array>
+</plist>

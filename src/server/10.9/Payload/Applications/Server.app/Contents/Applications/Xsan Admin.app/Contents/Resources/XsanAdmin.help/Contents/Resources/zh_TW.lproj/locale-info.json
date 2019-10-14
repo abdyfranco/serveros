@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "zh_TW.lproj",
+		"isoCodes": ["zh-tw", "zh-hk", "zh-mo", "zh-hant"],
+		"isoName": "Traditional Chinese",
+		"name": "繁體中文"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>若要檢視輔助說明，您必須啓用 JavaScript。</p>如需更多資訊，請參閱 <a href=\"http://help.apple.com/resources/javascript/\">此 Apple 支援文章</a>。</div>",
+		"loadfailed": "<div>目前無法取得輔助說明。</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@ 個搜尋結果",
+		"Apple applications": "Apple 應用程式",
+		"Cancel": "取消",
+		"Change Language": "更改語言",
+		"Close": "關閉",
+		"Featured application help": "特色應用程式輔助說明",
+		"Go to the homepage": "前往首頁",
+		"Help for:": "輔助說明：",
+		"Hide": "隱藏",
+		"Home": "主畫面",
+		"Loading latest help...": "正在載入最新的輔助說明⋯",
+		"Other applications": "其他應用程式",
+		"Print Book": "列印輔助說明",
+		"Print Options": "列印選項",
+		"Print Page": "列印頁面",
+		"Print Section": "列印段落",
+		"Recent applications": "最近使用過的應用程式",
+		"Search": "搜尋",
+		"Send feedback.": "傳送使用回饋。",
+		"Show all": "顯示全部",
+		"Show less": "顯示較少",
+		"Show the previous page": "顯示上一頁",
+		"Show the next page": "顯示下一頁",
+		"Show": "顯示",
+		"Was this page helpful?": "此頁面對您有幫忙嗎？"
+	}
+}

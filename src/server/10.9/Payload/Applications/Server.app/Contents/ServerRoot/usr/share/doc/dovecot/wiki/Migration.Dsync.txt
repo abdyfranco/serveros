@@ -1,0 +1,102 @@
+Migrating from any IMAP/POP3 server to Dovecot via dsync
+========================================================
+
+You need Dovecot v2.1.4+ for this.
+
+This page describes how to migrate mails to Dovecot from a remote IMAP/POP3
+server, preserving the IMAP UIDs, POP3 UIDLs and everything else.
+
+We'll assume that you can log in with master user "master" that has a password
+"secret". If you can't use master users, you'll need the users' plaintext
+passwords and change the appropriate configuration to use them.
+
+IMAP migration configuration
+----------------------------
+
+Set up configuration for the IMAP server you wish to migrate from:
+
+---%<-------------------------------------------------------------------------
+imapc_host = imap.example.com
+imapc_user = %u
+imapc_master_user = master
+imapc_password = secret
+imapc_features = rfc822.size
+
+# If the old IMAP server uses INBOX. namespace prefix, set:
+#imapc_list_prefix = INBOX
+
+# for SSL:
+#imapc_port = 993
+#imapc_ssl = imaps
+#imapc_ssl_ca_dir = /etc/ssl
+#imapc_ssl_verify = yes
+---%<-------------------------------------------------------------------------
+
+POP3 migration configuration
+----------------------------
+
+Set up configuration for the POP3 server you wish to migrate from:
+
+---%<-------------------------------------------------------------------------
+pop3c_host = pop3.example.com
+pop3c_user = %u
+pop3c_master_user = master
+pop3c_password = secret
+
+# for SSL:
+#pop3c_port = 995
+#pop3c_ssl = pop3s
+#pop3c_ssl_ca_dir = /etc/ssl
+#pop3c_ssl_verify = yes
+
+namespace {
+  prefix = POP3-MIGRATION-NS/
+  location = pop3c:
+  list = no
+  hidden = yes
+}
+protocol doveadm {
+  mail_plugins = $mail_plugins pop3_migration
+}
+plugin {
+  pop3_migration_mailbox = POP3-MIGRATION-NS/INBOX
+}
+---%<-------------------------------------------------------------------------
+
+The pop3-migration plugin is used to preserve POP3 UIDLs. When dsync is
+handling IMAP INBOX and requests a POP3 UIDL, the plugin connects to the POP3
+server and figures out which IMAP messages match which POP3 messages and then
+returns the appropriate POP3 UIDL.
+
+Running
+-------
+
+---%<-------------------------------------------------------------------------
+doveadm backup -R -u user@domain imapc:
+---%<-------------------------------------------------------------------------
+
+For per-user user/passwords use:
+
+---%<-------------------------------------------------------------------------
+doveadm -o imapc_user=foo -o pop3c_user=foo -o imapc_password=bar -o
+pop3c_password=bar backup -R -u user@domain imapc:
+---%<-------------------------------------------------------------------------
+
+The source IMAP/POP3 mailboxes shouldn't be modified while dsync is running.
+Also "dsync backup" means that if the destination has any changes that don't
+exist in source IMAP server, the changes are deleted.
+
+Once the users are migrated, remember to remove the pop3_migration plugin from
+settings.
+
+Problems
+--------
+
+ * POP3 message order (when it's different from IMAP message order) is
+   currently preserved only when destination is Maildir
+ * If source POP3 server merges multiple IMAP mailboxes into one POP3 INBOX,
+   the migration won't be transparent.
+ * If source IMAP and POP3 servers return messages somehow differently,
+   pop3-migration plugin might not be able to match the messages
+
+(This file was created from the wiki on 2013-08-05 04:42)

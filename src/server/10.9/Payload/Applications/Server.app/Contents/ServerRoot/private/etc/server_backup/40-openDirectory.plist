@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BackupActions</key>
+	<dict>
+		<key>Backup</key>
+		<string>backup</string>
+		<key>Help</key>
+		<string>help</string>
+		<key>Version</key>
+		<string>version</string>
+	</dict>
+	<key>BackupBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/openDirectory_backup</string>
+	<key>BackupLog</key>
+	<string>/private/var/log/server_backup/openDirectory_backup.log</string>
+	<key>ConfigurationFiles</key>
+	<array/>
+	<key>DataFiles</key>
+	<array/>
+	<key>ExclusionPaths</key>
+	<array/>
+	<key>PostBackupServiceCommands</key>
+	<array/>
+	<key>PostRestoreServiceCommands</key>
+	<array/>
+	<key>PreBackupServiceCommands</key>
+	<array/>
+	<key>PreRestoreServiceCommands</key>
+	<array/>
+	<key>RestoreActions</key>
+	<dict>
+		<key>Browse</key>
+		<string>browse</string>
+		<key>Default</key>
+		<string>all</string>
+	</dict>
+	<key>RestoreBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/openDirectory_restore</string>
+	<key>RestoreLog</key>
+	<string>/private/var/log/server_backup/openDirectory_restore.log</string>
+	<key>ServiceName</key>
+	<string>openDirectory</string>
+	<key>VerifyActions</key>
+	<dict>
+		<key>Default</key>
+		<string>all</string>
+	</dict>
+	<key>VerifyBinaryPath</key>
+	<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/server_backup/openDirectory_verify</string>
+	<key>VerifyLog</key>
+	<string>/private/var/log/server_backup/openDirectory_verify.log</string>
+	<key>Version</key>
+	<string>10.9</string>
+</dict>
+</plist>

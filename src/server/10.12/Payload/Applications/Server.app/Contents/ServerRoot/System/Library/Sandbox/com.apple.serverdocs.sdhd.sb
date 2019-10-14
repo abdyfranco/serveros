@@ -1,0 +1,39 @@
+(version 1)
+
+(deny default)
+
+(import "system.sb")
+
+(system-network)
+
+; sdhd runs as the user, so it can access any file the user normally can access
+(allow file-read*)
+(allow file-read-metadata)
+(allow file-write-create)
+(allow file-write*)
+
+(allow ipc-posix-shm-read-data)
+; TODO
+;       (ipc-posix-name "apple.shm.notification_center")
+;       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+; TODO
+(allow ipc-posix-shm-write-data)
+;       (ipc-posix-name "com.apple.AppleDatabaseChanged"))
+
+(allow mach-lookup)
+; TODO
+;       (global-name "com.apple.serverdocs.sdmd")
+;       (global-name "com.apple.CoreServices.coreservicesd")
+;       (global-name "com.apple.coresymbolicationd")
+;       (global-name "com.apple.distributed_notifications@1v3")
+;       (global-name "com.apple.ocspd")
+;       (global-name "com.apple.SecurityServer"))
+
+(allow network-outbound
+       (regex #"/Library/Server/ServerDocs/Database.xpg/sockets/\.s\.PGSQL\.5432$")
+       (literal "/private/var/run/mDNSResponder")
+       (remote tcp  "*:2195")
+       (remote tcp  "*:2196"))
+
+

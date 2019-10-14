@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMAccepts</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Optional</key>
+		<false/>
+		<key>Types</key>
+		<array>
+			<string>com.apple.RemoteDesktop.computer-object</string>
+		</array>
+	</dict>
+	<key>AMApplication</key>
+	<string>Remote Desktop</string>
+	<key>AMCanShowSelectedItemsWhenRun</key>
+	<false/>
+	<key>AMCanShowWhenRun</key>
+	<true/>
+	<key>AMCategory</key>
+	<string>AMCategoryUtilities</string>
+	<key>AMDefaultParameters</key>
+	<dict>
+		<key>zoomWindow</key>
+		<false/>
+	</dict>
+	<key>AMDescription</key>
+	<dict>
+		<key>AMDAlert</key>
+		<string></string>
+		<key>AMDInput</key>
+		<string></string>
+		<key>AMDNote</key>
+		<string></string>
+		<key>AMDOptions</key>
+		<string></string>
+		<key>AMDRelatedActions</key>
+		<string></string>
+		<key>AMDRequires</key>
+		<string></string>
+		<key>AMDResult</key>
+		<string></string>
+		<key>AMDSummary</key>
+		<string></string>
+		<key>AMDWebsite</key>
+		<string></string>
+	</dict>
+	<key>AMIconName</key>
+	<string>RemoteDesktop</string>
+	<key>AMKeywords</key>
+	<array>
+		<string>ARD</string>
+		<string>Action Pack</string>
+		<string>watch</string>
+	</array>
+	<key>AMName</key>
+	<string>Observe Computers</string>
+	<key>AMProvides</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Types</key>
+		<array>
+			<string>com.apple.RemoteDesktop.computer-object</string>
+		</array>
+	</dict>
+	<key>AMRequiredResources</key>
+	<array>
+		<dict>
+			<key>Display Name</key>
+			<string>Remote Desktop</string>
+			<key>Resource</key>
+			<string>com.apple.RemoteDesktop</string>
+			<key>Type</key>
+			<string>application</string>
+			<key>Version</key>
+			<string>3.0</string>
+		</dict>
+	</array>
+	<key>AMWarning</key>
+	<dict>
+		<key>Action</key>
+		<string>(* Action name to be suggested to add prior to this action to make the task safer, e.g. com.apple.Automator.CopyFiles, goes here. *)</string>
+		<key>ApplyButton</key>
+		<string>(* Button label for user to add proposed Action, e.g. Add. *)</string>
+		<key>IgnoreButton</key>
+		<string>(* Button label for user not to add proposed Action, e.g. Don't Add. *)</string>
+		<key>Level</key>
+		<integer>0</integer>
+		<key>Message</key>
+		<string>(* Warning message presented to user goes here. *)</string>
+	</dict>
+	<key>BuildMachineOSBuild</key>
+	<string>14D116</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.RemoteDesktop.Automator.ObserveComputers</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Observe Computers</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.3</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.3</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>6D543p</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>14D116</string>
+	<key>DTSDKName</key>
+	<string>macosx10.10internal</string>
+	<key>DTXcode</key>
+	<string>0630</string>
+	<key>DTXcodeBuild</key>
+	<string>6D543p</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2009, 2011-2014 Apple Inc.  All rights reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>AMAppleScriptAction</string>
+</dict>
+</plist>

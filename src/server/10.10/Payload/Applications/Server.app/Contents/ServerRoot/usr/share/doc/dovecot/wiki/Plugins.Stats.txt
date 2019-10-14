@@ -1,0 +1,50 @@
+Stats plugin
+============
+
+Stats plugin can be used to send statistics (CPU, disk usage, etc.) from mail
+processes to the stats process. The stats process can later be queried what's
+going on in the system. With imap_stats plugin you can get per-command level
+statistics for IMAP commands.
+
+Configuration
+-------------
+
+---%<-------------------------------------------------------------------------
+mail_plugins = $mail_plugins stats
+protocol imap {
+  mail_plugins = $mail_plugins imap_stats
+}
+plugin {
+  # How often to send statistics to the stats process. (Must be specified or
+stats are disabled.)
+  stats_refresh = 5s
+  # Track per-command statistics.
+  stats_track_cmds = yes
+}
+---%<-------------------------------------------------------------------------
+
+Since the stats process tracks quite a lot of statistics, its memory usage has
+to be limited by forgetting the more detailed stats first. These settings
+configure how the memory usage it handled:
+
+---%<-------------------------------------------------------------------------
+stats_memory_limit = 16 M
+
+stats_command_min_time = 1 mins
+stats_domain_min_time = 12 hours
+stats_ip_min_time = 12 hours
+stats_session_min_time = 15 mins
+stats_user_min_time = 1 hours
+---%<-------------------------------------------------------------------------
+
+Looking
+=======
+
+The 'doveadm stats dump' can be used to output raw statistics data. Ideally
+there would be a nice GUI that could be used to zoom around in the data, but
+that's not implemented yet. For now there is an internal 'doveadm stats top'
+command, but a much better one can be found as a perl script:stats-top.pl
+[http://www.dovecot.org/tools/stats-top.pl], which also requires stats.pl
+[http://www.dovecot.org/tools/stats.pl].
+
+(This file was created from the wiki on 2013-08-05 04:42)

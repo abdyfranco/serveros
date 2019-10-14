@@ -1,0 +1,260 @@
+ | From svn.tartarus.org/snowball/trunk/website/algorithms/finnish/stop.txt
+ | This file is distributed under the BSD License.
+ | See http://snowball.tartarus.org/license.php
+ | Also see http://www.opensource.org/licenses/bsd-license.html
+ |  - Encoding was converted to UTF-8.
+ |  - This notice was added.
+ 
+| forms of BE
+
+olla
+olen
+olet
+on
+olemme
+olette
+ovat
+ole        | negative form
+
+oli
+olisi
+olisit
+olisin
+olisimme
+olisitte
+olisivat
+olit
+olin
+olimme
+olitte
+olivat
+ollut
+olleet
+
+en         | negation
+et
+ei
+emme
+ette
+eivät
+
+|Words below in the following cases:
+|Nom   Gen    Acc    Part   Iness   Elat    Illat  Adess   Ablat   Allat   Ess    Trans
+minä | I
+minun | I
+minut | I
+minua | I
+minussa | I
+minusta | I
+minuun | I
+minulla | I
+minulta | I
+minulle | I
+sinä | you
+sinun | you
+sinut | you
+sinua | you
+sinussa | you
+sinusta | you
+sinuun | you
+sinulla | you
+sinulta | you
+sinulle | you
+hän | he she
+hänen | he she
+hänet | he she
+häntä | he she
+hänessä | he she
+hänestä | he she
+häneen | he she
+hänellä | he she
+häneltä | he she
+hänelle | he she
+me | we
+meidän | we
+meidät | we
+meitä | we
+meissä | we
+meistä | we
+meihin | we
+meillä | we
+meiltä | we
+meille | we
+te | you
+teidän | you
+teidät | you
+teitä | you
+teissä | you
+teistä | you
+teihin | you
+teillä | you
+teiltä | you
+teille | you
+he | they
+heidän | they
+heidät | they
+heitä | they
+heissä | they
+heistä | they
+heihin | they
+heillä | they
+heiltä | they
+heille | they
+tämä | this
+tämän | this
+tätä | this
+tässä | this
+tästä | this
+tähän | this
+tallä | this
+tältä | this
+tälle | this
+tänä | this
+täksi | this
+tuo | that
+tuon | that
+tuotä | that
+tuossa | that
+tuosta | that
+tuohon | that
+tuolla | that
+tuolta | that
+tuolle | that
+tuona | that
+tuoksi | that
+se | it
+sen | it
+sitä | it
+siinä | it
+siitä | it
+siihen | it
+sillä | it
+siltä | it
+sille | it
+sinä | it
+siksi | it
+nämä | these
+näiden | these
+näitä | these
+näissä | these
+näistä | these
+näihin | these
+näillä | these
+näiltä | these
+näille | these
+näinä | these
+näiksi | these
+nuo | those
+noiden | those
+noita | those
+noissa | those
+noista | those
+noihin | those
+noilla | those
+noilta | those
+noille | those
+noina | those
+noiksi | those
+ne | they
+niiden | they
+niitä | they
+niissä | they
+niistä | they
+niihin | they
+niillä | they
+niiltä | they
+niille | they
+niinä | they
+niiksi | they
+kuka | who
+kenen | who
+kenet | who
+ketä | who
+kenessä | who
+kenestä | who
+keneen | who
+kenellä | who
+keneltä | who
+kenelle | who
+kenenä | who
+keneksi | who
+ketkä | who (pl)
+keiden | who (pl)
+ketkä | who (pl)
+keitä | who (pl)
+keissä | who (pl)
+keistä | who (pl)
+keihin | who (pl)
+keillä | who (pl)
+keiltä | who (pl)
+keille | who (pl)
+keinä | who (pl)
+keiksi | who (pl)
+mikä | which what
+minkä | which what
+minkä | which what
+mitä | which what
+missä | which what
+mistä | which what
+mihin | which what
+millä | which what
+miltä | which what
+mille | which what
+minä | which what
+miksi | which what
+mitkä | which what (pl)
+joka | who which
+jonka | who which
+jota | who which
+jossa | who which
+josta | who which
+johon | who which
+jolla | who which
+jolta | who which
+jolle | who which
+jona | who which
+joksi | who which
+jotka | who which  (pl)
+joiden | who which  (pl)
+joita | who which  (pl)
+joissa | who which  (pl)
+joista | who which  (pl)
+joihin | who which  (pl)
+joilla | who which  (pl)
+joilta | who which  (pl)
+joille | who which  (pl)
+joina | who which  (pl)
+joiksi | who which  (pl)
+
+| conjunctions
+
+että   | that
+ja     | and
+jos    | if
+koska  | because
+kuin   | than
+mutta  | but
+niin   | so
+sekä   | and
+sillä  | for
+tai    | or
+vaan   | but
+vai    | or
+vaikka | although
+
+
+| prepositions
+
+kanssa  | with
+mukaan  | according to
+noin    | about
+poikki  | across
+yli     | over, across
+
+| other
+
+kun    | when
+niin   | so
+nyt    | now
+itse   | self
+

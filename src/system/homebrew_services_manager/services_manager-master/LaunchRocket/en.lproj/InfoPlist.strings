@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleDisplayName = "Services Manager";
+NSPrefPaneIconLabel = "Services Manager";
+CFBundleShortVersionString = "1.0";

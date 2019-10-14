@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Initialize</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>startup</string>
+		</array>
+		<key>variables</key>
+		<dict>
+			<key>defaultRecommendThreshold</key>
+			<integer>10</integer>
+			<key>defaultReportingInterval</key>
+			<integer>1440</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Log to ASL</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>security.action.host_blocked</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>Log</string>
+				<key>message</key>
+				<string>${event:eventTimestamp} Host at ${event:hostAddress} was blocked for ${event:blockDuration}</string>
+				<key>facility</key>
+				<string>AdaptiveFirewall</string>
+				<key>logLevel</key>
+				<string>Warning</string>
+				<key>logType</key>
+				<string>ASL</string>
+				<key>parameters</key>
+				<dict>
+					<key>eventType</key>
+					<string>${event:eventType}</string>
+					<key>hostAddress</key>
+					<string>${event:hostAddress}</string>
+				</dict>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Run the Report</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>periodic.daily.midnight</string>
+		</array>
+		<key>criterion</key>
+		<array>
+			<dict>
+				<key>operator</key>
+				<string>NotEmpty</string>
+				<key>operands</key>
+				<array>
+					<string>global:notificationContacts</string>
+				</array>
+			</dict>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>RunCommand</string>
+				<key>command</key>
+				<string>/Applications/Server.app/Contents/ServerRoot/System/Library/CoreServices/AdaptiveFirewall.bundle/Contents/MacOS/hb_summary</string>
+				<key>arguments</key>
+				<array>
+					<string>-m</string>
+					<string>${global:notificationContacts}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,1 @@
+<% if not context[:href].nil? %><a href="<%= context[:href] %>" style="text-decoration: none; color: #4C85B8;" target="_blank"><font color="#4C85B8"><% end %><%= CGI::escapeHTML(context[:display_value]) %><% if not context[:href].nil? %></font></a><% end %>

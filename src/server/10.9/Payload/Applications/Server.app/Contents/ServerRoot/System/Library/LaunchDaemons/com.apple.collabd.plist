@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>Label</key>
+		<string>com.apple.collabd</string>
+		<key>Disabled</key>
+		<true/>
+		<key>OnDemand</key>
+		<false/>
+		<key>PreventsSleep</key>
+		<true/>
+		<key>ProgramArguments</key>
+		<array>
+			<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabd_trampoline</string>
+		</array>
+	</dict>
+</plist>

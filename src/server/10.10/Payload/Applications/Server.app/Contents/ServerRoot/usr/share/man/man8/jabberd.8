@@ -1,0 +1,26 @@
+.TH jabberd 8 "28 August 2003" "2.3.1-417" "jabberd project"
+.SH NAME
+jabberd \- jabberd startup script
+.SH SYNOPSIS
+.B jabberd
+.I [-h] [-c config] [-D]
+.SH DESCRIPTION
+.BR jabberd
+is a script that runs the various components that make up the jabberd "server".
+.SH OPTIONS
+.TP
+.B \-h
+Show summary of options.
+.TP
+.B \-c
+Alternate configuration file to use. The compiled-in default is /etc/jabberd/jabberd.cfg
+.TP
+.B \-D
+Print debugging output. You should configure jabberd with the --enable-debug switch to enable this.
+.SH SEE ALSO
+.BR c2s (8)
+.BR router (8)
+.BR s2s (8)
+.BR sm (8)
+.SH AUTHOR
+Robert Norris <rob@cataclysm.cx>

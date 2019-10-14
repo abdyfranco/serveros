@@ -20,15 +20,6 @@ the latest versions of macOS on unsupported machines and bringing back part of t
 server-oriented functionality lost in previous versions.
 
 ## Included Packages ##
-### macOS Sierra Patcher ###
-macOS Sierra Patcher is an easy-to-use tool that allows anyone to install macOS Sierra
-on unsupported Macs.
-
-### macOS High Sierra Patcher ###
-macOS High Sierra Patcher, the successor to macOS Sierra Patcher, is an easy-to-use
-tool that allows anyone to install macOS High Sierra on unsupported Macs, also adds
-support for APFS drives.
-
 ### Xserve LOM Configurator ###
 Xserve LOM Configurator, allows you to configure the Xserve's Lights Out Management ports
 from a modern macOS installation.
@@ -45,6 +36,10 @@ support to the latest standards and connectivity protocols.
 The creation of the distribution package and the management of the dependencies are handled
 by [Packages](http://s.sudre.free.fr/Software/Packages/about.html), a macOS application.
 
+```
+./build.sh
+```
+
 ## Installing ##
 Before proceeding with the installation of **serverOS** you must disable SIP in your
 macOS installation.
@@ -58,21 +53,23 @@ If the installation of the package fails, it may be due to Gatekeeper so it will
 to install the package through the terminal by running it using sudo.
 
 ```
+sudo ./install_homebrew
 sudo installer -pkg "./build/serverOS.pkg" -target /
 ```
 
 ## Compatibility ##
 **serverOS** is fully compatible with the following configurations:
-- Xserve 2,1 running macOS 10.12 (macOS Sierra)*
-- Xserve 2,1 running macOS 10.13 (macOS High Sierra)*
+- Xserve 2,1 running macOS 10.12 (macOS Sierra)
+- Xserve 2,1 running macOS 10.13 (macOS High Sierra)
+- Xserve 2,1 running macOS 10.14 (macOS Mojave)
 - Xserve 3,1 running macOS 10.12 (macOS Sierra)
 - Xserve 3,1 running macOS 10.13 (macOS High Sierra)
-
-###### * Requires a graphics card upgrade to an NVIDIA GT 120 or better. ######
+- Xserve 3,1 running macOS 10.14 (macOS Mojave)
 
 ## Copyright ##
 - Copyright (c) 2016-2018 [dosdude1](http://dosdude1.com/)
 - Copyright (c) 2016-2018 [Pixeleyes Ltd.](http://www.pixeleyes.co.nz)
-- Copyright (c) 2015-2018 [MinnowStor](https://forums.macrumors.com/members/jimj740.832671/)
-- Copyright (c) 2013-2018 [Zenith432](https://sourceforge.net/u/zenith432/profile/)
+- Copyright (c) 2015-2018 [MinnowStor](https://forums.macrumors.com/members/jimj740.832671)
+- Copyright (c) 2013-2018 [Josh Butts](https://github.com/jimbojsb)
+- Copyright (c) 2013-2018 [Zenith432](https://sourceforge.net/u/zenith432/profile)
 - Copyright (c) 2012-2018 [Intel Corporation](https://www.intel.com)

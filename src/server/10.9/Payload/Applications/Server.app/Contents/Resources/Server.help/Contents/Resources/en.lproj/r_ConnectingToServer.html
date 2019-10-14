@@ -1,0 +1,73 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="description" content="Set up the address and names that identify your server on the network."><meta name="DC.Relation" scheme="URI" content="t_RegisterInternetName.html"><meta name="offlineflag" content="true"><meta name="APD.BuildID" content="01390204-A30F-11E3-B9F5-1AAD1870E736"><meta name="DC.Identifier" content="apd19E2A330-F793-41F5-9C33-299593E4E290"><title>Connecting to your Server</title><meta name="robots" content="anchors"></head><body id="apd19E2A330-F793-41F5-9C33-299593E4E290"><div class="subjectids"><a name="apd19E2A330-F793-41F5-9C33-299593E4E290"></a></div><img class="topicIcon" src="../spfic.png" height="64" width="64"><h1 class="title topictitle1">Connecting to your Server</h1><div class="body refbody"><p class="shortdesc summary-only">Set up the address and names that identify your server on
+        the network.</p><div class="section"><p class="p">Use the Connecting to Your Server pane to set up names that others use to connect to
+                your server.</p><table cellpadding="4" cellspacing="0" summary="" border="0" class="simpletable"><tr class="sthead"><th valign="bottom" align="left" id="d315e31" class="stentry">Option</th><th valign="bottom" align="left" id="d315e34" class="stentry">Description</th></tr><tr class="strow"><td valign="top" headers="d315e31" class="stentry"><p class="p">Computer Name</p></td><td valign="top" headers="d315e34" class="stentry"><p class="p">This appears in the AirDrop or Sharing sections of the Finder sidebar on
+                            other Mac computers. Other computers can use the computer name to connect to your
+                            server for file sharing or screen sharing if it has these services
+                            turned on.</p></td></tr><tr class="strow"><td valign="top" headers="d315e31" class="stentry"><p class="p">Host Name</p></td><td valign="top" headers="d315e34" class="stentry"><p class="p">The server setup assistant tries to determine the host name for you from
+                            an available DNS server on the network.</p><div class="p">Here are some reasons why the server setup assistant might not be able to
+                            determine your server’s host name:<a name="apd19E2A330-F793-41F5-9C33-299593E4E290__ul_wjz_p4v_gg"><!-- --></a><ul class="ul" id="apd19E2A330-F793-41F5-9C33-299593E4E290__ul_wjz_p4v_gg"><li class="li">The assistant can’t find a DNS server on your intranet or the
+                                    Internet that’s configured correctly for your server.</li><li class="li">Your server received the wrong network connection settings from
+                                    a DHCP server, which may be your Internet router.</li><li class="li">Your intranet doesn’t have a DHCP server, so you must enter your
+                                    server’s network connection settings manually.</li></ul>
+For information about how DNS servers must be configured, see the
+                            options below. If your server received the wrong network connection
+                            settings from a DHCP server, or if your intranet doesn’t have a DHCP
+                            server, you can set up one up, or change your server’s network
+                            connection settings in the Change Network pane.</div><p class="p">If you enter a host name, follow these guidelines:</p><dl class="dl"><dt class="dt dlterm">Host name for a local network:</dt><dd class="dd"><p class="p">To let users access your server only from your intranet,
+                                        enter a host name ending with .local, such as server.local.
+                                        This is a local network name, also called a local hostname. </p><p class="p">Only computers on your local IP subnet can access your server
+                                        by using its local network name. Usually, computers on the
+                                        same subnet have IP addresses that begin with the same three
+                                        sets of numbers, for example, 192.168.1. Windows computers
+                                        must have Bonjour Print Services for Windows installed. It’s
+                                        available at support.apple.com/kb/DL999.</p><p class="p">If the server’s host name is its local network name, the
+                                        server doesn’t support Kerberos or single sign-on
+                                        authentication.</p></dd><dt class="dt dlterm">Host name for a private network:</dt><dd class="dd"><p class="p">To let users access this server by using its host name on
+                                        your intranet and by using a VPN connection from the
+                                        Internet, enter a host name ending with .private, such as
+                                        server.example.private.</p><p class="p">If your intranet has a DNS server, it must be configured to
+                                        use the server’s host name to look up its IP address and
+                                        vice versa. This means the DNS server must have records for
+                                        forward lookup (an A record) and reverse lookup (a PTR
+                                        record). Ask your DNS server administrator to configure
+                                        these DNS records for your server.</p><p class="p">If your intranet doesn’t have a DNS server, the server setup
+                                        assistant configures your server to provide minimal DNS
+                                        service so users can use your server’s host name on your
+                                        intranet.</p></dd><dt class="dt dlterm">Host name for the Internet:</dt><dd class="dd"><p class="p">To let users access your server by using the same host name
+                                        on the Internet and your intranet, enter the host name you
+                                        registered with a domain name registrar.</p><p class="p">The DNS servers you use for the Internet must be configured
+                                        to use the server’s host name to look up its IP address and
+                                        vice versa. This means the DNS server must have records for
+                                        forward lookup (an A record) and reverse lookup (a PTR
+                                        record). Ask your ISP or DNS hosting service to configure
+                                        these DNS records for you.</p><p class="p">If your intranet has a DNS server, it also must be configured
+                                        with records for forward lookup and reverse lookup. Ask your
+                                        intranet DNS server administrator to configure these DNS
+                                        records for you.</p><p class="p">If your intranet doesn’t have a DNS server, the server setup
+                                        assistant configures your server to provide minimal DNS
+                                        service so users can use your server’s host name on your
+                                        intranet.</p></dd></dl><div class="note note"><span class="notetitle">Note:</span> Select a host name carefully. Changing the host name later
+                            can be disruptive, especially to users. For example, users must
+                            reconfigure their computers and tell others their email addresses have
+                            changed. </div></td></tr><tr class="strow"><td valign="top" headers="d315e31" class="stentry"><p class="p">Network Address</p></td><td valign="top" headers="d315e34" class="stentry"><p class="p">The numeric IP address that uniquely identifies your server on the
+                            network. The network address might be set initially to the IP address
+                            your server receives from the DHCP server on your network. Click Change
+                            Network to change the network address.</p><p class="p">Your server should always have the same IP address, so other users can
+                            connect to it reliably. If your server’s IP address changes, users might
+                            not be able to connect to it.</p><p class="p">Here are ways to keep your server’s IP address from changing:</p><a name="apd19E2A330-F793-41F5-9C33-299593E4E290__apd17680b56-1f76-4f3b-99ec-c9b55dbd5231"><!-- --></a><ul class="ul" id="apd19E2A330-F793-41F5-9C33-299593E4E290__apd17680b56-1f76-4f3b-99ec-c9b55dbd5231"><li class="li">If your server gets its Internet connection from a router with DHCP,
+                                such as an AirPort Base Station, you can configure the router’s DHCP
+                                to always assign the same IP address to your server. This feature is
+                                also called “static mapping” or “DHCP reservations.” If your network
+                                has a different DHCP server, ask the administrator to configure
+                                static mapping for your server.</li><li class="li">If your server has a direct Internet connection, for example through
+                                a DSL modem or cable modem that isn’t a router, get a static (fixed)
+                                IP address from your ISP. If necessary, you
+                                can usually upgrade to one for a fee.</li><li class="li">If your server isn’t connected to the Internet and your intranet
+                                doesn’t have a DHCP server, click Change Network to manually enter a
+                                static IP address. </li></ul></td></tr><tr class="strow"><td valign="top" headers="d315e31" class="stentry"><p class="p">Change Network</p></td><td valign="top" headers="d315e34" class="stentry"><p class="p">Click to change the server’s network address or other network connection
+                            settings. </p></td></tr></table><p class="p">Your Mac also has a local hostname, such as server.local, which isn’t shown in this
+                pane and isn’t registered with any DNS server. Computers on the same intranet (IP
+                subnet) as your server can use its local hostname instead of the registered host
+                name to connect to your server. The local hostname is derived by default from the
+                computer name. To change it, use the Server app after finishing server setup.
+                (Select your server, then choose the Network pane.)</p></div></div><div class="related-links"><div class="relinfo"><strong>Related information</strong><br><div><a class="link" href="#r_DHCPforServer">#r_DHCPforServer</a></div><div><a class="link" href="t_RegisterInternetName.html" title="To allow users to access the server by using its host name on the Internet, you must register the server’s host name.">Register the server’s Internet host name</a></div><div><a class="link" href="#r_DNSrecords">#r_DNSrecords</a></div></div></div></body></html>

@@ -1,1 +1,0 @@
-Dieses Programm hat festgestellt, dass auf diesem Server mindestens ein DHCP-Teilnetz eingerichtet ist. Wenn Sie fortfahren, werden alle Informationen Ÿber dieses Teilnetz gelšscht. Sobald dieses Programm abgeschlossen ist, kšnnen Sie die Konfiguration nicht mehr wiederherstellen. Mšchten Sie wirklich fortfahren?

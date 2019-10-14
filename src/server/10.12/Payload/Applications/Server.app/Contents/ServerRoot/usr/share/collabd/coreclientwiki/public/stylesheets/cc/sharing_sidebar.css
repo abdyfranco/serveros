@@ -1,0 +1,72 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+ 
+.cc-sharing-header
+{
+	height: 20px;
+	margin-bottom: 5px;
+}
+.cc-sharing-header .label
+{
+	display: inline-block;
+	margin: 1px 4px 0 0;
+	height: 18px;
+	line-height: 18px;
+	color: #9D9D9D;
+}
+
+.cc-sharing-empty-message
+{
+	margin-top: 18px;
+}
+
+.cc-sharing-items .cc-sharing-item
+{
+	position: relative;
+	height: 32px;
+	margin-bottom: 6px;
+}
+.cc-sharing-items .cc-sharing-item .icon
+{
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	top: 0;
+	left: 0;
+	background-image: url(/__collabd/coreclientbase/stylesheets/cc/img/user_32x32.png);
+    background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/user_32x32.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/user_32x32@2x.png) 2x);
+	
+	-webkit-background-size: 32px 32px;
+	-moz-background-size: 32px 32px;
+}
+.cc-sharing-items .cc-sharing-item .username
+{
+	position: absolute;
+	top: 2px;
+	bottom: 18px;
+	left: 42px;
+	right: 0;
+	font-size: 11px;
+	font-weight: bold;
+}
+.cc-sharing-items .cc-sharing-item .access
+{
+	position: absolute;
+	top: 18px;
+	left: 42px;
+	right: 0;
+	font-size: 11px;
+	
+	color: #9D9D9D;
+}

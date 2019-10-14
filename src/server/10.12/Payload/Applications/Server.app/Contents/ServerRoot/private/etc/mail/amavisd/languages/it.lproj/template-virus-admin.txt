@@ -1,0 +1,53 @@
+# =============================================================================
+# This is a template for non-spam (e.g. VIRUS,...) ADMINISTRATOR NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+Da: %f
+Data: %d
+Oggetto: [? [:ccat|major] |Mail pulita|Mail pulita|Mail bloccata da MTA|\
+Mail TROPPO GRANDE|INTESTAZIONE NON VALIDA nella mail|spam|SPAM|Contenuto NON VERIFICATO nella mail|\
+Contenuti VIETATI (%F) nella mail|VIRUS (%V) nella mail]\
+ DA [?%l||LOCAL ][?%a||\[%a\] ]%s
+A: [? %#T |undisclosed-recipients:;|[%T|, ]]
+[? %#C |#|Cc: [%C|, ]]
+Message-ID: <VA%i@%h>
+
+[? %#V |Nessun virus trovato.
+|Un virus trovato: %V
+|Due virus trovati:\n  %V
+|%#V virus trovati:\n  %V
+]
+[? %#F |#|[:wrap|78||  |Vietato [?%#F|nomi|nome|nomi]: %F]]
+[? %#X |#|Intestazione non valida:[\n[:wrap|78|  |  |%X]]]
+[? %#W |#\
+|Scansione alla ricerca di virus: %W
+|Scansioni alla ricerca di virus: %W
+]
+Tipo di contenuto: [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, bloccato per [:ccat|name]]
+Il codice di riferimento interno per il messaggio è %n/%i
+
+[? %a |#|[:wrap|78||  |Primo upstream indirizzo IP client SMTP: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Secondo una traccia di 'Ricevuti:',\
+ il messaggio apparentemente è stato originato da: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Non in quarantena.|Il messaggio è stato messo in quarantena come: %q]
+
+[? %#S |Non verranno inviate notifiche al mittente.
+
+]#
+[? %#D |#|Il messaggio VERRÀ inoltrato a:[\n%D]
+]
+[? %#N |#|Il messaggio NON È STATO inoltrato a:[\n%N]
+]
+[? %#V |#|[? %#v |#|Risultato scansione virus:[\n  %v]
+]]

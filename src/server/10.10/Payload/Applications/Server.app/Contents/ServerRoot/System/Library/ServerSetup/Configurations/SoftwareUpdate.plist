@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Perform setup for Software Update Server</string>
+	<key>dependencies</key>
+	<array/>
+	<key>environment</key>
+	<dict>
+		<key>_swup_root_dir</key>
+		<string>/Library/Server/Software Update</string>
+		<key>_role_account</key>
+		<string>_softwareupdate</string>
+		<key>commandFile</key>
+		<string>/tmp/swupdateCommandFile</string>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Software_Update</key>
+			<dict>
+				<key>description</key>
+				<string>Assure that ${_swup_root_dir} exists.</string>
+				<key>path</key>
+				<string>${_swup_root_dir}</string>
+				<key>owner</key>
+				<string>${_role_account}</string>
+				<key>group</key>
+				<string>${_role_account}</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<key>Config</key>
+			<dict>
+				<key>description</key>
+				<string>Assure that ${_swup_root_dir}/Config exists.</string>
+				<key>path</key>
+				<string>${_swup_root_dir}/Config</string>
+				<key>owner</key>
+				<string>${_role_account}</string>
+				<key>group</key>
+				<string>${_role_account}</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<key>Data</key>
+			<dict>
+				<key>description</key>
+				<string>Assure that ${_swup_root_dir}/Data exists.</string>
+				<key>path</key>
+				<string>${_swup_root_dir}/Data</string>
+				<key>owner</key>
+				<string>${_role_account}</string>
+				<key>group</key>
+				<string>${_role_account}</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<key>Cache</key>
+			<dict>
+				<key>description</key>
+				<string>Assure that ${_swup_root_dir}/Cache exists.</string>
+				<key>path</key>
+				<string>${_swup_root_dir}/Cache</string>
+				<key>owner</key>
+				<string>${_role_account}</string>
+				<key>group</key>
+				<string>${_role_account}</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<key>Status</key>
+			<dict>
+				<key>description</key>
+				<string>Assure that ${_swup_root_dir}/Status exists.</string>
+				<key>path</key>
+				<string>${_swup_root_dir}/Status</string>
+				<key>owner</key>
+				<string>${_role_account}</string>
+				<key>group</key>
+				<string>${_role_account}</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<key>Log</key>
+			<dict>
+				<key>description</key>
+				<string>Assure that ${_swup_root_dir}/Log exists.</string>
+				<key>path</key>
+				<string>${_swup_root_dir}/Log</string>
+				<key>owner</key>
+				<string>${_role_account}</string>
+				<key>group</key>
+				<string>${_role_account}</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>migration</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>arguments</key>
+				<array>
+					<string>command</string>
+				</array>
+				<key>path</key>
+				<string>${serverRoot}/usr/sbin/serveradmin</string>
+				<key>input</key>
+				<string>swupdate:command = upgradeConfig
+swupdate:upgradeSourceRoot = /Library/Server/Previous
+swupdate:upgradeSourceType = System
+swupdate:upgradeSourceVersion = &quot;${previousSystemVersion}&quot;
+swupdate:upgradeTargetRoot = /
+swupdate:upgradeLanguage = en
+</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

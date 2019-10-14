@@ -1,0 +1,71 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+#
+# Utility for gathering all Calendar and Contacts server logs, which can
+# vary in location depending on where data has been relocated to.
+#
+# Copyright (c) 2014-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+
+from __future__ import print_function
+
+import os
+import sys
+import plistlib
+import tarfile
+import tempfile
+
+DEFAULT_SERVER_ROOT = u"/Library/Server/Calendar and Contacts"
+PREFS_FILE = "/Library/Server/Preferences/Calendar.plist"
+if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
+    OUT_TMP = sys.argv[1]
+else:
+    OUT_TMP = tempfile.mkdtemp(dir='/tmp')
+OUTPUT_FILE = "{}/CalendarServerLogs.tar.gz".format(OUT_TMP)
+FIXED_LOCATION_LOGS = (
+    "/Library/Logs/Server/caldavd.log",
+    "/Library/Logs/Server/caldavd_agent.log",
+)
+
+
+def main():
+    if os.path.exists(OUTPUT_FILE):
+        os.remove(OUTPUT_FILE)
+    tar = tarfile.open(OUTPUT_FILE, "w:gz")
+
+    for filePath in FIXED_LOCATION_LOGS:
+        if os.path.exists(filePath):
+            tar.add(filePath)
+
+    serverRoot = DEFAULT_SERVER_ROOT
+    if os.path.exists(PREFS_FILE):
+        serverRoot = plistlib.readPlist(PREFS_FILE).get("ServerRoot", serverRoot)
+
+    logDirPath = os.path.join(serverRoot, "Logs")
+    if os.path.exists(logDirPath):
+        tar.add(logDirPath)
+
+    configDirPath = os.path.join(serverRoot, "Config")
+    if os.path.exists(configDirPath):
+        caldavdSystemPlist = os.path.join(configDirPath, "caldavd-system.plist")
+        if os.path.exists(caldavdSystemPlist):
+            tar.add(caldavdSystemPlist)
+        caldavdUserPlist = os.path.join(configDirPath, "caldavd-user.plist")
+        if os.path.exists(caldavdUserPlist):
+            tar.add(caldavdUserPlist)
+
+    tar.close()
+
+    print(
+        "Calendar and Contacts Server logs have been gathered to {}".format(
+            OUTPUT_FILE
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()

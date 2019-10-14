@@ -1,0 +1,11 @@
+#!/usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+# Thin command line interface script.
+# Run <tt>thin -h</tt> to get more usage.
+
+require "rubygems"
+Gem::Deprecate.skip = true    # Turn off the deprecation warnings, we got it already!
+require "bundler/setup"
+
+require 'thin'
+
+Thin::Runner.new(ARGV).run!

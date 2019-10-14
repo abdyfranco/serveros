@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MachServices</key>
+	<dict>
+		<key>com.apple.AssetCache</key>
+		<true/>
+		<key>com.apple.AssetCacheC</key>
+		<true/>
+	</dict>
+	<key>Disabled</key>
+	<true/>
+	<key>PreventsSleep</key>
+	<true/>
+	<key>UnloadOnSleep</key>
+	<true/>
+	<key>Label</key>
+	<string>com.apple.AssetCache</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/AssetCache/AssetCache</string>
+	</array>
+	<key>OnDemand</key>
+	<false/>
+	<key>UserName</key>
+	<string>_assetcache</string>
+	<key>GroupName</key>
+	<string>_assetcache</string>
+	<key>SoftResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>10240</integer>
+	</dict>
+</dict>
+</plist>

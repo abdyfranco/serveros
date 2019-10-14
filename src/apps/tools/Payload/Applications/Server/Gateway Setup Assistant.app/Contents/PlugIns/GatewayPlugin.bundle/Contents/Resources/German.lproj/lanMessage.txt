@@ -1,1 +1,0 @@
-Sie mŸssen mindestens eine Schnittstelle angeben, mit der die Internetverbindung gemeinsam genutzt wird.

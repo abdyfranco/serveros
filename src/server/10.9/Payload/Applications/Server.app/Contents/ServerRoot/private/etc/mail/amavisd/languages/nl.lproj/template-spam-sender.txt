@@ -1,0 +1,51 @@
+# =============================================================================
+# Dit is een sjabloon voor BERICHTEN AAN VERZENDERS VAN SPAM.
+# Meer informatie over de syntaxis en het aanpassen van de
+# sjabloon vindt u in "README.customize". De koptekstvelden 'Van', 'Aan'
+# en 'Datum' worden automatisch toegevoegd. Lange koptekstvelden worden
+# automatisch door het programma over meerdere regels verdeeld.
+#
+Ondewerp: Beschouwd als ONGEVRAAGDE BULKE-MAIL die van u afkomstig lijkt
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <SS%i@%h>
+
+Een bericht van %s[
+aan: %R]
+
+wordt beschouwd als ongevraagde bulke-mail (UBE).
+
+Onze interne referentiecode voor uw bericht is %n/%i
+
+Het bericht was voorzien van uw retouradres. Het was dus een authentieke
+e-mail van u of het afzenderadres was vervalst. In het laatste geval is
+uw e-mailadres misbruikt door anderen en bieden we u onze excuses aan
+voor dit ongevraagde bericht.
+
+We proberen de hoeveelheid backscatter zo veel mogelijk te beperken
+tot de meest ernstige gevallen van UBE en tot geïnfecteerde mail.
+In minder duidelijke gevallen wordt geprobeerd een balans te vinden
+tussen het verlies van authentieke berichten en het verzenden van
+ongewenste backscatter-berichten. Hierbij kan het gebeuren dat berichten
+onjuist worden beoordeeld.
+
+[? %a |#|[:wrap|78||  |IP-adres van eerste upstream SMTP-client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Volgens een tracering van 'Ontvangen:'\
+ lijkt het bericht afkomstig van: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+# [? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+[? %#X |#|\n[[:wrap|78||  |%X]\n]]
+
+[? %#D |De e-mail is niet bezorgd!
+]#
+#
+# SpamAssassin-rapport:
+# [%A
+# ]\

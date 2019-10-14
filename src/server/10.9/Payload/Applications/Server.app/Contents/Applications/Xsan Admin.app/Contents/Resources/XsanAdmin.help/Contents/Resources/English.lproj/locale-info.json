@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"folder": "English.lproj",
+		"isoCodes": ["en-us", "en-ca", "en"],
+		"isoName": "English",
+		"name": "English"
+	},
+	"static_ui": {
+		"jsdisabled": "<div><p>To view help, you must turn on JavaScript.</p> For more information, see <a href=\"http://help.apple.com/resources/javascript/?lang=en\">this Apple support article</a>.</div>",
+		"loadfailed": "<div>Help is currently unavailable.</div>"
+	},
+	"ui": {
+		"%@ Search Results": "%@ Search Results",
+		"Apple applications": "Apple applications",
+		"Cancel": "Cancel",
+		"Change Language": "Change Language",
+		"Close": "Close",
+		"Featured application help": "Featured application help",
+		"Go to the homepage": "Go to the homepage",
+		"Help for:": "Help for:",
+		"Hide": "Hide",
+		"Home": "Home",
+		"Loading latest help...": "Loading latest help...",
+		"Other applications": "Other applications",
+		"Print Book": "Print Book",
+		"Print Options": "Print Options",
+		"Print Page": "Print Page",
+		"Print Section": "Print Section",
+		"Recent applications": "Recent applications",
+		"Search": "Search",
+		"Send feedback.": "Send feedback.",
+		"Show all": "Show all",
+		"Show less": "Show less",
+		"Show the previous page": "Show the previous page",
+		"Show the next page": "Show the next page",
+		"Show": "Show",
+		"Was this page helpful?": "Was this page helpful?"
+	}
+}

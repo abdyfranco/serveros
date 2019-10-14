@@ -1,0 +1,13 @@
+#!/usr/bin/env python2.7
+
+import os; activate_this=os.path.join(os.path.dirname(os.path.realpath(__file__)), 'activate_this.py'); exec(compile(open(activate_this).read(), activate_this, 'exec'), dict(__file__=activate_this)); del os, activate_this
+
+# EASY-INSTALL-ENTRY-SCRIPT: 'CalendarServer==8.0a1+unknown','console_scripts','calendarserver_purge_principals'
+__requires__ = 'CalendarServer==8.0a1+unknown'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('CalendarServer==8.0a1+unknown', 'console_scripts', 'calendarserver_purge_principals')()
+    )

@@ -1,0 +1,171 @@
+// Copyright (c) 2009-2015 Apple Inc. All Rights Reserved.
+// 
+// IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+// computers and is subject to the terms and conditions of the Apple Software
+// License Agreement accompanying the package this file is a part of.
+// You may not port this file to another platform without Apple's written consent.
+//
+// IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+// of the Apple Software and is subject to the terms and conditions of the Apple
+// Software License Agreement accompanying the package this file is part of.
+
+if (typeof apple_loc_strings == "undefined") {
+	apple_loc_strings = {version:'1.0'};
+}
+
+var populateStrings = function(obj) {
+	for (aProperty in obj) {
+		apple_loc_strings[aProperty] = obj[aProperty];
+	}
+};
+
+populateStrings({
+	"_NavigationSidebar.My.Activity": "Mijn activiteit",
+	"_NavigationSidebar.My.Documents": "Mijn documenten",
+	"_NavigationSidebar.My.Favorites": "Mijn favorieten",
+	"_NavigationSidebar.Home": "Thuis",
+	"_NavigationSidebar.All.Activity": "Alle activiteit",
+	"_NavigationSidebar.All.Wikis": "Alle wiki's",
+	"_NavigationSidebar.All.People": "Alle personen",
+	"_NavigationSidebar.RecentlyViewed.Title": "Recente documenten",
+	"_Login.LogIn": "Log in",
+	"_Login.LogOut": "Log uit",
+	"_Login.Unauthenticated": "Gebruiker zonder identificatie",
+	"_Login.DialogTitle": "Log in",
+	"_Login.UserName": "Gebruikersnaam",
+	"_Login.Password": "Wachtwoord",
+	"_Login.RememberMe": "Onthoud",
+	"_WikiSetupAssistant.Next": "Volgende",
+	"_WikiSetupAssistant.Create": "Maak aan",
+	"_WikiSetupAssistant.GeneralPane.ShortTitle": "Algemeen",
+	"_WikiSetupAssistant.GeneralPane.LongTitle": "Nieuwe wiki aanmaken",
+	"_WikiSetupAssistant.GeneralPane.Name.Label": "Wiki-naam",
+	"_WikiSetupAssistant.GeneralPane.Name.Placeholder": "Apple Wiki",
+	"_WikiSetupAssistant.GeneralPane.Description.Label": "Beschrijving",
+	"_WikiSetupAssistant.GeneralPane.Description.Placeholder": "Geef hier een beschrijving van deze wiki",
+	"_WikiSetupAssistant.GeneralUserPane.Name.Label": "Naam",
+	"_WikiSetupAssistant.GeneralUserPane.Email.Label": "E-mail",
+	"_WikiSetupAssistant.GeneralUserPane.Email.Placeholder": "gebruiker@voorbeeld.com",
+	"_WikiSetupAssistant.ACLPane.ShortTitle": "Bevoegdheden",
+	"_WikiSetupAssistant.ACLPane.LongTitle": "Bevoegdheden instellen",
+	"_WikiSetupAssistant.AppearancePane.ShortTitle": "Weergave",
+	"_WikiSetupAssistant.AppearancePane.LongTitle": "Weergave instellen",
+	"_WikiSetupAssistant.AppearancePane.ColorScheme.Label": "Kleurenschema",	
+	"_WikiSetupAssistant.DonePane.LongTitle": "Configuratie is voltooid",
+	"_WikiSetupAssistant.DonePane.GoToWiki%@": "Ga naar wiki '%@'",
+	"_WikiSetupAssistant.DonePane.InformationLine1%@" : "De wiki '%@' is aangemaakt en kan worden gebruikt.",
+	"_WikiSetupAssistant.DonePane.InformationLine2" : "De wiki bevat extra configuratieopties die u kunt instellen.",
+	"_Document.Sidebar.Info": "Info",
+	"_Document.Sidebar.ViewAll": "Toon alles",
+	"_Document.Sidebar.Comments": "Opmerkingen",
+	"_Document.Sidebar.Comments.None": "Geen opmerkingen",
+	"_Document.Sidebar.Comments.New": "Opmerking",
+	"_Document.Sidebar.Comments.You": "U",
+	"_Document.Sidebar.Comments.Now": "Nu",
+	"_Document.Sidebar.Related": "Gerelateerd",
+	"_Document.Sidebar.Related.None": "Geen gerelateerde documenten",
+	"_Document.Sidebar.Related.Add": "Voeg document toe…",
+	"_Document.Sidebar.Related.SuggestedDocuments": "Suggesties voor documenten",
+	"_Document.Sidebar.Tags": "Tags",
+	"_Document.Sidebar.Tags.None": "Geen tags",
+	"_Document.Sidebar.Tags.Add": "Voeg tag toe…",
+	"_Document.Sidebar.Tags.Add.Name": "Voeg tekstveld voor tag toe",
+	"_Document.Sidebar.Tags.SuggestedTags": "Suggesties voor tags",
+	"_Document.Sidebar.History": "Geschiedenis",
+	"_Document.Sidebar.History.None": "Geen geschiedenis",
+	"_Document.Sidebar.History.VersionAvailableSingular": "1 versie beschikbaar",
+	"_Document.Sidebar.History.VersionAvailablePlural": "%@ versies beschikbaar",
+	"_Document.Sidebar.Notifications": "E-mailmeldingen",
+	"_Document.Sidebar.Notifications.Updated": "Alle updates",
+	"_Document.Sidebar.Notifications.CommentAdded": "Nieuwe opmerking",
+	"_Document.Sidebar.Notifications.DocumentUpdated": "Document bijgewerkt",
+	"_Document.Sidebar.Notifications.EmailInputTitle": "Voer uw e-mail in",
+	
+	"_Document.Sidebar.Sharing": "Delen",
+	"_Document.Sidebar.Sharing.None": "Niet gedeeld",
+	"_Document.Sidebar.Sharing.Add": "Deel met iemand…",
+	"_Document.Sidebar.Sharing.PopoverTitle": "Wijzig delingsinstellingen",
+	
+	"_Sharing.Notification.Updating.Subscription": "Abonnement bijwerken…",
+	"_Sharing.Notification.Updating.Subscription.Succeeded": "Bijwerken van abonnement geslaagd.",
+	"_Sharing.Notification.Updating.Subscription.Failed": "Abonnement kan niet worden bijgewerkt. Probeer het opnieuw.",
+	"_Sharing.Notification.Updating.Subscription.Failed.Email": "U moet een gewenst e-mailadres opgeven om abonnementen te gebruiken.",
+	
+	"_FilterBar.Filter.Label": "Toon:",
+	"_FilterBar.Filter.All.Title": "Alles",
+	"_FilterBar.Filter.Unread.Title": "Ongelezen",
+	"_FilterBar.Filter.Favorites.Title": "Favorieten",
+	"_FilterBar.SortBy.Label": "Sorteer op:",
+	"_FilterBar.SortBy.Rank.Title": "Meest relevant",
+	"_FilterBar.SortBy.Title.Title": "Titel",
+	"_FilterBar.SortBy.MostRecent.Title": "Meest recente",
+	"_FilterBar.SortBy.LeastRecent.Title": "Minst recente",
+	"_FilterBar.Grid.Title": "Symbolen",
+	"_FilterBar.List.Title": "Lijst",
+	"_GearMenu.General.Help": "Help",
+	"_GearMenu.General.MySettings": "Mijn gebruikersinstellingen…",
+	"_GearMenu.General.MySettings.Title": "Mijn gebruikersinstellingen",
+	"_GearMenu.General.Move" : "Verplaats…",
+	"_GearMenu.General.Replace": "Vervang bestand…",
+	"_GearMenu.Wiki.Settings": "Wiki-instellingen…",
+	"_GearMenu.Wiki.Settings.Title": "Wiki-instellingen",
+	"_GearMenu.User.Hide": "Verberg gebruiker…",
+	"_GearMenu.User.Unhide": "Hef verbergen gebruiker op…",
+	"_GearMenu.Search.SaveSearch" : "Bewaar deze zoekactie",
+	"_PlusMenu.NewWiki": "Nieuwe wiki…",
+	"_PlusMenu.NewPage.NewPageInWiki%@": "Nieuwe pagina in '%@'…",
+	"_PlusMenu.NewPage.NewInMyDocs": "Nieuwe pagina in 'Mijn documenten'…",
+	"_PlusMenu.NewPage.Dialog.Title" : "Nieuwe pagina",
+	"_PlusMenu.NewPage.Dialog.Label" : "Paginatitel",
+	"_Settings.Permissions.CommentAccess.Label":"Opmerkingen",
+	"_Settings.Permissions.CommentAccess.all":"Iedereen",
+	"_Settings.Permissions.CommentAccess.authenticated":"Ingelogde gebruikers",
+	"_Settings.Permissions.CommentAccess.disabled":"Niemand",
+	"_Settings.Permissions.CommentModeration.Label":"Opmerkingen controleren",
+	"_Settings.Permissions.CommentModeration.all":"Alle opmerkingen",
+	"_Settings.Permissions.CommentModeration.anonymous":"Alleen anonieme opmerkingen",
+	"_Settings.Permissions.CommentModeration.disabled":"Geen",
+	"_Settings.General.PreferedEmail":"Gewenst e-mailadres",
+	
+	// User Error Messages
+	"_Error.Delete.Document.Permissions":"Alleen de eigenaar of een beheerder mag dit document verwijderen.",
+	"_Error.Delete.Wiki.Permissions":"Alleen de eigenaar of een beheerder mag deze wiki verwijderen.",
+	"_Error.Hide.Person.Permissions":"Alleen een beheerder mag een persoon verbergen.",	
+	"_Error.People.Disabled": "Het bekijken van alle personen is uitgeschakeld op de server.",
+	"_Error.Projects.Disabled": "Het bekijken van alle projecten is uitgeschakeld op de server.",
+	"_Error.AllActivity.Disabled": "Het bekijken van alle activiteit is uitgeschakeld op de server.",
+
+	// Documents
+	"_General.Documents.My": "Mijn documenten",
+	"_General.Documents.None": "Geen documenten",
+	"_General.Documents.Untitled": "Naamloos",
+	"_General.Documents.Recents": "Recente documenten",
+	// Favorites
+	"_General.Favorites": "Favorieten",
+	// Search
+	"_Search": "Zoeken",
+	"_Search.Results": "Zoekresultaten",
+	"_Search.Recents": "Recente zoekacties",
+	"_Search.Saved": "Bewaarde zoekacties",
+	// Controls
+	"_Control.Back": "Terug",
+	"_Control.Add": "Voeg toe",
+	"_Control.Cancel": "Annuleer",
+	"_Control.Delete": "Verwijder",
+	"_Control.TrashIcon": "Prullenmandsymbool",	
+	"_Control.Done": "Gereed",
+	"_Control.Edit": "Wijzig",
+	"_Control.Save": "Bewaar",
+	"_Control.Send": "Stuur",
+	"_Control.OK": "OK",
+	"_Control.Close": "Sluit",
+	"_Control.Plus": "Plus",
+	"_Control.ShowDiff": "Toon verschillen",		
+	"_Control.Pagination.ShowAll": "Toon alles",
+	"_Control.Gear": "Taakmenu",
+	"_Control.MenuNavigation": "Navigatie",
+	"_Control.AccessRole.Popup": " venstermenu",
+	"_Control.Switch.On": "AAN",
+	"_Control.Switch.Off": "UIT",	
+	"_Settings.Notification": "Stuur e-mailmeldingen naar nieuwe leden"
+});

@@ -1,0 +1,285 @@
+#!/usr/bin/env /Applications/Server.app/Contents/ServerRoot/usr/bin/ruby
+
+require '/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/backend/lib/DeviceManagerExtension'
+require '/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/backend/lib/devicemgrd_utility'
+require 'cfpropertylist'
+
+class DMTool
+
+  @@commands =
+    {
+      'activateAPNS' =>
+      { :command     => 'activateAPNS',
+        :args        => [],
+        :description => "Performs the servermgr_devicemgr 'activateAPNS' request."
+      },
+      'activateOD' =>
+      { :command     => 'activateOD',
+        :args        => [],
+        :description => "Performs the servermgr_devicemgr 'activateOD' request."
+      },
+      'certificateUpdated' =>
+      { :command     => 'certificateUpdated',
+        :args        => [ { :key         => 'action',
+                            :description => "The action being taken with the old certificate. Either 'remove' or 'replace'." },
+                          { :key         => 'oldPath',
+                            :description => "The path to the old .cert.pem file. (The one being removed or replaced.)" },
+                          { :key         => 'newPath',
+                            :description => "The path to the new .cert.pem file. (For 'replace' only, ignore for 'remove'.)" }
+                        ],
+        :description => "Notifies devicemgr of changed or removed SSL and signing certificates."
+      },
+      'configureDEP' =>
+      { :command     => 'configureSimplifiedDeviceEnrollment',
+        :args        => [ { :key         => 'token',
+                            :description => "The path to the DEP sToken file (encrypted with the S/MIME cert from 'dm_tool getSMIMECertificate')",
+                            :optional    => true,
+                            :type        => :dataPath },
+                          { :key         => 'state',
+                            :description => "The state to set the DEP service ('ENABLED' or 'DISABLED'). Defaults to current state.",
+                            :optional    => true },
+                          { :key         => 'force',
+                            :description => "True to override the DEP server UUID check and take over management of the DEP account. Defaults to 0 (do not override).",
+                            :optional    => true },
+                          { :key         => 'supervisionIdentityPersistentReference',
+                            :description => "The path to a file containing the base64-encoded keychain persistent reference for the supervision identity",
+                            :optional    => true,
+                            :type        => :dataPath },
+                        ],
+        :description => "Configures the DEP admin account for Profile Manager."
+      },
+      'configureVPP' =>
+      { :command     => 'configureAppDistribution',
+        :args        => [ { :key         => 'token',
+                            :description => "The path to the VPP sToken file",
+                            :optional    => true,
+                            :type        => :dataPath },
+                          { :key         => 'state',
+                            :description => "The state to set the VPP service ('ENABLED' or 'DISABLED'). Defaults to current state.",
+                            :optional    => true },
+                          { :key         => 'force',
+                            :description => "True to override the VPP client GUID check and take over management of the VPP account. Defaults to 0 (do not override).",
+                            :optional    => true }
+                        ],
+        :description => "Configures the VPP admin account for Profile Manager."
+      },
+      'emailQueue' =>
+      { :command     => 'emailQueue',
+        :args        => [ { :key         => 'limit',
+                            :description => "The maximum number of records to return." }
+                        ],
+        :description => "Returns a hash of the emails that need to be sent."
+      },
+      'getEmailSettings' =>
+      { :command     => 'getEmailSettings',
+        :args        => [],
+        :description => "Returns the current email settings."
+      },
+      'getSMIMECertificate' =>
+      { :command     => 'getTokenEncryptionCertificate',
+        :args        => [],
+        :description => "Returns the server's S/MIME certificate."
+      },
+      'noOp' =>
+      { :command     => 'noOp',
+        :args        => [],
+        :description => "Simply launches devicemgrd. Side-effects include database creation and migration."
+      },
+      'periodicCleanup' =>
+      { :command     => 'periodicCleanup',
+        :args        => [],
+        :description => "Triggers immediate cleanup (garbage collection) of the database."
+      },
+      'periodicMaintenance' =>
+      { :command     => 'periodicMaintenance',
+        :args        => [],
+        :description => "Triggers immediate maintenance sync phase. Garbage collection phase may or may not run."
+      },
+      'periodicSyncs' =>
+      { :command     => 'periodicSyncs',
+        :args        => [],
+        :description => "Triggers immediate syncs of OD and VPP data."
+      },
+      'readVPPSettings' =>
+      { :command     => 'readAppDistributionSettings',
+        :args        => [],
+        :description => "Reads the current VPP configuration."
+      },
+      'resetVPP' =>
+      { :command     => 'reset_vpp',
+        :args        => [],
+        :description => "Retires all VPP users and revokes all VPP licenses from the configured VPP account."
+      },
+      'sendPushNotifications' =>
+      { :command     => 'sendPushNotifications',
+        :args        => [],
+        :description => "Sends all pending push notifications for devices that have outstanding tasks."
+      },
+      'syncDEP' =>
+      { :command     => 'depStartSync',
+        :args        => [ { :key         => 'forceFull',
+                            :description => "1 to force a FULL sync, 0 to allow an INCREMENTAL sync, if possible",
+                            :optional    => true },
+                            { :key         => 'userTriggered',
+                              :description => "1 to mark the request as being triggered by the user",
+                              :optional    => true }
+                        ],
+        :description => "Requests an immediate sync of DEP information with the DEP service."
+      },
+      'syncASM' =>
+      { :command     => 'asmStartSync',
+        :args        => [ { :key         => 'forceFull',
+                            :description => "1 to force a FULL sync, 0 to allow an INCREMENTAL sync, if possible",
+                            :optional    => true },
+                          { :key         => 'userTriggered',
+                            :description => "1 to mark the request as being triggered by the user",
+                            :optional    => true }
+                        ],
+        :description => "Requests an immediate sync of ASM information with the ASM service."
+      },
+      'syncVPP' =>
+      { :command     => 'vppStartSync',
+        :args        => [ { :key         => 'forceFull',
+                            :description => "1 to force a FULL sync, 0 to allow an INCREMENTAL sync, if possible",
+                            :optional    => true },
+                          { :key         => 'userTriggered',
+                            :description => "1 to mark the request as being triggered by the user",
+                            :optional    => true }
+                        ],
+        :description => "Requests an immediate sync of VPP information with the VPP service."
+      },
+      'unconfigureVPP' =>
+      { :command     => 'unconfigureVPP',
+        :args        => [],
+        :description => "Performs a 'resetVPP' plus removes the VPP admin account username and password."
+      },
+    }
+
+	#-------------------------------------------------------------------------
+
+  def self.run
+    self.usage if ARGV.empty?
+
+    async = false
+    until ARGV.empty? do
+      req = nil
+
+      arg = ARGV.shift
+      case arg
+      when '-a'
+        async = true
+        next
+      when '-s'
+        async = false
+        next
+      when '-c'
+        self.usage if ARGV.empty?       # No command!
+        arg = ARGV.shift                # Save the command name in 'arg'
+        req = { :command => arg }
+        req[ARGV.shift] = ARGV.shift until ARGV.length < 2
+        self.usage unless ARGV.empty?   # Had an odd number of arguments
+      else
+        cmd = @@commands[arg]
+        unless cmd
+          p "Unknown option '#{arg}'"
+          exit(2)  # We're done!
+        end
+
+        req = { :command => cmd[:command].to_s }
+
+        # If there are other arguments to grab, grab them
+        cmd[:args].each { |hash|
+          if ARGV.empty?
+            break if hash[:optional]
+            self.usage
+          end
+          val = ARGV.shift
+          if val == '--'
+            next if hash[:optional]
+            puts "Argument for #{hash[:key]} is not optional but '--' was specified."
+            exit(1)
+          end
+          val = File.read(val) if hash[:type] == :dataPath
+          req[hash[:key].to_s] = val
+        }
+      end # case
+
+      puts "Sending#{(async ? " (asynchronously)" : "")} command #{arg}"
+      resp = self.send_devicemgrd_request(req, async) if req
+      puts "Response: #{resp}" unless async
+    end # until ARGV.empty?
+    return 0
+  end
+
+	#-------------------------------------------------------------------------
+
+  def self.send_devicemgrd_request(request, async = false)
+    return nil if request.nil? || request.empty?
+
+    request['pid'] = Process.pid
+    plist = request.to_plist(:plist_format => CFPropertyList::List::FORMAT_XML)
+
+    result = DevicemgrdUtility.send_devicemgrd_request_string(plist, async)
+    return nil if async || result.nil? || result == ''
+
+    plist = CFPropertyList::List.new(:data => result)
+    result = CFPropertyList.native_types(plist.value)
+
+    yield result if block_given?
+    return result
+  end
+
+	#-------------------------------------------------------------------------
+
+  def self.usage
+    puts <<-USAGE
+Usage:
+  dm_tool [-a | -s] [<command> [-- | <value> ...] ... | -c <command> [<key> <value> ...]]
+
+  Tool to send commands to the devicemgrd daemon.
+
+  Options:
+    -a Send subsequent commands asynchronously (don't wait for a response from devicemgrd).
+       Overrides any previous '-s' option.
+
+    -c Send the rest of the arguments as an undocumented command. The first argument immediately
+       following -c is the name of the command and subsequent pairs of arguments are passed as
+       key:value pairs in string form. The number of arguments following the command must be a
+       a multiple of 2.
+
+    -s Send subsequent commands synchronously.
+       Overrides any previous '-a' option.
+
+    -- Use this to skip an optional argument in a command so subsequent arguments may be specified
+
+  Commands:
+USAGE
+
+  @@commands.sort.each { |ary|
+    k = ary[0]
+    v = ary[1]
+    cmd  = [k]
+    help = ["  #{v[:description]}"]
+    v[:args].each { |hash|
+      arg = hash[:key]
+      if hash[:optional]
+        cmd.push("[#{arg}]")
+      else
+        cmd.push(arg)
+      end
+      help.push("  #{arg}: #{hash[:description]}")
+    }
+    help.unshift(cmd.join(' '))
+    help.unshift('')          # Empty string at front for leading empty line
+    puts help.join("\n    ")
+  }
+
+  exit(1)
+  end
+
+	#-------------------------------------------------------------------------
+
+end # DMTool
+
+DMTool.run
+

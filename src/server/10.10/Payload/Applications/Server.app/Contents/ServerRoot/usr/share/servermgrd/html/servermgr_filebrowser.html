@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>FileBrowser</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "getDirectoryEntries") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getDirectoryEntries</string>\n';
+			commandValue += '	<key>path</key>\n';
+			commandValue += '	<string>/Applications</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withIcon16|withIcon32</string>\n';
+		} else if (selection == "getIconsForPaths") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getIconsForPaths</string>\n';
+			commandValue += '	<key>withIcon16</key>\n';
+			commandValue += '	<false/>\n';
+			commandValue += '	<key>withIcon32</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	<key>pathsArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>/Applications/Calculator.app</string>\n';
+			commandValue += '		<string>/Applications/Chess.app</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getVolumeList") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getVolumeList</string>\n';
+		} else if (selection == "getVolumeList_1") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getVolumeList</string>\n';
+			commandValue += '	<key>includeSharePoints</key>\n';
+			commandValue += '	<string>YES</string>\n';
+		} else if (selection == "getOpenDirectoryRecords") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getOpenDirectoryRecords</string>\n';
+			commandValue += '	<key>nodePath</key>\n';
+			commandValue += '	<string>/NetInfo/DefaultLocalNode</string>\n';
+			commandValue += '	<key>recordTypesArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>dsRecTypeStandard:Users</string>\n';
+			commandValue += '		<string>dsRecTypeStandard:UserAliases</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>attributeTypesArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '		<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '		<string>dsAttrTypeStandard:RealName</string>\n';
+			commandValue += '		<string>dsAttrTypeVirtual:isAdmin</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>patternKey</key>\n';
+			commandValue += '	<string>nameStartsWith</string>\n';
+			commandValue += '	<key>patternText</key>\n';
+			commandValue += '	<string>A</string>\n';
+			commandValue += '	<key>maxRecords</key>\n';
+			commandValue += '	<integer>5</integer>\n';
+		} else if (selection == "newFolder") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>newFolder</string>\n';
+			commandValue += '	<key>path</key>\n';
+			commandValue += '	<string>/</string>\n';
+		} else if (selection == "nfsMount") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>nfsMount</string>\n';
+			commandValue += '	<key>nfsServerHostName</key>\n';
+			commandValue += '	<string>unixServer</string>\n';
+			commandValue += '	<key>nfsExportPath</key>\n';
+			commandValue += '	<string>/export</string>\n';
+			commandValue += '	<key>nfsResharePath</key>\n';
+			commandValue += '	<string>/nfs_reshares/mountfolder</string>\n';
+			commandValue += '	<key>createMountRec</key>\n';
+			commandValue += '	<string>NO</string>\n';
+		} else if (selection == "nfsUnMount") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>nfsUnMount</string>\n';
+			commandValue += '	<key>nfsResharePath</key>\n';
+			commandValue += '	<string>/nfs_reshares/mountfolder</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_filebrowser'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="getDirectoryEntries">getDirectoryEntries
+						<OPTION VALUE="getIconsForPaths">getIconsForPaths
+						<OPTION VALUE="getVolumeList">getVolumeList
+						<OPTION VALUE="getVolumeList_1">getVolumeList 1
+						<OPTION VALUE="getOpenDirectoryRecords">getOpenDirectoryRecords
+						<OPTION VALUE="newFolder">newFolder
+						<OPTION VALUE="nfsMount">nfsMount
+						<OPTION VALUE="nfsUnMount">nfsUnMount
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_filebrowser">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

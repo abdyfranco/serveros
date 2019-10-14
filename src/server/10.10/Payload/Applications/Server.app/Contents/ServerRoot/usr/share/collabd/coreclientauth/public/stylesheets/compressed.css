@@ -1,0 +1,92 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+
+/*/BinaryCache/CoreCollaboration/CoreCollaboration-478.17~33/Root/Applications/Server.app/Contents/ServerRoot/usr/share/collabd/coreclientauth/public/stylesheets/compressed.css*/
+/*/BinaryCache/CoreCollaboration/CoreCollaboration-478.17~33/Root/Applications/Server.app/Contents/ServerRoot/usr/share/collabd/coreclientauth/public/stylesheets/webauth.css*/
+body{background:#626263;font-size:11px;font-family:Helvetica,Arial,Geneva,sans-serif;line-height:1.4;margin:0px;padding:0px;}
+body.framed{background:rgba(0,0,0,0.6);}
+.cc-auth-dialog h1,.cc-auth-dialog h2,.cc-auth-dialog p{margin:0px;padding:0px;}
+.cc-auth-dialog h1.error{padding:100px;}
+.cc-auth-dialog{position:absolute;left:50%;margin-left:-170px;top:50%;margin-top:-170px;background-color:rgba(255,255,255,0.3);width:340px;padding:3px;overflow:hidden;border-radius:7px;box-shadow:0px 2px 5px rgba(0,0,0,0.4);}
+.windowed .cc-auth-dialog{left:0;right:0;top:0;bottom:0;margin-left:0;margin-top:0;border-radius:0;box-shadow:none;padding:0;width:auto;}
+.cc-auth-dialog .inner{background-color:#EFEFEF;background:-webkit-gradient(linear,left top,left bottom,from(#FFFFFF),to(#EFEFEF));background:-moz-linear-gradient(top,#FFFFFF,#EFEFEF);font-size:13px;overflow:hidden;border-radius:5px;}
+.windowed .cc-auth-dialog .inner{border-radius:0;position:absolute;top:0;bottom:0;left:0;right:0;}
+.cc-auth-dialog .inner h1{color:#474747;background:#D5D5D5 url(/__collabd/coreclientbase/stylesheets/cc/img/dialog_header_bg.png) 0 0 repeat-x;background:-webkit-gradient(linear,left top,left bottom,from(#F9F9F9),to(#D5D5D5));background:-moz-linear-gradient(top,#F9F9F9,#D5D5D5);text-align:center;font-size:13px;font-weight:bold;line-height:24px;text-shadow:0px 1px 1px #FFFFFF;border-bottom:1px solid #b7b7b7;}
+.cc-auth-dialog .inner .icon{padding-top:32px;text-align:center;}
+.cc-auth-dialog .inner .img{height:44px;width:44px;display:inline-block;background-image:url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44.png);background-image:-webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44.png) 1x,url(/__collabd/coreclientbase/stylesheets/cc/img/user_44x44@2x.png) 2x);}
+.cc-auth-dialog .inner h2{color:#666666;font-size:20px;max-width:320px;font-weight:normal;overflow:hidden;padding:2px 16px 32px 16px;text-align:center;text-overflow:ellipsis;white-space:nowrap;}
+.windowed .cc-auth-dialog .inner h2{max-width:initial;}
+.cc-auth-dialog .inner .section + .section{padding-top:8px;}
+.cc-auth-dialog .inner .sections{padding-bottom:16px;}
+.windowed .cc-auth-dialog .inner .section{position:relative;height:26px;}
+.cc-auth-dialog .inner input[type=text],.cc-auth-dialog .inner input[type=username],.cc-auth-dialog .inner input[type=password]{border:1px solid #DBDBDB;color:#5F5F5F;height:20px;outline:none;padding:2px 4px;resize:none;width:216px;}
+.windowed .cc-auth-dialog .inner input[type=text],.windowed .cc-auth-dialog .inner input[type=username],.windowed .cc-auth-dialog .inner input[type=password]{width:auto;min-width:216px;position:absolute;right:12px;left:98px;}
+.cc-auth-dialog .inner input[type=text]:-moz-placeholder,.cc-auth-dialog .inner input[type=username]:-moz-placeholder,.cc-auth-dialog .inner input[type=password]:-moz-placeholder{font-style:italic;color:#DBDBDB;}
+body:not(.en) .cc-auth-dialog .inner input[type=text],body:not(.en) .cc-auth-dialog .inner input[type=username],body:not(.en) .cc-auth-dialog .inner input[type=password]{width:190px;}
+.cc-auth-dialog .inner label{color:#5F5F5F;float:left;font-weight:bold;height:25px;line-height:26px;overflow:hidden;padding:0px 8px;text-align:right;text-overflow:ellipsis;white-space:nowrap;width:82px;}
+.cc-auth-dialog .inner .remember_me_checkbox label{color:#616161;display:block;font-size:11px;font-weight:normal;float:none;height:auto;margin-bottom:-18px;text-align:left;padding:6px 16px 0px 95px;width:auto;}
+body:not(.en) .cc-auth-dialog .inner .remember_me_checkbox label{padding:6px 16px 0px 115px;}
+.cc-auth-dialog .inner .remember_me_checkbox label input{margin-right:5px;}
+body:not(.en) .cc-auth-dialog .inner label{width:112px;}
+body:not(.en) .cc-auth-dialog .inner .remember_me_checkbox label{padding-left:125px;}
+.cc-auth-dialog .inner .buttons{padding:10px 16px 12px 16px;text-align:right;}
+.windowed .cc-auth-dialog .inner .buttons{position:absolute;left:0;right:0;bottom:0;}
+.cc-auth-dialog .inner .buttons .cancel{display:none;}
+.framed .cc-auth-dialog .inner .buttons .cancel{display:inline;}
+.cc-auth-dialog .inner .buttons input + input{margin-left:6px;}
+.cc-auth-dialog .inner input[type="button"],.cc-auth-dialog .inner input[type="submit"],.cc-auth-dialog .inner input[type="reset"]{width:64px;}
+body:not(.en) .cc-auth-dialog .inner input[type="button"],body:not(.en) .cc-auth-dialog .inner input[type="submit"],body:not(.en) .cc-auth-dialog .inner input[type="reset"]{width:85px;}
+.cc-auth-dialog .inner p.error{color:red;}
+.cc-auth-dialog .inner p.intro,.cc-auth-dialog .inner p.info{color:#666666;text-shadow:#FFFFFF 0px -1px 0px;}
+.cc-auth-dialog .inner p.intro{padding:12px 16px 20px 16px !important;text-align:left;}
+.cc-auth-dialog .inner p.error,.cc-auth-dialog .inner p.info{text-align:center;}
+.cc-auth-dialog .inner p.error,.cc-auth-dialog .inner p.intro,.cc-auth-dialog .inner p.info{font-size:12px;padding-top:6px;}
+/*/BinaryCache/CoreCollaboration/CoreCollaboration-478.17~33/Root/Applications/Server.app/Contents/ServerRoot/usr/share/collabd/coreclientauth/public/stylesheets/iphone_webauth.css*/
+@media only screen and (max-device-width:480px){body.iphone .cc-auth-dialog{top:0px;right:0px;bottom:0px;left:0px;width:100%;margin:0px;padding:0px;border-radius:0px;box-shadow:none;font-size:11px;overflow-y:hidden;overflow-x:hidden;}
+body.iphone .cc-auth-dialog .inner{height:100%;background:#FFFFFF;background:#C1C1C1 0 0 repeat-x;background-image:url(data:image/gif;base64,R0lGODlhAQCQAdUAANPT0+rq6unp6cPDw+jo6Obm5tLS0sTExMXFxefn59bW1uDg4MnJyd7e3tnZ2eLi4tra2sbGxtHR0eXl5cfHx9zc3OPj4+Tk5NjY2NTU1NXV1c3Nzdvb28HBwd/f38rKys7OztDQ0NfX193d3cjIyMzMzOHh4cvLy8/Pz+vr68LCwuzs7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAABAJABAAaYwJVwSCwaj8ikcslsOp/OlHRKDVivVoF2qyV4v4SEeJwomM+FiXp9abst8PhjTjfZ7Yu83sPnN/6AI4KCFYWGHIiIEIuMDo6PGJGSIpSUCpeYChqbnBmenwChoqEGpaYGEqmqIaysKK8oILKyG7W1Jbi4J7u7H76+DMHCJMTEFMfIEcrLCM3OCAfR0gcD1dbVKtna2x3d3UEAOw==);color:#393939;}
+body.iphone .cc-auth-dialog .icon .img{height:80px;width:80px;background-size:80px 80px;}
+body.iphone .cc-auth-dialog h1{background:none;border:none;color:#757575;font-size:16px;text-shadow:none;top:224px;position:absolute;text-shadow:none;text-align:center;width:100%;font-weight:normal;}
+ 
+ body.iphone .cc-auth-dialog h2{color:#333333;font-size:32px;font-weight:bold;overflow:visible;height:64px;line-height:32px;padding:0px 0px 16px 0px;text-align:center;width:100%;display:block;position:absolute;top:144px;white-space:normal;max-width:none;}
+body.iphone .sections{position:absolute;top:270px;left:0px;right:0px;}
+ body.iphone .section label{display:none;}
+ body.iphone .section input[type="text"],body.iphone .section input[type="password"]{height:auto;border:1px solid #999999;font-size:20px;margin:0px auto;width:70%;display:block;}
+body.iphone .inner .remember_me_checkbox{text-align:center;margin-top:20px;}
+body.iphone .inner .remember_me_checkbox label{padding:0px;display:inline;}
+body.iphone .buttons{padding:0px;margin:0px auto;width:70%;position:absolute;top:380px;left:0px;right:0px;}
+body.iphone .buttons input[type="submit"],body.iphone .buttons input[type="reset"]{font-size:14px;width:90px;}
+body.iphone .section p.error,body.iphone .section p.info{font-size:16px;padding-bottom:10px;}
+@media screen and (orientation:landscape){body.iphone .cc-auth-dialog{position:relative;}
+body.iphone .cc-auth-dialog .inner{min-height:450px;}
+}
+}
+@media only screen and (min-device-width :768px) and (max-device-width :1024px){body.ipad .cc-auth-dialog{position:absolute;left:50%;margin-left:-270px;top:50%;margin-top:-170px;background-color:rgba(255,255,255,0.3);width:540px;padding:3px;overflow:hidden;border-radius:7px;box-shadow:0px 2px 5px rgba(0,0,0,0.4);}
+.cc-auth-dialog .inner{height:100%;background-image:-webkit-gradient(linear,left top,left bottom,from(rgb(226,229,234)),to(rgb(208,210,216)));}
+body.ipad .cc-auth-dialog .inner h1{font-size:17px;line-height:35px;height:35px;}
+body.ipad .cc-auth-dialog .inner h2{max-width:100%;font-size:22px;padding:10px 16px 12px 16px;}
+body.ipad .cc-auth-dialog .inner .sections{padding-bottom:16px;padding-left:25px;}
+body.ipad .cc-auth-dialog .inner div.section{width:480px;height:44px;left:30px;top:30px;padding-top:8px;margin-top:3px;-webkit-transform:none;background-color:white;border-radius:10px;border:1px solid #B8BBBF;box-shadow:0 1px 0 rgba(255,255,255,0.5),inset 0 1px 0 rgba(0,0,0,0.1);}
+body.ipad .cc-auth-dialog .inner label{width:110px;height:44px;-webkit-box-pack:start;font-size:19px;font-weight:bold;font-family:Helvetica;line-height:42px;padding-left:10px;padding-right:15px;}
+body.ipad .cc-auth-dialog .inner input[type=text],body.ipad .cc-auth-dialog .inner input[type=username],body.ipad .cc-auth-dialog .inner input[type=password]{left:120px !important;right:0px;width:310px;border-width:0;margin:0;background:transparent;padding:11px 9px;font-size:17px;font-family:Helvetica;}
+body.ipad .cc-auth-dialog .inner .remember_me_checkbox label{width:200px;padding-left:0px;font-size:17px;}
+body.ipad .cc-auth-dialog .inner p.error,.cc-auth-dialog .inner p.intro,.cc-auth-dialog .inner p.info{font-size:16px;padding-top:6px;}
+body.ipad .cc-auth-dialog .inner input[type="button"],.cc-auth-dialog .inner input[type="submit"],.cc-auth-dialog .inner input[type="reset"]{width:100px;font-size:17px;}
+body.ipad .cc-auth-dialog .inner .buttons{padding:10px 35px 12px 16px;}
+}
+/*/BinaryCache/CoreCollaboration/CoreCollaboration-478.17~33/Root/Applications/Server.app/Contents/ServerRoot/usr/share/collabd/coreclientauth/public/stylesheets/change_password.css*/
+#change_password .cc-auth-dialog .inner label{width:100px;}
+#change_password .cc-auth-dialog .inner input[type="text"],#change_password .cc-auth-dialog .inner input[type="username"],#change_password .cc-auth-dialog .inner input[type="password"]{width:202px;}
+#change_password input.cancel{float:left;}
+#change_password .notifier{top:0px !important;}
+

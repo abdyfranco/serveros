@@ -1,0 +1,207 @@
+Solr Full Text Search Indexing
+==============================
+
+Solr [http://lucene.apache.org/solr/] is a Lucene indexing server. Dovecot
+communicates to it using HTTP/XML queries.
+
+Compiling
+---------
+
+Give '--with-solr' parameter to 'configure' script. You'll also need to have
+libexpat and libcurl installed (if packages do not exist dovecot will compile
+without solr support). YUM: expat-devel, curl-devel
+
+Configuration
+-------------
+
+Solr Schema
+-----------
+
+Replace Solr's existing 'solr/conf/schema.xml' using 'doc/solr-schema.xml' from
+Dovecot.
+
+If you only have a 'managed-schema' file: copy 'schema.xml' to that folder,
+delete 'managed-schema' file and remove or comment out (be aware not to have
+recursive comment) the block '<updateRequestProcessorChain
+name="add-unknown-fields-to-the-schema">' from 'solrconfig.xml'. Then restart
+Solr. The 'managed-schema' file will be rebuild from 'schema.xml'. (See 1
+[http://stackoverflow.com/questions/37989084/solr-6-1-where-is-my-collections-managed-schema-file],
+2
+[http://stackoverflow.com/questions/30673095/using-schema-xml-instead-of-managed-schema-with-solr-5-1-x])
+
+You may want to check if the file contains something you want to modify. See
+Solr wiki [http://wiki.apache.org/solr/SchemaXml] for how to configure it.
+
+Dovecot Plugin
+--------------
+
+On Dovecot's side add:
+
+Into 10-mail.conf (note add existing plugins to string)
+
+---%<-------------------------------------------------------------------------
+mail_plugins = $mail_plugins fts fts_solr
+---%<-------------------------------------------------------------------------
+
+Into 90-plugins.conf
+
+---%<-------------------------------------------------------------------------
+plugin {
+  fts = solr
+  fts_solr = url=http://solr.example.org:8983/solr/
+}
+---%<-------------------------------------------------------------------------
+
+Fields listed in 'fts_solr' plugin setting are space separated. They can
+contain:
+
+ * url=<solr url> : Required base URL for Solr.
+ * debug : Enable HTTP debugging. Writes to error log.
+ * break-imap-search : Use Solr also for indexing TEXT and BODY searches. This
+   makes your server non-IMAP-compliant. (This is always enabled in v2.1+)
+
+Important notes:
+
+ * Some mail clients will not submit any search requests for certain fields if
+   they index things locally eg. Thunderbird will not send any requests for
+   fields such as sender/recipients/subject when Body is not included as this
+   data is contained within the local index.
+
+Solr commits & optimization
+---------------------------
+
+Solr indexes should be optimized once in a while to make searches faster and to
+remove space used by deleted mails. Dovecot never asks Solr to optimize, so you
+should do this yourself. Perhaps a cronjob that sends the optimize-command to
+Solr every n hours.
+
+With v2.2.3+ Dovecot only does soft commits to the Solr index to improve
+performance. You must run a hard commit once in a while or Solr will keep
+increasing its transaction log sizes. For example send the commit command to
+Solr every few minutes.
+
+---%<-------------------------------------------------------------------------
+# Optimize should be run somewhat rarely, e.g. once a day
+curl http://<hostname/ip>:<port|default 8983>/solr/update?optimize=true
+# Commit should be run pretty often, e.g. every minute
+curl http://<hostname/ip>:<port|default 8983>/solr/update?commit=true
+---%<-------------------------------------------------------------------------
+
+Re-index mailbox
+----------------
+
+If you require to force dovecot to reindex a whole mailbox you can run the
+command shown, this will only take action when a search is done and will apply
+to the whole mailbox.
+
+---%<-------------------------------------------------------------------------
+doveadm fts rescan -u <username>
+---%<-------------------------------------------------------------------------
+
+If you want to index a single mailbox/all mailboxes you can run the command
+shown, this will happen immediately and will blocking until action is
+completed.
+
+---%<-------------------------------------------------------------------------
+doveadm index [-u <user>|-A] [-S <socket_path>] [-q] [-n <max recent>] <mailbox
+mask>
+---%<-------------------------------------------------------------------------
+
+Sorting by relevancy
+--------------------
+
+Solr/Lucene supports returning a relevancy score for search results. If you
+want to sort the search results by the score, use Dovecot's non-standard
+X-SCORE sort key:
+
+---%<-------------------------------------------------------------------------
+1 SORT (X-SCORE) UTF-8 <search parameters>
+---%<-------------------------------------------------------------------------
+
+Indexes
+-------
+
+Dovecot creates the following fields:
+
+ * id: Unique ID consisting of uid/uidv/user/box.
+    * Note that your user names really shouldn't contain '/' character.
+ * uid: Message's IMAP UID.
+ * uidv: Mailbox's UIDVALIDITY. This changes if mailbox gets recreated.
+ * box: Mailbox name
+ * user: User name who owns the mailbox, or empty for public namespaces
+ * hdr: Indexed message headers
+ * body: Indexed message body
+ * any: "Copy field" from hdr and body, i.e. searching based on this will
+   search from both headers and bodies.
+
+Lucene does duplicate suppression based on the "id" field, so even if Dovecot
+sends the same message multiple times to Solr it gets indexed only once. This
+might happen currently if multiple searches are started at the same time.
+
+You might want to build a cronjob to go through the Lucene indexes once in a
+while to delete indexed messages (or entire mailboxes) that no longer exist on
+the filesystem. It shouldn't normally find any such messages though.
+
+Testing
+-------
+
+---%<-------------------------------------------------------------------------
+# telnet localhost imap
+* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REFERRALS ID ENABLE IDLE SORT
+SORT=DISPLAY THREAD=REFERENCES THREAD=REFS MULTIAPPEND UNSELECT CHILDREN
+NAMESPACE UIDPLUS LIST-EXTENDED I18NLEVEL=1 ESEARCH ESORT SEARCHRES WITHIN
+CONTEXT=SEARCH LIST-STATUS STARTTLS AUTH=PLAIN AUTH=LOGIN] I am ready.
+1 login username password
+2 select Inbox
+3 SEARCH text "test"
+---%<-------------------------------------------------------------------------
+
+Sharding
+--------
+
+If you have more users than fit into a single Solr box, you can split users off
+to different servers. A couple of different ways you could do it are:
+
+ * Have some HTTP proxy redirecting the connections based on the URL
+ * Configure Dovecot's userdb lookup to return a different host for 'fts_solr'
+   setting using <extra fields> [UserDatabase.ExtraFields.txt].
+    * LDAP: 'user_attrs = ..., solrHost=fts_solr=url=http://%$:8983/solr/'
+    * MySQL: 'user_query = SELECT concat('url=http://', solr_host,
+      ':8983/solr/') AS fts_solr, ...'
+
+External Tutorials
+------------------
+
+External sites with tutorials on using Solr under Dovecot
+
+ * Installing Apache Solr with Dovecot for fulltext search results
+   [http://atmail.com/kb/2009/installing-apache-solr-with-dovecot-for-fulltext-search-results/]
+   - Guide for installing all the dependencies for Solr to work under
+   CentOS/Fedora. Step by step tutorial.
+ * Installing Apache Solr with Dovecot for fulltext search results (ATmail
+   support guide)
+   [http://support.atmail.com/display/AKB/Installing+Apache+Solr+with+Dovecot+for+fulltext+search+results]
+
+Tipps
+-----
+
+Some additional things which might help you configuring Solr search:
+
+ * If you are using Tomcat: Set 'maxHttpHeaderSize="65536"' (connector
+   definition for port 8080 in '/etc/tomcat7/server.xml') to accept long search
+   query strings (iPhones tend to send multi-kilobyte-sized queries)
+ * Set 'df' to 'hdr' in '/etc/solr/conf/solrconfig.xml' ('/select' request
+   handler) to avoid strange 'undefined field text' errors.
+
+Recent versions of Solr
+-----------------------
+
+With recent versions of Solr (5+), you should have a look at these guides:
+
+ * Linux: http://things.m31.ch/?p=379
+ * FreeBSD: http://mor-pah.net/2016/08/15/dovecot-2-2-with-solr-6-or-5/
+
+Please keep in mind that you will have to change the Solr URL to include the
+core name (ie:'dovecot': 'http://localhost:8939/solr/dovecot').
+
+(This file was created from the wiki on 2017-05-30 16:30)

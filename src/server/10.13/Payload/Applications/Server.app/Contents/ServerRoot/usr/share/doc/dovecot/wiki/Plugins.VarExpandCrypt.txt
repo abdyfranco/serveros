@@ -1,0 +1,42 @@
+var_expand_crypt plugin
+=======================
+
+This plugins provides generic encrypt/decrypt facility for var_expand. It
+requires functional lib-dcrypt backend. For dovecot-auth process this plugin is
+automatically usable.
+
+Syntax
+------
+
+---%<-------------------------------------------------------------------------
+args=encrypted_value=%{encrypt;key=value,iv=value,noiv=yes,algo=algorithm,format=base64|hex:field}
+args=decrypted_value=%{decrypt;key=value,iv=value,noiv=yes,algo=algorithm,format=base64|hex:field}
+---%<-------------------------------------------------------------------------
+
+ * key - hex-encoded value
+ * iv  - same as key
+ * noiv - whether iv is included in return value
+ * algo - algorithm name (defaults to aes-256-cbc)
+ * format - return format
+
+decrypt expects input in base64 or hex format.
+
+Return formats
+--------------
+
+Without noiv encrypt returns iv$encrypted$. With noiv, just encrypted data is
+returned. Field(s) are encoded using format.
+
+key and iv must be the length required by the given algorithm.
+
+Example
+-------
+
+---%<-------------------------------------------------------------------------
+%{encrypt;key=f1f2f3f4f5f6f7f8f1f2f3f4f5f6f7f8f1f2f3f4f5f6f7f8f1f2f3f4f5f6f7f8:password}
+= 93736a0f910df27f89210e096e1d639a$966c2b4f3e7487f6acdb836f8d1dc3e0$
+%{decrypt;key=f1f2f3f4f5f6f7f8f1f2f3f4f5f6f7f8f1f2f3f4f5f6f7f8f1f2f3f4f5f6f7f8:encrypted}
+= pass
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2017-05-30 16:30)

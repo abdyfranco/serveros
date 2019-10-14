@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customsite443</key>
+	<array>
+		<dict>
+			<key>VARS</key>
+			<dict>
+				<key>VHOSTNAME</key>
+				<string>*</string>
+			</dict>
+			<key>type</key>
+			<string>container</string>
+			<key>directive</key>
+			<string>VirtualHost</string>
+			<key>name</key>
+			<string>${VHOSTNAME}:443</string>
+			<key>dictionaries</key>
+			<array>
+				<dict>
+					<key>VARS</key>
+					<dict>
+						<key>SERVERNAME</key>
+						<string>*</string>
+						<key>SERVERALIASES</key>
+						<string></string>
+					</dict>
+					<key>type</key>
+					<string>lines</string>
+					<key>strings</key>
+					<array>
+						<string>ServerName ${SERVERNAME}:443</string>
+						<string>${SERVERALIASES}</string>
+					</array>
+				</dict>
+				<dict>
+					<key>type</key>
+					<string>lines</string>
+					<key>strings</key>
+					<array>
+						<string>ProxyPreserveHost On</string>
+						<string>SetEnv proxy-chain-auth on</string>
+						<string>RequestHeader set X-Forwarded-Proto &quot;https&quot;</string>
+						<string>RequestHeader set X-Forwarded-Port &quot;443&quot;</string>
+					</array>
+				</dict>
+				<dict>
+					<key>type</key>
+					<string>container</string>
+					<key>directive</key>
+					<string>IfModule</string>
+					<key>name</key>
+					<string>mod_ssl</string>
+					<key>VARS</key>
+					<dict>
+						<key>SSLDIR</key>
+						<string>/etc/certificates/</string>
+						<key>SSLCERTID</key>
+						<string>PATH_PLACEHOLDER</string>
+						<key>MSTID</key>
+						<string>MST_IDENTITY_PLACEHOLDER</string>
+					</dict>
+					<key>strings</key>
+					<array>
+						<string>&lt;IfModule mod_ssl.c&gt;</string>
+						<string>SSLEngine On</string>
+						<string>SSLCertificateFile &quot;${SSLDIR}${SSLCERTID}.cert.pem&quot;</string>
+						<string>SSLCertificateKeyFile &quot;${SSLDIR}${SSLCERTID}.key.pem&quot;</string>
+						<string>SSLCertificateChainFile &quot;${SSLDIR}${SSLCERTID}.chain.pem&quot;</string>
+						<string>SSLCipherSuite &quot;HIGH:MEDIUM:!MD5:!RC4&quot;</string>
+						<string>SSLProtocol -all +TLSv1 +TLSv1.1 +TLSv1.2</string>
+						<string>SSLProxyEngine On</string>
+						<string>SSLProxyProtocol -all +TLSv1 +TLSv1.1 +TLSv1.2</string>
+						<string>SSLProxyCheckPeerCN off</string>
+						<string>SSLProxyCheckPeerName off</string>
+						<string>&lt;/IfModule&gt;</string>
+						<string>&lt;IfModule mod_secure_transport.c&gt;</string>
+						<string>MSTEngine On</string>
+						<string>MSTIdentity ${MSTID}</string>
+						<string>MSTCipherSuite HIGH, MEDIUM</string>
+						<string>MSTProtocolRange TLSv1.2 TLSv1.2</string>
+						<string>MSTProxyEngine On</string>
+						<string>MSTProxyProtocolRange TLSv1.2 TLSv1.2</string>
+						<string>&lt;/IfModule&gt;</string>
+						<string>RequestHeader set SSL_CLIENT_S_DN    &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_S_DN_CN &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_I_DN    &quot;&quot;</string>
+						<string>RequestHeader set SSL_SERVER_S_DN_OU &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_V_REMAIN &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_VERIFY  &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_V_START  &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_V_END  &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_M_VERSION  &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_M_SERIAL  &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_CERT  &quot;&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_CERT_CHAIN_0  &quot;&quot;</string>
+						<string>RequestHeader set SSL_SERVER_M_SERIAL  &quot;&quot;</string>
+						<string>RequestHeader set SSL_SERVER_M_VERSION  &quot;&quot;</string>
+						<string>RequestHeader set SSL_SERVER_I_DN  &quot;&quot;</string>
+						<string>RequestHeader set SSL_SERVER_CERT  &quot;&quot;</string>
+						<string>&lt;Location /&gt;</string>
+						<string>RequestHeader set SSL_CLIENT_S_DN &quot;%{SSL_CLIENT_S_DN}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_S_DN_CN &quot;%{SSL_CLIENT_S_DN_CN}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_I_DN &quot;%{SSL_CLIENT_I_DN}s&quot;</string>
+						<string>RequestHeader set SSL_SERVER_S_DN_OU &quot;%{SSL_SERVER_S_DN_OU}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_V_REMAIN &quot;%{SSL_CLIENT_V_REMAIN}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_VERIFY &quot;%{SSL_CLIENT_VERIFY}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_V_START &quot;%{SSL_CLIENT_V_START}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_V_END &quot;%{SSL_CLIENT_V_END}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_M_VERSION &quot;%{SSL_CLIENT_M_VERSION}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_M_SERIAL &quot;%{SSL_CLIENT_M_SERIAL}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_CERT &quot;%{SSL_CLIENT_CERT}s&quot;</string>
+						<string>RequestHeader set SSL_CLIENT_CERT_CHAIN_0 &quot;%{SSL_CLIENT_CERT_CHAIN_0}s&quot;</string>
+						<string>RequestHeader set SSL_SERVER_M_VERSION &quot;%{SSL_SERVER_M_VERSION}s&quot;</string>
+						<string>RequestHeader set SSL_SERVER_I_DN &quot;%{SSL_SERVER_I_DN}s&quot;</string>
+						<string>RequestHeader set SSL_SERVER_CERT &quot;%{SSL_SERVER_CERT}s&quot;</string>
+						<string>&lt;/Location&gt;</string>
+					</array>
+				</dict>
+				<dict>
+					<key>VARS</key>
+					<dict>
+						<key>DEST_BASE</key>
+						<string>http://127.0.0.1</string>
+						<key>DEST_PORT</key>
+						<string>34543</string>
+					</dict>
+					<key>type</key>
+					<string>lines</string>
+					<key>strings</key>
+					<array>
+						<string></string>
+						<string>#default proxy command</string>
+						<string>ProxyPass / ${DEST_BASE}:${DEST_PORT}/</string>
+						<string>ProxyPassReverse / ${DEST_BASE}:${DEST_PORT}/</string>
+					</array>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>customsite80</key>
+	<array>
+		<dict>
+			<key>VARS</key>
+			<dict>
+				<key>VHOSTNAME</key>
+				<string>*</string>
+			</dict>
+			<key>dictionaries</key>
+			<array>
+				<dict>
+					<key>VARS</key>
+					<dict>
+						<key>SERVERNAME</key>
+						<string>*</string>
+						<key>SERVERALIASES</key>
+						<string></string>
+					</dict>
+					<key>type</key>
+					<string>lines</string>
+					<key>strings</key>
+					<array>
+						<string>ServerName ${SERVERNAME}:80</string>
+						<string>${SERVERALIASES}</string>
+					</array>
+				</dict>
+				<dict>
+					<key>strings</key>
+					<array>
+						<string>ProxyPreserveHost On</string>
+						<string>SetEnv proxy-chain-auth on</string>
+						<string>RequestHeader set X-Forwarded-Proto &quot;http&quot;</string>
+						<string>RequestHeader set X-Forwarded-Port &quot;80&quot;</string>
+					</array>
+					<key>type</key>
+					<string>lines</string>
+				</dict>
+				<dict>
+					<key>VARS</key>
+					<dict>
+						<key>DEST_BASE</key>
+						<string>http://127.0.0.1</string>
+						<key>DEST_PORT</key>
+						<string>34580</string>
+					</dict>
+					<key>strings</key>
+					<array>
+						<string></string>
+						<string>#default proxy command</string>
+						<string>ProxyPass / ${DEST_BASE}:${DEST_PORT}/</string>
+						<string>ProxyPassReverse / ${DEST_BASE}:${DEST_PORT}/</string>
+					</array>
+					<key>type</key>
+					<string>lines</string>
+				</dict>
+			</array>
+			<key>directive</key>
+			<string>VirtualHost</string>
+			<key>name</key>
+			<string>${VHOSTNAME}:80</string>
+			<key>type</key>
+			<string>container</string>
+		</dict>
+	</array>
+</dict>
+</plist>

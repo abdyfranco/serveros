@@ -1,0 +1,198 @@
+Pigeonhole Sieve Extprograms Plugin
+===================================
+
+The "sieve_extprograms" plugin provides an extension to the Sieve filtering
+language [http://www.sieve.info] adding new action commands for invoking a
+predefined set of external programs. Messages can be piped to or filtered
+through those programs and string data can be input to and retrieved from those
+programs. To mitigate the security concerns, the external programs cannot be
+chosen arbitrarily; the available programs are restricted through administrator
+configuration.
+
+This plugin is only available for <Pigeonhole.txt> v0.3 and higher (available
+for Dovecot v2.1). For <Pigeonhole.txt> v0.4 this plugin is part of the
+release. This an evolution of the <Pipe plugin>
+[Pigeonhole.Sieve.Plugins.Pipe.txt] for Pigeonhole v0.2 and now provides the
+"filter" and "execute" commands (and corresponding extensions) in addition to
+the "pipe" command that was provided earlier by the Pipe plugin.
+
+Getting the sources
+-------------------
+
+Starting with Pigeonhole v0.4 for Dovecot v2.2, the plugin is included in the
+release and therefore it is implicitly compiled and installed with Pigeonhole
+itself.
+
+For Pigeonhole v0.3, the plugin was never released, but you can get the sources
+from its Mercurial repository:
+
+---%<-------------------------------------------------------------------------
+hg clone http://hg.rename-it.nl/pigeonhole-0.3-sieve-extprograms/
+---%<-------------------------------------------------------------------------
+
+Compiling for Pigeonhole v0.3
+-----------------------------
+
+If you downloaded the sources of this plugin using Mercurial, you will need to
+execute './autogen.sh' first to build the automake structure in your source
+tree. This process requires autotools and libtool to be installed.
+
+If you installed Dovecot from sources, the plugin's configure script should be
+able to find the installed 'dovecot-config' automatically, along with the
+Pigeonhole development headers:
+
+---%<-------------------------------------------------------------------------
+./configure
+make
+sudo make install
+---%<-------------------------------------------------------------------------
+
+If this doesn't work, you can use '--with-dovecot=<path>' configure option,
+where the path points to a directory containing 'dovecot-config' file. This can
+point to an installed file:
+
+---%<-------------------------------------------------------------------------
+./configure --with-dovecot=/usr/local/lib/dovecot
+make
+sudo make install
+---%<-------------------------------------------------------------------------
+
+The above example should also find the necessary Pigeonhole development headers
+implicitly. You can also compile by pointing to compiled Dovecot and Pigeonhole
+source trees:
+
+---%<-------------------------------------------------------------------------
+./configure --with-dovecot=../dovecot-2.1.0/
+--with-pigeonhole=../dovecot-2.1-pigeonhole-0.3.0
+make
+sudo make install
+---%<-------------------------------------------------------------------------
+
+Configuration
+-------------
+
+The plugin is activated by adding it to the sieve_plugins setting:
+
+---%<-------------------------------------------------------------------------
+sieve_plugins = sieve_extprograms
+---%<-------------------------------------------------------------------------
+
+This plugin registers the 'vnd.dovecot.pipe', 'vnd.dovecot.filter' and
+'vnd.dovecot.execute' extensions with the Sieve interpreter. However, these
+extensions are not enabled by default and thus need to be enabled explicitly.
+It is recommended to restrict the use of these extensions to global context by
+adding these to the 'sieve_global_extensions' setting. If personal user scripts
+also need to directly access external programs, the extensions need to be added
+to the 'sieve_extensions' setting.
+
+The commands introduced by the Sieve language extensions in this plugin can
+directly pipe a message or string data to an external program (typically a
+shell script) by forking a new process. Alternatively, these can connect to a
+unix socket behind which a Dovecot script service is listening to start the
+external program, e.g. to execute as a different user or for added security.
+
+The program name specified for the new Sieve 'pipe', 'filter' and 'execute'
+commands is used to find the program or socket in a configured directory.
+Separate directories are specified for the sockets and the directly executed
+binaries. The socket directory is searched first. Since the use of "/" in
+program names is prohibited, it is not possible to build a hierarchical
+structure.
+
+Directly forked programs are executed with a limited set of environment
+variables:'HOME', 'USER', 'SENDER', 'RECIPIENT' and 'ORIG_RECIPIENT'. Programs
+executed through the script-pipe socket service currently have no environment
+set at all.
+
+If a shell script is expected to read a message or string data, it must fully
+read the provided input until the data ends with EOF, otherwise the Sieve
+action invoking the program will fail. The action will also fail when the shell
+script returns a nonzero exit code. Standard output is available for returning
+a message (for the filter command) or string data (for the execute command) to
+the Sieve interpreter. Standard error is written to the LDA log file.
+
+The three extensions introduced by this plugin - 'vnd.dovecot.pipe',
+'vnd.dovecot.filter' and 'vnd.dovecot.pipe' - each have separate but similar
+configuration. The following configuration settings are used, for which
+"<extension>" in the setting name is replaced by either 'pipe', 'filter' or
+'execute' depending on which extension is being configured:
+
+sieve_<extension>_socket_dir = :
+  Points to a directory relative to the Dovecot base_dir where the plugin looks
+  for script service sockets.
+
+sieve_<extension>_bin_dir = :
+  Points to a directory where the plugin looks for programs (shell scripts) to
+  execute directly and pipe messages to.
+
+Example 1: socket service for "pipe" and "execute"
+--------------------------------------------------
+
+---%<-------------------------------------------------------------------------
+plugin {
+  sieve = ~/.dovecot.sieve
+
+  sieve_plugins = sieve_extprograms
+  sieve_global_extensions = +vnd.dovecot.pipe +vnd.dovecot.execute
+
+  # pipe sockets in /var/run/dovecot/sieve-pipe
+  sieve_pipe_socket_dir = sieve-pipe
+
+  # execute sockets in /var/run/dovecot/sieve-execute
+  sieve_execute_socket_dir = sieve-execute
+}
+
+service sieve-pipe-script {
+  # This script is executed for each service connection
+  executable = script /usr/lib/dovecot/sieve-extprograms/sieve-pipe-action.sh
+
+  # use some unprivileged user for execution
+  user = dovenull
+
+  # socket name is program-name in Sieve (without sieve-pipe/ prefix)
+  unix_listener sieve-pipe/sieve-pipe-script {
+  }
+}
+
+service sieve-execute-action {
+  # This script is executed for each service connection
+  executable = script
+/usr/lib/dovecot/sieve-extprograms/sieve-execute-action.sh
+
+  # use some unprivileged user for execution
+  user = dovenull
+
+  # socket name is program-name in Sieve (without sieve-execute/ prefix)
+  unix_listener sieve-execute/sieve-execute-action {
+  }
+}
+---%<-------------------------------------------------------------------------
+
+Example 2: direct execution for "pipe" and "filter"
+---------------------------------------------------
+
+---%<-------------------------------------------------------------------------
+plugin {
+  sieve = ~/.dovecot.sieve
+
+  sieve_plugins = sieve_extprograms
+  sieve_global_extensions = +vnd.dovecot.pipe +vnd.dovecot.filter
+
+  # This directory contains the scripts that are available for the pipe
+command.
+  sieve_pipe_bin_dir = /usr/lib/dovecot/sieve-pipe
+
+  # This directory contains the scripts that are available for the filter
+  # command.
+  sieve_filter_bin_dir = /usr/lib/dovecot/sieve-filter
+}
+---%<-------------------------------------------------------------------------
+
+Usage
+-----
+
+Read the specification (v0.3 plugin
+[http://hg.rename-it.nl/pigeonhole-0.3-sieve-extprograms/raw-file/tip/doc/rfc/spec-bosch-sieve-extprograms.txt]/v0.4
+[http://hg.rename-it.nl/dovecot-2.2-pigeonhole/raw-file/tip/doc/rfc/spec-bosch-sieve-extprograms.txt])
+for detailed information on how to use the new language extensions.
+
+(This file was created from the wiki on 2013-08-05 04:42)

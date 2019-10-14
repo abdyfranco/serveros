@@ -1,0 +1,196 @@
+#!/usr/bin/python -u
+
+import os
+import sys
+import string
+import getopt
+import socket
+import plistlib
+from commands import getstatusoutput, getoutput
+
+def CheckHostnameForNewIP():
+    status = 0
+    global oldHost, newHost, oldIP, newIP
+
+    try:
+        (oldName, aliaslist, addrlist) = socket.gethostbyaddr(oldIP)
+    except:
+        status = 1
+
+    # Try these separately, so we can give a proper warning of which
+    # failed to resolve.
+    try:
+        (newName, aliaslist, addrlist) = socket.gethostbyaddr(newIP)
+    except:
+        status = 1
+
+    try:
+        oldName
+    except NameError:
+        status = 2
+
+    try:
+        newName
+    except NameError:
+        status = 2
+
+    if status == 0:
+        unqNewName = newName.split(".")[0]
+        unqOldName = oldName.split(".")[0]
+
+
+        if newHost != newName and unqNewName != newName:
+            print ""
+            print "DNS lookup shows name '" + newName + "' for " + newIP + ", which does not match '" + newHost + "'"
+            print ""
+
+            # If the old host was not specified (is ""), ask the user if they
+            # want to use the reverse looked up value for the old host name
+            # as well as the new host name.  We MUST have an old host name
+            # to migrate from, otherwise using the new hostname makes no sense.
+            # Also, the argument passing to the changeip modules gets messed up.
+            if oldHost == "":
+                answer = raw_input( "Do you want to use a new name of '" + newName + "' and an old name of '" + oldName + "' instead? (y/N) " )
+
+                if answer == "Y" or answer == "y":
+	                newHost = newName
+	                oldHost = oldName
+
+                else:
+	                print ""
+	                print "Correct DNS to match the hostname provided, otherwise errors"
+	                print "will be logged in system.log and services may not function properly."
+	                print ""
+
+    else:
+        print ""
+        try:
+            newName
+        except NameError:
+            print "DNS does not have a valid name for IP address " + newIP
+            print "If DNS is not repaired, errors will be logged and services may not function"
+            print "properly."
+
+        try:
+            oldName
+        except NameError:
+            print "DNS does not have a valid name for IP address " + oldIP
+            print "WARNING: Names will not be migrated."
+        print ""
+
+def Usage():
+	print 'See the man page ("man changeip") for full details.'
+	print '\nUsage: /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip -h'
+	print '       Print this help message.'
+	print '\nUsage: /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip -checkhostname'
+	print '       Validate current IP & hostname with DNS.'
+	print '\nUsage: /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip <oldIP> <newIP>'
+	print '       Change IP addresses in supported configuration files, e.g.'
+	print '         /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip 10.0.1.10 10.0.1.12'
+	print '\nUsage: /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip <oldIP> [<newIP>] [<oldHost> <newHost>]'
+	print '       Change IP addresses and host names in supported files, e.g.'
+	print '         /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip 10.0.1.10 10.0.1.12 server10.example.com server12.example.com'
+	if os.getuid() != 0:
+		print "\n%s must be run as root" % sys.argv[0]	
+	
+	sys.exit(1)
+
+def CheckIPAddress(inString):
+	if  (len(inString.split(".")) == 4 and inString.replace("." , "").isdigit()):
+		return
+	else:
+		print "Invalid IP Address: %s" % inString
+		sys.exit(1)
+
+if len(sys.argv) == 2 and sys.argv[1] == "-checkhostname":
+       params = ["/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin", "command", "dirserv:command=checkHostName"]
+       os.spawnv(os.P_WAIT, "/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin", params)
+       sys.exit(0)
+
+try:
+	opts, args = getopt.getopt(sys.argv[1:], "d:hv")
+except getopt.GetoptError:
+	# print help information and exit:
+	Usage()
+	
+scriptDir = '/Applications/Server.app/Contents/ServerRoot/usr/libexec/changeip'
+verbose = False
+for o, a in opts:
+	if o == "-d":
+		scriptDir = a
+	if o == "-h":
+		Usage()
+	if o == "-v":
+		verbose = True
+	
+if  len(args) != 4 and len(args) != 3 and len(args) != 2:
+	Usage()
+
+if os.getuid() != 0:
+	print "%s must be run as root\n" % sys.argv[0]
+	sys.exit(1)
+
+oldHost=""
+newHost=""
+if len(args) == 4:
+	oldIP = args[0]
+	CheckIPAddress(oldIP)
+	newIP = args[1]
+	CheckIPAddress(newIP)
+	oldHost= args[2]
+	newHost = args[3]
+	if oldHost == "":
+		print "oldHost cannot be empty\n\n"
+		Usage()
+	if  (len(oldHost.split(".")) == 4 and oldHost.replace("." , "").isdigit()) and (len(newHost.split(".")) == 4 and newHost.replace("." , "").isdigit()):
+		print "oldHost and newHost supplied are IP Addresses\n\n"
+		Usage()
+	origHost = socket.gethostname()
+	if oldHost != origHost:
+		print ""
+		print "WARNING: current hostname (" + origHost + ") does not match " +  oldHost + "\n"
+
+# We now support passing just the IP Address and hostnames for changing
+elif  len(args) == 3:
+	oldIP = args[0]
+	newIP = oldIP
+	CheckIPAddress(newIP)	
+	oldHost = args[1]
+	newHost = args[2]
+	if oldHost == "":
+		print "oldHost cannot be empty\n\n"
+		Usage()
+	if  (len(oldHost.split(".")) == 4 and oldHost.replace("." , "").isdigit()) and (len(newHost.split(".")) == 4 and newHost.replace("." , "").isdigit()):
+		print "oldHost and newHost supplied are IP Addresses\n\n"
+		Usage()
+
+	origHost = socket.gethostname()
+	if oldHost != origHost:
+		print ""
+		print "WARNING: current hostname (" + origHost + ") does not match " +  oldHost + "\n"
+
+else:
+	oldIP = args[0]
+	CheckIPAddress(oldIP)	
+	newIP = args[1]
+	CheckIPAddress(newIP)	
+
+CheckHostnameForNewIP()
+
+# newhost cannot be empty, and should be a fqdn, but we can relax that condition
+if newHost != 0 and newHost != "": # and (newHost.find(".") == -1 or len(newHost.split(".")) > 1):
+    params = ["/usr/sbin/scutil", "--set", "HostName", newHost]
+    os.spawnv(os.P_WAIT, "/usr/sbin/scutil", params)
+
+for aFile in os.listdir(scriptDir):
+	params = [os.path.join(scriptDir, aFile), oldIP, newIP, oldHost, newHost]
+	if verbose:
+		params.insert(1, "-v")
+		print "\nExecuting:\n\t%s\n" % string.join(params)
+	os.spawnv(os.P_WAIT, os.path.join(scriptDir, aFile), params)
+
+# Write a file out with the current network configuration. This is used by the network monitor and alerts so that we dont say to run it again or post unneccesary alerts.
+# Consider removing this in a future refactor of this code.
+config = { 'HostName':newHost, 'IP':newIP }
+configFilePath = '/Library/Server/Setup/.NetworkConfiguration.plist'
+plistlib.writePlist(config, configFilePath)

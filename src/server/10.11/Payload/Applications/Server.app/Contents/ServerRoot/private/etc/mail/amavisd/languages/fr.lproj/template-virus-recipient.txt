@@ -1,0 +1,45 @@
+# =============================================================================
+# This is a template for VIRUS/BANNED/BAD-HEADER RECIPIENTS NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# Long header fields will be automatically wrapped by the program.
+#
+De : %f
+Date : %d
+Objet : [? [:ccat|major] |Courrier non infecté|Courrier non infecté|Courrier bloqué par MTA|\
+Taille du courrier DÉPASSÉE|EN-TÊTE NON VALIDE du courrier|COURRIER INDÉSIRABLE|COURRIER INDÉSIRABLE|Contenu du courrier NON VÉRIFIÉ\
+Contenu BANNI (%F) dans le courriel|VIRUS (%V) détecté dans le courrier] ADRESSÉ À VOUS de la part de %s
+[? [:header_field|To] |À : undisclosed-recipients:;|À : [:header_field|To]]
+[? [:header_field|Cc] |#|Cc : [:header_field|Cc]]
+Message-ID: <VR%i@%h>
+
+[? %#V |[? %#F ||AVERTISSEMENT DE CONTENU BANNI]|AVERTISSEMENT DE VIRUS]
+
+Notre analyze antivirus a détecté
+[? %#V |#|[:wrap|78|    |  |[?%#V|virus|virus|virus] : %V]]
+[? %#F |#|[:wrap|78|    |  |[?%#F|Noms|nom|noms] banni(s) : %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+dans un courrier électronique adressé à vous [? %S |envoyé vraisemblablement d’un expéditeur usurpé :|de :]
+  %o
+[? %S |déclarant être : %s|#]
+
+Type de contenu : [:ccat|name|main]#
+[? [:ccat|is_blocked_by_nonmain] ||, bloqué pour [:ccat|name]]
+Le code de référencement interne du message correspond à %n/%i
+
+[? %a |#|[:wrap|78||  |Première adresse IP du client SMTP pour l’envoi : \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Le traçage du champ « Received » révèle que\
+ le message semble provenir de : \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: %j]]
+[? %q |Non placé en quarantaine.|Le message a été placé en quarantaine sous : %q]
+
+Contactez votre administrateur système pour en savoir plus.

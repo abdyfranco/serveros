@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>com.apple.collabd.theme.header.border-bottom</key>
+		<string>1px solid rgba(0,0,0,0.5)</string>
+		<key>com.apple.collabd.theme.header.box-shadow</key>
+		<string>0px 1px 4px rgba(0,0,0,0.5)</string>
+		<key>com.apple.collabd.theme.main_banner.background-color</key>
+		<string>#3078BD</string>
+		<key>com.apple.collabd.theme.main_banner.background-gradient-webkit</key>
+		<string>-webkit-gradient(linear, left top, left bottom, from(#528BC4), to(#3078BD))</string>
+		<key>com.apple.collabd.theme.main_banner.background-gradient-moz</key>
+		<string>-moz-linear-gradient(top, #528BC4, #3078BD)</string>
+		<key>com.apple.collabd.theme.main_banner.background-gradient-ms</key>
+		<string>"progid:DXImageTransform.Microsoft.gradient(startColorStr='#528BC4', EndColorStr='#3078BD')"</string>
+		<key>com.apple.collabd.theme.main_banner.color</key>
+		<string>#FFFFFF</string>
+		<key>com.apple.collabd.theme.main_banner.text-shadow</key>
+		<string>rgba(0,0,0,0.6) 0px -1px 1px</string>
+		<key>com.apple.collabd.theme.main_banner.border-bottom-inner</key>
+		<string>1px solid rgba(255,255,255,0.15)</string>
+		<key>com.apple.collabd.theme.main_banner.border-bottom-outer</key>
+		<string>1px solid #245D94</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.border</key>
+		<string>1px solid rgba(0,0,0,0.3)</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.border-bottom-color</key>
+		<string>rgb(40,85,129) !important</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.box-shadow</key>
+		<string>0px 1px 0px rgba(255,255,255,0.2)</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.text-shadow</key>
+		<string>rgba(0,0,0,0.6) 0px 0px 2px</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.background-color</key>
+		<string>rgba(0,0,0,0.3)</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.background-gradient-webkit</key>
+		<string>-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0.3)), to(rgba(0,0,0,0.2)))</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.background-gradient-moz</key>
+		<string>-moz-linear-gradient(top, #2D5480, #356497)</string>
+		<key>com.apple.collabd.theme.main_banner.selected_link.background-gradient-ms</key>
+		<string>"progid:DXImageTransform.Microsoft.gradient(startColorStr='#2D5480', EndColorStr='#356497')"</string>
+		<key>com.apple.collabd.theme.body.background-color</key>
+		<string>#F5F6F7</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.background-color</key>
+		<string>#C7D9EF</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.background-gradient-webkit</key>
+		<string>-webkit-gradient(linear, left top, left bottom, from(#C7D9EF), to(#A8C7DF))</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.background-gradient-moz</key>
+		<string>-moz-linear-gradient(top, #C7D9EF, #A8C7DF)</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.background-gradient-ms</key>
+		<string>"progid:DXImageTransform.Microsoft.gradient(startColorStr='#C7D9EF', EndColorStr='#A8C7DF')"</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.border</key>
+		<string>1px solid #9EBACF</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.border-top-color</key>
+		<string>#A4BED5</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.border-bottom-color</key>
+		<string>#99B6CA</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.color</key>
+		<string>#395986</string>
+		<key>com.apple.collabd.theme.sidebar_and_filter_bar_headers.text-shadow</key>
+		<string>rgba(255,255,255,0.3) 0px 1px 0px</string>
+		<key>com.apple.collabd.theme.sidebar_and_history_banner_backgrounds</key>
+		<string>#F2F9FF</string>
+		<key>com.apple.collabd.theme.show_more_link</key>
+		<string>#467CBF</string>
+		<key>com.apple.collabd.theme.sidebar.rounded_button.color</key>
+		<string>#33597B</string>
+		<key>com.apple.collabd.theme.sidebar.rounded_button.border</key>
+		<string>1px solid #B0CEE4</string>
+		<key>com.apple.collabd.theme.sidebar.rounded_button.border-bottom-color</key>
+		<string>#9ABAD5</string>
+		<key>com.apple.collabd.theme.sidebar.rounded_button.background-color</key>
+		<string>#FCFDFF</string>
+		<key>com.apple.collabd.theme.sidebar.rounded_button.background-gradient-webkit</key>
+		<string>-webkit-gradient(linear, left top, left bottom, from(#FEFFFE), to(#E9F4FF))</string>
+		<key>com.apple.collabd.theme.sidebar.rounded_button.background-gradient-moz</key>
+		<string>-moz-linear-gradient(top, #FEFFFE, #E9F4FF)</string>
+		<key>com.apple.collabd.theme.sidebar.rounded_button.background-gradient-ms</key>
+		<string>"progid:DXImageTransform.Microsoft.gradient(startColorStr='#FEFFFE', EndColorStr='#E9F4FF')"</string>
+		<key>com.apple.collabd.sidebar.selected_losenge.background-color</key>
+		<string>#AAC5DF</string>
+		<key>com.apple.collabd.sidebar.selected_losenge.border</key>
+		<string>1px solid #9EB8D0</string>
+		<key>com.apple.collabd.sidebar.selected_losenge.color</key>
+		<string>#FFFFFF</string>
+		<key>com.apple.collabd.sidebar.selected_losenge.text-shadow</key>
+		<string>rgba(0,0,0,0.2) 0px -1px 0px</string>
+		<key>com.apple.collabd.theme.filter_bar_view.text-shadow</key>
+		<string>rgba(255,255,255,0.5) 0px 1px 0px</string>
+		<key>com.apple.collabd.theme.filter_bar_view.button_selected.text-shadow</key>
+		<string>rgba(0,0,0,0.4) 0px -1px 0px</string>
+		<key>com.apple.collabd.theme.filter_bar_view.button_selected.background-color</key>
+		<string>#5282b2</string>
+		<key>com.apple.collabd.theme.filter_bar_view.button_selected.background-webkit</key>
+		<string>-webkit-gradient(linear, left top, left bottom, from(#4f7fa3), to(#6596c2))</string>
+		<key>com.apple.collabd.theme.filter_bar_view.button_selected.background-moz</key>
+		<string>-moz-linear-gradient(top, #4f7fa3, #6596c2)</string>
+		<key>com.apple.collabd.theme.filter_bar_view.button_selected.box-shadow</key>
+		<string>0px 1px 0px rgba(255,255,255,0.3), inset 0px 0px 2px rgba(0,0,0,0.5)</string>
+		<key>com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button.border</key>
+		<string>1px solid rgba(57,89,134,0.6)</string>
+		<key>com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button.text-shadow</key>
+		<string>rgba(255,255,255,0.4) 0px 1px 0px</string>
+		<key>com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button.box-shadow</key>
+		<string>inset rgba(255,255,255,0.3) 0px 1px 0px</string>
+		<key>com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button-active.text-shadow</key>
+		<string>rgba(255,255,255,0.3) 0px 1px 0px</string>
+		<key>com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button-active.box-shadow</key>
+		<string>inset rgba(57,89,134,0.4) 0px 1px 3px</string>
+		<key>com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button-active.background-webkit</key>
+		<string>-webkit-gradient(linear, left top, left bottom, from(rgba(57,89,134,0.3)), to(rgba(57,89,134,0)))</string>
+		<key>com.apple.collabd.theme.filter_bar_view.cc-filter-bar-right-button-active.background-moz</key>
+		<string>-moz-linear-gradient(top, from(rgba(57,89,134,0.3)), to(rgba(57,89,134,0)))</string>
+		<key>com.apple.collabd.theme.comment.moderation_banner.background-color</key>
+		<string>#5F6C7F</string>
+		<key>com.apple.collabd.theme.comment.body.background-webkit</key>
+		<string>-webkit-gradient(linear, left top, left bottom, from(#EBF5FF), to(#DBEBFA))</string>
+		<key>com.apple.collabd.theme.comment.body.background-moz</key>
+		<string>-moz-linear-gradient(top, #EBF5FF, #DBEBFA)</string>
+		<key>com.apple.collabd.theme.comment.body.background-color</key>
+		<string>#DBEBFA</string>
+		<key>com.apple.collabd.theme.comment.body.border</key>
+		<string>1px solid #C3D0D3</string>
+		<key>com.apple.collabd.theme.comment.body.border-bottom-color</key>
+		<string>#B0C0CD</string>
+		<key>com.apple.collabd.theme.comment.body.box-shadow</key>
+		<string>0px 1px 0px #DEE6EC</string>
+		<key>com.apple.collabd.theme.tagger.textfield.border</key>
+		<string>1px solid #C5D0DB</string>
+		<key>com.apple.collabd.theme.tagger.textfield.border-bottom-color</key>
+		<string>#95A5B5</string>
+		<key>com.apple.collabd.theme.tagger.textfield.box-shadow</key>
+		<string>0px 1px 0px #E0E6E2</string>
+		<key>com.apple.collabd.theme.related.link.color</key>
+		<string>#607AA1</string>
+		<key>com.apple.collabd.theme.related.popup.header.background-color</key>
+		<string>rgba(100, 130, 165, 0.2)</string>
+		<key>com.apple.collabd.theme.related.popup.header.border</key>
+		<string>1px solid #A2B2CB</string>
+		<key>com.apple.collabd.theme.revisions.details.banner.border-bottom</key>
+		<string>1px solid #D8DFE4</string>
+		<key>com.apple.collabd.theme.revisions.details.buttons.border</key>
+		<string>1px solid #A9C7DE</string>
+		<key>com.apple.collabd.theme.revisions.details.buttons.color</key>
+		<string>#426D8E</string>
+	</dict>
+</plist>

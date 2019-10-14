@@ -1,0 +1,100 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Tag editor */
+
+.cc-tag-editor
+{
+	position: relative;
+}
+
+.cc-tag-editor .cc-sidebar-actions
+{
+	right: -13px;
+}
+
+.cc-tag-editor .cc-tag-entryfield
+{
+	height: 0px;
+	opacity: 0;
+	overflow: visible;
+	position: relative;
+}
+
+.cc-tag-editor.editing .cc-tag-entryfield
+{
+	height: 20px;
+	opacity: 1;
+}
+
+.cc-tag-editor .cc-tag-entryfield input
+{
+	height: 14px;
+	outline: none;
+	padding: 1px 9px 3px 9px;
+	width: 195px;
+	border-radius: 13px;
+}
+
+.cc-tag-collection
+{
+	margin-top: 5px;
+}
+
+.cc-tag
+{
+    max-width: 90%;
+	display: inline-block;
+	height: 18px;
+	line-height: 18px;
+	margin: 0px 4px 6px 0px;
+	position: relative;
+	border-radius: 2em;
+}
+
+.cc-tag a
+{
+	font-weight: normal !important;
+	padding: 0 10px;
+	width: auto !important;
+	display: inline-block;
+	border-radius: 2em;
+}
+
+.cc-tag .button.delete
+{
+	height: 21px;
+	opacity: 0;
+	position: absolute;
+	right: -10px;
+	top: -10px;
+	z-index: 100;
+	-webkit-transition: opacity 0.15s ease-in-out;
+}
+
+.cc-tag:hover .button.delete
+{
+	opacity: 1;
+}
+
+.cc-tag-editor .cc-tag-empty-message
+{
+	display: block;
+}
+
+.cc-tag-editor.editing .cc-tag-empty-message
+{
+	display: none;
+}
+
+/* @end */

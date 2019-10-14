@@ -1,0 +1,226 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+#
+# PromotionExtra script for calendar server.
+#
+# Copyright (c) 2012-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+import datetime
+import os
+from plistlib import readPlist, writePlistToString
+import subprocess
+import sys
+from time import sleep
+from twisted.python.filepath import FilePath
+
+DEFAULT_SERVER_ROOT = u"/Library/Server/Calendar and Contacts"
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+PREFS_FILE = "/Library/Preferences/com.apple.servermgr_calendar.plist"
+DITTO = "/usr/bin/ditto"
+ALERT_SCRIPT = "{root}/Library/CalendarServer/bin/calendarserver_alert".format(root=SERVER_APP_ROOT)
+
+
+def serverRootLocation():
+    """
+    Return the ServerRoot value from the servermgr_calendar.plist.  If not
+    present, return the default.
+
+    @rtype: C{unicode}
+    """
+    plist = "/Library/Preferences/com.apple.servermgr_calendar.plist"
+    serverRoot = u"/Library/Server/Calendar and Contacts"
+    if os.path.exists(plist):
+        serverRoot = readPlist(plist).get("ServerRoot", serverRoot)
+    if isinstance(serverRoot, str):
+        serverRoot = serverRoot.decode("utf-8")
+    return serverRoot
+
+
+CALENDAR_SERVER_ROOT = serverRootLocation()
+LOG_DIR = os.path.join(CALENDAR_SERVER_ROOT, "Logs")
+LOG = os.path.join(LOG_DIR, "migration.log")
+OLD_CALDAVD_PLIST = os.path.join(DEFAULT_SERVER_ROOT, "Config", "caldavd.plist")
+NEW_CALDAVD_PLIST = os.path.join(CALENDAR_SERVER_ROOT, "Config", "caldavd-system.plist")
+
+
+def log(msg):
+    try:
+        timestamp = datetime.datetime.now().strftime("%b %d %H:%M:%S")
+        if isinstance(msg, unicode):
+            msg = msg.encode("utf-8")
+        msg = "calendarpromotionextra: %s %s" % (timestamp, msg)
+        print(msg)  # so it appears in /Library/Logs/ServerSetup.log
+        with open(LOG, 'a') as output:
+            output.write("%s\n" % (msg,))  # so it appears in our log
+    except:
+        # Could not write to log
+        pass
+
+
+# def postAlert(alertType, args):
+#     if os.path.exists(ALERT_SCRIPT):
+#         try:
+#             commandLine = [ALERT_SCRIPT, alertType]
+#             commandLine.extend(args)
+#             subprocess.Popen(
+#                 commandLine,
+#                 stdout=subprocess.PIPE,
+#                 stderr=subprocess.PIPE,
+#             ).communicate()
+#         except Exception, e:
+#             log(
+#                 "Could not post alert: {alertType} {args} ({error})",
+#                 alertType=alertType, args=args, error=e
+#             )
+
+
+def relocateData():
+    """
+    If DataRoot is not under ServerRoot, move the ServerRoot contents to be
+    siblings of DataRoot and update the ServerRoot value in the plist.
+    """
+
+    serverRoot = serverRootLocation()
+
+    # caldavd.plist in /Library/Server/Calendar and Contacts
+    oldSystemPlistFilePath = FilePath(OLD_CALDAVD_PLIST)
+
+    # caldavd-system.plist under ServerRoot/Config
+    newSystemPlistFilePath = FilePath(NEW_CALDAVD_PLIST)
+
+    # remembers whether we want to update the legacy caldavd.plist or the
+    # modern caldavd-system.plist
+    # If True, we update the DataRoot in the legacy plist and let the
+    # CommonExtra do the job of pulling out the appropriate keys and writing
+    # to caldavd-system.plist
+    writeToOldPlist = False
+
+    if newSystemPlistFilePath.exists():
+        log("%s exists" % (newSystemPlistFilePath.path,))
+        systemPlist = readPlist(newSystemPlistFilePath.path)
+        dataRoot = systemPlist.get("DataRoot", "Data")
+    elif oldSystemPlistFilePath.exists():
+        log("Old %s exists" % (oldSystemPlistFilePath.path,))
+        systemPlist = readPlist(oldSystemPlistFilePath.path)
+        dataRoot = systemPlist.get("DataRoot", "Data")
+        writeToOldPlist = True
+    else:
+        log("%s does not exist" % (newSystemPlistFilePath.path,))
+        dataRoot = os.path.join(DEFAULT_SERVER_ROOT, "Data")
+
+    log("DataRoot: %s" % (dataRoot.encode("utf-8")))
+
+    if dataRoot.startswith("/Volumes/"):
+        log("DataRoot is external")
+
+        # Check that the volume is present
+        volume = "/".join(dataRoot.split("/")[:3])
+        if not os.path.exists(volume):
+            log("Volume not present: {}".format(volume))
+            sys.exit(1)
+
+        # Update DataRoot in caldavd-system.plist
+        serverRoot = os.path.dirname(dataRoot.rstrip("/"))  # parent of DataRoot
+        log("ServerRoot now: %s" % (serverRoot.encode("utf-8"),))
+        # If the old DataRoot leaf directory is not named "Data", rename it
+        if os.path.basename(dataRoot) != "Data":
+            newDataRoot = os.path.join(serverRoot, "Data")
+            log("Renaming {} to {}".format(dataRoot, newDataRoot))
+            os.rename(dataRoot, newDataRoot)
+        # Copy Config directory
+        src = "/Library/Server/Calendar and Contacts/Config"
+        dest = os.path.join(serverRoot, "Config")
+        log("Copying Config")
+        subprocess.call([DITTO, src, dest])
+        systemPlist["DataRoot"] = "Data"
+        if writeToOldPlist:
+            # Update the legacy plist which will be modernized in CommonExtra
+            targetFilePath = FilePath(os.path.join(serverRoot, "Config", "caldavd.plist"))
+        else:
+            # We've already got a modern plist, so just update it directly
+            targetFilePath = FilePath(os.path.join(serverRoot, "Config", "caldavd-system.plist"))
+        targetFilePath.setContent(writePlistToString(systemPlist))
+
+    # Update ServerRoot in the prefs file
+    log("ServerRoot: %s" % (serverRoot.encode("utf-8")))
+    prefsFilePath = FilePath(PREFS_FILE)
+    if prefsFilePath.exists():
+        prefs = readPlist(prefsFilePath.path)
+    else:
+        prefs = {}
+    prefs["ServerRoot"] = serverRoot
+    prefsFilePath.setContent(writePlistToString(prefs))
+
+
+def checkVolume(volumePath):
+    if volumePath.startswith("/Volumes/"):
+        # We're configured to use an external volume
+        volume = "/".join(volumePath.split("/")[:3])
+
+        # If the "volume" is there but it's a "phantom", i.e. a regular directory
+        # underneath /Volumes, give up immediately
+        if os.path.exists(volume):
+            # Check for phantom volume
+            bootDevice = os.stat("/").st_dev
+            dataDevice = os.stat(volumePath).st_dev
+            if bootDevice == dataDevice:
+                log("Phantom volume detected: {}".format(volume.encode("utf-8")))
+                sys.exit(2)
+        else:
+            # The volume is not mounted.  Let's wait 2 minutes to give it a chance
+            # to mount, and then give up.
+            tries = 60
+            while not os.path.exists(volume):
+                log("Volume not present: {}".format(volume.encode("utf-8")))
+                if tries == 0:
+                    log("Volume did not mount after waiting two minutes: {}".format(volume.encode("utf-8")))
+                    sys.exit(3)
+                sleep(2)
+                tries -= 1
+            log("Volume has mounted: {}".format(volume.encode("utf-8")))
+
+
+def main():
+
+    checkVolume(CALENDAR_SERVER_ROOT)
+
+    # Also, check the DataRoot value in case this is an older config since
+    # DataRoot could point to a volume other than server root
+    systemPlistPath = os.path.join(CALENDAR_SERVER_ROOT, "Config", "caldavd-system.plist")
+    if os.path.exists(systemPlistPath):
+        systemPlist = readPlist(systemPlistPath)
+        dataRoot = systemPlist.get("DataRoot", "")
+        if dataRoot.startswith("/Volumes/"):
+            checkVolume(dataRoot)
+
+
+    obsoletes = [
+        "/Library/Server/Web/Config/apache2/webapps/org.calendarserver.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contacts.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contacts.plist.default",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contactsssl.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.contactsssl.plist.default",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.webcal.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.webcalssl.plist",
+        "/Library/Server/Web/Config/apache2/webapps/com.apple.webapp.webcal.webssl.plist",
+    ]
+    for plistPath in obsoletes:
+        if os.path.exists(plistPath):
+            log("Obsolete plist exists: %s" % (plistPath,))
+            try:
+                os.remove(plistPath)
+                log("Removed %s" % (plistPath,))
+            except Exception, e:
+                log("Failed to remove %s: %s" % (plistPath, e))
+
+    relocateData()
+
+
+if __name__ == "__main__":
+    main()

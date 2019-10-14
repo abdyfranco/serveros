@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.apple.collabd</string>
+	<key>Disabled</key>
+	<true/>
+	<key>ProcessType</key>
+	<string>Interactive</string>
+	<key>UserName</key>
+	<string>_teamsserver</string>
+	<key>Sockets</key>
+	<dict>
+	<key>Listeners</key>
+	<!--- For now, listen on both legacy TCP port and UNIX socket. TCP port will be removed once Apache proxies to UNIX socket. --->
+	<array>
+		<dict>
+			<key>SockNodeName</key>
+			<string>127.0.0.1</string>
+			<key>SockFamily</key>
+			<string>IPv4</string>
+			<key>SockServiceName</key>
+			<string>4444</string>
+			<key>SockType</key>
+			<string>stream</string>
+		</dict>
+		<dict>
+			<key>SockFamily</key>
+			<string>Unix</string>
+			<key>SockPathName</key>
+			<string>/var/run/collabd</string>
+			<key>SockPathMode</key>
+			<integer>432</integer>
+			<key>SockPathOwner</key>
+			<integer>94</integer>
+			<key>SockPathGroup</key>
+			<integer>223</integer>
+		</dict>
+	</array>
+	</dict>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Applications/Server.app/Contents/ServerRoot/usr/sbin/collabd</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>NETWORK</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>portmapState</key>\n';
+			commandValue += '		<string>RUNNING</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "getIGDPortMappings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getIGDPortMappings</string>\n';
+		} else if (selection == "getCurrentGatewayInfo") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getCurrentGatewayInfo</string>\n';
+		} else if (selection == "manageCurrentIGD") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>manageCurrentIGD</string>\n';
+			commandValue += '	<key>manage</key>\n';
+			commandValue += '	<true/>\n';
+		} else if (selection == "syncIGDPortMappings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>syncIGDPortMappings</string>\n';
+		} else if (selection == "clearIGDPortMappings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>clearIGDPortMappings</string>\n';
+		} else if (selection == "setIGDPasswordForDevice") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setIGDPasswordForDevice</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>newPasswordForDevice</string>\n';
+		} else if (selection == "setIGDDNSServers") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setIGDDNSServers</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>passwordForDevice</string>\n';
+			commandValue += '   <key>dnsServers</key>\n';
+			commandValue += '   <array>\n';
+			commandValue += '       <string>127.0.0.1</string>\n';
+			commandValue += '   </array>\n';
+        } else if (selection == "openIGDTransaction") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>openIGDTransaction</string>\n';
+			commandValue += '	<key>descriptor</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '	</dict>\n';
+        } else if (selection == "commitIGDTransaction") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>commitIGDTransaction</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "cancelIGDTransaction") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>cancelIGDTransaction</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "getIGDTransactionStatus") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getIGDTransactionStatus</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "clearCurrentTransaction") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>clearCurrentTransaction</string>\n';
+        } else if (selection == "getIGDSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getIGDSettings</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "setIGDSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setIGDSettings</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+			commandValue += '	<key>dnsServers</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>serverIP1</string>\n';
+			commandValue += '	<string>serverIP2</string>\n';
+			commandValue += '	<string>serverIP3</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>dnsServers6</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>6serverIP1</string>\n';
+			commandValue += '	<string>6serverIP2</string>\n';
+			commandValue += '	<string>6serverIP3</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>serverDHCPAddress</key>\n';
+			commandValue += '	<string>IP_ADDRESS</string>\n';
+			commandValue += '	<key>serverDHCPName</key>\n';
+			commandValue += '	<string>server_name</string>\n';
+        } else if (selection == "saveIGDSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>saveIGDSettings</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "restoreIGDSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>restoreIGDSettings</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "getIGDPortmaps") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getIGDPortmaps</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "setIGDPortmaps") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setIGDPortmaps</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+			commandValue += '	<key>igdPortmaps</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	[portmap elements]\n';
+			commandValue += '	</array>\n';
+        } else if (selection == "saveIGDPortmaps") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>saveIGDPortmaps</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+        } else if (selection == "restoreIGDPortmaps") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>restoreIGDPortmaps</string>\n';
+			commandValue += '	<key>transactionID</key>\n';
+			commandValue += '	<string>id</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_network'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+						<OPTION VALUE="getIGDPortMappings">getIGDPortMappings
+						<OPTION VALUE="syncIGDPortMappings">syncIGDPortMappings
+						<OPTION VALUE="clearIGDPortMappings">clearIGDPortMappings
+						<OPTION VALUE="getCurrentGatewayInfo">getCurrentGatewayInfo
+						<OPTION VALUE="manageCurrentIGD">manageCurrentIGD
+						<OPTION VALUE="setIGDPasswordForDevice">setIGDPasswordForDevice
+                       <OPTION VALUE="setIGDDNSServers">setIGDDNSServers
+                        <OPTION VALUE="openIGDTransaction">openIGDTransaction
+                        <OPTION VALUE="commitIGDTransaction">commitIGDTransaction
+                        <OPTION VALUE="cancelIGDTransaction">cancelIGDTransaction
+                        <OPTION VALUE="clearCurrentTransaction">clearCurrentTransaction
+                        <OPTION VALUE="getIGDTransactionStatus">getIGDTransactionStatus
+                        <OPTION VALUE="getIGDSettings">getIGDSettings
+                        <OPTION VALUE="setIGDSettings">setIGDSettings
+                        <OPTION VALUE="saveIGDSettings">saveIGDSettings
+                        <OPTION VALUE="restoreIGDSettings">restoreIGDSettings
+                        <OPTION VALUE="getIGDPortmaps">getIGDPortmaps
+                        <OPTION VALUE="setIGDPortmaps">setIGDPortmaps
+                        <OPTION VALUE="saveIGDPortmaps">saveIGDPortmaps
+                        <OPTION VALUE="restoreIGDPortmaps">restoreIGDPortmaps
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_network">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

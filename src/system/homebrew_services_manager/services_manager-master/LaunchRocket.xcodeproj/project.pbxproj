@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03233D5F17054544009727CB /* ServiceController.h in Headers */ = {isa = PBXBuildFile; fileRef = 03233D5D17054544009727CB /* ServiceController.h */; };
+		03233D6017054544009727CB /* ServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03233D5E17054544009727CB /* ServiceController.m */; };
+		0351F8731705543600CE9495 /* ServiceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0351F8711705543600CE9495 /* ServiceManager.h */; };
+		0351F8741705543600CE9495 /* ServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351F8721705543600CE9495 /* ServiceManager.m */; };
+		039EEF8A189A1E1E00B5F169 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 039EEF89189A1E1E00B5F169 /* ServiceManagement.framework */; };
+		039F63E51892220F004C6696 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 039F63E21892220F004C6696 /* red.png */; };
+		039F63E61892220F004C6696 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 039F63E31892220F004C6696 /* green.png */; };
+		039F63E71892220F004C6696 /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 039F63E41892220F004C6696 /* yellow.png */; };
+		039F63EE18923821004C6696 /* HorizontalDivider.h in Headers */ = {isa = PBXBuildFile; fileRef = 039F63EC18923821004C6696 /* HorizontalDivider.h */; };
+		039F63EF18923821004C6696 /* HorizontalDivider.m in Sources */ = {isa = PBXBuildFile; fileRef = 039F63ED18923821004C6696 /* HorizontalDivider.m */; };
+		039F63F118923AA8004C6696 /* gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 039F63F018923AA8004C6696 /* gray.png */; };
+		03A8692B189327D900ED639C /* Process.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A86929189327D900ED639C /* Process.h */; };
+		03A8692C189327D900ED639C /* Process.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8692A189327D900ED639C /* Process.m */; };
+		03C5C20618AAC02B00FB25EF /* special-plists.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C5C20518AAC02B00FB25EF /* special-plists.plist */; };
+		03D25AA318A35FEF007B253F /* sudo.app in Resources */ = {isa = PBXBuildFile; fileRef = 03D25AA218A35FEF007B253F /* sudo.app */; };
+		03EE9DA216FFD39900E09197 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EE9DA116FFD39900E09197 /* Cocoa.framework */; };
+		03EE9DA416FFD39900E09197 /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EE9DA316FFD39900E09197 /* PreferencePanes.framework */; };
+		03EE9DAE16FFD39900E09197 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03EE9DAC16FFD39900E09197 /* InfoPlist.strings */; };
+		03EE9DB216FFD39900E09197 /* LaunchRocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE9DB116FFD39900E09197 /* LaunchRocket.m */; };
+		03EE9DB716FFD39900E09197 /* LaunchRocket.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03EE9DB516FFD39900E09197 /* LaunchRocket.xib */; };
+		03F2EBBA1702997E000077DE /* Service.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F2EBB81702997D000077DE /* Service.h */; };
+		03F2EBBB1702997E000077DE /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EBB91702997E000077DE /* Service.m */; };
+		03F2EBC61702A55C000077DE /* FlippedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F2EBC41702A55C000077DE /* FlippedView.h */; };
+		03F2EBC71702A55C000077DE /* FlippedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EBC51702A55C000077DE /* FlippedView.m */; };
+		2042ABB1217E6A63006A9502 /* services.png in Resources */ = {isa = PBXBuildFile; fileRef = 2042ABB0217E6A63006A9502 /* services.png */; };
+		204DF5A1217EF51100523D0A /* STPrivilegedTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 204DF59F217EF51100523D0A /* STPrivilegedTask.h */; };
+		204DF5A2217EF51100523D0A /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 204DF5A0217EF51100523D0A /* STPrivilegedTask.m */; };
+		204DF5A4217EF74500523D0A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204DF5A3217EF74500523D0A /* Security.framework */; };
+		208D4F91217E9C810095180A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 208D4F8F217E9C810095180A /* Localizable.strings */; };
+		20A40CB7217E7FAC00882CA7 /* services.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 20A40CB6217E7FAB00882CA7 /* services.tiff */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03233D5D17054544009727CB /* ServiceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceController.h; sourceTree = "<group>"; };
+		03233D5E17054544009727CB /* ServiceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceController.m; sourceTree = "<group>"; };
+		0351F8711705543600CE9495 /* ServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceManager.h; sourceTree = "<group>"; };
+		0351F8721705543600CE9495 /* ServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceManager.m; sourceTree = "<group>"; };
+		039EEF89189A1E1E00B5F169 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		039F63E21892220F004C6696 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
+		039F63E31892220F004C6696 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
+		039F63E41892220F004C6696 /* yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow.png; sourceTree = "<group>"; };
+		039F63EC18923821004C6696 /* HorizontalDivider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalDivider.h; sourceTree = "<group>"; };
+		039F63ED18923821004C6696 /* HorizontalDivider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalDivider.m; sourceTree = "<group>"; };
+		039F63F018923AA8004C6696 /* gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray.png; sourceTree = "<group>"; };
+		03A86929189327D900ED639C /* Process.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Process.h; sourceTree = "<group>"; };
+		03A8692A189327D900ED639C /* Process.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Process.m; sourceTree = "<group>"; };
+		03C5C20518AAC02B00FB25EF /* special-plists.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "special-plists.plist"; sourceTree = "<group>"; };
+		03D25AA218A35FEF007B253F /* sudo.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = sudo.app; path = LaunchRocket/sudo.app; sourceTree = "<group>"; };
+		03EE9D9E16FFD39900E09197 /* Services Manager.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Services Manager.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03EE9DA116FFD39900E09197 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		03EE9DA316FFD39900E09197 /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
+		03EE9DA616FFD39900E09197 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		03EE9DA716FFD39900E09197 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		03EE9DA816FFD39900E09197 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		03EE9DAB16FFD39900E09197 /* LaunchRocket-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LaunchRocket-Info.plist"; sourceTree = "<group>"; };
+		03EE9DAD16FFD39900E09197 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		03EE9DAF16FFD39900E09197 /* LaunchRocket-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LaunchRocket-Prefix.pch"; sourceTree = "<group>"; };
+		03EE9DB016FFD39900E09197 /* LaunchRocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LaunchRocket.h; sourceTree = "<group>"; };
+		03EE9DB116FFD39900E09197 /* LaunchRocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LaunchRocket.m; sourceTree = "<group>"; };
+		03F2EBB81702997D000077DE /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		03F2EBB91702997E000077DE /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
+		03F2EBC41702A55C000077DE /* FlippedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlippedView.h; sourceTree = "<group>"; };
+		03F2EBC51702A55C000077DE /* FlippedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlippedView.m; sourceTree = "<group>"; };
+		2042ABB0217E6A63006A9502 /* services.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = services.png; sourceTree = "<group>"; };
+		204DF59F217EF51100523D0A /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
+		204DF5A0217EF51100523D0A /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
+		204DF5A3217EF74500523D0A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		204EE6C1217EB1F200E90E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchRocket.xib; sourceTree = "<group>"; };
+		208D4F90217E9C810095180A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		208D4F92217E9C890095180A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		208D4F93217E9C910095180A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		208D4F94217E9C990095180A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		208D4F95217E9CA20095180A /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		20A40CB6217E7FAB00882CA7 /* services.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = services.tiff; sourceTree = "<group>"; };
+		20A40CDD217E843D00882CA7 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/LaunchRocket.xib; sourceTree = "<group>"; };
+		20A40CDE217E844200882CA7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		20A40CDF217E845000882CA7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/LaunchRocket.xib; sourceTree = "<group>"; };
+		20A40CE0217E845500882CA7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		20A40CE1217E845B00882CA7 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/LaunchRocket.xib; sourceTree = "<group>"; };
+		20A40CE2217E846000882CA7 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		20A40CE3217E846500882CA7 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/LaunchRocket.xib; sourceTree = "<group>"; };
+		20A40CE4217E846900882CA7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03EE9D9916FFD39900E09197 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				204DF5A4217EF74500523D0A /* Security.framework in Frameworks */,
+				039EEF8A189A1E1E00B5F169 /* ServiceManagement.framework in Frameworks */,
+				03EE9DA216FFD39900E09197 /* Cocoa.framework in Frameworks */,
+				03EE9DA416FFD39900E09197 /* PreferencePanes.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03EE9D9316FFD39900E09197 = {
+			isa = PBXGroup;
+			children = (
+				03D25AA218A35FEF007B253F /* sudo.app */,
+				03EE9DA916FFD39900E09197 /* LaunchRocket */,
+				03EE9DA016FFD39900E09197 /* Frameworks */,
+				03EE9D9F16FFD39900E09197 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		03EE9D9F16FFD39900E09197 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03EE9D9E16FFD39900E09197 /* Services Manager.prefPane */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03EE9DA016FFD39900E09197 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				204DF5A3217EF74500523D0A /* Security.framework */,
+				039EEF89189A1E1E00B5F169 /* ServiceManagement.framework */,
+				03EE9DA116FFD39900E09197 /* Cocoa.framework */,
+				03EE9DA316FFD39900E09197 /* PreferencePanes.framework */,
+				03EE9DA516FFD39900E09197 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		03EE9DA516FFD39900E09197 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03EE9DA616FFD39900E09197 /* AppKit.framework */,
+				03EE9DA716FFD39900E09197 /* CoreData.framework */,
+				03EE9DA816FFD39900E09197 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		03EE9DA916FFD39900E09197 /* LaunchRocket */ = {
+			isa = PBXGroup;
+			children = (
+				03EE9DB016FFD39900E09197 /* LaunchRocket.h */,
+				03EE9DB116FFD39900E09197 /* LaunchRocket.m */,
+				20A40CB6217E7FAB00882CA7 /* services.tiff */,
+				03EE9DB516FFD39900E09197 /* LaunchRocket.xib */,
+				03EE9DAA16FFD39900E09197 /* Supporting Files */,
+				03F2EBB81702997D000077DE /* Service.h */,
+				03F2EBB91702997E000077DE /* Service.m */,
+				03F2EBC41702A55C000077DE /* FlippedView.h */,
+				03F2EBC51702A55C000077DE /* FlippedView.m */,
+				03233D5D17054544009727CB /* ServiceController.h */,
+				03233D5E17054544009727CB /* ServiceController.m */,
+				0351F8711705543600CE9495 /* ServiceManager.h */,
+				0351F8721705543600CE9495 /* ServiceManager.m */,
+				039F63EC18923821004C6696 /* HorizontalDivider.h */,
+				039F63ED18923821004C6696 /* HorizontalDivider.m */,
+				03A86929189327D900ED639C /* Process.h */,
+				03A8692A189327D900ED639C /* Process.m */,
+				204DF59F217EF51100523D0A /* STPrivilegedTask.h */,
+				204DF5A0217EF51100523D0A /* STPrivilegedTask.m */,
+				208D4F8F217E9C810095180A /* Localizable.strings */,
+			);
+			path = LaunchRocket;
+			sourceTree = "<group>";
+		};
+		03EE9DAA16FFD39900E09197 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2042ABB0217E6A63006A9502 /* services.png */,
+				039F63E21892220F004C6696 /* red.png */,
+				039F63F018923AA8004C6696 /* gray.png */,
+				039F63E31892220F004C6696 /* green.png */,
+				039F63E41892220F004C6696 /* yellow.png */,
+				03EE9DAB16FFD39900E09197 /* LaunchRocket-Info.plist */,
+				03EE9DAC16FFD39900E09197 /* InfoPlist.strings */,
+				03EE9DAF16FFD39900E09197 /* LaunchRocket-Prefix.pch */,
+				03C5C20518AAC02B00FB25EF /* special-plists.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		03EE9D9A16FFD39900E09197 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F2EBBA1702997E000077DE /* Service.h in Headers */,
+				03F2EBC61702A55C000077DE /* FlippedView.h in Headers */,
+				204DF5A1217EF51100523D0A /* STPrivilegedTask.h in Headers */,
+				039F63EE18923821004C6696 /* HorizontalDivider.h in Headers */,
+				03A8692B189327D900ED639C /* Process.h in Headers */,
+				03233D5F17054544009727CB /* ServiceController.h in Headers */,
+				0351F8731705543600CE9495 /* ServiceManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		03EE9D9D16FFD39900E09197 /* Services Manager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03EE9DBA16FFD39900E09197 /* Build configuration list for PBXNativeTarget "Services Manager" */;
+			buildPhases = (
+				03EE9D9816FFD39900E09197 /* Sources */,
+				03EE9D9916FFD39900E09197 /* Frameworks */,
+				03EE9D9A16FFD39900E09197 /* Headers */,
+				03EE9D9B16FFD39900E09197 /* Resources */,
+				03EE9D9C16FFD39900E09197 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Services Manager";
+			productName = LaunchRocket;
+			productReference = 03EE9D9E16FFD39900E09197 /* Services Manager.prefPane */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		03EE9D9416FFD39900E09197 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "Josh Butts";
+			};
+			buildConfigurationList = 03EE9D9716FFD39900E09197 /* Build configuration list for PBXProject "LaunchRocket" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				es,
+				fr,
+				de,
+				it,
+				Base,
+			);
+			mainGroup = 03EE9D9316FFD39900E09197;
+			productRefGroup = 03EE9D9F16FFD39900E09197 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				03EE9D9D16FFD39900E09197 /* Services Manager */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		03EE9D9B16FFD39900E09197 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				039F63E61892220F004C6696 /* green.png in Resources */,
+				039F63E71892220F004C6696 /* yellow.png in Resources */,
+				208D4F91217E9C810095180A /* Localizable.strings in Resources */,
+				03D25AA318A35FEF007B253F /* sudo.app in Resources */,
+				039F63F118923AA8004C6696 /* gray.png in Resources */,
+				20A40CB7217E7FAC00882CA7 /* services.tiff in Resources */,
+				03EE9DAE16FFD39900E09197 /* InfoPlist.strings in Resources */,
+				03EE9DB716FFD39900E09197 /* LaunchRocket.xib in Resources */,
+				039F63E51892220F004C6696 /* red.png in Resources */,
+				03C5C20618AAC02B00FB25EF /* special-plists.plist in Resources */,
+				2042ABB1217E6A63006A9502 /* services.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		03EE9D9C16FFD39900E09197 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03EE9D9816FFD39900E09197 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03EE9DB216FFD39900E09197 /* LaunchRocket.m in Sources */,
+				03F2EBBB1702997E000077DE /* Service.m in Sources */,
+				204DF5A2217EF51100523D0A /* STPrivilegedTask.m in Sources */,
+				03F2EBC71702A55C000077DE /* FlippedView.m in Sources */,
+				03A8692C189327D900ED639C /* Process.m in Sources */,
+				03233D6017054544009727CB /* ServiceController.m in Sources */,
+				0351F8741705543600CE9495 /* ServiceManager.m in Sources */,
+				039F63EF18923821004C6696 /* HorizontalDivider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		03EE9DAC16FFD39900E09197 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03EE9DAD16FFD39900E09197 /* en */,
+				20A40CDE217E844200882CA7 /* es */,
+				20A40CE0217E845500882CA7 /* fr */,
+				20A40CE2217E846000882CA7 /* de */,
+				20A40CE4217E846900882CA7 /* it */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		03EE9DB516FFD39900E09197 /* LaunchRocket.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				20A40CDD217E843D00882CA7 /* es */,
+				20A40CDF217E845000882CA7 /* fr */,
+				20A40CE1217E845B00882CA7 /* de */,
+				20A40CE3217E846500882CA7 /* it */,
+				204EE6C1217EB1F200E90E50 /* Base */,
+			);
+			name = LaunchRocket.xib;
+			sourceTree = "<group>";
+		};
+		208D4F8F217E9C810095180A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				208D4F90217E9C810095180A /* de */,
+				208D4F92217E9C890095180A /* en */,
+				208D4F93217E9C910095180A /* es */,
+				208D4F94217E9C990095180A /* fr */,
+				208D4F95217E9CA20095180A /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		03EE9DB816FFD39900E09197 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		03EE9DB916FFD39900E09197 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		03EE9DBB16FFD39900E09197 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LaunchRocket/LaunchRocket-Prefix.pch";
+				INFOPLIST_FILE = "LaunchRocket/LaunchRocket-Info.plist";
+				INSTALL_PATH = "$(PROJECT_DIR)/Build";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = co.abdyfran.servicesmanager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "i386 x86_64";
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Debug;
+		};
+		03EE9DBC16FFD39900E09197 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LaunchRocket/LaunchRocket-Prefix.pch";
+				INFOPLIST_FILE = "LaunchRocket/LaunchRocket-Info.plist";
+				INSTALL_PATH = "$(PROJECT_DIR)/Build";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = co.abdyfran.servicesmanager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "i386 x86_64";
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		03EE9D9716FFD39900E09197 /* Build configuration list for PBXProject "LaunchRocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03EE9DB816FFD39900E09197 /* Debug */,
+				03EE9DB916FFD39900E09197 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03EE9DBA16FFD39900E09197 /* Build configuration list for PBXNativeTarget "Services Manager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03EE9DBB16FFD39900E09197 /* Debug */,
+				03EE9DBC16FFD39900E09197 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 03EE9D9416FFD39900E09197 /* Project object */;
+}

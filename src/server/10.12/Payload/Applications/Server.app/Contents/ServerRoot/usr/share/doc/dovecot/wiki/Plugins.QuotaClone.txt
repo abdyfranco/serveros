@@ -1,0 +1,31 @@
+Quota Clone Plugin
+==================
+
+(Requires v2.2.17+)
+
+Quota clone plugin is useful when you want to store everybody's current quota
+usage to a database, but you don't want to use the database as the
+authoritative quota database. For example you might want to access everybody's
+quota via Redis, but you don't store the Redis database permanently so it could
+become empty once in a while. In this case you can use e.g. <dict-file>
+[Quota.Dict.txt] or <count> [Quota.Count.txt] as the authoritative quota
+database and make a copy of the quota usage to Redis. From Redis you could then
+once in a while gather everybody's current quota usage and send it to yet
+another place (e.g. for statistics handling).
+
+Every time quota is updated, the value is updated to the cloned dict. There are
+race conditions with it so the quota may not always be 100% correct. The old
+value is always replaced with the new one though (not just
+incremented/decremented) so the cloned quota is never too much wrong.
+
+Configuration
+-------------
+
+---%<-------------------------------------------------------------------------
+mail_plugins = $mail_plugins quota quota_clone
+plugin {
+  quota_clone_dict = redis:127.0.0.1:6379
+}
+---%<-------------------------------------------------------------------------
+
+(This file was created from the wiki on 2016-04-26 04:43)

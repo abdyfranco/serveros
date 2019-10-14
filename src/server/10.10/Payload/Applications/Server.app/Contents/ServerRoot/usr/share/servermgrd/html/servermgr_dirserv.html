@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>DirServ</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "getLogPaths") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getLogPaths</string>\n';
+		} else if (selection == "tailFile") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>tailFile</string>\n';
+			commandValue += '	<key>identifier</key>\n';
+			commandValue += '	<string>serverLog</string>\n';
+			commandValue += '	<key>offset</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>amount</key>\n';
+			commandValue += '	<integer>10000</integer>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "readTreeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readTreeSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>anyKey</key>\n';
+			commandValue += '		<string>anyValue</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "getConfiguredDirectoryServers") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getConfiguredDirectoryServers</string>\n';
+			commandValue += '	<key>withStatus</key>\n';
+			commandValue += '	<true/>\n';
+		} else if (selection == "bindToADServer") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>bindToADServer</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>adserver.example.com</string>\n';
+			commandValue += '	<key>userName</key>\n';
+			commandValue += '	<string>admin</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>pass</string>\n';
+			commandValue += '	<key>computerID</key>\n';
+			commandValue += '	<string>mycomputer</string>\n';
+		} else if (selection == "validateADCredentials") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>validateADCredentials</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>adserver.example.com</string>\n';
+			commandValue += '	<key>userName</key>\n';
+			commandValue += '	<string>admin</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>pass</string>\n';
+		} else if (selection == "unbindFromADServer") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>unbindFromADServer</string>\n';
+			commandValue += '	<key>userName</key>\n';
+			commandValue += '	<string>admin</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>pass</string>\n';
+		} else if (selection == "addODServerAnon") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>addODServer</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>odserver.example.com</string>\n';
+		} else if (selection == "addODServerBind") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>addODServer</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>odserver.example.com</string>\n';
+			commandValue += '	<key>userName</key>\n';
+			commandValue += '	<string>admin</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>pass</string>\n';
+			commandValue += '	<key>computerID</key>\n';
+			commandValue += '	<string>mycomputer</string>\n';
+		} else if (selection == "getODServerProperties") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getODServerProperties</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>odserver.example.com</string>\n';
+		} else if (selection == "validateODCredentials") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>validateODCredentials</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>adserver.example.com</string>\n';
+			commandValue += '	<key>userName</key>\n';
+			commandValue += '	<string>admin</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>pass</string>\n';
+		} else if (selection == "removeODServerAnon") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>removeODServer</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>odserver.example.com</string>\n';
+		} else if (selection == "removeODServerBind") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>removeODServer</string>\n';
+			commandValue += '	<key>name</key>\n';
+			commandValue += '	<string>odserver.example.com</string>\n';
+			commandValue += '	<key>userName</key>\n';
+			commandValue += '	<string>admin</string>\n';
+			commandValue += '	<key>password</key>\n';
+			commandValue += '	<string>pass</string>\n';
+		} else if (selection == "preflightMasterCreation") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>preflightMasterCreation</string>\n';
+			commandValue += '	<key>dirAdminShortName</key>\n';
+			commandValue += '	<string>diradmin</string>\n';
+			commandValue += '	<key>dirAdminUID</key>\n';
+			commandValue += '	<string>1000</string>\n';
+		} else if (selection == "preflightReplicaCreation") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>preflightReplicaCreation</string>\n';
+			commandValue += '	<key>server</key>\n';
+			commandValue += '	<string>odserver.example.com</string>\n';
+			commandValue += '	<key>rootPassword</key>\n';
+			commandValue += '	<string>rootpass</string>\n';
+			commandValue += '	<key>dirAdminShortName</key>\n';
+			commandValue += '	<string>diradmin</string>\n';
+			commandValue += '	<key>dirAdminPassword</key>\n';
+			commandValue += '	<string>diradminpass</string>\n';
+		} else if (selection == "preflightReplicaPromotion") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>preflightReplicaPromotion</string>\n';
+			commandValue += '	<key>dirAdminShortName</key>\n';
+			commandValue += '	<string>diradmin</string>\n';
+			commandValue += '	<key>dirAdminPassword</key>\n';
+			commandValue += '	<string>diradminpass</string>\n';
+		} else if (selection == "preflightReplicaDecommission") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>preflightReplicaDecommission</string>\n';
+			commandValue += '	<key>rootPassword</key>\n';
+			commandValue += '	<string>rootpass</string>\n';
+			commandValue += '	<key>dirAdminShortName</key>\n';
+			commandValue += '	<string>diradmin</string>\n';
+			commandValue += '	<key>dirAdminPassword</key>\n';
+			commandValue += '	<string>diradminpass</string>\n';
+		} else if (selection == "createRootCA") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>createRootCA</string>\n';
+			commandValue += '	<key>caName</key>\n';
+			commandValue += '	<string>myCA</string>\n';
+			commandValue += '	<key>adminEmail</key>\n';
+			commandValue += '	<string>me@example.com</string>\n';
+		} else if (selection == "readEnabledAuthMechs") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readEnabledAuthMechs</string>\n';
+		} else if (selection == "enableAuthMechs") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>enableAuthMechs</string>\n';
+			commandValue += '	<key>authMechs</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>mech</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "disableAuthMechs") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>disableAuthMechs</string>\n';
+			commandValue += '	<key>authMechs</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>mech</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "createServicePrincipals") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>createServicePrincipals</string>\n';
+			commandValue += '	<key>services</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>serviceName</string>\n';
+			commandValue += '	</array>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_dirserv'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="getLogPaths">getLogPaths
+						<OPTION VALUE="tailFile">tailFile
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+						<OPTION VALUE="getConfiguredDirectoryServers">getConfiguredDirectoryServers
+						<OPTION VALUE="validateADCredentials">validateADCredentials
+						<OPTION VALUE="bindToADServer">bindToADServer
+						<OPTION VALUE="unbindFromADServer">unbindFromADServer
+						<OPTION VALUE="getODServerProperties">getODServerProperties
+						<OPTION VALUE="validateODCredentials">validateODCredentials
+						<OPTION VALUE="addODServerAnon">addODServer - anonymous binding
+						<OPTION VALUE="addODServerBind">addODServer - authenticated binding
+						<OPTION VALUE="removeODServerAnon">removeODServer - anonymous binding
+						<OPTION VALUE="removeODServerBind">removeODServer - authenticated binding
+                                                <OPTION VALUE="preflightMasterCreation">preflightMasterCreation
+                                                <OPTION VALUE="preflightReplicaCreation">preflightReplicaCreation
+                                                <OPTION VALUE="preflightReplicaPromotion">preflightReplicaPromotion
+                                                <OPTION VALUE="preflightReplicaDecommission">preflightReplicaDecommission
+                                                <OPTION VALUE="createRootCA">createRootCA
+                                                <OPTION VALUE="readEnabledAuthMechs">readEnabledAuthMechs
+                                                <OPTION VALUE="enableAuthMechs">enableAuthMechs
+                                                <OPTION VALUE="disableAuthMechs">disableAuthMechs
+                                                <OPTION VALUE="createServicePrincipals">createServicePrincipals
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_dirserv">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

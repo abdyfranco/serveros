@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Caching Service</string>
+
+	<key>promotion</key>
+	<dict>
+		<key>accounts</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>_assetcache</string>
+				<key>fullName</key>
+				<string>Asset Cache Service</string>
+				<key>uid</key>
+				<integer>235</integer>
+				<key>gid</key>
+				<integer>235</integer>
+				<key>guid</key>
+				<string>FFFFEEEE-DDDD-CCCC-BBBB-AAAA000000EB</string>
+				<key>type</key>
+				<string>user</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>_assetcache</string>
+				<key>fullName</key>
+				<string>Asset Cache Service</string>
+				<key>gid</key>
+				<integer>235</integer>
+				<key>guid</key>
+				<string>ABCDEFAB-CDEF-ABCD-EFAB-CDEF000000EB</string>
+				<key>type</key>
+				<string>group</string>
+			</dict>
+		</array>
+		<key>directories</key>
+		<array>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>group</key>
+				<string>wheel</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0775</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching/Data</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0750</string>
+			</dict>
+		</array>
+	</dict>
+
+	<key>migration</key>
+	<dict>
+		<key>directories</key>
+		<array>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>group</key>
+				<string>wheel</string>
+				<key>mode</key>
+				<string>0755</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0775</string>
+			</dict>
+			<dict>
+				<key>path</key>
+				<string>${serverLibrary}/Caching/Data</string>
+				<key>owner</key>
+				<string>_assetcache</string>
+				<key>group</key>
+				<string>_assetcache</string>
+				<key>mode</key>
+				<string>0750</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

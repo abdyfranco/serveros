@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Web Service Config Done</string>
+	<key>dependencies</key>
+	<array>
+		<string>servermgr_web_setup</string>
+		<string>servermgr_web_promotion</string>
+		<string>servermgr_web_migration</string>
+		<string>servermgr_web_restore</string>
+	</array>
+</dict>
+</plist>
+

@@ -1,0 +1,55 @@
+Full text search indexing
+=========================
+
+The following FTS indexers (in preferred order) are supported:
+
+ * <Solr> [Plugins.FTS.Solr.txt] communicates with Lucene's Solr server
+   [http://lucene.apache.org/solr/].
+ * <Lucene> [Plugins.FTS.Lucene.txt] uses Lucene's C++ library. (Requires
+   v2.1+)
+ * <Squat> [Plugins.FTS.Squat.txt] is Dovecot's own search index. (Obsolete in
+   v2.1+)
+
+Indexing
+--------
+
+Currently the FTS indexes are updated *only* while searching, so neither the
+<LDA.txt> nor an IMAP APPEND command updates the indexes immediately. This
+means that if user has received a lot of mail since the last indexing (==
+search operation), it may take a while to index all the mails before replying
+to the search command. Dovecot sends periodic "* OK Indexed n% of the mailbox"
+updates which can be caught by webmail implementations to implement a progress
+bar.
+
+The indexing can be done manually (e.g. cronjob) or by a LDA script by running:
+
+ * v2.1: 'doveadm index -u user@domain -q INBOX'
+ * v2.0: 'printf "a select INBOX\nb search text xyzzy\nc logout\n" |
+   /usr/local/libexec/dovecot/imap -u user@domain'
+
+Of course the INBOX needs to be replaced with whatever mailbox needs to be
+indexed.
+
+Rescan (v2.1+)
+--------------
+
+Since v2.1 Dovecot keeps track of indexed messages in the dovecot.index files.
+If this becomes out of sync with the actual FTS indexes (either too many or too
+few mails), you'll need to do a rescan:
+
+---%<-------------------------------------------------------------------------
+doveadm fts rescan -u user@domain
+---%<-------------------------------------------------------------------------
+
+Settings (v2.1+)
+----------------
+
+ * 'fts_index_timeout': When SEARCH notices that index isn't up to date, it
+   tells indexer to index the mails and waits until it is finished. This
+   setting adds a maximum timeout to this wait. If the timeout is reached, the
+   SEARCH fails with:'NO [INUSE] Timeout while waiting for indexing to finish'
+ * 'fts_decoder': Decode attachments to plaintext using this service and index
+   the resulting plaintext. See the 'decode2text.sh' script included in Dovecot
+   for how to use this.
+
+(This file was created from the wiki on 2013-08-05 04:42)

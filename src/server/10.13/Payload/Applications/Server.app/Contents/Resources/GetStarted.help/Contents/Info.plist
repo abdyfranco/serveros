@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en_US</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.serverappGetStarted.help</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Get Started Tutorials</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.6</string>
+	<key>CFBundleSignature</key>
+	<string>hbwr</string>
+	<key>CFBundleVersion</key>
+	<string>1.6</string>
+	<key>HPDBookAccessPath</key>
+	<string>redirect.html</string>
+	<key>HPDBookIconPath</key>
+	<string>spfic.png</string>
+	<key>HPDBookIndexPath</key>
+	<string>search.helpindex</string>
+	<key>HPDBookKBProduct</key>
+	<string></string>
+	<key>HPDBookKBURL</key>
+	<string></string>
+	<key>HPDBookRemoteURL</key>
+	<string>https://help.apple.com/serverapp/mac/getstarted/2.2/help/</string>
+	<key>HPDBookTitle</key>
+	<string>Get started with Server</string>
+	<key>HPDBookType</key>
+	<string>3</string>
+</dict>
+</plist>

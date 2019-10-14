@@ -1,0 +1,152 @@
+'\" t
+.\"     Title: CREATE DOMAIN
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "CREATE DOMAIN" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+CREATE_DOMAIN \- define a new domain
+.\" CREATE DOMAIN
+.SH "SYNOPSIS"
+.sp
+.nf
+CREATE DOMAIN \fIname\fR [ AS ] \fIdata_type\fR
+    [ COLLATE \fIcollation\fR ]
+    [ DEFAULT \fIexpression\fR ]
+    [ \fIconstraint\fR [ \&.\&.\&. ] ]
+
+where \fIconstraint\fR is:
+
+[ CONSTRAINT \fIconstraint_name\fR ]
+{ NOT NULL | NULL | CHECK (\fIexpression\fR) }
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBCREATE DOMAIN\fR
+creates a new domain\&. A domain is essentially a data type with optional constraints (restrictions on the allowed set of values)\&. The user who defines a domain becomes its owner\&.
+.PP
+If a schema name is given (for example,
+CREATE DOMAIN myschema\&.mydomain \&.\&.\&.) then the domain is created in the specified schema\&. Otherwise it is created in the current schema\&. The domain name must be unique among the types and domains existing in its schema\&.
+.PP
+Domains are useful for abstracting common constraints on fields into a single location for maintenance\&. For example, several tables might contain email address columns, all requiring the same CHECK constraint to verify the address syntax\&. Define a domain rather than setting up each table\*(Aqs constraint individually\&.
+.PP
+To be able to create a domain, you must have
+USAGE
+privilege on the underlying type\&.
+.SH "PARAMETERS"
+.PP
+\fIname\fR
+.RS 4
+The name (optionally schema\-qualified) of a domain to be created\&.
+.RE
+.PP
+\fIdata_type\fR
+.RS 4
+The underlying data type of the domain\&. This can include array specifiers\&.
+.RE
+.PP
+\fIcollation\fR
+.RS 4
+An optional collation for the domain\&. If no collation is specified, the underlying data type\*(Aqs default collation is used\&. The underlying type must be collatable if
+COLLATE
+is specified\&.
+.RE
+.PP
+DEFAULT \fIexpression\fR
+.RS 4
+The
+DEFAULT
+clause specifies a default value for columns of the domain data type\&. The value is any variable\-free expression (but subqueries are not allowed)\&. The data type of the default expression must match the data type of the domain\&. If no default value is specified, then the default value is the null value\&.
+.sp
+The default expression will be used in any insert operation that does not specify a value for the column\&. If a default value is defined for a particular column, it overrides any default associated with the domain\&. In turn, the domain default overrides any default value associated with the underlying data type\&.
+.RE
+.PP
+CONSTRAINT \fIconstraint_name\fR
+.RS 4
+An optional name for a constraint\&. If not specified, the system generates a name\&.
+.RE
+.PP
+NOT NULL
+.RS 4
+Values of this domain are normally prevented from being null\&. However, it is still possible for a domain with this constraint to take a null value if it is assigned a matching domain type that has become null, e\&.g\&. via a LEFT OUTER JOIN, or
+\fBINSERT INTO tab (domcol) VALUES ((SELECT domcol FROM tab WHERE false))\fR\&.
+.RE
+.PP
+NULL
+.RS 4
+Values of this domain are allowed to be null\&. This is the default\&.
+.sp
+This clause is only intended for compatibility with nonstandard SQL databases\&. Its use is discouraged in new applications\&.
+.RE
+.PP
+CHECK (\fIexpression\fR)
+.RS 4
+CHECK
+clauses specify integrity constraints or tests which values of the domain must satisfy\&. Each constraint must be an expression producing a Boolean result\&. It should use the key word
+VALUE
+to refer to the value being tested\&.
+.sp
+Currently,
+CHECK
+expressions cannot contain subqueries nor refer to variables other than
+VALUE\&.
+.RE
+.SH "EXAMPLES"
+.PP
+This example creates the
+us_postal_code
+data type and then uses the type in a table definition\&. A regular expression test is used to verify that the value looks like a valid US postal code:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+CREATE DOMAIN us_postal_code AS TEXT
+CHECK(
+   VALUE ~ \*(Aq^\ed{5}$\*(Aq
+OR VALUE ~ \*(Aq^\ed{5}\-\ed{4}$\*(Aq
+);
+
+CREATE TABLE us_snail_addy (
+  address_id SERIAL PRIMARY KEY,
+  street1 TEXT NOT NULL,
+  street2 TEXT,
+  street3 TEXT,
+  city TEXT NOT NULL,
+  postal us_postal_code NOT NULL
+);
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COMPATIBILITY"
+.PP
+The command
+\fBCREATE DOMAIN\fR
+conforms to the SQL standard\&.
+.SH "SEE ALSO"
+ALTER DOMAIN (\fBALTER_DOMAIN\fR(7)), DROP DOMAIN (\fBDROP_DOMAIN\fR(7))

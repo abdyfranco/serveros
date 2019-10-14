@@ -1,0 +1,45 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.\" test using groff -man scsd.8 -T ascii | more
+.Dd 10/28/10               \" DATE 
+.Dt scsd 8      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm scsd
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd Accounts Config Service Daemon
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl l \" [-l]
+.Op Fl p Ar port            \" [-p port] 
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm
+is a daemon that vends customized service config information to authenticated users. It runs as a webapp
+out of launchd.
+.Pp                      \" Inserts a space
+.Bl -tag -width -indent  \" Begins a tagged list 
+.It Fl l \" Each item preceded by .It macro
+Get the listening sockets from launchd
+.It Fl p Ar port
+Port to listen on, cannot be used with -l
+.El                      \" Ends the list
+.Pp
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "/System/Library/LaunchDaemons/com.apple.AccountsConfigService.plist" -compact
+.It Pa /usr/libexec/scsd
+.It Pa /Library/Preferences/com.apple.AccountsConfigService.plist
+.It Pa /System/Library/LaunchDaemons/com.apple.AccountsConfigService.plist
+.It Pa /etc/apache2/webapps/com.apple.webapp.ACSServer.plist
+.El                      \" Ends the list
+.Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr launchd 8 , 
+.Xr webapp.plist 8 
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner

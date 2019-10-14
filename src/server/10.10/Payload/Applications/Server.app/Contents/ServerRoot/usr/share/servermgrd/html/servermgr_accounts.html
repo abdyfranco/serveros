@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>ACCOUNTS</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "authenticateAdmin") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>authenticateAdmin</string>\n';
+			commandValue += '	<key>adminName</key>\n';
+			commandValue += '	<string>diradmin</string>\n';
+			commandValue += '	<key>adminPassword</key>\n';
+			commandValue += '	<string>diradmin</string>\n';
+		} else if (selection == "createBasicSACLGroups") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>createBasicSACLGroups</string>\n';
+		} else if (selection == "synchImports") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>synchImports</string>\n';
+		} else if (selection == "getUserList") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getUserList</string>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RealName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:Picture</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getGroupList") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getGroupList</string>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RealName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "createUser") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>createUser</string>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RecordName</key>\n';
+			commandValue += '	<string>testuser</string>\n';
+			commandValue += '	<key>otherAttributes</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RealName</key>\n';
+			commandValue += '	<string>Test User</string>\n';
+			commandValue += '	</dict>\n';
+			commandValue += '	<key>services</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '	<key>afp</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	<key>chat</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	<key>mail</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	</dict>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RealName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:Picture</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "createGroup") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>createGroup</string>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RecordName</key>\n';
+			commandValue += '	<string>testgroup</string>\n';
+			commandValue += '	<key>otherAttributes</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RealName</key>\n';
+			commandValue += '	<string>Test Group</string>\n';
+			commandValue += '	</dict>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RealName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "deleteGroup") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>deleteGroup</string>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RecordName</key>\n';
+			commandValue += '	<string>testgroup</string>\n';
+		} else if (selection == "deleteUser") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>deleteUser</string>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RecordName</key>\n';
+			commandValue += '	<string>testuser</string>\n';
+		} else if (selection == "getUserAttributes") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getUserAttributes</string>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RecordName</key>\n';
+			commandValue += '	<string>testuser</string>\n';
+			commandValue += '	<key>withMembership</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	<key>servicesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>afp</string>\n';
+			commandValue += '	<string>chat</string>\n';
+			commandValue += '	<string>mail</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RealName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "setUserAttributes") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setUserAttributes</string>\n';
+			commandValue += '	<key>userName</key>\n';
+			commandValue += '	<string>testuser</string>\n';
+			commandValue += '	<key>attributes</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RealName</key>\n';
+			commandValue += '	<string>Test User</string>\n';
+			commandValue += '	</dict>\n';
+			commandValue += '	<key>services</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '	<key>afp</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	<key>chat</key>\n';
+			commandValue += '	<false/>\n';
+			commandValue += '	<key>mail</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	</dict>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getGroupAttributes") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getGroupAttributes</string>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RecordName</key>\n';
+			commandValue += '	<string>testgroup</string>\n';
+			commandValue += '	<key>withMembership</key>\n';
+			commandValue += '	<true/>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RealName</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "setGroupAttributes") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setGroupAttributes</string>\n';
+			commandValue += '	<key>groupName</key>\n';
+			commandValue += '	<string>testgroup</string>\n';
+			commandValue += '	<key>attributes</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '	<key>dsAttrTypeStandard:RealName</key>\n';
+			commandValue += '	<string>Test Group</string>\n';
+			commandValue += '	</dict>\n';
+			commandValue += '	<key>attributesToReturn</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '	<string>dsAttrTypeStandard:GeneratedUID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:UniqueID</string>\n';
+			commandValue += '	<string>dsAttrTypeStandard:RecordName</string>\n';
+			commandValue += '	</array>\n';			
+		} else if (selection == "setMembership") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setMembership</string>\n';
+			commandValue += '	<key>guidArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>groupName</key>\n';
+			commandValue += '	<string>testgroup</string>\n';
+			commandValue += '	<key>addMembership</key>\n';
+			commandValue += '	<true/>\n';
+		} else if (selection == "getDirNodes") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getDirNodes</string>\n';
+		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_accounts'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="authenticateAdmin">authenticateAdmin
+						<OPTION VALUE="synchImports">synchImports
+						<OPTION VALUE="getUserList">getUserList
+						<OPTION VALUE="getGroupList">getGroupList
+						<OPTION VALUE="createUser">createUser
+						<OPTION VALUE="deleteUser">deleteUser
+						<OPTION VALUE="getUserAttributes">getUserAttributes
+						<OPTION VALUE="setUserAttributes">setUserAttributes
+						<OPTION VALUE="createGroup">createGroup
+						<OPTION VALUE="deleteGroup">deleteGroup
+						<OPTION VALUE="getGroupAttributes">getGroupAttributes
+						<OPTION VALUE="setGroupAttributes">setGroupAttributes
+						<OPTION VALUE="setMembership">setMembership
+						<OPTION VALUE="getDirNodes">getDirNodes
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_accounts">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

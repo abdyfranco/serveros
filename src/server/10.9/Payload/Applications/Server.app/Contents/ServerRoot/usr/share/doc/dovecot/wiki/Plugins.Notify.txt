@@ -1,0 +1,9 @@
+Notify plugin
+=============
+
+The notify plugin can be used to easily develop other plugins that need to do
+some work when something in user's mailboxes change. See <mail_log>
+[Plugins.MailLog.txt] plugin as an example how to develop a plugin based on the
+notify plugin.
+
+(This file was created from the wiki on 2013-08-05 04:42)

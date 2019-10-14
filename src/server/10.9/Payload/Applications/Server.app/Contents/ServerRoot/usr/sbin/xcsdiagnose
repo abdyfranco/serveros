@@ -1,0 +1,301 @@
+#! /usr/bin/ruby
+
+require 'tmpdir'
+require 'open3'
+require 'CFPropertyList'
+
+$runningLogLines = []
+
+def colorize(text, color_code)
+  "\e[#{color_code}m#{text}\e[0m"
+end
+
+def stripWhitespace(text)
+  return text.gsub(/\s/,'')
+end
+
+def log(msg)
+  $runningLogLines << msg
+  puts msg
+end
+
+def logGrey(msg)
+  $runningLogLines << msg
+  puts colorize(msg, 90)
+end
+
+def logRed(msg)
+  $runningLogLines << msg
+  puts colorize(msg, 31)
+end
+
+def logGreen(msg)
+  $runningLogLines << msg
+  puts colorize(msg, 32)
+end
+
+def run(cmd)
+  stdout, stderr, exit_status = Open3.capture3(ENV, cmd)
+  unless exit_status.success?
+    logRed("** Error running command (#{cmd}) **")
+    logRed(stderr)
+  end
+  return [stdout, stderr, exit_status]
+end
+
+%w[ SIGHUP SIGINT SIGQUIT SIGTERM ].each { |sig| trap(sig) { Kernel.exit! } }
+
+log "** Welcome to xcsdiagnose **"
+
+if Process.euid != 0
+  logRed("** xcsdiagnose must run as root, exiting **")
+  Kernel.exit!
+end
+
+SERVER_INSTALL_PATH_PREFIX = "/Applications/Server.app/Contents/ServerRoot"
+LIBRARY_SERVER_PATH = "/Library/Server"
+
+begin
+  
+  log "== Preparing =="
+  
+  tempDir = Dir.mktmpdir
+  log "-- Created temporary directory #{tempDir}"
+  logsDir = "#{tempDir}/Logs"
+  log "-- Creating logs directory #{logsDir}"
+  Dir.mkdir(logsDir)
+  configDir = "#{tempDir}/Config"
+  log "-- Creating config directory #{configDir}"
+  Dir.mkdir(configDir)
+  botRunsDir = "#{tempDir}/BotRuns"
+  log "-- Creating bot runs directory #{botRunsDir}"
+  Dir.mkdir(botRunsDir)
+  adcDir = "#{tempDir}/ADC"
+  log "-- Creating ADC directory #{adcDir}"
+  Dir.mkdir(adcDir)
+  diagnosticsDir = "#{tempDir}/Diagnostics"
+  log "-- Creating diagnostics directory #{diagnosticsDir}"
+  Dir.mkdir(diagnosticsDir)
+  log "  | Done"
+  
+  log "== Getting product versions =="
+  log "-- Getting OS version information"
+  osProductVersion = stripWhitespace(run("sw_vers -productVersion")[0])
+  osBuildVersion = stripWhitespace(run("sw_vers -buildVersion")[0])
+  log "---- OS version is #{osProductVersion} (build #{osBuildVersion})"
+  log "-- Getting xcode-select configuration"
+  xcodeSelectPrintPath = stripWhitespace(run("/usr/bin/xcode-select -p")[0])
+  log "---- xcode-select is configured to use: #{xcodeSelectPrintPath}"
+  log "-- Getting xcode version information"
+  xcodeSelectPrintPathWithoutContentsDeveloper = xcodeSelectPrintPath.gsub("/Contents/Developer", "")
+  xcodeVersionPlistPath = "#{xcodeSelectPrintPathWithoutContentsDeveloper}/Contents/version.plist"
+  if File.exists?(xcodeVersionPlistPath)
+    versionDictionaryPlist = CFPropertyList::List.new(:file => xcodeVersionPlistPath)
+    versionDictionary = CFPropertyList.native_types(versionDictionaryPlist.value)
+    shortVersionString = versionDictionary["CFBundleShortVersionString"]
+    productBuildVersion = versionDictionary["ProductBuildVersion"]
+    log "---- Xcode version is #{shortVersionString} (build #{productBuildVersion})"
+  else
+    log "---- #{xcodeVersionPlistPath} is missing; cannot get version information"
+  end
+  log "-- Getting server version information"
+  serverPath = "/Applications/Server.app"
+  serverInfoPlistPath = "/Applications/Server.app/Contents/version.plist"
+  serverVersionPlistPath = "#{SERVER_INSTALL_PATH_PREFIX}/System/Library/CoreServices/ServerVersion.plist"
+  if File.exists?(serverPath)
+    serverInfoPlist = CFPropertyList::List.new(:file => serverInfoPlistPath)
+    serverInfoDictionary = CFPropertyList.native_types(serverInfoPlist.value)
+    shortVersionString = serverInfoDictionary["CFBundleShortVersionString"]
+    serverVersionPlist = CFPropertyList::List.new(:file => serverVersionPlistPath)
+    serverVersionDictionary = CFPropertyList.native_types(serverVersionPlist.value)
+    productBuildVersion = serverVersionDictionary["ProductBuildVersion"]
+    log "---- Server version is #{shortVersionString} (build #{productBuildVersion})"
+  else
+    log "---- #{serverVersionPlistPath} is missing; cannot get version information"
+  end
+  log "-- Getting 'serveradmin settings xcode'"
+  serveradminTuple = run("#{SERVER_INSTALL_PATH_PREFIX}/usr/sbin/serveradmin settings xcode")
+  File.open("#{diagnosticsDir}/serveradmin_xcode_settings.output", "w") { |f|
+    f.write(serveradminTuple[0])
+  }
+  log "  | Done"
+  
+  log "== Gathering logs =="
+  logsToGather = [
+    ["/Library/Server/Xcode/Logs"],
+    ["/var/log/system.log", "system.log"],
+    ["/Library/Logs/ServerSetup.log", "ServerSetup.log"]
+  ]
+  for tuple in logsToGather
+    tuplePath = tuple[0]
+    destinationPath = tuple[1]
+    if File.exists?(tuplePath)
+      if File.directory?(tuplePath)
+        log "-- Copying #{tuplePath} to #{logsDir}"
+        run "/bin/cp #{tuplePath}/* #{logsDir}"
+      else
+        log "-- Copying #{tuplePath} to #{logsDir}/#{destinationPath}"
+        run "/bin/cp #{tuplePath} #{logsDir}/#{destinationPath}"
+      end
+    end
+  end
+  log "  | Done"
+  
+  log "== Gathering config files =="
+  configsToGather = [
+    "/Library/Server/Xcode/Config/xcode.plist",
+    "/Library/Server/Xcode/Config/xcsbuildd.plist",
+    "/Library/Server/Xcode/Config/svn_committer_email_config.plist",
+    "/Library/Server/Xcode/Config/ssh_known_hosts",
+    "/Library/Server/Wiki/Config/collabd.plist",
+    "/Library/Server/Wiki/Config/notifications.plist"
+  ]
+  for configPath in configsToGather
+    if File.exists?(configPath)
+      log "-- Copying #{configPath} to #{configDir}"
+      run "/bin/cp #{configPath} #{configDir}/#{File.basename(configPath)}"
+    end
+  end
+  log "  | Done"
+  
+  log "== Gathering diagnostics =="
+  processesWeCareAbout = [
+    'collabd', 
+    'xcsbuildd',
+    'xcsdevicesnifferd',
+    'xcsxcodeappwatcher',
+    'xcscredd',
+    'xcscredhandler',
+    'xcodebuild'
+  ]
+  log "-- Getting memory usage for processes"
+  for processName in processesWeCareAbout
+    begin
+      pid = `/usr/bin/pgrep -f #{processName}$`.split("\n").first.to_i
+      memoryKb = `/bin/ps -o rss= -p #{pid}`.to_f
+      memoryMb = (memoryKb / 1024).round(2)
+      log("---- #{processName} is using #{memoryKb}KB / #{memoryMb}MB")
+    rescue Exception => e
+    end
+  end
+  log "  | Done"
+  log "-- Sampling processes"
+  for processName in processesWeCareAbout
+    log "---- Sampling #{processName}"
+    sampleOutput = run("/usr/bin/sample #{processName}")[0]
+    sampleOutputPath = "#{diagnosticsDir}/#{processName}.sample"
+    File.open(sampleOutputPath, "w") { |f|
+      f.write(sampleOutput)
+    }
+    log "    | Done sampling #{processName} to #{sampleOutputPath}"
+  end
+  log "  | Done"
+  log "-- Running lsof to diagnose file descriptors"
+  lsofOutput = run("/usr/sbin/lsof")[0]
+  File.open("#{diagnosticsDir}/lsof.output", "w") { |f|
+    f.write(lsofOutput)
+  }
+  for processName in processesWeCareAbout
+    IO.popen("/usr/bin/grep #{processName} | /usr/bin/wc -l", mode='r+') do |io|
+      io.write lsofOutput
+      io.close_write
+      fileDescriptorsPerProcess = io.read.gsub(/\s/,'')
+      log "---- #{processName} name has #{fileDescriptorsPerProcess} file descriptors open"
+    end
+  end
+  log "  | Done"
+  
+  log "-- Getting disk usage"
+  log "---- Calculating disk usage for all volumes"
+  diskUsage = run("/bin/df -h")[0]
+  log "---- Disk usage for /: \n#{diskUsage}"
+  log "---- Calculating disk usage for /Library/Server"
+  libraryServerDiskUsage = run("/usr/bin/du -sh /Library/Server")[0]
+  log "---- Disk usage for /Library/Server: #{stripWhitespace(libraryServerDiskUsage.gsub('/Library/Server', ''))}"
+  log "---- Generating disk usage breakdown for /Library/Server"
+  libraryServerDiskUsageBreakdown = run("/usr/bin/du -ah /Library/Server")[0]
+  File.open("#{diagnosticsDir}/LibraryServerDiskUsage.output", "w") { |f|
+    f.write(libraryServerDiskUsageBreakdown)
+  }
+  log "  | Done"
+  
+  # TODO: headless testing statistics
+  
+  log "== Gathering database information =="
+  dbstatusCommand = "#{SERVER_INSTALL_PATH_PREFIX}/usr/bin/psql -U collab -h #{LIBRARY_SERVER_PATH}/Wiki/PostgresSocket -c '\\q' 2>&1;"
+  dbstatusTuple = run(dbstatusCommand)
+  dbstatusExitCode = dbstatusTuple[2]
+  if dbstatusExitCode != 0
+    log "-- Failed to connect to database (running #{dbstatusCommand})"
+  else
+    log "-- Successfully connected to database (running #{dbstatusCommand})"
+  end
+  pgStatActivityOutputPath = "#{diagnosticsDir}/PGStatActivity.output"
+  log "-- Writing pg_stat_activity to #{pgStatActivityOutputPath}"
+  dbactivityCommand = "#{SERVER_INSTALL_PATH_PREFIX}/usr/bin/psql -U collab -h #{LIBRARY_SERVER_PATH}/Wiki/PostgresSocket -c 'select * from pg_stat_activity' 2>&1;"
+  libraryServerPGStatActivityOutput = run(dbactivityCommand)[0]
+  File.open(pgStatActivityOutputPath, "w") { |f|
+    f.write(libraryServerPGStatActivityOutput)
+  }
+  pgProcessListOutputPath = "#{diagnosticsDir}/PostgresEntriesInProcessList.output"
+  log "-- Writing postgres processes to #{pgProcessListOutputPath}"
+  pgProcessListOutput = run("/bin/ps aux | grep postg")[0]
+  File.open(pgProcessListOutputPath, "w") { |f|
+    f.write(pgProcessListOutput)
+  }
+  log "  | Done"
+  
+  log "== Gathering ADC information"
+  provisioningProfilesPath = "#{LIBRARY_SERVER_PATH}/Xcode/Data/ProvisioningProfiles"
+  log "-- Copying provisioning profiles from #{provisioningProfilesPath} to #{adcDir}"
+  run("/bin/mkdir -p #{adcDir}/ProvisioningProfiles")
+  run("/bin/cp -R #{provisioningProfilesPath}/* #{adcDir}/ProvisioningProfiles/")
+  log "-- Dumping certificates matching \"developer\" from keychain"
+  findCertificateDeveloperOutput = run("/usr/bin/security find-certificate -a -c \"developer\"")[0]
+  File.open("#{adcDir}/FindCertificateDeveloper.output", "w") { |f|
+    f.write(findCertificateDeveloperOutput)
+  }
+  log "-- Dumping certificates matching \"xcode\" from keychain"
+  findCertificateXcodeOutput = run("/usr/bin/security find-certificate -a -c \"xcode\"")[0]
+  File.open("#{adcDir}/FindCertificateXcode.output", "w") { |f|
+    f.write(findCertificateXcodeOutput)
+  }
+  log "-- Dumping identities (certificates and matching private keys) matching \"developer\" from keychain"
+  findIdentityDeveloperOutput = run("/usr/bin/security find-identity| grep -i \"developer\"")[0]
+  File.open("#{adcDir}/FindIdentityDeveloper.output", "w") { |f|
+    f.write(findIdentityDeveloperOutput)
+  }
+  log "-- Dumping identities (certificates and matching private keys) matching \"xcode\" from keychain"
+  findIdentityXcodeOutput = run("/usr/bin/security find-identity | grep -i \"xcode\"")[0]
+  File.open("#{adcDir}/FindIdentityXcode.output", "w") { |f|
+    f.write(findIdentityXcodeOutput)
+  }
+  log "  | Done"
+  
+  log "== Copying bot run data =="
+  run("/bin/cp -R /Library/Server/Xcode/Data/BotRuns/* #{botRunsDir}")
+  log "  | Done"
+  
+  log "== Generating a sysdiagnose =="
+  run("/usr/bin/sysdiagnose -b -f #{tempDir}")
+  log "  | Done"
+  
+  log "== Writing xcsdiagnose log to disk =="
+  xcsdiagnoseOutputPath = "#{tempDir}/xcsdiagnose.output"
+  File.open("#{xcsdiagnoseOutputPath}", "w") { |f|
+    f.write($runningLogLines.join("\n"))
+  }
+  log "  | Done"
+  
+  log "=== Creating tar archive of results =="
+  run "/usr/bin/tar zcvf /tmp/xcsdiagnose-#{File.basename(tempDir)}.tar.gz -C #{tempDir} ."
+  run "/bin/chmod 644 /tmp/xcsdiagnose-#{File.basename(tempDir)}.tar.gz"
+  run "/usr/bin/open -R /tmp/xcsdiagnose-#{File.basename(tempDir)}.tar.gz"
+  log "  | Done"
+  
+rescue Exception => e
+  logRed("** Got an exception running xcsdiagnose (#{e.inspect}) **")
+  Kernel.exit!
+end
+
+logGreen("** xcsdiagnose complete, please attach the tar file at /tmp/xcsdiagnose-#{File.basename(tempDir)}.tar.gz to a radar **")

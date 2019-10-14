@@ -1,0 +1,7 @@
+# This is the Xcode Server default configuration file used by the build system.
+
+[user]
+	name = John Doe
+	email = jdoe@mycompany.com
+[mergetool]
+	keepBackup = true

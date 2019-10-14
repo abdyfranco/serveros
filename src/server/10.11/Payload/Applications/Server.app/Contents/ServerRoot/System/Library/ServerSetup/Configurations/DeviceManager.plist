@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>dependencies</key>
+	<array>
+		<string>PostgreSQL</string>
+		<string>servermgr_web_ConfigDone</string>
+	</array>
+	<key>description</key>
+	<string>Profile Manager</string>
+	<key>migration</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>arguments</key>
+				<array>
+					<string>--sourceRoot</string>
+					<string>/Library/Server/Previous</string>
+					<string>--targetRoot</string>
+					<string>/</string>
+					<string>--purge</string>
+					<string>0</string>
+					<string>--language</string>
+					<string>en</string>
+					<string>--sourceType</string>
+					<string>System</string>
+					<string>--sourceVersion</string>
+					<string>${previousSystemVersion}</string>
+				</array>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/deviceManagerMigration.sh</string>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<string>${serverRoot}/usr/libexec/deviceManagerCommon.sh</string>
+		</array>
+	</dict>
+</dict>
+</plist>

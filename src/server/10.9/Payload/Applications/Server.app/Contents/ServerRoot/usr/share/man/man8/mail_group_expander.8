@@ -1,0 +1,60 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd 2/15/06               \" DATE 
+.Dt mail_group_expander 1      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm mail_group_expander,
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl vh                \" [-vh]
+.Op Fl a Ar path         \" [-a path] 
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm mail_group_expander
+is used to to add group aliases to the /etc/aliases file.  It scans the directory
+looking for mail enabled groups, expands the users contained within the group and then
+adds email addresses for each user to the group alias.  Groups are enabled through
+the Server Preferences Application 
+.Pp                      \" Inserts a space
+The options are as follows:
+.Bl -tag -width -indent  \" Differs from above in tag removed 
+.It Fl a Ar path            \"-a flag as a list item
+Select an alternate aliases file (default is /etc/aliases) 
+.It Fl v
+Display version information
+.It Fl h
+Display help information
+.El                      \" Ends the list
+.Pp
+.\" .Sh ENVIRONMENT      \" May not be needed
+.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.\" .It Ev ENV_VAR_1
+.\" Description of ENV_VAR_1
+.\" .It Ev ENV_VAR_2
+.\" Description of ENV_VAR_2
+.\" .El                      
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "/etc/aliases" -compact
+.It Pa /etc/aliases
+Mail system local aliases file
+.El                      \" Ends the list
+.\" .Sh DIAGNOSTICS       \" May not be needed
+.\" .Bl -diag
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .El
+.Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr aliases 5 , 
+.Xr postfix 1 ,
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner

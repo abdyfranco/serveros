@@ -1,0 +1,12 @@
+Metadata-Version: 1.0
+Name: Calendar and Contacts Server
+Version: 5.2 (Apple Calendar Server 21.32.38)
+Summary: ('CalDAV/CardDAV protocol extensions to twext.web2.dav',)
+Home-page: UNKNOWN
+Author: Apple Inc.
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: 
+        Extends twisted.web2.dav to implement CalDAV/CardDAV-aware resources and methods.
+        
+Platform: all

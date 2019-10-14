@@ -513,7 +513,7 @@
 			<key>FOLLOW_SYMBOLIC_LINKS</key>
 			<true/>
 			<key>IDENTIFIER</key>
-			<string>com.apple.sata3</string>
+			<string>co.abdyfran.sata3driver</string>
 			<key>LOCATION</key>
 			<integer>0</integer>
 			<key>NAME</key>
@@ -715,7 +715,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>SATA 3 Driver</string>
+			<string>AHCI SATA 3 Controller Driver</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 		</dict>

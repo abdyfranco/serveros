@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Adaptive Firewall (afctl) migration and setup</string>
+	<key>dependencies</key>
+	<array/>
+	<key>environment</key>
+	<dict>
+		<key>dataStore</key>
+		<string>/private/var/db/af/</string>
+		<key>prefsLocation</key>
+		<string>/private/etc/af.plist</string>
+		<key>defaultPrefs</key>
+		<string>${serverRoot}/${prefsLocation}</string>
+		<key>serverLibexec</key>
+		<string>${serverRoot}/usr/libexec/</string>
+		<key>previousSystem</key>
+		<string>${serverLibrary}/Previous</string>
+		<key>rulesetLocation</key>
+		<string>/Library/Server/Firewall/Adaptive/Rules</string>
+		<key>defaultRuleset</key>
+		<string>${serverRoot}/private/etc/emond.d/rules</string>
+	</dict>
+	<key>defaults</key>
+	<dict/>
+	<key>setup</key>
+	<dict>
+		<key>directories</key>
+		<dict>
+			<key>Adaptive Firewall Rules</key>
+			<dict>
+				<key>description</key>
+				<string>Directory containing the emond ruleset for the Adaptive Firewall</string>
+				<key>path</key>
+				<string>${rulesetLocation}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0700</string>
+			</dict>
+			<key>Adaptive Firewall Runtime Data</key>
+			<dict>
+				<key>description</key>
+				<string>Directory containing the blacklist, whitelist and the pf table backing store</string>
+				<key>path</key>
+				<string>${dataStore}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0700</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Create the pf table backing store</string>
+				<key>path</key>
+				<string>/usr/bin/touch</string>
+				<key>arguments</key>
+				<array>
+					<string>${dataStore}/blockedHosts</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Insert the Adaptive Firewall anchor into the system anchors file</string>
+				<key>path</key>
+				<string>${serverLibexec}/insert_AF_anchor</string>
+			</dict>
+		</array>
+	</dict>
+	<key>promotion</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>copy AF rule</key>
+			<dict>
+				<key>description</key>
+				<string>Copy the default emond ruleset for Adaptive Firewall into Library/Server/Firewall</string>
+				<key>path</key>
+				<string>${rulesetLocation}/AdaptiveFirewall.plist</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>${defaultRuleset}/AdaptiveFirewall.plist</string>
+			</dict>
+			<key>copy DHA rule</key>
+			<dict>
+				<key>description</key>
+				<string>Copy the default emond ruleset for Directory Harvesting Attack into Library/Server/Firewall</string>
+				<key>path</key>
+				<string>${rulesetLocation}/DHABlock.plist</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>${defaultRuleset}/DHABlock.plist</string>
+			</dict>
+			<key>config file</key>
+			<dict>
+				<key>description</key>
+				<string>The default Adaptive Firewall config file</string>
+				<key>path</key>
+				<string>${prefsLocation}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>${defaultPrefs}</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Clean out old whitelist/blacklist data</string>
+				<key>path</key>
+				<string>/bin/rm</string>
+				<key>arguments</key>
+				<array>
+					<string>-f</string>
+					<string>${dataStore}/whitelist</string>
+					<string>${dataStore}/blacklist</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Adaptive Firewall self configure</string>
+				<key>path</key>
+				<string>${serverLibexec}/afctl</string>
+				<key>arguments</key>
+				<array>
+					<string>-c</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>restore</key>
+	<dict/>
+	<key>migration</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>config file</key>
+			<dict>
+				<key>description</key>
+				<string>The default Adaptive Firewall config file</string>
+				<key>path</key>
+				<string>${prefsLocation}</string>
+				<key>source</key>
+				<string>${previousSystem}${prefsLocation}</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Migrate the Adaptive Firewall State</string>
+				<key>path</key>
+				<string>${serverLibexec}/migrate_AF_state</string>
+				<key>arguments</key>
+				<array>
+					<string>${previousSystem}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>config file</key>
+			<dict>
+				<key>description</key>
+				<string>The default Adaptive Firewall config file</string>
+				<key>path</key>
+				<string>${prefsLocation}</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>${defaultPrefs}</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,303 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+.cc-sidebar-section[data-guid="sidebars/comments"] .content
+{
+	padding: 0px 17px 12px 17px;
+}
+
+.cc-sidebar-section[data-guid="sidebars/moderated_comments"] .content
+{
+	padding: 8px 19px 16px 11px !important;
+}
+
+.cc-sidebar-section[data-guid="sidebars/comments"].editing .cc-sidebar-pagination,
+.cc-sidebar-section[data-guid="sidebars/moderated_comments"].editing .cc-sidebar-pagination
+{
+	display: none;
+}
+
+.cc-comment
+{
+	color: #5A5A5A;
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.cc-comment:last-child
+{
+	margin-bottom: 0px;
+}
+
+/* @group Comment body */
+
+.cc-comment .body
+{
+	position: relative;
+}
+
+.cc-comment .body .mid pre
+{
+	min-height: 16px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+.cc-comment .moderation.banner
+{
+	color: #FFFFFF;
+	display: block;
+	font-size: 9px;
+	height: 13px;
+	line-height: 13px;
+	opacity: 0;
+	padding: 0px 3px;
+	position: absolute;
+	right: -1px;
+	text-transform: lowercase;
+	top: -1px;
+	border-bottom-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-webkit-transition: opacity 0.15s linear;
+}
+
+.cc-comment.unapproved .moderation.banner
+{
+	opacity: 1;
+}
+
+.cc-comment:hover .moderation.banner
+{
+	opacity: 0;
+}
+
+.cc-comment .body
+{
+	color: #595959;
+	cursor: text;
+	margin-bottom: 12px;
+	margin-right: 6px;
+	padding: 8px;
+	border-radius: 3px;
+}
+
+.cc-comment .norgie
+{
+	background-repeat: no-repeat;
+	bottom: -10px;
+	display: block;
+	height: 10px;
+	position: absolute;
+	right: 50px;
+	width: 8px;
+}
+
+/* @end */
+
+/* @group Author */
+
+.cc-comment .author
+{
+	position: relative;
+	padding-top: 5px;
+	margin-right: 7px;
+}
+
+.cc-comment .author .icon
+{
+	height: 34px;
+	width: 34px;
+	border: 1px solid transparent;
+	overflow: hidden;
+	position: absolute;
+	right: 6px;
+	text-align: center;
+	top: -5px;
+}
+
+.cc-comment .author .icon.default
+{
+	background: transparent url(/__collabd/coreclientbase/stylesheets/cc/img/user_32x32.png) center center no-repeat;
+	background-image: -webkit-image-set(url(/__collabd/coreclientbase/stylesheets/cc/img/user_32x32.png) 1x,
+										url(/__collabd/coreclientbase/stylesheets/cc/img/user_32x32@2x.png) 2x);
+	
+	height: 32px;
+	width: 32px;
+	right: 8px;
+	top: 0px;
+}
+
+.cc-comment .author .icon:not(.default)
+{
+	border-radius: 4px;
+	border-color: rgba(0,0,0,0.2);
+}
+
+.cc-comment .author .icon img
+{
+	height: 34px;
+	width: 34px;
+	border-radius: 4px;
+}
+
+
+.cc-comment .author .username,
+.cc-comment .author .datetime
+{
+	display: block;
+	font-size: 11px;
+	line-height: 14px;
+	text-align: right;
+	margin-right: 51px;
+}
+
+.cc-comment .author .username
+{
+	color: #5A5A5A;
+	font-weight: bold;
+}
+
+.cc-comment .author .datetime
+{
+	color: #868686;
+	text-shadow: #FFFFFF 0px 1px 0px;
+}
+
+/* @end */
+
+/* @group Moderation group headers */
+
+.cc-comment .header .grouping
+{
+	color: #9D9D9D;
+	display: none;
+	font-size: 11px;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.cc-comment .header .grouping.displayed
+{
+	display: block;
+}
+
+/* @end */
+
+/* @group Actions */
+
+.cc-comment-manager
+{
+	margin-right: -14px;
+	padding-top: 5px;
+	position: relative;
+}
+
+.cc-comment-manager h2.placeholder
+{
+	padding-right: 14px;
+}
+
+.cc-comment .actions
+{
+	height: 21px;
+	opacity: 0;
+	position: absolute;
+	right: -7px;
+	top: -11px;
+	-webkit-transition: opacity 0.15s ease-in-out;
+}
+
+.cc-comment:not(.hasactions) .actions
+{
+	display: none;
+}
+
+.cc-comment:hover .actions
+{
+	opacity: 1;
+}
+
+.cc-comment-manager .actions .button,
+.cc-comment.unapproved .actions .button.approve
+{
+	display: inline-block;
+}
+
+.cc-comment .actions .button.approve
+{
+	display: none;
+}
+
+/* @end */
+
+/* @group Editor */
+
+.cc-comment-editor.editing
+{
+	padding-bottom: 15px;
+}
+
+.cc-comment-manager .editor .cc-comment .body
+{
+	background: #FFFFFF;
+	padding: 6px 8px 4px 8px;
+}
+
+.cc-comment-manager .editor .cc-comment .norgie
+{
+	background-position: 0px -10px;
+}
+
+.cc-comment textarea
+{
+	border: none;
+	font-size: 12px;
+	font-family: inherit;
+	height: 18px;
+	line-height: 18px;
+	margin: 1px 0px -1px 0px;
+	min-height: 18px;
+	outline: none;
+	overflow: hidden;
+	padding: 0px;
+	resize: none;
+	width: 196px;
+}
+
+.cc-comment-editor .editor,
+.cc-comment-editor.editing ~ h2.placeholder
+{
+	display: none;
+}
+
+.cc-comment-editor.editing .editor
+{
+	display: block;
+}
+
+/* @end */
+
+/* @group Moderated comments sidebar */
+
+.cc-sidebar-section[data-guid="sidebars/moderated_comments"] .cc-sidebar-actions,
+.cc-sidebar-section[data-guid="sidebars/moderated_comments"] .cc-comment .actions
+{
+	display: none;
+}
+
+.cc-sidebar-section[data-guid="sidebars/moderated_comments"] .cc-comment.unapproved .actions
+{
+	display: block;
+}
+
+/* @end */

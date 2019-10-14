@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Set up the servermgr_info preferences</string>
+	<key>dependencies</key>
+	<array/>
+	<key>environment</key>
+	<dict>
+		<key>prefsPath</key>
+		<string>/Library/Server/Preferences</string>
+		<key>oldPrefsPath</key>
+		<string>/Library/Preferences</string>
+	</dict>
+	<key>setup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>move the old prefs file if it exists</string>
+				<key>path</key>
+				<string>/Applications/Server.app/Contents/ServerRoot/usr/libexec/setupInfoPrefs</string>
+				<key>arguments</key>
+				<array>
+					<string>${oldPrefsPath}/com.apple.servermgr_info.plist</string>
+					<string>${prefsPath}/com.apple.servermgr_info.plist</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>promotion</key>
+	<dict/>
+	<key>restore</key>
+	<dict/>
+	<key>migration</key>
+	<dict/>
+	<key>postSetup</key>
+	<dict/>
+	<key>Note</key>
+	<string>If the file exists at the old location we copy it, else do nothing (even if it doesn&apos;t exist)</string>
+</dict>
+</plist>

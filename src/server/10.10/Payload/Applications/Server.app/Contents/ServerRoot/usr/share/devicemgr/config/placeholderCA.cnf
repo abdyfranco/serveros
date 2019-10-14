@@ -1,0 +1,13 @@
+[ req ]
+default_bits=1024
+distinguished_name=req_distinguished_name
+prompt=no
+input_password=whocares
+
+[ req_distinguished_name ]              
+C=US
+ST=State
+CN=Profile Manager Placeholder CA Cert
+O=My Org
+OU=My Org Unit
+emailAddress=admin@exmaple.com

@@ -1,0 +1,31 @@
+#!/Applications/Server.app/Contents/ServerRoot/Library/CalendarServer/bin/python
+# Wrapper around serveradmin to stop both calendar server and contacts server.
+#
+# Copyright (c) 2014-2015 Apple Inc.  All Rights Reserved.
+#
+# IMPORTANT NOTE:  This file is licensed only for use on Apple-labeled
+# computers and is subject to the terms and conditions of the Apple
+# Software License Agreement accompanying the package this file is a
+# part of.  You may not port this file to another platform without
+# Apple's written consent.
+from __future__ import print_function
+
+import subprocess
+
+
+SERVER_APP_ROOT = "/Applications/Server.app/Contents/ServerRoot"
+SERVER_ADMIN = "%s/usr/sbin/serveradmin" % (SERVER_APP_ROOT,)
+
+
+def stopService():
+    input = "calendar:command = stopBoth"
+    subprocess.Popen(
+        args=[SERVER_ADMIN, "command"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    ).communicate(input=input)
+
+
+if __name__ == "__main__":
+    stopService()

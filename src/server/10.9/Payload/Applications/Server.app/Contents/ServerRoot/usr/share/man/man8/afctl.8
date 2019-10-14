@@ -1,0 +1,119 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.\" test using groff -man afctl.8 -T ascii | more
+.Dd 3/28/06               \" DATE 
+.Dt afctl 8      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm afctl
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd automatic host blocking
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl v Ar debug_level              \" [-abcd]
+.Op Fl a Ar ip_address Fl t Ar ttl         \" [-a path] 
+.Op Fl w Ar ip_address              \" [-abcd]
+.Op Fl r Ar ip_address              \" [-abcd]
+.Op Fl x Ar ip_address              \" [-abcd]
+.Op Fl c
+.Op Fl e    
+.Op Fl d  
+.Op Fl f  
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm
+is a tool for temporarily blocking a given ipv4 or ipv6 address using the built-in firewall.
+All blocking requests have a time to live; they are unblocked when it expires.  
+.Nm 
+also maintins a whitelist of addresses that it will not block. All block requests are checked
+against this list before being added to the blacklist. The hosts blocked by 
+.Nm
+are stored in a table in a pf anchor.
+.Nm
+also accepts address ranges in CDIR notation, for entry into the whitelist or the blacklist.
+If invoked with no flags,
+.Nm
+loops through the blacklist and removes addresses that have exceded their time to live. By default
+.Nm
+gets executed every 15 minutes to sweep out old entries.
+.Pp                      \" Inserts a space
+.Bl -tag -width -indent  \" Begins a tagged list 
+.It Fl v debug_level               \" Each item preceded by .It macro
+Verbosity, ascenting numbers are more verbose. level 0 is default level 1 is basic progress.
+.It Fl a ip_address
+Add address to the blacklist. ip_address can be ipv4 or ipv6 in CDIR notation. No DNS names allowed. 
+An optional -t parameter allows the specification of the time in minutes that the address will remain blocked.
+.It Fl r ip_address
+Remove address from the blacklist. It will also be removed from the firewall table.
+.It Fl w ip_address
+Add address to the whitelist. ip_address can be ipv4 or ipv6 in CDIR notation. No DNS names allowed.
+.It Fl x ip_address
+Remove an address from the whitelist. ip_address can be ipv4 or ipv6 in CDIR notation. No DNS names allowed.
+.It Fl c
+Self configure. The
+.Nm
+tool will query the system configuration and determine the addresses that need to be whitelisted (routers, local interfaces, nameservers).
+.It Fl d
+Disables the pf anchor used to block the hosts in the table.
+.It Fl e 
+Enables the anchor disabled by -d (above)
+.It Fl f 
+Forces
+.Nm
+into a running state (sets the proper key in 
+.Ar af.plist
+and writes out
+.Ar af_state
+)
+.El                      \" Ends the list
+.Pp
+.Sh EXAMPLE
+To set up the whitelist and choose an interval for the blacklist entry aging (as root)
+.Bd -literal -offset indent
+/usr/libexec/afctl -c -i 10
+
+.Ed
+To add 69.23.0.45 to the blacklist for at least 35 minutes
+.Bd -literal -offset indent
+/usr/libexec/afctl -a 69.23.0.45 -t 35
+
+.Ed
+To add the address 17.254.3.183 to the whitelist so it will never be blocked by
+.Nm
+.Bd -literal -offset indent
+/usr/libexec/afctl -w 17.254.3.183
+
+.Ed
+To make sure that the blacklist is preserved across reboots be sure to edit the
+.Ar startup_behavior
+key in the
+.Ar af.plist
+config file.
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "/Users/joeuser/Library/really_long_file_name" -compact
+.It Pa Server.app/Contents/ServerRoot/usr/libexec/afctl
+The exectuable
+.It Pa /etc/af.plist
+The plist formatted config file
+.It Pa /var/run/af_state
+A state file telling 
+.Nm
+what to do when it launches.
+.It Pa /var/db/af/whitelist
+The file used to store the whitelist
+.It Pa /var/db/af/blacklist
+The file used to store the list of blocked addresses
+.It Pa /var/db/af/blockedHosts
+The file that holds the pf table
+.El                      \" Ends the list
+.Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr af.plist 5 , 
+.Xr pfctl 8
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner

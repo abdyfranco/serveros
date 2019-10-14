@@ -1,0 +1,161 @@
+#!/usr/bin/perl
+#
+# Copyright (c) 2013 Apple Inc. All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without  
+# modification, are permitted provided that the following conditions  
+# are met:
+# 
+# 1.  Redistributions of source code must retain the above copyright  
+# notice, this list of conditions and the following disclaimer.
+# 2.  Redistributions in binary form must reproduce the above  
+# copyright notice, this list of conditions and the following  
+# disclaimer in the documentation and/or other materials provided  
+# with the distribution.
+# 3.  Neither the name of Apple Inc. ("Apple") nor the names of its  
+# contributors may be used to endorse or promote products derived  
+# from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND  
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,  
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A  
+# PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS  
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  
+# USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND  
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,  
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT  
+# OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF  
+# SUCH DAMAGE.
+#
+
+use strict;
+
+################################ Constants ################################
+
+my $clam_av_logfile = "/Library/Logs/Mail/clamav.log";
+
+my $daily_cld = "/Library/Server/Mail/Data/scanner/clamav/db/daily.cld";
+my $daily_cvd = "/Library/Server/Mail/Data/scanner/clamav/db/daily.cvd";
+my $main_cld = "/Library/Server/Mail/Data/scanner/clamav/db/main.cld";
+my $main_cvd = "/Library/Server/Mail/Data/scanner/clamav/db/main.cvd";
+
+###########################################################################
+# main
+###########################################################################
+
+use Foundation;
+use POSIX qw/strftime/;
+use Sys::Hostname;
+use English;
+
+my $log_time = 0;
+#my $log_time_delta = 150;
+my $log_time_delta = 15;
+
+my $host = hostname();
+
+do_db_preflight();
+
+# exec clamd
+if ($ARGV[0] ne "") {exec "@ARGV"};
+
+exit(0);
+
+################################# Functions ###############################
+
+###########################################################################
+# log_msg()
+
+sub log_msg()
+{
+	my ($in_msg) = "@_";
+
+	# get log timestamp
+	my $c_time_str = strftime('%b %d %H:%M:%S', localtime);
+
+	# post message
+	open LOG_FILE, ">> $clam_av_logfile";
+	print LOG_FILE "$c_time_str $host clam_db_preflight[$PID]: $in_msg\n";
+	close LOG_FILE;
+} # log_msg
+
+###########################################################################
+# log_waiting()
+
+sub log_waiting()
+{
+	my ($in_msg) = "@_";
+
+	# only log ever 'n' minutes
+	if ( time() > $log_time ) {
+		&log_msg( $in_msg );
+		# set log time delta
+		if ( !$log_time ) {
+			$log_time = time();
+		}
+		$log_time += $log_time_delta;
+	}
+} # log_waiting
+
+###########################################################################
+# log_file_mod_time()
+
+sub log_file_mod_time()
+{
+	my ($in_file) = @_;
+	my $cld = 0;
+	my $mod_time = 0;
+	my $file_name = "";
+
+	# get modification time for main/daily db file
+	if ( $in_file eq "main" ) {
+		if ( -e $main_cld ) {
+			$file_name = "main.cld";
+			$mod_time = (stat($main_cld))[9];
+		} elsif (-e $main_cvd ) {
+			$file_name = "main.cvd";
+			$mod_time = (stat($main_cvd))[9];
+		}
+	} elsif ( $in_file eq "daily" ) {
+		if ( -e $daily_cld ) {
+			$file_name = "daily.cld";
+			$mod_time = (stat($daily_cld))[9];
+		} elsif (-e $daily_cvd ) {
+			$file_name = "daily.cld";
+			$mod_time = (stat($daily_cvd))[9];
+		}
+	}
+
+	# log it if you it
+	if ( $file_name ne "" ) {
+		my $time_str = strftime('%b %d %H:%M:%S', (localtime $mod_time));
+		&log_msg( "AntiVirus database: $file_name last updated: $time_str" );
+	}
+} # log_file_mod_time
+
+###########################################################################
+# do_db_preflight()
+
+sub do_db_preflight()
+{
+	# check for main. cld/cvd file
+	until ( (-e $main_cld) || (-e $main_cvd) ) {
+		&log_waiting( "Waiting for Clam AV main database file to download" );
+		sleep(5);
+	}
+	# log file modification time for main db
+	&log_file_mod_time("main");
+
+	# reset log delta timer
+	$log_time = 0;
+	# check for daily. cld/cvd file
+	until ( (-e $daily_cld) || (-e $daily_cvd) ) {
+		&log_waiting( "waiting for Clam AV daily database file to download" );
+		sleep(5);
+	}
+
+	# log file modification time for daily db
+	&log_file_mod_time("daily");
+} # do_db_preflight

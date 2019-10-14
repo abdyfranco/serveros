@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>AFP</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "getConnectedUsers") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getConnectedUsers</string>\n';
+		} else if (selection == "disconnectUsers") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>disconnectUsers</string>\n';
+			commandValue += '	<key>message</key>\n';
+			commandValue += '	<string>you are doomed</string>\n';
+			commandValue += '	<key>minutes</key>\n';
+			commandValue += '	<integer>5</integer>\n';
+			commandValue += '	<key>sessionIDsArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<integer>100</integer>\n';
+			commandValue += '		<integer>101</integer>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "reconnectUsers") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>reconnectUsers</string>\n';
+			commandValue += '	<key>disconnectIDsArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<integer>100</integer>\n';
+			commandValue += '		<integer>101</integer>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "cancelDisconnect") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>cancelDisconnect</string>\n';
+			commandValue += '	<key>timerID</key>\n';
+			commandValue += '	<integer>200</integer>\n';
+		} else if (selection == "sendMessage") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>sendMessage</string>\n';
+			commandValue += '	<key>message</key>\n';
+			commandValue += '	<string>you are going to be doomed</string>\n';
+			commandValue += '	<key>sessionIDsArray</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<integer>100</integer>\n';
+			commandValue += '		<integer>101</integer>\n';
+			commandValue += '	</array>\n';
+		} else if (selection == "getLogPaths") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getLogPaths</string>\n';
+		} else if (selection == "tailFile") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>tailFile</string>\n';
+			commandValue += '	<key>identifier</key>\n';
+			commandValue += '	<string>errorLog</string>\n';
+			commandValue += '	<key>offset</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>amount</key>\n';
+			commandValue += '	<integer>10000</integer>\n';
+		} else if (selection == "getHistory") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getHistory</string>\n';
+			commandValue += '	<key>timeScale</key>\n';
+			commandValue += '	<integer>3600</integer>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>v1</string>\n';
+		} else if (selection == "syncSharePoints") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>syncSharePoints</string>\n';
+		} else if (selection == "setState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setState</string>\n';
+			commandValue += '	<key>state</key>\n';
+			commandValue += '	<string>START</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>anyKey</key>\n';
+			commandValue += '		<string>anyValue</string>\n';
+			commandValue += '	</dict>\n';
+		} else if (selection == "getEncodings") {
+            commandValue += '	<key>command</key>\n';
+            commandValue += '	<string>getEncodings</string>\n';
+        }else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_afp'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="getConnectedUsers">getConnectedUsers
+						<OPTION VALUE="disconnectUsers">disconnectUsers
+						<OPTION VALUE="reconnectUsers">reconnectUsers
+						<OPTION VALUE="cancelDisconnect">cancelDisconnect
+						<OPTION VALUE="sendMessage">sendMessage
+						<OPTION VALUE="getLogPaths">getLogPaths
+						<OPTION VALUE="tailFile">tailFile
+						<OPTION VALUE="getHistory">getHistory
+						<OPTION VALUE="syncSharePoints">syncSharePoints
+						<OPTION VALUE="setState">setState
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+                        <OPTION VALUE="getEncodings"> getEncodings
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_afp">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

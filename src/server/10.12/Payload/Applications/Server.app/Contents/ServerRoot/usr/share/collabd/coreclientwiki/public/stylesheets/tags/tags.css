@@ -1,0 +1,252 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Loading/empty placeholders */
+
+.cc-grouped-tags-view.loading
+{
+	background: transparent url(../cc/img/spinner_transparent.gif) center center no-repeat;
+	height: 225px;
+}
+
+.cc-grouped-tags-view h2.empty
+{
+	color: #DDDDDD;
+	display: block;
+	font-size: 18px;
+	height: 225px;
+	line-height: 225px;
+	text-align: center;
+}
+
+.cc-grouped-tags-view.loading .loading,
+.cc-grouped-tags-view.loading .empty,
+.cc-grouped-tags-view.loading .groupings,
+.cc-grouped-tags-view.empty .loading,
+.cc-grouped-tags-view.empty .empty,
+.cc-grouped-tags-view.empty .groupings,
+.cc-grouped-tags-view h2.empty,
+.cc-grouped-tags-view h2.loading
+{
+	display: none;
+}
+
+.cc-grouped-tags-view.empty h2.empty
+{
+	display: block;
+}
+
+/* @end */
+
+/* @group Tag groupings */
+
+.cc-grouped-tags-view .cc-tag-group + .cc-tag-group
+{
+	border-top: 1px solid #E9E9E9;
+}
+
+.cc-grouped-tags-view .cc-tag-group
+{
+	background: #FFFFFF;
+	height: auto;
+	margin-bottom: 16px;
+	position: relative;
+	padding: 10px 16px 0px 16px;
+}
+
+.cc-grouped-tags-view .cc-tag-group.empty
+{
+	display: none;
+}
+
+.cc-grouped-tags-view .cc-tag-group.expandable
+{
+	border-bottom: 16px solid #FFFFFF;
+	height: 82px;
+	margin-bottom: 0px;
+	overflow: hidden;
+}
+
+.cc-grouped-tags-view .cc-tag-group.expandable.expanded
+{
+	height: auto;
+}
+
+.cc-grouped-tags-view .cc-tag-group.expandable ul
+{
+	margin-bottom: -4px;
+}
+
+.cc-grouped-tags-view .cc-tag-group h2
+{
+	color: #758091;
+	font-size: 36px;
+	margin: 0px;
+	padding: 0px 0px 6px 2px;
+}
+
+.cc-grouped-tags-view .cc-tag-group span.show
+{
+	color: #787878;
+	cursor: pointer;
+	font-size: 12px;
+	position: absolute;
+	right: 18px;
+	top: 16px;
+}
+
+.cc-grouped-tags-view .cc-tag-group span.show
+{
+	display: none;
+}
+
+.cc-grouped-tags-view .cc-tag-group.expandable span.show,
+.cc-grouped-tags-view .cc-tag-group.expandable.expanded span.show.less
+{
+	display: block;
+}
+
+.cc-grouped-tags-view .cc-tag-group.expandable.expanded span.show.more,
+.cc-grouped-tags-view .cc-tag-group.expandable span.show.less
+{
+	display: none;
+}
+
+/* @end */
+
+/* @group Edit mode */
+
+.cc-grouped-tags-view
+{
+	position: relative;
+}
+
+.cc-grouped-tags-view .cc-filter-bar-view .cc-filter-bar-view-keyword
+{
+	display: none !important;
+}
+
+.cc-grouped-tags-view .cc-grouped-tags-view-actions
+{
+	display: block;
+	height: 28px;
+	line-height: 28px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.cc-grouped-tags-view .cc-grouped-tags-view-actions .button
+{
+	cursor: default;
+	display: none;
+	height: 16px;
+	line-height: 15px;
+}
+
+.cc-grouped-tags-view .cc-grouped-tags-view-actions .button.edit
+{
+	margin: 0px 7px 0px 7px;
+	border: 1px solid transparent;
+	border-radius: 8px;
+}
+
+.cc-grouped-tags-view .cc-grouped-tags-view-actions .button.done
+{
+	font-weight: bold;
+	height: 18px;
+	line-height: 18px;
+	margin: 5px 7px 0px 7px;
+}
+
+.cc-grouped-tags-view .cc-grouped-tags-view-actions .button.edit
+{
+	background-position: center center;
+	background-repeat: no-repeat;
+	text-indent: -9999px;
+	width: 18px;
+}
+
+.cc-grouped-tags-view.editable .cc-grouped-tags-view-actions .button.edit
+{
+	display: inline-block;
+}
+
+.cc-grouped-tags-view.editable.editing .cc-grouped-tags-view-actions .button.edit
+{
+	display: none;
+}
+
+.cc-grouped-tags-view.editable.editing .cc-grouped-tags-view-actions .button.done
+{
+	display: inline-block;
+}
+
+.cc-grouped-tags-view .cc-tag
+{
+	height: 22px;
+	line-height: 22px;
+	margin-right: 6px;
+	margin-bottom: 8px;
+}
+
+.cc-grouped-tags-view.editing .cc-tag
+{
+	padding-left: 26px;
+}
+
+.cc-grouped-tags-view.editing .cc-tag a
+{
+	padding: 0 10px 0 0;
+}
+
+.cc-grouped-tags-view .cc-tag .button.delete
+{
+	background: transparent url(../cc/img/button_actions.png) 0px 0px no-repeat;
+    background-image: -webkit-image-set(url(../cc/img/button_actions.png) 1x,
+										url(../cc/img/button_actions@2x.png) 2x);
+	height: 22px;
+	width: 22px !important;
+}
+
+.cc-grouped-tags-view .cc-tag .button.delete
+{
+	left: 0px;
+	margin-top: -11px;
+	right: none;
+	opacity: 1 !important;
+	display: none !important;
+	top: 50%;
+	text-indent: -9999px;
+}
+
+.cc-grouped-tags-view.editing .cc-tag .button.delete
+{
+	opacity: 1 !important;
+	display: block !important;
+	z-index: 200;
+}
+
+#tags_page_edit_dialog
+{
+	width: 328px;
+}
+
+/* Workaround for the fact that Tags page isn't centered if you have hidden the inspector in other pages */
+
+body.tags #content.no-secondary #content-primary
+{
+	left: auto;
+}
+
+/* @end */

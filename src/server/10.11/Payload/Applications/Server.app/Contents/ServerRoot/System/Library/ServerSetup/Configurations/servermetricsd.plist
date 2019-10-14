@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Install servermetricsd.</string>
+	<key>setup</key>
+	<dict>
+		<key>files</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Install servermetricsd&apos;s ASL module.</string>
+				<key>path</key>
+				<string>/etc/asl/com.apple.servermetricsd</string>
+				<key>owner</key>
+				<string>root</string>
+				<key>mode</key>
+				<string>0644</string>
+				<key>source</key>
+				<string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ServerMetrics.framework/Resources/com.apple.servermetricsd</string>
+			</dict>
+		</array>
+		<key>services</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Load servermetricsd&apos;s aggregator launchd job.</string>
+				<key>state</key>
+				<string>enabled</string>
+				<key>name</key>
+				<string>com.apple.servermetricsd.daemon</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Load servermetricsd&apos;s sampler launchd job.</string>
+				<key>state</key>
+				<string>enabled</string>
+				<key>name</key>
+				<string>com.apple.servermetricsd.sample</string>
+			</dict>
+		</array>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Send SIGHUP to syslogd.</string>
+				<key>path</key>
+				<string>/Applications/Server.app/Contents/ServerRoot/System/Library/PrivateFrameworks/ServerMetrics.framework/Resources/hup_syslogd.sh</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

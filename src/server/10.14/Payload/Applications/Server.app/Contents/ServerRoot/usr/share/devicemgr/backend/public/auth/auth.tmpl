@@ -1,0 +1,63 @@
+«%#-------------------------------------------------------------------------           %»
+«%# Copyright (c) 2018 Apple Inc. All rights reserved.                                 %»
+«%#                                                                                    %»
+«%# IMPORTANT NOTE: This file is licensed only for use on Apple-branded                %»
+«%# computers and is subject to the terms and conditions of the Apple Software         %»
+«%# License Agreement accompanying the package this file is a part of.                 %»
+«%# You may not port this file to another platform without Apple's written consent.    %»
+«%#-------------------------------------------------------------------------           %»
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>«%= t["_Webauth.Title"] %»</title>
+    <meta name="x-apple-auth-redirect" content="«%= redirectURL %»">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <link href="«%= staticURIRoot %»/auth/auth.css" media="screen" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="«%= staticURIRoot %»/javascripts/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="«%= staticURIRoot %»/auth/auth.js"></script>
+  </head>
+  <body>
+    <div class="apple-logo">
+      <img width="24" height="24" src="«%= staticURIRoot %»/auth/images/apple_off.png" srcset="«%= staticURIRoot %»/auth/images/apple_off@2x.png 2x" alt="Apple">
+    </div>
+    <div class="help-cont">
+      <div class="help-text">
+        <a href="https://help.apple.com/profilemanager/mac/5.7/" target="_blank">«%= t["_Webauth.LearnMore"] %»</a>
+      </div>
+      <div class="help-divider"></div>
+      <div class="help-icon">
+        <a href="https://help.apple.com/profilemanager/mac/5.7/" target="_blank" class="help-icon"></a>
+      </div>
+    </div>
+    <div class="login-container">
+      <div class="login-box">      
+        <div class="login-unit login-header">«%= authHeaderText %»</div>
+        <div class="login-unit login-description">«%= authDescriptionText %»</div>
+        <div class="login-divider"></div>
+        <div class="login-hostname">«%= hostname %»</div>
+        <form accept-charset="UTF-8" action="javascript:void(0);" id="login_form">
+          <div class="login-username">
+            <input id="username" name="username" type="text" placeholder="«%= t["_Webauth.UserName"] %»" autocorrect="off" autocapitalize="off" autocomplete="off">
+          </div>
+          <div class="login-password-cont">
+            <div class="login-password">
+              <input id="password" name="password" placeholder="«%= t["_Webauth.Password"] %»" type="password" value="" autocorrect="off" autocapitalize="off" autocomplete="off">
+            </div>
+            <div class="login-submit" id="submit_info">              
+            </div>
+          </div>
+          <div class="login-error" id="login-error" >«%= t["_Webauth.InvalidUserPass"] %»</div>
+          <div class="login-rememberme-cont">
+            <label for="rememberMe"><input type="checkbox" id="rememberMe" «%= rememberMeStyleHTML %»>«%= t["_Webauth.KeepMeLoggedIn"] %»</label>
+          </div>
+          <div class="login-bottom-divider"></div>
+          «%# Hidden button to make the submit action work %»
+          <input type="submit" class="submit-button">
+        </form>
+      </div>
+      <div class="login-other-link">
+        <a href="«%= otherLoginUrl %»">«%= otherLoginText %»</a>
+      </div>
+    </div>
+  </body>
+</html>

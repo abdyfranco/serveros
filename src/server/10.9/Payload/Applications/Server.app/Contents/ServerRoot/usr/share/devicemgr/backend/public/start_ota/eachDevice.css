@@ -1,0 +1,117 @@
+/*-------------------------------------------------------------------------
+Copyright (c) 2014 Apple Inc. All rights reserved.
+
+IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+computers and is subject to the terms and conditions of the Apple Software
+License Agreement accompanying the package this file is a part of.
+You may not port this file to another platform without Apple's written consent.
+------------------------------------------------------------------------- */
+
+.device {
+  border: 1px solid #C3C3C3;
+  -webkit-border-radius: 5px;
+  padding-bottom: 10px;
+  margin: 5px 0px;
+  text-align: center;
+  background-color: #FDFDFD;
+  position: relative;
+  color: #4E4E4E;
+}
+
+#addDeviceFakeDevice.device {
+  padding-top: 0px;  
+}
+
+#addDeviceHelperText {
+  color: #958E91; 
+  font-size: 12px; 
+  text-align: left; 
+  line-height: 1.3em; 
+  padding: 0px 15px;
+}
+
+#addDeviceFakeDevice p {
+  margin: 0.7em 0px;
+}
+
+#addDeviceForm {
+  padding: 0 10px;
+}
+
+.device .deviceName {
+  background-color: #D4E8F9;
+  top: 0;
+  left: 0;
+  right: 0;  
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+  font-weight: bold;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-bottom: 10px;
+}
+
+.device .removeDeviceLink {
+  text-decoration: none;
+}
+
+.deviceName .device-name-text {
+  display: inline-block;
+  width: 150px;
+}
+
+.device .removeDevice {
+  position: absolute;
+  color: #5085b0;
+  top: 9px;
+  font-weight: 600;
+  right: 5px;
+  width: 60px;
+  height: 22px;
+  font-size: 11px;
+}
+
+.device :active .removeDevice {
+}
+
+.device .tasks > a {
+  border: 1px solid #C7C7C7;
+  display: block;
+  -webkit-border-radius: 12px;
+  padding: 3px;
+  margin: 5px 60px;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+  background: -webkit-gradient(linear, left top, left bottom, from(#FEFFFE), to(#EAEAEA));
+}
+.device > .lastTask {
+  border-top: 1px solid gray;
+  padding-top: 10px;
+}
+
+.device > .macLockWipePin > form {
+  background-color: #F2F2F2;
+  padding: 5px;
+  border-bottom: 1px solid #B4B4B4;
+  border-top:    1px solid #B4B4B4;
+  margin-bottom: 10px;
+  color: #7B7B7B;
+}
+
+.device > .macLockWipePin > form > label {
+  font-size: 80%;
+  font-weight: bold;
+  display: block;
+  padding: 5px;
+}
+
+.device > .macLockWipePin > form > input {
+  width: 80%;
+  height: 19px;
+  font-size: 120%;
+  color: #7B7B7B;
+}
+
+/*background: url(data:image/png;base64,);
+*/

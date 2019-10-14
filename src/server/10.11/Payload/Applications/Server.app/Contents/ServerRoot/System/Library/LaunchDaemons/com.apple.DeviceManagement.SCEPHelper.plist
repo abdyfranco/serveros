@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>BinaryOrderPreference</key>
+  <array>
+    <integer>7</integer>
+    <integer>-1</integer>
+  </array>
+  <key>EnableTransactions</key>
+  <true/>
+  <key>EnablePressuredExit</key>
+  <true/>
+  <key>Label</key>
+  <string>com.apple.DeviceManagement.SCEPHelper</string>
+  <key>MachServices</key>
+  <dict>
+    <key>com.apple.DeviceManagement.SCEPHelper</key>
+    <true/>
+  </dict>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Applications/Server.app/Contents/ServerRoot/usr/share/devicemgr/scep_helper</string>
+  </array>
+  <key>StandardErrorPath</key>
+  <string>/dev/null</string>
+  <key>StandardOutPath</key>
+  <string>/dev/null</string>
+</dict>
+</plist>

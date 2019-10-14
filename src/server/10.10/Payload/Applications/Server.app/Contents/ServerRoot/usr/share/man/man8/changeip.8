@@ -1,0 +1,154 @@
+.\"     $Id$
+.\"
+.\" Copyright (c) 2006-2013 Apple Inc. All Rights Reserved.
+.\" 
+.\" IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+.\" computers and is subject to the terms and conditions of the Apple Software
+.\" License Agreement accompanying the package this file is a part of.
+.\" You may not port this file to another platform without Apple's written consent.
+.\"
+.Dd September 17, 2008
+.Dt changeip 8
+.Os "Mac OS X Server" 10.8
+.Sh NAME
+.Nm changeip
+.Nd Change service configuration files with hard-coded IP addresses
+.Sh SYNOPSIS
+.Nm
+.Op Fl v
+.Op Fl d Ar path
+.Ar old-ip
+.Op Ar new-ip
+.Op Ar old-hostname Ar new-hostname
+.Pp
+.Nm
+.Fl checkhostname
+.Pp
+.Nm
+.Fl h
+.Sh DESCRIPTION
+.Nm
+is used to manually update configuration records when a server's IP address
+or hostname changed in a way that affected services were unable to properly
+process, for example when the server is behind a NAT device and the WAN
+identity changed.
+.Pp
+In typical usage, this command is used by an administrator to correct
+affected services when a server's network information changes.
+.Nm
+can be invoked before the change is applied; in such an invocation, the
+arguments consist of the server's current and pending IP addresses, and 
+optionally the existing and new host name. 
+Their usage and valid values include:
+.Bl -tag -width ".It Ar new-hostname" -compact
+.It Ar old-ip
+If the IP address has not yet been changed, this is the existing IP address
+of the server. If the IP has already been changed, this is the previous
+address. (This is the value that will be replaced in the server's relevant
+configuration files.)
+.It Ar new-ip
+If the IP address has not yet been changed, this is the IP address that will
+be assigned to the server. If the IP has already been changed, this is the
+existing IP address. This value will replace old-ip in the machine's
+configuration.
+.It Ar old-hostname
+As with old-ip, the existing or previous fully qualified domain name
+("FQDN" or sometimes "DNS name") for this server. If only the IP address was
+affected, this argument and the next may be omitted.
+.It Ar new-hostname
+If
+.Ar old-hostname
+was provided, this argument must also be provided. The machine's fully
+qualified domain name and related service configuration will be set to
+this value.
+.El
+.Pp
+Once the tool has successfully completed, the administrator must change
+the machine's network settings in the Network Control Panel to match
+.Ar new-ip
+(if new-ip is not the current IP) and immediately reboot the server.
+.Pp
+The second invocation,
+.Fl checkhostname ,
+provides a diagnostic tool that compares the current IP address and hostname
+to the information returned by DNS.
+.Pp
+The final invocation prints usage information.
+.Pp
+.Nm
+must be run as root.
+.Sh OPTIONS
+The following options are available:
+.Bl -tag -width ".Fl d Ns Ar path-buff" -compact
+.It Fl d Ar path
+Iterate over the executables in
+.Ar path
+instead of the default
+.Pa /Applications/Server.app/Contents/ServerRoot/usr/libexec/changeip .
+.Pp
+.It Fl h
+Print usage summary and exit.
+.Pp
+.It Fl v
+Run verbosely, that is with additional diagnostic output.
+.El
+.Sh FILES & FOLDERS
+.Bl -ohang -width ".Pa /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip" -compact
+.It Pa /Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip
+.Bl -dash -offset indent -compact
+.It
+daemon
+.El
+.It Pa /Applications/Server.app/Contents/ServerRoot/usr/libexec/changeip/
+.Bl -dash -offset indent -compact
+.It
+directory containing service-specific tools
+.El
+.El
+.Sh EXAMPLES
+This would be a typical invocation for a server redeployment:
+.Dl "/Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip 192.0.0.12 192.0.1.10 old.example.com new.example.com"
+.Pp
+It is also possible to leave the host name intact and only change the IP
+address:
+.Dl "/Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip 192.0.0.12 192.0.1.10"
+.Pp
+Its complement could be used to change only the host names, perhaps
+because the DNS tables have been changed:
+.Dl "/Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip 192.0.0.12 192.0.0.12 old.example.com new.example.com"
+Note how the IP addresses are required, but that they are identical.
+.Pp
+Optionally you may supply only a single IP Address if only the hostname is changing.
+.Dl "/Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip 192.0.0.12 old.example.com new.example.com"
+Note a warning will be returned if, after setting the new hostname, it does not resolve to the IP Address supplied.
+.D1 ""
+.Sh DIAGNOSTICS
+.Ex -std
+.Pp
+.Bl -diag
+.It "/Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip must be run as root."
+Because
+.Nm
+modifies system-wide resources, it must be executed by the root user.
+.It "Invalid IP Address:"
+One of the IP address arguments was invalid.
+.El
+.Sh SEE ALSO
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.Xr dscl 1 ,
+.Xr DirectoryServiceAttributes 7 ,
+.Xr DirectoryService 8 ,
+.Xr scutil 8
+.Sh KNOWN ISSUES
+The script does not perform the actual change of IP address; this is by
+design.
+.Sh HISTORY
+A version of
+.Nm
+has been present in Mac OS X Server since at least version 10.3 (Panther).
+.Pp
+In 10.6 (Snow Leopard),
+.Nm
+no longer manipulates the directory and therefore no longer takes a directory
+URL as an argument.

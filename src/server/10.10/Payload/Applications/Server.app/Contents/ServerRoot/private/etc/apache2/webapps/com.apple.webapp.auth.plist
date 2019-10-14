@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>name</key>
+		<string>com.apple.webapp.auth</string>
+		<key>includeFiles</key>
+		<array>
+			<string>/Library/Server/Web/Config/apache2/httpd_corecollaboration_webauth.conf</string>
+		</array>
+		<key>proxies</key>
+		<dict>
+			<key>/auth</key>
+			<dict>
+				<key>path</key>
+				<string>/auth</string>
+				<key>urls</key>
+				<array>
+					<string>http://localhost:4444/auth</string>
+				</array>
+			</dict>
+		</dict>
+		<key>requiredModuleNames</key>
+		<array>
+			<string>proxy_module</string>
+			<string>headers_module</string>
+		</array>
+		<key>requiredWebAppNames</key>
+		<array>
+			<string>com.apple.webapp.collabd</string>
+		</array>
+		<key>sslPolicy</key>
+		<integer>4</integer> <!-- 4: UseSSLAndNonSSL -->
+	</dict>
+</plist>

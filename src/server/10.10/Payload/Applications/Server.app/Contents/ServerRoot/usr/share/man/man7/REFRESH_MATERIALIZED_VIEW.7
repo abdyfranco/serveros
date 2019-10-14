@@ -1,0 +1,100 @@
+'\" t
+.\"     Title: REFRESH MATERIALIZED VIEW
+.\"    Author: The PostgreSQL Global Development Group
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2014
+.\"    Manual: PostgreSQL 9.3.5 Documentation
+.\"    Source: PostgreSQL 9.3.5
+.\"  Language: English
+.\"
+.TH "REFRESH MATERIALIZED VIEW" "7" "2014" "PostgreSQL 9.3.5" "PostgreSQL 9.3.5 Documentation"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+REFRESH_MATERIALIZED_VIEW \- replace the contents of a materialized view
+.\" REFRESH MATERIALIZED VIEW
+.SH "SYNOPSIS"
+.sp
+.nf
+REFRESH MATERIALIZED VIEW \fIname\fR
+    [ WITH [ NO ] DATA ]
+.fi
+.SH "DESCRIPTION"
+.PP
+
+\fBREFRESH MATERIALIZED VIEW\fR
+completely replaces the contents of a materialized view\&. The old contents are discarded\&. If
+WITH DATA
+is specified (or defaults) the backing query is executed to provide the new data, and the materialized view is left in a scannable state\&. If
+WITH NO DATA
+is specified no new data is generated and the materialized view is left in an unscannable state\&.
+.SH "PARAMETERS"
+.PP
+\fIname\fR
+.RS 4
+The name (optionally schema\-qualified) of the materialized view to refresh\&.
+.RE
+.SH "NOTES"
+.PP
+While the default index for future
+\fBCLUSTER\fR(7)
+operations is retained,
+\fBREFRESH MATERIALIZED VIEW\fR
+does not order the generated rows based on this property\&. If you want the data to be ordered upon generation, you must use an
+ORDER BY
+clause in the backing query\&.
+.SH "EXAMPLES"
+.PP
+This command will replace the contents of the materialized view called
+order_summary
+using the query from the materialized view\*(Aqs definition, and leave it in a scannable state:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+REFRESH MATERIALIZED VIEW order_summary;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+This command will free storage associated with the materialized view
+annual_statistics_basis
+and leave it in an unscannable state:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+REFRESH MATERIALIZED VIEW annual_statistics_basis WITH NO DATA;
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COMPATIBILITY"
+.PP
+
+\fBREFRESH MATERIALIZED VIEW\fR
+is a
+PostgreSQL
+extension\&.
+.SH "SEE ALSO"
+CREATE MATERIALIZED VIEW (\fBCREATE_MATERIALIZED_VIEW\fR(7)), ALTER MATERIALIZED VIEW (\fBALTER_MATERIALIZED_VIEW\fR(7)), DROP MATERIALIZED VIEW (\fBDROP_MATERIALIZED_VIEW\fR(7))

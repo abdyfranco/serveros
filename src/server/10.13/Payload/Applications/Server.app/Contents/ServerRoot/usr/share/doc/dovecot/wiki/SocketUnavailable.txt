@@ -1,0 +1,69 @@
+UNIX Socket Resource Temporarily Unavailable
+============================================
+
+Commonly visible as:
+
+---%<-------------------------------------------------------------------------
+imap-login: Error: net_connect_unix(imap) failed: Resource temporarily
+unavailable
+---%<-------------------------------------------------------------------------
+
+This means that there are more imap-login processes trying to connect to the
+"imap" UNIX socket than there are imap processes accepting the connections. The
+kernel's connection listener queue got full and it started rejecting further
+connections. So what can be done about it?
+
+Dovecot v2.2 bug
+----------------
+
+Dovecot v2.2.0 - v2.2.6 were attempting to optimize host.domain lookups by
+doing them only once in the master process. Unfortunately they were actually
+doing the lookup every time when creating a new process. In some configuration
+this lookup could have done a somewhat slow DNS lookup, causing the process
+creation to become very slow and triggering this message.
+
+The fix is in v2.2.7 and you can also workaround this:
+
+ * Add to dovecot.conf: 'import_environment = TZ DEBUG_OUTOFMEM
+   DOVECOT_HOSTDOMAIN=mailserver.example.com' (of course changing the value)
+
+Wrong service settings
+----------------------
+
+This can happen if 'service imap { client_limit } ' is set to anything else
+than 1. IMAP (and POP3 and other mail) processes do disk IO, lock waiting and
+such, so if all the available imap processes are stuck waiting on something,
+they can't accept new connections and they queue up in the kernel. For mail
+processes only 'client_limit=1' is recommended, except maybe for very tiny
+systems with a few users.
+
+Master process busy
+-------------------
+
+Dovecot master process forks all of the new processes. If it's using 100% CPU,
+it doesn't have time to fork enough new processes. Even if it's not constantly
+using 100% CPU there may be fork bursts where it temporarily gets too busy. The
+solution is to make it do less work by forking less processes:
+
+ * Most importantly switch to <high-performance login process mode>
+   [LoginProcess.txt]. This alone might be enough.
+ * You can also switch (most of the) other commonly forked processes to be
+   reused. For example 'service imap { service_count = 100 } ' reuses the imap
+   process for 100 different IMAP connections before it dies. This is useful
+   mainly for imap, pop3 and managesieve services. It's better to avoid using
+   'service_count=0' (unlimited) in case there are memory leaks.
+ * You can pre-fork some idling processes to handle bursts with 'service {
+   process_min_avail }'.
+
+See <Services.txt> before changing any service settings. Some services require
+specific values to work correctly.
+
+Listener queue size
+-------------------
+
+Dovecot uses the ' service { client_limit } '*' service { process_limit } ' as
+the listener queue size, but uses a hardcoded upper limit of 511. Most OSes use
+an even lower limit, typically 128. In Linux you can increase this from
+'/proc/sys/net/core/somaxconn'.
+
+(This file was created from the wiki on 2017-05-30 16:30)

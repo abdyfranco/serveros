@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>WIKI</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+		if (selection == "getState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getState</string>\n';
+			commandValue += '	<key>variant</key>\n';
+			commandValue += '	<string>withDetails</string>\n';
+		} else if (selection == "getLogPaths") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getLogPaths</string>\n';
+		} else if (selection == "getWikisList") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getWikisList</string>\n';
+		} else if (selection == "tailFile") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>tailFile</string>\n';
+			commandValue += '	<key>path</key>\n';
+			commandValue += '	<string>/var/log/system.log</string>\n';
+			commandValue += '	<key>offset</key>\n';
+			commandValue += '	<integer>0</integer>\n';
+			commandValue += '	<key>amount</key>\n';
+			commandValue += '	<integer>10000</integer>\n';
+		} else if (selection == "setState") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>setState</string>\n';
+			commandValue += '	<key>state</key>\n';
+			commandValue += '	<string>START</string>\n';
+		} else if (selection == "readSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>readSettings</string>\n';
+		} else if (selection == "writeSettings") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>writeSettings</string>\n';
+			commandValue += '	<key>configuration</key>\n';
+			commandValue += '	<dict>\n';
+			commandValue += '		<key>projectCreators</key>\n';
+			commandValue += '		<array>\n';
+			commandValue += '			<dict>\n';
+			commandValue += '			<key>guid</key>\n';
+			commandValue += '			<string>23657851-1744-4F3A-9213-356391229333</string>\n';
+			commandValue += '			<key>shortName</key>\n';
+			commandValue += '			<string>johndoe</string>\n';
+			commandValue += '			<key>longName</key>\n';
+			commandValue += '			<string>John Freakin Doe</string>\n';
+			commandValue += '			<key>type</key>\n';
+			commandValue += '			<string>user</string>\n';
+			commandValue += '			</dict>\n';
+			commandValue += '		</array>\n';
+			commandValue += '		<key>ChangePasswordEnabled</key>\n';
+			commandValue += '		<true/>\n';
+			commandValue += '	</dict>\n';
+ 		} else if (selection == "initialSetup") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>initialSetup</string>\n';
+			commandValue += '	<key>dataLocation</key>\n';
+			commandValue += '	<string>/Library/Server/Wiki/FileData</string>\n';
+ 		} else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_wiki'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="getState">getState
+						<OPTION VALUE="getLogPaths">getLogPaths
+						<OPTION VALUE="getWikisList">getWikisList
+						<OPTION VALUE="tailFile">tailFile
+						<OPTION VALUE="setState">setState
+						<OPTION VALUE="readSettings">readSettings
+						<OPTION VALUE="writeSettings">writeSettings
+						<OPTION VALUE="initialSetup">initialSetup
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_wiki">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

@@ -1,0 +1,118 @@
+#!/usr/bin/perl
+#
+# Copyright (c) 2010-2013 Apple Inc. All rights reserved.
+# 
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+# 
+# Redistribution and use in source and binary forms, with or without  
+# modification, are permitted provided that the following conditions  
+# are met:
+# 
+# 1.  Redistributions of source code must retain the above copyright  
+# notice, this list of conditions and the following disclaimer.
+# 2.  Redistributions in binary form must reproduce the above  
+# copyright notice, this list of conditions and the following  
+# disclaimer in the documentation and/or other materials provided  
+# with the distribution.
+# 3.  Neither the name of Apple Inc. ("Apple") nor the names of its  
+# contributors may be used to endorse or promote products derived
+# from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND  
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,  
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A  
+# PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS  
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT  
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  
+# USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND  
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,  
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT  
+# OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF  
+# SUCH DAMAGE.
+
+my $_amavis_log = "/Library/Logs/Mail/amavis.log";
+my $_clamd_log = "/Library/Logs/Mail/clamav.log";
+my $_freshclam_log = "/Library/Logs/Mail/freshclam.log";
+my $_junkmail_log = "/Library/Logs/Mail/junkmail.log";
+my $_list_server_log = "/Library/Logs/Mail/listserver.log";
+my $_mail_debug_log = "/Library/Logs/Mail/mail-debug.log";
+my $_mail_err_log = "/Library/Logs/Mail/mail-err.log";
+my $_mail_info_log = "/Library/Logs/Mail/mail-info.log";
+
+my $_partition_map = "/Library/Server/Mail/Config/dovecot/partition_map.conf";
+
+if (! -e $_amavis_log) {
+	open(LOG_FILE, ">$_amavis_log");
+	chown(83, 80, $_amavis_log);
+	chmod(0640, $_amavis_log);
+	close(LOG_FILE);
+}
+
+if (! -e $_clamd_log) {
+	open(LOG_FILE, ">$_clamd_log");
+	chown(83, 80, $_clamd_log);
+	chmod(0640, $_clamd_log);
+	close(LOG_FILE);
+}
+
+if (! -e $_freshclam_log) {
+	open(LOG_FILE, ">$_freshclam_log");
+	chown(82, 80, $_freshclam_log);
+	chmod(0640, $_freshclam_log);
+	close(LOG_FILE);
+}
+
+if (! -e $_junkmail_log) {
+	open(LOG_FILE, ">$_junkmail_log");
+	chown(83, 80, $_junkmail_log);
+	chmod(0640, $_junkmail_log);
+	close(LOG_FILE);
+}
+
+if (! -e $_list_server_log) {
+	open(LOG_FILE, ">$_list_server_log");
+	chown(27, 80, $_list_server_log);
+	chmod(0640, $_list_server_log);
+	close(LOG_FILE);
+}
+
+if (! -e $_mail_debug_log) {
+	open(LOG_FILE, ">$_mail_debug_log");
+	chown(214, 80, $_mail_debug_log);
+	chmod(0640, $_mail_debug_log);
+	close(LOG_FILE);
+}
+
+if (! -e $_mail_err_log) {
+	open(LOG_FILE, ">$_mail_err_log");
+	chown(214, 80, $_mail_err_log);
+	chmod(0640, $_mail_err_log);
+	close(LOG_FILE);
+}
+
+if (! -e $_mail_info_log) {
+	open(LOG_FILE, ">$_mail_info_log");
+	chown(214, 80, $_mail_info_log);
+	chmod(0640, $_mail_info_log);
+	close(LOG_FILE);
+}
+
+open(MAP_FILE, "<$_partition_map");
+while( <MAP_FILE> ) {
+	my( $line ) = $_;
+	chomp( $line );
+	my @parts = split(':', $line);
+	if ( (scalar @parts) == 2 ) {
+		if (! -e "$parts[1]") {
+			system( "/bin/wait4path", "$parts[1]" );
+		}
+	}
+}
+
+if ($ARGV[0] ne "") {exec "@ARGV"};
+
+exit(0);

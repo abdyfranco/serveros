@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>
+			${TITLE}
+		</title>
+		<meta name="Author" content="Apple Inc.">
+		<meta name="Category" content="company">
+		<style type="text/css" media="all">
+
+		body { font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif; background-color: #fff; color: #333; margin:0; padding:0; height:0; width:0; position:absolute; }
+		h3 { font-weight: bold; font-size: 1em; line-height: 8px; }
+
+		/* LAYOUT */
+		.clear { clear: both; }
+
+		#container { width:980px; margin:0 auto; position:relative; }
+		#main { width:980px; position:relative; }
+		#content { width:980px; padding:0; margin:0 0px; color:#666; background:#FFF; min-height:900px; }
+
+		#content #hero { position:relative; width:980px; height:280px; padding:0; margin:0 0 -25px; }
+		#content .gradient { padding:0 58px 40px; color:#666; background:url(./images/content_gradient.jpg) repeat-x; }
+
+		#content table { border-collapse: collapse; padding:0px; border:solid 1px #555; width:97%; margin-bottom:45px; }
+		#content td { margin:0px; border:solid 1px #555; padding:1px 7px; }
+		#content td.key { width:40%; }
+		#content th { background:#777; border:solid 1px #555; color:#FFF; padding:1px 7px; text-align:left; }
+		
+		#content p + p { margin-top:-25px; }
+		#content p + table { margin-top:-25px; margin-left: 10px; }
+		#content p + ul { margin-top:-30px; }
+		
+		img.left { float: left; margin: 2px 20px 16px 0; }
+		img.right { float: right; margin: 2px 0 16px 20px; }
+
+		#content h2 { font-size:25px; font-weight:normal; padding-top:50px; margin-bottom:0.5em; color:#252525; }
+		#content h3 { font-size:14px; margin-top:0.5em; margin-bottom:0.4em; color:#252525; }
+
+		#content p { margin-bottom:45px; }
+		#content p.intro { font-weight:bold; margin-bottom:30px; margin:0 30px 30px 0; }
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="main">
+				<div id="content">
+					<img id="hero" src="./images/header.png" alt="Mac OS X Lion" name="hero">
+					<div class="gradient">
+						<h2>
+							${INTRO_TITLE}
+						</h2>
+						<p class="intro">
+							${INTRO}
+						</p>
+						${CONTENT}
+					</div><!-- /gradient -->
+				</div><!-- /content -->
+			</div><!-- /main -->
+		</div><!-- /container -->
+	</body>
+</html>

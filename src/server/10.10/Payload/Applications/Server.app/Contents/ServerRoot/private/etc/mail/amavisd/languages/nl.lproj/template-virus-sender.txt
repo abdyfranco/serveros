@@ -1,0 +1,91 @@
+# =============================================================================
+# Dit is een sjabloon voor BERICHTEN AAN AFZENDERS OVER VIRUSSEN/VERBODEN
+# INHOUD.
+# Meer informatie over de syntaxis en het aanpassen van de
+# sjabloon vindt u in "README.customize".  Lange koptekstvelden worden
+# automatisch door het programma over meerdere regels verdeeld.
+#
+Onderwerp: [? [:ccat|major]
+|Goedgekeurd bericht van u\
+|Goedgekeurd bericht van u\
+|Goedgekeurd bericht van u (Door MTA geblokkeerd)\
+|TE GROOT bericht van u\
+|ONJUISTE KOPTEKST in bericht van u\
+|SPAM die van u afkomstig lijkt\
+|SPAM die van u afkomstig lijkt\
+|Een bericht met NIET GECONTROLEERDE inhoud van u\
+|VERBODEN inhoud van u (%F)\
+|VIRUS in bericht dat afkomstig lijkt van u (%V)\
+]
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <VS%i@%h>
+
+[? [:ccat|major] |Goedgekeurde mail|Goedgekeurde mail|DOOR MTA GEBLOKKEERD|TE GROOT|ONGELDIGE KOPTEKST|\
+spam|SPAM|NIET GECONTROLEERDE inhoud|WAARSCHUWING VOOR VERBODEN INHOUD|VIRUSWAARSCHUWING]
+
+Tijdens de controle van de inhoud is het volgende gevonden:
+[? %#V |#|[:wrap|78|    |  |[? %#V |virussen|virus|virussen]: %V]]
+[? %#F |#|[:wrap|78|    |  |banned [? %#F |namen|naam|namen]: %F]]
+[? %#X |#|[[:wrap|78|    |  |%X]\n]]
+
+in e-mail die door u %s
+lijkt te zijn gestuurd aan de volgende [? %#R |ontvangers|ontvanger|ontvangers]:[
+-> %R]
+
+Onze interne referentiecode voor uw bericht is  %n/%i
+
+[? %a |#|[:wrap|78||  |IP-adres van eerste upstream SMTP-client: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |Volgens een tracering van 'Ontvangen:'\
+ lijkt het bericht afkomstig van: \[%e\], %t]]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+[? %#D |De e-mail is niet bezorgd!
+
+]#
+[? %#V ||Controleer uw syteem op virussen
+of vraag uw systeembeheerder om dit te doen.
+
+]#
+[? %#V |[? %#F ||#
+Het bericht [?%#D|is geblokkeerd|heeft deze waarschuwing veroorzaakt]
+omdat het een component bevat (als MIME-onderdeel of genest) waarvan
+de naam, het MIME-type of het type inhoud in strijd is met
+ons toegangsbeleid.
+
+Als u inhoud wilt verzenden dat op basis van het beleid van de locatie
+als riskant of ongewenst wordt beschouwd of dat te groot is om via e-mail
+te versturen, kunt u de inhoud op het web publiceren en de URL van
+het document naar de ontvanger sturen.
+
+Afhankelijk van het beleid dat op de locatie van de ontvanger en de afzender
+wordt gehanteed, is het met enige moeite wellicht toch mogelijk om inhoud
+(inclusief virussen) te verzenden op een van de volgende manieren:
+
+- gecodeerd met pgp, gpg of een andere coderingsmethode;
+
+- verpakt in een bestand of archief dat met een wachtwoord is beveiligd of dat
+  is vervormd (bijv.: zip -e, arj -g, arc g, rar -p of een andere methode)
+
+Is de inhoud niet geheim, dan kunt u de coderingsleutel of het wachtwoord
+in hetzelfde bericht vermelden voor de ontvanger.
+
+Als de inhoud niet schadelijk is, bieden we onze excuses aan voor het ongemak.
+
+Deze beperkingen hebben tot doel om de meest gebruikte verspreidingsmethoden
+voor virussen en andere malware zoveel mogelijk te blokkeren. Virussen en malware
+maken vaak gebruik van automatische mechanismen en beveiligingslekken in populaire
+e-mailprogramma's (e-mailprogramma's en browsers van Microsoft zijn vaak het doelwit).
+Omdat de ontvanger de e-mail expliciet en handmatig moet decoderen, wordt de kans op
+automatische malwareverspreiding veel kleiner.
+#
+# Meer informatie over het e-mailbeleid vindt u op ...
+
+]]#

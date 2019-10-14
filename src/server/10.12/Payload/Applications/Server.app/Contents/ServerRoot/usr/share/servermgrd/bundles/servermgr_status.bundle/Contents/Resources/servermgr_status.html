@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+	<HEAD>
+		<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1">
+		<META NAME="PRAGMA" CONTENT="NO-CACHE">
+		<TITLE>Status</TITLE>
+	</HEAD>
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	function SelectCommand(popup) {
+		selection = popup.options[popup.selectedIndex].value;
+		commandValue = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		commandValue += '<plist version="0.9">\n';
+		commandValue += '<dict>\n';
+        if (selection == "isServerAlive") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>isServerAlive</string>\n';
+        }
+        else if (selection == "getExternalIPAddress") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getExternalIPAddress</string>\n';
+        }
+        else if (selection == "getExternalDomainName") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>getExternalDomainName</string>\n';
+        }
+        else if (selection == "resolutionStatusForDomainName") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>resolutionStatusForDomainName</string>\n';
+			commandValue += '	<key>domainName</key>\n';
+			commandValue += '	<string>apple.com</string>\n';
+        }
+        else if (selection == "MXRecordsForDomainNames") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>MXRecordsForDomainNames</string>\n';
+			commandValue += '	<key>domains</key>\n';
+            commandValue += '	<array>\n';
+            commandValue += '		<string>apple.com</string>\n';
+            commandValue += '	</array>\n';
+        }
+        else if (selection == "connectionStatusForPorts") {
+			commandValue += '	<key>command</key>\n';
+			commandValue += '	<string>connectionStatusForPorts</string>\n';
+			commandValue += '	<key>TCPPorts</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>80</string>\n';
+			commandValue += '	</array>\n';
+			commandValue += '	<key>UDPPorts</key>\n';
+			commandValue += '	<array>\n';
+			commandValue += '		<string>53</string>\n';
+			commandValue += '	</array>\n';
+        }
+        else if (selection == "reachabilityForWebDomains") {
+            commandValue += '	<key>command</key>\n';
+            commandValue += '	<string>reachabilityForWebDomains</string>\n';
+            commandValue += '	<key>domains</key>\n';
+            commandValue += '	<array>\n';
+            commandValue += '		<dict>\n';
+            commandValue += '           <key>name</key>\n';
+            commandValue += '			<string>store.apple.com:80</string>\n';
+            commandValue += '           <key>ssl</key>\n';
+            commandValue += '			<\false>\n';
+            commandValue += '		</dict>\n';
+            commandValue += '		<dict>\n';
+            commandValue += '           <key>name</key>\n';
+            commandValue += '			<string>web.apple.com:443</string>\n';
+            commandValue += '           <key>ssl</key>\n';
+            commandValue += '			<\true>\n';
+            commandValue += '		</dict>\n';
+            commandValue += '		<dict>\n';
+            commandValue += '           <key>name</key>\n';
+            commandValue += '			<string>fake.apple.com:8080</string>\n';
+            commandValue += '           <key>ssl</key>\n';
+            commandValue += '			<\false>\n';
+            commandValue += '		</dict>\n';
+            commandValue += '	</array>\n';
+        }
+        else {
+			document.forms['commandForm'].elements['input'].value = '';
+			return;
+		}
+		commandValue += '</dict>\n';
+		commandValue += '</plist>\n';
+		document.forms['commandForm'].elements['input'].value = commandValue;
+	}
+	//-->
+	</SCRIPT>
+	<BODY>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<TR>
+				<TD ALIGN="CENTER" HEIGHT="40" VALIGN="TOP">
+					<H3>This http form can be used to test 'servermgr_status'</H3>
+				</TD>
+			</TR>
+			<TR>
+				<TD ALIGN="CENTER">
+					Command: <SELECT NAME="commandPopup" ONCHANGE="SelectCommand(this)">
+						<OPTION SELECTED VALUE="N/A">- Select a command -
+						<OPTION VALUE="isServerAlive">isServerAlive
+						<OPTION VALUE="getExternalIPAddress">getExternalIPAddress
+						<OPTION VALUE="getExternalDomainName">getExternalDomainName
+						<OPTION VALUE="resolutionStatusForDomainName">resolutionStatusForDomainName
+						<OPTION VALUE="MXRecordsForDomainName">MXRecordsForDomainName
+						<OPTION VALUE="connectionStatusForPorts">connectionStatusForPorts
+					</SELECT>
+				</TD>
+			</TR>
+		</TABLE>
+		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="5">
+			<FORM METHOD="GET" NAME="commandForm" ACTION="/commands/servermgr_status">
+				<TR>
+					<TD ALIGN="CENTER">
+						<TEXTAREA COLS="80" ROWS="24" MAXLENGTH="32767" NAME="input"></TEXTAREA>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER">
+						<INPUT TYPE="SUBMIT" VALUE="Send Command" NAME="send"></INPUT>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+						<SMALL>
+							Click on your browser back button after the result is displayed
+						</SMALL>
+					</TD>
+				</TR>
+				<NOSCRIPT>
+				<TR>
+					<TD ALIGN="CENTER" HEIGHT="40" VALIGN="BOTTOM">
+							<B>You need a JavaScript-enabled web browser!</B>
+					</TD>
+				</TR>
+				</NOSCRIPT>
+			</FORM>
+		</TABLE>
+	</BODY>
+</HTML>

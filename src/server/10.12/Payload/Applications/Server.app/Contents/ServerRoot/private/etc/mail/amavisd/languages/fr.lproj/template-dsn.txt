@@ -1,0 +1,133 @@
+# =============================================================================
+# This is a template for (neutral: non-virus, non-spam, non-banned)
+# DELIVERY STATUS NOTIFICATIONS to sender.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+Objet : [?%#D|Courrier non distribuable|Notification d’état de distribution]\
+[? [:ccat|major] |||, BLOQUÉ PAR MTA\
+|, Taille du message DÉPASSÉE \
+|, section d’en-tête non valide[=explain_badh|1]\
+[?[:ccat|minor]||: MIME incorrect|: caractère sur 8 bits non encodé\
+|: usage incorrect du caractère de contrôle|: ligne d’en-tête constituée uniquement d’espaces\
+|: longueur de ligne d’en-tête supérieure à 998 caractères|: erreur de syntaxe du champ de l’en-tête\
+|: champ de l’en-tête requis mais manquant|: champ de l’en-tête en double|]\
+|, COURRIER ÉLECTRONIQUE ENVOYÉ EN MASSE DE FAÇON NON SOLLICITÉE dont vous semblez être l’expéditeur\
+|, COURRIER ÉLECTRONIQUE ENVOYÉ EN MASSE DE FAÇON NON SOLLICITÉE dont vous semblez être l’expéditeur\
+|, contenu NON VÉRIFIÉ\
+|, type de contenu BANNI (%F)\
+|, VIRUS inclus dans un message dont vous semblez être l’expéditeur (%V)\
+]
+Message-ID: <DSN%i@%h>
+
+[? %#D |#|Votre message A ÉTÉ CORRECTEMENT RELAYÉ à :[\n  %D]
+[~[:dsn_notify]|["\\bCORRECT\\b"]|\
+; vous avez explicitement demandé de recevoir une notification d’état de distribution en cas de distribution correcte.\n]\
+]
+[? %#N |#|Le message N’A PAS ÉTÉ relayé à :[\n  %N]
+]
+[:wrap|78|||Ce rapport de [?%#D|non distribution|distribution] a été \
+généré par le programme amavisd-new sur l’hôte %h. \
+Notre code de référencement interne relatif à votre message correspond à %n/%i]
+
+# ccat_min 0: autre,  1: MIME incorrect,  2: carac. 8 bits,  3: NUL/CR,
+#          4: vide,  5: long,  6: syntaxe,  7: manquant,  8: multiple
+[? [:explain_badh] ||[? [:ccat|minor]
+|EN-TÊTE NON VALIDE
+|EN-TÊTE NON VALIDE : SECTION D’EN-TÊTE MIME OU STRUCTURE MIME INCORRECTE 
+|EN-TÊTE NON VALIDE : CARACTÈRES SUR 8 BITS NON VALIDES DANS LA SECTION DE L’EN-TÊTE
+|EN-TÊTE NON VALIDE : CARACTÈRES DE CONTRÔLE NON VALIDES DANS LA SECTION DE L’EN-TÊTE
+|EN-TÊTE NON VALIDE : LIGNE DU CHAMP D’EN-TÊTE ENCAPSULÉE, CONSTITUÉE INTÉGRALEMENT D’ESPACES
+|EN-TÊTE NON VALIDE : TAILLE DE LA LIGNE DE L’EN-TÊTE SUPÉRIEURE À LA LIMITE DE 998 CARACTÈRES TELLE QU’AUTORISÉE PAR LA NORME RFC2822
+|EN-TÊTE NON VALIDE : ERREUR DE SYNTAXE DANS LE CHAMP DE L’EN-TÊTE
+|EN-TÊTE NON VALIDE : CHAMP D’EN-TÊTE REQUIS MAIS MANQUANT
+|EN-TÊTE NON VALIDE : CHAMP D’EN-TÊTE EN DOUBLE
+|EN-TÊTE NON VALIDE
+]
+[[:wrap|78|  |  |%X]\n]
+]\
+#
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+[? %#X|#|[? [:useragent] |#|[:wrap|78||  |[:useragent]]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+
+# ccat_min 0: autre,  1: MIME incorrect,  2: carac. 8 bits,  3: NUL/CR,
+#          4: vide,  5: long,  6: syntax,  7: manquant,  8: multiple
+[? [:explain_badh] ||[? [:ccat|minor]
+|# 0: autre
+|# 1: MIME incorrect
+|# 2: carac. 8 bits
+QUE REPRÉSENTE UN CARACTÈRE NON VALIDE DANS LA SECTION D’EN-TÊTE D’UN COURRIER ÉLECTRONIQUE ?
+
+  Le document RFC 5322 spécifie les règles pour la formation des messages Internet.
+  Il n’autorise pas l’usage direct de caractères avec les codes supérieurs à 127 
+  (non encodés) dans la section d’en-tête d’un courrier électronique.
+
+  Si de tels caractères (par exemple, comportant des symboles diacritiques) issue de l’ISO Latin
+  ou autres alphabets doivent être inclus dans une section d’en-tête, ils doivent
+  être correctement encodés en respectant la norme RFC 2047. Cet encodage
+  est souvent effectué de façon transparente par le lecteur de courrier électronique (MUA), mais si
+  aucun encodage automatique n’est disponible (par exemple, dans le cas de certains MUA plus anciens), il revêt
+  de la responsabilité de l’utilisateur d’éviter l’utilisation de ces caractères dans la section d’en-tête
+  ou de les encoder manuellement. Les champs d’en-tête entrant généralement
+  dans cette catégorie sont les champs « Objet », « Entreprise » et ceux des commentaires
+  ou encore les noms affichés dans les adresses électroniques au niveau des champs « De », « À » ou « Cc ».
+
+  Ces en-têtes non valides sont parfois automatiquement insérés
+  par un MUA, MTA, un mécanisme de filtrage de contenu ou autre service de gestion du courrier électronique.
+  Si tel est le cas, le service en question doit être corrigé ou correctement
+  configuré. Les champs d’en-tête entrant généralement dans cette catégorie
+  sont « Date », « Reçu le », « X-Mailer », « X-Priority », « X-Scanned », etc.
+
+  Si vous ne savez pas comment résoudre ou éviter ce problème, veuillez en faire part à
+  « votre » administrateur ou responsable système.
+#
+[~[:useragent]|^X-Mailer:\\s*Microsoft Outlook Express 6\\.00|["
+  Si votre MUA est Microsoft Outlook Express, assurez-vous que ses
+  paramètres sous :
+     Outils -> Options -> Envoyer -> Format d’envoi du courrier -> Texte brut et HTML
+  correspondent aux valeurs suivantes : « Format MIME » DOIT ÊTRE coché
+  et l’option « Autoriser les caractères 8 bits dans les en-têtes » NE DOIT PAS être activée !
+"]]#
+|# 3: NUL/CR
+USAGE INCORRECT DU CARACTÈRE DE CONTRÔLE DANS LA SECTION D’EN-TÊTE D’UN MESSAGE
+
+  Le document RFC 5322 spécifie les règles pour la mise en forme des messages Internet.
+  Il interdit l’usage de caractères de contrôle NUL et CR seul,
+  directement dans la section d’en-tête d’un courrier électronique.
+|# 4: vide
+LIGNE DU CHAMP D’EN-TÊTE ENCAPSULÉE, CONSTITUÉE INTÉGRALEMENT D’ESPACES
+
+  Le document RFC 5322 spécifie les règles pour la mise en forme des messages Internet.
+  La section « 3.2.2. Folding white space and comments » prévoie l’interdiction explicite
+  de l’encapsulage des champs d’en-tête, c’est-à-dire qu’aucune ligne d’un
+  champ d’en-tête encapsulé ne peut être intégralement constituée d’espaces
+  (caractères de contrôle SP et HTAB) sans autre caractère.
+|# 5: long
+LONGUEUR DE LIGNE D’EN-TÊTE SUPÉRIEURE À LA LIMITE DES 998 CARACTÈRES PRÉVUE DANS LE RFC5322
+
+  Le document RFC 5322 spécifie les règles pour la mise en forme des messages Internet.
+  La section « 2.1.1. Line Length Limits » interdit à chaque ligne de la section
+  d’un en-tête de dépasser une longueur de 998 caractères (hors caractère CRLF).
+|# 6: syntaxe
+|# 7: manquant
+CHAMP D’EN-TÊTE MANQUANT
+
+  Le document RFC 5322 spécifie les règles pour la mise en forme des messages Internet.
+  La section « 3.6. Field Definitions » précise que certains champs d’en-tête
+  sont obligatoires (champ de la date d’expédition et champ « De » correspondant à l’expéditeur).
+|# 8: multiple
+CHAMP D’EN-TÊTE EN DOUBLE
+
+  Le document RFC 5322 spécifie les règles pour la mise en forme des messages Internet.
+  La section « 3.6. Field Definitions » précise que certains champs d’en-tête
+  ne doivent pas se présenter plusieurs fois dans la section de l’en-tête d’un message.
+|# autre
+]]#

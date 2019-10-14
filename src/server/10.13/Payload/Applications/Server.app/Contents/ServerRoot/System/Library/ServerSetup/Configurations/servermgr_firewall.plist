@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Perform setup for servermgr_firewall</string>
+	<key>setup</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Clean up service configurations that may have changed</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/ServerFirewallServiceCleanser</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Load PF rules, if they already exist</string>
+				<key>path</key>
+				<string>${serverRoot}/usr/libexec/ServerFirewallPromotion.sh</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

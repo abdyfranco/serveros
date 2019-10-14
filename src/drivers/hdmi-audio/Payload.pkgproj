@@ -513,7 +513,7 @@
 			<key>FOLLOW_SYMBOLIC_LINKS</key>
 			<true/>
 			<key>IDENTIFIER</key>
-			<string>com.apple.hdmiaudio</string>
+			<string>co.abdyfran.hdmiaudiodriver</string>
 			<key>LOCATION</key>
 			<integer>0</integer>
 			<key>NAME</key>

@@ -1,0 +1,484 @@
+/**
+ * Copyright (c) 2010-2014, Apple Inc. All rights reserved. 
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+ * computers and is subject to the terms and conditions of the Apple Software
+ * License Agreement accompanying the package this file is a part of.
+ * You may not port this file to another platform without Apple's written consent.
+ * 
+ * IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+ * of the Apple Software and is subject to the terms and conditions of the Apple
+ * Software License Agreement accompanying the package this file is part of.
+ **/
+
+/* @group Toggle sidebar */
+
+.sidebar-open
+{
+	background: url(./img/sidebar_open.png) no-repeat;
+    background-image: -webkit-image-set(url(./img/sidebar_open.png) 1x,
+										url(./img/sidebar_open@2x.png) 2x);
+	
+	display: none;
+	height: 24px;
+	position: absolute;
+	right: 30px;
+	text-indent: -9999px;
+	top: 24px;
+	width: 24px;
+	z-index: 10;
+}
+
+#content.no-secondary .sidebar-open
+{
+	display: block;
+}
+
+/* @end */
+
+.cc-sidebar.hidden
+{
+	display: none;
+}
+
+.cc-sidebar > h2,
+.cc-sidebar.toplevel .cc-sidebar-section > h3
+{
+	position: relative;
+	font-weight: bold;
+	font-size: 12px;
+	height: 29px;
+	line-height: 31px;
+	margin: 0px -1px;
+	width: 246px;
+	padding: 0px;
+	text-transform: uppercase;
+}
+
+.cc-sidebar > h2 .title,
+.cc-sidebar.toplevel .cc-sidebar-section > h3 .title
+{
+  margin-left: 14px;
+}
+
+.cc-sidebar.toplevel .cc-sidebar-section > h3 .disclosure {
+	display: none;
+}
+.cc-sidebar.toplevel .cc-sidebar-section > h3 {
+	cursor: default;
+}
+
+.cc-sidebar.hidden + .cc-sidebar > h2
+{
+	margin-top: -1px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+}
+
+.cc-sidebar h2 .button
+{
+	cursor: default;
+	position: absolute;
+	top: 5px;
+	right: 7px;
+	width: 19px;
+	height: 20px;
+	text-indent: -9999px;
+	overflow: hidden;
+}
+
+.cc-sidebar h2 .button.sidebar-close
+{
+	background-repeat: repeat-x;
+}
+
+.cc-sidebar:first-child,
+.cc-sidebar.toplevel .cc-sidebar-section:first-child
+{
+	margin-top: -1px;
+}
+
+.cc-sidebar:first-child > h2,
+.cc-sidebar.toplevel .cc-sidebar-section:first-child,
+.cc-sidebar.toplevel .cc-sidebar-section:first-child > h3
+{
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+
+.cc-sidebar:last-child > .content,
+.cc-sidebar.toplevel .cc-sidebar-section:last-child > .content
+{
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+.cc-sidebar:not(.toplevel) > .content,
+.cc-sidebar.toplevel .cc-sidebar-section > .content
+{
+	color: #5A5A5A;
+	cursor: default;
+	font-size: 12px;
+	font-weight: normal;
+	margin: 0px 1px 1px 1px;
+	overflow: hidden;
+	padding: 8px 0px;
+	position: relative;
+}
+
+.cc-sidebar > .content ul li a[href]
+{
+    display: inline-block;
+    width: 100%;
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cc-sidebar > .content ul li span.updated
+{
+	color: #9A9A9A;
+	display: block;
+	font-weight: normal;
+	padding: 1px 0px 4px;
+}
+
+.cc-sidebar > .content a.more
+{
+	display: block;
+	font-weight: bold;
+	height: 16px;
+	line-height: 16px;
+	text-align: right;
+	text-transform: lowercase;
+}
+
+.cc-sidebar-section h3
+{
+	position: relative;
+	display: inline-block;
+	color: #8a8d92;
+	font-size: 12px;
+	height: 28px;
+	line-height: 28px;
+	padding-left: 19px;
+	cursor: pointer;
+}
+
+.cc-sidebar-section h3 .disclosure
+{
+	background: url(./img/sidebar_arrow_open.png) no-repeat;
+    background-image: -webkit-image-set(url(./img/sidebar_arrow_open.png) 1x,
+										url(./img/sidebar_arrow_open@2x.png) 2x);
+	display: block;
+	height: 5px;
+	left: 6px;
+	position: absolute;
+	text-indent: -9999px;
+	top: 11px;
+	width: 7px;
+}
+
+.cc-sidebar-section.collapsed h3 .disclosure
+{
+	background: url(./img/sidebar_arrow_closed.png) no-repeat;
+    background-image: -webkit-image-set(url(./img/sidebar_arrow_closed.png) 1x,
+										url(./img/sidebar_arrow_closed@2x.png) 2x);
+	width: 4px;
+	height: 7px;
+	left: 8px;
+	top: 10px;
+}
+
+.cc-sidebar-section h3
+{
+	color: #6A6A6A;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-shadow: #FFFFFF 0px 1px 0px;
+}
+
+.cc-sidebar-section h3 .unread
+{
+	color: #B0B0B0;
+	font-size: 11px;
+	font-weight: 500;
+	text-shadow: #FFFFFF 0px 1px 0px;
+}
+
+.cc-sidebar-section.loading > .content *
+{
+	display: none;
+}
+
+.cc-sidebar-section.loading > .content
+{
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: default;
+	text-indent: -9999px;
+}
+
+.cc-sidebar-section > .content
+{
+	min-height: 16px;
+	padding: 0px 18px 6px 18px;
+	height: auto;
+}
+
+.cc-sidebar-section.collapsed .content
+{
+	display: none;
+}
+
+.cc-sidebar .content h2
+{
+	color: #B1B3B5;
+	font-size: 11px;
+	font-weight: bold;	
+	margin-bottom: 4px;
+}
+
+.cc-sidebar .checkbox
+{
+	color: #808283;
+	display: block;
+	font-size: 12px;
+	height: 22px;
+	line-height: 22px;
+	margin: 0px 0px 0px 14px;
+}
+
+.cc-sidebar .checkbox input
+{
+	margin: 0px 5px 0px 0px;
+}
+
+/* @group Action buttons */
+
+.cc-sidebar-actions
+{
+	display: block;
+	height: 22px;
+	position: absolute;
+	top: -26px;
+	right: 0px;
+}
+
+.cc-sidebar-actions .button
+{
+	opacity: 0;
+	-webkit-transition-property: right, opacity;
+	-webkit-transition-duration: 0.4s;
+	-webkit-transition-timing-function: ease-in-out;
+}
+
+.cc-sidebar-section.editing .cc-sidebar-actions .button.cancel,
+.cc-sidebar-section.editing .cc-sidebar-actions .button.save,
+.cc-sidebar-actions  .button.add
+{
+	opacity: 1;
+}
+
+.cc-sidebar-section.editing .cc-sidebar-actions .button.add
+{
+	opacity: 0;
+}
+
+.cc-sidebar-actions
+{
+	width: 44px;
+}
+
+.cc-sidebar-actions .button
+{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+.cc-sidebar-actions .button.add
+{
+	z-index: 2;
+}
+
+.cc-sidebar-actions .button.cancel
+{
+	z-index: 1;
+	-webkit-transform: rotate(10deg);
+	-moz-transform: rotate(10deg);
+	-ms-transform: rotate(10deg);
+	transform: rotate(10deg);
+}
+
+.cc-sidebar-section.editing .cc-sidebar-actions .button.cancel
+{
+	right: 24px;
+	z-index: 3;
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+.cc-sidebar-section.editing .cc-sidebar-actions .button.add
+{
+	right: 24px;
+	-webkit-transform: rotate(-10deg);
+	-moz-transform: rotate(-10deg);
+	-ms-transform: rotate(-10deg);
+	transform: rotate(-10deg);
+}
+
+.cc-sidebar-section .button
+{
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 100%;
+	text-indent: -9999px;
+	width: 22px;
+}
+
+.cc-sidebar-section .button a
+{
+	height: 100%;
+}
+
+.cc-sidebar-section .button.add
+{
+	background-position: 0px 0px;
+}
+
+.cc-sidebar-section .button.save
+{
+	background-position: 0px -44px;
+}
+
+.cc-sidebar-section .button.cancel,
+.cc-sidebar-section .button.delete
+{
+	background-position: 0px -22px;
+}
+
+.cc-sidebar-section .button.approve
+{
+	background-position: 0px -66px;
+}
+
+/* @end */
+
+/* @group Empty placeholder */
+
+.cc-sidebar h2.placeholder
+{
+	font-size: 12px;
+	font-weight: normal;
+	text-align: center;
+	height: 33px;
+	line-height: 33px;
+}
+
+/* @end */
+
+/* @group Pagination */
+
+.cc-sidebar .cc-sidebar-pagination
+{
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+	height: 32px;
+	line-height: 32px;
+	margin-bottom: -6px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.cc-sidebar .cc-sidebar-pagination a
+{
+	display: block;
+}
+
+.cc-sidebar .cc-sidebar-pagination.loading
+{
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: default;
+	text-indent: -9999px;
+}
+
+.cc-sidebar .cc-sidebar-pagination .placeholder,
+.cc-sidebar .cc-sidebar-pagination.loading a,
+.cc-sidebar .cc-sidebar-pagination.empty a
+{
+	display: none;
+}
+
+.cc-sidebar .cc-sidebar-pagination.empty .placeholder
+{
+	display: block;
+}
+
+/* @end */
+
+/* @group Recent documents sidebar */
+
+.cc-sidebar-section[data-guid='sidebars/recent_documents'].content ul li a
+{
+	display: block;
+	width: 185px;
+}
+
+.cc-sidebar-section[data-guid='sidebars/recent_documents'] .placeholder.empty
+{
+	display: none;
+}
+
+.cc-sidebar-section[data-guid='sidebars/recent_documents'].empty .placeholder.empty
+{
+	display: block;
+}
+
+.cc-sidebar-section[data-guid='sidebars/recent_documents'] .content,
+.cc-sidebar-section[data-guid='sidebars/upcoming_events'] .content
+{
+	padding: 10px 20px 10px 25px !important;
+}
+
+/* @end */
+
+/* @group Other */
+
+.cc-sidebar .cc-sidebar-rounded-button
+{
+	display: inline-block;
+	height: 18px;
+	line-height: 18px;
+	padding: 0 10px;
+	font-weight: bold;
+	text-shadow: #fff 0px 1px 0px;
+	border-radius: 9px;
+	box-shadow: 0px 2px 2px rgba(255, 255, 255, 1);
+}
+
+/* @end */
+
+/* @group 10733920 */
+
+.cc-sidebar-section[data-guid='sidebars/container_notifications'] div.checkbox
+{
+	color: inherit !important;
+}
+
+/* @end */
+
+/* @group 11309760 */
+
+.cc-sidebar-section[data-guid='sidebars/container_notifications'] div.checkbox label
+{
+	width: 100%;
+	display: inline-block;
+}
+
+/* @end */

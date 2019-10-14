@@ -1,0 +1,46 @@
+# =============================================================================
+# This is a template for SPAM SENDER NOTIFICATIONS.
+# For syntax and customization instructions see README.customize.
+# The From, To and Date header fields will be provided automatically.
+# Long header fields will be automatically wrapped by the program.
+#
+제목: 요청되지 않은 대용량 이메일이 사용자로부터 전송된 것으로 인식되었습니다
+[? %m  |#|In-Reply-To: %m]
+Message-ID: <SS%i@%h>
+
+%s[
+받는 사람: %R](으)로부터의 메시지
+
+가 UBE(요청되지 않은 대용량 이메일)로 인식되었습니다.
+
+메시지에 대한 내부 참조 코드는 %n/%i입니다
+
+메시지가 사용자의 반송 주소로 전달되었으므로 사용자로부터 전송된 메일이거나 전송자 주소가 거짓이며
+이메일 주소가 타사 업체에 의해 악용되었을 수 있습니다. 그런 경우 예기치 않은 알림 메시지로 불편을 드려 
+죄송합니다.
+
+더 중요한 UBE 경우와 잘못된 메일이 혼동되는 것을 최소화하려고 노력하겠습니다. 그렇지만 상황이 명백하지 
+않은 경우 올바른 메일을 유실하고 예상치 않은 메일이 전송되는 상황 간에 약간의 균형이 필요하며 양쪽에게 
+부수적인 피해가 발생할 수 있습니다.
+
+[? %a |#|[:wrap|78||  |첫 번째 업스트리밍 SMTP 클라이언트 IP 주소: \[%a\] %g]]
+[? %e |#|[:wrap|78||  |'수신:' 결과에 따라,\
+ 해당 메시지가 \[%e\], %t]에서 생성되었습니다]
+
+[:wrap|78||  |Return-Path: %s[?[:dkim|envsender]|| (OK)]]
+[:wrap|78||  |From: [:header_field|From|100][?[:dkim|author]|| (dkim:AUTHOR)]]
+[? [:header_field|Sender]|#|\
+[:wrap|78||  |Sender: [:header_field|Sender|100]\
+[?[:dkim|sender]|| (dkim:SENDER)]]]
+[? %m |#|[:wrap|78||  |Message-ID: %m]]
+[? %r |#|[:wrap|78||  |Resent-Message-ID: %r]]
+# [? [:useragent] |#|[:wrap|78||  |[:useragent]]]
+[? %j |#|[:wrap|78||  |Subject: [:header_field|Subject|100]]]
+[? %#X |#|\n[[:wrap|78||  |%X]\n]]
+
+[? %#D |이메일 전송이 중단되었습니다!
+]#
+#
+# SpamAssassin 리포트:
+# [%A
+# ]\

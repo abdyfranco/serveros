@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Copyright (c) 2009-2015 Apple Inc. All Rights Reserved.
+#
+# IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+# computers and is subject to the terms and conditions of the Apple Software
+# License Agreement accompanying the package this file is a part of.
+# You may not port this file to another platform without Apple's written consent.
+#
+# Runs as CommonExtra
+#
+# Copy installed files, under the bundle, to their run-time place,
+# under /Library/Server.
+#
+SERVER_INSTALL_PATH_PREFIX=/Applications/Server.app/Contents/ServerRoot
+SERVER_LIBRARY_DIR=/Library/Server
+SERVER_LIBRARY_SITES_DIR=${SERVER_LIBRARY_DIR}/Web/Data/Sites
+mkdir -m 775 -p $SERVER_LIBRARY_SITES_DIR/Default
+chown root:admin $SERVER_LIBRARY_SITES_DIR/Default
+chown root:admin ${SERVER_LIBRARY_DIR}/Web/Data
+chmod 775 ${SERVER_LIBRARY_DIR}/Web/Data
+chown root:admin ${SERVER_LIBRARY_DIR}/Web/Data/*
+chmod 775 ${SERVER_LIBRARY_DIR}/Web/Data/*
+
+suffix=(de en fr ja es it nl ko zh-CN zh-TW)
+lproj=(de en fr ja es it nl ko zh_CN zh_TW)
+for (( i=0 ; i < ${#suffix[@]} ; i++ )) ; do
+	source=${SERVER_INSTALL_PATH_PREFIX}/usr/share/web/locales/${lproj[i]}.lproj/default.html
+	target=${SERVER_LIBRARY_SITES_DIR}/Default/default.html.${suffix[i]}
+	if [ -h $target ] ; then
+		rm $target
+	fi
+	if [ ! -e $target ] ; then
+		ln -s $source $target
+	fi
+done
+

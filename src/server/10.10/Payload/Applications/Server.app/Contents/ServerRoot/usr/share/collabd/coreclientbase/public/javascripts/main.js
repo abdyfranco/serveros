@@ -1,0 +1,67 @@
+// Copyright (c) 2009-2014 Apple Inc. All Rights Reserved.
+// 
+// IMPORTANT NOTE: This file is licensed only for use on Apple-branded
+// computers and is subject to the terms and conditions of the Apple Software
+// License Agreement accompanying the package this file is a part of.
+// You may not port this file to another platform without Apple's written consent.
+//
+// IMPORTANT NOTE: This file is licensed only for use with the Wiki Server feature
+// of the Apple Software and is subject to the terms and conditions of the Apple
+// Software License Agreement accompanying the package this file is part of.
+
+//= require "./thirdparty/prototype.js"
+//= require "./thirdparty/builder.js"
+//= require "./thirdparty/effects.js"
+//= require "./core.js"
+//= require "./accessibility.js"
+//= require "./localization.js"
+//= require "./ext/string.js"
+//= require "./ext/csdatetime.js"
+//= require "./ext/element.js"
+//= require "./guid.js"
+//= require "./url.js"
+//= require "./meta.js"
+//= require "./hidpi.js"
+//= require "./browser.js"
+//= require "./cookie.js"
+//= require "./logger.js"
+//= require "./routes.js"
+//= require "./service_client.js"
+//= require "./authenticator.js"
+//= require "./events.js"
+//= require "./keyboard.js"
+//= require "./store/store.js"
+//= require "./entity_mixins.js"
+//= require "./entity_types.js"
+//= require "./sessions.js"
+//= require "./server_proxy.js"
+//= require "./activity_stream.js"
+//= require "./widgets.js"
+//= require "./env.js"
+//= require "./dialogs.js"
+//= require "./notifier.js"
+//= require "./qtmedia.js"
+//= require "./smokey.js"
+//= require "./scroller.js"
+//= require "./panel_set.js"
+//= require "./error_message_view.js"
+//= require "./paginating_list_view.js"
+//= require "./paginating_search_query_list_view.js"
+//= require "./container_list_view.js"
+//= require "./activity_view.js"
+//= require "./search_view.js"
+//= require "./sharing_view.js"
+//= require "./access_editor_view.js"
+//= require "./disclosure_view.js"
+//= require "./stacked_view.js"
+//= require "./files.js"
+//= require "./avatar_editor.js"
+//= require "./recent_searches.js"
+//= require "./entity_title_view.js"
+//= require "./wikieditor/editor.js"
+//= require_directory ./wikieditor/blocks
+//= require "./revisions/base.js"
+//= require "./quicklook/base.js"
+//= require "./files/base.js"
+//= require "./dispatch.js"
+//= require "./pages.js"

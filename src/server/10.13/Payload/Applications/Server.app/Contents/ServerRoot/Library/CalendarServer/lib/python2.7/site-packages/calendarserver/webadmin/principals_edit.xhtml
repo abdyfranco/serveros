@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1" t:render="main">
+
+  <head>
+    <title><t:slot name="title" /></title>
+
+    <link t:render="stylesheet" />
+    <style>
+
+      table.record {
+        margin-left: auto;
+        margin-right: auto;
+        width: auto;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <h1><t:slot name="title" /></h1>
+
+    <table class="record">
+      <caption>Record Information</caption>
+      <thead>
+        <tr>
+          <th>Field Name</th>
+          <th>Field Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Directory Service</td>
+          <td><t:slot name="service" /></td>
+        </tr>
+        <tr>
+          <td>UID</td>
+          <td><t:slot name="uid" /></td>
+        </tr>
+        <tr>
+          <td>GUID</td>
+          <td><t:slot name="guid" /></td>
+        </tr>
+        <tr>
+          <td>Record Type</td>
+          <td><t:slot name="recordType" /></td>
+        </tr>
+        <tr>
+          <td>Short Names</td>
+          <td><t:slot name="shortNames" /></td>
+        </tr>
+        <tr>
+          <td>Full Names</td>
+          <td><t:slot name="fullNames" /></td>
+        </tr>
+        <tr>
+          <td>Email Addresses</td>
+          <td><t:slot name="emailAddresses" /></td>
+        </tr>
+        <tr>
+          <td>Calendar User Addresses</td>
+          <td><t:slot name="calendarUserAddresses" /></td>
+        </tr>
+        <tr>
+          <td>Server ID</td>
+          <td><t:slot name="serverURI" /></td>
+        </tr>
+        <!--
+        <tr>
+          <td>Auto Schedule</td>
+          <td>
+            <form id="auto_schedule_form" action="" method="get">
+              <input id="auto_schedule_toggle" type="checkbox" name="state" value="on" />
+              <select id="auto_schedule_select">
+                <option value="accept-always">Accept always</option>
+                <option value="decline-always">Decline always</option>
+                <option value="accept-if-free">Accept if free</option>
+                <option value="decline-if-busy">Decline if busy</option>
+                <option value="automatic">Automatic</option>
+              </select>
+            </form>
+          </td>
+        </tr>
+         -->
+      </tbody>
+    </table>
+
+  </body>
+
+</html>

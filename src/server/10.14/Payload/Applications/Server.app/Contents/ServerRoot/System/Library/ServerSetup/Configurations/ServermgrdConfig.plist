@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>description</key>
+	<string>Server Manager Daemon migration and setup</string>
+	<key>dependencies</key>
+	<array>
+		<string>ServerSupport</string>
+	</array>
+	<key>environment</key>
+	<dict>
+		<key>prefsLocation</key>
+		<string>/Library/Server/Preferences/com.apple.servermgrd.plist</string>
+		<key>defaultPrefs</key>
+		<string>${serverRoot}//Library/Preferences/com.apple.servermgrd.plist</string>
+		<key>legacyPrefsLocation</key>
+		<string>/Library/Preferences/com.apple.servermgrd.plist</string>
+		<key>serverLibexec</key>
+		<string>${serverRoot}/usr/libexec/</string>
+	</dict>
+	<key>defaults</key>
+	<dict/>
+	<key>setup</key>
+	<dict/>
+	<key>promotion</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Make sure the ACL on the com.apple.servermgrd identity allows servermgr-listener</string>
+				<key>path</key>
+				<string>${serverLibexec}/updateServermgrdCert</string>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Move the servermgrd.plist file into /Library/Server</string>
+				<key>path</key>
+				<string>${serverLibexec}/updateServermgrdPrefs</string>
+				<key>arguments</key>
+				<array>
+					<string>${prefsLocation}</string>
+					<string>${legacyPrefsLocation}</string>
+					<string>${defaultPrefs}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<key>restore</key>
+	<dict/>
+	<key>migration</key>
+	<dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Reset the remote admin state</string>
+				<key>path</key>
+				<string>${serverLibexec}/updateRemoteAdminState</string>
+				<key>arguments</key>
+				<array>
+					<string>${prefsLocation}</string>
+					<string>${defaultPrefs}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>description</key>
+				<string>Make sure the ACL on the com.apple.servermgrd identity allows servermgr-listener</string>
+				<key>path</key>
+				<string>${serverLibexec}/updateServermgrdCert</string>
+			</dict>
+		</array>
+	</dict>
+	<key>postSetup</key>
+	<dict>
+		<key>files</key>
+		<dict>
+			<key>defaultPrefs</key>
+			<dict>
+				<key>description</key>
+				<string>default preference file</string>
+				<key>path</key>
+				<string>${prefsLocation}</string>
+				<key>source</key>
+				<string>${defaultPrefs}</string>
+			</dict>
+		</dict>
+		<key>scripts</key>
+		<array>
+			<dict>
+				<key>description</key>
+				<string>Update Logging profiles</string>
+				<key>path</key>
+				<string>${serverLibexec}/install_logprefs</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>

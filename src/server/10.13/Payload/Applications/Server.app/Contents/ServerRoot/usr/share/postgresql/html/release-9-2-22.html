@@ -1,0 +1,786 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Release 9.2.22</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REV="MADE"
+HREF="mailto:pgsql-docs@postgresql.org"><LINK
+REL="HOME"
+TITLE="PostgreSQL 9.4.15 Documentation"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Release Notes"
+HREF="release.html"><LINK
+REL="PREVIOUS"
+TITLE="Release 9.2.23"
+HREF="release-9-2-23.html"><LINK
+REL="NEXT"
+TITLE="Release 9.2.21"
+HREF="release-9-2-21.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=ISO-8859-1"><META
+NAME="creation"
+CONTENT="2017-11-06T22:35:27"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="4"
+ALIGN="center"
+VALIGN="bottom"
+><A
+HREF="index.html"
+>PostgreSQL 9.4.15 Documentation</A
+></TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+TITLE="Release 9.2.23"
+HREF="release-9-2-23.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="release.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="60%"
+ALIGN="center"
+VALIGN="bottom"
+>Appendix E. Release Notes</TD
+><TD
+WIDTH="20%"
+ALIGN="right"
+VALIGN="top"
+><A
+TITLE="Release 9.2.21"
+HREF="release-9-2-21.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="RELEASE-9-2-22"
+>E.40. Release 9.2.22</A
+></H1
+><DIV
+CLASS="FORMALPARA"
+><P
+><B
+>Release date: </B
+>2017-08-10</P
+></DIV
+><P
+>   This release contains a variety of fixes from 9.2.21.
+   For information about new features in the 9.2 major release, see
+   <A
+HREF="release-9-2.html"
+>Section E.62</A
+>.
+  </P
+><P
+>   The <SPAN
+CLASS="PRODUCTNAME"
+>PostgreSQL</SPAN
+> community will stop releasing updates
+   for the 9.2.X release series in September 2017.
+   Users are encouraged to update to a newer release branch soon.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN127440"
+>E.40.1. Migration to Version 9.2.22</A
+></H2
+><P
+>    A dump/restore is not required for those running 9.2.X.
+   </P
+><P
+>    However, if you use foreign data servers that make use of user
+    passwords for authentication, see the first changelog entry below.
+   </P
+><P
+>    Also, if you are upgrading from a version earlier than 9.2.20,
+    see <A
+HREF="release-9-2-20.html"
+>Section E.42</A
+>.
+   </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN127446"
+>E.40.2. Changes</A
+></H2
+><P
+></P
+><UL
+><LI
+><P
+>      Further restrict visibility
+      of <TT
+CLASS="STRUCTNAME"
+>pg_user_mappings</TT
+>.<TT
+CLASS="STRUCTFIELD"
+>umoptions</TT
+>, to
+      protect passwords stored as user mapping options
+      (Noah Misch)
+     </P
+><P
+>      The fix for CVE-2017-7486 was incorrect: it allowed a user
+      to see the options in her own user mapping, even if she did not
+      have <TT
+CLASS="LITERAL"
+>USAGE</TT
+> permission on the associated foreign server.
+      Such options might include a password that had been provided by the
+      server owner rather than the user herself.
+      Since <TT
+CLASS="STRUCTNAME"
+>information_schema.user_mapping_options</TT
+> does not
+      show the options in such cases, <TT
+CLASS="STRUCTNAME"
+>pg_user_mappings</TT
+>
+      should not either.
+      (CVE-2017-7547)
+     </P
+><P
+>      By itself, this patch will only fix the behavior in newly initdb'd
+      databases.  If you wish to apply this change in an existing database,
+      you will need to do the following:
+     </P
+><DIV
+CLASS="PROCEDURE"
+><OL
+TYPE="1"
+><LI
+CLASS="STEP"
+><P
+>        Restart the postmaster after adding <TT
+CLASS="LITERAL"
+>allow_system_table_mods
+        = true</TT
+> to <TT
+CLASS="FILENAME"
+>postgresql.conf</TT
+>.  (In versions
+        supporting <TT
+CLASS="COMMAND"
+>ALTER SYSTEM</TT
+>, you can use that to make the
+        configuration change, but you'll still need a restart.)
+       </P
+></LI
+><LI
+CLASS="STEP"
+><P
+>        In <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>each</I
+></SPAN
+> database of the cluster,
+        run the following commands as superuser:
+</P><PRE
+CLASS="PROGRAMLISTING"
+>SET search_path = pg_catalog;
+CREATE OR REPLACE VIEW pg_user_mappings AS
+    SELECT
+        U.oid       AS umid,
+        S.oid       AS srvid,
+        S.srvname   AS srvname,
+        U.umuser    AS umuser,
+        CASE WHEN U.umuser = 0 THEN
+            'public'
+        ELSE
+            A.rolname
+        END AS usename,
+        CASE WHEN (U.umuser &lt;&gt; 0 AND A.rolname = current_user
+                     AND (pg_has_role(S.srvowner, 'USAGE')
+                          OR has_server_privilege(S.oid, 'USAGE')))
+                    OR (U.umuser = 0 AND pg_has_role(S.srvowner, 'USAGE'))
+                    OR (SELECT rolsuper FROM pg_authid WHERE rolname = current_user)
+                    THEN U.umoptions
+                 ELSE NULL END AS umoptions
+    FROM pg_user_mapping U
+         LEFT JOIN pg_authid A ON (A.oid = U.umuser) JOIN
+        pg_foreign_server S ON (U.umserver = S.oid);</PRE
+><P>
+       </P
+></LI
+><LI
+CLASS="STEP"
+><P
+>        Do not forget to include the <TT
+CLASS="LITERAL"
+>template0</TT
+>
+        and <TT
+CLASS="LITERAL"
+>template1</TT
+> databases, or the vulnerability will still
+        exist in databases you create later.  To fix <TT
+CLASS="LITERAL"
+>template0</TT
+>,
+        you'll need to temporarily make it accept connections.
+        In <SPAN
+CLASS="PRODUCTNAME"
+>PostgreSQL</SPAN
+> 9.5 and later, you can use
+</P><PRE
+CLASS="PROGRAMLISTING"
+>ALTER DATABASE template0 WITH ALLOW_CONNECTIONS true;</PRE
+><P>
+        and then after fixing <TT
+CLASS="LITERAL"
+>template0</TT
+>, undo that with
+</P><PRE
+CLASS="PROGRAMLISTING"
+>ALTER DATABASE template0 WITH ALLOW_CONNECTIONS false;</PRE
+><P>
+        In prior versions, instead use
+</P><PRE
+CLASS="PROGRAMLISTING"
+>UPDATE pg_database SET datallowconn = true WHERE datname = 'template0';
+UPDATE pg_database SET datallowconn = false WHERE datname = 'template0';</PRE
+><P>
+       </P
+></LI
+><LI
+CLASS="STEP"
+><P
+>        Finally, remove the <TT
+CLASS="LITERAL"
+>allow_system_table_mods</TT
+> configuration
+        setting, and again restart the postmaster.
+       </P
+></LI
+></OL
+></DIV
+></LI
+><LI
+><P
+>      Disallow empty passwords in all password-based authentication methods
+      (Heikki Linnakangas)
+     </P
+><P
+>      <SPAN
+CLASS="APPLICATION"
+>libpq</SPAN
+> ignores empty password specifications, and does
+      not transmit them to the server.  So, if a user's password has been
+      set to the empty string, it's impossible to log in with that password
+      via <SPAN
+CLASS="APPLICATION"
+>psql</SPAN
+> or other <SPAN
+CLASS="APPLICATION"
+>libpq</SPAN
+>-based
+      clients.  An administrator might therefore believe that setting the
+      password to empty is equivalent to disabling password login.
+      However, with a modified or non-<SPAN
+CLASS="APPLICATION"
+>libpq</SPAN
+>-based client,
+      logging in could be possible, depending on which authentication
+      method is configured.  In particular the most common
+      method, <TT
+CLASS="LITERAL"
+>md5</TT
+>, accepted empty passwords.
+      Change the server to reject empty passwords in all cases.
+      (CVE-2017-7546)
+     </P
+></LI
+><LI
+><P
+>      On Windows, retry process creation if we fail to reserve the address
+      range for our shared memory in the new process (Tom Lane, Amit
+      Kapila)
+     </P
+><P
+>      This is expected to fix infrequent child-process-launch failures that
+      are probably due to interference from antivirus products.
+     </P
+></LI
+><LI
+><P
+>      Fix low-probability corruption of shared predicate-lock hash table
+      in Windows builds (Thomas Munro, Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Avoid logging clean closure of an SSL connection as though
+      it were a connection reset (Michael Paquier)
+     </P
+></LI
+><LI
+><P
+>      Prevent sending SSL session tickets to clients (Tom Lane)
+     </P
+><P
+>      This fix prevents reconnection failures with ticket-aware client-side
+      SSL code.
+     </P
+></LI
+><LI
+><P
+>      Fix code for setting <A
+HREF="runtime-config-connection.html#GUC-TCP-KEEPALIVES-IDLE"
+>tcp_keepalives_idle</A
+> on
+      Solaris (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Fix statistics collector to honor inquiry messages issued just after
+      a postmaster shutdown and immediate restart (Tom Lane)
+     </P
+><P
+>      Statistics inquiries issued within half a second of the previous
+      postmaster shutdown were effectively ignored.
+     </P
+></LI
+><LI
+><P
+>      Ensure that the statistics collector's receive buffer size is at
+      least 100KB (Tom Lane)
+     </P
+><P
+>      This reduces the risk of dropped statistics data on older platforms
+      whose default receive buffer size is less than that.
+     </P
+></LI
+><LI
+><P
+>      Fix possible creation of an invalid WAL segment when a standby is
+      promoted just after it processes an <TT
+CLASS="LITERAL"
+>XLOG_SWITCH</TT
+> WAL
+      record (Andres Freund)
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="SYSTEMITEM"
+>SIGHUP</SPAN
+> and <SPAN
+CLASS="SYSTEMITEM"
+>SIGUSR1</SPAN
+> handling in
+      walsender processes (Petr Jelinek, Andres Freund)
+     </P
+></LI
+><LI
+><P
+>      Fix unnecessarily slow restarts of <SPAN
+CLASS="APPLICATION"
+>walreceiver</SPAN
+>
+      processes due to race condition in postmaster (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Fix cases where an <TT
+CLASS="COMMAND"
+>INSERT</TT
+> or <TT
+CLASS="COMMAND"
+>UPDATE</TT
+> assigns
+      to more than one element of a column that is of domain-over-array
+      type (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Move autogenerated array types out of the way during
+      <TT
+CLASS="COMMAND"
+>ALTER ... RENAME</TT
+> (Vik Fearing)
+     </P
+><P
+>      Previously, we would rename a conflicting autogenerated array type
+      out of the way during <TT
+CLASS="COMMAND"
+>CREATE</TT
+>; this fix extends that
+      behavior to renaming operations.
+     </P
+></LI
+><LI
+><P
+>      Ensure that <TT
+CLASS="COMMAND"
+>ALTER USER ... SET</TT
+> accepts all the syntax
+      variants that <TT
+CLASS="COMMAND"
+>ALTER ROLE ... SET</TT
+> does (Peter Eisentraut)
+     </P
+></LI
+><LI
+><P
+>      Properly update dependency info when changing a datatype I/O
+      function's argument or return type from <TT
+CLASS="TYPE"
+>opaque</TT
+> to the
+      correct type (Heikki Linnakangas)
+     </P
+><P
+>      <TT
+CLASS="COMMAND"
+>CREATE TYPE</TT
+> updates I/O functions declared in this
+      long-obsolete style, but it forgot to record a dependency on the
+      type, allowing a subsequent <TT
+CLASS="COMMAND"
+>DROP TYPE</TT
+> to leave broken
+      function definitions behind.
+     </P
+></LI
+><LI
+><P
+>      Reduce memory usage when <TT
+CLASS="COMMAND"
+>ANALYZE</TT
+> processes
+      a <TT
+CLASS="TYPE"
+>tsvector</TT
+> column (Heikki Linnakangas)
+     </P
+></LI
+><LI
+><P
+>      Fix unnecessary precision loss and sloppy rounding when multiplying
+      or dividing <TT
+CLASS="TYPE"
+>money</TT
+> values by integers or floats (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Tighten checks for whitespace in functions that parse identifiers,
+      such as <CODE
+CLASS="FUNCTION"
+>regprocedurein()</CODE
+> (Tom Lane)
+     </P
+><P
+>      Depending on the prevailing locale, these functions could
+      misinterpret fragments of multibyte characters as whitespace.
+     </P
+></LI
+><LI
+><P
+>      Use relevant <TT
+CLASS="LITERAL"
+>#define</TT
+> symbols from Perl while
+      compiling <SPAN
+CLASS="APPLICATION"
+>PL/Perl</SPAN
+> (Ashutosh Sharma, Tom Lane)
+     </P
+><P
+>      This avoids portability problems, typically manifesting as
+      a <SPAN
+CLASS="QUOTE"
+>"handshake"</SPAN
+> mismatch during library load, when working with
+      recent Perl versions.
+     </P
+></LI
+><LI
+><P
+>      In <SPAN
+CLASS="APPLICATION"
+>psql</SPAN
+>, fix failure when <TT
+CLASS="COMMAND"
+>COPY FROM STDIN</TT
+>
+      is ended with a keyboard EOF signal and then another <TT
+CLASS="COMMAND"
+>COPY
+      FROM STDIN</TT
+> is attempted (Thomas Munro)
+     </P
+><P
+>      This misbehavior was observed on BSD-derived platforms (including
+      macOS), but not on most others.
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_dump</SPAN
+> to not emit invalid SQL for an empty
+      operator class (Daniel Gustafsson)
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_dump</SPAN
+> output to stdout on Windows (Kuntal Ghosh)
+     </P
+><P
+>      A compressed plain-text dump written to stdout would contain corrupt
+      data due to failure to put the file descriptor into binary mode.
+     </P
+></LI
+><LI
+><P
+>      Fix <CODE
+CLASS="FUNCTION"
+>pg_get_ruledef()</CODE
+> to print correct output for
+      the <TT
+CLASS="LITERAL"
+>ON SELECT</TT
+> rule of a view whose columns have been
+      renamed (Tom Lane)
+     </P
+><P
+>      In some corner cases, <SPAN
+CLASS="APPLICATION"
+>pg_dump</SPAN
+> relies
+      on <CODE
+CLASS="FUNCTION"
+>pg_get_ruledef()</CODE
+> to dump views, so that this error
+      could result in dump/reload failures.
+     </P
+></LI
+><LI
+><P
+>      Fix dumping of function expressions in the <TT
+CLASS="LITERAL"
+>FROM</TT
+> clause in
+      cases where the expression does not deparse into something that looks
+      like a function call (Tom Lane)
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_basebackup</SPAN
+> output to stdout on Windows
+      (Haribabu Kommi)
+     </P
+><P
+>      A backup written to stdout would contain corrupt data due to failure
+      to put the file descriptor into binary mode.
+     </P
+></LI
+><LI
+><P
+>      Fix <SPAN
+CLASS="APPLICATION"
+>pg_upgrade</SPAN
+> to ensure that the ending WAL record
+      does not have <A
+HREF="runtime-config-wal.html#GUC-WAL-LEVEL"
+>wal_level</A
+> = <TT
+CLASS="LITERAL"
+>minimum</TT
+>
+      (Bruce Momjian)
+     </P
+><P
+>      This condition could prevent upgraded standby servers from
+      reconnecting.
+     </P
+></LI
+><LI
+><P
+>      Always use <TT
+CLASS="OPTION"
+>-fPIC</TT
+>, not <TT
+CLASS="OPTION"
+>-fpic</TT
+>, when building
+      shared libraries with gcc (Tom Lane)
+     </P
+><P
+>      This supports larger extension libraries on platforms where it makes
+      a difference.
+     </P
+></LI
+><LI
+><P
+>      Fix unescaped-braces issue in our build scripts for Microsoft MSVC,
+      to avoid a warning or error from recent Perl versions (Andrew
+      Dunstan)
+     </P
+></LI
+><LI
+><P
+>      In MSVC builds, handle the case where the <SPAN
+CLASS="APPLICATION"
+>openssl</SPAN
+>
+      library is not within a <TT
+CLASS="FILENAME"
+>VC</TT
+> subdirectory (Andrew Dunstan)
+     </P
+></LI
+><LI
+><P
+>      In MSVC builds, add proper include path for <SPAN
+CLASS="APPLICATION"
+>libxml2</SPAN
+>
+      header files (Andrew Dunstan)
+     </P
+><P
+>      This fixes a former need to move things around in standard Windows
+      installations of <SPAN
+CLASS="APPLICATION"
+>libxml2</SPAN
+>.
+     </P
+></LI
+><LI
+><P
+>      In MSVC builds, recognize a Tcl library that is
+      named <TT
+CLASS="FILENAME"
+>tcl86.lib</TT
+> (Noah Misch)
+     </P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="release-9-2-23.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="release-9-2-21.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Release 9.2.23</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="release.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Release 9.2.21</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
