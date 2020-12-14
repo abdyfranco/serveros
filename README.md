@@ -2,6 +2,8 @@
 
 # serverOS for Mac #
 
+> This project has been abandoned. An appropriate replacement will be announced in the future.
+
 **serverOS** – The Xserve was the Apple server until November 5, 2010 that
 was officially discontinued, offering as an alternative the Mac Mini Server or the
 Mac Pro, but none of these machines are designed with server-grade hardware in
